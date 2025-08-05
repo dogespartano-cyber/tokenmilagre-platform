@@ -1,0 +1,13 @@
+# Arquivos de ambiente Python
+.venv/
+
+# Arquivos de cache do Python
+__pycache__/
+*.pyc
+
+# Banco de dados local
+*.db
+*.sqlite3
+
+# Arquivos de sistema
+.DS_Store
