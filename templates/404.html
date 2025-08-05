@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artigo não encontrado - Blog de Artigos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="site-title">
+                <a href="/" class="site-title-link">Blog de Artigos</a>
+            </h1>
+        </header>
+
+        <main class="main-content">
+            <div class="error-page">
+                <div class="error-illustration">
+                    <svg viewBox="0 0 200 200" class="error-svg">
+                        <!-- Ilustração de página não encontrada -->
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Documento com X -->
+                        <rect x="50" y="40" width="100" height="120" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+                        <rect x="60" y="55" width="80" height="4" fill="#e2e8f0"/>
+                        <rect x="60" y="65" width="60" height="4" fill="#e2e8f0"/>
+                        <rect x="60" y="75" width="70" height="4" fill="#e2e8f0"/>
+                        
+                        <!-- X grande no meio -->
+                        <line x1="75" y1="95" x2="125" y2="135" stroke="url(#gradient)" stroke-width="6" stroke-linecap="round"/>
+                        <line x1="125" y1="95" x2="75" y2="135" stroke="url(#gradient)" stroke-width="6" stroke-linecap="round"/>
+                        
+                        <!-- Lupa -->
+                        <circle cx="140" cy="75" r="15" fill="none" stroke="url(#gradient)" stroke-width="3"/>
+                        <line x1="150" y1="85" x2="165" y2="100" stroke="url(#gradient)" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+
+                <div class="error-content">
+                    <h1 class="error-title">404</h1>
+                    <h2 class="error-subtitle">Artigo não encontrado</h2>
+                    <p class="error-description">
+                        Ops! O artigo que você está procurando não existe ou foi removido. 
+                        Pode ser que o link esteja incorreto ou que o conteúdo tenha sido movido.
+                    </p>
+
+                    <div class="error-actions">
+                        <a href="/" class="primary-btn">
+                            <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                            </svg>
+                            Voltar ao início
+                        </a>
+                        
+                        <button onclick="goBack()" class="secondary-btn">
+                            <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                            </svg>
+                            Página anterior
+                        </button>
+                    </div>
+                </div>
+
+                <div class="error-suggestions">
+                    <h3 class="suggestions-title">Talvez você esteja procurando por:</h3>
+                    <ul class="suggestions-list">
+                        <li>
+                            <a href="/" class="suggestion-link">
+                                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                </svg>
+                                Página inicial com todos os artigos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/api/articles" class="suggestion-link">
+                                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                                </svg>
+                                API dos artigos (JSON)
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="error-details">
+                    <details class="error-technical">
+                        <summary class="technical-summary">Detalhes técnicos</summary>
+                        <div class="technical-content">
+                            <p><strong>Código de erro:</strong> 404 - Not Found</p>
+                            <p><strong>URL solicitada:</strong> <code>{{ request.url }}</code></p>
+                            <p><strong>Método:</strong> {{ request.method }}</p>
+                            <p><strong>Timestamp:</strong> {{ moment().format('DD/MM/YYYY HH:mm:ss') if moment else 'N/A' }}</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-text">
+                    © {{ current_year or 2024 }} Blog de Artigos. 
+                    <span class="footer-separator">|</span>
+                    Criado com ❤️ usando Flask
+                </p>
+                <div class="footer-links">
+                    <a href="/" class="footer-link">Home</a>
+                    <a href="/api/articles" class="footer-link">API</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = '/';
+            }
+        }
+
+        // Adicionar algumas animações para tornar a página mais agradável
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animação de entrada para os elementos
+            const elements = document.querySelectorAll('.error-illustration, .error-content, .error-suggestions');
+            elements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+
+            // Animação da ilustração SVG
+            const errorSvg = document.querySelector('.error-svg');
+            if (errorSvg) {
+                setTimeout(() => {
+                    errorSvg.style.animation = 'float 3s ease-in-out infinite';
+                }, 1000);
+            }
+
+            // Adicionar hover effects nos botões
+            const buttons = document.querySelectorAll('.primary-btn, .secondary-btn');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+
+        // CSS animation keyframes (adicionado via JavaScript)
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
