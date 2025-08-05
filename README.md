@@ -28,7 +28,7 @@ Execute o script de instalação para criar o ambiente virtual e instalar todas 
 
 ### 2. Inicialização do Banco de Dados
 
-Na primeira vez que você rodar o projeto, você precisa criar o banco de dados. O script de inicialização fará isso por você:
+Na primeira vez que você rodar o projeto (ou se o arquivo `database.db` não existir), você precisa criar as tabelas do banco de dados. O script de inicialização fará isso por você. Este comando é seguro e não apagará dados existentes.
 
 ```bash
 source .venv/bin/activate
