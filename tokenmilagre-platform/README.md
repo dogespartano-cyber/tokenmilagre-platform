@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌟 TokenMilagre Platform
 
-## Getting Started
+**Plataforma de apoio mútuo baseada no token $MILAGRE (Solana)**
 
-First, run the development server:
+## 🚀 Quick Start
+
+### Desenvolvimento Local
 
 ```bash
+# Instalar dependências
+npm install
+
+# Rodar servidor de desenvolvimento
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Abrir http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Build para Produção
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Criar build otimizado
+npm run build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Rodar build localmente
+npm start
+```
 
-## Learn More
+## 🔧 Stack Tecnológico
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework:** Next.js 15
+- **Linguagem:** TypeScript
+- **Estilização:** Tailwind CSS 4
+- **Blockchain:** Solana (via @solana/web3.js)
+- **Wallet:** Phantom
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎯 Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- ✅ Conexão com Phantom Wallet
+- ✅ Verificação de holdings $MILAGRE
+- ✅ Sistema de níveis (Visitante → Apoiador → Guardião → Anjo Guardião)
+- ✅ Design responsivo
+- ⏳ Dashboard para holders (em desenvolvimento)
+- ⏳ Sistema de fórum e mentorias (em desenvolvimento)
 
-## Deploy on Vercel
+## 📝 Configuração
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Copie `.env.local.example` para `.env.local`
+2. Ajuste as variáveis se necessário
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🌐 Deploy na Vercel
+
+Este projeto está otimizado para deploy na Vercel:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/SEU_USUARIO/tokenmilagre-platform)
+
+## 📄 Documentação
+
+Veja `PROJETO_TOKENMILAGRE_LOG.md` na raiz do repositório para documentação completa.
+
+## 🔗 Links
+
+- **Token:** [3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump](https://pump.fun/coin/3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump)
+- **Website:** tokenmilagre.xyz
+- **Rede:** Solana Mainnet
+
+## 📜 Licença
+
+© 2025 by $MILAGRE. Todos os direitos reservados.
