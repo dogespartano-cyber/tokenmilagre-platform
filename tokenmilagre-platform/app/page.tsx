@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function Home() {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
@@ -12,10 +12,10 @@ export default function Home() {
   const connectWallet = async () => {
     setLoading(true);
     try {
-      // @ts-ignore
-      if (window.solana && window.solana.isPhantom) {
-        // @ts-ignore
-        const response = await window.solana.connect();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((window as any).solana && (window as any).solana.isPhantom) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const response = await (window as any).solana.connect();
         setWalletAddress(response.publicKey.toString());
         await checkTokenBalance(response.publicKey.toString());
       } else {
@@ -28,7 +28,7 @@ export default function Home() {
     }
   };
 
-  const checkTokenBalance = async (address: string) => {
+  const checkTokenBalance = async (_address: string) => {
     // Simulação - posteriormente implementaremos chamada real à blockchain
     const mockBalance = Math.floor(Math.random() * 50000);
     setTokenBalance(mockBalance);
