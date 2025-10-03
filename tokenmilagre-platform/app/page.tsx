@@ -310,8 +310,9 @@ export default function Home() {
         <div id="home" className="grid lg:grid-cols-2 gap-12 items-center mb-20 scroll-mt-24">
           {/* Left - Text Content */}
           <div className="text-center lg:text-left order-2 lg:order-1">
-            <h2 className="text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-xl">
-              Nunca Estarás Sozinho ❤️
+            <h2 className="text-5xl lg:text-7xl font-extrabold text-white mb-6 drop-shadow-xl font-[family-name:var(--font-poppins)] tracking-tight flex items-center justify-center lg:justify-start gap-3">
+              <span>Nunca Estarás Sozinho</span>
+              <span className="text-6xl lg:text-7xl animate-pulse">❤️</span>
             </h2>
             <p className="text-xl text-white mb-8 leading-relaxed drop-shadow-md">
               Nos momentos mais difíceis, <span className="font-bold text-yellow-200">$MILAGRE</span> surge como um farol de esperança.
