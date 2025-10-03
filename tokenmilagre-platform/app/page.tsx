@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 export default function Home() {
@@ -8,6 +8,8 @@ export default function Home() {
   const [tokenBalance, setTokenBalance] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
 
@@ -18,6 +20,26 @@ export default function Home() {
       setMobileMenuOpen(false);
     }
   };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(TOKEN_ADDRESS);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  // Mostrar botão de scroll quando descer
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const connectWallet = async () => {
     setLoading(true);
@@ -778,44 +800,44 @@ export default function Home() {
 
         {/* Sobre o Projeto */}
         <div id="contato" className="mb-20 scroll-mt-24">
-          <div className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 backdrop-blur-lg rounded-3xl p-12 border-2 border-purple-300/30 shadow-2xl">
+          <div className="bg-gradient-to-br from-pink-400/20 via-rose-400/20 to-orange-400/20 backdrop-blur-xl rounded-3xl p-8 md:p-12 border-2 border-pink-300/40 shadow-2xl">
             <h3 className="text-4xl font-bold text-white text-center mb-6 drop-shadow-lg">
               Sobre o Projeto $MILAGRE 💫
             </h3>
 
             <div className="max-w-4xl mx-auto space-y-8">
               <div className="text-center">
-                <p className="text-white/95 text-xl leading-relaxed mb-6">
+                <p className="text-white text-xl leading-relaxed mb-6">
                   $MILAGRE é mais que um token - é um movimento de apoio mútuo genuíno na blockchain.
                 </p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-white/10 rounded-2xl p-6">
-                  <h4 className="text-2xl font-bold mb-4 text-purple-300">🎯 Nossa Missão</h4>
-                  <p className="text-white/90 leading-relaxed">
+                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-rose-200/30 hover:bg-white/25 transition">
+                  <h4 className="text-2xl font-bold mb-4 text-rose-200">🎯 Nossa Missão</h4>
+                  <p className="text-white leading-relaxed">
                     Criar um ecossistema descentralizado onde holders se conectam, aprendem e crescem juntos.
                     Oferecemos mentorias, networking, educação financeira e suporte emocional para todos que
                     acreditam que juntos somos mais fortes.
                   </p>
                 </div>
 
-                <div className="bg-white/10 rounded-2xl p-6">
-                  <h4 className="text-2xl font-bold mb-4 text-purple-300">💎 Nossos Valores</h4>
-                  <p className="text-white/90 leading-relaxed">
-                    <strong>Transparência:</strong> Sem promessas vazias<br />
-                    <strong>Apoio Mútuo:</strong> Crescemos juntos<br />
-                    <strong>Inclusão:</strong> Todos são bem-vindos<br />
-                    <strong>Ação:</strong> Resultados reais, não apenas palavras
+                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-orange-200/30 hover:bg-white/25 transition">
+                  <h4 className="text-2xl font-bold mb-4 text-orange-200">💎 Nossos Valores</h4>
+                  <p className="text-white leading-relaxed">
+                    <strong className="text-orange-100">Transparência:</strong> Sem promessas vazias<br />
+                    <strong className="text-orange-100">Apoio Mútuo:</strong> Crescemos juntos<br />
+                    <strong className="text-orange-100">Inclusão:</strong> Todos são bem-vindos<br />
+                    <strong className="text-orange-100">Ação:</strong> Resultados reais, não apenas palavras
                   </p>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-yellow-400/20 to-yellow-600/20 rounded-2xl p-8 border border-yellow-300/30 text-center">
-                <p className="text-2xl font-bold text-yellow-300 mb-4">
+              <div className="bg-gradient-to-r from-yellow-400/25 to-orange-400/25 backdrop-blur-sm rounded-2xl p-8 border-2 border-yellow-300/40 text-center shadow-lg">
+                <p className="text-2xl font-bold text-yellow-100 mb-4 drop-shadow">
                   &quot;Nunca estarás sozinho&quot;
                 </p>
-                <p className="text-white/90 text-lg">
+                <p className="text-white text-lg">
                   Este é nosso compromisso com cada holder. Em momentos de dúvida, celebração ou desafio,
                   nossa comunidade estará sempre presente.
                 </p>
@@ -825,9 +847,27 @@ export default function Home() {
                 <h4 className="text-2xl font-bold text-white mb-4">📊 Informações do Token</h4>
                 <div className="bg-white/10 rounded-2xl p-6 inline-block">
                   <p className="text-white/80 text-sm mb-2">Endereço do Contrato:</p>
-                  <code className="text-yellow-300 font-mono text-xs break-all">
-                    {TOKEN_ADDRESS}
-                  </code>
+                  <div className="flex items-center gap-3 justify-center flex-wrap">
+                    <code className="text-yellow-300 font-mono text-xs break-all max-w-md">
+                      {TOKEN_ADDRESS}
+                    </code>
+                    <button
+                      onClick={copyToClipboard}
+                      className="px-4 py-2 bg-gradient-to-r from-yellow-400 to-amber-400 hover:from-yellow-300 hover:to-amber-300 text-gray-900 font-bold text-sm rounded-full transition-all shadow-lg hover:scale-105 flex items-center gap-2"
+                    >
+                      {copied ? (
+                        <>
+                          <span>✓</span>
+                          <span>Copiado!</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>📋</span>
+                          <span>Copiar</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                   <div className="mt-4 pt-4 border-t border-white/20">
                     <p className="text-white/80 text-sm">Blockchain: <strong className="text-white">Solana</strong></p>
                     <p className="text-white/80 text-sm">Tipo: <strong className="text-white">SPL Token</strong></p>
@@ -838,6 +878,24 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      {/* Botão Flutuante - Subir */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-40 w-14 h-14 bg-gradient-to-br from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 rounded-full shadow-2xl hover:shadow-yellow-400/50 flex items-center justify-center transition-all duration-300 hover:scale-110 group border-2 border-yellow-300/50"
+          aria-label="Voltar ao topo"
+        >
+          <svg
+            className="w-6 h-6 text-gray-900 group-hover:translate-y-[-2px] transition-transform"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      )}
 
       {/* Footer */}
       <footer className="container mx-auto px-4 py-12 mt-20 border-t-2 border-white/30">
