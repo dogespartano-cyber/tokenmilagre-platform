@@ -163,6 +163,9 @@ export default function Home() {
               <button onClick={() => scrollToSection('sobre')} className="text-white hover:text-yellow-300 transition font-semibold">
                 O que é?
               </button>
+              <button onClick={() => scrollToSection('token')} className="text-white hover:text-yellow-300 transition font-semibold">
+                Token
+              </button>
               <button onClick={() => scrollToSection('guardioes')} className="text-white hover:text-yellow-300 transition font-semibold">
                 Guardiões
               </button>
@@ -211,6 +214,9 @@ export default function Home() {
             <div className="md:hidden mt-4 pb-4 border-t border-white/20 pt-4 space-y-3">
               <button onClick={() => scrollToSection('sobre')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
                 O que é?
+              </button>
+              <button onClick={() => scrollToSection('token')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
+                Token
               </button>
               <button onClick={() => scrollToSection('guardioes')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
                 Guardiões
@@ -396,7 +402,7 @@ export default function Home() {
         </div>
 
         {/* Informações Técnicas do Token */}
-        <div className="mb-20">
+        <div id="token" className="mb-20 scroll-mt-24">
           <div className="relative overflow-hidden bg-gradient-to-br from-cyan-400/20 via-teal-400/20 to-emerald-400/20 backdrop-blur-xl rounded-3xl p-8 md:p-12 border-2 border-cyan-300/40 shadow-2xl">
             {/* Background decorativo */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-400/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
@@ -420,8 +426,14 @@ export default function Home() {
                     {/* Header do Card */}
                     <div className="flex items-center justify-between mb-8">
                       <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg">
-                          <span className="text-3xl">🪙</span>
+                        <div className="w-16 h-16 bg-gradient-to-br from-cyan-400/20 to-teal-500/20 rounded-2xl flex items-center justify-center shadow-lg border-2 border-cyan-300/40 overflow-hidden">
+                          <Image
+                            src="/images/TOKEN-MILAGRE-.webp"
+                            alt="$MILAGRE Logo"
+                            width={64}
+                            height={64}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                         <div>
                           <h4 className="text-3xl font-bold text-white drop-shadow-lg">$MILAGRE</h4>
