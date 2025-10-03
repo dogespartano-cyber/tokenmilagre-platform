@@ -28,10 +28,36 @@ export default function Home() {
     }
   };
 
-  const checkTokenBalance = async (_address: string) => {
-    // Simulação - posteriormente implementaremos chamada real à blockchain
-    const mockBalance = Math.floor(Math.random() * 50000);
-    setTokenBalance(mockBalance);
+  const checkTokenBalance = async (address: string) => {
+    try {
+      // Importa Connection e PublicKey do Solana
+      const { Connection, PublicKey } = await import('@solana/web3.js');
+
+      // Conecta à rede Solana Mainnet
+      const connection = new Connection('https://api.mainnet-beta.solana.com', 'confirmed');
+
+      // Converte endereços para PublicKey
+      const walletPublicKey = new PublicKey(address);
+      const tokenMintAddress = new PublicKey(TOKEN_ADDRESS);
+
+      // Busca todas as contas de token associadas à carteira
+      const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
+        walletPublicKey,
+        { mint: tokenMintAddress }
+      );
+
+      if (tokenAccounts.value.length > 0) {
+        // Pega o saldo da primeira conta encontrada
+        const balance = tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount;
+        setTokenBalance(balance || 0);
+      } else {
+        // Nenhuma conta encontrada = saldo zero
+        setTokenBalance(0);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar saldo:', error);
+      setTokenBalance(0);
+    }
   };
 
   const disconnectWallet = () => {
