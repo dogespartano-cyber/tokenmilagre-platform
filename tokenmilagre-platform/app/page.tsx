@@ -168,34 +168,34 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {/* Guardiã da Prosperidade */}
-            <div className="bg-white/25 backdrop-blur-md rounded-3xl overflow-hidden border-2 border-white/40 shadow-xl hover:scale-105 transition-transform">
-              <div className="relative h-64 overflow-hidden">
+            <div className="bg-white/90 backdrop-blur-md rounded-3xl overflow-hidden border-2 border-yellow-300/50 shadow-xl hover:scale-105 transition-transform">
+              <div className="relative h-80 overflow-hidden">
                 <Image
                   src="/images/Token-MILAGRE-1.webp"
                   alt="Guardiã da Prosperidade"
                   width={400}
                   height={400}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                  <h4 className="text-white font-bold text-2xl">👼 Guardiã da Prosperidade</h4>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
+                  <h4 className="text-white font-bold text-2xl drop-shadow-lg">👼 Guardiã da Prosperidade</h4>
                 </div>
               </div>
-              <div className="p-6">
-                <p className="text-white/90 mb-4 leading-relaxed">
-                  <strong className="text-yellow-300">Proteção Financeira:</strong> Orienta holders em decisões de investimento sábias e sustentáveis.
+              <div className="p-6 bg-gradient-to-br from-teal-50 to-blue-50">
+                <p className="text-gray-800 mb-4 leading-relaxed font-medium">
+                  <strong className="text-yellow-600">Proteção Financeira:</strong> Orienta holders em decisões de investimento sábias e sustentáveis.
                 </p>
-                <ul className="space-y-2 text-white/85 text-sm">
+                <ul className="space-y-2 text-gray-700 text-sm">
                   <li className="flex items-start gap-2">
-                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span className="text-yellow-600 mt-1 font-bold">✓</span>
                     <span>Alertas de oportunidades de crescimento</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span className="text-yellow-600 mt-1 font-bold">✓</span>
                     <span>Educação financeira comunitária</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span className="text-yellow-600 mt-1 font-bold">✓</span>
                     <span>Recompensas para holders de longo prazo</span>
                   </li>
                 </ul>
@@ -203,34 +203,34 @@ export default function Home() {
             </div>
 
             {/* Guardião da Sabedoria */}
-            <div className="bg-white/25 backdrop-blur-md rounded-3xl overflow-hidden border-2 border-white/40 shadow-xl hover:scale-105 transition-transform">
-              <div className="relative h-64 overflow-hidden">
+            <div className="bg-white/90 backdrop-blur-md rounded-3xl overflow-hidden border-2 border-yellow-300/50 shadow-xl hover:scale-105 transition-transform">
+              <div className="relative h-80 overflow-hidden">
                 <Image
                   src="/images/Token-MILAGRE-2.webp"
                   alt="Guardião da Sabedoria"
                   width={400}
                   height={400}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                  <h4 className="text-white font-bold text-2xl">🧙 Guardião da Sabedoria</h4>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
+                  <h4 className="text-white font-bold text-2xl drop-shadow-lg">🧙 Guardião da Sabedoria</h4>
                 </div>
               </div>
-              <div className="p-6">
-                <p className="text-white/90 mb-4 leading-relaxed">
-                  <strong className="text-yellow-300">Conhecimento Compartilhado:</strong> Cultiva uma comunidade de aprendizado contínuo e mentoria.
+              <div className="p-6 bg-gradient-to-br from-teal-50 to-blue-50">
+                <p className="text-gray-800 mb-4 leading-relaxed font-medium">
+                  <strong className="text-yellow-600">Conhecimento Compartilhado:</strong> Cultiva uma comunidade de aprendizado contínuo e mentoria.
                 </p>
-                <ul className="space-y-2 text-white/85 text-sm">
+                <ul className="space-y-2 text-gray-700 text-sm">
                   <li className="flex items-start gap-2">
-                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span className="text-yellow-600 mt-1 font-bold">✓</span>
                     <span>Workshops sobre blockchain e DeFi</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span className="text-yellow-600 mt-1 font-bold">✓</span>
                     <span>Mentorias 1-on-1 com especialistas</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span className="text-yellow-600 mt-1 font-bold">✓</span>
                     <span>Biblioteca de recursos educacionais</span>
                   </li>
                 </ul>
@@ -238,34 +238,34 @@ export default function Home() {
             </div>
 
             {/* Anjo da Esperança */}
-            <div className="bg-white/25 backdrop-blur-md rounded-3xl overflow-hidden border-2 border-white/40 shadow-xl hover:scale-105 transition-transform">
-              <div className="relative h-64 overflow-hidden">
+            <div className="bg-white/90 backdrop-blur-md rounded-3xl overflow-hidden border-2 border-yellow-300/50 shadow-xl hover:scale-105 transition-transform">
+              <div className="relative h-80 overflow-hidden">
                 <Image
                   src="/images/Token-MILAGRE-7.webp"
                   alt="Anjo da Esperança"
                   width={400}
                   height={400}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                  <h4 className="text-white font-bold text-2xl">💫 Anjo da Esperança</h4>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
+                  <h4 className="text-white font-bold text-2xl drop-shadow-lg">💫 Anjo da Esperança</h4>
                 </div>
               </div>
-              <div className="p-6">
-                <p className="text-white/90 mb-4 leading-relaxed">
-                  <strong className="text-yellow-300">Apoio Emocional:</strong> Oferece suporte e motivação em momentos de incerteza.
+              <div className="p-6 bg-gradient-to-br from-teal-50 to-blue-50">
+                <p className="text-gray-800 mb-4 leading-relaxed font-medium">
+                  <strong className="text-yellow-600">Apoio Emocional:</strong> Oferece suporte e motivação em momentos de incerteza.
                 </p>
-                <ul className="space-y-2 text-white/85 text-sm">
+                <ul className="space-y-2 text-gray-700 text-sm">
                   <li className="flex items-start gap-2">
-                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span className="text-yellow-600 mt-1 font-bold">✓</span>
                     <span>Grupos de apoio emocional</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span className="text-yellow-600 mt-1 font-bold">✓</span>
                     <span>Histórias inspiradoras de superação</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span className="text-yellow-600 mt-1 font-bold">✓</span>
                     <span>Rede de ajuda mútua 24/7</span>
                   </li>
                 </ul>
