@@ -10,8 +10,47 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
+
+  const faqItems = [
+    {
+      icon: '❓',
+      question: 'Por que $MILAGRE foi criado?',
+      answer: '$MILAGRE nasceu da necessidade de criar uma comunidade onde as pessoas realmente se apoiam. Muitos tokens prometem "comunidade", mas poucos entregam valor humano real. Nós queremos mudar isso, oferecendo mentorias, networking e suporte emocional genuíno para todos os holders.'
+    },
+    {
+      icon: '🔒',
+      question: '$MILAGRE é seguro?',
+      answer: 'Sim! $MILAGRE é um token SPL na blockchain Solana, uma das blockchains mais rápidas e seguras do mundo. Todas as transações são verificadas e registradas publicamente. Sempre use carteiras oficiais como Phantom e nunca compartilhe suas seed phrases com ninguém.'
+    },
+    {
+      icon: '🎯',
+      question: 'Como funciona o sistema de guardiões?',
+      answer: 'Os três guardiões (Prosperidade, Sabedoria e Esperança) representam os pilares da nossa comunidade. Dependendo da quantidade de $MILAGRE que você possui, você desbloqueia diferentes níveis de acesso: Apoiador (1.000+), Guardião (10.000+) e Anjo Guardião (50.000+). Cada nível oferece benefícios exclusivos.'
+    },
+    {
+      icon: '💰',
+      question: 'Onde posso vender meus tokens?',
+      answer: 'Você pode vender seus tokens $MILAGRE na mesma plataforma onde comprou (Pump.fun) ou em qualquer DEX da Solana que suporte o token. Basta conectar sua carteira e fazer a troca por SOL ou outros tokens.'
+    },
+    {
+      icon: '🚀',
+      question: 'Qual é o roadmap do projeto?',
+      answer: 'Fase 1 (Atual): Landing page e integração blockchain ✅ | Fase 2: Dashboard de holders com estatísticas em tempo real | Fase 3: Sistema de mentoria e fórum comunitário | Fase 4: Governança on-chain e sistema de recompensas/staking'
+    },
+    {
+      icon: '🌐',
+      question: 'O que é Solana?',
+      answer: 'Solana é uma blockchain de alta performance que processa milhares de transações por segundo com taxas extremamente baixas (centavos de dólar). É ideal para projetos que precisam de velocidade e eficiência, como $MILAGRE.'
+    },
+    {
+      icon: '🛡️',
+      question: 'Dicas de segurança para holders',
+      answer: '• Nunca compartilhe sua seed phrase (12-24 palavras) | • Use apenas sites oficiais - verifique sempre o domínio | • Habilite autenticação 2FA em exchanges | • Desconfie de mensagens privadas - não pedimos informações por DM | • Faça backup da sua carteira em local seguro'
+    }
+  ];
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -358,15 +397,101 @@ export default function Home() {
 
         {/* Informações Técnicas do Token */}
         <div className="mb-20">
-          <div className="bg-gradient-to-br from-cyan-400/20 via-teal-400/20 to-emerald-400/20 backdrop-blur-xl rounded-3xl p-8 md:p-12 border-2 border-cyan-300/40 shadow-2xl">
-            <h3 className="text-4xl font-bold text-white text-center mb-4 drop-shadow-lg">
-              Informações do Token 🪙
-            </h3>
-            <p className="text-white text-center text-lg mb-10 max-w-3xl mx-auto">
-              $MILAGRE foi criado com as melhores tecnologias do ecossistema Solana
-            </p>
+          <div className="relative overflow-hidden bg-gradient-to-br from-cyan-400/20 via-teal-400/20 to-emerald-400/20 backdrop-blur-xl rounded-3xl p-8 md:p-12 border-2 border-cyan-300/40 shadow-2xl">
+            {/* Background decorativo */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-400/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-10">
+            <div className="relative z-10">
+              <h3 className="text-4xl md:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg">
+                Informações do Token
+              </h3>
+              <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
+                Criado com as melhores tecnologias do ecossistema <span className="text-cyan-200 font-semibold">Solana</span>
+              </p>
+
+              {/* Token Card - Estilo Cartão de Crédito Premium */}
+              <div className="max-w-5xl mx-auto mb-12">
+                <div className="relative bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-2xl rounded-3xl p-8 md:p-10 border-2 border-white/30 shadow-2xl hover:shadow-cyan-400/30 transition-all duration-500 group">
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+
+                  <div className="relative z-10">
+                    {/* Header do Card */}
+                    <div className="flex items-center justify-between mb-8">
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg">
+                          <span className="text-3xl">🪙</span>
+                        </div>
+                        <div>
+                          <h4 className="text-3xl font-bold text-white drop-shadow-lg">$MILAGRE</h4>
+                          <p className="text-cyan-200 text-sm font-semibold">SPL Token • Solana</p>
+                        </div>
+                      </div>
+                      <div className="hidden md:flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur flex items-center justify-center border border-white/20">
+                          <Image src="/images/solana-logo.png" alt="Solana" width={32} height={32} />
+                        </div>
+                        <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur flex items-center justify-center border border-white/20">
+                          <Image src="/images/pumpfun-logo.png" alt="Pump.fun" width={32} height={32} />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Contrato */}
+                    <div className="mb-8">
+                      <p className="text-cyan-200 text-sm font-semibold mb-3 flex items-center gap-2">
+                        <span>🔐</span>
+                        <span>Endereço do Contrato</span>
+                      </p>
+                      <div className="bg-gradient-to-r from-teal-900/40 to-cyan-900/40 rounded-2xl p-4 border border-cyan-300/20 mb-4">
+                        <code className="text-yellow-100 font-mono text-sm md:text-base break-all block">
+                          {TOKEN_ADDRESS}
+                        </code>
+                      </div>
+                      <button
+                        onClick={copyToClipboard}
+                        className="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-cyan-400 to-teal-400 hover:from-cyan-300 hover:to-teal-300 text-white font-bold text-base rounded-xl transition-all shadow-lg hover:scale-105 hover:shadow-cyan-400/50 flex items-center justify-center gap-2"
+                      >
+                        {copied ? (
+                          <>
+                            <span className="text-xl">✓</span>
+                            <span>Endereço Copiado!</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="text-xl">📋</span>
+                            <span>Copiar Endereço</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20 text-center hover:bg-white/15 transition">
+                        <p className="text-cyan-200 text-xs mb-1 font-semibold">Blockchain</p>
+                        <p className="text-white font-bold text-lg">Solana</p>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20 text-center hover:bg-white/15 transition">
+                        <p className="text-cyan-200 text-xs mb-1 font-semibold">Tipo</p>
+                        <p className="text-white font-bold text-lg">SPL Token</p>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20 text-center hover:bg-white/15 transition">
+                        <p className="text-cyan-200 text-xs mb-1 font-semibold">Plataforma</p>
+                        <p className="text-white font-bold text-lg">Pump.fun</p>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20 text-center hover:bg-white/15 transition">
+                        <p className="text-cyan-200 text-xs mb-1 font-semibold">Velocidade</p>
+                        <p className="text-white font-bold text-lg">&lt;1s</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Cards Pump.fun e Solana - Reformulados */}
+              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {/* Card Pump.fun */}
               <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 border-2 border-cyan-200/40 hover:border-yellow-300/60 hover:bg-white/25 transition-all group shadow-lg hover:shadow-yellow-300/30">
                 <div className="flex flex-col items-center text-center">
@@ -425,45 +550,6 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
-            {/* Contrato e Stats */}
-            <div className="bg-gradient-to-r from-white/15 to-cyan-100/15 backdrop-blur-lg rounded-2xl p-6 border-2 border-cyan-200/30 max-w-4xl mx-auto shadow-lg">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="text-center md:text-left">
-                  <p className="text-cyan-100 text-sm mb-2 font-semibold">Endereço do Contrato</p>
-                  <div className="flex flex-col md:flex-row items-center gap-3">
-                    <code className="text-yellow-100 font-mono text-xs md:text-sm break-all block bg-gradient-to-r from-teal-900/40 to-cyan-900/40 p-3 rounded-lg border border-cyan-300/20 flex-1">
-                      {TOKEN_ADDRESS}
-                    </code>
-                    <button
-                      onClick={copyToClipboard}
-                      className="px-4 py-2 bg-gradient-to-r from-teal-400 to-cyan-400 hover:from-teal-300 hover:to-cyan-300 text-white font-bold text-sm rounded-full transition-all shadow-lg hover:scale-105 flex items-center gap-2 whitespace-nowrap"
-                    >
-                      {copied ? (
-                        <>
-                          <span>✓</span>
-                          <span>Copiado!</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>📋</span>
-                          <span>Copiar</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center bg-white/10 rounded-xl p-3 border border-cyan-200/20">
-                    <p className="text-cyan-100 text-sm mb-1">Blockchain</p>
-                    <p className="text-white font-bold text-lg">Solana</p>
-                  </div>
-                  <div className="text-center bg-white/10 rounded-xl p-3 border border-cyan-200/20">
-                    <p className="text-cyan-100 text-sm mb-1">Tipo</p>
-                    <p className="text-white font-bold text-lg">SPL Token</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -718,101 +804,72 @@ export default function Home() {
           </div>
         </div>
 
-        {/* FAQ / Milagrépedia */}
+        {/* FAQ / Milagrépedia - Accordion Interativa */}
         <div id="faq" className="mb-20 scroll-mt-24">
-          <h3 className="text-4xl font-bold text-white text-center mb-4 drop-shadow-lg">
+          <h3 className="text-4xl md:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg">
             Milagrépedia 📚
           </h3>
           <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
             Perguntas frequentes sobre $MILAGRE e nossa comunidade
           </p>
 
-          <div className="max-w-4xl mx-auto space-y-4">
-            {/* FAQ Item 1 */}
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-              <h4 className="text-xl font-bold text-yellow-300 mb-3">
-                ❓ Por que $MILAGRE foi criado?
-              </h4>
-              <p className="text-white/90 leading-relaxed">
-                $MILAGRE nasceu da necessidade de criar uma comunidade onde as pessoas realmente se apoiam.
-                Muitos tokens prometem &quot;comunidade&quot;, mas poucos entregam valor humano real. Nós queremos mudar isso,
-                oferecendo mentorias, networking e suporte emocional genuíno para todos os holders.
-              </p>
-            </div>
+          <div className="max-w-4xl mx-auto space-y-3">
+            {faqItems.map((item, index) => (
+              <div
+                key={index}
+                className={`
+                  bg-white/20 backdrop-blur-lg rounded-2xl border-2 transition-all duration-300
+                  ${openFaqIndex === index
+                    ? 'border-yellow-300/60 bg-white/25 shadow-xl shadow-yellow-300/20'
+                    : 'border-white/30 hover:border-white/40 hover:bg-white/22'
+                  }
+                `}
+              >
+                <button
+                  onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+                  className="w-full p-6 text-left flex items-center justify-between gap-4 group"
+                >
+                  <div className="flex items-center gap-4 flex-1">
+                    <span className="text-3xl group-hover:scale-110 transition-transform duration-200">
+                      {item.icon}
+                    </span>
+                    <h4 className="text-lg md:text-xl font-bold text-yellow-300 group-hover:text-yellow-200 transition">
+                      {item.question}
+                    </h4>
+                  </div>
+                  <svg
+                    className={`w-6 h-6 text-yellow-300 transition-transform duration-300 flex-shrink-0 ${
+                      openFaqIndex === index ? 'rotate-180' : ''
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
 
-            {/* FAQ Item 2 */}
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-              <h4 className="text-xl font-bold text-yellow-300 mb-3">
-                🔒 $MILAGRE é seguro?
-              </h4>
-              <p className="text-white/90 leading-relaxed">
-                Sim! $MILAGRE é um token SPL na blockchain Solana, uma das blockchains mais rápidas e seguras do mundo.
-                Todas as transações são verificadas e registradas publicamente. Sempre use carteiras oficiais como Phantom
-                e nunca compartilhe suas seed phrases com ninguém.
-              </p>
-            </div>
-
-            {/* FAQ Item 3 */}
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-              <h4 className="text-xl font-bold text-yellow-300 mb-3">
-                🎯 Como funciona o sistema de guardiões?
-              </h4>
-              <p className="text-white/90 leading-relaxed">
-                Os três guardiões (Prosperidade, Sabedoria e Esperança) representam os pilares da nossa comunidade.
-                Dependendo da quantidade de $MILAGRE que você possui, você desbloqueia diferentes níveis de acesso:
-                Apoiador (1.000+), Guardião (10.000+) e Anjo Guardião (50.000+). Cada nível oferece benefícios exclusivos.
-              </p>
-            </div>
-
-            {/* FAQ Item 4 */}
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-              <h4 className="text-xl font-bold text-yellow-300 mb-3">
-                💰 Onde posso vender meus tokens?
-              </h4>
-              <p className="text-white/90 leading-relaxed">
-                Você pode vender seus tokens $MILAGRE na mesma plataforma onde comprou (Pump.fun) ou em qualquer DEX
-                da Solana que suporte o token. Basta conectar sua carteira e fazer a troca por SOL ou outros tokens.
-              </p>
-            </div>
-
-            {/* FAQ Item 5 */}
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-              <h4 className="text-xl font-bold text-yellow-300 mb-3">
-                🚀 Qual é o roadmap do projeto?
-              </h4>
-              <p className="text-white/90 leading-relaxed">
-                <strong className="text-yellow-300">Fase 1 (Atual):</strong> Landing page e integração blockchain ✅<br />
-                <strong className="text-yellow-300">Fase 2:</strong> Dashboard de holders com estatísticas em tempo real<br />
-                <strong className="text-yellow-300">Fase 3:</strong> Sistema de mentoria e fórum comunitário<br />
-                <strong className="text-yellow-300">Fase 4:</strong> Governança on-chain e sistema de recompensas/staking
-              </p>
-            </div>
-
-            {/* FAQ Item 6 */}
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-              <h4 className="text-xl font-bold text-yellow-300 mb-3">
-                🌐 O que é Solana?
-              </h4>
-              <p className="text-white/90 leading-relaxed">
-                Solana é uma blockchain de alta performance que processa milhares de transações por segundo com taxas
-                extremamente baixas (centavos de dólar). É ideal para projetos que precisam de velocidade e eficiência,
-                como $MILAGRE. Para aprender mais, visite <a href="https://solana.com" target="_blank" rel="noopener noreferrer" className="text-yellow-300 underline">solana.com</a>.
-              </p>
-            </div>
-
-            {/* FAQ Item 7 */}
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-              <h4 className="text-xl font-bold text-yellow-300 mb-3">
-                🛡️ Dicas de segurança para holders
-              </h4>
-              <p className="text-white/90 leading-relaxed">
-                <strong>• Nunca compartilhe sua seed phrase</strong> (12-24 palavras de recuperação)<br />
-                <strong>• Use apenas sites oficiais</strong> - verifique sempre o domínio<br />
-                <strong>• Habilite autenticação 2FA</strong> em exchanges<br />
-                <strong>• Desconfie de mensagens privadas</strong> - não pedimos informações por DM<br />
-                <strong>• Faça backup da sua carteira</strong> em local seguro
-              </p>
-            </div>
+                <div
+                  className={`
+                    overflow-hidden transition-all duration-300
+                    ${openFaqIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
+                  `}
+                >
+                  <div className="px-6 pb-6 pt-2">
+                    <div className="pl-14">
+                      <p className="text-white/90 leading-relaxed">
+                        {item.answer.split(' | ').map((part, i, arr) => (
+                          <span key={i}>
+                            {part}
+                            {i < arr.length - 1 && <><br /><br /></>}
+                          </span>
+                        ))}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
