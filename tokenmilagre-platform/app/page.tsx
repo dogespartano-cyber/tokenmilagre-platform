@@ -431,9 +431,27 @@ export default function Home() {
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="text-center md:text-left">
                   <p className="text-cyan-100 text-sm mb-2 font-semibold">Endereço do Contrato</p>
-                  <code className="text-yellow-100 font-mono text-xs md:text-sm break-all block bg-gradient-to-r from-teal-900/40 to-cyan-900/40 p-3 rounded-lg border border-cyan-300/20">
-                    {TOKEN_ADDRESS}
-                  </code>
+                  <div className="flex flex-col md:flex-row items-center gap-3">
+                    <code className="text-yellow-100 font-mono text-xs md:text-sm break-all block bg-gradient-to-r from-teal-900/40 to-cyan-900/40 p-3 rounded-lg border border-cyan-300/20 flex-1">
+                      {TOKEN_ADDRESS}
+                    </code>
+                    <button
+                      onClick={copyToClipboard}
+                      className="px-4 py-2 bg-gradient-to-r from-teal-400 to-cyan-400 hover:from-teal-300 hover:to-cyan-300 text-white font-bold text-sm rounded-full transition-all shadow-lg hover:scale-105 flex items-center gap-2 whitespace-nowrap"
+                    >
+                      {copied ? (
+                        <>
+                          <span>✓</span>
+                          <span>Copiado!</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>📋</span>
+                          <span>Copiar</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center bg-white/10 rounded-xl p-3 border border-cyan-200/20">
