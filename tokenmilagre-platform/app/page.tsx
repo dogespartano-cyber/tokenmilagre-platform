@@ -876,8 +876,8 @@ export default function Home() {
 
             {/* Citação e Informações do Token */}
             <div className="text-center space-y-8">
-              <div className="text-6xl mb-6">✨</div>
-              <p className="text-3xl md:text-4xl font-bold text-yellow-200 mb-6 drop-shadow-lg leading-relaxed">
+              <div className="text-6xl mb-6">❤️</div>
+              <p className="text-3xl md:text-4xl font-bold text-red-400 mb-6 drop-shadow-lg leading-relaxed">
                 &quot;Nunca estarás sozinho&quot;
               </p>
               <p className="text-white/95 text-lg max-w-3xl mx-auto leading-relaxed">
@@ -913,13 +913,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="px-6 py-3 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold text-base rounded-2xl transition-all shadow-lg hover:scale-105 hover:shadow-green-400/50 flex items-center gap-2"
                   >
-                    <Image
-                      src="/images/pumpfun-logo.png"
-                      alt="Pump.fun"
-                      width={24}
-                      height={24}
-                      className="drop-shadow-lg"
-                    />
+                    <span className="text-xl">💊</span>
                     <span>Comprar</span>
                   </a>
                 </div>
