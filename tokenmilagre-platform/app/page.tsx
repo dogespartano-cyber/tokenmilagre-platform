@@ -234,16 +234,40 @@ export default function Home() {
 
           {/* Right - Hero Image */}
           <div className="order-1 lg:order-2 flex justify-center">
-            <div className="relative w-full max-w-lg">
-              <div className="absolute inset-0 bg-yellow-300/30 blur-3xl rounded-full"></div>
-              <Image
-                src="/images/TOKEN-MILAGRE-.webp"
-                alt="Anjo do Milagre"
-                width={500}
-                height={500}
-                className="relative z-10 drop-shadow-2xl animate-pulse-slow rounded-3xl"
-                priority
-              />
+            <div className="relative w-full max-w-lg group">
+              {/* Aura espiritual base */}
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-300/20 via-cyan-300/20 to-purple-300/20 blur-3xl rounded-full animate-pulse"></div>
+
+              {/* Iluminação ao hover - Camadas múltiplas */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-yellow-200/0 via-yellow-400/0 to-white/0 blur-2xl rounded-full opacity-0 group-hover:opacity-70 transition-opacity duration-700"></div>
+              <div className="absolute inset-0 bg-gradient-to-bl from-cyan-200/0 via-cyan-400/0 to-white/0 blur-2xl rounded-full opacity-0 group-hover:opacity-60 transition-opacity duration-1000 delay-100"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-purple-200/0 via-purple-400/0 to-white/0 blur-2xl rounded-full opacity-0 group-hover:opacity-50 transition-opacity duration-1000 delay-200"></div>
+
+              {/* Raios de luz */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                <div className="absolute top-0 left-1/2 w-1 h-full bg-gradient-to-b from-yellow-200/80 to-transparent blur-sm -translate-x-1/2 animate-pulse"></div>
+                <div className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-200/80 to-transparent blur-sm -translate-y-1/2 animate-pulse delay-150"></div>
+              </div>
+
+              {/* Partículas flutuantes */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
+                <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-yellow-300 rounded-full blur-sm animate-float"></div>
+                <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-cyan-300 rounded-full blur-sm animate-float-delayed"></div>
+                <div className="absolute bottom-1/3 left-1/3 w-2 h-2 bg-purple-300 rounded-full blur-sm animate-float-slow"></div>
+                <div className="absolute bottom-1/4 right-1/3 w-1 h-1 bg-white rounded-full blur-sm animate-float"></div>
+              </div>
+
+              {/* Imagem com efeito de levitação */}
+              <div className="relative z-10 transform group-hover:scale-105 group-hover:-translate-y-2 transition-all duration-700">
+                <Image
+                  src="/images/TOKEN-MILAGRE-Hero.webp"
+                  alt="Anjo Guardião do Milagre"
+                  width={500}
+                  height={500}
+                  className="drop-shadow-2xl rounded-3xl"
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>
