@@ -157,6 +157,61 @@ export default function Home() {
           </div>
         </div>
 
+        {/* O que é $MILAGRE */}
+        <div className="mb-20">
+          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-12 border-2 border-white/30 shadow-2xl">
+            <h3 className="text-4xl font-bold text-white text-center mb-6 drop-shadow-lg">
+              O que é $MILAGRE? ✨
+            </h3>
+            <div className="max-w-4xl mx-auto space-y-6 text-white/95 text-lg leading-relaxed">
+              <p className="text-center text-xl font-semibold text-yellow-300">
+                Um token comunitário peer-to-peer criado na blockchain Solana para conectar pessoas através de apoio mútuo genuíno.
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-8 mt-8">
+                <div className="bg-white/10 rounded-2xl p-6">
+                  <h4 className="text-2xl font-bold mb-4 text-yellow-300">🌐 Tecnologia Solana</h4>
+                  <p className="text-white/90">
+                    Construído na blockchain Solana, $MILAGRE oferece transações rápidas, taxas baixas e segurança descentralizada.
+                    Não é apenas um token - é uma ponte entre tecnologia e humanidade.
+                  </p>
+                </div>
+
+                <div className="bg-white/10 rounded-2xl p-6">
+                  <h4 className="text-2xl font-bold mb-4 text-yellow-300">🤝 Apoio Mútuo Real</h4>
+                  <p className="text-white/90">
+                    Diferente de outros tokens, $MILAGRE existe para criar valor humano real: mentorias, networking,
+                    suporte emocional e oportunidades de crescimento pessoal e profissional.
+                  </p>
+                </div>
+
+                <div className="bg-white/10 rounded-2xl p-6">
+                  <h4 className="text-2xl font-bold mb-4 text-yellow-300">👼 Guardiões Celestiais</h4>
+                  <p className="text-white/90">
+                    Nossa comunidade é guiada por três pilares: Prosperidade (crescimento financeiro),
+                    Sabedoria (educação contínua) e Esperança (apoio emocional). Cada holder tem acesso a esses guardiões.
+                  </p>
+                </div>
+
+                <div className="bg-white/10 rounded-2xl p-6">
+                  <h4 className="text-2xl font-bold mb-4 text-yellow-300">🎯 Missão Clara</h4>
+                  <p className="text-white/90">
+                    &quot;Nunca estarás sozinho&quot; não é só um slogan - é nosso compromisso. Criamos um ecossistema onde
+                    holders se ajudam mutuamente a superar desafios e alcançar seus objetivos.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-yellow-400/20 to-yellow-600/20 rounded-2xl p-6 mt-8 border border-yellow-300/30">
+                <p className="text-center font-semibold text-xl">
+                  💡 <strong className="text-yellow-300">Do Only Good Everyday</strong> - Fazemos apenas o bem, todos os dias.
+                  Cada transação fortalece nossa comunidade e expande nossa capacidade de ajudar uns aos outros.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Guardiões Detalhados */}
         <div className="mb-20">
           <h3 className="text-4xl font-bold text-white text-center mb-4 drop-shadow-lg">
@@ -398,6 +453,166 @@ export default function Home() {
             >
               💬 Entrar na Comunidade
             </a>
+          </div>
+        </div>
+
+        {/* FAQ / Milagrépedia */}
+        <div className="mb-20">
+          <h3 className="text-4xl font-bold text-white text-center mb-4 drop-shadow-lg">
+            Milagrépedia 📚
+          </h3>
+          <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
+            Perguntas frequentes sobre $MILAGRE e nossa comunidade
+          </p>
+
+          <div className="max-w-4xl mx-auto space-y-6">
+            {/* FAQ Item 1 */}
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+              <h4 className="text-xl font-bold text-yellow-300 mb-3">
+                ❓ Por que $MILAGRE foi criado?
+              </h4>
+              <p className="text-white/90 leading-relaxed">
+                $MILAGRE nasceu da necessidade de criar uma comunidade onde as pessoas realmente se apoiam.
+                Muitos tokens prometem &quot;comunidade&quot;, mas poucos entregam valor humano real. Nós queremos mudar isso,
+                oferecendo mentorias, networking e suporte emocional genuíno para todos os holders.
+              </p>
+            </div>
+
+            {/* FAQ Item 2 */}
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+              <h4 className="text-xl font-bold text-yellow-300 mb-3">
+                🔒 $MILAGRE é seguro?
+              </h4>
+              <p className="text-white/90 leading-relaxed">
+                Sim! $MILAGRE é um token SPL na blockchain Solana, uma das blockchains mais rápidas e seguras do mundo.
+                Todas as transações são verificadas e registradas publicamente. Sempre use carteiras oficiais como Phantom
+                e nunca compartilhe suas seed phrases com ninguém.
+              </p>
+            </div>
+
+            {/* FAQ Item 3 */}
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+              <h4 className="text-xl font-bold text-yellow-300 mb-3">
+                🎯 Como funciona o sistema de guardiões?
+              </h4>
+              <p className="text-white/90 leading-relaxed">
+                Os três guardiões (Prosperidade, Sabedoria e Esperança) representam os pilares da nossa comunidade.
+                Dependendo da quantidade de $MILAGRE que você possui, você desbloqueia diferentes níveis de acesso:
+                Apoiador (1.000+), Guardião (10.000+) e Anjo Guardião (50.000+). Cada nível oferece benefícios exclusivos.
+              </p>
+            </div>
+
+            {/* FAQ Item 4 */}
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+              <h4 className="text-xl font-bold text-yellow-300 mb-3">
+                💰 Onde posso vender meus tokens?
+              </h4>
+              <p className="text-white/90 leading-relaxed">
+                Você pode vender seus tokens $MILAGRE na mesma plataforma onde comprou (Pump.fun) ou em qualquer DEX
+                da Solana que suporte o token. Basta conectar sua carteira e fazer a troca por SOL ou outros tokens.
+              </p>
+            </div>
+
+            {/* FAQ Item 5 */}
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+              <h4 className="text-xl font-bold text-yellow-300 mb-3">
+                🚀 Qual é o roadmap do projeto?
+              </h4>
+              <p className="text-white/90 leading-relaxed">
+                <strong className="text-yellow-300">Fase 1 (Atual):</strong> Landing page e integração blockchain ✅<br />
+                <strong className="text-yellow-300">Fase 2:</strong> Dashboard de holders com estatísticas em tempo real<br />
+                <strong className="text-yellow-300">Fase 3:</strong> Sistema de mentoria e fórum comunitário<br />
+                <strong className="text-yellow-300">Fase 4:</strong> Governança on-chain e sistema de recompensas/staking
+              </p>
+            </div>
+
+            {/* FAQ Item 6 */}
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+              <h4 className="text-xl font-bold text-yellow-300 mb-3">
+                🌐 O que é Solana?
+              </h4>
+              <p className="text-white/90 leading-relaxed">
+                Solana é uma blockchain de alta performance que processa milhares de transações por segundo com taxas
+                extremamente baixas (centavos de dólar). É ideal para projetos que precisam de velocidade e eficiência,
+                como $MILAGRE. Para aprender mais, visite <a href="https://solana.com" target="_blank" rel="noopener noreferrer" className="text-yellow-300 underline">solana.com</a>.
+              </p>
+            </div>
+
+            {/* FAQ Item 7 */}
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+              <h4 className="text-xl font-bold text-yellow-300 mb-3">
+                🛡️ Dicas de segurança para holders
+              </h4>
+              <p className="text-white/90 leading-relaxed">
+                <strong>• Nunca compartilhe sua seed phrase</strong> (12-24 palavras de recuperação)<br />
+                <strong>• Use apenas sites oficiais</strong> - verifique sempre o domínio<br />
+                <strong>• Habilite autenticação 2FA</strong> em exchanges<br />
+                <strong>• Desconfie de mensagens privadas</strong> - não pedimos informações por DM<br />
+                <strong>• Faça backup da sua carteira</strong> em local seguro
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Sobre o Projeto */}
+        <div className="mb-20">
+          <div className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 backdrop-blur-lg rounded-3xl p-12 border-2 border-purple-300/30 shadow-2xl">
+            <h3 className="text-4xl font-bold text-white text-center mb-6 drop-shadow-lg">
+              Sobre o Projeto $MILAGRE 💫
+            </h3>
+
+            <div className="max-w-4xl mx-auto space-y-8">
+              <div className="text-center">
+                <p className="text-white/95 text-xl leading-relaxed mb-6">
+                  $MILAGRE é mais que um token - é um movimento de apoio mútuo genuíno na blockchain.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white/10 rounded-2xl p-6">
+                  <h4 className="text-2xl font-bold mb-4 text-purple-300">🎯 Nossa Missão</h4>
+                  <p className="text-white/90 leading-relaxed">
+                    Criar um ecossistema descentralizado onde holders se conectam, aprendem e crescem juntos.
+                    Oferecemos mentorias, networking, educação financeira e suporte emocional para todos que
+                    acreditam que juntos somos mais fortes.
+                  </p>
+                </div>
+
+                <div className="bg-white/10 rounded-2xl p-6">
+                  <h4 className="text-2xl font-bold mb-4 text-purple-300">💎 Nossos Valores</h4>
+                  <p className="text-white/90 leading-relaxed">
+                    <strong>Transparência:</strong> Sem promessas vazias<br />
+                    <strong>Apoio Mútuo:</strong> Crescemos juntos<br />
+                    <strong>Inclusão:</strong> Todos são bem-vindos<br />
+                    <strong>Ação:</strong> Resultados reais, não apenas palavras
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-yellow-400/20 to-yellow-600/20 rounded-2xl p-8 border border-yellow-300/30 text-center">
+                <p className="text-2xl font-bold text-yellow-300 mb-4">
+                  &quot;Nunca estarás sozinho&quot;
+                </p>
+                <p className="text-white/90 text-lg">
+                  Este é nosso compromisso com cada holder. Em momentos de dúvida, celebração ou desafio,
+                  nossa comunidade estará sempre presente.
+                </p>
+              </div>
+
+              <div className="text-center">
+                <h4 className="text-2xl font-bold text-white mb-4">📊 Informações do Token</h4>
+                <div className="bg-white/10 rounded-2xl p-6 inline-block">
+                  <p className="text-white/80 text-sm mb-2">Endereço do Contrato:</p>
+                  <code className="text-yellow-300 font-mono text-xs break-all">
+                    {TOKEN_ADDRESS}
+                  </code>
+                  <div className="mt-4 pt-4 border-t border-white/20">
+                    <p className="text-white/80 text-sm">Blockchain: <strong className="text-white">Solana</strong></p>
+                    <p className="text-white/80 text-sm">Tipo: <strong className="text-white">SPL Token</strong></p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </main>
