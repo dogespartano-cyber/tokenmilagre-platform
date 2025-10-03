@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Script from 'next/script';
 
 export default function Home() {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
@@ -138,6 +139,57 @@ export default function Home() {
   const tier = getTier(tokenBalance);
 
   return (
+    <>
+      {/* Schema.org JSON-LD para SEO */}
+      <Script id="faq-schema" type="application/ld+json" strategy="afterInteractive">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": faqItems.map(item => ({
+            "@type": "Question",
+            "name": item.question,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": item.answer.replace(/ \| /g, '. ')
+            }
+          }))
+        })}
+      </Script>
+
+      <Script id="organization-schema" type="application/ld+json" strategy="afterInteractive">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "$MILAGRE Token",
+          "url": "https://tokenmilagre.xyz",
+          "logo": "https://tokenmilagre.xyz/images/TOKEN-MILAGRE-Hero.webp",
+          "description": "Token SPL comunitário de apoio mútuo na blockchain Solana",
+          "sameAs": [
+            "https://twitter.com/tokenmilagre",
+            "https://t.me/tokenmilagre"
+          ]
+        })}
+      </Script>
+
+      <Script id="crypto-schema" type="application/ld+json" strategy="afterInteractive">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "$MILAGRE Token",
+          "description": "Token SPL comunitário na Solana. Guardiões da Prosperidade, Sabedoria e Esperança guiando holders.",
+          "brand": {
+            "@type": "Brand",
+            "name": "$MILAGRE"
+          },
+          "offers": {
+            "@type": "Offer",
+            "url": `https://pump.fun/coin/${TOKEN_ADDRESS}`,
+            "priceCurrency": "SOL",
+            "availability": "https://schema.org/InStock"
+          }
+        })}
+      </Script>
+
     <div className="min-h-screen bg-gradient-to-br from-[#5DD4D4] via-[#4DB8D8] to-[#E8F4F4]">
       {/* Navigation Menu - Fixed */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#4DB8D8]/95 to-[#5DD4D4]/95 backdrop-blur-lg border-b-2 border-white/20 shadow-xl">
@@ -267,13 +319,24 @@ export default function Home() {
             </p>
 
             {!walletAddress ? (
-              <button
-                onClick={connectWallet}
-                disabled={loading}
-                className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-gray-900 font-bold text-xl px-12 py-5 rounded-full transition-all shadow-2xl disabled:opacity-50 transform hover:scale-105"
-              >
-                {loading ? 'Conectando...' : '🔗 Conectar Carteira'}
-              </button>
+              <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                <button
+                  onClick={connectWallet}
+                  disabled={loading}
+                  className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-gray-900 font-bold text-xl px-12 py-5 rounded-full transition-all shadow-2xl disabled:opacity-50 transform hover:scale-105"
+                >
+                  {loading ? 'Conectando...' : '🔗 Conectar Carteira'}
+                </button>
+                <a
+                  href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold text-xl px-12 py-5 rounded-full transition-all shadow-2xl transform hover:scale-105 flex items-center gap-2"
+                >
+                  <span>💊</span>
+                  <span>Comprar</span>
+                </a>
+              </div>
             ) : (
               <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-8 border-2 border-white/30 shadow-2xl">
                 <div className="mb-4">
@@ -1020,5 +1083,6 @@ export default function Home() {
         </div>
       </footer>
     </div>
+    </>
   );
 }
