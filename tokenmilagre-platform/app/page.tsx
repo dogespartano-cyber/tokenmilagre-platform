@@ -207,7 +207,7 @@ export default function Home() {
                   className="w-full h-full object-cover relative z-10"
                 />
               </div>
-              <h1 className="text-2xl font-bold text-white drop-shadow-lg group-hover:text-yellow-200 transition">$MILAGRE</h1>
+              <h1 className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg group-hover:text-yellow-200 transition font-[family-name:var(--font-poppins)]">$MILAGRE</h1>
             </button>
 
             {/* Desktop Menu */}
@@ -314,17 +314,17 @@ export default function Home() {
               <span>Nunca Estarás Sozinho</span>
               <span className="text-6xl lg:text-7xl animate-pulse">❤️</span>
             </h2>
-            <p className="text-xl text-white mb-8 leading-relaxed drop-shadow-md">
+            <p className="text-lg sm:text-xl text-white mb-8 leading-relaxed drop-shadow-md">
               Nos momentos mais difíceis, <span className="font-bold text-yellow-200">$MILAGRE</span> surge como um farol de esperança.
               Juntos, criamos novas chances para um novo começo.
             </p>
 
             {!walletAddress ? (
-              <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
                 <button
                   onClick={connectWallet}
                   disabled={loading}
-                  className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-gray-900 font-bold text-xl px-12 py-5 rounded-full transition-all shadow-2xl disabled:opacity-50 transform hover:scale-105"
+                  className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-gray-900 font-bold text-lg sm:text-xl px-8 sm:px-12 py-4 sm:py-5 rounded-full transition-all shadow-2xl disabled:opacity-50 transform hover:scale-105"
                 >
                   {loading ? 'Conectando...' : '🔗 Conectar Carteira'}
                 </button>
@@ -332,7 +332,7 @@ export default function Home() {
                   href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold text-xl px-12 py-5 rounded-full transition-all shadow-2xl transform hover:scale-105 flex items-center gap-2"
+                  className="w-full sm:w-auto bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold text-lg sm:text-xl px-8 sm:px-12 py-4 sm:py-5 rounded-full transition-all shadow-2xl transform hover:scale-105 flex items-center justify-center gap-2"
                 >
                   <span>🪙</span>
                   <span className="hidden sm:inline">Comprar $MILAGRE</span>
@@ -350,7 +350,7 @@ export default function Home() {
 
                 <div className="mb-4">
                   <p className="text-white/80 text-sm mb-1">Seu saldo:</p>
-                  <p className="text-4xl font-bold text-white drop-shadow-lg">{tokenBalance.toLocaleString()} $MILAGRE</p>
+                  <p className="text-3xl sm:text-4xl font-bold text-white drop-shadow-lg">{tokenBalance.toLocaleString()} $MILAGRE</p>
                 </div>
 
                 <div className="mb-6 p-4 bg-gradient-to-br from-yellow-400/20 to-yellow-600/20 rounded-2xl border border-yellow-300/30">
@@ -414,7 +414,7 @@ export default function Home() {
         {/* O que é $MILAGRE */}
         <div id="sobre" className="mb-20 scroll-mt-24">
           <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 md:p-12 border-2 border-white/30 shadow-2xl">
-            <h3 className="text-4xl font-bold text-white text-center mb-6 drop-shadow-lg">
+            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-6 drop-shadow-lg font-[family-name:var(--font-poppins)]">
               O que é $MILAGRE? ✨
             </h3>
             <div className="max-w-4xl mx-auto space-y-6 text-white/95 text-lg leading-relaxed">
@@ -424,7 +424,7 @@ export default function Home() {
 
               <div className="grid md:grid-cols-2 gap-6 mt-8">
                 <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-                  <h4 className="text-2xl font-bold mb-4 text-yellow-200">🌐 Tecnologia Solana</h4>
+                  <h4 className="text-xl sm:text-2xl font-bold mb-4 text-yellow-200 font-[family-name:var(--font-poppins)]">🌐 Tecnologia Solana</h4>
                   <p className="text-white leading-relaxed">
                     Construído na blockchain Solana, $MILAGRE oferece transações rápidas, taxas baixas e segurança descentralizada.
                     Não é apenas um token - é uma ponte entre tecnologia e humanidade.
@@ -432,7 +432,7 @@ export default function Home() {
                 </div>
 
                 <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-                  <h4 className="text-2xl font-bold mb-4 text-yellow-200">🤝 Apoio Mútuo Real</h4>
+                  <h4 className="text-xl sm:text-2xl font-bold mb-4 text-yellow-200 font-[family-name:var(--font-poppins)]">🤝 Apoio Mútuo Real</h4>
                   <p className="text-white leading-relaxed">
                     Diferente de outros tokens, $MILAGRE existe para criar valor humano real: mentorias, networking,
                     suporte emocional e oportunidades de crescimento pessoal e profissional.
@@ -440,7 +440,7 @@ export default function Home() {
                 </div>
 
                 <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-                  <h4 className="text-2xl font-bold mb-4 text-yellow-200">👼 Guardiões Celestiais</h4>
+                  <h4 className="text-xl sm:text-2xl font-bold mb-4 text-yellow-200 font-[family-name:var(--font-poppins)]">👼 Guardiões Celestiais</h4>
                   <p className="text-white leading-relaxed">
                     Nossa comunidade é guiada por três pilares: Prosperidade (crescimento financeiro),
                     Sabedoria (educação contínua) e Esperança (apoio emocional). Cada holder tem acesso a esses guardiões.
@@ -448,7 +448,7 @@ export default function Home() {
                 </div>
 
                 <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-                  <h4 className="text-2xl font-bold mb-4 text-yellow-200">🎯 Missão Clara</h4>
+                  <h4 className="text-xl sm:text-2xl font-bold mb-4 text-yellow-200 font-[family-name:var(--font-poppins)]">🎯 Missão Clara</h4>
                   <p className="text-white leading-relaxed">
                     &quot;Nunca estarás sozinho&quot; não é só um slogan - é nosso compromisso. Criamos um ecossistema onde
                     holders se ajudam mutuamente a superar desafios e alcançar seus objetivos.
@@ -474,7 +474,7 @@ export default function Home() {
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
 
             <div className="relative z-10">
-              <h3 className="text-4xl md:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg">
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
                 Informações do Token
               </h3>
               <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
@@ -501,7 +501,7 @@ export default function Home() {
                           />
                         </div>
                         <div>
-                          <h4 className="text-3xl font-bold text-white drop-shadow-lg">$MILAGRE</h4>
+                          <h4 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-lg font-[family-name:var(--font-poppins)]">$MILAGRE</h4>
                           <p className="text-cyan-200 text-sm font-semibold">SPL Token • Solana</p>
                         </div>
                       </div>
@@ -592,7 +592,7 @@ export default function Home() {
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <h4 className="text-2xl font-bold text-white mb-3 drop-shadow">Criado na Pump.fun</h4>
+                  <h4 className="text-xl sm:text-2xl font-bold text-white mb-3 drop-shadow font-[family-name:var(--font-poppins)]">Criado na Pump.fun</h4>
                   <p className="text-white leading-relaxed mb-4">
                     Lançado na <strong className="text-yellow-200">Pump.fun</strong>, a plataforma líder para criação de tokens na Solana.
                     Garantia de liquidez e transparência total desde o primeiro dia.
@@ -621,7 +621,7 @@ export default function Home() {
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <h4 className="text-2xl font-bold text-white mb-3 drop-shadow">Rede Solana</h4>
+                  <h4 className="text-xl sm:text-2xl font-bold text-white mb-3 drop-shadow font-[family-name:var(--font-poppins)]">Rede Solana</h4>
                   <p className="text-white leading-relaxed mb-4">
                     Construído na <strong className="text-teal-200">blockchain Solana</strong>, conhecida por suas transações ultra-rápidas
                     (menos de 1 segundo) e taxas extremamente baixas (centavos de dólar).
@@ -644,7 +644,7 @@ export default function Home() {
 
         {/* Guardiões Detalhados */}
         <div id="guardioes" className="mb-20 scroll-mt-24">
-          <h3 className="text-4xl font-bold text-white text-center mb-4 drop-shadow-lg">
+          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
             Nossos Guardiões Celestiais ✨
           </h3>
           <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
@@ -674,7 +674,7 @@ export default function Home() {
                   <div className="inline-block px-4 py-2 bg-yellow-400/90 backdrop-blur-sm rounded-full mb-3 shadow-lg">
                     <span className="text-sm font-bold text-gray-900">👼 Prosperidade</span>
                   </div>
-                  <h4 className="text-3xl font-bold text-white mb-3 drop-shadow-lg">Guardiã da Prosperidade</h4>
+                  <h4 className="text-2xl sm:text-3xl font-bold text-white mb-3 drop-shadow-lg font-[family-name:var(--font-poppins)]">Guardiã da Prosperidade</h4>
                   <p className="text-white/95 mb-4 text-lg leading-relaxed">
                     <span className="font-bold text-yellow-200">Proteção Financeira:</span> Orienta holders em decisões de investimento sábias e sustentáveis.
                   </p>
@@ -715,7 +715,7 @@ export default function Home() {
                   <div className="inline-block px-4 py-2 bg-blue-400/90 backdrop-blur-sm rounded-full mb-3 shadow-lg">
                     <span className="text-sm font-bold text-white">🧙 Sabedoria</span>
                   </div>
-                  <h4 className="text-3xl font-bold text-white mb-3 drop-shadow-lg">Guardião da Sabedoria</h4>
+                  <h4 className="text-2xl sm:text-3xl font-bold text-white mb-3 drop-shadow-lg font-[family-name:var(--font-poppins)]">Guardião da Sabedoria</h4>
                   <p className="text-white/95 mb-4 text-lg leading-relaxed">
                     <span className="font-bold text-blue-200">Conhecimento Compartilhado:</span> Cultiva uma comunidade de aprendizado contínuo e mentoria.
                   </p>
@@ -756,7 +756,7 @@ export default function Home() {
                   <div className="inline-block px-4 py-2 bg-purple-400/90 backdrop-blur-sm rounded-full mb-3 shadow-lg">
                     <span className="text-sm font-bold text-white">💫 Esperança</span>
                   </div>
-                  <h4 className="text-3xl font-bold text-white mb-3 drop-shadow-lg">Anjo da Esperança</h4>
+                  <h4 className="text-2xl sm:text-3xl font-bold text-white mb-3 drop-shadow-lg font-[family-name:var(--font-poppins)]">Anjo da Esperança</h4>
                   <p className="text-white/95 mb-4 text-lg leading-relaxed">
                     <span className="font-bold text-purple-200">Apoio Emocional:</span> Oferece suporte e motivação em momentos de incerteza.
                   </p>
@@ -779,7 +779,7 @@ export default function Home() {
 
         {/* Tutorial de Compra */}
         <div id="comprar" className="mb-20 scroll-mt-24">
-          <h3 className="text-4xl font-bold text-white text-center mb-4 drop-shadow-lg">
+          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
             Como Comprar $MILAGRE 🚀
           </h3>
           <p className="text-white/90 text-center text-lg mb-10 max-w-2xl mx-auto">
@@ -792,7 +792,7 @@ export default function Home() {
               <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
                 <span className="text-3xl font-bold text-white">1</span>
               </div>
-              <h4 className="text-xl font-bold text-white mb-3 text-center">Instale a Phantom</h4>
+              <h4 className="text-lg sm:text-xl font-bold text-white mb-3 text-center font-[family-name:var(--font-poppins)]">Instale a Phantom</h4>
               <p className="text-white/85 text-sm text-center leading-relaxed">
                 Baixe a carteira <a href="https://phantom.app/" target="_blank" rel="noopener noreferrer" className="text-yellow-300 underline">Phantom</a> (extensão do navegador ou app mobile).
               </p>
@@ -803,7 +803,7 @@ export default function Home() {
               <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
                 <span className="text-3xl font-bold text-white">2</span>
               </div>
-              <h4 className="text-xl font-bold text-white mb-3 text-center">Compre Solana (SOL)</h4>
+              <h4 className="text-lg sm:text-xl font-bold text-white mb-3 text-center font-[family-name:var(--font-poppins)]">Compre Solana (SOL)</h4>
               <p className="text-white/85 text-sm text-center leading-relaxed">
                 Adquira SOL em exchanges como Binance, Coinbase ou diretamente na Phantom com cartão.
               </p>
@@ -814,7 +814,7 @@ export default function Home() {
               <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
                 <span className="text-3xl font-bold text-white">3</span>
               </div>
-              <h4 className="text-xl font-bold text-white mb-3 text-center">Acesse Pump.fun</h4>
+              <h4 className="text-lg sm:text-xl font-bold text-white mb-3 text-center font-[family-name:var(--font-poppins)]">Acesse Pump.fun</h4>
               <p className="text-white/85 text-sm text-center leading-relaxed">
                 Visite <a href={`https://pump.fun/coin/${TOKEN_ADDRESS}`} target="_blank" rel="noopener noreferrer" className="text-yellow-300 underline">pump.fun</a> e conecte sua Phantom Wallet.
               </p>
@@ -825,7 +825,7 @@ export default function Home() {
               <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
                 <span className="text-3xl font-bold text-white">4</span>
               </div>
-              <h4 className="text-xl font-bold text-white mb-3 text-center">Troque por $MILAGRE</h4>
+              <h4 className="text-lg sm:text-xl font-bold text-white mb-3 text-center font-[family-name:var(--font-poppins)]">Troque por $MILAGRE</h4>
               <p className="text-white/85 text-sm text-center leading-relaxed">
                 Insira a quantidade de SOL, confirme a transação e receba seus $MILAGRE!
               </p>
@@ -837,7 +837,7 @@ export default function Home() {
               href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-white font-bold text-xl px-12 py-5 rounded-full transition-all shadow-2xl transform hover:scale-105"
+              className="inline-block bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-white font-bold text-lg sm:text-xl px-8 sm:px-12 py-4 sm:py-5 rounded-full transition-all shadow-2xl transform hover:scale-105"
             >
               🚀 Comprar Agora no Pump.fun
             </a>
@@ -846,10 +846,10 @@ export default function Home() {
 
         {/* CTA Section */}
         <div className="mb-20 bg-gradient-to-br from-yellow-400/30 to-yellow-600/30 backdrop-blur-lg rounded-3xl p-12 border-2 border-yellow-300/50 shadow-2xl text-center">
-          <h3 className="text-4xl font-bold text-white mb-6 drop-shadow-lg">
+          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 drop-shadow-lg font-[family-name:var(--font-poppins)] text-center">
             Por que investir em $MILAGRE?
           </h3>
-          <p className="text-white/95 text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
+          <p className="text-white/95 text-lg sm:text-xl max-w-3xl mx-auto mb-10 leading-relaxed px-4">
             $MILAGRE é construído sobre colaboração e confiança. Aqui, você nunca está sozinho.
             Nossa comunidade está unida pelo propósito de superar desafios e apoiar uns aos outros.
           </p>
@@ -872,12 +872,12 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex gap-6 justify-center flex-wrap">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-stretch sm:items-center px-4">
             <a
               href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-white font-bold text-xl px-10 py-5 rounded-full transition-all shadow-xl transform hover:scale-105"
+              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-white font-bold text-lg sm:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-full transition-all shadow-xl transform hover:scale-105 text-center"
             >
               🚀 Comprar $MILAGRE
             </a>
@@ -885,7 +885,7 @@ export default function Home() {
               href="https://t.me/tokenmilagre"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 text-white font-bold text-xl px-10 py-5 rounded-full transition-all shadow-xl transform hover:scale-105"
+              className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 text-white font-bold text-lg sm:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-full transition-all shadow-xl transform hover:scale-105 text-center"
             >
               💬 Entrar na Comunidade
             </a>
@@ -894,7 +894,7 @@ export default function Home() {
 
         {/* FAQ / Milagrépedia - Accordion Interativa */}
         <div id="faq" className="mb-20 scroll-mt-24">
-          <h3 className="text-4xl md:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg">
+          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
             Milagrépedia 📚
           </h3>
           <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
@@ -963,7 +963,7 @@ export default function Home() {
 
         {/* Sobre o Projeto */}
         <div id="contato" className="mb-20 scroll-mt-24">
-          <h3 className="text-4xl font-bold text-yellow-200 text-center mb-4 drop-shadow-lg">
+          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-yellow-200 text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
             Sobre o Projeto $MILAGRE 💫
           </h3>
           <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
@@ -980,7 +980,7 @@ export default function Home() {
                   <div className="w-14 h-14 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center shadow-lg">
                     <span className="text-3xl">🎯</span>
                   </div>
-                  <h4 className="text-2xl font-bold text-yellow-200">Nossa Missão</h4>
+                  <h4 className="text-xl sm:text-2xl font-bold text-yellow-200 font-[family-name:var(--font-poppins)]">Nossa Missão</h4>
                 </div>
                 <p className="text-white/95 leading-relaxed text-lg">
                   Criar um ecossistema descentralizado onde holders se <strong className="text-yellow-200">conectam</strong>,
@@ -996,7 +996,7 @@ export default function Home() {
                   <div className="w-14 h-14 bg-gradient-to-br from-yellow-400 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg">
                     <span className="text-3xl">💎</span>
                   </div>
-                  <h4 className="text-2xl font-bold text-yellow-200">Nossos Valores</h4>
+                  <h4 className="text-xl sm:text-2xl font-bold text-yellow-200 font-[family-name:var(--font-poppins)]">Nossos Valores</h4>
                 </div>
                 <div className="space-y-3 text-lg">
                   <div className="flex items-start gap-3">
@@ -1022,7 +1022,7 @@ export default function Home() {
             {/* Citação e Informações do Token */}
             <div className="text-center space-y-8">
               <div className="text-6xl mb-6">❤️</div>
-              <p className="text-3xl md:text-4xl font-bold text-red-400 mb-6 drop-shadow-lg leading-relaxed">
+              <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-400 mb-6 drop-shadow-lg leading-relaxed px-4">
                 &quot;Nunca estarás sozinho&quot;
               </p>
               <p className="text-white/95 text-lg max-w-3xl mx-auto leading-relaxed">
@@ -1031,8 +1031,8 @@ export default function Home() {
               </p>
 
               {/* Endereço do Contrato */}
-              <div className="flex flex-col items-center justify-center gap-4 max-w-4xl mx-auto">
-                <code className="text-2xl md:text-3xl font-mono font-bold text-yellow-200 break-all">
+              <div className="flex flex-col items-center justify-center gap-4 max-w-4xl mx-auto px-4">
+                <code className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-mono font-bold text-yellow-200 break-all text-center">
                   {TOKEN_ADDRESS}
                 </code>
                 <div className="flex items-center gap-4">
