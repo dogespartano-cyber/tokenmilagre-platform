@@ -133,7 +133,7 @@ export default function Home() {
     if (balance >= 50000) return { name: 'Anjo Guardião', color: 'text-yellow-400', emoji: '👼', benefits: 'Acesso total + Badge exclusivo' };
     if (balance >= 10000) return { name: 'Guardião', color: 'text-blue-300', emoji: '🛡️', benefits: 'Grupos privados + Mentorias' };
     if (balance >= 1000) return { name: 'Apoiador', color: 'text-teal-300', emoji: '🤝', benefits: 'Acesso à plataforma' };
-    return { name: 'Visitante', color: 'text-gray-300', emoji: '✨', benefits: 'Compre $MILAGRE para começar' };
+    return { name: 'Visitante', color: 'text-gray-300', emoji: '👋', benefits: 'Compre $MILAGRE para começar' };
   };
 
   const tier = getTier(tokenBalance);
@@ -415,7 +415,7 @@ export default function Home() {
         <div id="sobre" className="mb-20 scroll-mt-24">
           <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 md:p-12 border-2 border-white/30 shadow-2xl">
             <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-6 drop-shadow-lg font-[family-name:var(--font-poppins)]">
-              O que é $MILAGRE? ✨
+              O que é $MILAGRE? 💡
             </h3>
             <div className="max-w-4xl mx-auto space-y-6 text-white/95 text-lg leading-relaxed">
               <p className="text-center text-xl font-semibold text-yellow-300">
@@ -645,7 +645,7 @@ export default function Home() {
         {/* Guardiões Detalhados */}
         <div id="guardioes" className="mb-20 scroll-mt-24">
           <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
-            Nossos Guardiões Celestiais ✨
+            Nossos Guardiões Celestiais 🛡️
           </h3>
           <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
             Cada guardião representa um pilar fundamental da nossa comunidade, guiando holders em sua jornada de prosperidade e crescimento.
