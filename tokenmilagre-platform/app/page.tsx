@@ -874,57 +874,41 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Citação Destaque */}
+            {/* Citação e Informações do Token - Card Unificado */}
             <div className="relative bg-white/15 backdrop-blur-xl rounded-3xl border-2 border-white/30 shadow-2xl p-10 text-center overflow-hidden group hover:bg-white/20 transition-all duration-300">
               <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 to-amber-600/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative z-10">
-                <div className="text-6xl mb-4">✨</div>
-                <p className="text-3xl md:text-4xl font-bold text-yellow-200 mb-6 drop-shadow-lg leading-relaxed">
-                  &quot;Nunca estarás sozinho&quot;
-                </p>
-                <p className="text-white/95 text-lg max-w-3xl mx-auto leading-relaxed">
-                  Este é nosso compromisso com cada holder. Em momentos de dúvida, celebração ou desafio,
-                  nossa <span className="font-semibold text-yellow-300">comunidade estará sempre presente</span>.
-                </p>
-              </div>
-            </div>
-
-            {/* Informações do Token */}
-            <div className="bg-white/15 backdrop-blur-xl rounded-3xl border-2 border-white/30 shadow-2xl p-8">
-              <h4 className="text-2xl font-bold text-center text-yellow-200 mb-6">📊 Informações do Token</h4>
-
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 max-w-3xl mx-auto border border-white/20">
-                <p className="text-yellow-200 text-sm mb-3 font-semibold text-center">Endereço do Contrato</p>
-                <div className="flex flex-col md:flex-row items-center gap-3 justify-center">
-                  <code className="text-yellow-100 font-mono text-xs md:text-sm break-all text-center md:text-left bg-gradient-to-r from-yellow-900/40 to-amber-900/40 p-4 rounded-xl border border-yellow-300/20 flex-1">
-                    {TOKEN_ADDRESS}
-                  </code>
-                  <button
-                    onClick={copyToClipboard}
-                    className="px-5 py-3 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-gray-900 font-bold text-sm rounded-xl transition-all shadow-lg hover:scale-105 hover:shadow-yellow-400/50 flex items-center gap-2 whitespace-nowrap"
-                  >
-                    {copied ? (
-                      <>
-                        <span>✓</span>
-                        <span>Copiado!</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>📋</span>
-                        <span>Copiar</span>
-                      </>
-                    )}
-                  </button>
+              <div className="relative z-10 space-y-8">
+                {/* Citação */}
+                <div>
+                  <div className="text-6xl mb-4">✨</div>
+                  <p className="text-3xl md:text-4xl font-bold text-yellow-200 mb-6 drop-shadow-lg leading-relaxed">
+                    &quot;Nunca estarás sozinho&quot;
+                  </p>
+                  <p className="text-white/95 text-lg max-w-3xl mx-auto leading-relaxed">
+                    Este é nosso compromisso com cada holder. Em momentos de dúvida, celebração ou desafio,
+                    nossa <span className="font-semibold text-yellow-300">comunidade estará sempre presente</span>.
+                  </p>
                 </div>
 
-                <div className="mt-6 pt-6 border-t border-white/20 grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <p className="text-yellow-200 text-sm mb-1">Blockchain</p>
-                    <p className="text-white font-bold text-lg">Solana</p>
-                  </div>
-                  <div>
-                    <p className="text-yellow-200 text-sm mb-1">Tipo</p>
-                    <p className="text-white font-bold text-lg">SPL Token</p>
+                {/* Divisor */}
+                <div className="flex items-center gap-4 max-w-xl mx-auto">
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-yellow-300/30 to-transparent"></div>
+                  <span className="text-yellow-200">📊</span>
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-yellow-300/30 to-transparent"></div>
+                </div>
+
+                {/* Informações do Token */}
+                <div>
+                  <h4 className="text-xl font-bold text-yellow-200 mb-4">Informações do Token</h4>
+                  <div className="grid grid-cols-2 gap-6 max-w-md mx-auto mb-4">
+                    <div>
+                      <p className="text-yellow-200/80 text-sm mb-1">Blockchain</p>
+                      <p className="text-white font-bold text-lg">Solana</p>
+                    </div>
+                    <div>
+                      <p className="text-yellow-200/80 text-sm mb-1">Tipo</p>
+                      <p className="text-white font-bold text-lg">SPL Token</p>
+                    </div>
                   </div>
                 </div>
               </div>
