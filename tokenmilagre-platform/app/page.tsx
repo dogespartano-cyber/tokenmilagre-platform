@@ -875,41 +875,87 @@ export default function Home() {
             </div>
 
             {/* Citação e Informações do Token - Card Unificado */}
-            <div className="relative bg-white/15 backdrop-blur-xl rounded-3xl border-2 border-white/30 shadow-2xl p-10 text-center overflow-hidden group hover:bg-white/20 transition-all duration-300">
+            <div className="relative bg-white/15 backdrop-blur-xl rounded-3xl border-2 border-white/30 shadow-2xl hover:shadow-yellow-300/50 p-10 md:p-12 text-center overflow-hidden group hover:bg-white/20 transition-all duration-300">
               <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 to-amber-600/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <div className="relative z-10 space-y-8">
                 {/* Citação */}
                 <div>
-                  <div className="text-6xl mb-4">✨</div>
+                  <div className="text-6xl mb-6">✨</div>
                   <p className="text-3xl md:text-4xl font-bold text-yellow-200 mb-6 drop-shadow-lg leading-relaxed">
                     &quot;Nunca estarás sozinho&quot;
                   </p>
-                  <p className="text-white/95 text-lg max-w-3xl mx-auto leading-relaxed">
+                  <p className="text-white/95 text-lg max-w-3xl mx-auto leading-relaxed mb-8">
                     Este é nosso compromisso com cada holder. Em momentos de dúvida, celebração ou desafio,
                     nossa <span className="font-semibold text-yellow-300">comunidade estará sempre presente</span>.
                   </p>
+
+                  {/* Endereço do Contrato */}
+                  <div className="flex flex-col md:flex-row items-center justify-center gap-4 max-w-4xl mx-auto">
+                    <code className="text-2xl md:text-3xl font-mono font-bold text-yellow-200 break-all text-center md:text-left">
+                      {TOKEN_ADDRESS}
+                    </code>
+                    <button
+                      onClick={copyToClipboard}
+                      className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-gray-900 font-bold text-base rounded-2xl transition-all shadow-lg hover:scale-105 hover:shadow-yellow-400/50 flex items-center gap-2 whitespace-nowrap"
+                    >
+                      {copied ? (
+                        <>
+                          <span className="text-xl">✓</span>
+                          <span>Copiado!</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-xl">📋</span>
+                          <span>Copiar</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Divisor */}
-                <div className="flex items-center gap-4 max-w-xl mx-auto">
-                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-yellow-300/30 to-transparent"></div>
-                  <span className="text-yellow-200">📊</span>
-                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-yellow-300/30 to-transparent"></div>
+                <div className="flex items-center gap-4 max-w-2xl mx-auto">
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-yellow-300/40 to-transparent"></div>
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-yellow-300/40 to-transparent"></div>
                 </div>
 
-                {/* Informações do Token */}
-                <div>
-                  <h4 className="text-xl font-bold text-yellow-200 mb-4">Informações do Token</h4>
-                  <div className="grid grid-cols-2 gap-6 max-w-md mx-auto mb-4">
-                    <div>
-                      <p className="text-yellow-200/80 text-sm mb-1">Blockchain</p>
-                      <p className="text-white font-bold text-lg">Solana</p>
+                {/* Logos Pump.fun e Solana */}
+                <div className="flex items-center justify-center gap-8 md:gap-12">
+                  <a
+                    href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/logo transition-transform hover:scale-110 duration-300"
+                  >
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-emerald-600/20 rounded-full blur-xl opacity-0 group-hover/logo:opacity-100 transition-opacity"></div>
+                      <Image
+                        src="/images/pumpfun-logo.png"
+                        alt="Pump.fun"
+                        width={80}
+                        height={80}
+                        className="relative z-10 drop-shadow-lg"
+                      />
                     </div>
-                    <div>
-                      <p className="text-yellow-200/80 text-sm mb-1">Tipo</p>
-                      <p className="text-white font-bold text-lg">SPL Token</p>
+                  </a>
+
+                  <a
+                    href="https://solana.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/logo transition-transform hover:scale-110 duration-300"
+                  >
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-400/20 to-cyan-600/20 rounded-full blur-xl opacity-0 group-hover/logo:opacity-100 transition-opacity"></div>
+                      <Image
+                        src="/images/solana-logo.png"
+                        alt="Solana"
+                        width={80}
+                        height={80}
+                        className="relative z-10 drop-shadow-lg"
+                      />
                     </div>
-                  </div>
+                  </a>
                 </div>
               </div>
             </div>
