@@ -11,3 +11,6 @@ __pycache__/
 
 # Arquivos de sistema
 .DS_Store
+
+# Claude Code - arquivos com credenciais
+.claude/settings.local.json
