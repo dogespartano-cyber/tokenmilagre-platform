@@ -237,7 +237,7 @@ export default function Home() {
                   𝕏
                 </a>
                 <a href="https://t.me/tokenmilagre" target="_blank" rel="noopener noreferrer" className="text-white hover:text-yellow-300 transition text-xl">
-                  📱
+                  💬
                 </a>
               </div>
 
@@ -288,7 +288,7 @@ export default function Home() {
                   𝕏
                 </a>
                 <a href="https://t.me/tokenmilagre" target="_blank" rel="noopener noreferrer" className="text-white hover:text-yellow-300 transition text-2xl">
-                  📱
+                  💬
                 </a>
               </div>
 
