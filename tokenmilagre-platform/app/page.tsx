@@ -818,77 +818,126 @@ export default function Home() {
 
         {/* Sobre o Projeto */}
         <div id="contato" className="mb-20 scroll-mt-24">
-          <div className="bg-gradient-to-br from-pink-400/20 via-rose-400/20 to-orange-400/20 backdrop-blur-xl rounded-3xl p-8 md:p-12 border-2 border-pink-300/40 shadow-2xl">
-            <h3 className="text-4xl font-bold text-white text-center mb-6 drop-shadow-lg">
-              Sobre o Projeto $MILAGRE 💫
-            </h3>
+          <div className="relative bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-blue-500/20 backdrop-blur-xl rounded-3xl p-8 md:p-12 border-2 border-purple-300/40 shadow-2xl overflow-hidden">
+            {/* Efeitos de luz de fundo */}
+            <div className="absolute top-0 left-0 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
 
-            <div className="max-w-4xl mx-auto space-y-8">
-              <div className="text-center">
-                <p className="text-white text-xl leading-relaxed mb-6">
-                  $MILAGRE é mais que um token - é um movimento de apoio mútuo genuíno na blockchain.
-                </p>
-              </div>
+            <div className="relative z-10">
+              <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-cyan-200 text-center mb-3 drop-shadow-lg">
+                Sobre o Projeto $MILAGRE
+              </h3>
+              <p className="text-center text-purple-200 text-lg mb-10">💫 Um movimento que transforma vidas</p>
 
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-rose-200/30 hover:bg-white/25 transition">
-                  <h4 className="text-2xl font-bold mb-4 text-rose-200">🎯 Nossa Missão</h4>
-                  <p className="text-white leading-relaxed">
-                    Criar um ecossistema descentralizado onde holders se conectam, aprendem e crescem juntos.
-                    Oferecemos mentorias, networking, educação financeira e suporte emocional para todos que
-                    acreditam que juntos somos mais fortes.
+              <div className="max-w-5xl mx-auto space-y-10">
+                {/* Card Principal - Introdução */}
+                <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-lg rounded-3xl p-8 border border-purple-200/30 shadow-xl">
+                  <p className="text-white text-xl md:text-2xl text-center leading-relaxed font-light">
+                    $MILAGRE é mais que um token - é um <span className="font-bold text-purple-200">ecossistema de apoio mútuo</span> genuíno na blockchain,
+                    onde cada holder encontra <span className="font-bold text-blue-200">prosperidade, sabedoria e esperança</span>.
                   </p>
                 </div>
 
-                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-orange-200/30 hover:bg-white/25 transition">
-                  <h4 className="text-2xl font-bold mb-4 text-orange-200">💎 Nossos Valores</h4>
-                  <p className="text-white leading-relaxed">
-                    <strong className="text-orange-100">Transparência:</strong> Sem promessas vazias<br />
-                    <strong className="text-orange-100">Apoio Mútuo:</strong> Crescemos juntos<br />
-                    <strong className="text-orange-100">Inclusão:</strong> Todos são bem-vindos<br />
-                    <strong className="text-orange-100">Ação:</strong> Resultados reais, não apenas palavras
-                  </p>
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-r from-yellow-400/25 to-orange-400/25 backdrop-blur-sm rounded-2xl p-8 border-2 border-yellow-300/40 text-center shadow-lg">
-                <p className="text-2xl font-bold text-yellow-100 mb-4 drop-shadow">
-                  &quot;Nunca estarás sozinho&quot;
-                </p>
-                <p className="text-white text-lg">
-                  Este é nosso compromisso com cada holder. Em momentos de dúvida, celebração ou desafio,
-                  nossa comunidade estará sempre presente.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <h4 className="text-2xl font-bold text-white mb-4">📊 Informações do Token</h4>
-                <div className="bg-white/10 rounded-2xl p-6 inline-block">
-                  <p className="text-white/80 text-sm mb-2">Endereço do Contrato:</p>
-                  <div className="flex items-center gap-3 justify-center flex-wrap">
-                    <code className="text-yellow-300 font-mono text-xs break-all max-w-md">
-                      {TOKEN_ADDRESS}
-                    </code>
-                    <button
-                      onClick={copyToClipboard}
-                      className="px-4 py-2 bg-gradient-to-r from-yellow-400 to-amber-400 hover:from-yellow-300 hover:to-amber-300 text-gray-900 font-bold text-sm rounded-full transition-all shadow-lg hover:scale-105 flex items-center gap-2"
-                    >
-                      {copied ? (
-                        <>
-                          <span>✓</span>
-                          <span>Copiado!</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>📋</span>
-                          <span>Copiar</span>
-                        </>
-                      )}
-                    </button>
+                {/* Grid de Missão e Valores */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Missão */}
+                  <div className="group bg-gradient-to-br from-purple-400/20 to-indigo-400/20 backdrop-blur-lg rounded-3xl p-8 border-2 border-purple-300/40 hover:border-purple-300/60 transition-all duration-300 hover:scale-[1.02] shadow-xl hover:shadow-purple-400/30">
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <span className="text-2xl">🎯</span>
+                      </div>
+                      <h4 className="text-2xl font-bold text-purple-100">Nossa Missão</h4>
+                    </div>
+                    <p className="text-white/95 leading-relaxed text-lg">
+                      Criar um ecossistema descentralizado onde holders se <strong className="text-purple-200">conectam</strong>,
+                      <strong className="text-purple-200"> aprendem</strong> e <strong className="text-purple-200">crescem juntos</strong>.
+                      Oferecemos mentorias, networking, educação financeira e suporte emocional para todos que acreditam
+                      que <span className="text-purple-200 font-semibold">juntos somos mais fortes</span>.
+                    </p>
                   </div>
-                  <div className="mt-4 pt-4 border-t border-white/20">
-                    <p className="text-white/80 text-sm">Blockchain: <strong className="text-white">Solana</strong></p>
-                    <p className="text-white/80 text-sm">Tipo: <strong className="text-white">SPL Token</strong></p>
+
+                  {/* Valores */}
+                  <div className="group bg-gradient-to-br from-blue-400/20 to-cyan-400/20 backdrop-blur-lg rounded-3xl p-8 border-2 border-blue-300/40 hover:border-blue-300/60 transition-all duration-300 hover:scale-[1.02] shadow-xl hover:shadow-blue-400/30">
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <span className="text-2xl">💎</span>
+                      </div>
+                      <h4 className="text-2xl font-bold text-blue-100">Nossos Valores</h4>
+                    </div>
+                    <div className="space-y-3 text-lg">
+                      <div className="flex items-start gap-3">
+                        <span className="text-blue-200 mt-1">✦</span>
+                        <p className="text-white/95"><strong className="text-blue-200">Transparência:</strong> Sem promessas vazias</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="text-blue-200 mt-1">✦</span>
+                        <p className="text-white/95"><strong className="text-blue-200">Apoio Mútuo:</strong> Crescemos juntos</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="text-blue-200 mt-1">✦</span>
+                        <p className="text-white/95"><strong className="text-blue-200">Inclusão:</strong> Todos são bem-vindos</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="text-blue-200 mt-1">✦</span>
+                        <p className="text-white/95"><strong className="text-blue-200">Ação:</strong> Resultados reais, não apenas palavras</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Citação Destaque */}
+                <div className="relative bg-gradient-to-r from-purple-400/25 via-blue-400/25 to-cyan-400/25 backdrop-blur-lg rounded-3xl p-10 border-2 border-purple-300/50 text-center shadow-2xl overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-blue-600/10 animate-pulse-slow"></div>
+                  <div className="relative z-10">
+                    <div className="text-6xl mb-4">✨</div>
+                    <p className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-100 via-blue-100 to-cyan-100 mb-6 drop-shadow-lg leading-relaxed">
+                      &quot;Nunca estarás sozinho&quot;
+                    </p>
+                    <p className="text-white text-lg max-w-3xl mx-auto leading-relaxed">
+                      Este é nosso compromisso com cada holder. Em momentos de dúvida, celebração ou desafio,
+                      nossa <span className="font-semibold text-purple-200">comunidade estará sempre presente</span>.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Informações do Token */}
+                <div className="bg-gradient-to-br from-indigo-400/15 to-purple-400/15 backdrop-blur-lg rounded-3xl p-8 border-2 border-indigo-300/40 shadow-xl">
+                  <h4 className="text-2xl font-bold text-center text-indigo-100 mb-6">📊 Informações do Token</h4>
+
+                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 max-w-3xl mx-auto border border-white/20">
+                    <p className="text-purple-200 text-sm mb-3 font-semibold text-center">Endereço do Contrato</p>
+                    <div className="flex flex-col md:flex-row items-center gap-3 justify-center">
+                      <code className="text-yellow-200 font-mono text-xs md:text-sm break-all text-center md:text-left bg-gradient-to-r from-indigo-900/40 to-purple-900/40 p-4 rounded-xl border border-purple-300/20 flex-1">
+                        {TOKEN_ADDRESS}
+                      </code>
+                      <button
+                        onClick={copyToClipboard}
+                        className="px-5 py-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-400 hover:to-blue-400 text-white font-bold text-sm rounded-xl transition-all shadow-lg hover:scale-105 hover:shadow-purple-500/50 flex items-center gap-2 whitespace-nowrap"
+                      >
+                        {copied ? (
+                          <>
+                            <span>✓</span>
+                            <span>Copiado!</span>
+                          </>
+                        ) : (
+                          <>
+                            <span>📋</span>
+                            <span>Copiar</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    <div className="mt-6 pt-6 border-t border-white/20 grid grid-cols-2 gap-4 text-center">
+                      <div>
+                        <p className="text-purple-200 text-sm mb-1">Blockchain</p>
+                        <p className="text-white font-bold text-lg">Solana</p>
+                      </div>
+                      <div>
+                        <p className="text-purple-200 text-sm mb-1">Tipo</p>
+                        <p className="text-white font-bold text-lg">SPL Token</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
