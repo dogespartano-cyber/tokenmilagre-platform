@@ -31,28 +31,20 @@ export default function Home() {
 
   const checkTokenBalance = async (address: string) => {
     try {
-      // Importa Connection e PublicKey do Solana
       const { Connection, PublicKey } = await import('@solana/web3.js');
-
-      // Conecta à rede Solana Mainnet
       const connection = new Connection('https://api.mainnet-beta.solana.com', 'confirmed');
-
-      // Converte endereços para PublicKey
       const walletPublicKey = new PublicKey(address);
       const tokenMintAddress = new PublicKey(TOKEN_ADDRESS);
 
-      // Busca todas as contas de token associadas à carteira
       const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
         walletPublicKey,
         { mint: tokenMintAddress }
       );
 
       if (tokenAccounts.value.length > 0) {
-        // Pega o saldo da primeira conta encontrada
         const balance = tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount;
         setTokenBalance(balance || 0);
       } else {
-        // Nenhuma conta encontrada = saldo zero
         setTokenBalance(0);
       }
     } catch (error) {
@@ -158,99 +150,194 @@ export default function Home() {
                 alt="Anjo do Milagre"
                 width={500}
                 height={500}
-                className="relative z-10 drop-shadow-2xl animate-pulse-slow"
+                className="relative z-10 drop-shadow-2xl animate-pulse-slow rounded-3xl"
                 priority
               />
             </div>
           </div>
         </div>
 
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-20">
-          <div className="bg-white/25 backdrop-blur-md rounded-3xl p-8 border-2 border-white/40 shadow-xl hover:scale-105 transition-transform">
-            <div className="mb-4 flex justify-center">
-              <div className="w-24 h-24 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-2xl flex items-center justify-center shadow-xl">
-                <span className="text-5xl">🛡️</span>
-              </div>
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-3 text-center">Escudo Dourado</h3>
-            <p className="text-white/90 text-center leading-relaxed">
-              Simboliza o compromisso coletivo de proteger e fortalecer uns aos outros,
-              criando uma base sólida de confiança e apoio mútuo.
-            </p>
-          </div>
+        {/* Guardiões Detalhados */}
+        <div className="mb-20">
+          <h3 className="text-4xl font-bold text-white text-center mb-4 drop-shadow-lg">
+            Nossos Guardiões Celestiais ✨
+          </h3>
+          <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
+            Cada guardião representa um pilar fundamental da nossa comunidade, guiando holders em sua jornada de prosperidade e crescimento.
+          </p>
 
-          <div className="bg-white/25 backdrop-blur-md rounded-3xl p-8 border-2 border-white/40 shadow-xl hover:scale-105 transition-transform">
-            <div className="mb-4 flex justify-center">
-              <div className="w-24 h-24 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-2xl flex items-center justify-center shadow-xl">
-                <span className="text-5xl">👑</span>
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {/* Guardiã da Prosperidade */}
+            <div className="bg-white/25 backdrop-blur-md rounded-3xl overflow-hidden border-2 border-white/40 shadow-xl hover:scale-105 transition-transform">
+              <div className="relative h-64 overflow-hidden">
+                <Image
+                  src="/images/Token-MILAGRE-1.webp"
+                  alt="Guardiã da Prosperidade"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                  <h4 className="text-white font-bold text-2xl">👼 Guardiã da Prosperidade</h4>
+                </div>
+              </div>
+              <div className="p-6">
+                <p className="text-white/90 mb-4 leading-relaxed">
+                  <strong className="text-yellow-300">Proteção Financeira:</strong> Orienta holders em decisões de investimento sábias e sustentáveis.
+                </p>
+                <ul className="space-y-2 text-white/85 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span>Alertas de oportunidades de crescimento</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span>Educação financeira comunitária</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span>Recompensas para holders de longo prazo</span>
+                  </li>
+                </ul>
               </div>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-3 text-center">Cetro Dourado</h3>
-            <p className="text-white/90 text-center leading-relaxed">
-              Empunhado com elegância e determinação, representa justiça e igualdade.
-              É um lembrete de que o poder deve ser guiado pela sabedoria.
-            </p>
-          </div>
 
-          <div className="bg-white/25 backdrop-blur-md rounded-3xl p-8 border-2 border-white/40 shadow-xl hover:scale-105 transition-transform">
-            <div className="mb-4 flex justify-center">
-              <div className="w-24 h-24 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-2xl flex items-center justify-center shadow-xl">
-                <span className="text-5xl">🤝</span>
+            {/* Guardião da Sabedoria */}
+            <div className="bg-white/25 backdrop-blur-md rounded-3xl overflow-hidden border-2 border-white/40 shadow-xl hover:scale-105 transition-transform">
+              <div className="relative h-64 overflow-hidden">
+                <Image
+                  src="/images/Token-MILAGRE-2.webp"
+                  alt="Guardião da Sabedoria"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                  <h4 className="text-white font-bold text-2xl">🧙 Guardião da Sabedoria</h4>
+                </div>
+              </div>
+              <div className="p-6">
+                <p className="text-white/90 mb-4 leading-relaxed">
+                  <strong className="text-yellow-300">Conhecimento Compartilhado:</strong> Cultiva uma comunidade de aprendizado contínuo e mentoria.
+                </p>
+                <ul className="space-y-2 text-white/85 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span>Workshops sobre blockchain e DeFi</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span>Mentorias 1-on-1 com especialistas</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span>Biblioteca de recursos educacionais</span>
+                  </li>
+                </ul>
               </div>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-3 text-center">Comunidade Unida</h3>
-            <p className="text-white/90 text-center leading-relaxed">
-              Nossa comunidade é unida pelo propósito de superar desafios e apoiar uns aos outros.
-              Aqui, você nunca estará sozinho.
-            </p>
+
+            {/* Anjo da Esperança */}
+            <div className="bg-white/25 backdrop-blur-md rounded-3xl overflow-hidden border-2 border-white/40 shadow-xl hover:scale-105 transition-transform">
+              <div className="relative h-64 overflow-hidden">
+                <Image
+                  src="/images/Token-MILAGRE-7.webp"
+                  alt="Anjo da Esperança"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                  <h4 className="text-white font-bold text-2xl">💫 Anjo da Esperança</h4>
+                </div>
+              </div>
+              <div className="p-6">
+                <p className="text-white/90 mb-4 leading-relaxed">
+                  <strong className="text-yellow-300">Apoio Emocional:</strong> Oferece suporte e motivação em momentos de incerteza.
+                </p>
+                <ul className="space-y-2 text-white/85 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span>Grupos de apoio emocional</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span>Histórias inspiradoras de superação</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-300 mt-1">✓</span>
+                    <span>Rede de ajuda mútua 24/7</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Gallery Section */}
+        {/* Tutorial de Compra */}
         <div className="mb-20">
-          <h3 className="text-4xl font-bold text-white text-center mb-10 drop-shadow-lg">
-            Nossos Guardiões Celestiais ✨
+          <h3 className="text-4xl font-bold text-white text-center mb-4 drop-shadow-lg">
+            Como Comprar $MILAGRE 🚀
           </h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
-              <Image
-                src="/images/Token-MILAGRE-1.webp"
-                alt="Anjo Guardião Feminino"
-                width={400}
-                height={400}
-                className="w-full h-auto transform group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                <p className="text-white font-bold text-xl">Guardiã da Prosperidade</p>
+          <p className="text-white/90 text-center text-lg mb-10 max-w-2xl mx-auto">
+            Siga este guia passo a passo para adquirir seus tokens e se juntar à nossa comunidade.
+          </p>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {/* Passo 1 */}
+            <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-6 border-2 border-white/30 shadow-xl">
+              <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
+                <span className="text-3xl font-bold text-white">1</span>
               </div>
+              <h4 className="text-xl font-bold text-white mb-3 text-center">Instale a Phantom</h4>
+              <p className="text-white/85 text-sm text-center leading-relaxed">
+                Baixe a carteira <a href="https://phantom.app/" target="_blank" rel="noopener noreferrer" className="text-yellow-300 underline">Phantom</a> (extensão do navegador ou app mobile).
+              </p>
             </div>
 
-            <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
-              <Image
-                src="/images/Token-MILAGRE-2.webp"
-                alt="Anjo Guardião Masculino"
-                width={400}
-                height={400}
-                className="w-full h-auto transform group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                <p className="text-white font-bold text-xl">Guardião da Sabedoria</p>
+            {/* Passo 2 */}
+            <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-6 border-2 border-white/30 shadow-xl">
+              <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
+                <span className="text-3xl font-bold text-white">2</span>
               </div>
+              <h4 className="text-xl font-bold text-white mb-3 text-center">Compre Solana (SOL)</h4>
+              <p className="text-white/85 text-sm text-center leading-relaxed">
+                Adquira SOL em exchanges como Binance, Coinbase ou diretamente na Phantom com cartão.
+              </p>
             </div>
 
-            <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
-              <Image
-                src="/images/Token-MILAGRE-7.webp"
-                alt="Anjo da Esperança"
-                width={400}
-                height={400}
-                className="w-full h-auto transform group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                <p className="text-white font-bold text-xl">Anjo da Esperança</p>
+            {/* Passo 3 */}
+            <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-6 border-2 border-white/30 shadow-xl">
+              <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
+                <span className="text-3xl font-bold text-white">3</span>
               </div>
+              <h4 className="text-xl font-bold text-white mb-3 text-center">Acesse Pump.fun</h4>
+              <p className="text-white/85 text-sm text-center leading-relaxed">
+                Visite <a href={`https://pump.fun/coin/${TOKEN_ADDRESS}`} target="_blank" rel="noopener noreferrer" className="text-yellow-300 underline">pump.fun</a> e conecte sua Phantom Wallet.
+              </p>
             </div>
+
+            {/* Passo 4 */}
+            <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-6 border-2 border-white/30 shadow-xl">
+              <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
+                <span className="text-3xl font-bold text-white">4</span>
+              </div>
+              <h4 className="text-xl font-bold text-white mb-3 text-center">Troque por $MILAGRE</h4>
+              <p className="text-white/85 text-sm text-center leading-relaxed">
+                Insira a quantidade de SOL, confirme a transação e receba seus $MILAGRE!
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-8 text-center">
+            <a
+              href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-white font-bold text-xl px-12 py-5 rounded-full transition-all shadow-2xl transform hover:scale-105"
+            >
+              🚀 Comprar Agora no Pump.fun
+            </a>
           </div>
         </div>
 
@@ -263,6 +350,24 @@ export default function Home() {
             $MILAGRE é construído sobre colaboração e confiança. Aqui, você nunca está sozinho.
             Nossa comunidade está unida pelo propósito de superar desafios e apoiar uns aos outros.
           </p>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-10 max-w-4xl mx-auto">
+            <div className="bg-white/10 rounded-2xl p-6">
+              <div className="text-4xl mb-3">🛡️</div>
+              <h4 className="text-white font-bold text-lg mb-2">Comunidade Real</h4>
+              <p className="text-white/80 text-sm">Apoio mútuo e crescimento conjunto</p>
+            </div>
+            <div className="bg-white/10 rounded-2xl p-6">
+              <div className="text-4xl mb-3">📈</div>
+              <h4 className="text-white font-bold text-lg mb-2">Utilidade Genuína</h4>
+              <p className="text-white/80 text-sm">Acesso a mentorias e recursos exclusivos</p>
+            </div>
+            <div className="bg-white/10 rounded-2xl p-6">
+              <div className="text-4xl mb-3">💎</div>
+              <h4 className="text-white font-bold text-lg mb-2">Transparência Total</h4>
+              <p className="text-white/80 text-sm">Sem promessas vazias, apenas ação real</p>
+            </div>
+          </div>
 
           <div className="flex gap-6 justify-center flex-wrap">
             <a
