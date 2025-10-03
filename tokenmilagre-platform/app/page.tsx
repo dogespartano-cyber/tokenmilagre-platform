@@ -312,119 +312,125 @@ export default function Home() {
             Cada guardião representa um pilar fundamental da nossa comunidade, guiando holders em sua jornada de prosperidade e crescimento.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="max-w-5xl mx-auto space-y-8">
             {/* Guardiã da Prosperidade */}
-            <div className="group bg-gradient-to-br from-white/95 to-white/85 backdrop-blur-md rounded-3xl shadow-2xl hover:shadow-yellow-300/50 transition-all duration-300 overflow-hidden border border-yellow-300/30">
-              <div className="relative h-72 overflow-hidden bg-gradient-to-br from-yellow-50 to-amber-100">
-                <Image
-                  src="/images/Token-MILAGRE-1.webp"
-                  alt="Guardiã da Prosperidade"
-                  width={400}
-                  height={400}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <div className="inline-block px-3 py-1 bg-yellow-400 rounded-full mb-2">
+            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl border-2 border-white/30 shadow-2xl hover:shadow-yellow-300/50 hover:bg-white/20 transition-all duration-300 overflow-hidden">
+              <div className="flex flex-col md:flex-row items-center gap-6 p-6 md:p-8">
+                {/* Imagem Circular */}
+                <div className="relative w-48 h-48 md:w-56 md:h-56 flex-shrink-0">
+                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/30 to-yellow-600/30 rounded-full blur-2xl"></div>
+                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-yellow-300/50 shadow-xl">
+                    <Image
+                      src="/images/Token-MILAGRE-1.webp"
+                      alt="Guardiã da Prosperidade"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Conteúdo */}
+                <div className="flex-1 text-center md:text-left">
+                  <div className="inline-block px-4 py-2 bg-yellow-400/90 backdrop-blur-sm rounded-full mb-3 shadow-lg">
                     <span className="text-sm font-bold text-gray-900">👼 Prosperidade</span>
                   </div>
-                  <h4 className="text-white font-bold text-xl">Guardiã da Prosperidade</h4>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-gray-700 mb-4 text-sm leading-relaxed">
-                  <span className="font-bold text-yellow-600">Proteção Financeira:</span> Orienta holders em decisões de investimento sábias e sustentáveis.
-                </p>
-                <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-gray-600">
-                    <span className="text-yellow-500 mt-0.5">✓</span>
-                    <span>Alertas de oportunidades</span>
-                  </div>
-                  <div className="flex items-start gap-2 text-sm text-gray-600">
-                    <span className="text-yellow-500 mt-0.5">✓</span>
-                    <span>Educação financeira</span>
-                  </div>
-                  <div className="flex items-start gap-2 text-sm text-gray-600">
-                    <span className="text-yellow-500 mt-0.5">✓</span>
-                    <span>Recompensas long-term</span>
+                  <h4 className="text-3xl font-bold text-white mb-3 drop-shadow-lg">Guardiã da Prosperidade</h4>
+                  <p className="text-white/95 mb-4 text-lg leading-relaxed">
+                    <span className="font-bold text-yellow-200">Proteção Financeira:</span> Orienta holders em decisões de investimento sábias e sustentáveis.
+                  </p>
+                  <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                    <span className="px-4 py-2 bg-yellow-400/20 backdrop-blur-sm border border-yellow-300/30 rounded-full text-white text-sm">
+                      ✓ Alertas de oportunidades
+                    </span>
+                    <span className="px-4 py-2 bg-yellow-400/20 backdrop-blur-sm border border-yellow-300/30 rounded-full text-white text-sm">
+                      ✓ Educação financeira
+                    </span>
+                    <span className="px-4 py-2 bg-yellow-400/20 backdrop-blur-sm border border-yellow-300/30 rounded-full text-white text-sm">
+                      ✓ Recompensas long-term
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Guardião da Sabedoria */}
-            <div className="group bg-gradient-to-br from-white/95 to-white/85 backdrop-blur-md rounded-3xl shadow-2xl hover:shadow-blue-300/50 transition-all duration-300 overflow-hidden border border-blue-300/30">
-              <div className="relative h-72 overflow-hidden bg-gradient-to-br from-blue-50 to-cyan-100">
-                <Image
-                  src="/images/Token-MILAGRE-2.webp"
-                  alt="Guardião da Sabedoria"
-                  width={400}
-                  height={400}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <div className="inline-block px-3 py-1 bg-blue-400 rounded-full mb-2">
+            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl border-2 border-white/30 shadow-2xl hover:shadow-blue-300/50 hover:bg-white/20 transition-all duration-300 overflow-hidden">
+              <div className="flex flex-col md:flex-row items-center gap-6 p-6 md:p-8">
+                {/* Imagem Circular */}
+                <div className="relative w-48 h-48 md:w-56 md:h-56 flex-shrink-0">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400/30 to-cyan-600/30 rounded-full blur-2xl"></div>
+                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-blue-300/50 shadow-xl">
+                    <Image
+                      src="/images/Token-MILAGRE-2.webp"
+                      alt="Guardião da Sabedoria"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Conteúdo */}
+                <div className="flex-1 text-center md:text-left">
+                  <div className="inline-block px-4 py-2 bg-blue-400/90 backdrop-blur-sm rounded-full mb-3 shadow-lg">
                     <span className="text-sm font-bold text-white">🧙 Sabedoria</span>
                   </div>
-                  <h4 className="text-white font-bold text-xl">Guardião da Sabedoria</h4>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-gray-700 mb-4 text-sm leading-relaxed">
-                  <span className="font-bold text-blue-600">Conhecimento Compartilhado:</span> Cultiva uma comunidade de aprendizado contínuo e mentoria.
-                </p>
-                <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-gray-600">
-                    <span className="text-blue-500 mt-0.5">✓</span>
-                    <span>Workshops blockchain & DeFi</span>
-                  </div>
-                  <div className="flex items-start gap-2 text-sm text-gray-600">
-                    <span className="text-blue-500 mt-0.5">✓</span>
-                    <span>Mentorias especializadas</span>
-                  </div>
-                  <div className="flex items-start gap-2 text-sm text-gray-600">
-                    <span className="text-blue-500 mt-0.5">✓</span>
-                    <span>Biblioteca educacional</span>
+                  <h4 className="text-3xl font-bold text-white mb-3 drop-shadow-lg">Guardião da Sabedoria</h4>
+                  <p className="text-white/95 mb-4 text-lg leading-relaxed">
+                    <span className="font-bold text-blue-200">Conhecimento Compartilhado:</span> Cultiva uma comunidade de aprendizado contínuo e mentoria.
+                  </p>
+                  <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                    <span className="px-4 py-2 bg-blue-400/20 backdrop-blur-sm border border-blue-300/30 rounded-full text-white text-sm">
+                      ✓ Workshops blockchain & DeFi
+                    </span>
+                    <span className="px-4 py-2 bg-blue-400/20 backdrop-blur-sm border border-blue-300/30 rounded-full text-white text-sm">
+                      ✓ Mentorias especializadas
+                    </span>
+                    <span className="px-4 py-2 bg-blue-400/20 backdrop-blur-sm border border-blue-300/30 rounded-full text-white text-sm">
+                      ✓ Biblioteca educacional
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Anjo da Esperança */}
-            <div className="group bg-gradient-to-br from-white/95 to-white/85 backdrop-blur-md rounded-3xl shadow-2xl hover:shadow-purple-300/50 transition-all duration-300 overflow-hidden border border-purple-300/30">
-              <div className="relative h-72 overflow-hidden bg-gradient-to-br from-purple-50 to-pink-100">
-                <Image
-                  src="/images/Token-MILAGRE-7.webp"
-                  alt="Anjo da Esperança"
-                  width={400}
-                  height={400}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <div className="inline-block px-3 py-1 bg-purple-400 rounded-full mb-2">
+            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl border-2 border-white/30 shadow-2xl hover:shadow-purple-300/50 hover:bg-white/20 transition-all duration-300 overflow-hidden">
+              <div className="flex flex-col md:flex-row items-center gap-6 p-6 md:p-8">
+                {/* Imagem Circular */}
+                <div className="relative w-48 h-48 md:w-56 md:h-56 flex-shrink-0">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-400/30 to-pink-600/30 rounded-full blur-2xl"></div>
+                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-purple-300/50 shadow-xl">
+                    <Image
+                      src="/images/Token-MILAGRE-7.webp"
+                      alt="Anjo da Esperança"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Conteúdo */}
+                <div className="flex-1 text-center md:text-left">
+                  <div className="inline-block px-4 py-2 bg-purple-400/90 backdrop-blur-sm rounded-full mb-3 shadow-lg">
                     <span className="text-sm font-bold text-white">💫 Esperança</span>
                   </div>
-                  <h4 className="text-white font-bold text-xl">Anjo da Esperança</h4>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-gray-700 mb-4 text-sm leading-relaxed">
-                  <span className="font-bold text-purple-600">Apoio Emocional:</span> Oferece suporte e motivação em momentos de incerteza.
-                </p>
-                <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-gray-600">
-                    <span className="text-purple-500 mt-0.5">✓</span>
-                    <span>Grupos de apoio emocional</span>
-                  </div>
-                  <div className="flex items-start gap-2 text-sm text-gray-600">
-                    <span className="text-purple-500 mt-0.5">✓</span>
-                    <span>Histórias de superação</span>
-                  </div>
-                  <div className="flex items-start gap-2 text-sm text-gray-600">
-                    <span className="text-purple-500 mt-0.5">✓</span>
-                    <span>Ajuda mútua 24/7</span>
+                  <h4 className="text-3xl font-bold text-white mb-3 drop-shadow-lg">Anjo da Esperança</h4>
+                  <p className="text-white/95 mb-4 text-lg leading-relaxed">
+                    <span className="font-bold text-purple-200">Apoio Emocional:</span> Oferece suporte e motivação em momentos de incerteza.
+                  </p>
+                  <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                    <span className="px-4 py-2 bg-purple-400/20 backdrop-blur-sm border border-purple-300/30 rounded-full text-white text-sm">
+                      ✓ Grupos de apoio emocional
+                    </span>
+                    <span className="px-4 py-2 bg-purple-400/20 backdrop-blur-sm border border-purple-300/30 rounded-full text-white text-sm">
+                      ✓ Histórias de superação
+                    </span>
+                    <span className="px-4 py-2 bg-purple-400/20 backdrop-blur-sm border border-purple-300/30 rounded-full text-white text-sm">
+                      ✓ Ajuda mútua 24/7
+                    </span>
                   </div>
                 </div>
               </div>
