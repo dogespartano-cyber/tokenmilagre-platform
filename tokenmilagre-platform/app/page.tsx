@@ -311,7 +311,7 @@ export default function Home() {
           {/* Left - Text Content */}
           <div className="text-center lg:text-left order-2 lg:order-1">
             <h2 className="text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-xl">
-              Nunca Estarás Sozinho 👼
+              Nunca Estarás Sozinho ❤️
             </h2>
             <p className="text-xl text-white mb-8 leading-relaxed drop-shadow-md">
               Nos momentos mais difíceis, <span className="font-bold text-yellow-200">$MILAGRE</span> surge como um farol de esperança.
@@ -333,8 +333,9 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold text-xl px-12 py-5 rounded-full transition-all shadow-2xl transform hover:scale-105 flex items-center gap-2"
                 >
-                  <span>💊</span>
-                  <span>Comprar</span>
+                  <span>🪙</span>
+                  <span className="hidden sm:inline">Comprar $MILAGRE</span>
+                  <span className="sm:hidden">Comprar</span>
                 </a>
               </div>
             ) : (
@@ -1045,8 +1046,9 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="px-6 py-3 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold text-base rounded-2xl transition-all shadow-lg hover:scale-105 hover:shadow-green-400/50 flex items-center gap-2"
                   >
-                    <span className="text-xl">💊</span>
-                    <span>Comprar</span>
+                    <span>🪙</span>
+                    <span className="hidden sm:inline">Comprar $MILAGRE</span>
+                    <span className="sm:hidden">Comprar</span>
                   </a>
                 </div>
               </div>
