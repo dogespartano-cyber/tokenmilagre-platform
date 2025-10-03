@@ -7,8 +7,17 @@ export default function Home() {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [tokenBalance, setTokenBalance] = useState<number>(0);
   const [loading, setLoading] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setMobileMenuOpen(false);
+    }
+  };
 
   const connectWallet = async () => {
     setLoading(true);
@@ -69,35 +78,117 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#5DD4D4] via-[#4DB8D8] to-[#E8F4F4]">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6 flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center shadow-lg">
-            <span className="text-2xl">✨</span>
-          </div>
-          <h1 className="text-3xl font-bold text-white drop-shadow-lg">$MILAGRE</h1>
-        </div>
+      {/* Navigation Menu - Fixed */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#4DB8D8]/95 to-[#5DD4D4]/95 backdrop-blur-lg border-b-2 border-white/20 shadow-xl">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex justify-between items-center">
+            {/* Logo */}
+            <button onClick={() => scrollToSection('home')} className="flex items-center gap-3 hover:opacity-80 transition">
+              <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center shadow-lg">
+                <span className="text-xl">✨</span>
+              </div>
+              <h1 className="text-2xl font-bold text-white drop-shadow-lg">$MILAGRE</h1>
+            </button>
 
-        <div className="flex gap-6 items-center">
-          <a href="https://twitter.com" target="_blank" className="text-white hover:text-yellow-300 transition text-2xl drop-shadow">
-            𝕏
-          </a>
-          <a href="https://t.me/tokenmilagre" target="_blank" className="text-white hover:text-yellow-300 transition text-2xl drop-shadow">
-            ✈️
-          </a>
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center gap-6">
+              <button onClick={() => scrollToSection('sobre')} className="text-white hover:text-yellow-300 transition font-semibold">
+                O que é?
+              </button>
+              <button onClick={() => scrollToSection('guardioes')} className="text-white hover:text-yellow-300 transition font-semibold">
+                Guardiões
+              </button>
+              <button onClick={() => scrollToSection('comprar')} className="text-white hover:text-yellow-300 transition font-semibold">
+                Como Comprar
+              </button>
+              <button onClick={() => scrollToSection('faq')} className="text-white hover:text-yellow-300 transition font-semibold">
+                FAQ
+              </button>
+              <button onClick={() => scrollToSection('contato')} className="text-white hover:text-yellow-300 transition font-semibold">
+                Sobre
+              </button>
+
+              {/* Social Icons */}
+              <div className="flex gap-4 items-center ml-4 pl-4 border-l-2 border-white/30">
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-yellow-300 transition text-xl">
+                  𝕏
+                </a>
+                <a href="https://t.me/tokenmilagre" target="_blank" rel="noopener noreferrer" className="text-white hover:text-yellow-300 transition text-xl">
+                  ✈️
+                </a>
+              </div>
+
+              {/* CTA Button */}
+              <a
+                href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-gray-900 font-bold px-6 py-2 rounded-full transition-all shadow-lg transform hover:scale-105"
+              >
+                🚀 Comprar
+              </a>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden text-white text-3xl focus:outline-none"
+            >
+              {mobileMenuOpen ? '✕' : '☰'}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden mt-4 pb-4 border-t border-white/20 pt-4 space-y-3">
+              <button onClick={() => scrollToSection('sobre')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
+                O que é?
+              </button>
+              <button onClick={() => scrollToSection('guardioes')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
+                Guardiões
+              </button>
+              <button onClick={() => scrollToSection('comprar')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
+                Como Comprar
+              </button>
+              <button onClick={() => scrollToSection('faq')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
+                FAQ
+              </button>
+              <button onClick={() => scrollToSection('contato')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
+                Sobre
+              </button>
+
+              <div className="flex gap-6 items-center pt-3 border-t border-white/20">
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-yellow-300 transition text-2xl">
+                  𝕏
+                </a>
+                <a href="https://t.me/tokenmilagre" target="_blank" rel="noopener noreferrer" className="text-white hover:text-yellow-300 transition text-2xl">
+                  ✈️
+                </a>
+              </div>
+
+              <a
+                href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-center bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 font-bold px-6 py-3 rounded-full transition-all shadow-lg mt-4"
+              >
+                🚀 Comprar Agora
+              </a>
+            </div>
+          )}
         </div>
-      </header>
+      </nav>
 
       {/* Hero Section */}
-      <main className="container mx-auto px-4 py-12">
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+      <main className="container mx-auto px-4 pt-28 pb-12">
+        <div id="home" className="grid lg:grid-cols-2 gap-12 items-center mb-20 scroll-mt-24">
           {/* Left - Text Content */}
           <div className="text-center lg:text-left order-2 lg:order-1">
             <h2 className="text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-xl">
               Nunca Estarás Sozinho 👼
             </h2>
-            <p className="text-xl text-white/95 mb-8 leading-relaxed">
-              Nos momentos mais difíceis, <span className="font-bold text-yellow-300">$MILAGRE</span> surge como um farol de esperança.
+            <p className="text-xl text-white mb-8 leading-relaxed drop-shadow-md">
+              Nos momentos mais difíceis, <span className="font-bold text-yellow-200">$MILAGRE</span> surge como um farol de esperança.
               Juntos, criamos novas chances para um novo começo.
             </p>
 
@@ -158,8 +249,8 @@ export default function Home() {
         </div>
 
         {/* O que é $MILAGRE */}
-        <div className="mb-20">
-          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-12 border-2 border-white/30 shadow-2xl">
+        <div id="sobre" className="mb-20 scroll-mt-24">
+          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 md:p-12 border-2 border-white/30 shadow-2xl">
             <h3 className="text-4xl font-bold text-white text-center mb-6 drop-shadow-lg">
               O que é $MILAGRE? ✨
             </h3>
@@ -168,34 +259,34 @@ export default function Home() {
                 Um token comunitário peer-to-peer criado na blockchain Solana para conectar pessoas através de apoio mútuo genuíno.
               </p>
 
-              <div className="grid md:grid-cols-2 gap-8 mt-8">
-                <div className="bg-white/10 rounded-2xl p-6">
-                  <h4 className="text-2xl font-bold mb-4 text-yellow-300">🌐 Tecnologia Solana</h4>
-                  <p className="text-white/90">
+              <div className="grid md:grid-cols-2 gap-6 mt-8">
+                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
+                  <h4 className="text-2xl font-bold mb-4 text-yellow-200">🌐 Tecnologia Solana</h4>
+                  <p className="text-white leading-relaxed">
                     Construído na blockchain Solana, $MILAGRE oferece transações rápidas, taxas baixas e segurança descentralizada.
                     Não é apenas um token - é uma ponte entre tecnologia e humanidade.
                   </p>
                 </div>
 
-                <div className="bg-white/10 rounded-2xl p-6">
-                  <h4 className="text-2xl font-bold mb-4 text-yellow-300">🤝 Apoio Mútuo Real</h4>
-                  <p className="text-white/90">
+                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
+                  <h4 className="text-2xl font-bold mb-4 text-yellow-200">🤝 Apoio Mútuo Real</h4>
+                  <p className="text-white leading-relaxed">
                     Diferente de outros tokens, $MILAGRE existe para criar valor humano real: mentorias, networking,
                     suporte emocional e oportunidades de crescimento pessoal e profissional.
                   </p>
                 </div>
 
-                <div className="bg-white/10 rounded-2xl p-6">
-                  <h4 className="text-2xl font-bold mb-4 text-yellow-300">👼 Guardiões Celestiais</h4>
-                  <p className="text-white/90">
+                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
+                  <h4 className="text-2xl font-bold mb-4 text-yellow-200">👼 Guardiões Celestiais</h4>
+                  <p className="text-white leading-relaxed">
                     Nossa comunidade é guiada por três pilares: Prosperidade (crescimento financeiro),
                     Sabedoria (educação contínua) e Esperança (apoio emocional). Cada holder tem acesso a esses guardiões.
                   </p>
                 </div>
 
-                <div className="bg-white/10 rounded-2xl p-6">
-                  <h4 className="text-2xl font-bold mb-4 text-yellow-300">🎯 Missão Clara</h4>
-                  <p className="text-white/90">
+                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
+                  <h4 className="text-2xl font-bold mb-4 text-yellow-200">🎯 Missão Clara</h4>
+                  <p className="text-white leading-relaxed">
                     &quot;Nunca estarás sozinho&quot; não é só um slogan - é nosso compromisso. Criamos um ecossistema onde
                     holders se ajudam mutuamente a superar desafios e alcançar seus objetivos.
                   </p>
@@ -213,7 +304,7 @@ export default function Home() {
         </div>
 
         {/* Guardiões Detalhados */}
-        <div className="mb-20">
+        <div id="guardioes" className="mb-20 scroll-mt-24">
           <h3 className="text-4xl font-bold text-white text-center mb-4 drop-shadow-lg">
             Nossos Guardiões Celestiais ✨
           </h3>
@@ -342,7 +433,7 @@ export default function Home() {
         </div>
 
         {/* Tutorial de Compra */}
-        <div className="mb-20">
+        <div id="comprar" className="mb-20 scroll-mt-24">
           <h3 className="text-4xl font-bold text-white text-center mb-4 drop-shadow-lg">
             Como Comprar $MILAGRE 🚀
           </h3>
@@ -457,7 +548,7 @@ export default function Home() {
         </div>
 
         {/* FAQ / Milagrépedia */}
-        <div className="mb-20">
+        <div id="faq" className="mb-20 scroll-mt-24">
           <h3 className="text-4xl font-bold text-white text-center mb-4 drop-shadow-lg">
             Milagrépedia 📚
           </h3>
@@ -465,9 +556,9 @@ export default function Home() {
             Perguntas frequentes sobre $MILAGRE e nossa comunidade
           </p>
 
-          <div className="max-w-4xl mx-auto space-y-6">
+          <div className="max-w-4xl mx-auto space-y-4">
             {/* FAQ Item 1 */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
               <h4 className="text-xl font-bold text-yellow-300 mb-3">
                 ❓ Por que $MILAGRE foi criado?
               </h4>
@@ -479,7 +570,7 @@ export default function Home() {
             </div>
 
             {/* FAQ Item 2 */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
               <h4 className="text-xl font-bold text-yellow-300 mb-3">
                 🔒 $MILAGRE é seguro?
               </h4>
@@ -491,7 +582,7 @@ export default function Home() {
             </div>
 
             {/* FAQ Item 3 */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
               <h4 className="text-xl font-bold text-yellow-300 mb-3">
                 🎯 Como funciona o sistema de guardiões?
               </h4>
@@ -503,7 +594,7 @@ export default function Home() {
             </div>
 
             {/* FAQ Item 4 */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
               <h4 className="text-xl font-bold text-yellow-300 mb-3">
                 💰 Onde posso vender meus tokens?
               </h4>
@@ -514,7 +605,7 @@ export default function Home() {
             </div>
 
             {/* FAQ Item 5 */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
               <h4 className="text-xl font-bold text-yellow-300 mb-3">
                 🚀 Qual é o roadmap do projeto?
               </h4>
@@ -527,7 +618,7 @@ export default function Home() {
             </div>
 
             {/* FAQ Item 6 */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
               <h4 className="text-xl font-bold text-yellow-300 mb-3">
                 🌐 O que é Solana?
               </h4>
@@ -539,7 +630,7 @@ export default function Home() {
             </div>
 
             {/* FAQ Item 7 */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
               <h4 className="text-xl font-bold text-yellow-300 mb-3">
                 🛡️ Dicas de segurança para holders
               </h4>
@@ -555,7 +646,7 @@ export default function Home() {
         </div>
 
         {/* Sobre o Projeto */}
-        <div className="mb-20">
+        <div id="contato" className="mb-20 scroll-mt-24">
           <div className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 backdrop-blur-lg rounded-3xl p-12 border-2 border-purple-300/30 shadow-2xl">
             <h3 className="text-4xl font-bold text-white text-center mb-6 drop-shadow-lg">
               Sobre o Projeto $MILAGRE 💫
