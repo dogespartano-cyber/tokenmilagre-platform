@@ -83,11 +83,18 @@ export default function Home() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <button onClick={() => scrollToSection('home')} className="flex items-center gap-3 hover:opacity-80 transition">
-              <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center shadow-lg">
-                <span className="text-xl">✨</span>
+            <button onClick={() => scrollToSection('home')} className="flex items-center gap-3 hover:opacity-90 transition group">
+              <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 border-yellow-300/50 group-hover:border-yellow-300 transition-all group-hover:scale-110">
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-cyan-400/20 blur-sm"></div>
+                <Image
+                  src="/images/TOKEN-MILAGRE-Hero.webp"
+                  alt="$MILAGRE"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover relative z-10"
+                />
               </div>
-              <h1 className="text-2xl font-bold text-white drop-shadow-lg">$MILAGRE</h1>
+              <h1 className="text-2xl font-bold text-white drop-shadow-lg group-hover:text-yellow-200 transition">$MILAGRE</h1>
             </button>
 
             {/* Desktop Menu */}
