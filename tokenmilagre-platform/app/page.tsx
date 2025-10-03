@@ -327,6 +327,100 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Informações Técnicas do Token */}
+        <div className="mb-20">
+          <div className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 backdrop-blur-xl rounded-3xl p-8 md:p-12 border-2 border-purple-300/30 shadow-2xl">
+            <h3 className="text-4xl font-bold text-white text-center mb-4 drop-shadow-lg">
+              Informações do Token 🪙
+            </h3>
+            <p className="text-white/90 text-center text-lg mb-10 max-w-3xl mx-auto">
+              $MILAGRE foi criado com as melhores tecnologias do ecossistema Solana
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-10">
+              {/* Card Pump.fun */}
+              <div className="bg-white/15 backdrop-blur-lg rounded-2xl p-8 border-2 border-white/30 hover:border-green-300/50 hover:bg-white/20 transition-all group">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-24 h-24 mb-6 bg-white/10 rounded-2xl p-4 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center">
+                    <Image
+                      src="/images/pumpfun-logo.png"
+                      alt="Pump.fun"
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <h4 className="text-2xl font-bold text-white mb-3">Criado na Pump.fun</h4>
+                  <p className="text-white/90 leading-relaxed mb-4">
+                    Lançado na <strong className="text-green-300">Pump.fun</strong>, a plataforma líder para criação de tokens na Solana.
+                    Garantia de liquidez e transparência total desde o primeiro dia.
+                  </p>
+                  <a
+                    href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-400 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-green-400/50"
+                  >
+                    <span>Ver na Pump.fun</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Card Solana */}
+              <div className="bg-white/15 backdrop-blur-lg rounded-2xl p-8 border-2 border-white/30 hover:border-purple-300/50 hover:bg-white/20 transition-all group">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-24 h-24 mb-6 bg-white/10 rounded-2xl p-4 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center">
+                    <Image
+                      src="/images/solana-logo.png"
+                      alt="Solana"
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <h4 className="text-2xl font-bold text-white mb-3">Rede Solana</h4>
+                  <p className="text-white/90 leading-relaxed mb-4">
+                    Construído na <strong className="text-purple-300">blockchain Solana</strong>, conhecida por suas transações ultra-rápidas
+                    (menos de 1 segundo) e taxas extremamente baixas (centavos de dólar).
+                  </p>
+                  <a
+                    href="https://solana.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-purple-500 hover:bg-purple-400 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-purple-400/50"
+                  >
+                    <span>Sobre Solana</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Contrato e Stats */}
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 max-w-4xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="text-center md:text-left">
+                  <p className="text-white/70 text-sm mb-2">Endereço do Contrato</p>
+                  <code className="text-yellow-200 font-mono text-xs md:text-sm break-all block bg-black/20 p-3 rounded-lg">
+                    {TOKEN_ADDRESS}
+                  </code>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center">
+                    <p className="text-white/70 text-sm mb-1">Blockchain</p>
+                    <p className="text-white font-bold text-lg">Solana</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-white/70 text-sm mb-1">Tipo</p>
+                    <p className="text-white font-bold text-lg">SPL Token</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Guardiões Detalhados */}
         <div id="guardioes" className="mb-20 scroll-mt-24">
           <h3 className="text-4xl font-bold text-white text-center mb-4 drop-shadow-lg">
