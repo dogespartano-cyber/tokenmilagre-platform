@@ -1,0 +1,16 @@
+{
+  "name": "$MILAGRE Token",
+  "short_name": "$MILAGRE",
+  "description": "Token comunitário de apoio mútuo na Solana",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#5DD4D4",
+  "theme_color": "#FFD700",
+  "icons": [
+    {
+      "src": "/images/TOKEN-MILAGRE-.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ]
+}
