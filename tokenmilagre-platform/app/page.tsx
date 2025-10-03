@@ -890,42 +890,40 @@ export default function Home() {
                 <code className="text-2xl md:text-3xl font-mono font-bold text-yellow-200 break-all">
                   {TOKEN_ADDRESS}
                 </code>
-                <button
-                  onClick={copyToClipboard}
-                  className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-gray-900 font-bold text-base rounded-2xl transition-all shadow-lg hover:scale-105 hover:shadow-yellow-400/50 flex items-center gap-2"
-                >
-                  {copied ? (
-                    <>
-                      <span className="text-xl">✓</span>
-                      <span>Copiado!</span>
-                    </>
-                  ) : (
-                    <>
-                      <span className="text-xl">📋</span>
-                      <span>Copiar</span>
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* Logo Pump.fun */}
-              <a
-                href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block group/logo transition-transform hover:scale-110 duration-300"
-              >
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-green-400/30 to-emerald-600/30 rounded-full blur-2xl opacity-0 group-hover/logo:opacity-100 transition-opacity"></div>
-                  <Image
-                    src="/images/pumpfun-logo.png"
-                    alt="Pump.fun"
-                    width={140}
-                    height={140}
-                    className="relative z-10 drop-shadow-2xl"
-                  />
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={copyToClipboard}
+                    className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-gray-900 font-bold text-base rounded-2xl transition-all shadow-lg hover:scale-105 hover:shadow-yellow-400/50 flex items-center gap-2"
+                  >
+                    {copied ? (
+                      <>
+                        <span className="text-xl">✓</span>
+                        <span>Copiado!</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-xl">📋</span>
+                        <span>Copiar</span>
+                      </>
+                    )}
+                  </button>
+                  <a
+                    href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold text-base rounded-2xl transition-all shadow-lg hover:scale-105 hover:shadow-green-400/50 flex items-center gap-2"
+                  >
+                    <Image
+                      src="/images/pumpfun-logo.png"
+                      alt="Pump.fun"
+                      width={24}
+                      height={24}
+                      className="drop-shadow-lg"
+                    />
+                    <span>Comprar</span>
+                  </a>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
