@@ -526,22 +526,33 @@ export default function Home() {
                           {TOKEN_ADDRESS}
                         </code>
                       </div>
-                      <button
-                        onClick={copyToClipboard}
-                        className="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-cyan-400 to-teal-400 hover:from-cyan-300 hover:to-teal-300 text-white font-bold text-base rounded-xl transition-all shadow-lg hover:scale-105 hover:shadow-cyan-400/50 flex items-center justify-center gap-2"
-                      >
-                        {copied ? (
-                          <>
-                            <span className="text-xl">✓</span>
-                            <span>Endereço Copiado!</span>
-                          </>
-                        ) : (
-                          <>
-                            <span className="text-xl">📋</span>
-                            <span>Copiar Endereço</span>
-                          </>
-                        )}
-                      </button>
+                      <div className="flex flex-col sm:flex-row gap-3">
+                        <button
+                          onClick={copyToClipboard}
+                          className="flex-1 sm:flex-none px-6 py-3 bg-gradient-to-r from-cyan-400 to-teal-400 hover:from-cyan-300 hover:to-teal-300 text-white font-bold text-base rounded-xl transition-all shadow-lg hover:scale-105 hover:shadow-cyan-400/50 flex items-center justify-center gap-2"
+                        >
+                          {copied ? (
+                            <>
+                              <span className="text-xl">✓</span>
+                              <span>Endereço Copiado!</span>
+                            </>
+                          ) : (
+                            <>
+                              <span className="text-xl">📋</span>
+                              <span>Copiar Endereço</span>
+                            </>
+                          )}
+                        </button>
+                        <a
+                          href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 sm:flex-none px-6 py-3 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold text-base rounded-xl transition-all shadow-lg hover:scale-105 hover:shadow-green-400/50 flex items-center justify-center gap-2"
+                        >
+                          <span>🪙</span>
+                          <span>Comprar</span>
+                        </a>
+                      </div>
                     </div>
 
                     {/* Stats Grid */}
