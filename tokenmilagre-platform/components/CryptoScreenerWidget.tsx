@@ -36,7 +36,7 @@ function CryptoScreenerWidget() {
     <div
       className="tradingview-widget-container bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden"
       ref={container}
-      style={{ height: "500px", width: "100%" }}
+      style={{ height: "650px", width: "100%" }}
     >
       <div className="tradingview-widget-container__widget" style={{ height: "100%", width: "100%" }}></div>
     </div>

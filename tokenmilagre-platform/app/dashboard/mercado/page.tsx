@@ -116,7 +116,7 @@ export default function MercadoPage() {
             <p className="text-white text-xl">Carregando dados do mercado...</p>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-10">
             {/* Market Overview */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Total Market Cap */}
@@ -263,11 +263,15 @@ export default function MercadoPage() {
               </div>
             </div>
 
+            {/* Divider */}
+            <div className="border-t-2 border-white/20"></div>
+
             {/* TradingView Charts */}
             <div className="space-y-6">
-              <h2 className="text-white font-bold text-2xl font-[family-name:var(--font-poppins)] text-center">
+              <h2 className="text-white font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2">
                 📈 Gráficos ao Vivo
               </h2>
+              <p className="text-white/70 text-center mb-6">Acompanhe BTC, ETH e SOL em tempo real</p>
 
               <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                 {/* BTC Chart */}
@@ -299,11 +303,15 @@ export default function MercadoPage() {
               </div>
             </div>
 
+            {/* Divider */}
+            <div className="border-t-2 border-white/20"></div>
+
             {/* Análise Técnica Avançada */}
             <div className="space-y-6">
-              <h2 className="text-white font-bold text-2xl font-[family-name:var(--font-poppins)] text-center">
+              <h2 className="text-white font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2">
                 🔬 Análise Técnica Avançada
               </h2>
+              <p className="text-white/70 text-center mb-6">Indicadores técnicos e recomendações de trading</p>
 
               <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                 {/* Análise Técnica BTC */}
@@ -335,11 +343,15 @@ export default function MercadoPage() {
               </div>
             </div>
 
+            {/* Divider */}
+            <div className="border-t-2 border-white/20"></div>
+
             {/* Heatmap & Screener */}
             <div className="space-y-6">
-              <h2 className="text-white font-bold text-2xl font-[family-name:var(--font-poppins)] text-center">
+              <h2 className="text-white font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2">
                 🗺️ Mapa de Mercado & Screener
               </h2>
+              <p className="text-white/70 text-center mb-6">Visualize o mercado completo e filtre oportunidades</p>
 
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Crypto Heatmap */}
