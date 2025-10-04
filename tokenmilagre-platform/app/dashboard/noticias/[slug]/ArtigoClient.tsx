@@ -25,9 +25,11 @@ interface NewsItem {
 interface ArtigoClientProps {
   article: NewsItem | null;
   relatedArticles?: NewsItem[];
+  previousArticle?: NewsItem | null;
+  nextArticle?: NewsItem | null;
 }
 
-export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoClientProps) {
+export default function ArtigoClient({ article, relatedArticles = [], previousArticle = null, nextArticle = null }: ArtigoClientProps) {
   const router = useRouter();
   const [readingProgress, setReadingProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('');
@@ -88,27 +90,22 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
     }
   };
 
-  const getCategoryGradient = (category: string) => {
-    const gradients: Record<string, string> = {
-      'Bitcoin': 'from-orange-500 to-yellow-500',
-      'Ethereum': 'from-purple-500 to-blue-500',
-      'Solana': 'from-green-500 to-teal-500',
-      'DeFi': 'from-pink-500 to-purple-500',
-      'NFTs': 'from-indigo-500 to-purple-500',
-      'Regulação': 'from-gray-500 to-slate-500',
-    };
-    return gradients[category] || 'from-blue-500 to-cyan-500';
-  };
-
-  const shareOnTwitter = () => {
+  const shareOnX = () => {
     const url = window.location.href;
     const text = `${article?.title} via @TokenMilagre`;
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
   };
 
-  const shareOnLinkedIn = () => {
+  const shareOnWhatsApp = () => {
     const url = window.location.href;
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+    const text = `${article?.title} - ${url}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
+  const shareOnTelegram = () => {
+    const url = window.location.href;
+    const text = article?.title || '';
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
   };
 
   const copyLink = () => {
@@ -138,10 +135,10 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
 
   return (
     <>
-      {/* Barra de Progresso de Leitura */}
+      {/* Barra de Progresso de Leitura - Cor fixa laranja/amarelo */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-white/10 z-50">
         <div
-          className={`h-full bg-gradient-to-r ${getCategoryGradient(article.category[0])} transition-all duration-300`}
+          className="h-full bg-gradient-to-r from-orange-500 to-yellow-500 transition-all duration-300"
           style={{ width: `${readingProgress}%` }}
         />
       </div>
@@ -157,17 +154,6 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
             >
               <span>←</span> Voltar para Notícias
             </button>
-
-            {/* Hero Image com Gradiente */}
-            <div className={`w-full h-64 rounded-2xl bg-gradient-to-br ${getCategoryGradient(article.category[0])} mb-8 relative overflow-hidden`}>
-              <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-10"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center text-white">
-                  <div className="text-6xl mb-4">{getSentimentIcon(article.sentiment)}</div>
-                  <p className="text-2xl font-bold px-8">{article.category.join(' • ')}</p>
-                </div>
-              </div>
-            </div>
 
             {/* Header do Artigo */}
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border-2 border-white/30 shadow-xl mb-6">
@@ -214,18 +200,24 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
               {/* Botões de Compartilhamento */}
               <div className="pt-6 border-t border-white/10">
                 <p className="text-white/60 text-sm mb-3">Compartilhar:</p>
-                <div className="flex gap-3">
+                <div className="flex gap-3 flex-wrap">
                   <button
-                    onClick={shareOnTwitter}
-                    className="px-4 py-2 bg-[#1DA1F2] hover:bg-[#1a8cd8] text-white rounded-lg transition flex items-center gap-2"
+                    onClick={shareOnX}
+                    className="px-4 py-2 bg-black hover:bg-gray-900 text-white rounded-lg transition flex items-center gap-2"
                   >
-                    <span>𝕏</span> Twitter
+                    <span>𝕏</span> X
                   </button>
                   <button
-                    onClick={shareOnLinkedIn}
-                    className="px-4 py-2 bg-[#0077B5] hover:bg-[#006399] text-white rounded-lg transition flex items-center gap-2"
+                    onClick={shareOnWhatsApp}
+                    className="px-4 py-2 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-lg transition flex items-center gap-2"
                   >
-                    <span>in</span> LinkedIn
+                    <span>📱</span> WhatsApp
+                  </button>
+                  <button
+                    onClick={shareOnTelegram}
+                    className="px-4 py-2 bg-[#0088cc] hover:bg-[#0077b3] text-white rounded-lg transition flex items-center gap-2"
+                  >
+                    <span>✈️</span> Telegram
                   </button>
                   <button
                     onClick={copyLink}
@@ -323,10 +315,45 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
               )}
             </div>
 
+            {/* Navegação Anterior/Próximo */}
+            {(previousArticle || nextArticle) && (
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl mb-8">
+                <div className="flex justify-between items-center gap-4">
+                  {previousArticle ? (
+                    <button
+                      onClick={() => router.push(`/dashboard/noticias/${previousArticle.slug || previousArticle.id}`)}
+                      className="flex-1 text-left bg-white/5 hover:bg-white/10 p-4 rounded-xl transition border border-white/10 hover:border-white/20 group"
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-white/50 text-sm">← Anterior</span>
+                      </div>
+                      <h4 className="text-white font-semibold line-clamp-2 group-hover:text-yellow-300 transition">{previousArticle.title}</h4>
+                    </button>
+                  ) : (
+                    <div className="flex-1"></div>
+                  )}
+
+                  {nextArticle ? (
+                    <button
+                      onClick={() => router.push(`/dashboard/noticias/${nextArticle.slug || nextArticle.id}`)}
+                      className="flex-1 text-right bg-white/5 hover:bg-white/10 p-4 rounded-xl transition border border-white/10 hover:border-white/20 group"
+                    >
+                      <div className="flex items-center justify-end gap-2 mb-2">
+                        <span className="text-white/50 text-sm">Próximo →</span>
+                      </div>
+                      <h4 className="text-white font-semibold line-clamp-2 group-hover:text-yellow-300 transition">{nextArticle.title}</h4>
+                    </button>
+                  ) : (
+                    <div className="flex-1"></div>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Artigos Relacionados */}
             {relatedArticles.length > 0 && (
               <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border-2 border-white/30 shadow-xl">
-                <h3 className="text-2xl font-bold text-white mb-6">📰 Artigos Relacionados</h3>
+                <h3 className="text-2xl font-bold text-white mb-6">📰 Continue Lendo</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   {relatedArticles.slice(0, 4).map((related, idx) => (
                     <button

@@ -69,14 +69,31 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
   const { slug } = await params;
   const article = await getArticle(slug);
 
-  // Buscar artigos relacionados (mesma categoria)
+  // Buscar artigos relacionados, anterior e próximo
   let relatedArticles: NewsItem[] = [];
+  let previousArticle: NewsItem | null = null;
+  let nextArticle: NewsItem | null = null;
+
   if (article) {
     try {
       const newsFilePath = path.join(process.cwd(), 'data', 'news.json');
       const fileContent = await fs.readFile(newsFilePath, 'utf-8');
       const allNews: NewsItem[] = JSON.parse(fileContent);
 
+      // Encontrar índice do artigo atual
+      const currentIndex = allNews.findIndex(item => item.id === article.id);
+
+      // Artigo anterior (mais novo)
+      if (currentIndex > 0) {
+        previousArticle = allNews[currentIndex - 1];
+      }
+
+      // Próximo artigo (mais antigo)
+      if (currentIndex < allNews.length - 1) {
+        nextArticle = allNews[currentIndex + 1];
+      }
+
+      // Artigos relacionados (mesma categoria, excluindo atual)
       relatedArticles = allNews
         .filter(item =>
           item.id !== article.id &&
@@ -88,5 +105,5 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
     }
   }
 
-  return <ArtigoClient article={article} relatedArticles={relatedArticles} />;
+  return <ArtigoClient article={article} relatedArticles={relatedArticles} previousArticle={previousArticle} nextArticle={nextArticle} />;
 }
