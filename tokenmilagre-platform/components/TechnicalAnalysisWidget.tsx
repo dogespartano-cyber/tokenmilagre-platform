@@ -20,7 +20,7 @@ function TechnicalAnalysisWidget({ symbol = "BINANCE:BTCUSDT" }: TechnicalAnalys
     script.type = "text/javascript";
     script.async = true;
     script.innerHTML = JSON.stringify({
-      interval: "1m",
+      interval: "4h",
       width: "100%",
       isTransparent: false,
       height: "100%",
