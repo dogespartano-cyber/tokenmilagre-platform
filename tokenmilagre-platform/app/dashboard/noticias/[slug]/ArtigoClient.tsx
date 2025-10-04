@@ -164,7 +164,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
         {/* Botão Voltar */}
         <button
           onClick={() => router.push('/dashboard/noticias')}
-          className="mb-6 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition flex items-center gap-2 max-w-7xl mx-auto"
+          className="mb-6 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition flex items-center gap-2"
         >
           <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
           Voltar para Notícias
@@ -233,24 +233,24 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                   </button>
                   <button
                     onClick={shareOnWhatsApp}
-                    className="w-10 h-10 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-lg transition flex items-center justify-center"
-                    title="Compartilhar no WhatsApp"
+                    className="px-4 py-2 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-lg transition flex items-center gap-2"
                   >
-                    <FontAwesomeIcon icon={faWhatsapp} className="w-5 h-5" />
+                    <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
+                    WhatsApp
                   </button>
                   <button
                     onClick={shareOnTelegram}
-                    className="w-10 h-10 bg-[#0088cc] hover:bg-[#0077b3] text-white rounded-lg transition flex items-center justify-center"
-                    title="Compartilhar no Telegram"
+                    className="px-4 py-2 bg-[#0088cc] hover:bg-[#0077b3] text-white rounded-lg transition flex items-center gap-2"
                   >
-                    <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
+                    <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
+                    Telegram
                   </button>
                   <button
                     onClick={copyLink}
-                    className="w-10 h-10 bg-white/10 hover:bg-white/20 text-white rounded-lg transition flex items-center justify-center"
-                    title="Copiar link"
+                    className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition flex items-center gap-2"
                   >
-                    <FontAwesomeIcon icon={faLink} className="w-5 h-5" />
+                    <FontAwesomeIcon icon={faLink} className="w-4 h-4" />
+                    Copiar link
                   </button>
                 </div>
               </div>
