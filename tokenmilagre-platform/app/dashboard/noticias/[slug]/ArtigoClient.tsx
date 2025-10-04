@@ -216,57 +216,52 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
               {(() => {
                 const sentimentData = getSentimentData(article.sentiment);
                 return (
-                  <div className="mb-6 flex justify-center">
-                    <div className={`${sentimentData.bgColor} ${sentimentData.borderColor} border-2 rounded-2xl p-6 inline-flex flex-col items-center gap-4`}>
-                      {/* Velocímetro Visual */}
-                      <div className="relative w-32 h-20 overflow-hidden">
-                        {/* Arco do velocímetro */}
-                        <div className="absolute bottom-0 left-0 right-0 h-16">
-                          <svg viewBox="0 0 200 100" className="w-full h-full">
-                            {/* Fundo do arco */}
-                            <path
-                              d="M 20 90 A 80 80 0 0 1 180 90"
-                              fill="none"
-                              stroke="rgba(255,255,255,0.1)"
-                              strokeWidth="12"
-                              strokeLinecap="round"
-                            />
-                            {/* Arco colorido gradiente */}
-                            <defs>
-                              <linearGradient id={`gradient-${article.id}`} x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style={{ stopColor: '#ef4444' }} />
-                                <stop offset="50%" style={{ stopColor: '#eab308' }} />
-                                <stop offset="100%" style={{ stopColor: '#22c55e' }} />
-                              </linearGradient>
-                            </defs>
-                            <path
-                              d="M 20 90 A 80 80 0 0 1 180 90"
-                              fill="none"
-                              stroke={`url(#gradient-${article.id})`}
-                              strokeWidth="8"
-                              strokeLinecap="round"
-                            />
-                          </svg>
-                        </div>
-
-                        {/* Ponteiro do velocímetro */}
-                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-12 origin-bottom transition-transform duration-500"
-                             style={{ transform: `translateX(-50%) rotate(${sentimentData.rotation}deg)` }}>
-                          <div className={`w-1 h-full bg-gradient-to-t ${sentimentData.color} rounded-full shadow-lg`}></div>
-                          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white rounded-full shadow-lg"></div>
-                        </div>
+                  <div className="mb-6 flex items-center gap-6">
+                    {/* Velocímetro Visual */}
+                    <div className="relative w-24 h-16 shrink-0">
+                      {/* Arco do velocímetro */}
+                      <div className="absolute bottom-0 left-0 right-0 h-14">
+                        <svg viewBox="0 0 200 100" className="w-full h-full">
+                          {/* Fundo do arco */}
+                          <path
+                            d="M 20 90 A 80 80 0 0 1 180 90"
+                            fill="none"
+                            stroke="rgba(255,255,255,0.1)"
+                            strokeWidth="12"
+                            strokeLinecap="round"
+                          />
+                          {/* Arco colorido gradiente */}
+                          <defs>
+                            <linearGradient id={`gradient-${article.id}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                              <stop offset="0%" style={{ stopColor: '#ef4444' }} />
+                              <stop offset="50%" style={{ stopColor: '#eab308' }} />
+                              <stop offset="100%" style={{ stopColor: '#22c55e' }} />
+                            </linearGradient>
+                          </defs>
+                          <path
+                            d="M 20 90 A 80 80 0 0 1 180 90"
+                            fill="none"
+                            stroke={`url(#gradient-${article.id})`}
+                            strokeWidth="8"
+                            strokeLinecap="round"
+                          />
+                        </svg>
                       </div>
 
-                      {/* Label do Sentimento */}
-                      <div className="text-center">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-2xl">{sentimentData.icon}</span>
-                          <span className={`${sentimentData.textColor} font-bold text-lg`}>
-                            {sentimentData.label}
-                          </span>
-                        </div>
-                        <p className="text-white/60 text-xs">Análise de sentimento da notícia</p>
+                      {/* Ponteiro do velocímetro */}
+                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-10 origin-bottom transition-transform duration-500"
+                           style={{ transform: `translateX(-50%) rotate(${sentimentData.rotation}deg)` }}>
+                        <div className={`w-1 h-full bg-gradient-to-t ${sentimentData.color} rounded-full shadow-lg`}></div>
+                        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white rounded-full shadow-lg"></div>
                       </div>
+                    </div>
+
+                    {/* Label do Sentimento */}
+                    <div>
+                      <span className={`${sentimentData.textColor} font-bold text-lg`}>
+                        {sentimentData.label}
+                      </span>
+                      <p className="text-white/60 text-xs">Análise de sentimento da notícia</p>
                     </div>
                   </div>
                 );
