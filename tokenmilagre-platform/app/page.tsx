@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
+import Link from 'next/link';
 import { HolderCounter } from '@/components/HolderCounter';
 import { DexScreenerChart } from '@/components/DexScreenerChart';
 
@@ -235,6 +236,9 @@ export default function Home() {
               <button onClick={() => scrollToSection('contato')} className="text-white hover:text-yellow-300 transition font-semibold">
                 Sobre
               </button>
+              <Link href="/manifesto" className="text-white hover:text-yellow-300 transition font-semibold">
+                Manifesto
+              </Link>
 
               {/* Social Icons */}
               <div className="flex gap-4 items-center ml-4 pl-4 border-l-2 border-white/30">
@@ -290,6 +294,9 @@ export default function Home() {
               <button onClick={() => scrollToSection('contato')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
                 Sobre
               </button>
+              <Link href="/manifesto" className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
+                Manifesto
+              </Link>
 
               <div className="flex gap-6 items-center pt-3 border-t border-white/20">
                 <a href="https://x.com/TokenMilagre" target="_blank" rel="noopener noreferrer" className="w-8 h-8 flex items-center justify-center hover:opacity-70 transition">
