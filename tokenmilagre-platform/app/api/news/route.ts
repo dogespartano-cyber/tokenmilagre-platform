@@ -7,8 +7,10 @@ export const dynamic = 'force-dynamic';
 export const maxDuration = 60; // 60 segundos timeout
 
 interface NewsItem {
+  id: string;
   title: string;
   summary: string;
+  content?: string;
   url: string;
   source: string;
   publishedAt: string;
@@ -63,8 +65,10 @@ async function fetchRealNews(): Promise<NewsItem[]> {
     // Fallback caso arquivo não exista
     const structuredNews: NewsItem[] = [
         {
+          id: 'fallback-1',
           title: 'Bitcoin atinge nova máxima histórica após aprovação de ETF',
           summary: 'O Bitcoin ultrapassou a marca de $100.000 após a aprovação de múltiplos ETFs pela SEC. Analistas preveem continuidade da tendência de alta.',
+          content: 'Artigo completo em breve...',
           url: 'https://cointelegraph.com',
           source: 'Cointelegraph',
           publishedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
@@ -73,8 +77,10 @@ async function fetchRealNews(): Promise<NewsItem[]> {
           keywords: ['ETF', 'SEC', 'Alta histórica']
         },
         {
+          id: 'fallback-2',
           title: 'Ethereum Pectra upgrade agendado para março de 2025',
           summary: 'A próxima atualização do Ethereum trará melhorias significativas em escalabilidade e redução de taxas de gas.',
+          content: 'Artigo completo em breve...',
           url: 'https://ethereum.org',
           source: 'Ethereum Foundation',
           publishedAt: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
@@ -83,8 +89,10 @@ async function fetchRealNews(): Promise<NewsItem[]> {
           keywords: ['Upgrade', 'Pectra', 'Escalabilidade']
         },
         {
+          id: 'fallback-3',
           title: 'Solana DeFi TVL ultrapassa $10 bilhões',
           summary: 'O ecossistema DeFi da Solana continua crescendo com novos protocolos e maior adoção institucional.',
+          content: 'Artigo completo em breve...',
           url: 'https://defillama.com',
           source: 'DeFi Llama',
           publishedAt: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
@@ -93,8 +101,10 @@ async function fetchRealNews(): Promise<NewsItem[]> {
           keywords: ['TVL', 'DeFi', 'Crescimento']
         },
         {
+          id: 'fallback-4',
           title: 'SEC multa exchange por violação de regulamentação',
           summary: 'Autoridade reguladora dos EUA aplicou multa de $50 milhões em exchange por não seguir regras de registro.',
+          content: 'Artigo completo em breve...',
           url: 'https://sec.gov',
           source: 'SEC',
           publishedAt: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
@@ -103,8 +113,10 @@ async function fetchRealNews(): Promise<NewsItem[]> {
           keywords: ['SEC', 'Multa', 'Regulação']
         },
         {
+          id: 'fallback-5',
           title: 'NFTs de arte digital batem recorde em leilão',
           summary: 'Coleção NFT vendida por $25 milhões marca novo recorde no mercado de arte digital.',
+          content: 'Artigo completo em breve...',
           url: 'https://opensea.io',
           source: 'OpenSea',
           publishedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
@@ -113,8 +125,10 @@ async function fetchRealNews(): Promise<NewsItem[]> {
           keywords: ['NFT', 'Arte', 'Recorde']
         },
         {
+          id: 'fallback-6',
           title: 'Análise: Altcoin season pode estar começando',
           summary: 'Indicadores técnicos sugerem que altcoins podem superar Bitcoin nas próximas semanas.',
+          content: 'Artigo completo em breve...',
           url: 'https://cryptoquant.com',
           source: 'CryptoQuant',
           publishedAt: new Date(Date.now() - 36 * 60 * 60 * 1000).toISOString(),

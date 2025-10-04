@@ -1,10 +1,13 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 
 interface NewsItem {
+  id: string;
   title: string;
   summary: string;
+  content?: string;
   url: string;
   source: string;
   publishedAt: string;
@@ -161,15 +164,13 @@ export default function NoticiasPage() {
                 </div>
 
                 {/* Link */}
-                <a
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href={`/dashboard/noticias/${item.id}`}
                   className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-semibold text-sm transition"
                 >
-                  Ler notícia completa
+                  Ler artigo completo
                   <span>→</span>
-                </a>
+                </Link>
               </div>
             ))}
           </div>
