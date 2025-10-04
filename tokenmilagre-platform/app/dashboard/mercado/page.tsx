@@ -393,29 +393,17 @@ export default function MercadoPage() {
               <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                 {/* BTC Chart */}
                 <div>
-                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
-                    <span>₿</span>
-                    <span>Bitcoin (BTC/USDT)</span>
-                  </h3>
-                  <LightweightChart symbol="BTCUSDT" />
+                  <LightweightChart symbol="BTCUSDT" name="₿ Bitcoin (BTC/USDT)" />
                 </div>
 
                 {/* ETH Chart */}
                 <div>
-                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
-                    <span>Ξ</span>
-                    <span>Ethereum (ETH/USDT)</span>
-                  </h3>
-                  <LightweightChart symbol="ETHUSDT" />
+                  <LightweightChart symbol="ETHUSDT" name="Ξ Ethereum (ETH/USDT)" />
                 </div>
 
                 {/* SOL Chart */}
                 <div>
-                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
-                    <span>◎</span>
-                    <span>Solana (SOL/USDT)</span>
-                  </h3>
-                  <LightweightChart symbol="SOLUSDT" />
+                  <LightweightChart symbol="SOLUSDT" name="◎ Solana (SOL/USDT)" />
                 </div>
               </div>
             </div>
