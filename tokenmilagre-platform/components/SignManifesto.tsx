@@ -1,11 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function SignManifesto() {
   const [signed, setSigned] = useState(false);
   const [signing, setSigning] = useState(false);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [signersCount, setSignersCount] = useState(0);
+
+  // Mock contador de signatários (em produção, seria on-chain)
+  useEffect(() => {
+    const mockCount = 147; // Contador mockup
+    const savedCount = localStorage.getItem('manifesto_signers_count');
+    if (savedCount) {
+      setSignersCount(parseInt(savedCount));
+    } else {
+      setSignersCount(mockCount);
+      localStorage.setItem('manifesto_signers_count', mockCount.toString());
+    }
+  }, []);
 
   const handleSign = async () => {
     setSigning(true);
@@ -26,6 +39,11 @@ export function SignManifesto() {
         // Salvar no localStorage (mock - em produção seria on-chain)
         localStorage.setItem('manifesto_signed', 'true');
         localStorage.setItem('manifesto_signer', address);
+
+        // Incrementar contador
+        const newCount = signersCount + 1;
+        setSignersCount(newCount);
+        localStorage.setItem('manifesto_signers_count', newCount.toString());
       } else {
         alert('Por favor, instale a carteira Phantom: https://phantom.app/');
       }
@@ -79,10 +97,18 @@ export function SignManifesto() {
         <h3 className="text-2xl font-bold text-white mb-4 font-[family-name:var(--font-poppins)]">
           ✍️ Assine o Manifesto
         </h3>
-        <p className="text-white/95 mb-6 max-w-2xl mx-auto">
+        <p className="text-white/95 mb-4 max-w-2xl mx-auto">
           Ao assinar este manifesto com sua wallet, você demonstra seu compromisso com os valores
           de transparência, colaboração e apoio mútuo que definem o $MILAGRE.
         </p>
+
+        {/* Contador de Signatários */}
+        <div className="inline-block bg-white/10 backdrop-blur-sm rounded-full px-6 py-2 mb-6">
+          <p className="text-white/90 text-sm">
+            <span className="font-bold text-yellow-200 text-lg">{signersCount}</span> {signersCount === 1 ? 'pessoa assinou' : 'pessoas assinaram'}
+          </p>
+        </div>
+
         <div className="space-y-4">
           <button
             onClick={handleSign}
