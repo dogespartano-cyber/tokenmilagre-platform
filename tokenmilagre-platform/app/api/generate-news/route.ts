@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { fetchNewsWithGemini, generateFullArticle } from '@/lib/gemini-news';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -21,14 +22,14 @@ interface NewsItem {
 
 // Tópicos para gerar artigos
 const CRYPTO_TOPICS = [
-  'Bitcoin price analysis and market trends',
-  'Ethereum latest updates and upgrades',
-  'Solana ecosystem developments',
-  'DeFi protocols and innovations',
-  'NFT market trends and sales',
-  'Crypto regulation news',
-  'Blockchain technology advances',
-  'Altcoin market analysis'
+  'Bitcoin: últimas análises de preço e tendências de mercado',
+  'Ethereum: atualizações recentes e próximos upgrades',
+  'Solana: desenvolvimentos no ecossistema e DeFi',
+  'DeFi: protocolos e inovações em finanças descentralizadas',
+  'NFTs: tendências de mercado e vendas importantes',
+  'Regulação cripto: novidades regulatórias globais',
+  'Tecnologia blockchain: avanços e inovações',
+  'Altcoins: análise de mercado e oportunidades'
 ];
 
 export async function POST(request: Request) {
@@ -43,12 +44,35 @@ export async function POST(request: Request) {
     const selectedTopics = CRYPTO_TOPICS.sort(() => 0.5 - Math.random()).slice(0, count);
 
     for (const topic of selectedTopics) {
-      // Aqui vamos usar o Gemini MCP para gerar artigos reais
-      // Por enquanto, vou criar uma estrutura que você pode integrar com MCP
+      console.log(`📰 Buscando notícia sobre: ${topic}`);
 
-      const article = await generateArticleWithAI(topic);
-      if (article) {
+      // Buscar notícia com Gemini
+      const geminiResponse = await fetchNewsWithGemini(topic);
+
+      if (geminiResponse) {
+        // Gerar artigo completo
+        const fullContent = await generateFullArticle(
+          geminiResponse.title,
+          geminiResponse.summary,
+          geminiResponse.category,
+          geminiResponse.sentiment
+        );
+
+        const article: NewsItem = {
+          id: Date.now().toString(36) + Math.random().toString(36).substring(2),
+          title: geminiResponse.title,
+          summary: geminiResponse.summary,
+          content: fullContent,
+          url: getSourceUrl(geminiResponse.source),
+          source: geminiResponse.source,
+          publishedAt: new Date().toISOString(),
+          category: [geminiResponse.category],
+          sentiment: geminiResponse.sentiment,
+          keywords: geminiResponse.keywords
+        };
+
         newArticles.push(article);
+        console.log(`✅ Artigo gerado: ${article.title}`);
       }
     }
 
@@ -87,8 +111,27 @@ export async function POST(request: Request) {
   }
 }
 
-// Função para gerar artigo com IA (integrar com Gemini MCP)
-async function generateArticleWithAI(topic: string): Promise<NewsItem | null> {
+// Função helper para obter URL da fonte
+function getSourceUrl(source: string): string {
+  const sourceMap: Record<string, string> = {
+    'CoinDesk': 'https://coindesk.com',
+    'Cointelegraph': 'https://cointelegraph.com',
+    'Exame': 'https://exame.com/future-of-money/',
+    'InfoMoney': 'https://infomoney.com.br',
+    'The Block': 'https://theblock.co',
+    'Decrypt': 'https://decrypt.co',
+    'Bitcoin Magazine': 'https://bitcoinmagazine.com',
+    'DeFi Llama': 'https://defillama.com',
+    'OpenSea': 'https://opensea.io',
+    'SEC': 'https://sec.gov',
+    'Binance': 'https://binance.com'
+  };
+
+  return sourceMap[source] || 'https://cointelegraph.com';
+}
+
+// Função antiga removida - agora usamos Gemini diretamente
+async function generateArticleWithAI_OLD(topic: string): Promise<NewsItem | null> {
   try {
     // TODO: Integrar com Gemini MCP aqui
     // const geminiResponse = await callGeminiMCP(topic);
