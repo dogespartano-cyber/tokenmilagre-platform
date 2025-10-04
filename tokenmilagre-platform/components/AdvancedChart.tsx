@@ -157,40 +157,40 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       wickDownColor: '#b91c1c',
     });
 
-    // SMA 20 (amarelo)
+    // SMA 20 (amarelo brilhante)
     const sma20Series = chart.addSeries(LineSeries, {
-      color: '#eab308',
-      lineWidth: 2,
+      color: '#fbbf24',
+      lineWidth: 3,
       title: 'SMA 20',
     });
 
-    // SMA 50 (laranja)
+    // SMA 50 (laranja brilhante)
     const sma50Series = chart.addSeries(LineSeries, {
-      color: '#f97316',
-      lineWidth: 2,
+      color: '#fb923c',
+      lineWidth: 3,
       title: 'SMA 50',
     });
 
-    // Bandas de Bollinger - Banda Superior (azul claro)
+    // Bandas de Bollinger - Banda Superior (branco)
     const bbUpperSeries = chart.addSeries(LineSeries, {
-      color: '#60a5fa',
-      lineWidth: 1,
-      lineStyle: 2, // Dashed
+      color: '#ffffff',
+      lineWidth: 2,
+      lineStyle: 0, // Solid
       title: 'BB Upper',
     });
 
-    // Bandas de Bollinger - Média (azul)
+    // Bandas de Bollinger - Média (branco)
     const bbMiddleSeries = chart.addSeries(LineSeries, {
-      color: '#3b82f6',
+      color: '#ffffff',
       lineWidth: 2,
       title: 'BB Middle',
     });
 
-    // Bandas de Bollinger - Banda Inferior (azul escuro)
+    // Bandas de Bollinger - Banda Inferior (branco)
     const bbLowerSeries = chart.addSeries(LineSeries, {
-      color: '#1e40af',
-      lineWidth: 1,
-      lineStyle: 2, // Dashed
+      color: '#ffffff',
+      lineWidth: 2,
+      lineStyle: 0, // Solid
       title: 'BB Lower',
     });
 
@@ -310,63 +310,47 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
 
   return (
     <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-yellow-400/40 shadow-xl overflow-hidden">
-      {name && (
-        <div className="px-4 pt-4 pb-2 flex items-center justify-between bg-gradient-to-r from-yellow-400/10 to-amber-400/10">
-          <div>
-            <h4 className="text-white font-bold text-xl">{name}</h4>
-            <p className="text-white/70 text-sm mt-1">
-              📊 SMA 20/50 • 📈 Bandas de Bollinger • 📉 RSI
-            </p>
-          </div>
-
-          {/* Timeframe Selector */}
-          <div className="flex gap-1 bg-white/5 rounded-lg p-1">
-            {(['15m', '4h', '1d'] as Timeframe[]).map((tf) => (
-              <button
-                key={tf}
-                onClick={() => setTimeframe(tf)}
-                className={`px-3 py-1 rounded text-sm font-medium transition-all ${
-                  timeframe === tf
-                    ? 'bg-yellow-400/30 text-white shadow-sm'
-                    : 'text-white/60 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                {tf.toUpperCase()}
-              </button>
-            ))}
-          </div>
+      {/* Timeframe Selector - Compacto no topo */}
+      <div className="px-4 pt-3 pb-2 flex items-center justify-between">
+        <div className="flex gap-1 bg-white/5 rounded-lg p-1">
+          {(['15m', '4h', '1d'] as Timeframe[]).map((tf) => (
+            <button
+              key={tf}
+              onClick={() => setTimeframe(tf)}
+              className={`px-3 py-1 rounded text-sm font-medium transition-all ${
+                timeframe === tf
+                  ? 'bg-yellow-400/30 text-white shadow-sm'
+                  : 'text-white/60 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              {tf.toUpperCase()}
+            </button>
+          ))}
         </div>
-      )}
-      <div className="p-4 pt-2">
-        <div ref={chartContainerRef} />
 
-        {/* Legenda dos Indicadores */}
-        <div className="mt-3 flex flex-wrap gap-4 text-xs">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-0.5 bg-yellow-500"></div>
-            <span className="text-white/70">SMA 20</span>
+        {/* Legenda compacta */}
+        <div className="flex flex-wrap gap-3 text-xs">
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-0.5 bg-yellow-400"></div>
+            <span className="text-white/80">SMA 20</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-0.5 bg-orange-500"></div>
-            <span className="text-white/70">SMA 50</span>
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-0.5 bg-orange-400"></div>
+            <span className="text-white/80">SMA 50</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-0.5 bg-blue-400"></div>
-            <span className="text-white/70">BB Upper</span>
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-0.5 bg-white"></div>
+            <span className="text-white/80">Bollinger</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-0.5 bg-blue-600"></div>
-            <span className="text-white/70">BB Middle</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-0.5 bg-blue-900"></div>
-            <span className="text-white/70">BB Lower</span>
-          </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <div className="w-3 h-0.5 bg-purple-500"></div>
-            <span className="text-white/70">RSI (painel inferior)</span>
+            <span className="text-white/80">RSI</span>
           </div>
         </div>
+      </div>
+
+      <div className="px-4 pb-4">
+        <div ref={chartContainerRef} />
       </div>
     </div>
   );
