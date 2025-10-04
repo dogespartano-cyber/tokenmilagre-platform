@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { promises as fs } from 'fs';
+import path from 'path';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -28,7 +30,7 @@ const NEWS_SOURCES = [
   'bitcoinmagazine.com'
 ];
 
-// Função para buscar notícias estruturadas
+// Função para buscar notícias do arquivo JSON
 async function fetchRealNews(): Promise<NewsItem[]> {
   try {
     // Verificar cache primeiro
@@ -37,9 +39,28 @@ async function fetchRealNews(): Promise<NewsItem[]> {
       return newsCache.data;
     }
 
-    console.log('🔍 Buscando notícias atualizadas...');
+    console.log('🔍 Buscando notícias do arquivo...');
 
-    // Notícias estruturadas (em produção, integrar com RSS feeds ou NewsAPI)
+    const newsFilePath = path.join(process.cwd(), 'data', 'news.json');
+
+    try {
+      const fileContent = await fs.readFile(newsFilePath, 'utf-8');
+      const newsFromFile: NewsItem[] = JSON.parse(fileContent);
+
+      if (newsFromFile.length > 0) {
+        // Atualizar cache
+        newsCache = {
+          data: newsFromFile,
+          timestamp: Date.now()
+        };
+
+        return newsFromFile;
+      }
+    } catch (error) {
+      console.log('⚠️ Arquivo de notícias não encontrado, usando fallback');
+    }
+
+    // Fallback caso arquivo não exista
     const structuredNews: NewsItem[] = [
         {
           title: 'Bitcoin atinge nova máxima histórica após aprovação de ETF',
