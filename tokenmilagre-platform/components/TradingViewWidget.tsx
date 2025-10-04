@@ -55,7 +55,7 @@ function TradingViewWidget({ symbol, symbolName }: TradingViewWidgetProps) {
     <div
       className="tradingview-widget-container bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden"
       ref={container}
-      style={{ height: "610px", width: "100%" }}
+      style={{ height: "400px", width: "100%" }}
     >
       <div className="tradingview-widget-container__widget" style={{ height: "calc(100% - 32px)", width: "100%" }}></div>
       <div className="tradingview-widget-copyright p-2 text-center">
