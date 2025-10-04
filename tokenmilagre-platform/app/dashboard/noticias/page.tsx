@@ -5,15 +5,19 @@ import Link from 'next/link';
 
 interface NewsItem {
   id: string;
+  slug?: string;
   title: string;
   summary: string;
   content?: string;
   url: string;
   source: string;
+  sources?: string[];
   publishedAt: string;
   category: string[];
   sentiment: 'positive' | 'neutral' | 'negative';
   keywords: string[];
+  factChecked?: boolean;
+  lastVerified?: string;
 }
 
 export default function NoticiasPage() {

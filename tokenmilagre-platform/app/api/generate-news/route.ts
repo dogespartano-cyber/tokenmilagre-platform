@@ -254,10 +254,11 @@ async function generateArticleWithAI_OLD(topic: string): Promise<NewsItem | null
     const content = generateFullContent(title, selectedTemplate.category, selectedTemplate.sentiment);
 
     // Gerar ID único
-    const id = Date.now().toString(36) + Math.random().toString(36).substring(2);
+    const { id, slug } = generateNewsId(title);
 
     const article: NewsItem = {
       id,
+      slug,
       title,
       summary: summary.substring(0, 200),
       content,

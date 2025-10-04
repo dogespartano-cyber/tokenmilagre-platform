@@ -10,6 +10,9 @@
     "publishedAt": "2025-10-04T12:35:00.000Z",
     "category": ["Bitcoin"],
     "sentiment": "positive",
-    "keywords": ["Bitcoin", "Uptober", "Investimento Institucional", "ETF", "Alta de Preço"]
+    "keywords": ["Bitcoin", "Uptober", "Investimento Institucional", "ETF", "Alta de Preço"],
+    "factChecked": true,
+    "sources": ["InfoMoney", "CoinDesk", "Bloomberg Crypto"],
+    "lastVerified": "2025-10-04T12:35:00.000Z"
   }
 ]

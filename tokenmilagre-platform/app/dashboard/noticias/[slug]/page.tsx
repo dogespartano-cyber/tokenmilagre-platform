@@ -1,8 +1,7 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import ReactMarkdown from 'react-markdown';
+import { Metadata } from 'next';
+import ArtigoClient from './ArtigoClient';
+import { promises as fs } from 'fs';
+import path from 'path';
 
 interface NewsItem {
   id: string;
@@ -22,219 +21,53 @@ interface NewsItem {
   lastVerified?: string;
 }
 
-export default function ArtigoPage() {
-  const params = useParams();
-  const router = useRouter();
-  const [article, setArticle] = useState<NewsItem | null>(null);
-  const [loading, setLoading] = useState(true);
+async function getArticle(slug: string): Promise<NewsItem | null> {
+  try {
+    const newsFilePath = path.join(process.cwd(), 'data', 'news.json');
+    const fileContent = await fs.readFile(newsFilePath, 'utf-8');
+    const news: NewsItem[] = JSON.parse(fileContent);
 
-  useEffect(() => {
-    fetchArticle();
-  }, [params.slug]);
-
-  const fetchArticle = async () => {
-    try {
-      const response = await fetch(`/api/news`);
-      const data = await response.json();
-
-      if (data.success) {
-        // Buscar por slug primeiro, depois por id (fallback)
-        const foundArticle = data.data.find(
-          (item: NewsItem) => item.slug === params.slug || item.id === params.slug
-        );
-        if (foundArticle) {
-          setArticle(foundArticle);
-        }
-      }
-    } catch (error) {
-      console.error('Erro ao buscar artigo:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getTimeAgo = (date: string) => {
-    const now = new Date();
-    const published = new Date(date);
-    const diffMs = now.getTime() - published.getTime();
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-
-    if (diffHours < 1) return 'Agora mesmo';
-    if (diffHours < 24) return `Há ${diffHours}h`;
-    const diffDays = Math.floor(diffHours / 24);
-    return `Há ${diffDays}d`;
-  };
-
-  const getSentimentIcon = (sentiment: string) => {
-    switch (sentiment) {
-      case 'positive': return '🟢';
-      case 'negative': return '🔴';
-      default: return '🟡';
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center py-20">
-          <div className="text-6xl mb-4 animate-pulse">📰</div>
-          <p className="text-white text-xl">Carregando artigo...</p>
-        </div>
-      </div>
-    );
+    return news.find(item => item.slug === slug || item.id === slug) || null;
+  } catch (error) {
+    console.error('Erro ao buscar artigo:', error);
+    return null;
   }
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await getArticle(slug);
 
   if (!article) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center py-20">
-          <div className="text-6xl mb-4">❌</div>
-          <p className="text-white text-xl mb-4">Artigo não encontrado</p>
-          <button
-            onClick={() => router.push('/dashboard/noticias')}
-            className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 font-bold rounded-xl hover:scale-105 transition"
-          >
-            ← Voltar para Notícias
-          </button>
-        </div>
-      </div>
-    );
+    return {
+      title: 'Artigo não encontrado | TokenMilagre',
+      description: 'O artigo solicitado não foi encontrado.',
+    };
   }
 
-  return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      {/* Botão Voltar */}
-      <button
-        onClick={() => router.push('/dashboard/noticias')}
-        className="mb-6 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition flex items-center gap-2"
-      >
-        <span>←</span> Voltar para Notícias
-      </button>
+  return {
+    title: `${article.title} | TokenMilagre`,
+    description: article.summary.substring(0, 160),
+    keywords: article.keywords.join(', '),
+    openGraph: {
+      title: article.title,
+      description: article.summary.substring(0, 160),
+      type: 'article',
+      publishedTime: article.publishedAt,
+      authors: [article.source],
+      tags: article.keywords,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.summary.substring(0, 160),
+    },
+  };
+}
 
-      {/* Header do Artigo */}
-      <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border-2 border-white/30 shadow-xl mb-6">
-        <div className="flex items-center gap-4 mb-4">
-          <span className="text-3xl">{getSentimentIcon(article.sentiment)}</span>
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-2 flex-wrap">
-              <span className="text-white/70 font-semibold">{article.source}</span>
-              <span className="text-white/50">•</span>
-              <span className="text-white/50 text-sm">{getTimeAgo(article.publishedAt)}</span>
-              {article.factChecked && (
-                <>
-                  <span className="text-white/50">•</span>
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 border border-green-400/40 rounded-full text-xs text-green-300 font-semibold">
-                    <span>✓</span>
-                    Verificado
-                  </span>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
+export default async function ArtigoPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const article = await getArticle(slug);
 
-        <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-          {article.title}
-        </h1>
-
-        <p className="text-white/70 text-lg mb-6">
-          {article.summary}
-        </p>
-
-        {/* Categorias */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {article.category.map((cat, idx) => (
-            <span
-              key={idx}
-              className="px-3 py-1 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-300/30 rounded-lg text-sm text-white font-semibold"
-            >
-              {cat}
-            </span>
-          ))}
-        </div>
-
-        {/* Keywords */}
-        <div className="flex flex-wrap gap-2">
-          {article.keywords.map((keyword, idx) => (
-            <span
-              key={idx}
-              className="px-2 py-1 bg-white/10 rounded-lg text-xs text-white/80"
-            >
-              #{keyword}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Conteúdo do Artigo */}
-      <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border-2 border-white/30 shadow-xl">
-        <article className="prose prose-invert prose-lg max-w-none">
-          <ReactMarkdown
-            components={{
-              h2: ({ children }) => (
-                <h2 className="text-2xl font-bold text-white mt-8 mb-4">{children}</h2>
-              ),
-              h3: ({ children }) => (
-                <h3 className="text-xl font-bold text-white mt-6 mb-3">{children}</h3>
-              ),
-              p: ({ children }) => (
-                <p className="text-white/80 mb-4 leading-relaxed">{children}</p>
-              ),
-              ul: ({ children }) => (
-                <ul className="list-disc list-inside mb-4 text-white/80 space-y-2">{children}</ul>
-              ),
-              li: ({ children }) => (
-                <li className="text-white/80">{children}</li>
-              ),
-              strong: ({ children }) => (
-                <strong className="text-white font-bold">{children}</strong>
-              ),
-              em: ({ children }) => (
-                <em className="text-yellow-300">{children}</em>
-              ),
-            }}
-          >
-            {article.content || 'Conteúdo não disponível.'}
-          </ReactMarkdown>
-        </article>
-
-        {/* Múltiplas Fontes */}
-        {article.sources && article.sources.length > 0 && (
-          <div className="mt-8 pt-6 border-t-2 border-white/20">
-            <h3 className="text-white font-bold mb-3">📚 Fontes Consultadas:</h3>
-            <div className="flex flex-wrap gap-2">
-              {article.sources.map((source, idx) => (
-                <span
-                  key={idx}
-                  className="px-3 py-1 bg-white/10 border border-white/20 rounded-lg text-sm text-white/80 hover:bg-white/20 transition"
-                >
-                  {source}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Fonte Original */}
-        <div className="mt-6 pt-6 border-t-2 border-white/20">
-          <a
-            href={article.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-semibold transition"
-          >
-            Ver fonte principal ({article.source})
-            <span>→</span>
-          </a>
-        </div>
-
-        {/* Info de Verificação */}
-        {article.lastVerified && (
-          <div className="mt-4 text-white/50 text-xs">
-            Última verificação: {new Date(article.lastVerified).toLocaleString('pt-BR')}
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  return <ArtigoClient article={article} />;
 }
