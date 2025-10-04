@@ -51,14 +51,14 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
       },
     });
 
-    // Série de candlestick verde/vermelho pastel
+    // Série de candlestick verde/vermelho pastel escuro
     const candlestickSeries = chart.addSeries(CandlestickSeries, {
-      upColor: '#86efac', // Verde pastel (alta)
-      downColor: '#fca5a5', // Vermelho pastel (baixa)
-      borderUpColor: '#86efac', // Mesma cor do corpo
-      borderDownColor: '#fca5a5', // Mesma cor do corpo
-      wickUpColor: '#4ade80',
-      wickDownColor: '#f87171',
+      upColor: '#4ade80', // Verde pastel escuro (alta)
+      downColor: '#f87171', // Vermelho pastel escuro (baixa)
+      borderUpColor: '#4ade80', // Mesma cor do corpo
+      borderDownColor: '#f87171', // Mesma cor do corpo
+      wickUpColor: '#22c55e',
+      wickDownColor: '#ef4444',
     });
 
     // Série de volume (histograma)
@@ -142,7 +142,7 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
         return {
           time: ((candle[0] as number) / 1000) as Time,
           value: parseFloat(candle[5] as string), // Volume
-          color: close >= open ? '#86efac80' : '#fca5a580', // Verde/vermelho pastel com transparência
+          color: close >= open ? '#4ade8080' : '#f8717180', // Verde/vermelho pastel escuro com transparência
         };
       });
 
