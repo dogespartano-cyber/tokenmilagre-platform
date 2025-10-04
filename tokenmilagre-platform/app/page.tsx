@@ -6,6 +6,7 @@ import Script from 'next/script';
 import Link from 'next/link';
 import { HolderCounter } from '@/components/HolderCounter';
 import { DexScreenerChart } from '@/components/DexScreenerChart';
+import { ManifestoSignersCount } from '@/components/ManifestoSignersCount';
 
 export default function Home() {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
@@ -982,15 +983,7 @@ export default function Home() {
             {/* Contador de Signatários + CTA */}
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center">
               <div className="mb-4">
-                <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-400/20 to-emerald-400/20 rounded-full border border-green-300/40">
-                  <span className="text-2xl">✍️</span>
-                  <div className="text-left">
-                    <p className="text-white/80 text-xs font-semibold">Signatários do Manifesto</p>
-                    <p className="text-white font-bold text-xl">
-                      <span className="text-yellow-200">147</span> pessoas
-                    </p>
-                  </div>
-                </div>
+                <ManifestoSignersCount />
               </div>
 
               <p className="text-white/95 mb-6 max-w-2xl mx-auto">

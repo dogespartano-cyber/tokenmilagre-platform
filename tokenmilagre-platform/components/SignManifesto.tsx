@@ -1,24 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useManifestoSigners } from '@/hooks/useManifestoSigners';
+import { ManifestoSignersCount } from './ManifestoSignersCount';
 
 export function SignManifesto() {
   const [signed, setSigned] = useState(false);
   const [signing, setSigning] = useState(false);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
-  const [signersCount, setSignersCount] = useState(0);
-
-  // Mock contador de signatários (em produção, seria on-chain)
-  useEffect(() => {
-    const mockCount = 147; // Contador mockup
-    const savedCount = localStorage.getItem('manifesto_signers_count');
-    if (savedCount) {
-      setSignersCount(parseInt(savedCount));
-    } else {
-      setSignersCount(mockCount);
-      localStorage.setItem('manifesto_signers_count', mockCount.toString());
-    }
-  }, []);
+  const { incrementCount } = useManifestoSigners();
 
   const handleSign = async () => {
     setSigning(true);
@@ -40,10 +30,8 @@ export function SignManifesto() {
         localStorage.setItem('manifesto_signed', 'true');
         localStorage.setItem('manifesto_signer', address);
 
-        // Incrementar contador
-        const newCount = signersCount + 1;
-        setSignersCount(newCount);
-        localStorage.setItem('manifesto_signers_count', newCount.toString());
+        // Incrementar contador (sincronizado globalmente)
+        incrementCount();
       } else {
         alert('Por favor, instale a carteira Phantom: https://phantom.app/');
       }
@@ -103,10 +91,8 @@ export function SignManifesto() {
         </p>
 
         {/* Contador de Signatários */}
-        <div className="inline-block bg-white/10 backdrop-blur-sm rounded-full px-6 py-2 mb-6">
-          <p className="text-white/90 text-sm">
-            <span className="font-bold text-yellow-200 text-lg">{signersCount}</span> {signersCount === 1 ? 'pessoa assinou' : 'pessoas assinaram'}
-          </p>
+        <div className="mb-6">
+          <ManifestoSignersCount variant="compact" />
         </div>
 
         <div className="space-y-4">
