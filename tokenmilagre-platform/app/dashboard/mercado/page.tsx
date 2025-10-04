@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
-const TradingViewWidget = dynamic(() => import('@/components/TradingViewWidget'), {
+const LightweightChart = dynamic(() => import('@/components/LightweightChart'), {
   ssr: false,
 });
 
@@ -395,18 +395,18 @@ export default function MercadoPage() {
                 <div>
                   <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
                     <span>₿</span>
-                    <span>Bitcoin (BTC/USD)</span>
+                    <span>Bitcoin (BTC/USDT)</span>
                   </h3>
-                  <TradingViewWidget symbol="BINANCE:BTCUSD" symbolName="BTCUSD" />
+                  <LightweightChart symbol="BTCUSDT" />
                 </div>
 
                 {/* ETH Chart */}
                 <div>
                   <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
                     <span>Ξ</span>
-                    <span>Ethereum (ETH/USD)</span>
+                    <span>Ethereum (ETH/USDT)</span>
                   </h3>
-                  <TradingViewWidget symbol="BINANCE:ETHUSD" symbolName="ETHUSD" />
+                  <LightweightChart symbol="ETHUSDT" />
                 </div>
 
                 {/* SOL Chart */}
@@ -415,7 +415,7 @@ export default function MercadoPage() {
                     <span>◎</span>
                     <span>Solana (SOL/USDT)</span>
                   </h3>
-                  <TradingViewWidget symbol="BINANCE:SOLUSDT" symbolName="SOLUSDT" />
+                  <LightweightChart symbol="SOLUSDT" />
                 </div>
               </div>
             </div>
