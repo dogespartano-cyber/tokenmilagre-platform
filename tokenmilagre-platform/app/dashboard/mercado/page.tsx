@@ -33,19 +33,32 @@ interface FearGreedData {
   value_classification: string;
 }
 
+interface NewsItem {
+  id: string;
+  slug?: string;
+  title: string;
+  summary: string;
+  publishedAt: string;
+  category: string[];
+  sentiment: 'positive' | 'neutral' | 'negative';
+}
+
 export default function MercadoPage() {
   const [marketData, setMarketData] = useState<MarketData | null>(null);
   const [fearGreed, setFearGreed] = useState<FearGreedData | null>(null);
+  const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchMarketData();
     fetchFearGreed();
+    fetchNews();
 
     // Atualizar a cada 30 segundos
     const interval = setInterval(() => {
       fetchMarketData();
       fetchFearGreed();
+      fetchNews();
     }, 30000);
 
     return () => clearInterval(interval);
@@ -82,6 +95,18 @@ export default function MercadoPage() {
     }
   };
 
+  const fetchNews = async () => {
+    try {
+      const response = await fetch('/api/news');
+      const data = await response.json();
+      if (data.success) {
+        setNews(data.data.slice(0, 3)); // Pegar apenas as 3 últimas notícias
+      }
+    } catch (error) {
+      console.error('Erro ao buscar notícias:', error);
+    }
+  };
+
   const formatNumber = (num: number) => {
     if (num >= 1e12) return `$${(num / 1e12).toFixed(2)}T`;
     if (num >= 1e9) return `$${(num / 1e9).toFixed(2)}B`;
@@ -106,6 +131,26 @@ export default function MercadoPage() {
       'Extreme Greed': '🚀'
     };
     return map[classification] || '📊';
+  };
+
+  const getSentimentIcon = (sentiment: string) => {
+    switch (sentiment) {
+      case 'positive': return '🟢';
+      case 'negative': return '🔴';
+      default: return '🟡';
+    }
+  };
+
+  const getTimeAgo = (date: string) => {
+    const now = new Date();
+    const published = new Date(date);
+    const diffMs = now.getTime() - published.getTime();
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+
+    if (diffHours < 1) return 'Agora mesmo';
+    if (diffHours < 24) return `Há ${diffHours}h`;
+    const diffDays = Math.floor(diffHours / 24);
+    return `Há ${diffDays}d`;
   };
 
   return (
@@ -185,8 +230,8 @@ export default function MercadoPage() {
               </div>
             </div>
 
-            {/* Análise de Mercado - Card Unificado */}
-            <div className="grid md:grid-cols-2 gap-6">
+            {/* Análise de Mercado e Links */}
+            <div className="grid md:grid-cols-3 gap-6">
               {/* Sentimento & Análise do Mercado */}
               <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
                 <h3 className="text-white font-bold text-xl mb-6 font-[family-name:var(--font-poppins)]">
@@ -295,6 +340,43 @@ export default function MercadoPage() {
                     <p className="text-white/70 text-xs">Análise técnica</p>
                   </a>
                 </div>
+              </div>
+
+              {/* Últimas Notícias */}
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
+                <h3 className="text-white font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2">
+                  <span>📰</span>
+                  <span>Últimas Notícias</span>
+                </h3>
+                <div className="space-y-3">
+                  {news.length > 0 ? (
+                    news.map((item, idx) => (
+                      <Link
+                        key={idx}
+                        href={`/dashboard/noticias/${item.slug || item.id}`}
+                        className="block bg-white/5 hover:bg-white/10 rounded-lg p-3 border border-white/10 hover:border-white/20 transition-all group"
+                      >
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-sm">{getSentimentIcon(item.sentiment)}</span>
+                          <span className="text-white/60 text-xs">{item.category[0]}</span>
+                          <span className="text-white/50 text-xs ml-auto">{getTimeAgo(item.publishedAt)}</span>
+                        </div>
+                        <h4 className="text-white font-semibold text-sm mb-1 line-clamp-2 group-hover:text-yellow-300 transition">
+                          {item.title}
+                        </h4>
+                        <p className="text-white/60 text-xs line-clamp-2">{item.summary}</p>
+                      </Link>
+                    ))
+                  ) : (
+                    <p className="text-white/60 text-sm text-center py-4">Carregando notícias...</p>
+                  )}
+                </div>
+                <Link
+                  href="/dashboard/noticias"
+                  className="mt-4 block text-center text-yellow-400 hover:text-yellow-300 font-semibold text-sm transition"
+                >
+                  Ver todas as notícias →
+                </Link>
               </div>
             </div>
 
