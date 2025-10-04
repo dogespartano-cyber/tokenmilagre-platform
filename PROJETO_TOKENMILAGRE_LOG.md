@@ -464,7 +464,72 @@ git push origin main --force
 
 ---
 
+---
+
+### CHECKPOINT 15: Melhorias de Design e UX (30+ min)
+**Data:** Sessão atual - 2025-10-03
+
+**Implementações:**
+
+**1. Redesign Informações do Token (Card Premium):**
+- ✅ Card estilo "cartão de crédito premium"
+- ✅ Glassmorphism avançado (backdrop-blur-2xl)
+- ✅ Shine effect no hover (gradiente deslizante)
+- ✅ Logo TOKEN-MILAGRE-.webp integrada ao card
+- ✅ Stats grid 2x4 com hover states
+- ✅ Background blur circles decorativos
+- ✅ Link na navbar para seção #token
+
+**2. FAQ Accordion Interativa:**
+- ✅ Sistema accordion com state management
+- ✅ Apenas 1 item aberto por vez
+- ✅ Transições suaves de altura (max-h-0 → max-h-96)
+- ✅ 7 perguntas com ícones únicos
+- ✅ Ícone de seta rotativa (0° → 180°)
+- ✅ Border glow amarelo no item ativo
+- ✅ Quebra de parágrafos com ' | ' separator
+
+**3. Sistema de Micro-animações:**
+- ✅ Keyframes em globals.css:
+  - fadeInUp (0.8s)
+  - fadeInScale (0.6s)
+  - slideInLeft (0.7s)
+  - slideInRight (0.7s)
+  - shimmer (2s loop)
+- ✅ 7 classes de delay (100ms-700ms) para stagger
+- ✅ Pronto para uso em futuras features
+
+**4. SEO Avançado - Schema.org:**
+- ✅ JSON-LD FAQPage com 7 questões
+- ✅ JSON-LD Organization com sameAs
+- ✅ JSON-LD Product (CryptoCurrency)
+- ✅ Next.js Script com strategy="afterInteractive"
+- ✅ Metadata expandida (18 keywords)
+
+**5. Otimização de CTAs:**
+- ✅ Botão "Comprar" no hero ao lado de "Conectar Carteira"
+- ✅ Ícone: 🪙 (moeda - reconhecimento universal)
+- ✅ Texto responsivo:
+  - Desktop (≥640px): "Comprar $MILAGRE"
+  - Mobile (<640px): "Comprar"
+- ✅ Gradient green/emerald
+- ✅ Aplicado em 2 locais (hero + sobre)
+
+**6. Ajuste Visual:**
+- ✅ Título hero: "Nunca Estarás Sozinho" 👼 → ❤️
+- ✅ Harmonização com tema coração da seção "Sobre"
+
+**Arquivos Modificados:**
+- `app/page.tsx`: 7 seções atualizadas
+- `app/layout.tsx`: Metadata e Schema.org
+- `app/globals.css`: 5 novos keyframes + 7 delays
+- `public/images/TOKEN-MILAGRE-.webp`: Logo copiada
+
+**Commits:** SEO + Design elaborado + CTA optimization
+
+---
+
 **Última Atualização:** 2025-10-03
 **Status:** ✅ Produção - Funcionando
-**Versão:** 2.0.0
-**Total de Checkpoints:** 14
+**Versão:** 2.1.0
+**Total de Checkpoints:** 15
