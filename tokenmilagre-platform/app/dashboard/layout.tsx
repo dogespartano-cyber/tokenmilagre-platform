@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBriefcase, faChartLine, faNewspaper } from '@fortawesome/free-solid-svg-icons';
 
 const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
 
@@ -16,9 +18,9 @@ export default function DashboardLayout({
   const pathname = usePathname();
 
   const menuItems = [
-    { href: '/dashboard', label: 'Portfolio' },
-    { href: '/dashboard/mercado', label: 'Mercado' },
-    { href: '/dashboard/noticias', label: 'Notícias' },
+    { href: '/dashboard', label: 'Portfolio', icon: faBriefcase },
+    { href: '/dashboard/mercado', label: 'Mercado', icon: faChartLine },
+    { href: '/dashboard/noticias', label: 'Notícias', icon: faNewspaper },
   ];
 
   return (
@@ -52,9 +54,34 @@ export default function DashboardLayout({
                 </div>
               </Link>
             </div>
+
+            {/* Menu Horizontal - Desktop */}
+            <nav className="hidden md:flex items-center gap-6">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`text-white font-semibold transition ${
+                    pathname === item.href
+                      ? 'text-yellow-300'
+                      : 'hover:text-yellow-300'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <Link
+                href="/"
+                className="text-white hover:text-yellow-300 transition font-semibold"
+              >
+                ← Voltar
+              </Link>
+            </nav>
+
+            {/* Botão Voltar - Mobile */}
             <Link
               href="/"
-              className="text-white hover:text-yellow-300 transition font-semibold"
+              className="md:hidden text-white hover:text-yellow-300 transition font-semibold"
             >
               ← Voltar
             </Link>
@@ -70,12 +97,13 @@ export default function DashboardLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center justify-center px-4 py-3 rounded-xl transition-all ${
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   pathname === item.href
                     ? 'bg-gradient-to-r from-yellow-400/30 to-amber-400/30 border-2 border-yellow-300/50 text-white font-bold'
                     : 'bg-white/5 border-2 border-white/10 text-white/80 hover:bg-white/10 hover:text-white'
                 }`}
               >
+                <FontAwesomeIcon icon={item.icon} className="w-5 h-5" />
                 <span className="font-semibold">{item.label}</span>
               </Link>
             ))}
@@ -108,12 +136,13 @@ export default function DashboardLayout({
                     key={item.href}
                     href={item.href}
                     onClick={() => setSidebarOpen(false)}
-                    className={`flex items-center justify-center px-4 py-3 rounded-xl transition-all ${
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                       pathname === item.href
                         ? 'bg-gradient-to-r from-yellow-400/30 to-amber-400/30 border-2 border-yellow-300/50 text-white font-bold'
                         : 'bg-white/5 border-2 border-white/10 text-white/80 hover:bg-white/10 hover:text-white'
                     }`}
                   >
+                    <FontAwesomeIcon icon={item.icon} className="w-5 h-5" />
                     <span className="font-semibold">{item.label}</span>
                   </Link>
                 ))}
