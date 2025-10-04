@@ -69,5 +69,24 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
   const { slug } = await params;
   const article = await getArticle(slug);
 
-  return <ArtigoClient article={article} />;
+  // Buscar artigos relacionados (mesma categoria)
+  let relatedArticles: NewsItem[] = [];
+  if (article) {
+    try {
+      const newsFilePath = path.join(process.cwd(), 'data', 'news.json');
+      const fileContent = await fs.readFile(newsFilePath, 'utf-8');
+      const allNews: NewsItem[] = JSON.parse(fileContent);
+
+      relatedArticles = allNews
+        .filter(item =>
+          item.id !== article.id &&
+          item.category.some(cat => article.category.includes(cat))
+        )
+        .slice(0, 4);
+    } catch (error) {
+      console.error('Erro ao buscar artigos relacionados:', error);
+    }
+  }
+
+  return <ArtigoClient article={article} relatedArticles={relatedArticles} />;
 }
