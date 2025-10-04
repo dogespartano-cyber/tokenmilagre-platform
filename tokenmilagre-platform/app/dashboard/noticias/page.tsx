@@ -74,6 +74,14 @@ export default function NoticiasPage() {
     }
   };
 
+  const getSentimentLabel = (sentiment: string) => {
+    switch (sentiment) {
+      case 'positive': return 'Notícia otimista';
+      case 'negative': return 'Notícia pessimista';
+      default: return 'Notícia neutra';
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="space-y-8">
@@ -129,7 +137,7 @@ export default function NoticiasPage() {
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <span className="text-2xl">{getSentimentIcon(item.sentiment)}</span>
-                    <span className="text-white/60 text-sm">{item.source}</span>
+                    <span className="text-white/60 text-sm">{getSentimentLabel(item.sentiment)}</span>
                   </div>
                   <span className="text-white/50 text-xs">{getTimeAgo(item.publishedAt)}</span>
                 </div>
@@ -168,15 +176,13 @@ export default function NoticiasPage() {
                   ))}
                 </div>
 
-                {/* Badge Verificado (se aplicável) */}
-                {item.factChecked && (
-                  <div className="mt-4 pt-4 border-t border-white/10">
-                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 border border-green-400/40 rounded-full text-xs text-green-300 font-semibold">
-                      <span>✓</span>
-                      Verificado
-                    </span>
-                  </div>
-                )}
+                {/* Link Leia Mais */}
+                <div className="mt-4 pt-4 border-t border-white/10">
+                  <span className="inline-flex items-center gap-1 text-sm text-yellow-400 font-semibold group-hover:text-yellow-300 transition">
+                    Leia mais
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </span>
+                </div>
               </Link>
             ))}
           </div>
