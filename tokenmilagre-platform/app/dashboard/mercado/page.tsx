@@ -117,12 +117,12 @@ export default function MercadoPage() {
           </div>
         ) : (
           <div className="space-y-10">
-            {/* Market Overview */}
+            {/* Visão Geral do Mercado */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Total Market Cap */}
+              {/* Capitalização Total */}
               <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-white/80 text-sm">Market Cap Total</p>
+                  <p className="text-white/80 text-sm">Capitalização Total</p>
                   <span className="text-2xl">💰</span>
                 </div>
                 <p className="text-white font-bold text-3xl mb-1">
@@ -138,7 +138,7 @@ export default function MercadoPage() {
                 </p>
               </div>
 
-              {/* 24h Volume */}
+              {/* Volume 24h */}
               <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-white/80 text-sm">Volume 24h</p>
@@ -147,13 +147,13 @@ export default function MercadoPage() {
                 <p className="text-white font-bold text-3xl mb-1">
                   {marketData && formatNumber(marketData.totalVolume)}
                 </p>
-                <p className="text-white/70 text-sm">Trading global</p>
+                <p className="text-white/70 text-sm">Negociação global</p>
               </div>
 
-              {/* BTC Dominance */}
+              {/* Dominância BTC */}
               <div className="bg-gradient-to-br from-orange-400/20 to-yellow-400/20 backdrop-blur-lg rounded-2xl p-6 border-2 border-orange-300/40 shadow-xl">
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-white/80 text-sm">BTC Dominance</p>
+                  <p className="text-white/80 text-sm">Dominância BTC</p>
                   <span className="text-2xl">₿</span>
                 </div>
                 <p className="text-white font-bold text-3xl mb-1">
@@ -167,10 +167,10 @@ export default function MercadoPage() {
                 </div>
               </div>
 
-              {/* ETH Dominance */}
+              {/* Dominância ETH */}
               <div className="bg-gradient-to-br from-purple-400/20 to-blue-400/20 backdrop-blur-lg rounded-2xl p-6 border-2 border-purple-300/40 shadow-xl">
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-white/80 text-sm">ETH Dominance</p>
+                  <p className="text-white/80 text-sm">Dominância ETH</p>
                   <span className="text-2xl">Ξ</span>
                 </div>
                 <p className="text-white font-bold text-3xl mb-1">
@@ -185,12 +185,12 @@ export default function MercadoPage() {
               </div>
             </div>
 
-            {/* Market Insights - Card Unificado */}
+            {/* Análise de Mercado - Card Unificado */}
             <div className="grid md:grid-cols-2 gap-6">
               {/* Sentimento & Análise do Mercado */}
               <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
                 <h3 className="text-white font-bold text-xl mb-6 font-[family-name:var(--font-poppins)]">
-                  📊 Market Insights
+                  📊 Análise de Mercado
                 </h3>
 
                 {/* Sentimento do Mercado */}
@@ -212,7 +212,7 @@ export default function MercadoPage() {
                           {fearGreed.value_classification === 'Greed' && 'Ganância'}
                           {fearGreed.value_classification === 'Extreme Greed' && 'Ganância Extrema'}
                         </p>
-                        <p className="text-white/60 text-xs leading-relaxed">
+                        <p className="text-white/70 text-sm leading-relaxed">
                           {parseInt(fearGreed.value) <= 25 && 'Mercado em pânico - possível oportunidade de compra'}
                           {parseInt(fearGreed.value) > 25 && parseInt(fearGreed.value) <= 45 && 'Investidores cautelosos - sentimento negativo'}
                           {parseInt(fearGreed.value) > 45 && parseInt(fearGreed.value) <= 55 && 'Mercado equilibrado - sem tendência clara'}
@@ -249,7 +249,7 @@ export default function MercadoPage() {
                             : `Bitcoin Dominante: ${Math.round((100 - marketData.btcDominance) / 2)}% de chance de Altseason`
                           }
                         </p>
-                        <p className="text-white/60 text-xs leading-relaxed">
+                        <p className="text-white/70 text-sm leading-relaxed">
                           {marketData.btcDominance < 40 && 'Altcoins superando BTC - momento ideal para diversificação'}
                           {marketData.btcDominance >= 40 && marketData.btcDominance < 50 && 'Transição em curso - monitore oportunidades em altcoins'}
                           {marketData.btcDominance >= 50 && 'BTC lidera o mercado - foco em Bitcoin e grandes caps'}
@@ -301,7 +301,7 @@ export default function MercadoPage() {
             {/* Divider */}
             <div className="border-t-2 border-white/20"></div>
 
-            {/* TradingView Charts */}
+            {/* Gráficos TradingView */}
             <div className="space-y-6">
               <h2 className="text-white font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2">
                 📈 Gráficos ao Vivo
@@ -381,28 +381,28 @@ export default function MercadoPage() {
             {/* Divider */}
             <div className="border-t-2 border-white/20"></div>
 
-            {/* Heatmap & Screener */}
+            {/* Mapa de Calor & Rastreador */}
             <div className="space-y-6">
               <h2 className="text-white font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2">
-                🗺️ Mapa de Mercado & Screener
+                🗺️ Mapa de Mercado & Rastreador
               </h2>
               <p className="text-white/70 text-center mb-6">Visualize o mercado completo e filtre oportunidades</p>
 
               <div className="grid md:grid-cols-2 gap-6">
-                {/* Crypto Heatmap */}
+                {/* Mapa de Calor Cripto */}
                 <div>
                   <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
                     <span>🔥</span>
-                    <span>Crypto Heatmap</span>
+                    <span>Mapa de Calor Cripto</span>
                   </h3>
                   <CryptoHeatmapWidget />
                 </div>
 
-                {/* Crypto Screener */}
+                {/* Rastreador de Mercado */}
                 <div>
                   <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
                     <span>📋</span>
-                    <span>Market Screener</span>
+                    <span>Rastreador de Mercado</span>
                   </h3>
                   <CryptoScreenerWidget />
                 </div>
