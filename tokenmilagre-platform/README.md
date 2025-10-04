@@ -79,23 +79,26 @@ npm start
   - Métricas de mercado (Market Cap, Volume 24h, Dominância BTC/ETH)
 - ✅ Links úteis (CoinGecko, DeFi Llama, CoinMarketCap)
 
-#### Sistema de Notícias Cripto
-- ✅ **Geração automática de artigos completos com IA**
-- ✅ Artigos em Markdown com conteúdo extenso (300-500 palavras)
+#### Sistema de Notícias Cripto com IA (Gemini 2.5 Pro)
+- ✅ **Integração completa com Google Gemini 2.5 Pro**
+- ✅ **Geração de notícias REAIS do mercado cripto**
+- ✅ Busca automática de notícias atualizadas via Gemini
+- ✅ Artigos completos em Markdown (500-800 palavras)
 - ✅ Templates profissionais por categoria:
-  - Bitcoin: Análise técnica + fundamentos
-  - Ethereum: Updates + ecossistema
-  - Solana: Performance + crescimento
-  - DeFi: Protocolos + inovações
-  - NFTs: Mercado + casos de uso
-  - Regulação: Framework global
+  - Bitcoin: Análise técnica + fundamentos + previsões
+  - Ethereum: Updates + ecossistema + próximos upgrades
+  - Solana: Performance + crescimento + TVL
+  - DeFi: Protocolos + inovações + yields
+  - NFTs: Mercado + casos de uso + vendas recordes
+  - Regulação: Framework global + SEC + compliance
 - ✅ Páginas dinâmicas `/dashboard/noticias/[id]`
 - ✅ Filtros por categoria (Bitcoin, Ethereum, Solana, DeFi, NFTs, Regulação)
-- ✅ Análise de sentimento (🟢 Positivo, 🟡 Neutro, 🔴 Negativo)
-- ✅ Extração automática de keywords
+- ✅ Análise de sentimento automática (🟢 Positivo, 🟡 Neutro, 🔴 Negativo)
+- ✅ Extração inteligente de keywords com IA
 - ✅ Sistema de cache (30 minutos)
-- ✅ Armazenamento persistente em JSON
+- ✅ Armazenamento persistente em `data/news.json`
 - ✅ Interface de leitura otimizada com prose styling
+- ✅ Fontes verificadas (CoinDesk, Cointelegraph, Exame, InfoMoney)
 
 ### 🎨 UI/UX
 - ✅ Design glassmorphism (backdrop-blur + transparências)
@@ -112,7 +115,7 @@ tokenmilagre-platform/
 ├── app/
 │   ├── api/
 │   │   ├── news/route.ts              # API de notícias com cache
-│   │   ├── generate-news/route.ts     # Gerador de artigos com IA
+│   │   ├── generate-news/route.ts     # Gerador com Gemini 2.5 Pro
 │   │   └── process-news/route.ts      # Processamento de notícias
 │   ├── dashboard/
 │   │   ├── layout.tsx                 # Layout com sidebar
@@ -129,6 +132,8 @@ tokenmilagre-platform/
 │   ├── TechnicalAnalysisWidget.tsx    # Análise técnica
 │   ├── CryptoHeatmapWidget.tsx        # Heatmap
 │   └── CryptoScreenerWidget.tsx       # Screener
+├── lib/
+│   └── gemini-news.ts                 # 🆕 Integração Gemini CLI
 ├── data/
 │   └── news.json                      # Artigos persistidos
 ├── public/
@@ -148,22 +153,54 @@ tokenmilagre-platform/
 - **Alternative.me API**: Fear & Greed Index
 - **TradingView**: Gráficos e análise técnica embarcada
 
+### Inteligência Artificial (Gemini)
+- **Google Gemini 2.5 Pro**: Modelo principal para geração de conteúdo
+- **Gemini CLI**: Integração via linha de comando
+- **Busca de notícias reais**: Pesquisa automática no mercado cripto
+- **Geração de artigos**: Conteúdo markdown estruturado e profissional
+- **Análise de sentimento**: Classificação automática (positivo/neutro/negativo)
+- **Extração de keywords**: Identificação inteligente de termos relevantes
+- **Múltiplas fontes**: CoinDesk, Cointelegraph, Exame, InfoMoney, The Block
+
 ### Geração de Conteúdo
 - **Templates em Markdown**: Artigos estruturados por categoria
 - **Sistema de IDs únicos**: timestamp + random (base36)
-- **Análise de sentimento**: Detecção automática de palavras-chave
 - **Cache em memória**: 30 minutos de duração
+- **Fallback inteligente**: Templates padrão caso IA falhe
 
-## 🎯 Sistema de Geração de Artigos
+## 🎯 Sistema de Geração de Artigos com IA
+
+### Como Funciona
+
+1. **Seleção de Tópicos**: Escolhe aleatoriamente tópicos do mercado cripto
+2. **Busca com Gemini**: Pesquisa notícias reais usando Gemini 2.5 Pro
+3. **Geração de Artigo**: Cria conteúdo completo em markdown
+4. **Persistência**: Salva em `data/news.json`
+5. **Cache**: Armazena por 30 minutos
+
+### Tópicos Suportados
+
+- Bitcoin: análises de preço e tendências
+- Ethereum: atualizações e upgrades
+- Solana: desenvolvimentos no ecossistema
+- DeFi: protocolos e inovações
+- NFTs: tendências de mercado
+- Regulação: novidades regulatórias
+- Blockchain: avanços tecnológicos
+- Altcoins: análise de mercado
 
 ### Como Gerar Novos Artigos
 
-Para gerar artigos automaticamente, faça uma requisição POST:
-
+**Via API (POST):**
 ```bash
 curl -X POST https://tokenmilagre.xyz/api/generate-news \
   -H "Content-Type: application/json" \
   -d '{"count": 6}'
+```
+
+**Via Gemini CLI (direto):**
+```bash
+gemini -m gemini-2.5-pro -p "Busque uma notícia sobre Bitcoin de hoje"
 ```
 
 ### Resposta de Exemplo
@@ -172,7 +209,17 @@ curl -X POST https://tokenmilagre.xyz/api/generate-news \
 {
   "success": true,
   "message": "6 artigos gerados com sucesso",
-  "articles": [...],
+  "articles": [
+    {
+      "id": "unique_id",
+      "title": "Bitcoin ultrapassa $120K com previsão do Citi...",
+      "summary": "Resumo do artigo...",
+      "content": "# Artigo completo em markdown...",
+      "source": "CoinDesk",
+      "sentiment": "positive",
+      "keywords": ["Bitcoin", "Citi", "ETF"]
+    }
+  ],
   "total": 6
 }
 ```
@@ -218,6 +265,34 @@ NEXT_PUBLIC_TOKEN_ADDRESS=3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump
 }
 ```
 
+### Requisitos para IA (Gemini)
+
+Para usar o gerador de notícias com Gemini, você precisa:
+
+1. **Instalar Gemini CLI**:
+```bash
+npm install -g @google/gemini-cli
+```
+
+2. **Autenticar**:
+```bash
+gemini
+# Seguir fluxo OAuth
+```
+
+3. **Configurar modelo padrão** (opcional):
+```bash
+# Editar ~/.gemini/settings.json
+{
+  "model": "gemini-2.5-pro"
+}
+```
+
+4. **Testar integração**:
+```bash
+gemini -m gemini-2.5-pro -p "Olá, teste"
+```
+
 ## 🚀 Deploy
 
 ### Vercel (Recomendado)
@@ -250,6 +325,44 @@ npm start
 - **Comprar**: [Pump.fun](https://pump.fun/coin/3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump)
 - **Rede**: Solana Mainnet
 - **Explorer**: Solscan
+
+## 📋 Histórico de Implementações
+
+### Últimas Atualizações (Outubro 2025)
+
+#### ✅ **Integração Gemini 2.5 Pro** (04/10/2025)
+- Criado módulo `lib/gemini-news.ts` para integração com Gemini CLI
+- Substituído gerador mock por IA real
+- Função `fetchNewsWithGemini()` busca notícias atualizadas
+- Função `generateFullArticle()` cria conteúdo markdown completo
+- Suporte a múltiplas fontes verificadas
+- Análise automática de sentimento e keywords
+
+#### ✅ **Sistema de Notícias Completo** (03/10/2025)
+- API `/api/generate-news` para geração automática
+- API `/api/news` com cache de 30 minutos
+- Páginas dinâmicas `/dashboard/noticias/[id]`
+- Filtros por categoria
+- Interface de leitura otimizada
+
+#### ✅ **Dashboard de Mercado** (02/10/2025)
+- 3 Gráficos TradingView (BTC, ETH, SOL)
+- 3 Widgets de Análise Técnica
+- Crypto Heatmap e Screener
+- Fear & Greed Index
+- Métricas de mercado em tempo real
+
+#### ✅ **Manifesto $MILAGRE** (01/10/2025)
+- Página dedicada com 12 seções
+- Sistema de assinatura
+- Contador de signatários
+- Navegação lateral com scroll
+
+#### ✅ **Portfolio Tracker** (30/09/2025)
+- Integração Phantom Wallet
+- Sistema de tiers/badges
+- Exibição de saldos $MILAGRE e SOL
+- Link para Solscan
 
 ## 🛠️ Desenvolvimento
 
