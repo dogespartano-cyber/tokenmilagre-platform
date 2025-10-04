@@ -243,9 +243,6 @@ export default function Home() {
               <Link href="/dashboard" className="text-white hover:text-yellow-300 transition font-semibold">
                 Dashboard
               </Link>
-              <Link href="/mercado" className="text-white hover:text-yellow-300 transition font-semibold">
-                Mercado
-              </Link>
 
               {/* Social Icons */}
               <div className="flex gap-4 items-center ml-4 pl-4 border-l-2 border-white/30">
@@ -306,9 +303,6 @@ export default function Home() {
               </Link>
               <Link href="/dashboard" className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
                 Dashboard
-              </Link>
-              <Link href="/mercado" className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
-                Mercado
               </Link>
 
               <div className="flex gap-6 items-center pt-3 border-t border-white/20">

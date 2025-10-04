@@ -92,27 +92,7 @@ export default function MercadoPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#5DD4D4] via-[#4DB8D8] to-[#E8F4F4]">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-gradient-to-r from-[#4DB8D8]/95 to-[#5DD4D4]/95 backdrop-blur-lg border-b-2 border-white/20 shadow-xl">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex justify-between items-center">
-            <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
-              <div className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg font-[family-name:var(--font-poppins)]">
-                📊 Mercado Cripto
-              </div>
-            </Link>
-            <Link
-              href="/"
-              className="text-white hover:text-yellow-300 transition font-semibold"
-            >
-              ← Voltar
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8">
         {loading ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4 animate-pulse">📊</div>
@@ -316,6 +296,5 @@ export default function MercadoPage() {
           </div>
         )}
       </div>
-    </div>
   );
 }
