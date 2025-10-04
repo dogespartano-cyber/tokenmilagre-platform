@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
+import { HolderCounter } from '@/components/HolderCounter';
+import { DexScreenerChart } from '@/components/DexScreenerChart';
 
 export default function Home() {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
@@ -224,6 +226,9 @@ export default function Home() {
               <button onClick={() => scrollToSection('comprar')} className="text-white hover:text-yellow-300 transition font-semibold">
                 Como Comprar
               </button>
+              <button onClick={() => scrollToSection('contribuir')} className="text-white hover:text-yellow-300 transition font-semibold">
+                Contribuir
+              </button>
               <button onClick={() => scrollToSection('faq')} className="text-white hover:text-yellow-300 transition font-semibold">
                 FAQ
               </button>
@@ -275,6 +280,9 @@ export default function Home() {
               </button>
               <button onClick={() => scrollToSection('comprar')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
                 Como Comprar
+              </button>
+              <button onClick={() => scrollToSection('contribuir')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
+                Contribuir
               </button>
               <button onClick={() => scrollToSection('faq')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
                 FAQ
@@ -462,7 +470,25 @@ export default function Home() {
                   Cada transação fortalece nossa comunidade e expande nossa capacidade de ajudar uns aos outros.
                 </p>
               </div>
+
+              {/* Contador de Holders */}
+              <div className="flex justify-center mt-8">
+                <HolderCounter />
+              </div>
             </div>
+          </div>
+        </div>
+
+        {/* Gráfico de Preço */}
+        <div className="mb-20">
+          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-6 drop-shadow-lg font-[family-name:var(--font-poppins)]">
+            Gráfico de Preço 📈
+          </h3>
+          <p className="text-white/90 text-center text-lg mb-8 max-w-2xl mx-auto">
+            Acompanhe o desempenho de $MILAGRE em tempo real
+          </p>
+          <div className="max-w-6xl mx-auto">
+            <DexScreenerChart />
           </div>
         </div>
 
@@ -543,6 +569,15 @@ export default function Home() {
                             </>
                           )}
                         </button>
+                        <a
+                          href={`https://solscan.io/token/${TOKEN_ADDRESS}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 sm:flex-none px-6 py-3 bg-gradient-to-r from-purple-400 to-purple-500 hover:from-purple-300 hover:to-purple-400 text-white font-bold text-base rounded-xl transition-all shadow-lg hover:scale-105 hover:shadow-purple-400/50 flex items-center justify-center gap-2"
+                        >
+                          <span>🔍</span>
+                          <span>Solscan</span>
+                        </a>
                         <a
                           href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                           target="_blank"
@@ -890,6 +925,94 @@ export default function Home() {
               <Image src="/images/telegrama.png" alt="Telegram" width={28} height={28} className="w-7 h-7 object-contain" />
               <span>Entrar na Comunidade</span>
             </a>
+          </div>
+        </div>
+
+        {/* Como Contribuir */}
+        <div id="contribuir" className="mb-20 scroll-mt-24">
+          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
+            Como Contribuir 🤝
+          </h3>
+          <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
+            O $MILAGRE é construído pela comunidade, para a comunidade. Sua contribuição fortalece nosso ecossistema.
+          </p>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {/* Educar */}
+            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl p-8 border-2 border-white/30 shadow-xl hover:shadow-yellow-300/50 hover:bg-white/20 hover:border-yellow-300/50 transition-all duration-300">
+              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">📚</div>
+              <h4 className="text-xl sm:text-2xl font-bold text-white mb-3 font-[family-name:var(--font-poppins)]">Educar</h4>
+              <p className="text-white/90 mb-6 leading-relaxed">
+                Crie tutoriais, faça mentorias, responda dúvidas e compartilhe conhecimento com a comunidade.
+              </p>
+              <a
+                href="https://t.me/+Bop_TVFc_mg3Njlh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block w-full text-center px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 text-white font-bold rounded-xl transition-all shadow-lg hover:scale-105"
+              >
+                Começar a Ajudar
+              </a>
+            </div>
+
+            {/* Desenvolver */}
+            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl p-8 border-2 border-white/30 shadow-xl hover:shadow-purple-300/50 hover:bg-white/20 hover:border-purple-300/50 transition-all duration-300">
+              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">💻</div>
+              <h4 className="text-xl sm:text-2xl font-bold text-white mb-3 font-[family-name:var(--font-poppins)]">Desenvolver</h4>
+              <p className="text-white/90 mb-6 leading-relaxed">
+                Contribua código open source, reporte bugs, sugira features e melhore nossa plataforma.
+              </p>
+              <a
+                href="https://github.com/dogespartano-cyber/tokenmilagre-platform"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block w-full text-center px-4 py-3 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-400 hover:to-purple-500 text-white font-bold rounded-xl transition-all shadow-lg hover:scale-105"
+              >
+                Ver GitHub
+              </a>
+            </div>
+
+            {/* Governar */}
+            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl p-8 border-2 border-white/30 shadow-xl hover:shadow-green-300/50 hover:bg-white/20 hover:border-green-300/50 transition-all duration-300">
+              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">🗳️</div>
+              <h4 className="text-xl sm:text-2xl font-bold text-white mb-3 font-[family-name:var(--font-poppins)]">Governar</h4>
+              <p className="text-white/90 mb-6 leading-relaxed">
+                Vote em proposals, crie propostas, delegue votos e participe das decisões comunitárias.
+              </p>
+              <a
+                href="https://t.me/+Bop_TVFc_mg3Njlh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block w-full text-center px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-white font-bold rounded-xl transition-all shadow-lg hover:scale-105"
+              >
+                Participar
+              </a>
+            </div>
+
+            {/* Apoiar */}
+            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl p-8 border-2 border-white/30 shadow-xl hover:shadow-pink-300/50 hover:bg-white/20 hover:border-pink-300/50 transition-all duration-300">
+              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">🤝</div>
+              <h4 className="text-xl sm:text-2xl font-bold text-white mb-3 font-[family-name:var(--font-poppins)]">Apoiar</h4>
+              <p className="text-white/90 mb-6 leading-relaxed">
+                Dê suporte emocional, celebre vitórias, ajude novatos e fortaleça nossa comunidade.
+              </p>
+              <a
+                href="https://t.me/+Bop_TVFc_mg3Njlh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block w-full text-center px-4 py-3 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-400 hover:to-pink-500 text-white font-bold rounded-xl transition-all shadow-lg hover:scale-105"
+              >
+                Entrar na Comunidade
+              </a>
+            </div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <div className="inline-block bg-gradient-to-r from-yellow-400/20 to-amber-400/20 backdrop-blur-lg rounded-2xl p-6 border-2 border-yellow-300/40">
+              <p className="text-white text-lg font-semibold">
+                💡 <strong className="text-yellow-300">Contribuição = Influência</strong> - No $MILAGRE, seu poder vem de ajudar ativamente, não apenas de acumular tokens.
+              </p>
+            </div>
           </div>
         </div>
 
