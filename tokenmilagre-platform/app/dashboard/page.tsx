@@ -36,24 +36,31 @@ export default function DashboardPage() {
     setLoading(true);
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if ((window as any).solana && (window as any).solana.isPhantom) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const response = await (window as any).solana.connect();
-        const address = response.publicKey.toString();
-        setWalletAddress(address);
-
-        // Fetch SOL balance
-        const connection = new Connection(RPC_URL, 'confirmed');
-        const balance = await connection.getBalance(response.publicKey);
-        setsolBalance(balance / 1e9); // Convert lamports to SOL
-
-        // Mock token balance (em produção, buscaria do contrato)
-        setTokenBalance(5432.56);
-      } else {
+      if (!(window as any).solana || !(window as any).solana.isPhantom) {
         alert('Por favor, instale a carteira Phantom: https://phantom.app/');
+        return;
       }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const response = await (window as any).solana.connect();
+      const address = response.publicKey.toString();
+      setWalletAddress(address);
+
+      // Fetch SOL balance
+      const connection = new Connection(RPC_URL, 'confirmed');
+      const balance = await connection.getBalance(response.publicKey);
+      setsolBalance(balance / 1e9); // Convert lamports to SOL
+
+      // Set token balance to 0 for new wallets (em produção, buscaria do contrato real)
+      setTokenBalance(0);
     } catch (err) {
       console.error('Erro ao conectar:', err);
+      // Only show alert if wallet connection was actually rejected
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((err as any).code === 4001) {
+        // User rejected the connection
+        return;
+      }
       alert('Erro ao conectar wallet. Tente novamente.');
     } finally {
       setLoading(false);
@@ -241,47 +248,23 @@ export default function DashboardPage() {
               </p>
             </div>
 
-            {/* Histórico de Transações (Mockup) */}
+            {/* Histórico de Transações */}
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
               <h3 className="text-white font-bold text-xl mb-4 font-[family-name:var(--font-poppins)]">
                 Histórico de Transações 📊
               </h3>
               <div className="space-y-3">
-                {/* Mockup transactions */}
-                <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-white font-semibold">Compra</p>
-                      <p className="text-white/70 text-sm">Há 2 dias</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-green-400 font-bold">+1,000 $MILAGRE</p>
-                      <p className="text-white/70 text-sm">0.5 SOL</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-white font-semibold">Compra</p>
-                      <p className="text-white/70 text-sm">Há 1 semana</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-green-400 font-bold">+500 $MILAGRE</p>
-                      <p className="text-white/70 text-sm">0.25 SOL</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="text-center mt-4">
+                <div className="text-center py-8">
+                  <p className="text-white/70 mb-4">
+                    Visualize suas transações no blockchain
+                  </p>
                   <a
                     href={`https://solscan.io/account/${walletAddress}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block px-6 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-white border border-purple-300/40 rounded-full transition-all"
+                    className="inline-block px-6 py-3 bg-purple-500/20 hover:bg-purple-500/30 text-white border border-purple-300/40 rounded-full transition-all"
                   >
-                    🔍 Ver Todas no Solscan
+                    🔍 Ver Transações no Solscan
                   </a>
                 </div>
               </div>
