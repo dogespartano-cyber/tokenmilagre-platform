@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { fetchNewsWithGemini, generateFullArticle } from '@/lib/gemini-news';
+import {
+  fetchNewsWithFactCheck,
+  generateFullArticleWithDisclaimer
+} from '@/lib/gemini-news';
+import { generateNewsId } from '@/lib/utils';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -9,15 +13,20 @@ export const maxDuration = 60;
 
 interface NewsItem {
   id: string;
+  slug: string; // SEO-friendly URL
   title: string;
   summary: string;
   content: string; // Artigo completo em markdown
   url: string;
   source: string;
+  sources?: string[]; // Múltiplas fontes
   publishedAt: string;
   category: string[];
   sentiment: 'positive' | 'neutral' | 'negative';
   keywords: string[];
+  factChecked?: boolean; // Verificado por fact-checker
+  factCheckIssues?: string[];
+  lastVerified?: string;
 }
 
 // Tópicos para gerar artigos
@@ -44,35 +53,47 @@ export async function POST(request: Request) {
     const selectedTopics = CRYPTO_TOPICS.sort(() => 0.5 - Math.random()).slice(0, count);
 
     for (const topic of selectedTopics) {
-      console.log(`📰 Buscando notícia sobre: ${topic}`);
+      console.log(`📰 Buscando notícia verificada sobre: ${topic}`);
 
-      // Buscar notícia com Gemini
-      const geminiResponse = await fetchNewsWithGemini(topic);
+      // Buscar notícia com FACT-CHECKING
+      const verifiedNews = await fetchNewsWithFactCheck(topic);
 
-      if (geminiResponse) {
-        // Gerar artigo completo
-        const fullContent = await generateFullArticle(
-          geminiResponse.title,
-          geminiResponse.summary,
-          geminiResponse.category,
-          geminiResponse.sentiment
+      if (verifiedNews) {
+        // Gerar ID e slug SEO-friendly
+        const { id, slug } = generateNewsId(verifiedNews.title);
+
+        // Gerar artigo completo com disclaimer
+        const fullContent = await generateFullArticleWithDisclaimer(
+          verifiedNews.title,
+          verifiedNews.summary,
+          verifiedNews.category,
+          verifiedNews.sentiment,
+          verifiedNews.sources || [verifiedNews.source]
         );
 
         const article: NewsItem = {
-          id: Date.now().toString(36) + Math.random().toString(36).substring(2),
-          title: geminiResponse.title,
-          summary: geminiResponse.summary,
+          id,
+          slug, // ← SEO-friendly
+          title: verifiedNews.title,
+          summary: verifiedNews.summary,
           content: fullContent,
-          url: getSourceUrl(geminiResponse.source),
-          source: geminiResponse.source,
+          url: getSourceUrl(verifiedNews.source),
+          source: verifiedNews.source,
+          sources: verifiedNews.sources, // ← Múltiplas fontes
           publishedAt: new Date().toISOString(),
-          category: [geminiResponse.category],
-          sentiment: geminiResponse.sentiment,
-          keywords: geminiResponse.keywords
+          category: [verifiedNews.category],
+          sentiment: verifiedNews.sentiment,
+          keywords: verifiedNews.keywords,
+          factChecked: verifiedNews.factChecked, // ← Verificado
+          factCheckIssues: verifiedNews.factCheckIssues,
+          lastVerified: verifiedNews.lastVerified.toISOString()
         };
 
         newArticles.push(article);
-        console.log(`✅ Artigo gerado: ${article.title}`);
+        console.log(`✅ Artigo verificado gerado: ${article.title}`);
+        if (!article.factChecked && article.factCheckIssues && article.factCheckIssues.length > 0) {
+          console.warn(`⚠️  Issues encontrados:`, article.factCheckIssues);
+        }
       }
     }
 

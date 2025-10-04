@@ -6,15 +6,20 @@ import ReactMarkdown from 'react-markdown';
 
 interface NewsItem {
   id: string;
+  slug?: string;
   title: string;
   summary: string;
   content?: string;
   url: string;
   source: string;
+  sources?: string[];
   publishedAt: string;
   category: string[];
   sentiment: 'positive' | 'neutral' | 'negative';
   keywords: string[];
+  factChecked?: boolean;
+  factCheckIssues?: string[];
+  lastVerified?: string;
 }
 
 export default function ArtigoPage() {
@@ -25,7 +30,7 @@ export default function ArtigoPage() {
 
   useEffect(() => {
     fetchArticle();
-  }, [params.id]);
+  }, [params.slug]);
 
   const fetchArticle = async () => {
     try {
@@ -33,7 +38,10 @@ export default function ArtigoPage() {
       const data = await response.json();
 
       if (data.success) {
-        const foundArticle = data.data.find((item: NewsItem) => item.id === params.id);
+        // Buscar por slug primeiro, depois por id (fallback)
+        const foundArticle = data.data.find(
+          (item: NewsItem) => item.slug === params.slug || item.id === params.slug
+        );
         if (foundArticle) {
           setArticle(foundArticle);
         }
@@ -108,10 +116,19 @@ export default function ArtigoPage() {
         <div className="flex items-center gap-4 mb-4">
           <span className="text-3xl">{getSentimentIcon(article.sentiment)}</span>
           <div className="flex-1">
-            <div className="flex items-center gap-3 mb-2">
+            <div className="flex items-center gap-3 mb-2 flex-wrap">
               <span className="text-white/70 font-semibold">{article.source}</span>
               <span className="text-white/50">•</span>
               <span className="text-white/50 text-sm">{getTimeAgo(article.publishedAt)}</span>
+              {article.factChecked && (
+                <>
+                  <span className="text-white/50">•</span>
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 border border-green-400/40 rounded-full text-xs text-green-300 font-semibold">
+                    <span>✓</span>
+                    Verificado
+                  </span>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -181,18 +198,42 @@ export default function ArtigoPage() {
           </ReactMarkdown>
         </article>
 
+        {/* Múltiplas Fontes */}
+        {article.sources && article.sources.length > 0 && (
+          <div className="mt-8 pt-6 border-t-2 border-white/20">
+            <h3 className="text-white font-bold mb-3">📚 Fontes Consultadas:</h3>
+            <div className="flex flex-wrap gap-2">
+              {article.sources.map((source, idx) => (
+                <span
+                  key={idx}
+                  className="px-3 py-1 bg-white/10 border border-white/20 rounded-lg text-sm text-white/80 hover:bg-white/20 transition"
+                >
+                  {source}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Fonte Original */}
-        <div className="mt-8 pt-6 border-t-2 border-white/20">
+        <div className="mt-6 pt-6 border-t-2 border-white/20">
           <a
             href={article.url}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-semibold transition"
           >
-            Ver fonte original ({article.source})
+            Ver fonte principal ({article.source})
             <span>→</span>
           </a>
         </div>
+
+        {/* Info de Verificação */}
+        {article.lastVerified && (
+          <div className="mt-4 text-white/50 text-xs">
+            Última verificação: {new Date(article.lastVerified).toLocaleString('pt-BR')}
+          </div>
+        )}
       </div>
     </div>
   );

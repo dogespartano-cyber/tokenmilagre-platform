@@ -116,9 +116,10 @@ export default function NoticiasPage() {
         {!loading && (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {news.map((item, index) => (
-              <div
+              <Link
                 key={index}
-                className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl hover:shadow-2xl transition-all hover:scale-105 group"
+                href={`/dashboard/noticias/${item.slug || item.id}`}
+                className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl hover:shadow-2xl transition-all hover:scale-105 group cursor-pointer block"
               >
                 {/* Header do Card */}
                 <div className="flex items-start justify-between mb-3">
@@ -163,15 +164,16 @@ export default function NoticiasPage() {
                   ))}
                 </div>
 
-                {/* Link */}
-                <Link
-                  href={`/dashboard/noticias/${item.id}`}
-                  className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-semibold text-sm transition"
-                >
-                  Ler artigo completo
-                  <span>→</span>
-                </Link>
-              </div>
+                {/* Badge Verificado (se aplicável) */}
+                {item.factChecked && (
+                  <div className="mt-4 pt-4 border-t border-white/10">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 border border-green-400/40 rounded-full text-xs text-green-300 font-semibold">
+                      <span>✓</span>
+                      Verificado
+                    </span>
+                  </div>
+                )}
+              </Link>
             ))}
           </div>
         )}
