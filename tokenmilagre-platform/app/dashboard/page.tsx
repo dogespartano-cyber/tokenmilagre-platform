@@ -3,6 +3,24 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Connection } from '@solana/web3.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faLink,
+  faWallet,
+  faCircleNotch,
+  faHandshake,
+  faShield,
+  faUserAstronaut,
+  faUserGraduate,
+  faCode,
+  faSignature,
+  faMagnifyingGlass,
+  faRocket,
+  faPenNib,
+  faTrophy,
+  faChartSimple,
+  faUnlink,
+} from '@fortawesome/free-solid-svg-icons';
 
 const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
 const RPC_URL = 'https://api.mainnet-beta.solana.com';
@@ -10,7 +28,7 @@ const RPC_URL = 'https://api.mainnet-beta.solana.com';
 interface Badge {
   id: string;
   name: string;
-  icon: string;
+  icon: typeof faSignature;
   description: string;
   earned: boolean;
 }
@@ -24,12 +42,12 @@ export default function DashboardPage() {
 
   // Badges mockup
   const badges: Badge[] = [
-    { id: '1', name: 'Signatário', icon: '✍️', description: 'Assinou o manifesto', earned: false },
-    { id: '2', name: 'Apoiador', icon: '🤝', description: '1.000+ $MILAGRE', earned: false },
-    { id: '3', name: 'Guardião', icon: '🛡️', description: '10.000+ $MILAGRE', earned: false },
-    { id: '4', name: 'Anjo', icon: '👼', description: '50.000+ $MILAGRE', earned: false },
-    { id: '5', name: 'Mentor', icon: '🧙', description: '10+ mentorias realizadas', earned: false },
-    { id: '6', name: 'Contribuidor', icon: '💻', description: 'Código contribuído', earned: false },
+    { id: '1', name: 'Signatário', icon: faSignature, description: 'Assinou o manifesto', earned: false },
+    { id: '2', name: 'Apoiador', icon: faHandshake, description: '1.000+ $MILAGRE', earned: false },
+    { id: '3', name: 'Guardião', icon: faShield, description: '10.000+ $MILAGRE', earned: false },
+    { id: '4', name: 'Anjo', icon: faUserAstronaut, description: '50.000+ $MILAGRE', earned: false },
+    { id: '5', name: 'Mentor', icon: faUserGraduate, description: '10+ mentorias realizadas', earned: false },
+    { id: '6', name: 'Contribuidor', icon: faCode, description: 'Código contribuído', earned: false },
   ];
 
   const connectWallet = async () => {
@@ -74,10 +92,10 @@ export default function DashboardPage() {
   };
 
   const getTier = () => {
-    if (tokenBalance >= 50000) return { name: 'Anjo Guardião', icon: '👼', color: 'purple' };
-    if (tokenBalance >= 10000) return { name: 'Guardião', icon: '🛡️', color: 'blue' };
-    if (tokenBalance >= 1000) return { name: 'Apoiador', icon: '🤝', color: 'green' };
-    return { name: 'Visitante', icon: '👋', color: 'gray' };
+    if (tokenBalance >= 50000) return { name: 'Anjo Guardião', icon: faUserAstronaut, color: 'purple' };
+    if (tokenBalance >= 10000) return { name: 'Guardião', icon: faShield, color: 'blue' };
+    if (tokenBalance >= 1000) return { name: 'Apoiador', icon: faHandshake, color: 'green' };
+    return { name: 'Visitante', icon: faHandshake, color: 'gray' };
   };
 
   const getNextTier = () => {
@@ -97,7 +115,9 @@ export default function DashboardPage() {
           // Wallet Not Connected
           <div className="max-w-2xl mx-auto">
             <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-12 border-2 border-white/30 shadow-2xl text-center">
-              <div className="text-6xl mb-6">🔗</div>
+              <div className="text-6xl mb-6">
+                <FontAwesomeIcon icon={faLink} className="w-16 h-16 text-white" />
+              </div>
               <h1 className="text-3xl font-bold text-white mb-4 font-[family-name:var(--font-poppins)]">
                 Conecte sua Wallet
               </h1>
@@ -111,12 +131,12 @@ export default function DashboardPage() {
               >
                 {loading ? (
                   <span className="flex items-center gap-2">
-                    <span className="animate-spin">⏳</span>
+                    <FontAwesomeIcon icon={faCircleNotch} className="w-5 h-5 animate-spin" />
                     <span>Conectando...</span>
                   </span>
                 ) : (
                   <span className="flex items-center gap-2">
-                    <span>👛</span>
+                    <FontAwesomeIcon icon={faWallet} className="w-5 h-5" />
                     <span>Conectar Phantom</span>
                   </span>
                 )}
@@ -137,8 +157,9 @@ export default function DashboardPage() {
                 </div>
                 <button
                   onClick={disconnectWallet}
-                  className="px-6 py-2 bg-red-500/20 hover:bg-red-500/30 text-white border border-red-300/40 rounded-full transition-all"
+                  className="px-6 py-2 bg-red-500/20 hover:bg-red-500/30 text-white border border-red-300/40 rounded-full transition-all flex items-center gap-2"
                 >
+                  <FontAwesomeIcon icon={faUnlink} className="w-4 h-4" />
                   Desconectar
                 </button>
               </div>
@@ -172,7 +193,7 @@ export default function DashboardPage() {
               <div className="bg-gradient-to-br from-blue-400/20 to-cyan-400/20 backdrop-blur-lg rounded-2xl p-6 border-2 border-blue-300/40 shadow-xl">
                 <p className="text-white/80 text-sm mb-2">Tier Atual</p>
                 <p className="text-white font-bold text-3xl mb-1 flex items-center gap-2">
-                  <span className="text-4xl">{tier.icon}</span>
+                  <FontAwesomeIcon icon={tier.icon} className="w-10 h-10" />
                   <span>{tier.name}</span>
                 </p>
                 <p className="text-white/70 text-sm">
@@ -204,8 +225,9 @@ export default function DashboardPage() {
 
             {/* Badge Collection */}
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-              <h3 className="text-white font-bold text-xl mb-4 font-[family-name:var(--font-poppins)]">
-                Coleção de Badges 🏆
+              <h3 className="text-white font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2">
+                <FontAwesomeIcon icon={faTrophy} className="w-6 h-6" />
+                Coleção de Badges
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {badges.map((badge) => (
@@ -218,7 +240,9 @@ export default function DashboardPage() {
                     } backdrop-blur-sm rounded-xl p-4 border-2 text-center transition-all hover:scale-105`}
                     title={badge.description}
                   >
-                    <div className="text-4xl mb-2">{badge.icon}</div>
+                    <div className="text-4xl mb-2">
+                      <FontAwesomeIcon icon={badge.icon} className="w-10 h-10 text-white" />
+                    </div>
                     <p className="text-white text-xs font-semibold">{badge.name}</p>
                   </div>
                 ))}
@@ -230,8 +254,9 @@ export default function DashboardPage() {
 
             {/* Histórico de Transações */}
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-              <h3 className="text-white font-bold text-xl mb-4 font-[family-name:var(--font-poppins)]">
-                Histórico de Transações 📊
+              <h3 className="text-white font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2">
+                <FontAwesomeIcon icon={faChartSimple} className="w-6 h-6" />
+                Histórico de Transações
               </h3>
               <div className="space-y-3">
                 <div className="text-center py-8">
@@ -242,9 +267,10 @@ export default function DashboardPage() {
                     href={`https://solscan.io/account/${walletAddress}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block px-6 py-3 bg-purple-500/20 hover:bg-purple-500/30 text-white border border-purple-300/40 rounded-full transition-all"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-purple-500/20 hover:bg-purple-500/30 text-white border border-purple-300/40 rounded-full transition-all"
                   >
-                    🔍 Ver Transações no Solscan
+                    <FontAwesomeIcon icon={faMagnifyingGlass} className="w-4 h-4" />
+                    Ver Transações no Solscan
                   </a>
                 </div>
               </div>
@@ -256,15 +282,17 @@ export default function DashboardPage() {
                 href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold text-lg px-8 py-6 rounded-2xl transition-all shadow-xl hover:scale-105 text-center"
+                className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold text-lg px-8 py-6 rounded-2xl transition-all shadow-xl hover:scale-105 text-center flex items-center justify-center gap-2"
               >
-                🚀 Comprar Mais $MILAGRE
+                <FontAwesomeIcon icon={faRocket} className="w-5 h-5" />
+                Comprar Mais $MILAGRE
               </Link>
               <Link
                 href="/manifesto"
-                className="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-gray-900 font-bold text-lg px-8 py-6 rounded-2xl transition-all shadow-xl hover:scale-105 text-center"
+                className="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-gray-900 font-bold text-lg px-8 py-6 rounded-2xl transition-all shadow-xl hover:scale-105 text-center flex items-center justify-center gap-2"
               >
-                ✍️ Assinar Manifesto
+                <FontAwesomeIcon icon={faPenNib} className="w-5 h-5" />
+                Assinar Manifesto
               </Link>
             </div>
           </div>

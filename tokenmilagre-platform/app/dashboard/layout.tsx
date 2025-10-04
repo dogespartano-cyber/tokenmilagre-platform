@@ -18,9 +18,9 @@ export default function DashboardLayout({
   const pathname = usePathname();
 
   const menuItems = [
-    { href: '/dashboard', label: 'Portfolio', icon: faBriefcase },
     { href: '/dashboard/mercado', label: 'Mercado', icon: faChartLine },
     { href: '/dashboard/noticias', label: 'Notícias', icon: faNewspaper },
+    { href: '/dashboard', label: 'Portfolio', icon: faBriefcase },
   ];
 
   return (
