@@ -269,15 +269,15 @@ export default function MercadoPage() {
             </div>
 
             {/* TradingView Charts */}
-            <div>
-              <h2 className="text-white font-bold text-2xl mb-6 font-[family-name:var(--font-poppins)] text-center">
+            <div className="space-y-6">
+              <h2 className="text-white font-bold text-2xl font-[family-name:var(--font-poppins)] text-center">
                 📈 Gráficos ao Vivo
               </h2>
 
-              <div className="grid lg:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 gap-6">
                 {/* BTC Chart */}
-                <div>
-                  <h3 className="text-white font-semibold text-lg mb-2 flex items-center gap-2">
+                <div className="space-y-3">
+                  <h3 className="text-white font-semibold text-lg flex items-center gap-2">
                     <span>₿</span>
                     <span>Bitcoin (BTC/USD)</span>
                   </h3>
@@ -285,8 +285,8 @@ export default function MercadoPage() {
                 </div>
 
                 {/* ETH Chart */}
-                <div>
-                  <h3 className="text-white font-semibold text-lg mb-2 flex items-center gap-2">
+                <div className="space-y-3">
+                  <h3 className="text-white font-semibold text-lg flex items-center gap-2">
                     <span>Ξ</span>
                     <span>Ethereum (ETH/USD)</span>
                   </h3>
@@ -294,12 +294,22 @@ export default function MercadoPage() {
                 </div>
 
                 {/* SOL Chart */}
-                <div className="lg:col-span-2">
-                  <h3 className="text-white font-semibold text-lg mb-2 flex items-center gap-2">
+                <div className="space-y-3">
+                  <h3 className="text-white font-semibold text-lg flex items-center gap-2">
                     <span>◎</span>
                     <span>Solana (SOL/USDT)</span>
                   </h3>
                   <TradingViewWidget symbol="BINANCE:SOLUSDT" symbolName="SOLUSDT" />
+                </div>
+
+                {/* Espaço para futuros widgets */}
+                <div className="space-y-3">
+                  <div className="bg-white/5 backdrop-blur-lg rounded-2xl border-2 border-white/20 border-dashed shadow-xl p-8 flex items-center justify-center" style={{ height: "400px" }}>
+                    <div className="text-center">
+                      <div className="text-6xl mb-4 opacity-50">📊</div>
+                      <p className="text-white/60 font-semibold">Mais gráficos em breve</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
