@@ -522,7 +522,15 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                         'CoinDesk': 'https://www.coindesk.com',
                         'The Block': 'https://www.theblock.co',
                         'InfoMoney': 'https://www.infomoney.com.br',
-                        'Bloomberg Crypto': 'https://www.bloomberg.com/crypto'
+                        'Bloomberg Crypto': 'https://www.bloomberg.com/crypto',
+                        'Coinfomania': 'https://coinfomania.com',
+                        '99Bitcoins': 'https://99bitcoins.com',
+                        'Coin Central': 'https://coincentral.com',
+                        'CoinGecko': 'https://www.coingecko.com',
+                        'Coin Bureau': 'https://www.coinbureau.com',
+                        'Standard Chartered': 'https://www.sc.com',
+                        'Morningstar': 'https://www.morningstar.com',
+                        'CoinMarketCap': 'https://coinmarketcap.com'
                       };
 
                       const url = sourceUrls[source] || '#';
