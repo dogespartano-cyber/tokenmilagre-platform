@@ -184,8 +184,40 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
   const readingTime = calculateReadingTime(article.content || '');
   const headings = extractHeadings(article.content || '');
 
+  // Schema Markup para SEO
+  const schemaMarkup = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": article.title,
+    "description": article.summary,
+    "datePublished": article.publishedAt,
+    "dateModified": article.publishedAt,
+    "author": {
+      "@type": "Organization",
+      "name": article.source
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "$MILAGRE",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://tokenmilagre.xyz/logo.png"
+      }
+    },
+    "articleSection": article.category.join(", "),
+    "keywords": article.keywords.join(", "),
+    "inLanguage": "pt-BR",
+    "isAccessibleForFree": true
+  };
+
   return (
     <>
+      {/* Schema Markup JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
+      />
+
       {/* Barra de Progresso de Leitura - Cor fixa laranja/amarelo */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-white/10 z-50">
         <div
@@ -279,14 +311,51 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
               </div>
 
               {/* Título */}
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
                 {article.title}
               </h1>
+
+              {/* Data de Publicação */}
+              <div className="mb-6 flex items-center gap-2 text-white/60">
+                <span className="text-lg">📅</span>
+                <span className="text-sm font-medium">
+                  Publicado em: {new Date(article.publishedAt).toLocaleDateString('pt-BR', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    timeZone: 'America/Sao_Paulo'
+                  })} BRT
+                </span>
+              </div>
 
               {/* Resumo */}
               <p className="text-white/80 text-xl mb-6 leading-relaxed font-light">
                 {article.summary}
               </p>
+
+              {/* Table of Contents */}
+              {headings.length > 0 && (
+                <div className="bg-white/5 border-2 border-white/10 rounded-xl p-6 mb-6">
+                  <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                    <span className="text-xl">📚</span>
+                    Neste Artigo:
+                  </h3>
+                  <nav className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    {headings.map((heading, idx) => (
+                      <a
+                        key={idx}
+                        href={`#${heading.id}`}
+                        className="text-white/70 hover:text-yellow-300 text-sm transition py-2 px-3 hover:bg-white/5 rounded-lg flex items-center gap-2 group"
+                      >
+                        <span className="text-white/50 group-hover:text-yellow-300">→</span>
+                        {heading.text}
+                      </a>
+                    ))}
+                  </nav>
+                </div>
+              )}
 
               {/* Keywords */}
               <div className="flex flex-wrap gap-2 mb-4">
@@ -377,15 +446,71 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                         {children}
                       </blockquote>
                     ),
+                    a: ({ href, children }) => (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-yellow-400 hover:text-yellow-300 underline decoration-yellow-400/50 hover:decoration-yellow-300 transition-colors font-medium"
+                      >
+                        {children}
+                      </a>
+                    ),
                   }}
                 >
                   {article.content || 'Conteúdo não disponível.'}
                 </ReactMarkdown>
               </article>
 
+              {/* CTA Comunitário */}
+              <div className="mt-12 pt-8 border-t-2 border-white/20">
+                <div className="bg-gradient-to-r from-yellow-400/10 via-amber-400/10 to-yellow-400/10 border-2 border-yellow-400/30 rounded-2xl p-8">
+                  <h3 className="text-white font-bold text-2xl mb-4 flex items-center gap-2">
+                    <span className="text-3xl">💬</span>
+                    Participe da Discussão
+                  </h3>
+                  <p className="text-white/80 mb-6 text-lg">
+                    O que você acha sobre este tema? Compartilhe sua opinião com a comunidade $MILAGRE!
+                  </p>
+                  <div className="flex flex-wrap gap-4">
+                    <a
+                      href="https://discord.gg/milagre"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-3 bg-[#5865F2] hover:bg-[#4752C4] text-white rounded-xl font-semibold transition flex items-center gap-2 shadow-lg"
+                    >
+                      <span className="text-xl">💬</span>
+                      Discord $MILAGRE
+                    </a>
+                    <a
+                      href="https://t.me/milagretoken"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-3 bg-[#0088cc] hover:bg-[#0077b3] text-white rounded-xl font-semibold transition flex items-center gap-2 shadow-lg"
+                    >
+                      <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
+                      Telegram $MILAGRE
+                    </a>
+                  </div>
+                  <div className="mt-6 pt-6 border-t border-white/10">
+                    <p className="text-white/60 text-sm mb-3">
+                      <span className="font-semibold text-white">Quer aprender mais sobre Bitcoin e reservas nacionais?</span>
+                    </p>
+                    <a
+                      href="/educacao"
+                      className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-semibold transition"
+                    >
+                      <span className="text-xl">📚</span>
+                      Explore nossa Biblioteca Educacional $MILAGRE
+                      <span>→</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
               {/* Múltiplas Fontes */}
               {article.sources && article.sources.length > 0 && (
-                <div className="mt-12 pt-8 border-t-2 border-white/20">
+                <div className="mt-8 pt-8 border-t-2 border-white/20">
                   <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                     <FontAwesomeIcon icon={faBook} className="w-5 h-5" />
                     Fontes Consultadas:

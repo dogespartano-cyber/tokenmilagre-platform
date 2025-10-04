@@ -45,10 +45,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
+  const baseUrl = 'https://tokenmilagre.xyz';
+  const articleUrl = `${baseUrl}/dashboard/noticias/${article.slug || article.id}`;
+
   return {
     title: `${article.title} | TokenMilagre`,
     description: article.summary.substring(0, 160),
     keywords: article.keywords.join(', '),
+    authors: [{ name: article.source }],
     openGraph: {
       title: article.title,
       description: article.summary.substring(0, 160),
@@ -56,11 +60,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       publishedTime: article.publishedAt,
       authors: [article.source],
       tags: article.keywords,
+      url: articleUrl,
+      siteName: '$MILAGRE - TokenMilagre',
     },
     twitter: {
       card: 'summary_large_image',
       title: article.title,
       description: article.summary.substring(0, 160),
+      creator: '@TokenMilagre',
     },
   };
 }
