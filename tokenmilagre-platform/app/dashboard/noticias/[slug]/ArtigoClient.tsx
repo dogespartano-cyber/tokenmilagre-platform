@@ -170,12 +170,12 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
           Voltar para Notícias
         </button>
 
-        <div className="grid lg:grid-cols-[1fr,264px] gap-8 max-w-7xl mx-auto items-start">
-          {/* Conteúdo Principal */}
-          <div className="w-full max-w-4xl">
-
-            {/* Header do Artigo */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border-2 border-white/30 shadow-xl mb-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex gap-8 items-start">
+            {/* Conteúdo Principal */}
+            <div className="flex-1 max-w-4xl">
+              {/* Header do Artigo */}
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border-2 border-white/30 shadow-xl mb-6">
               {/* Meta Info */}
               <div className="flex items-center gap-3 mb-4 flex-wrap text-sm">
                 <span className="text-white/70 font-semibold">{article.source}</span>
@@ -226,31 +226,31 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 <div className="flex gap-3 flex-wrap">
                   <button
                     onClick={shareOnX}
-                    className="px-4 py-2 bg-black hover:bg-gray-900 text-white rounded-lg transition flex items-center gap-2"
+                    className="w-10 h-10 bg-black hover:bg-gray-900 text-white rounded-lg transition flex items-center justify-center"
+                    title="Compartilhar no X"
                   >
-                    <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
-                    X
+                    <FontAwesomeIcon icon={faXTwitter} className="w-5 h-5" />
                   </button>
                   <button
                     onClick={shareOnWhatsApp}
-                    className="px-4 py-2 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-lg transition flex items-center gap-2"
+                    className="w-10 h-10 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-lg transition flex items-center justify-center"
+                    title="Compartilhar no WhatsApp"
                   >
-                    <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
-                    WhatsApp
+                    <FontAwesomeIcon icon={faWhatsapp} className="w-5 h-5" />
                   </button>
                   <button
                     onClick={shareOnTelegram}
-                    className="px-4 py-2 bg-[#0088cc] hover:bg-[#0077b3] text-white rounded-lg transition flex items-center gap-2"
+                    className="w-10 h-10 bg-[#0088cc] hover:bg-[#0077b3] text-white rounded-lg transition flex items-center justify-center"
+                    title="Compartilhar no Telegram"
                   >
-                    <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
-                    Telegram
+                    <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
                   </button>
                   <button
                     onClick={copyLink}
-                    className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition flex items-center gap-2"
+                    className="w-10 h-10 bg-white/10 hover:bg-white/20 text-white rounded-lg transition flex items-center justify-center"
+                    title="Copiar link"
                   >
-                    <FontAwesomeIcon icon={faLink} className="w-4 h-4" />
-                    Copiar link
+                    <FontAwesomeIcon icon={faLink} className="w-5 h-5" />
                   </button>
                 </div>
               </div>
@@ -407,30 +407,31 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
             )}
           </div>
 
-          {/* Sidebar - Índice (Desktop) - Alinhado com o card do título */}
-          {headings.length > 0 && (
-            <div className="hidden lg:block">
-              <div className="sticky top-24">
-                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-                  <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faBook} className="w-4 h-4" />
-                    Índice
-                  </h3>
-                  <nav className="space-y-2">
-                    {headings.map((heading, idx) => (
-                      <a
-                        key={idx}
-                        href={`#${heading.id}`}
-                        className="block text-white/70 hover:text-white text-sm transition py-1 hover:pl-2 duration-200"
-                      >
-                        {heading.text}
-                      </a>
-                    ))}
-                  </nav>
+            {/* Sidebar - Índice (Desktop) - Alinhado horizontalmente com o header */}
+            {headings.length > 0 && (
+              <div className="hidden lg:block w-64 shrink-0">
+                <div className="sticky top-24">
+                  <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
+                    <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                      <FontAwesomeIcon icon={faBook} className="w-4 h-4" />
+                      Índice
+                    </h3>
+                    <nav className="space-y-2">
+                      {headings.map((heading, idx) => (
+                        <a
+                          key={idx}
+                          href={`#${heading.id}`}
+                          className="block text-white/70 hover:text-white text-sm transition py-1 hover:pl-2 duration-200"
+                        >
+                          {heading.text}
+                        </a>
+                      ))}
+                    </nav>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </>
