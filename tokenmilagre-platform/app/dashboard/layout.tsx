@@ -2,7 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+
+const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
 
 export default function DashboardLayout({
   children,
@@ -32,9 +35,19 @@ export default function DashboardLayout({
                 {sidebarOpen ? '✕' : '☰'}
               </button>
 
-              <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
-                <div className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg font-[family-name:var(--font-poppins)]">
-                  $MILAGRE Dashboard
+              <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition group">
+                <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 border-yellow-300/50 group-hover:border-yellow-300 transition-all group-hover:scale-110">
+                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-cyan-400/20 blur-sm"></div>
+                  <Image
+                    src="/images/TOKEN-MILAGRE-Hero.webp"
+                    alt="$MILAGRE"
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-cover relative z-10"
+                  />
+                </div>
+                <div className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg group-hover:text-yellow-200 transition font-[family-name:var(--font-poppins)]">
+                  $MILAGRE
                 </div>
               </Link>
             </div>
@@ -50,7 +63,7 @@ export default function DashboardLayout({
 
       <div className="flex">
         {/* Sidebar - Desktop */}
-        <aside className="hidden lg:block w-64 min-h-screen bg-white/10 backdrop-blur-lg border-r-2 border-white/20">
+        <aside className="hidden lg:block w-64 bg-white/10 backdrop-blur-lg border-r-2 border-white/20 sticky top-[73px] h-[calc(100vh-73px)] overflow-y-auto">
           <nav className="p-6 space-y-2">
             {menuItems.map((item) => (
               <Link
@@ -66,6 +79,19 @@ export default function DashboardLayout({
                 <span className="font-semibold">{item.label}</span>
               </Link>
             ))}
+
+            {/* Comprar $MILAGRE Button */}
+            <div className="pt-4 mt-4 border-t-2 border-white/20">
+              <a
+                href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold shadow-lg hover:scale-105"
+              >
+                <span className="text-2xl">🚀</span>
+                <span className="font-semibold">Comprar $MILAGRE</span>
+              </a>
+            </div>
           </nav>
         </aside>
 
@@ -92,6 +118,19 @@ export default function DashboardLayout({
                     <span className="font-semibold">{item.label}</span>
                   </Link>
                 ))}
+
+                {/* Comprar $MILAGRE Button */}
+                <div className="pt-4 mt-4 border-t-2 border-white/20">
+                  <a
+                    href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold shadow-lg"
+                  >
+                    <span className="text-2xl">🚀</span>
+                    <span className="font-semibold">Comprar $MILAGRE</span>
+                  </a>
+                </div>
               </nav>
             </aside>
           </div>

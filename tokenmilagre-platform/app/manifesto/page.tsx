@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { SignManifesto } from '@/components/SignManifesto';
 
 export default function ManifestoPage() {
@@ -37,7 +38,17 @@ export default function ManifestoPage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition group">
-              <div className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg font-[family-name:var(--font-poppins)]">
+              <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 border-yellow-300/50 group-hover:border-yellow-300 transition-all group-hover:scale-110">
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-cyan-400/20 blur-sm"></div>
+                <Image
+                  src="/images/TOKEN-MILAGRE-Hero.webp"
+                  alt="$MILAGRE"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover relative z-10"
+                />
+              </div>
+              <div className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg group-hover:text-yellow-200 transition font-[family-name:var(--font-poppins)]">
                 $MILAGRE
               </div>
             </Link>
