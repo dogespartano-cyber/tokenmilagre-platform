@@ -305,43 +305,6 @@ export default function MercadoPage() {
                 )}
               </div>
 
-              {/* Links Úteis */}
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-                <h3 className="text-white font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2">
-                  <span>🔗</span>
-                  <span>Links Úteis</span>
-                </h3>
-                <div className="space-y-2">
-                  <a
-                    href="https://www.coingecko.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block bg-white/5 hover:bg-white/10 rounded-lg p-3 border border-white/10 transition-all"
-                  >
-                    <p className="text-white font-semibold text-sm">📊 CoinGecko</p>
-                    <p className="text-white/70 text-xs">Dados de mercado</p>
-                  </a>
-                  <a
-                    href="https://coinmarketcap.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block bg-white/5 hover:bg-white/10 rounded-lg p-3 border border-white/10 transition-all"
-                  >
-                    <p className="text-white font-semibold text-sm">💹 CoinMarketCap</p>
-                    <p className="text-white/70 text-xs">Rankings e preços</p>
-                  </a>
-                  <a
-                    href="https://br.tradingview.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block bg-white/5 hover:bg-white/10 rounded-lg p-3 border border-white/10 transition-all"
-                  >
-                    <p className="text-white font-semibold text-sm">📈 TradingView</p>
-                    <p className="text-white/70 text-xs">Análise técnica</p>
-                  </a>
-                </div>
-              </div>
-
               {/* Últimas Notícias */}
               <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
                 <h3 className="text-white font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2">
@@ -377,6 +340,43 @@ export default function MercadoPage() {
                 >
                   Ver todas as notícias →
                 </Link>
+              </div>
+
+              {/* Links Úteis */}
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
+                <h3 className="text-white font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2">
+                  <span>🔗</span>
+                  <span>Links Úteis</span>
+                </h3>
+                <div className="space-y-2">
+                  <a
+                    href="https://www.coingecko.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block bg-white/5 hover:bg-white/10 rounded-lg p-3 border border-white/10 transition-all"
+                  >
+                    <p className="text-white font-semibold text-sm">📊 CoinGecko</p>
+                    <p className="text-white/70 text-xs">Dados de mercado</p>
+                  </a>
+                  <a
+                    href="https://coinmarketcap.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block bg-white/5 hover:bg-white/10 rounded-lg p-3 border border-white/10 transition-all"
+                  >
+                    <p className="text-white font-semibold text-sm">💹 CoinMarketCap</p>
+                    <p className="text-white/70 text-xs">Rankings e preços</p>
+                  </a>
+                  <a
+                    href="https://br.tradingview.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block bg-white/5 hover:bg-white/10 rounded-lg p-3 border border-white/10 transition-all"
+                  >
+                    <p className="text-white font-semibold text-sm">📈 TradingView</p>
+                    <p className="text-white/70 text-xs">Análise técnica</p>
+                  </a>
+                </div>
               </div>
             </div>
 
