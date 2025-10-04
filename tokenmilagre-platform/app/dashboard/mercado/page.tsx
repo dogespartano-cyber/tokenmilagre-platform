@@ -8,6 +8,18 @@ const TradingViewWidget = dynamic(() => import('@/components/TradingViewWidget')
   ssr: false,
 });
 
+const TechnicalAnalysisWidget = dynamic(() => import('@/components/TechnicalAnalysisWidget'), {
+  ssr: false,
+});
+
+const CryptoScreenerWidget = dynamic(() => import('@/components/CryptoScreenerWidget'), {
+  ssr: false,
+});
+
+const CryptoHeatmapWidget = dynamic(() => import('@/components/CryptoHeatmapWidget'), {
+  ssr: false,
+});
+
 interface MarketData {
   totalMarketCap: number;
   totalVolume: number;
@@ -283,6 +295,69 @@ export default function MercadoPage() {
                     <span>Solana (SOL/USDT)</span>
                   </h3>
                   <TradingViewWidget symbol="BINANCE:SOLUSDT" symbolName="SOLUSDT" />
+                </div>
+              </div>
+            </div>
+
+            {/* Análise Técnica Avançada */}
+            <div className="space-y-6">
+              <h2 className="text-white font-bold text-2xl font-[family-name:var(--font-poppins)] text-center">
+                🔬 Análise Técnica Avançada
+              </h2>
+
+              <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
+                {/* Análise Técnica BTC */}
+                <div>
+                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                    <span>₿</span>
+                    <span>Bitcoin - Indicadores</span>
+                  </h3>
+                  <TechnicalAnalysisWidget symbol="BINANCE:BTCUSDT" />
+                </div>
+
+                {/* Análise Técnica ETH */}
+                <div>
+                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                    <span>Ξ</span>
+                    <span>Ethereum - Indicadores</span>
+                  </h3>
+                  <TechnicalAnalysisWidget symbol="BINANCE:ETHUSDT" />
+                </div>
+
+                {/* Análise Técnica SOL */}
+                <div>
+                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                    <span>◎</span>
+                    <span>Solana - Indicadores</span>
+                  </h3>
+                  <TechnicalAnalysisWidget symbol="BINANCE:SOLUSDT" />
+                </div>
+              </div>
+            </div>
+
+            {/* Heatmap & Screener */}
+            <div className="space-y-6">
+              <h2 className="text-white font-bold text-2xl font-[family-name:var(--font-poppins)] text-center">
+                🗺️ Mapa de Mercado & Screener
+              </h2>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Crypto Heatmap */}
+                <div>
+                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                    <span>🔥</span>
+                    <span>Crypto Heatmap</span>
+                  </h3>
+                  <CryptoHeatmapWidget />
+                </div>
+
+                {/* Crypto Screener */}
+                <div>
+                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                    <span>📋</span>
+                    <span>Market Screener</span>
+                  </h3>
+                  <CryptoScreenerWidget />
                 </div>
               </div>
             </div>
