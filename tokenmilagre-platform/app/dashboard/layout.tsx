@@ -18,6 +18,7 @@ export default function DashboardLayout({
   const menuItems = [
     { href: '/dashboard', label: 'Portfolio', icon: '💼' },
     { href: '/dashboard/mercado', label: 'Mercado', icon: '📊' },
+    { href: '/dashboard/noticias', label: 'Notícias', icon: '📰' },
   ];
 
   return (
