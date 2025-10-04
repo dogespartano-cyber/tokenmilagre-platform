@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowLeft,
   faClock,
-  faCheckCircle,
   faHashtag,
   faBook,
   faBookOpen,
@@ -279,17 +278,6 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 </span>
               </div>
 
-              {/* Badge de Verificação - Separado para maior clareza */}
-              {article.factChecked && (
-                <div className="mb-4 inline-flex items-center gap-2 px-3 py-2 bg-green-500/10 border border-green-400/30 rounded-xl">
-                  <FontAwesomeIcon icon={faCheckCircle} className="w-4 h-4 text-green-400" />
-                  <div>
-                    <p className="text-green-300 font-semibold text-sm">Fact-Checked por $MILAGRE</p>
-                    <p className="text-white/60 text-xs">Análise verificada por nossa equipe</p>
-                  </div>
-                </div>
-              )}
-
               {/* Título */}
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
                 {article.title}
@@ -436,46 +424,9 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
               )}
             </div>
 
-            {/* Navegação Anterior/Próximo */}
-            {(previousArticle || nextArticle) && (
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl mb-8">
-                <div className="flex justify-between items-center gap-4">
-                  {previousArticle ? (
-                    <button
-                      onClick={() => router.push(`/dashboard/noticias/${previousArticle.slug || previousArticle.id}`)}
-                      className="flex-1 text-left bg-white/5 hover:bg-white/10 p-4 rounded-xl transition border border-white/10 hover:border-white/20 group"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <FontAwesomeIcon icon={faChevronLeft} className="w-3 h-3 text-white/50" />
-                        <span className="text-white/50 text-sm">Anterior</span>
-                      </div>
-                      <h4 className="text-white font-semibold line-clamp-2 group-hover:text-yellow-300 transition">{previousArticle.title}</h4>
-                    </button>
-                  ) : (
-                    <div className="flex-1"></div>
-                  )}
-
-                  {nextArticle ? (
-                    <button
-                      onClick={() => router.push(`/dashboard/noticias/${nextArticle.slug || nextArticle.id}`)}
-                      className="flex-1 text-right bg-white/5 hover:bg-white/10 p-4 rounded-xl transition border border-white/10 hover:border-white/20 group"
-                    >
-                      <div className="flex items-center justify-end gap-2 mb-2">
-                        <span className="text-white/50 text-sm">Próximo</span>
-                        <FontAwesomeIcon icon={faChevronRight} className="w-3 h-3 text-white/50" />
-                      </div>
-                      <h4 className="text-white font-semibold line-clamp-2 group-hover:text-yellow-300 transition">{nextArticle.title}</h4>
-                    </button>
-                  ) : (
-                    <div className="flex-1"></div>
-                  )}
-                </div>
-              </div>
-            )}
-
           </div>
 
-            {/* Sidebar - Índice e Artigos Relacionados (Desktop) */}
+            {/* Sidebar - Índice, Navegação e Artigos Relacionados (Desktop) */}
             <div className="hidden lg:block w-64 shrink-0">
               <div className="sticky top-24 space-y-6">
                 {/* Card Índice */}
@@ -496,6 +447,40 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                         </a>
                       ))}
                     </nav>
+                  </div>
+                )}
+
+                {/* Card Navegação Anterior/Próximo */}
+                {(previousArticle || nextArticle) && (
+                  <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
+                    <h3 className="text-white font-bold mb-4 text-sm">Navegação</h3>
+                    <div className="space-y-3">
+                      {previousArticle && (
+                        <button
+                          onClick={() => router.push(`/dashboard/noticias/${previousArticle.slug || previousArticle.id}`)}
+                          className="w-full text-left bg-white/5 hover:bg-white/10 p-3 rounded-xl transition border border-white/10 hover:border-white/20 group"
+                        >
+                          <div className="flex items-center gap-2 mb-1">
+                            <FontAwesomeIcon icon={faChevronLeft} className="w-3 h-3 text-white/50" />
+                            <span className="text-white/50 text-xs">Anterior</span>
+                          </div>
+                          <h4 className="text-white font-semibold text-sm line-clamp-2 group-hover:text-yellow-300 transition">{previousArticle.title}</h4>
+                        </button>
+                      )}
+
+                      {nextArticle && (
+                        <button
+                          onClick={() => router.push(`/dashboard/noticias/${nextArticle.slug || nextArticle.id}`)}
+                          className="w-full text-left bg-white/5 hover:bg-white/10 p-3 rounded-xl transition border border-white/10 hover:border-white/20 group"
+                        >
+                          <div className="flex items-center gap-2 mb-1">
+                            <FontAwesomeIcon icon={faChevronRight} className="w-3 h-3 text-white/50" />
+                            <span className="text-white/50 text-xs">Próximo</span>
+                          </div>
+                          <h4 className="text-white font-semibold text-sm line-clamp-2 group-hover:text-yellow-300 transition">{nextArticle.title}</h4>
+                        </button>
+                      )}
+                    </div>
                   </div>
                 )}
 
