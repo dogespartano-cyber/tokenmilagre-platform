@@ -234,10 +234,10 @@ export default function Home() {
               {/* Social Icons */}
               <div className="flex gap-4 items-center ml-4 pl-4 border-l-2 border-white/30">
                 <a href="https://x.com/TokenMilagre" target="_blank" rel="noopener noreferrer" className="w-6 h-6 flex items-center justify-center hover:opacity-70 transition">
-                  <Image src="/imagens/X-twitter.png" alt="X/Twitter" width={24} height={24} className="w-full h-full object-contain" />
+                  <Image src="/images/X-twitter.png" alt="X/Twitter" width={24} height={24} className="w-full h-full object-contain" />
                 </a>
                 <a href="https://t.me/+Bop_TVFc_mg3Njlh" target="_blank" rel="noopener noreferrer" className="w-6 h-6 flex items-center justify-center hover:opacity-70 transition">
-                  <Image src="/imagens/telegrama.png" alt="Telegram" width={24} height={24} className="w-full h-full object-contain" />
+                  <Image src="/images/telegrama.png" alt="Telegram" width={24} height={24} className="w-full h-full object-contain" />
                 </a>
               </div>
 
@@ -285,10 +285,10 @@ export default function Home() {
 
               <div className="flex gap-6 items-center pt-3 border-t border-white/20">
                 <a href="https://x.com/TokenMilagre" target="_blank" rel="noopener noreferrer" className="w-8 h-8 flex items-center justify-center hover:opacity-70 transition">
-                  <Image src="/imagens/X-twitter.png" alt="X/Twitter" width={32} height={32} className="w-full h-full object-contain" />
+                  <Image src="/images/X-twitter.png" alt="X/Twitter" width={32} height={32} className="w-full h-full object-contain" />
                 </a>
                 <a href="https://t.me/+Bop_TVFc_mg3Njlh" target="_blank" rel="noopener noreferrer" className="w-8 h-8 flex items-center justify-center hover:opacity-70 transition">
-                  <Image src="/imagens/telegrama.png" alt="Telegram" width={32} height={32} className="w-full h-full object-contain" />
+                  <Image src="/images/telegrama.png" alt="Telegram" width={32} height={32} className="w-full h-full object-contain" />
                 </a>
               </div>
 
@@ -887,7 +887,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 text-white font-bold text-lg sm:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-full transition-all shadow-xl transform hover:scale-105 text-center flex items-center justify-center gap-3"
             >
-              <Image src="/imagens/telegrama.png" alt="Telegram" width={28} height={28} className="w-7 h-7 object-contain" />
+              <Image src="/images/telegrama.png" alt="Telegram" width={28} height={28} className="w-7 h-7 object-contain" />
               <span>Entrar na Comunidade</span>
             </a>
           </div>
