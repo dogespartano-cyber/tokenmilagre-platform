@@ -240,7 +240,7 @@ export default function Home() {
               <Link href="/manifesto" className="text-white hover:text-yellow-300 transition font-semibold">
                 Manifesto
               </Link>
-              <Link href="/dashboard" className="text-white hover:text-yellow-300 transition font-semibold">
+              <Link href="/dashboard/mercado" className="text-white hover:text-yellow-300 transition font-semibold">
                 Dashboard
               </Link>
 
@@ -301,7 +301,7 @@ export default function Home() {
               <Link href="/manifesto" className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
                 Manifesto
               </Link>
-              <Link href="/dashboard" className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
+              <Link href="/dashboard/mercado" className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
                 Dashboard
               </Link>
 

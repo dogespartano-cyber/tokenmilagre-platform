@@ -187,42 +187,77 @@ export default function MercadoPage() {
 
             {/* Market Insights - Card Unificado */}
             <div className="grid md:grid-cols-2 gap-6">
-              {/* Fear & Greed + Altcoin Season */}
+              {/* Sentimento & Análise do Mercado */}
               <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-                <h3 className="text-white font-bold text-xl mb-4 font-[family-name:var(--font-poppins)]">
+                <h3 className="text-white font-bold text-xl mb-6 font-[family-name:var(--font-poppins)]">
                   📊 Market Insights
                 </h3>
 
-                <div className="grid grid-cols-2 gap-4">
-                  {/* Fear & Greed Index */}
-                  {fearGreed && (
-                    <div className="flex flex-col items-center">
-                      <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${getFearGreedColor(parseInt(fearGreed.value))} flex items-center justify-center shadow-lg mb-2`}>
-                        <div className="bg-white/20 backdrop-blur-sm w-20 h-20 rounded-full flex flex-col items-center justify-center">
-                          <span className="text-3xl">{getFearGreedEmoji(fearGreed.value_classification)}</span>
-                          <span className="text-white font-bold text-lg">{fearGreed.value}</span>
+                {/* Sentimento do Mercado */}
+                {fearGreed && (
+                  <div className="mb-6 pb-6 border-b border-white/20">
+                    <p className="text-white/70 text-sm mb-3 font-semibold">Sentimento do Mercado</p>
+                    <div className="flex items-center gap-4">
+                      <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${getFearGreedColor(parseInt(fearGreed.value))} flex items-center justify-center shadow-lg flex-shrink-0`}>
+                        <div className="bg-white/20 backdrop-blur-sm w-16 h-16 rounded-full flex flex-col items-center justify-center">
+                          <span className="text-2xl">{getFearGreedEmoji(fearGreed.value_classification)}</span>
+                          <span className="text-white font-bold text-sm">{fearGreed.value}</span>
                         </div>
                       </div>
-                      <p className="text-white font-bold text-sm text-center">
-                        {fearGreed.value_classification}
-                      </p>
-                      <p className="text-white/60 text-xs text-center">Fear & Greed</p>
+                      <div className="flex-1">
+                        <p className="text-white font-bold text-lg mb-1">
+                          {fearGreed.value_classification === 'Extreme Fear' && 'Medo Extremo'}
+                          {fearGreed.value_classification === 'Fear' && 'Medo'}
+                          {fearGreed.value_classification === 'Neutral' && 'Neutro'}
+                          {fearGreed.value_classification === 'Greed' && 'Ganância'}
+                          {fearGreed.value_classification === 'Extreme Greed' && 'Ganância Extrema'}
+                        </p>
+                        <p className="text-white/60 text-xs leading-relaxed">
+                          {parseInt(fearGreed.value) <= 25 && 'Mercado em pânico - possível oportunidade de compra'}
+                          {parseInt(fearGreed.value) > 25 && parseInt(fearGreed.value) <= 45 && 'Investidores cautelosos - sentimento negativo'}
+                          {parseInt(fearGreed.value) > 45 && parseInt(fearGreed.value) <= 55 && 'Mercado equilibrado - sem tendência clara'}
+                          {parseInt(fearGreed.value) > 55 && parseInt(fearGreed.value) <= 75 && 'Otimismo crescente - mercado aquecendo'}
+                          {parseInt(fearGreed.value) > 75 && 'Euforia no mercado - atenção a correções'}
+                        </p>
+                      </div>
                     </div>
-                  )}
-
-                  {/* Altcoin Season */}
-                  <div className="flex flex-col items-center justify-center">
-                    <div className="text-4xl mb-2">
-                      {marketData && marketData.btcDominance < 40 ? '🚀' : '📊'}
-                    </div>
-                    <p className="text-white font-bold text-sm text-center">
-                      {marketData && marketData.btcDominance < 40
-                        ? 'Altcoin Season'
-                        : 'BTC Dominante'}
-                    </p>
-                    <p className="text-white/60 text-xs text-center">Baseado BTC/ETH</p>
                   </div>
-                </div>
+                )}
+
+                {/* Altcoin Season */}
+                {marketData && (
+                  <div>
+                    <p className="text-white/70 text-sm mb-3 font-semibold">Ciclo de Mercado</p>
+                    <div className="flex items-center gap-4">
+                      <div className={`w-20 h-20 rounded-full ${
+                        marketData.btcDominance < 40
+                          ? 'bg-gradient-to-br from-green-500 to-emerald-600'
+                          : marketData.btcDominance < 50
+                          ? 'bg-gradient-to-br from-yellow-500 to-orange-500'
+                          : 'bg-gradient-to-br from-blue-500 to-purple-600'
+                      } flex items-center justify-center shadow-lg flex-shrink-0`}>
+                        <span className="text-3xl">
+                          {marketData.btcDominance < 40 ? '🚀' : marketData.btcDominance < 50 ? '⚡' : '₿'}
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-white font-bold text-lg mb-1">
+                          {marketData.btcDominance < 40
+                            ? `Altseason Ativa! ${Math.round(100 - marketData.btcDominance)}% de chance`
+                            : marketData.btcDominance < 50
+                            ? `Aproximando Altseason: ${Math.round((50 - marketData.btcDominance) * 2)}% de chance`
+                            : `Bitcoin Dominante: ${Math.round(100 - ((marketData.btcDominance - 50) * 2))}% chance de Altseason`
+                          }
+                        </p>
+                        <p className="text-white/60 text-xs leading-relaxed">
+                          {marketData.btcDominance < 40 && 'Altcoins superando BTC - momento ideal para diversificação'}
+                          {marketData.btcDominance >= 40 && marketData.btcDominance < 50 && 'Transição em curso - monitore oportunidades em altcoins'}
+                          {marketData.btcDominance >= 50 && 'BTC lidera o mercado - foco em Bitcoin e grandes caps'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Links Úteis */}
