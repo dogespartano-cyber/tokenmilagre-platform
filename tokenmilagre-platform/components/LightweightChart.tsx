@@ -17,10 +17,10 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
   useEffect(() => {
     if (!chartContainerRef.current) return;
 
-    // Criar gráfico com fundo azul claro sem grade
+    // Criar gráfico com fundo #64c5da sem grade
     const chart = createChart(chartContainerRef.current, {
       layout: {
-        background: { type: ColorType.Solid, color: '#d2fdff' },
+        background: { type: ColorType.Solid, color: '#64c5da' },
         textColor: '#1e293b',
       },
       grid: {
@@ -51,14 +51,14 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
       },
     });
 
-    // Série de candlestick verde/vermelho pastel escuro
+    // Série de candlestick verde/vermelho forte
     const candlestickSeries = chart.addSeries(CandlestickSeries, {
-      upColor: '#4ade80', // Verde pastel escuro (alta)
-      downColor: '#f87171', // Vermelho pastel escuro (baixa)
-      borderUpColor: '#4ade80', // Mesma cor do corpo
-      borderDownColor: '#f87171', // Mesma cor do corpo
-      wickUpColor: '#22c55e',
-      wickDownColor: '#ef4444',
+      upColor: '#16a34a', // Verde forte (alta)
+      downColor: '#dc2626', // Vermelho forte (baixa)
+      borderUpColor: '#16a34a', // Mesma cor do corpo
+      borderDownColor: '#dc2626', // Mesma cor do corpo
+      wickUpColor: '#15803d',
+      wickDownColor: '#b91c1c',
     });
 
     // Série de volume (histograma)
@@ -142,7 +142,7 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
         return {
           time: ((candle[0] as number) / 1000) as Time,
           value: parseFloat(candle[5] as string), // Volume
-          color: close >= open ? '#4ade8080' : '#f8717180', // Verde/vermelho pastel escuro com transparência
+          color: close >= open ? '#16a34a80' : '#dc262680', // Verde/vermelho forte com transparência
         };
       });
 

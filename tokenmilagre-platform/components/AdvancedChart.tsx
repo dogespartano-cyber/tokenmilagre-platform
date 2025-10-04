@@ -113,10 +113,10 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       }
     };
 
-    // Criar gráfico principal com fundo azul claro
+    // Criar gráfico principal com fundo #64c5da
     const chart = createChart(chartContainerRef.current, {
       layout: {
-        background: { type: ColorType.Solid, color: '#d2fdff' },
+        background: { type: ColorType.Solid, color: '#64c5da' },
         textColor: '#1e293b',
       },
       grid: {
@@ -147,14 +147,14 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       },
     });
 
-    // Série de candlestick
+    // Série de candlestick verde/vermelho forte
     const candlestickSeries = chart.addSeries(CandlestickSeries, {
-      upColor: '#4ade80',
-      downColor: '#f87171',
-      borderUpColor: '#4ade80',
-      borderDownColor: '#f87171',
-      wickUpColor: '#22c55e',
-      wickDownColor: '#ef4444',
+      upColor: '#16a34a',
+      downColor: '#dc2626',
+      borderUpColor: '#16a34a',
+      borderDownColor: '#dc2626',
+      wickUpColor: '#15803d',
+      wickDownColor: '#b91c1c',
     });
 
     // SMA 20 (amarelo)
