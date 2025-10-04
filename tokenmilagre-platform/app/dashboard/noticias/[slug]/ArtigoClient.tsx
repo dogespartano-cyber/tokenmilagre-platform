@@ -3,6 +3,23 @@
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowLeft,
+  faClock,
+  faCheckCircle,
+  faHashtag,
+  faBook,
+  faBookOpen,
+  faLink,
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  faXTwitter,
+  faWhatsapp,
+  faTelegram,
+} from '@fortawesome/free-brands-svg-icons';
 
 interface NewsItem {
   id: string;
@@ -144,16 +161,18 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
       </div>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="flex gap-8 max-w-7xl mx-auto">
+        {/* Botão Voltar */}
+        <button
+          onClick={() => router.push('/dashboard/noticias')}
+          className="mb-6 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition flex items-center gap-2 max-w-7xl mx-auto"
+        >
+          <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
+          Voltar para Notícias
+        </button>
+
+        <div className="grid lg:grid-cols-[1fr,264px] gap-8 max-w-7xl mx-auto items-start">
           {/* Conteúdo Principal */}
-          <div className="flex-1 max-w-4xl">
-            {/* Botão Voltar */}
-            <button
-              onClick={() => router.push('/dashboard/noticias')}
-              className="mb-6 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition flex items-center gap-2"
-            >
-              <span>←</span> Voltar para Notícias
-            </button>
+          <div className="w-full max-w-4xl">
 
             {/* Header do Artigo */}
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border-2 border-white/30 shadow-xl mb-6">
@@ -163,12 +182,15 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 <span className="text-white/50">•</span>
                 <span className="text-white/50">{getTimeAgo(article.publishedAt)}</span>
                 <span className="text-white/50">•</span>
-                <span className="text-white/50">⏱️ {readingTime} min de leitura</span>
+                <span className="text-white/50 flex items-center gap-1">
+                  <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
+                  {readingTime} min de leitura
+                </span>
                 {article.factChecked && (
                   <>
                     <span className="text-white/50">•</span>
                     <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 border border-green-400/40 rounded-full text-xs text-green-300 font-semibold">
-                      <span>✓</span>
+                      <FontAwesomeIcon icon={faCheckCircle} className="w-3 h-3" />
                       Verificado
                     </span>
                   </>
@@ -190,9 +212,10 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 {article.keywords.map((keyword, idx) => (
                   <span
                     key={idx}
-                    className="px-3 py-1 bg-white/10 rounded-full text-sm text-white/80"
+                    className="px-3 py-1 bg-white/10 rounded-full text-sm text-white/80 flex items-center gap-1"
                   >
-                    #{keyword}
+                    <FontAwesomeIcon icon={faHashtag} className="w-3 h-3" />
+                    {keyword}
                   </span>
                 ))}
               </div>
@@ -205,25 +228,29 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                     onClick={shareOnX}
                     className="px-4 py-2 bg-black hover:bg-gray-900 text-white rounded-lg transition flex items-center gap-2"
                   >
-                    <span>𝕏</span> X
+                    <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
+                    X
                   </button>
                   <button
                     onClick={shareOnWhatsApp}
                     className="px-4 py-2 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-lg transition flex items-center gap-2"
                   >
-                    <span>📱</span> WhatsApp
+                    <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
+                    WhatsApp
                   </button>
                   <button
                     onClick={shareOnTelegram}
                     className="px-4 py-2 bg-[#0088cc] hover:bg-[#0077b3] text-white rounded-lg transition flex items-center gap-2"
                   >
-                    <span>✈️</span> Telegram
+                    <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
+                    Telegram
                   </button>
                   <button
                     onClick={copyLink}
                     className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition flex items-center gap-2"
                   >
-                    <span>🔗</span> Copiar link
+                    <FontAwesomeIcon icon={faLink} className="w-4 h-4" />
+                    Copiar link
                   </button>
                 </div>
               </div>
@@ -279,7 +306,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
               {article.sources && article.sources.length > 0 && (
                 <div className="mt-12 pt-8 border-t-2 border-white/20">
                   <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                    <span>📚</span> Fontes Consultadas:
+                    <FontAwesomeIcon icon={faBook} className="w-5 h-5" />
+                    Fontes Consultadas:
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {article.sources.map((source, idx) => (
@@ -325,7 +353,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                       className="flex-1 text-left bg-white/5 hover:bg-white/10 p-4 rounded-xl transition border border-white/10 hover:border-white/20 group"
                     >
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="text-white/50 text-sm">← Anterior</span>
+                        <FontAwesomeIcon icon={faChevronLeft} className="w-3 h-3 text-white/50" />
+                        <span className="text-white/50 text-sm">Anterior</span>
                       </div>
                       <h4 className="text-white font-semibold line-clamp-2 group-hover:text-yellow-300 transition">{previousArticle.title}</h4>
                     </button>
@@ -339,7 +368,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                       className="flex-1 text-right bg-white/5 hover:bg-white/10 p-4 rounded-xl transition border border-white/10 hover:border-white/20 group"
                     >
                       <div className="flex items-center justify-end gap-2 mb-2">
-                        <span className="text-white/50 text-sm">Próximo →</span>
+                        <span className="text-white/50 text-sm">Próximo</span>
+                        <FontAwesomeIcon icon={faChevronRight} className="w-3 h-3 text-white/50" />
                       </div>
                       <h4 className="text-white font-semibold line-clamp-2 group-hover:text-yellow-300 transition">{nextArticle.title}</h4>
                     </button>
@@ -353,7 +383,10 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
             {/* Artigos Relacionados */}
             {relatedArticles.length > 0 && (
               <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border-2 border-white/30 shadow-xl">
-                <h3 className="text-2xl font-bold text-white mb-6">📰 Continue Lendo</h3>
+                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                  <FontAwesomeIcon icon={faBookOpen} className="w-6 h-6" />
+                  Continue Lendo
+                </h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   {relatedArticles.slice(0, 4).map((related, idx) => (
                     <button
@@ -374,13 +407,14 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
             )}
           </div>
 
-          {/* Sidebar - Índice (Desktop) */}
+          {/* Sidebar - Índice (Desktop) - Alinhado com o card do título */}
           {headings.length > 0 && (
-            <div className="hidden lg:block w-64 shrink-0">
+            <div className="hidden lg:block">
               <div className="sticky top-24">
                 <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
                   <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                    <span>📑</span> Índice
+                    <FontAwesomeIcon icon={faBook} className="w-4 h-4" />
+                    Índice
                   </h3>
                   <nav className="space-y-2">
                     {headings.map((heading, idx) => (
