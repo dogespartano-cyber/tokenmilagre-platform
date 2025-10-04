@@ -12,6 +12,9 @@ function TechnicalAnalysisWidget({ symbol = "BINANCE:BTCUSDT" }: TechnicalAnalys
   useEffect(() => {
     if (!container.current) return;
 
+    // Limpa conteúdo anterior
+    container.current.innerHTML = '';
+
     const script = document.createElement("script");
     script.src = "https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js";
     script.type = "text/javascript";
@@ -29,21 +32,17 @@ function TechnicalAnalysisWidget({ symbol = "BINANCE:BTCUSDT" }: TechnicalAnalys
     });
 
     container.current.appendChild(script);
-
-    return () => {
-      if (container.current) {
-        container.current.innerHTML = '';
-      }
-    };
   }, [symbol]);
 
   return (
-    <div
-      className="tradingview-widget-container bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden"
-      ref={container}
-      style={{ height: "500px", width: "100%" }}
-    >
-      <div className="tradingview-widget-container__widget" style={{ height: "100%", width: "100%" }}></div>
+    <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden" style={{ height: "500px" }}>
+      <div
+        className="tradingview-widget-container"
+        ref={container}
+        style={{ height: "100%", width: "100%" }}
+      >
+        <div className="tradingview-widget-container__widget" style={{ height: "100%", width: "100%" }}></div>
+      </div>
     </div>
   );
 }
