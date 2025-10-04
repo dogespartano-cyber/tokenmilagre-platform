@@ -16,9 +16,9 @@ export default function DashboardLayout({
   const pathname = usePathname();
 
   const menuItems = [
-    { href: '/dashboard', label: 'Portfolio', icon: '💼' },
-    { href: '/dashboard/mercado', label: 'Mercado', icon: '📊' },
-    { href: '/dashboard/noticias', label: 'Notícias', icon: '📰' },
+    { href: '/dashboard', label: 'Portfolio' },
+    { href: '/dashboard/mercado', label: 'Mercado' },
+    { href: '/dashboard/noticias', label: 'Notícias' },
   ];
 
   return (
@@ -70,13 +70,12 @@ export default function DashboardLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                className={`flex items-center justify-center px-4 py-3 rounded-xl transition-all ${
                   pathname === item.href
                     ? 'bg-gradient-to-r from-yellow-400/30 to-amber-400/30 border-2 border-yellow-300/50 text-white font-bold'
                     : 'bg-white/5 border-2 border-white/10 text-white/80 hover:bg-white/10 hover:text-white'
                 }`}
               >
-                <span className="text-2xl">{item.icon}</span>
                 <span className="font-semibold">{item.label}</span>
               </Link>
             ))}
@@ -109,13 +108,12 @@ export default function DashboardLayout({
                     key={item.href}
                     href={item.href}
                     onClick={() => setSidebarOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    className={`flex items-center justify-center px-4 py-3 rounded-xl transition-all ${
                       pathname === item.href
                         ? 'bg-gradient-to-r from-yellow-400/30 to-amber-400/30 border-2 border-yellow-300/50 text-white font-bold'
                         : 'bg-white/5 border-2 border-white/10 text-white/80 hover:bg-white/10 hover:text-white'
                     }`}
                   >
-                    <span className="text-2xl">{item.icon}</span>
                     <span className="font-semibold">{item.label}</span>
                   </Link>
                 ))}
