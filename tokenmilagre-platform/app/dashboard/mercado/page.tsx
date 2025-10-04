@@ -8,6 +8,10 @@ const LightweightChart = dynamic(() => import('@/components/LightweightChart'), 
   ssr: false,
 });
 
+const TechnicalAnalysisWidget = dynamic(() => import('@/components/TechnicalAnalysisWidget'), {
+  ssr: false,
+});
+
 const CryptoScreenerWidget = dynamic(() => import('@/components/CryptoScreenerWidget'), {
   ssr: false,
 });
@@ -412,22 +416,34 @@ export default function MercadoPage() {
               <h2 className="text-white font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2">
                 🔬 Análise Técnica Avançada
               </h2>
-              <p className="text-white/70 text-center mb-6">Gráficos detalhados com múltiplos timeframes</p>
+              <p className="text-white/70 text-center mb-6">Indicadores técnicos e recomendações de trading</p>
 
               <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                 {/* Análise Técnica BTC */}
                 <div>
-                  <LightweightChart symbol="BTCUSDT" name="₿ Bitcoin - Análise" />
+                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                    <span>₿</span>
+                    <span>Bitcoin - Indicadores</span>
+                  </h3>
+                  <TechnicalAnalysisWidget symbol="BINANCE:BTCUSDT" />
                 </div>
 
                 {/* Análise Técnica ETH */}
                 <div>
-                  <LightweightChart symbol="ETHUSDT" name="Ξ Ethereum - Análise" />
+                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                    <span>Ξ</span>
+                    <span>Ethereum - Indicadores</span>
+                  </h3>
+                  <TechnicalAnalysisWidget symbol="BINANCE:ETHUSDT" />
                 </div>
 
                 {/* Análise Técnica SOL */}
                 <div>
-                  <LightweightChart symbol="SOLUSDT" name="◎ Solana - Análise" />
+                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                    <span>◎</span>
+                    <span>Solana - Indicadores</span>
+                  </h3>
+                  <TechnicalAnalysisWidget symbol="BINANCE:SOLUSDT" />
                 </div>
               </div>
             </div>
