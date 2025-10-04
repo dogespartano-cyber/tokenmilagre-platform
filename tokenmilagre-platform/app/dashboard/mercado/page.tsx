@@ -173,97 +173,91 @@ export default function MercadoPage() {
               </div>
             </div>
 
-            {/* Fear & Greed Index */}
-            {fearGreed && (
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border-2 border-white/30 shadow-xl">
-                <h2 className="text-white font-bold text-2xl mb-6 font-[family-name:var(--font-poppins)] text-center">
-                  Fear & Greed Index
-                </h2>
-                <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-                  <div className="relative">
-                    <div className={`w-48 h-48 rounded-full bg-gradient-to-br ${getFearGreedColor(parseInt(fearGreed.value))} flex items-center justify-center shadow-2xl`}>
-                      <div className="bg-white/20 backdrop-blur-sm w-40 h-40 rounded-full flex flex-col items-center justify-center">
-                        <span className="text-6xl mb-2">{getFearGreedEmoji(fearGreed.value_classification)}</span>
-                        <span className="text-white font-bold text-4xl">{fearGreed.value}</span>
+            {/* Market Insights - Card Unificado */}
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
+              <h2 className="text-white font-bold text-2xl mb-6 font-[family-name:var(--font-poppins)]">
+                📊 Market Insights
+              </h2>
+
+              <div className="grid md:grid-cols-3 gap-6">
+                {/* Fear & Greed Index */}
+                {fearGreed && (
+                  <div className="space-y-4">
+                    <h3 className="text-white font-bold text-lg flex items-center gap-2">
+                      <span>😱</span>
+                      <span>Fear & Greed</span>
+                    </h3>
+                    <div className="flex flex-col items-center">
+                      <div className={`w-32 h-32 rounded-full bg-gradient-to-br ${getFearGreedColor(parseInt(fearGreed.value))} flex items-center justify-center shadow-xl`}>
+                        <div className="bg-white/20 backdrop-blur-sm w-28 h-28 rounded-full flex flex-col items-center justify-center">
+                          <span className="text-4xl mb-1">{getFearGreedEmoji(fearGreed.value_classification)}</span>
+                          <span className="text-white font-bold text-2xl">{fearGreed.value}</span>
+                        </div>
                       </div>
+                      <p className="text-white font-bold text-xl mt-3 text-center">
+                        {fearGreed.value_classification}
+                      </p>
+                      <p className="text-white/70 text-sm text-center">Sentimento do mercado</p>
                     </div>
                   </div>
-                  <div className="text-center md:text-left">
-                    <p className="text-white font-bold text-3xl mb-2">
-                      {fearGreed.value_classification}
+                )}
+
+                {/* Altcoin Season */}
+                <div className="space-y-4">
+                  <h3 className="text-white font-bold text-lg flex items-center gap-2">
+                    <span>🌊</span>
+                    <span>Altcoin Season</span>
+                  </h3>
+                  <div className="flex flex-col items-center justify-center h-full">
+                    <p className="text-white/80 text-sm mb-3 text-center">
+                      Baseado na dominância BTC/ETH
                     </p>
-                    <p className="text-white/80 text-lg mb-4">
-                      Sentimento do mercado cripto
-                    </p>
-                    <div className="space-y-2 text-sm text-white/70">
-                      <p>🔴 0-25: Extreme Fear</p>
-                      <p>🟠 26-45: Fear</p>
-                      <p>🟡 46-55: Neutral</p>
-                      <p>🟢 56-75: Greed</p>
-                      <p>🟢 76-100: Extreme Greed</p>
+                    <div className="text-5xl mb-2">
+                      {marketData && marketData.btcDominance < 40 ? '🚀' : '📊'}
                     </div>
+                    <p className="text-white font-bold text-lg text-center">
+                      {marketData && marketData.btcDominance < 40
+                        ? 'Altcoin Season Ativa'
+                        : 'Bitcoin Dominante'}
+                    </p>
                   </div>
                 </div>
-              </div>
-            )}
 
-            {/* Market Indicators */}
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Altcoin Season Indicator */}
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-                <h3 className="text-white font-bold text-xl mb-4 flex items-center gap-2">
-                  <span>🌊</span>
-                  <span>Altcoin Season</span>
-                </h3>
-                <div className="text-center py-6">
-                  <p className="text-white/80 mb-4">
-                    Calculado baseado na dominância BTC/ETH
-                  </p>
-                  <div className="text-5xl mb-2">
-                    {marketData && marketData.btcDominance < 40 ? '🚀' : '🐢'}
+                {/* Links Úteis */}
+                <div className="space-y-4">
+                  <h3 className="text-white font-bold text-lg flex items-center gap-2">
+                    <span>🔗</span>
+                    <span>Links Úteis</span>
+                  </h3>
+                  <div className="space-y-2">
+                    <a
+                      href="https://www.coingecko.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block bg-white/5 hover:bg-white/10 rounded-lg p-3 border border-white/10 transition-all"
+                    >
+                      <p className="text-white font-semibold text-sm">📊 CoinGecko</p>
+                      <p className="text-white/70 text-xs">Dados de mercado</p>
+                    </a>
+                    <a
+                      href="https://coinmarketcap.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block bg-white/5 hover:bg-white/10 rounded-lg p-3 border border-white/10 transition-all"
+                    >
+                      <p className="text-white font-semibold text-sm">💹 CoinMarketCap</p>
+                      <p className="text-white/70 text-xs">Rankings e preços</p>
+                    </a>
+                    <a
+                      href="https://alternative.me/crypto/fear-and-greed-index/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block bg-white/5 hover:bg-white/10 rounded-lg p-3 border border-white/10 transition-all"
+                    >
+                      <p className="text-white font-semibold text-sm">📈 TradingView</p>
+                      <p className="text-white/70 text-xs">Análise técnica</p>
+                    </a>
                   </div>
-                  <p className="text-white font-bold text-2xl">
-                    {marketData && marketData.btcDominance < 40
-                      ? 'Altcoin Season Ativa'
-                      : 'Bitcoin Dominante'}
-                  </p>
-                </div>
-              </div>
-
-              {/* Quick Links */}
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-                <h3 className="text-white font-bold text-xl mb-4 flex items-center gap-2">
-                  <span>🔗</span>
-                  <span>Links Úteis</span>
-                </h3>
-                <div className="space-y-3">
-                  <a
-                    href="https://www.coingecko.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block bg-white/5 hover:bg-white/10 rounded-xl p-4 border border-white/10 transition-all"
-                  >
-                    <p className="text-white font-semibold">📊 CoinGecko</p>
-                    <p className="text-white/70 text-sm">Dados de mercado</p>
-                  </a>
-                  <a
-                    href="https://coinmarketcap.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block bg-white/5 hover:bg-white/10 rounded-xl p-4 border border-white/10 transition-all"
-                  >
-                    <p className="text-white font-semibold">💹 CoinMarketCap</p>
-                    <p className="text-white/70 text-sm">Rankings e preços</p>
-                  </a>
-                  <a
-                    href="https://alternative.me/crypto/fear-and-greed-index/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block bg-white/5 hover:bg-white/10 rounded-xl p-4 border border-white/10 transition-all"
-                  >
-                    <p className="text-white font-semibold">😱 Fear & Greed</p>
-                    <p className="text-white/70 text-sm">Análise de sentimento</p>
-                  </a>
                 </div>
               </div>
             </div>
@@ -304,7 +298,7 @@ export default function MercadoPage() {
 
                 {/* Espaço para futuros widgets */}
                 <div className="space-y-3">
-                  <div className="bg-white/5 backdrop-blur-lg rounded-2xl border-2 border-white/20 border-dashed shadow-xl p-8 flex items-center justify-center" style={{ height: "400px" }}>
+                  <div className="bg-white/5 backdrop-blur-lg rounded-2xl border-2 border-white/20 border-dashed shadow-xl p-8 flex items-center justify-center" style={{ height: "610px" }}>
                     <div className="text-center">
                       <div className="text-6xl mb-4 opacity-50">📊</div>
                       <p className="text-white/60 font-semibold">Mais gráficos em breve</p>
