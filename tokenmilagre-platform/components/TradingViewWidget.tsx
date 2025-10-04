@@ -8,50 +8,45 @@ interface TradingViewWidgetProps {
 }
 
 function TradingViewWidget({ symbol, symbolName }: TradingViewWidgetProps) {
-  const container = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!container.current) return;
+    if (!containerRef.current) return;
 
-    // Limpa conteúdo anterior
-    container.current.innerHTML = '';
-
-    const script = document.createElement("script");
-    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
-    script.type = "text/javascript";
+    const script = document.createElement('script');
+    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+    script.type = 'text/javascript';
     script.async = true;
     script.innerHTML = JSON.stringify({
       autosize: true,
       symbol: symbol,
-      interval: "D",
-      timezone: "Etc/UTC",
-      theme: "dark",
-      style: "1",
-      locale: "br",
+      interval: 'D',
+      timezone: 'Etc/UTC',
+      theme: 'dark',
+      style: '1',
+      locale: 'br',
+      enable_publishing: false,
       allow_symbol_change: true,
       calendar: false,
-      support_host: "https://www.tradingview.com",
-      hide_top_toolbar: false,
-      hide_side_toolbar: false,
-      save_image: false,
-      backgroundColor: "rgba(0, 0, 0, 0)",
-      gridColor: "rgba(255, 255, 255, 0.06)"
+      support_host: 'https://www.tradingview.com'
     });
 
-    container.current.appendChild(script);
+    containerRef.current.appendChild(script);
+
+    return () => {
+      if (containerRef.current) {
+        containerRef.current.innerHTML = '';
+      }
+    };
   }, [symbol]);
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden">
-      <div
-        className="tradingview-widget-container"
-        ref={container}
-        style={{ height: "500px", width: "100%" }}
-      >
-        <div className="tradingview-widget-container__widget" style={{ height: "calc(100% - 32px)", width: "100%" }}></div>
-        <div className="tradingview-widget-copyright" style={{ fontSize: "13px", lineHeight: "32px", textAlign: "center", verticalAlign: "middle", padding: "0 10px" }}>
-          <a href={`https://br.tradingview.com/symbols/${symbolName || symbol}/`} rel="noopener nofollow" target="_blank">
-            <span style={{ color: "rgba(255, 255, 255, 0.6)" }}>📈 TradingView</span>
+    <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden" style={{ height: '600px' }}>
+      <div className="tradingview-widget-container" ref={containerRef} style={{ height: '100%', width: '100%' }}>
+        <div className="tradingview-widget-container__widget" style={{ height: 'calc(100% - 32px)', width: '100%' }}></div>
+        <div className="tradingview-widget-copyright" style={{ lineHeight: '32px', fontSize: '13px', textAlign: 'center' }}>
+          <a href={`https://br.tradingview.com/symbols/${symbolName || symbol}/`} rel="noopener nofollow" target="_blank" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>
+            <span>TradingView Chart</span>
           </a>
         </div>
       </div>
