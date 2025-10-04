@@ -24,6 +24,10 @@ const CryptoHeatmapWidget = dynamic(() => import('@/components/CryptoHeatmapWidg
   ssr: false,
 });
 
+const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
+  ssr: false,
+});
+
 interface MarketData {
   totalMarketCap: number;
   totalVolume: number;
@@ -166,6 +170,11 @@ export default function MercadoPage() {
           </div>
         ) : (
           <div className="space-y-10">
+            {/* Ticker Tape - Fita de Preços */}
+            <div className="rounded-2xl overflow-hidden shadow-xl border-2 border-white/20">
+              <TickerTapeWidget />
+            </div>
+
             {/* Visão Geral do Mercado */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Capitalização Total */}
