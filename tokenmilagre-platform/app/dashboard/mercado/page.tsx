@@ -8,6 +8,10 @@ const LightweightChart = dynamic(() => import('@/components/LightweightChart'), 
   ssr: false,
 });
 
+const AdvancedChart = dynamic(() => import('@/components/AdvancedChart'), {
+  ssr: false,
+});
+
 const TechnicalAnalysisWidget = dynamic(() => import('@/components/TechnicalAnalysisWidget'), {
   ssr: false,
 });
@@ -378,6 +382,21 @@ export default function MercadoPage() {
                   </a>
                 </div>
               </div>
+            </div>
+
+            {/* Divider */}
+            <div className="border-t-2 border-white/20"></div>
+
+            {/* Gráfico Bitcoin Avançado com Indicadores */}
+            <div className="space-y-6">
+              <h2 className="text-white font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2">
+                👑 Bitcoin - Análise Completa
+              </h2>
+              <p className="text-white/70 text-center mb-6">
+                Gráfico avançado com Médias Móveis, Bandas de Bollinger e RSI
+              </p>
+
+              <AdvancedChart symbol="BTCUSDT" name="₿ Bitcoin (BTC/USDT) - Gráfico Profissional" />
             </div>
 
             {/* Divider */}
