@@ -935,6 +935,126 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Manifesto Open Source - Resumo */}
+        <div id="manifesto" className="mb-20 scroll-mt-24">
+          <div className="bg-gradient-to-br from-yellow-400/20 via-amber-400/20 to-orange-400/20 backdrop-blur-xl rounded-3xl p-8 md:p-12 border-2 border-yellow-300/40 shadow-2xl">
+            <div className="text-center mb-8">
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
+                Manifesto Open Source 📜
+              </h3>
+              <p className="text-2xl sm:text-3xl font-bold text-yellow-200 mb-4 flex items-center justify-center gap-3">
+                <span>Nunca Estarás Sozinho</span>
+                <span className="text-3xl animate-pulse">❤️</span>
+              </p>
+              <p className="text-white/95 text-lg max-w-3xl mx-auto">
+                Um movimento de apoio mútuo genuíno construído sobre os princípios do código aberto,
+                colaboração peer-to-peer e a crença fundamental de que <strong className="text-yellow-200">juntos somos mais fortes</strong>.
+              </p>
+            </div>
+
+            {/* Valores Principais */}
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                <div className="text-4xl mb-3 text-center">🌐</div>
+                <h4 className="text-lg font-bold text-yellow-200 mb-2 text-center">Transparência Radical</h4>
+                <p className="text-white/90 text-sm text-center">
+                  Todas as decisões, transações e processos são públicos e auditáveis on-chain
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                <div className="text-4xl mb-3 text-center">🤝</div>
+                <h4 className="text-lg font-bold text-yellow-200 mb-2 text-center">Colaboração Aberta</h4>
+                <p className="text-white/90 text-sm text-center">
+                  Qualquer holder pode contribuir com código, ideias ou suporte à comunidade
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                <div className="text-4xl mb-3 text-center">⚖️</div>
+                <h4 className="text-lg font-bold text-yellow-200 mb-2 text-center">Meritocracia de Contribuição</h4>
+                <p className="text-white/90 text-sm text-center">
+                  Influência vem de ajudar ativamente, não apenas de acumular tokens
+                </p>
+              </div>
+            </div>
+
+            {/* Contador de Signatários + CTA */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center">
+              <div className="mb-4">
+                <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-400/20 to-emerald-400/20 rounded-full border border-green-300/40">
+                  <span className="text-2xl">✍️</span>
+                  <div className="text-left">
+                    <p className="text-white/80 text-xs font-semibold">Signatários do Manifesto</p>
+                    <p className="text-white font-bold text-xl">
+                      <span className="text-yellow-200">147</span> pessoas
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-white/95 mb-6 max-w-2xl mx-auto">
+                Assine o manifesto com sua wallet e demonstre seu compromisso com transparência,
+                colaboração e apoio mútuo
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href="/manifesto"
+                  className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-gray-900 font-bold text-lg rounded-full transition-all shadow-xl hover:scale-105 inline-block"
+                >
+                  📖 Ler Manifesto Completo
+                </Link>
+                <Link
+                  href="/manifesto"
+                  className="px-8 py-4 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold text-lg rounded-full transition-all shadow-xl hover:scale-105 inline-block"
+                >
+                  ✍️ Assinar Manifesto
+                </Link>
+              </div>
+
+              <p className="text-white/70 text-sm mt-4">
+                💡 Código 100% open source • Licença CC BY-SA 4.0
+              </p>
+            </div>
+
+            {/* Resumo dos 7 Valores */}
+            <div className="mt-8 bg-white/5 rounded-2xl p-6 border border-white/10">
+              <h4 className="text-xl font-bold text-white mb-4 text-center">7 Valores Fundamentais</h4>
+              <div className="grid md:grid-cols-2 gap-3 text-sm text-white/90">
+                <div className="flex items-start gap-2">
+                  <span className="text-yellow-300 mt-1">1.</span>
+                  <span><strong className="text-yellow-200">Transparência Radical</strong> - Tudo é público</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-yellow-300 mt-1">2.</span>
+                  <span><strong className="text-yellow-200">Colaboração Aberta</strong> - Qualquer um pode contribuir</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-yellow-300 mt-1">3.</span>
+                  <span><strong className="text-yellow-200">Inclusão</strong> - Para todos, sem exceção</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-yellow-300 mt-1">4.</span>
+                  <span><strong className="text-yellow-200">Meritocracia</strong> - Contribuição = Influência</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-yellow-300 mt-1">5.</span>
+                  <span><strong className="text-yellow-200">Apoio Mútuo</strong> - Genuinamente nos importamos</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-yellow-300 mt-1">6.</span>
+                  <span><strong className="text-yellow-200">Inovação Responsável</strong> - Experimentar com cuidado</span>
+                </div>
+                <div className="flex items-start gap-2 md:col-span-2 justify-center">
+                  <span className="text-yellow-300 mt-1">7.</span>
+                  <span><strong className="text-yellow-200">Sustentabilidade</strong> - Construindo para gerações</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Como Contribuir */}
         <div id="contribuir" className="mb-20 scroll-mt-24">
           <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
