@@ -162,7 +162,7 @@ async function generateArticleWithAI(topic: string): Promise<NewsItem | null> {
     };
 
     // Detectar categoria do tópico
-    let selectedTemplate = templates['Bitcoin'];
+    let selectedTemplate: typeof templates[keyof typeof templates] = templates['Bitcoin'];
     if (topic.toLowerCase().includes('ethereum')) selectedTemplate = templates['Ethereum'];
     else if (topic.toLowerCase().includes('solana')) selectedTemplate = templates['Solana'];
     else if (topic.toLowerCase().includes('defi')) selectedTemplate = templates['DeFi'];
