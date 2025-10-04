@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createChart, ColorType, ISeriesApi, CandlestickSeries, HistogramSeries, Time } from 'lightweight-charts';
 
 interface LightweightChartProps {
@@ -8,21 +8,24 @@ interface LightweightChartProps {
   name?: string; // Nome do ativo (ex: "Bitcoin", "Ethereum")
 }
 
+type Timeframe = '15m' | '4h' | '1d';
+
 export default function LightweightChart({ symbol, name }: LightweightChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
+  const [timeframe, setTimeframe] = useState<Timeframe>('1d');
 
   useEffect(() => {
     if (!chartContainerRef.current) return;
 
-    // Criar gráfico com fundo azul claro
+    // Criar gráfico com fundo azul claro sem grade
     const chart = createChart(chartContainerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: '#d2fdff' },
         textColor: '#1e293b',
       },
       grid: {
-        vertLines: { color: 'rgba(0, 0, 0, 0.06)' },
-        horzLines: { color: 'rgba(0, 0, 0, 0.06)' },
+        vertLines: { visible: false },
+        horzLines: { visible: false },
       },
       width: chartContainerRef.current.clientWidth,
       height: 500,
@@ -48,14 +51,14 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
       },
     });
 
-    // Série de candlestick verde/vermelho tradicional
+    // Série de candlestick verde/vermelho pastel
     const candlestickSeries = chart.addSeries(CandlestickSeries, {
-      upColor: '#22c55e', // Verde (alta)
-      downColor: '#ef4444', // Vermelho (baixa)
-      borderUpColor: '#16a34a',
-      borderDownColor: '#dc2626',
-      wickUpColor: '#16a34a',
-      wickDownColor: '#dc2626',
+      upColor: '#86efac', // Verde pastel (alta)
+      downColor: '#fca5a5', // Vermelho pastel (baixa)
+      borderUpColor: '#86efac', // Mesma cor do corpo
+      borderDownColor: '#fca5a5', // Mesma cor do corpo
+      wickUpColor: '#4ade80',
+      wickDownColor: '#f87171',
     });
 
     // Série de volume (histograma)
@@ -75,7 +78,7 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
     });
 
     // Buscar dados da Binance
-    fetchBinanceData(symbol, candlestickSeries, volumeSeries);
+    fetchBinanceData(symbol, timeframe, candlestickSeries, volumeSeries);
 
     // Responsivo
     const handleResize = () => {
@@ -92,17 +95,34 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
       window.removeEventListener('resize', handleResize);
       chart.remove();
     };
-  }, [symbol]);
+  }, [symbol, timeframe]);
 
   const fetchBinanceData = async (
     symbol: string,
+    timeframe: Timeframe,
     candlestickSeries: ISeriesApi<'Candlestick'>,
     volumeSeries: ISeriesApi<'Histogram'>
   ) => {
     try {
-      // Binance API - Klines (candlestick) - últimos 100 dias
+      // Mapear timeframe para intervalo da Binance
+      const intervalMap = {
+        '15m': '15m',
+        '4h': '4h',
+        '1d': '1d',
+      };
+
+      // Definir limite de candles baseado no timeframe
+      const limitMap = {
+        '15m': 96,  // 24 horas (96 velas de 15min)
+        '4h': 168,  // 4 semanas (168 velas de 4h)
+        '1d': 100,  // 100 dias
+      };
+
+      const interval = intervalMap[timeframe];
+      const limit = limitMap[timeframe];
+
       const response = await fetch(
-        `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1d&limit=100`
+        `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`
       );
       const data: Array<Array<string | number>> = await response.json();
 
@@ -122,7 +142,7 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
         return {
           time: ((candle[0] as number) / 1000) as Time,
           value: parseFloat(candle[5] as string), // Volume
-          color: close >= open ? '#22c55e80' : '#ef444480', // Verde/vermelho com transparência
+          color: close >= open ? '#86efac80' : '#fca5a580', // Verde/vermelho pastel com transparência
         };
       });
 
@@ -136,8 +156,25 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
   return (
     <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden">
       {name && (
-        <div className="px-4 pt-4 pb-2">
+        <div className="px-4 pt-4 pb-2 flex items-center justify-between">
           <h4 className="text-white font-bold text-lg">{name}</h4>
+
+          {/* Timeframe Selector */}
+          <div className="flex gap-1 bg-white/5 rounded-lg p-1">
+            {(['15m', '4h', '1d'] as Timeframe[]).map((tf) => (
+              <button
+                key={tf}
+                onClick={() => setTimeframe(tf)}
+                className={`px-3 py-1 rounded text-sm font-medium transition-all ${
+                  timeframe === tf
+                    ? 'bg-white/20 text-white shadow-sm'
+                    : 'text-white/60 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                {tf.toUpperCase()}
+              </button>
+            ))}
+          </div>
         </div>
       )}
       <div className="p-4 pt-0">
