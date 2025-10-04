@@ -403,17 +403,15 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 </div>
               )}
 
-              {/* Fonte Original */}
+              {/* Botão Voltar para Notícias */}
               <div className="mt-8 pt-8 border-t-2 border-white/20">
-                <a
-                  href={article.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => router.push('/dashboard/noticias')}
                   className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-semibold transition text-lg"
                 >
-                  Ver fonte principal ({article.source})
-                  <span>→</span>
-                </a>
+                  <span>←</span>
+                  Voltar para Notícias
+                </button>
               </div>
 
               {/* Info de Verificação */}
