@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { useState, useEffect, useCallback } from 'react';
 
 interface NewsItem {
   title: string;
@@ -29,11 +28,7 @@ export default function NoticiasPage() {
     { id: 'regulação', label: 'Regulação', icon: '⚖️' },
   ];
 
-  useEffect(() => {
-    fetchNews();
-  }, [selectedCategory]);
-
-  const fetchNews = async () => {
+  const fetchNews = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch(`/api/news?category=${selectedCategory}`);
@@ -46,7 +41,11 @@ export default function NoticiasPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    fetchNews();
+  }, [fetchNews]);
 
   const getTimeAgo = (date: string) => {
     const now = new Date();
@@ -58,14 +57,6 @@ export default function NoticiasPage() {
     if (diffHours < 24) return `Há ${diffHours}h`;
     const diffDays = Math.floor(diffHours / 24);
     return `Há ${diffDays}d`;
-  };
-
-  const getSentimentColor = (sentiment: string) => {
-    switch (sentiment) {
-      case 'positive': return 'text-green-400';
-      case 'negative': return 'text-red-400';
-      default: return 'text-yellow-400';
-    }
   };
 
   const getSentimentIcon = (sentiment: string) => {
@@ -86,9 +77,6 @@ export default function NoticiasPage() {
           </h1>
           <p className="text-white/70 text-lg">
             Resumos inteligentes das principais notícias do mercado
-          </p>
-          <p className="text-white/50 text-sm mt-2">
-            ✨ Powered by Claude AI
           </p>
         </div>
 
@@ -195,21 +183,6 @@ export default function NoticiasPage() {
             <p className="text-white/60 mt-2">Tente selecionar outra categoria</p>
           </div>
         )}
-
-        {/* Info Box */}
-        <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-lg rounded-2xl p-6 border-2 border-blue-300/30 shadow-xl">
-          <div className="flex items-start gap-4">
-            <span className="text-4xl">🤖</span>
-            <div>
-              <h3 className="text-white font-bold text-lg mb-2">Sobre os Resumos</h3>
-              <p className="text-white/80 text-sm leading-relaxed">
-                Todas as notícias são automaticamente resumidas e classificadas pela <strong>IA Claude</strong>.
-                Os resumos destacam os pontos principais, categorizam por tema e analisam o sentimento
-                (positivo, neutro ou negativo) para você tomar decisões informadas rapidamente.
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
