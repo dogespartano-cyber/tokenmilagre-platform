@@ -36,7 +36,7 @@ npm start
 - **Blockchain:** Solana (via @solana/web3.js)
 - **Wallet:** Phantom Integration
 - **Markdown:** react-markdown para artigos
-- **Análise de Mercado:** TradingView Widgets
+- **Gráficos:** TradingView Widgets + Lightweight Charts
 - **Deploy:** Vercel (CI/CD via GitHub)
 
 ## ✨ Features Principais
@@ -69,7 +69,16 @@ npm start
 - ✅ Link direto para Solscan (histórico blockchain)
 
 #### Análise de Mercado
-- ✅ 3 Gráficos TradingView ao vivo (BTC, ETH, SOL)
+- ✅ **TradingView Ticker Tape** horizontal (BTC, ETH, SOL)
+- ✅ **Gráfico Bitcoin Avançado** com indicadores técnicos:
+  - SMA 20 e SMA 50 (Médias Móveis)
+  - Bandas de Bollinger
+  - RSI (Relative Strength Index)
+- ✅ **3 Gráficos Lightweight Charts** profissionais (BTC, ETH, SOL)
+  - Candlesticks com cores fortes (verde/vermelho)
+  - Volume bars sincronizados
+  - Timeframes: 15m, 4h, 1d
+  - Dados em tempo real da Binance API
 - ✅ 3 Widgets de Análise Técnica (RSI, MACD, Médias Móveis)
 - ✅ Crypto Heatmap (visão geral do mercado)
 - ✅ Market Screener (tabela de todas criptos)
@@ -79,26 +88,17 @@ npm start
   - Métricas de mercado (Market Cap, Volume 24h, Dominância BTC/ETH)
 - ✅ Links úteis (CoinGecko, DeFi Llama, CoinMarketCap)
 
-#### Sistema de Notícias Cripto com IA (Gemini 2.5 Pro)
-- ✅ **Integração completa com Google Gemini 2.5 Pro**
-- ✅ **Geração de notícias REAIS do mercado cripto**
-- ✅ Busca automática de notícias atualizadas via Gemini
-- ✅ Artigos completos em Markdown (500-800 palavras)
-- ✅ Templates profissionais por categoria:
-  - Bitcoin: Análise técnica + fundamentos + previsões
-  - Ethereum: Updates + ecossistema + próximos upgrades
-  - Solana: Performance + crescimento + TVL
-  - DeFi: Protocolos + inovações + yields
-  - NFTs: Mercado + casos de uso + vendas recordes
-  - Regulação: Framework global + SEC + compliance
-- ✅ Páginas dinâmicas `/dashboard/noticias/[id]`
+#### Sistema de Notícias Cripto
+- ✅ **Workflow Perplexity + Claude Code** (conteúdo verificado)
+- ✅ Artigos completos em Markdown (500-1500 palavras)
+- ✅ Fontes REAIS e verificáveis
+- ✅ Páginas dinâmicas `/dashboard/noticias/[slug]`
 - ✅ Filtros por categoria (Bitcoin, Ethereum, Solana, DeFi, NFTs, Regulação)
-- ✅ Análise de sentimento automática (🟢 Positivo, 🟡 Neutro, 🔴 Negativo)
-- ✅ Extração inteligente de keywords com IA
-- ✅ Sistema de cache (30 minutos)
-- ✅ Armazenamento persistente em `data/news.json`
+- ✅ Análise de sentimento (🟢 Positivo, 🟡 Neutro, 🔴 Negativo)
+- ✅ Cards clicáveis com "Leia mais"
+- ✅ URLs amigáveis (slug-based)
 - ✅ Interface de leitura otimizada com prose styling
-- ✅ Fontes verificadas (CoinDesk, Cointelegraph, Exame, InfoMoney)
+- ✅ Armazenamento em `data/news.json`
 
 ### 🎨 UI/UX
 - ✅ Design glassmorphism (backdrop-blur + transparências)
@@ -107,6 +107,7 @@ npm start
 - ✅ Logos consistentes em todas as páginas
 - ✅ Animações suaves e transições
 - ✅ Estados de loading e empty states
+- ✅ Backgrounds transparentes para integração com gradiente
 
 ## 📁 Estrutura do Projeto
 
@@ -115,7 +116,6 @@ tokenmilagre-platform/
 ├── app/
 │   ├── api/
 │   │   ├── news/route.ts              # API de notícias com cache
-│   │   ├── generate-news/route.ts     # Gerador com Gemini 2.5 Pro
 │   │   └── process-news/route.ts      # Processamento de notícias
 │   ├── dashboard/
 │   │   ├── layout.tsx                 # Layout com sidebar
@@ -123,17 +123,18 @@ tokenmilagre-platform/
 │   │   ├── mercado/page.tsx           # Análise de mercado
 │   │   ├── noticias/
 │   │   │   ├── page.tsx               # Listagem de notícias
-│   │   │   └── [id]/page.tsx          # Artigo completo
+│   │   │   └── [slug]/page.tsx        # Artigo completo
 │   ├── manifesto/page.tsx             # Página do manifesto
 │   ├── page.tsx                       # Homepage
 │   └── layout.tsx                     # Root layout
 ├── components/
+│   ├── AdvancedChart.tsx              # 🆕 Chart BTC com indicadores
+│   ├── LightweightChart.tsx           # 🆕 Charts profissionais
+│   ├── TickerTapeWidget.tsx           # 🆕 Ticker horizontal
 │   ├── TradingViewWidget.tsx          # Gráfico TradingView
 │   ├── TechnicalAnalysisWidget.tsx    # Análise técnica
 │   ├── CryptoHeatmapWidget.tsx        # Heatmap
 │   └── CryptoScreenerWidget.tsx       # Screener
-├── lib/
-│   └── gemini-news.ts                 # 🆕 Integração Gemini CLI
 ├── data/
 │   └── news.json                      # Artigos persistidos
 ├── public/
@@ -149,79 +150,60 @@ tokenmilagre-platform/
 - **Token Address**: `3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump`
 
 ### Dados de Mercado
+- **Binance API**: Dados de candlesticks e volume em tempo real
 - **CoinGecko API**: Market cap, volume, dominância
 - **Alternative.me API**: Fear & Greed Index
 - **TradingView**: Gráficos e análise técnica embarcada
 
-### Inteligência Artificial (Gemini)
-- **Google Gemini 2.5 Pro**: Modelo principal para geração de conteúdo
-- **Gemini CLI**: Integração via linha de comando
-- **Busca de notícias reais**: Pesquisa automática no mercado cripto
-- **Geração de artigos**: Conteúdo markdown estruturado e profissional
-- **Análise de sentimento**: Classificação automática (positivo/neutro/negativo)
-- **Extração de keywords**: Identificação inteligente de termos relevantes
-- **Múltiplas fontes**: CoinDesk, Cointelegraph, Exame, InfoMoney, The Block
+### Gráficos Profissionais
+- **Lightweight Charts v5.0.9**: Biblioteca TradingView para gráficos avançados
+- **Indicadores Técnicos**:
+  - SMA (Simple Moving Average) 20 e 50 períodos
+  - Bollinger Bands (20 períodos, 2 desvios padrão)
+  - RSI (Relative Strength Index, 14 períodos)
+- **Timeframes**: 15 minutos, 4 horas, 1 dia
+- **Fonte de Dados**: Binance Klines API
 
-### Geração de Conteúdo
-- **Templates em Markdown**: Artigos estruturados por categoria
-- **Sistema de IDs únicos**: timestamp + random (base36)
-- **Cache em memória**: 30 minutos de duração
-- **Fallback inteligente**: Templates padrão caso IA falhe
+## 🎯 Sistema de Criação de Artigos
 
-## 🎯 Sistema de Geração de Artigos com IA
+### Workflow Recomendado (Perplexity + Claude Code)
 
-### Como Funciona
+Este é o método mais eficiente e confiável para criar artigos de notícias:
 
-1. **Seleção de Tópicos**: Escolhe aleatoriamente tópicos do mercado cripto
-2. **Busca com Gemini**: Pesquisa notícias reais usando Gemini 2.5 Pro
-3. **Geração de Artigo**: Cria conteúdo completo em markdown
-4. **Persistência**: Salva em `data/news.json`
-5. **Cache**: Armazena por 30 minutos
-
-### Tópicos Suportados
-
-- Bitcoin: análises de preço e tendências
-- Ethereum: atualizações e upgrades
-- Solana: desenvolvimentos no ecossistema
-- DeFi: protocolos e inovações
-- NFTs: tendências de mercado
-- Regulação: novidades regulatórias
-- Blockchain: avanços tecnológicos
-- Altcoins: análise de mercado
-
-### Como Gerar Novos Artigos
-
-**Via API (POST):**
-```bash
-curl -X POST https://tokenmilagre.xyz/api/generate-news \
-  -H "Content-Type: application/json" \
-  -d '{"count": 6}'
+#### 1. Pesquisa com Perplexity Pro
+```
+Prompt: "Pesquise notícias recentes sobre [tema] em fontes confiáveis de criptomoedas.
+Inclua dados verificáveis e cite as fontes."
 ```
 
-**Via Gemini CLI (direto):**
-```bash
-gemini -m gemini-2.5-pro -p "Busque uma notícia sobre Bitcoin de hoje"
+**Vantagens:**
+- ✅ Fontes REAIS e verificáveis
+- ✅ Fact-checking automático
+- ✅ Múltiplas fontes citadas
+- ✅ Dados atualizados
+
+#### 2. Formatação com Claude Code
+
+Cole o texto do Perplexity no Claude Code e peça:
+```
+"Formate este conteúdo como artigo para o $MILAGRE seguindo o padrão:
+- Sentimento: [positive/neutral/negative]
+- Keywords: [lista]
+- Categorias: [Bitcoin, Ethereum, etc]"
 ```
 
-### Resposta de Exemplo
+Claude irá:
+- ✅ Estruturar o JSON
+- ✅ Adicionar metadata
+- ✅ Gerar slug amigável
+- ✅ Fazer commit automático
 
-```json
-{
-  "success": true,
-  "message": "6 artigos gerados com sucesso",
-  "articles": [
-    {
-      "id": "unique_id",
-      "title": "Bitcoin ultrapassa $120K com previsão do Citi...",
-      "summary": "Resumo do artigo...",
-      "content": "# Artigo completo em markdown...",
-      "source": "CoinDesk",
-      "sentiment": "positive",
-      "keywords": ["Bitcoin", "Citi", "ETF"]
-    }
-  ],
-  "total": 6
-}
+#### 3. Commit & Deploy
+```bash
+# Claude Code faz automaticamente:
+git add data/news.json
+git commit -m "feat: Novo artigo sobre [tema]"
+git push
 ```
 
 ### Estrutura de um Artigo
@@ -229,17 +211,28 @@ gemini -m gemini-2.5-pro -p "Busque uma notícia sobre Bitcoin de hoje"
 ```typescript
 {
   id: string;              // ID único
-  title: string;           // Título dinâmico
+  slug: string;            // URL amigável
+  title: string;           // Título
   summary: string;         // Resumo (200 chars)
-  content: string;         // Artigo completo em Markdown
-  url: string;             // URL fonte
-  source: string;          // Nome da fonte
+  content: string;         // Artigo em Markdown
+  url: string;             // "#" para artigos próprios
+  source: string;          // "$MILAGRE Research"
   publishedAt: string;     // ISO timestamp
   category: string[];      // Categorias
   sentiment: 'positive' | 'neutral' | 'negative';
   keywords: string[];      // Keywords extraídas
 }
 ```
+
+### Comparação de Métodos
+
+| Método | Tokens Claude | Fontes | Fact-check | Custo |
+|--------|---------------|--------|------------|-------|
+| **Perplexity + Claude** | ~10k | ✅ Reais | ✅ Auto | $ |
+| Claude + Gemini MCP | ~41k | ❌ Fictícias | ❌ Não | $$ |
+| Manual | ~8k | ✅ Reais | Manual | $ |
+
+**Recomendado**: Perplexity + Claude (melhor custo-benefício + fontes verificáveis)
 
 ## 📝 Configuração
 
@@ -261,36 +254,9 @@ NEXT_PUBLIC_TOKEN_ADDRESS=3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump
   "typescript": "^5",
   "@solana/web3.js": "^1.99.5",
   "react-markdown": "^9.0.1",
-  "tailwindcss": "^4.1.0"
+  "tailwindcss": "^4.1.0",
+  "lightweight-charts": "^5.0.9"
 }
-```
-
-### Requisitos para IA (Gemini)
-
-Para usar o gerador de notícias com Gemini, você precisa:
-
-1. **Instalar Gemini CLI**:
-```bash
-npm install -g @google/gemini-cli
-```
-
-2. **Autenticar**:
-```bash
-gemini
-# Seguir fluxo OAuth
-```
-
-3. **Configurar modelo padrão** (opcional):
-```bash
-# Editar ~/.gemini/settings.json
-{
-  "model": "gemini-2.5-pro"
-}
-```
-
-4. **Testar integração**:
-```bash
-gemini -m gemini-2.5-pro -p "Olá, teste"
 ```
 
 ## 🚀 Deploy
@@ -312,9 +278,9 @@ npm start
 
 ## 📊 Métricas do Projeto
 
-- **First Load JS**: ~102 KB (otimizado)
+- **First Load JS**: ~120 KB (com lightweight-charts)
 - **Rotas estáticas**: 9 páginas
-- **Rotas dinâmicas**: 3 APIs
+- **Rotas dinâmicas**: 2 APIs
 - **Tempo de build**: ~15-20s
 - **Lighthouse Score**: 90+ (Performance, A11y, Best Practices)
 
@@ -330,18 +296,31 @@ npm start
 
 ### Últimas Atualizações (Outubro 2025)
 
-#### ✅ **Integração Gemini 2.5 Pro** (04/10/2025)
-- Criado módulo `lib/gemini-news.ts` para integração com Gemini CLI
-- Substituído gerador mock por IA real
-- Função `fetchNewsWithGemini()` busca notícias atualizadas
-- Função `generateFullArticle()` cria conteúdo markdown completo
-- Suporte a múltiplas fontes verificadas
-- Análise automática de sentimento e keywords
+#### ✅ **Remoção do Gemini + Workflow Perplexity** (04/10/2025)
+- Removido sistema de geração com Gemini MCP
+- Implementado workflow Perplexity + Claude Code
+- Redução de ~70% no consumo de tokens
+- Fontes REAIS e verificáveis
+- Documentação atualizada
+
+#### ✅ **Gráficos Profissionais com Lightweight Charts** (04/10/2025)
+- AdvancedChart com SMA 20/50, Bollinger Bands e RSI
+- LightweightChart para BTC, ETH, SOL
+- TickerTapeWidget horizontal
+- Integração com Binance API
+- Backgrounds transparentes
+- Timeframes múltiplos (15m, 4h, 1d)
+
+#### ✅ **UX de Notícias Melhorada** (04/10/2025)
+- URLs amigáveis com slugs
+- Cards clicáveis
+- Sentimento em português ("Notícia otimista/pessimista/neutra")
+- Fonte "$MILAGRE Research" transparente
+- Nota de transparência em artigos gerados por IA
 
 #### ✅ **Sistema de Notícias Completo** (03/10/2025)
-- API `/api/generate-news` para geração automática
-- API `/api/news` com cache de 30 minutos
-- Páginas dinâmicas `/dashboard/noticias/[id]`
+- API `/api/news` com cache
+- Páginas dinâmicas `/dashboard/noticias/[slug]`
 - Filtros por categoria
 - Interface de leitura otimizada
 

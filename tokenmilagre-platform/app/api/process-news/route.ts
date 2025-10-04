@@ -28,7 +28,7 @@ Formato da resposta (JSON puro, sem markdown):
   "keywords": ["3-5 palavras-chave principais"]
 }`;
 
-    // Simular processamento (em produção, chamar Gemini MCP aqui)
+    // Processamento básico usando funções auxiliares
     const analysis: NewsAnalysis = {
       summary: content.substring(0, 200),
       category: detectCategories(title + ' ' + content),
