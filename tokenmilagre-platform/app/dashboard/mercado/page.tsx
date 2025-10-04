@@ -2,6 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const TradingViewWidget = dynamic(() => import('@/components/TradingViewWidget'), {
+  ssr: false,
+});
 
 interface MarketData {
   totalMarketCap: number;
@@ -260,6 +265,40 @@ export default function MercadoPage() {
                     <p className="text-white/70 text-sm">Análise de sentimento</p>
                   </a>
                 </div>
+              </div>
+            </div>
+
+            {/* TradingView Charts */}
+            <div className="space-y-6">
+              <h2 className="text-white font-bold text-2xl mb-4 font-[family-name:var(--font-poppins)] text-center">
+                📈 Gráficos ao Vivo
+              </h2>
+
+              {/* BTC Chart */}
+              <div>
+                <h3 className="text-white font-semibold text-lg mb-2 flex items-center gap-2">
+                  <span>₿</span>
+                  <span>Bitcoin (BTC/USD)</span>
+                </h3>
+                <TradingViewWidget symbol="BINANCE:BTCUSD" symbolName="BTCUSD" />
+              </div>
+
+              {/* ETH Chart */}
+              <div>
+                <h3 className="text-white font-semibold text-lg mb-2 flex items-center gap-2">
+                  <span>Ξ</span>
+                  <span>Ethereum (ETH/USD)</span>
+                </h3>
+                <TradingViewWidget symbol="BINANCE:ETHUSD" symbolName="ETHUSD" />
+              </div>
+
+              {/* SOL Chart */}
+              <div>
+                <h3 className="text-white font-semibold text-lg mb-2 flex items-center gap-2">
+                  <span>◎</span>
+                  <span>Solana (SOL/USDT)</span>
+                </h3>
+                <TradingViewWidget symbol="BINANCE:SOLUSDT" symbolName="SOLUSDT" />
               </div>
             </div>
 
