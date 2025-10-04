@@ -13,11 +13,20 @@ import {
   faLink,
   faChevronLeft,
   faChevronRight,
+  faCalendar,
+  faComments,
+  faGraduationCap,
+  faExternalLinkAlt,
+  faCircle,
+  faArrowUp,
+  faArrowDown,
+  faMinus,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faXTwitter,
   faWhatsapp,
   faTelegram,
+  faDiscord,
 } from '@fortawesome/free-brands-svg-icons';
 
 interface NewsItem {
@@ -100,9 +109,12 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
 
   const getSentimentIcon = (sentiment: string) => {
     switch (sentiment) {
-      case 'positive': return '🟢';
-      case 'negative': return '🔴';
-      default: return '🟡';
+      case 'positive':
+        return <FontAwesomeIcon icon={faCircle} className="text-green-500" />;
+      case 'negative':
+        return <FontAwesomeIcon icon={faCircle} className="text-red-500" />;
+      default:
+        return <FontAwesomeIcon icon={faCircle} className="text-yellow-500" />;
     }
   };
 
@@ -116,7 +128,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
           borderColor: 'border-green-400/40',
           textColor: 'text-green-300',
           rotation: 45, // Velocímetro aponta para direita (positivo)
-          icon: '📈'
+          icon: faArrowUp
         };
       case 'negative':
         return {
@@ -126,7 +138,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
           borderColor: 'border-red-400/40',
           textColor: 'text-red-300',
           rotation: -45, // Velocímetro aponta para esquerda (negativo)
-          icon: '📉'
+          icon: faArrowDown
         };
       default:
         return {
@@ -136,7 +148,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
           borderColor: 'border-yellow-400/40',
           textColor: 'text-yellow-300',
           rotation: 0, // Velocímetro aponta para centro (neutro)
-          icon: '📊'
+          icon: faMinus
         };
     }
   };
@@ -317,7 +329,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
 
               {/* Data de Publicação */}
               <div className="mb-6 flex items-center gap-2 text-white/60">
-                <span className="text-lg">📅</span>
+                <FontAwesomeIcon icon={faCalendar} className="w-4 h-4" />
                 <span className="text-sm font-medium">
                   Publicado em: {new Date(article.publishedAt).toLocaleDateString('pt-BR', {
                     day: 'numeric',
@@ -444,7 +456,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
               <div className="mt-12 pt-8 border-t-2 border-white/20">
                 <div className="bg-gradient-to-r from-yellow-400/10 via-amber-400/10 to-yellow-400/10 border-2 border-yellow-400/30 rounded-2xl p-8">
                   <h3 className="text-white font-bold text-2xl mb-4 flex items-center gap-2">
-                    <span className="text-3xl">💬</span>
+                    <FontAwesomeIcon icon={faComments} className="w-6 h-6" />
                     Participe da Discussão
                   </h3>
                   <p className="text-white/80 mb-6 text-lg">
@@ -457,7 +469,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                       rel="noopener noreferrer"
                       className="px-6 py-3 bg-[#5865F2] hover:bg-[#4752C4] text-white rounded-xl font-semibold transition flex items-center gap-2 shadow-lg"
                     >
-                      <span className="text-xl">💬</span>
+                      <FontAwesomeIcon icon={faDiscord} className="w-5 h-5" />
                       Discord $MILAGRE
                     </a>
                     <a
@@ -478,9 +490,9 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                       href="/educacao"
                       className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-semibold transition"
                     >
-                      <span className="text-xl">📚</span>
+                      <FontAwesomeIcon icon={faGraduationCap} className="w-5 h-5" />
                       Explore nossa Biblioteca Educacional $MILAGRE
-                      <span>→</span>
+                      <FontAwesomeIcon icon={faChevronRight} className="w-4 h-4" />
                     </a>
                   </div>
                 </div>
@@ -524,7 +536,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                           className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-sm text-white/80 hover:bg-yellow-400/20 hover:border-yellow-400/40 hover:text-yellow-300 transition flex items-center gap-2"
                         >
                           {source}
-                          <span className="text-xs opacity-60">↗</span>
+                          <FontAwesomeIcon icon={faExternalLinkAlt} className="w-3 h-3 opacity-60" />
                         </a>
                       );
                     })}
