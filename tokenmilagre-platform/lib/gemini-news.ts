@@ -1,5 +1,12 @@
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import {
+  factCheckArticle,
+  fetchMultipleSources,
+  validateCriticalData,
+  extractCriticalData,
+  generateDisclaimer
+} from './fact-checker';
 
 const execAsync = promisify(exec);
 
@@ -10,6 +17,13 @@ interface GeminiNewsResponse {
   category: string;
   sentiment: 'positive' | 'neutral' | 'negative';
   keywords: string[];
+}
+
+export interface EnhancedNewsResponse extends GeminiNewsResponse {
+  sources: string[]; // Múltiplas fontes
+  factChecked: boolean;
+  factCheckIssues: string[];
+  lastVerified: Date;
 }
 
 export async function fetchNewsWithGemini(topic: string): Promise<GeminiNewsResponse | null> {
@@ -121,4 +135,73 @@ Analistas acompanham de perto esses desenvolvimentos, que podem ter implicaçõe
 
 *Análise fornecida pela equipe $MILAGRE Research*
 `;
+}
+
+/**
+ * VERSÃO APRIMORADA: Fetch com fact-checking e múltiplas fontes
+ */
+export async function fetchNewsWithFactCheck(topic: string): Promise<EnhancedNewsResponse | null> {
+  try {
+    console.log(`🔍 Buscando notícia verificada sobre: ${topic}`);
+
+    // 1. Buscar notícia inicial
+    const newsResponse = await fetchNewsWithGemini(topic);
+    if (!newsResponse) return null;
+
+    // 2. Buscar múltiplas fontes
+    const sources = await fetchMultipleSources(topic);
+    console.log(`📰 Fontes identificadas: ${sources.join(', ')}`);
+
+    // 3. Gerar artigo completo
+    const fullArticle = await generateFullArticle(
+      newsResponse.title,
+      newsResponse.summary,
+      newsResponse.category,
+      newsResponse.sentiment
+    );
+
+    // 4. Extrair dados críticos
+    const criticalData = extractCriticalData(fullArticle);
+
+    // 5. Validar dados críticos
+    const validation = await validateCriticalData(criticalData);
+    console.log(`✓ Validação: ${validation.valid ? 'OK' : 'Correções necessárias'}`);
+
+    // 6. Fact-check completo
+    const factCheck = await factCheckArticle(
+      newsResponse.title,
+      fullArticle,
+      newsResponse.category
+    );
+
+    const enhancedResponse: EnhancedNewsResponse = {
+      ...newsResponse,
+      sources: sources,
+      factChecked: factCheck.isValid && validation.valid,
+      factCheckIssues: [...factCheck.issues, ...validation.corrections],
+      lastVerified: new Date()
+    };
+
+    return enhancedResponse;
+
+  } catch (error) {
+    console.error('Erro no fetch com fact-check:', error);
+    return null;
+  }
+}
+
+/**
+ * Gera artigo completo com disclaimer
+ */
+export async function generateFullArticleWithDisclaimer(
+  title: string,
+  summary: string,
+  category: string,
+  sentiment: string,
+  sources: string[]
+): Promise<string> {
+  const baseArticle = await generateFullArticle(title, summary, category, sentiment);
+  const disclaimer = generateDisclaimer(sources, new Date());
+
+  return baseArticle + '\n' + disclaimer;
 }
