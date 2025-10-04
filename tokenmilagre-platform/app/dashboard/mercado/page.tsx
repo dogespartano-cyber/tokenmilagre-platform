@@ -243,10 +243,10 @@ export default function MercadoPage() {
                       <div className="flex-1">
                         <p className="text-white font-bold text-lg mb-1">
                           {marketData.btcDominance < 40
-                            ? `Altseason Ativa! ${Math.round(100 - marketData.btcDominance)}% de chance`
+                            ? `Altseason Ativa! ${Math.round(100 - marketData.btcDominance)}% de intensidade`
                             : marketData.btcDominance < 50
                             ? `Aproximando Altseason: ${Math.round((50 - marketData.btcDominance) * 2)}% de chance`
-                            : `Bitcoin Dominante: ${Math.round(100 - ((marketData.btcDominance - 50) * 2))}% chance de Altseason`
+                            : `Bitcoin Dominante: ${Math.round((100 - marketData.btcDominance) / 2)}% de chance de Altseason`
                           }
                         </p>
                         <p className="text-white/60 text-xs leading-relaxed">
