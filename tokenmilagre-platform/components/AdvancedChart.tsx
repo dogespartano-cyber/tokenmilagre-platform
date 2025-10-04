@@ -309,7 +309,7 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-yellow-400/40 shadow-xl overflow-hidden">
+    <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden">
       {/* Timeframe Selector - Compacto no topo */}
       <div className="px-4 pt-3 pb-2 flex items-center justify-between">
         <div className="flex gap-1 bg-white/5 rounded-lg p-1">
