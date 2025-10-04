@@ -171,7 +171,7 @@ export default function MercadoPage() {
         ) : (
           <div className="space-y-10">
             {/* Ticker Tape - Fita de Preços */}
-            <div className="rounded-2xl overflow-hidden shadow-xl border-2 border-white/20">
+            <div className="rounded-2xl overflow-hidden shadow-xl border-2 border-yellow-400/40 bg-gradient-to-r from-yellow-400/10 via-amber-400/10 to-yellow-400/10">
               <TickerTapeWidget />
             </div>
 

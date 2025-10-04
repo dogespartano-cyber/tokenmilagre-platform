@@ -29,7 +29,7 @@ function TickerTapeWidget() {
         }
       ],
       showSymbolLogo: true,
-      isTransparent: false,
+      isTransparent: true,
       displayMode: 'adaptive',
       colorTheme: 'dark',
       locale: 'br'
