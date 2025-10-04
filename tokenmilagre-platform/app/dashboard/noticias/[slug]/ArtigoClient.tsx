@@ -269,7 +269,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
 
               {/* Meta Info */}
               <div className="flex items-center gap-3 mb-4 flex-wrap text-sm">
-                <span className="text-white/70 font-semibold">{article.source}</span>
+                <span className="text-white/70 font-semibold">Baseado em: {article.source}</span>
                 <span className="text-white/50">•</span>
                 <span className="text-white/50">{getTimeAgo(article.publishedAt)}</span>
                 <span className="text-white/50">•</span>
@@ -277,16 +277,18 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                   <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
                   {readingTime} min de leitura
                 </span>
-                {article.factChecked && (
-                  <>
-                    <span className="text-white/50">•</span>
-                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 border border-green-400/40 rounded-full text-xs text-green-300 font-semibold">
-                      <FontAwesomeIcon icon={faCheckCircle} className="w-3 h-3" />
-                      Verificado
-                    </span>
-                  </>
-                )}
               </div>
+
+              {/* Badge de Verificação - Separado para maior clareza */}
+              {article.factChecked && (
+                <div className="mb-4 inline-flex items-center gap-2 px-3 py-2 bg-green-500/10 border border-green-400/30 rounded-xl">
+                  <FontAwesomeIcon icon={faCheckCircle} className="w-4 h-4 text-green-400" />
+                  <div>
+                    <p className="text-green-300 font-semibold text-sm">Fact-Checked por $MILAGRE</p>
+                    <p className="text-white/60 text-xs">Análise verificada por nossa equipe</p>
+                  </div>
+                </div>
+              )}
 
               {/* Título */}
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
