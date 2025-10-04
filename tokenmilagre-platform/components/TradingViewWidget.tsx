@@ -29,7 +29,33 @@ function TradingViewWidget({ symbol, symbolName }: TradingViewWidgetProps) {
       enable_publishing: false,
       allow_symbol_change: true,
       calendar: false,
-      support_host: 'https://www.tradingview.com'
+      support_host: 'https://www.tradingview.com',
+      // Cores customizadas
+      backgroundColor: 'rgba(15, 23, 42, 0.6)', // Fundo semi-transparente
+      gridColor: 'rgba(255, 255, 255, 0.06)', // Grid sutil
+      studies_overrides: {
+        'volume.volume.color.0': '#ef4444', // Volume vermelho (baixa)
+        'volume.volume.color.1': '#22c55e', // Volume verde (alta)
+      },
+      overrides: {
+        // Fundo do gráfico
+        'paneProperties.background': '#0f172a',
+        'paneProperties.backgroundType': 'solid',
+
+        // Grid
+        'paneProperties.vertGridProperties.color': 'rgba(255, 255, 255, 0.06)',
+        'paneProperties.horzGridProperties.color': 'rgba(255, 255, 255, 0.06)',
+
+        // Velas de alta (verde/amarelo)
+        'mainSeriesProperties.candleStyle.upColor': '#eab308',
+        'mainSeriesProperties.candleStyle.borderUpColor': '#facc15',
+        'mainSeriesProperties.candleStyle.wickUpColor': '#facc15',
+
+        // Velas de baixa (vermelho/laranja)
+        'mainSeriesProperties.candleStyle.downColor': '#f97316',
+        'mainSeriesProperties.candleStyle.borderDownColor': '#fb923c',
+        'mainSeriesProperties.candleStyle.wickDownColor': '#fb923c',
+      }
     });
 
     container.appendChild(script);
