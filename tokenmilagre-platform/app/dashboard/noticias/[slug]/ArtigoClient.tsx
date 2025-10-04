@@ -471,37 +471,13 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
               </div>
             )}
 
-            {/* Artigos Relacionados */}
-            {relatedArticles.length > 0 && (
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border-2 border-white/30 shadow-xl">
-                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                  <FontAwesomeIcon icon={faBookOpen} className="w-6 h-6" />
-                  Continue Lendo
-                </h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {relatedArticles.slice(0, 4).map((related, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => router.push(`/dashboard/noticias/${related.slug || related.id}`)}
-                      className="text-left bg-white/5 hover:bg-white/10 p-4 rounded-xl transition border border-white/10 hover:border-white/20"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm">{getSentimentIcon(related.sentiment)}</span>
-                        <span className="text-white/60 text-xs">{related.category[0]}</span>
-                      </div>
-                      <h4 className="text-white font-semibold mb-2 line-clamp-2">{related.title}</h4>
-                      <p className="text-white/60 text-sm line-clamp-2">{related.summary}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
 
-            {/* Sidebar - Índice (Desktop) - Alinhado horizontalmente com o header */}
-            {headings.length > 0 && (
-              <div className="hidden lg:block w-64 shrink-0">
-                <div className="sticky top-24">
+            {/* Sidebar - Índice e Artigos Relacionados (Desktop) */}
+            <div className="hidden lg:block w-64 shrink-0">
+              <div className="sticky top-24 space-y-6">
+                {/* Card Índice */}
+                {headings.length > 0 && (
                   <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
                     <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                       <FontAwesomeIcon icon={faBook} className="w-4 h-4" />
@@ -519,9 +495,35 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                       ))}
                     </nav>
                   </div>
-                </div>
+                )}
+
+                {/* Card Continue Lendo */}
+                {relatedArticles.length > 0 && (
+                  <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
+                    <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                      <FontAwesomeIcon icon={faBookOpen} className="w-4 h-4" />
+                      Continue Lendo
+                    </h3>
+                    <div className="space-y-3">
+                      {relatedArticles.slice(0, 3).map((related, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => router.push(`/dashboard/noticias/${related.slug || related.id}`)}
+                          className="w-full text-left bg-white/5 hover:bg-white/10 p-3 rounded-xl transition border border-white/10 hover:border-white/20"
+                        >
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-sm">{getSentimentIcon(related.sentiment)}</span>
+                            <span className="text-white/60 text-xs">{related.category[0]}</span>
+                          </div>
+                          <h4 className="text-white font-semibold text-sm mb-1 line-clamp-2">{related.title}</h4>
+                          <p className="text-white/60 text-xs line-clamp-2">{related.summary}</p>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
