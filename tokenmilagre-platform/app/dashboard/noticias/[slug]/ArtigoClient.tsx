@@ -335,28 +335,6 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 {article.summary}
               </p>
 
-              {/* Table of Contents */}
-              {headings.length > 0 && (
-                <div className="bg-white/5 border-2 border-white/10 rounded-xl p-6 mb-6">
-                  <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                    <span className="text-xl">📚</span>
-                    Neste Artigo:
-                  </h3>
-                  <nav className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    {headings.map((heading, idx) => (
-                      <a
-                        key={idx}
-                        href={`#${heading.id}`}
-                        className="text-white/70 hover:text-yellow-300 text-sm transition py-2 px-3 hover:bg-white/5 rounded-lg flex items-center gap-2 group"
-                      >
-                        <span className="text-white/50 group-hover:text-yellow-300">→</span>
-                        {heading.text}
-                      </a>
-                    ))}
-                  </nav>
-                </div>
-              )}
-
               {/* Keywords */}
               <div className="flex flex-wrap gap-2 mb-4">
                 {article.keywords.map((keyword, idx) => (
@@ -474,7 +452,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                   </p>
                   <div className="flex flex-wrap gap-4">
                     <a
-                      href="https://discord.gg/milagre"
+                      href="https://discord.gg/ybJ4Mgxu"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-6 py-3 bg-[#5865F2] hover:bg-[#4752C4] text-white rounded-xl font-semibold transition flex items-center gap-2 shadow-lg"
@@ -483,7 +461,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                       Discord $MILAGRE
                     </a>
                     <a
-                      href="https://t.me/milagretoken"
+                      href="https://t.me/+Bop_TVFc_mg3Njlh"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-6 py-3 bg-[#0088cc] hover:bg-[#0077b3] text-white rounded-xl font-semibold transition flex items-center gap-2 shadow-lg"
@@ -516,14 +494,40 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                     Fontes Consultadas:
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    {article.sources.map((source, idx) => (
-                      <span
-                        key={idx}
-                        className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-sm text-white/80 hover:bg-white/20 transition"
-                      >
-                        {source}
-                      </span>
-                    ))}
+                    {article.sources.map((source, idx) => {
+                      // Mapear nome da fonte para URL
+                      const sourceUrls: { [key: string]: string } = {
+                        'Cointelegraph': 'https://cointelegraph.com',
+                        'PANews': 'https://www.panewslab.com',
+                        'Bitbo.io': 'https://bitbo.io',
+                        'Yahoo Finance': 'https://finance.yahoo.com',
+                        'TicoTimes': 'https://ticotimes.net',
+                        'Reuters': 'https://www.reuters.com',
+                        'Crystal Intelligence': 'https://crystalintelligence.com',
+                        'WebProNews': 'https://www.webpronews.com',
+                        'Anadolu Agency': 'https://www.aa.com.tr',
+                        'BBC Portuguese': 'https://www.bbc.com/portuguese',
+                        'CoinDesk': 'https://www.coindesk.com',
+                        'The Block': 'https://www.theblock.co',
+                        'InfoMoney': 'https://www.infomoney.com.br',
+                        'Bloomberg Crypto': 'https://www.bloomberg.com/crypto'
+                      };
+
+                      const url = sourceUrls[source] || '#';
+
+                      return (
+                        <a
+                          key={idx}
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-sm text-white/80 hover:bg-yellow-400/20 hover:border-yellow-400/40 hover:text-yellow-300 transition flex items-center gap-2"
+                        >
+                          {source}
+                          <span className="text-xs opacity-60">↗</span>
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
               )}
