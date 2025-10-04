@@ -113,11 +113,11 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       }
     };
 
-    // Criar gráfico principal com fundo #64c5da
+    // Criar gráfico principal com fundo transparente
     const chart = createChart(chartContainerRef.current, {
       layout: {
-        background: { type: ColorType.Solid, color: '#64c5da' },
-        textColor: '#1e293b',
+        background: { type: ColorType.Solid, color: 'transparent' },
+        textColor: '#ffffff',
       },
       grid: {
         vertLines: { visible: false },
@@ -126,21 +126,21 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       width: chartContainerRef.current.clientWidth,
       height: 600,
       timeScale: {
-        borderColor: 'rgba(0, 0, 0, 0.1)',
+        borderColor: 'rgba(255, 255, 255, 0.2)',
         timeVisible: true,
         secondsVisible: false,
       },
       rightPriceScale: {
-        borderColor: 'rgba(0, 0, 0, 0.1)',
+        borderColor: 'rgba(255, 255, 255, 0.2)',
       },
       crosshair: {
         vertLine: {
-          color: 'rgba(0, 0, 0, 0.3)',
+          color: 'rgba(255, 255, 255, 0.4)',
           width: 1,
           style: 1,
         },
         horzLine: {
-          color: 'rgba(0, 0, 0, 0.3)',
+          color: 'rgba(255, 255, 255, 0.4)',
           width: 1,
           style: 1,
         },
