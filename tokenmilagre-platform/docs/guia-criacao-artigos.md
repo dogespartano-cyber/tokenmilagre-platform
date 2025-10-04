@@ -23,9 +23,9 @@ Retorne um artigo completo em português brasileiro com:
 - ✅ Dados atualizados
 - ✅ URLs completas das fontes
 
-### Etapa 2: Formatação com Claude Code
+### Etapa 2: Formatação com Claude
 
-Cole o texto do Perplexity no Claude Code e peça:
+Cole o texto do Perplexity no Claude e peça:
 
 ```
 Formate este conteúdo seguindo o template-artigo.md para o $MILAGRE:
@@ -40,7 +40,7 @@ Formate este conteúdo seguindo o template-artigo.md para o $MILAGRE:
 
 ### Etapa 3: Validação e Publicação
 
-Claude Code irá:
+Claude irá:
 1. ✅ Estruturar o JSON completo
 2. ✅ Adicionar metadata (id, slug, publishedAt)
 3. ✅ Validar formato markdown
@@ -114,7 +114,7 @@ Claude Code irá:
    ```markdown
    ---
 
-   **Nota de Transparência:** Este artigo foi pesquisado via Perplexity AI com verificação de [X] fontes primárias e formatado pela equipe $MILAGRE Research. O conteúdo é educacional e informativo, não constituindo aconselhamento financeiro ou de investimento.
+   **Nota de Transparência:** Este artigo foi pesquisado via Claude com busca web em tempo real e verificação de fontes primárias, formatado pela equipe $MILAGRE Research. O conteúdo é educacional e informativo, não constituindo aconselhamento financeiro ou de investimento.
    ```
 
 ### ❌ Elementos PROIBIDOS
@@ -124,6 +124,7 @@ Claude Code irá:
 - ❌ **Links fictícios ou inventados**
 - ❌ **Dados sem fonte verificável**
 - ❌ **Títulos genéricos tipo "Introdução"**
+- ❌ **Mencionar IAs específicas na nota de transparência** (usar apenas "Claude")
 
 ### ✅ Boas Práticas de Escrita
 
@@ -201,7 +202,7 @@ Claude Code irá:
 
 ## 🔍 Fontes Mapeadas com URLs
 
-As fontes abaixo já têm URLs mapeadas no componente `ArtigoClient.tsx`:
+As fontes abaixo já têm URLs mapeadas no componente `ArtigoClient.tsx` (total: 22 fontes):
 
 - `Cointelegraph` → https://cointelegraph.com
 - `CoinDesk` → https://www.coindesk.com
@@ -217,8 +218,16 @@ As fontes abaixo já têm URLs mapeadas no componente `ArtigoClient.tsx`:
 - `WebProNews` → https://www.webpronews.com
 - `Anadolu Agency` → https://www.aa.com.tr
 - `BBC Portuguese` → https://www.bbc.com/portuguese
+- `Coinfomania` → https://coinfomania.com
+- `99Bitcoins` → https://99bitcoins.com
+- `Coin Central` → https://coincentral.com
+- `CoinGecko` → https://www.coingecko.com
+- `Coin Bureau` → https://www.coinbureau.com
+- `Standard Chartered` → https://www.sc.com
+- `Morningstar` → https://www.morningstar.com
+- `CoinMarketCap` → https://coinmarketcap.com
 
-**Para adicionar nova fonte:** Editar `ArtigoClient.tsx` linha ~499 e adicionar ao objeto `sourceUrls`
+**Para adicionar nova fonte:** Editar `ArtigoClient.tsx` linha ~511 e adicionar ao objeto `sourceUrls`
 
 ---
 
@@ -324,7 +333,48 @@ Cite todas as fontes com URLs.
 | Claude + Gemini MCP | ~41k | ❌ Fictícias | ❌ Não | $$$ | ❌ NÃO |
 | Manual | ~8k | ✅ Reais | Manual | $ | ⚠️ Trabalhoso |
 
-**Melhor custo-benefício:** Perplexity Pro + Claude Code
+**Melhor custo-benefício:** Perplexity Pro + Claude
+
+## 🎨 Padrão de Design Visual
+
+### Ícones FontAwesome (NÃO usar emojis)
+
+**Ícones implementados na UI:**
+- 📅 Data: `faCalendar`
+- 💬 Comentários: `faComments`
+- 🎓 Educação: `faGraduationCap`
+- 🔗 Link externo: `faExternalLinkAlt`
+- 📖 Livro/Índice: `faBook`
+- 📚 Leitura: `faBookOpen`
+- ⬅️ Voltar: `faChevronLeft`
+- ➡️ Avançar: `faChevronRight`
+- 🟢 Positivo: `faCircle` (verde)
+- 🔴 Negativo: `faCircle` (vermelho)
+- 🟡 Neutro: `faCircle` (amarelo)
+- 📈 Alta: `faArrowUp`
+- 📉 Baixa: `faArrowDown`
+- ➖ Neutro: `faMinus`
+
+**Redes sociais:**
+- Discord: `faDiscord`
+- Telegram: `faTelegram`
+- Twitter/X: `faXTwitter`
+- WhatsApp: `faWhatsapp`
+
+### Links das Fontes
+
+Todos os links de fontes consultadas são:
+- ✅ Clicáveis com `target="_blank"`
+- ✅ Hover amarelo (`hover:text-yellow-300`)
+- ✅ Ícone de link externo (`faExternalLinkAlt`)
+- ✅ Mapeados no objeto `sourceUrls` (ArtigoClient.tsx:511)
+
+### CTAs Comunitários
+
+Cada artigo inclui seção "Participe da Discussão" com:
+- Discord: https://discord.gg/ybJ4Mgxu
+- Telegram: https://t.me/+Bop_TVFc_mg3Njlh
+- Link biblioteca educacional: /educacao
 
 ---
 
@@ -366,4 +416,39 @@ Para dúvidas sobre a criação de artigos:
 
 ---
 
-**Última atualização:** 04 de outubro de 2025
+## 📝 Checklist Final Atualizado
+
+Antes de publicar, verificar:
+
+- [ ] **Conteúdo**
+  - [ ] Título atrativo e descritivo
+  - [ ] Resumo com máximo 200 caracteres
+  - [ ] Seção "Contexto para Iniciantes" presente
+  - [ ] Estrutura H2/H3 bem definida
+  - [ ] Dados verificáveis com fontes
+  - [ ] Conclusão forte
+
+- [ ] **Metadata**
+  - [ ] Slug URL-friendly
+  - [ ] Sentimento correto (positive/neutral/negative)
+  - [ ] 5-7 keywords relevantes
+  - [ ] 1-3 categorias apropriadas
+  - [ ] Campo `sources` preenchido (array)
+  - [ ] `factChecked: true`
+  - [ ] `lastVerified` com timestamp
+
+- [ ] **Design**
+  - [ ] SEM emojis no corpo do artigo
+  - [ ] SEM seção "Fontes Consultadas" no markdown
+  - [ ] Nota de transparência padrão (mencionar apenas "Claude")
+  - [ ] Links das fontes mapeados em `sourceUrls`
+
+- [ ] **Git**
+  - [ ] Commit com mensagem descritiva
+  - [ ] Push para repositório
+  - [ ] Verificar deploy automático
+
+---
+
+**Última atualização:** 04 de outubro de 2025 (23:30 BRT)
+**Versão:** 2.0 - Atualizado com FontAwesome, nota de transparência padrão e 22 fontes mapeadas

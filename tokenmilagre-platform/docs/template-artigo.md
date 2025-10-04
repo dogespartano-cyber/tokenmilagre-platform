@@ -105,4 +105,4 @@
 
 ---
 
-**Nota de Transparência:** Este artigo foi pesquisado via Perplexity AI com verificação de [número] fontes primárias e formatado pela equipe $MILAGRE Research. O conteúdo é educacional e informativo, não constituindo aconselhamento financeiro ou de investimento.
+**Nota de Transparência:** Este artigo foi pesquisado via Claude com busca web em tempo real e verificação de fontes primárias, formatado pela equipe $MILAGRE Research. O conteúdo é educacional e informativo, não constituindo aconselhamento financeiro ou de investimento.
