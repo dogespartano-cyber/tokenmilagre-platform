@@ -24,9 +24,9 @@ export default function DashboardLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#5DD4D4] via-[#4DB8D8] to-[#E8F4F4]">
+    <div className="min-h-screen bg-gradient-to-br from-[#0A1628] via-[#142841] to-[#1E3A5F]">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-gradient-to-r from-[#4DB8D8]/95 to-[#5DD4D4]/95 backdrop-blur-lg border-b-2 border-white/20 shadow-xl">
+      <header className="sticky top-0 z-50 bg-[#142841]/95 backdrop-blur-lg border-b-2 border-[#2A4A6E]/60 shadow-xl">
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
@@ -39,8 +39,8 @@ export default function DashboardLayout({
               </button>
 
               <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition group">
-                <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 border-yellow-300/50 group-hover:border-yellow-300 transition-all group-hover:scale-110">
-                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-cyan-400/20 blur-sm"></div>
+                <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 border-[#10B981]/50 group-hover:border-[#10B981] transition-all group-hover:scale-110">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#10B981]/20 to-[#059669]/20 blur-sm"></div>
                   <Image
                     src="/images/TOKEN-MILAGRE-Hero.webp"
                     alt="$MILAGRE"
@@ -49,7 +49,7 @@ export default function DashboardLayout({
                     className="w-full h-full object-cover relative z-10"
                   />
                 </div>
-                <div className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg group-hover:text-yellow-200 transition font-[family-name:var(--font-poppins)]">
+                <div className="text-xl sm:text-2xl font-bold text-[#E0E6ED] drop-shadow-lg group-hover:text-[#34D399] transition font-[family-name:var(--font-poppins)]">
                   $MILAGRE
                 </div>
               </Link>
@@ -61,10 +61,10 @@ export default function DashboardLayout({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-white font-semibold transition ${
+                  className={`text-[#E0E6ED] font-semibold transition ${
                     pathname === item.href
-                      ? 'text-yellow-300'
-                      : 'hover:text-yellow-300'
+                      ? 'text-[#10B981]'
+                      : 'hover:text-[#34D399]'
                   }`}
                 >
                   {item.label}
@@ -72,7 +72,7 @@ export default function DashboardLayout({
               ))}
               <Link
                 href="/"
-                className="text-white hover:text-yellow-300 transition font-semibold"
+                className="text-[#E0E6ED] hover:text-[#34D399] transition font-semibold"
               >
                 ← Voltar
               </Link>
@@ -81,7 +81,7 @@ export default function DashboardLayout({
             {/* Botão Voltar - Mobile */}
             <Link
               href="/"
-              className="md:hidden text-white hover:text-yellow-300 transition font-semibold"
+              className="md:hidden text-[#E0E6ED] hover:text-[#34D399] transition font-semibold"
             >
               ← Voltar
             </Link>
@@ -91,7 +91,7 @@ export default function DashboardLayout({
 
       <div className="flex">
         {/* Sidebar - Desktop */}
-        <aside className="hidden lg:block w-64 bg-white/10 backdrop-blur-lg border-r-2 border-white/20 sticky top-[73px] h-[calc(100vh-73px)] overflow-y-auto">
+        <aside className="hidden lg:block w-64 bg-[#0A1628] backdrop-blur-lg border-r-2 border-[#2A4A6E]/60 sticky top-[73px] h-[calc(100vh-73px)] overflow-y-auto">
           <nav className="p-6 space-y-2">
             {menuItems.map((item) => (
               <Link
@@ -99,8 +99,8 @@ export default function DashboardLayout({
                 href={item.href}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   pathname === item.href
-                    ? 'bg-gradient-to-r from-yellow-400/30 to-amber-400/30 border-2 border-yellow-300/50 text-white font-bold'
-                    : 'bg-white/5 border-2 border-white/10 text-white/80 hover:bg-white/10 hover:text-white'
+                    ? 'bg-[#142841] border-l-4 border-[#10B981] text-[#FFFFFF] font-bold shadow-lg'
+                    : 'bg-[#142841]/50 border-2 border-[#2A4A6E]/40 text-[#94A3B8] hover:bg-[#1E3A5F] hover:text-[#E0E6ED]'
                 }`}
               >
                 <FontAwesomeIcon icon={item.icon} className="w-5 h-5" />
@@ -109,12 +109,12 @@ export default function DashboardLayout({
             ))}
 
             {/* Comprar $MILAGRE Button */}
-            <div className="pt-4 mt-4 border-t-2 border-white/20">
+            <div className="pt-4 mt-4 border-t-2 border-[#2A4A6E]/60">
               <a
                 href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold shadow-lg hover:scale-105"
+                className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all bg-gradient-to-r from-[#10B981] to-[#059669] hover:brightness-110 text-white font-bold shadow-lg hover:scale-105"
               >
                 <span className="text-2xl">🚀</span>
                 <span className="font-semibold">Comprar $MILAGRE</span>
@@ -125,9 +125,9 @@ export default function DashboardLayout({
 
         {/* Sidebar - Mobile */}
         {sidebarOpen && (
-          <div className="lg:hidden fixed inset-0 z-40 bg-black/50" onClick={() => setSidebarOpen(false)}>
+          <div className="lg:hidden fixed inset-0 z-40 bg-black/70" onClick={() => setSidebarOpen(false)}>
             <aside
-              className="absolute left-0 top-16 bottom-0 w-64 bg-gradient-to-br from-[#4DB8D8] to-[#5DD4D4] backdrop-blur-lg border-r-2 border-white/20"
+              className="absolute left-0 top-16 bottom-0 w-64 bg-[#0A1628] backdrop-blur-lg border-r-2 border-[#2A4A6E]/60"
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="p-6 space-y-2">
@@ -138,8 +138,8 @@ export default function DashboardLayout({
                     onClick={() => setSidebarOpen(false)}
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                       pathname === item.href
-                        ? 'bg-gradient-to-r from-yellow-400/30 to-amber-400/30 border-2 border-yellow-300/50 text-white font-bold'
-                        : 'bg-white/5 border-2 border-white/10 text-white/80 hover:bg-white/10 hover:text-white'
+                        ? 'bg-[#142841] border-l-4 border-[#10B981] text-[#FFFFFF] font-bold shadow-lg'
+                        : 'bg-[#142841]/50 border-2 border-[#2A4A6E]/40 text-[#94A3B8] hover:bg-[#1E3A5F] hover:text-[#E0E6ED]'
                     }`}
                   >
                     <FontAwesomeIcon icon={item.icon} className="w-5 h-5" />
@@ -148,12 +148,12 @@ export default function DashboardLayout({
                 ))}
 
                 {/* Comprar $MILAGRE Button */}
-                <div className="pt-4 mt-4 border-t-2 border-white/20">
+                <div className="pt-4 mt-4 border-t-2 border-[#2A4A6E]/60">
                   <a
                     href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold shadow-lg"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all bg-gradient-to-r from-[#10B981] to-[#059669] hover:brightness-110 text-white font-bold shadow-lg"
                   >
                     <span className="text-2xl">🚀</span>
                     <span className="font-semibold">Comprar $MILAGRE</span>
