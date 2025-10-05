@@ -486,7 +486,7 @@ export default function MercadoPage() {
               </h2>
               <p className="text-white/70 text-center mb-6">Visualize o mercado completo e filtre oportunidades</p>
 
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-8">
                 {/* Mapa de Calor Cripto */}
                 <div>
                   <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
