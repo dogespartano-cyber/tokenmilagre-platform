@@ -16,7 +16,7 @@ const TechnicalAnalysisWidget = dynamic(() => import('@/components/TechnicalAnal
   ssr: false,
 });
 
-const CryptoScreenerWidget = dynamic(() => import('@/components/CryptoScreenerWidget'), {
+const CustomCryptoScreener = dynamic(() => import('@/components/CustomCryptoScreener'), {
   ssr: false,
 });
 
@@ -502,7 +502,7 @@ export default function MercadoPage() {
                     <span>📋</span>
                     <span>Rastreador de Mercado</span>
                   </h3>
-                  <CryptoScreenerWidget />
+                  <CustomCryptoScreener />
                 </div>
               </div>
             </div>
