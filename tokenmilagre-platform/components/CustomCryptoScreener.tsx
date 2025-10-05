@@ -86,6 +86,7 @@ export default function CustomCryptoScreener() {
         header: 'Nome',
         cell: info => (
           <div className="flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={info.row.original.image}
               alt={info.getValue()}

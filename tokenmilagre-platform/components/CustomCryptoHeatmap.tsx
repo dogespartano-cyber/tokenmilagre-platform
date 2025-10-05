@@ -27,8 +27,21 @@ interface TreemapData {
 }
 
 // Custom content for treemap cells
-const CustomContent = (props: any) => {
-  const { x, y, width, height, name, symbol, change, price, image, rank } = props;
+interface CustomContentProps {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  name: string;
+  symbol: string;
+  change: number;
+  price: number;
+  image: string;
+  rank: number;
+}
+
+const CustomContent = (props: CustomContentProps) => {
+  const { x, y, width, height, symbol, change, price, image, rank } = props;
 
   // Só mostrar conteúdo se o quadrado for grande o suficiente
   const isLargeEnough = width > 80 && height > 60;
@@ -181,13 +194,21 @@ const CustomContent = (props: any) => {
 };
 
 // Custom tooltip
-const CustomTooltip = ({ active, payload }: any) => {
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    payload: TreemapData;
+  }>;
+}
+
+const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
       <div className="bg-gradient-to-br from-[#142841] to-[#1E3A5F] border-2 border-[#2A4A6E] rounded-lg p-4 shadow-xl">
         <div className="flex items-center gap-3 mb-3">
           {data.image && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img src={data.image} alt={data.name} className="w-8 h-8 rounded-full" />
           )}
           <div>
