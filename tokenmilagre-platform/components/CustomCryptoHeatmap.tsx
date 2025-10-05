@@ -24,6 +24,7 @@ interface TreemapData {
   price: number;
   image: string;
   rank: number;
+  [key: string]: string | number;
 }
 
 // Custom content for treemap cells
