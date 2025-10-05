@@ -178,66 +178,82 @@ export default function MercadoPage() {
             {/* Visão Geral do Mercado */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Capitalização Total */}
-              <div className="bg-gradient-to-br from-[#142841] to-[#1E3A5F] backdrop-blur-lg rounded-2xl p-6 border-2 border-[#2A4A6E] shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+              <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300" style={{
+                background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                borderColor: 'var(--border-medium)'
+              }}>
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-[#94A3B8] text-sm">Capitalização Total</p>
+                  <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Capitalização Total</p>
                   <span className="text-2xl">💰</span>
                 </div>
-                <p className="text-[#FFFFFF] font-bold text-3xl mb-1">
+                <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
                   {marketData && formatNumber(marketData.totalMarketCap)}
                 </p>
-                <p className={`text-sm font-semibold ${
-                  marketData && marketData.marketCapChange24h >= 0
-                    ? 'text-[#10B981]'
-                    : 'text-[#EF4444]'
-                }`}>
+                <p className="text-sm font-semibold" style={{
+                  color: marketData && marketData.marketCapChange24h >= 0 ? 'var(--success)' : 'var(--error)'
+                }}>
                   {marketData && marketData.marketCapChange24h >= 0 ? '▲' : '▼'}
                   {marketData && Math.abs(marketData.marketCapChange24h).toFixed(2)}% (24h)
                 </p>
               </div>
 
               {/* Volume 24h */}
-              <div className="bg-gradient-to-br from-[#142841] to-[#1E3A5F] backdrop-blur-lg rounded-2xl p-6 border-2 border-[#2A4A6E] shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+              <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300" style={{
+                background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                borderColor: 'var(--border-medium)'
+              }}>
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-[#94A3B8] text-sm">Volume 24h</p>
+                  <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Volume 24h</p>
                   <span className="text-2xl">📈</span>
                 </div>
-                <p className="text-[#FFFFFF] font-bold text-3xl mb-1">
+                <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
                   {marketData && formatNumber(marketData.totalVolume)}
                 </p>
-                <p className="text-[#64748B] text-sm">Negociação global</p>
+                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Negociação global</p>
               </div>
 
               {/* Dominância BTC */}
-              <div className="bg-gradient-to-br from-[#F59E0B]/15 to-[#D97706]/15 backdrop-blur-lg rounded-2xl p-6 border border-[#F59E0B]/30 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
+              <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300" style={{
+                background: 'linear-gradient(135deg, var(--warning-bg), var(--bg-elevated))',
+                borderColor: 'var(--warning-border)'
+              }}>
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-[#94A3B8] text-sm">Dominância BTC</p>
+                  <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Dominância BTC</p>
                   <span className="text-2xl">₿</span>
                 </div>
-                <p className="text-[#FFFFFF] font-bold text-3xl mb-1">
+                <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
                   {marketData && marketData.btcDominance.toFixed(2)}%
                 </p>
-                <div className="w-full bg-[#2A4A6E]/50 rounded-full h-2 mt-2">
+                <div className="w-full rounded-full h-2 mt-2" style={{ backgroundColor: 'var(--border-medium)' }}>
                   <div
-                    className="bg-gradient-to-r from-[#F59E0B] to-[#D97706] h-full rounded-full transition-all duration-500"
-                    style={{ width: `${marketData?.btcDominance}%` }}
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{
+                      background: 'linear-gradient(90deg, #F59E0B, #D97706)',
+                      width: `${marketData?.btcDominance}%`
+                    }}
                   />
                 </div>
               </div>
 
               {/* Dominância ETH */}
-              <div className="bg-gradient-to-br from-[#8B5CF6]/15 to-[#7C3AED]/15 backdrop-blur-lg rounded-2xl p-6 border border-[#8B5CF6]/30 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
+              <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300" style={{
+                background: 'linear-gradient(135deg, #EDE9FE, var(--bg-elevated))',
+                borderColor: '#C4B5FD'
+              }}>
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-[#94A3B8] text-sm">Dominância ETH</p>
+                  <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Dominância ETH</p>
                   <span className="text-2xl">Ξ</span>
                 </div>
-                <p className="text-[#FFFFFF] font-bold text-3xl mb-1">
+                <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
                   {marketData && marketData.ethDominance.toFixed(2)}%
                 </p>
-                <div className="w-full bg-[#2A4A6E]/50 rounded-full h-2 mt-2">
+                <div className="w-full rounded-full h-2 mt-2" style={{ backgroundColor: 'var(--border-medium)' }}>
                   <div
-                    className="bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] h-full rounded-full transition-all duration-500"
-                    style={{ width: `${marketData?.ethDominance}%` }}
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{
+                      background: 'linear-gradient(90deg, #8B5CF6, #7C3AED)',
+                      width: `${marketData?.ethDominance}%`
+                    }}
                   />
                 </div>
               </div>
@@ -319,8 +335,11 @@ export default function MercadoPage() {
               </div>
 
               {/* Últimas Notícias */}
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-                <h3 className="text-white font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2">
+              <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{
+                backgroundColor: 'var(--bg-elevated)',
+                borderColor: 'var(--border-medium)'
+              }}>
+                <h3 className="font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                   <span>📰</span>
                   <span>Últimas Notícias</span>
                 </h3>
@@ -330,21 +349,25 @@ export default function MercadoPage() {
                       <Link
                         key={idx}
                         href={`/dashboard/noticias/${item.slug || item.id}`}
-                        className="block bg-[#142841]/50 hover:bg-[#1E3A5F] rounded-lg p-3 border border-[#2A4A6E]/40 hover:border-[#10B981]/50 transition-all duration-300 group hover:shadow-lg hover:-translate-y-0.5"
+                        className="block rounded-lg p-3 border transition-all duration-300 group hover:shadow-lg hover:-translate-y-0.5"
+                        style={{
+                          backgroundColor: 'var(--bg-secondary)',
+                          borderColor: 'var(--border-medium)'
+                        }}
                       >
                         <div className="flex items-center gap-2 mb-2">
                           <span className="text-sm">{getSentimentIcon(item.sentiment)}</span>
-                          <span className="text-[#94A3B8] text-xs">{item.category[0]}</span>
-                          <span className="text-[#64748B] text-xs ml-auto">{getTimeAgo(item.publishedAt)}</span>
+                          <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{item.category[0]}</span>
+                          <span className="text-xs ml-auto" style={{ color: 'var(--text-muted)' }}>{getTimeAgo(item.publishedAt)}</span>
                         </div>
-                        <h4 className="text-[#E0E6ED] font-semibold text-sm mb-1 line-clamp-2 group-hover:text-[#10B981] transition">
+                        <h4 className="font-semibold text-sm mb-1 line-clamp-2 transition" style={{ color: 'var(--text-secondary)' }}>
                           {item.title}
                         </h4>
-                        <p className="text-[#94A3B8] text-xs line-clamp-2">{item.summary}</p>
+                        <p className="text-xs line-clamp-2" style={{ color: 'var(--text-tertiary)' }}>{item.summary}</p>
                       </Link>
                     ))
                   ) : (
-                    <p className="text-[#94A3B8] text-sm text-center py-4">Carregando notícias...</p>
+                    <p className="text-sm text-center py-4" style={{ color: 'var(--text-tertiary)' }}>Carregando notícias...</p>
                   )}
                 </div>
                 <Link
@@ -356,8 +379,11 @@ export default function MercadoPage() {
               </div>
 
               {/* Links Úteis */}
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-                <h3 className="text-white font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2">
+              <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{
+                backgroundColor: 'var(--bg-elevated)',
+                borderColor: 'var(--border-medium)'
+              }}>
+                <h3 className="font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                   <span>🔗</span>
                   <span>Links Úteis</span>
                 </h3>
@@ -366,19 +392,27 @@ export default function MercadoPage() {
                     href="https://www.coingecko.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block bg-[#142841]/50 hover:bg-[#1E3A5F] rounded-lg p-3 border border-[#2A4A6E]/40 hover:border-[#10B981]/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                    className="block rounded-lg p-3 border transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                    style={{
+                      backgroundColor: 'var(--bg-secondary)',
+                      borderColor: 'var(--border-medium)'
+                    }}
                   >
-                    <p className="text-[#E0E6ED] font-semibold text-sm">📊 CoinGecko</p>
-                    <p className="text-[#94A3B8] text-xs">Dados de mercado</p>
+                    <p className="font-semibold text-sm" style={{ color: 'var(--text-secondary)' }}>📊 CoinGecko</p>
+                    <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Dados de mercado</p>
                   </a>
                   <a
                     href="https://coinmarketcap.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block bg-[#142841]/50 hover:bg-[#1E3A5F] rounded-lg p-3 border border-[#2A4A6E]/40 hover:border-[#10B981]/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                    className="block rounded-lg p-3 border transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                    style={{
+                      backgroundColor: 'var(--bg-secondary)',
+                      borderColor: 'var(--border-medium)'
+                    }}
                   >
-                    <p className="text-[#E0E6ED] font-semibold text-sm">💹 CoinMarketCap</p>
-                    <p className="text-[#94A3B8] text-xs">Rankings e preços</p>
+                    <p className="font-semibold text-sm" style={{ color: 'var(--text-secondary)' }}>💹 CoinMarketCap</p>
+                    <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Rankings e preços</p>
                   </a>
                   <a
                     href="https://br.tradingview.com"
