@@ -24,6 +24,10 @@ const CryptoHeatmapWidget = dynamic(() => import('@/components/CryptoHeatmapWidg
   ssr: false,
 });
 
+const CustomCryptoHeatmap = dynamic(() => import('@/components/CustomCryptoHeatmap'), {
+  ssr: false,
+});
+
 const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
   ssr: false,
 });
@@ -487,13 +491,22 @@ export default function MercadoPage() {
               <p className="text-white/70 text-center mb-6">Visualize o mercado completo e filtre oportunidades</p>
 
               <div className="space-y-8">
-                {/* Mapa de Calor Cripto */}
+                {/* Mapa de Calor Cripto - TradingView */}
                 <div>
                   <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
                     <span>🔥</span>
-                    <span>Mapa de Calor Cripto</span>
+                    <span>Mapa de Calor Cripto - TradingView</span>
                   </h3>
                   <CryptoHeatmapWidget />
+                </div>
+
+                {/* Mapa de Calor Customizado - CoinGecko */}
+                <div>
+                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                    <span>🎨</span>
+                    <span>Mapa de Calor Customizado - CoinGecko API</span>
+                  </h3>
+                  <CustomCryptoHeatmap />
                 </div>
 
                 {/* Rastreador de Mercado */}
