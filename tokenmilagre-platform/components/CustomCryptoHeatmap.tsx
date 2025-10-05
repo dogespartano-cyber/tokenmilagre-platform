@@ -28,21 +28,28 @@ interface TreemapData {
 }
 
 // Custom content for treemap cells
-interface CustomContentProps {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  name: string;
-  symbol: string;
-  change: number;
-  price: number;
-  image: string;
-  rank: number;
-}
-
-const CustomContent = (props: CustomContentProps) => {
-  const { x, y, width, height, symbol, change, price, image, rank } = props;
+const CustomContent = (props: Record<string, unknown>) => {
+  const {
+    x = 0,
+    y = 0,
+    width = 0,
+    height = 0,
+    symbol = '',
+    change = 0,
+    price = 0,
+    image = '',
+    rank = 0
+  } = props as {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    symbol: string;
+    change: number;
+    price: number;
+    image: string;
+    rank: number;
+  };
 
   // Só mostrar conteúdo se o quadrado for grande o suficiente
   const isLargeEnough = width > 80 && height > 60;
