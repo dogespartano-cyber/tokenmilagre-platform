@@ -181,7 +181,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-20">
           <div className="text-6xl mb-4">❌</div>
-          <p className="text-white text-xl mb-4">Artigo não encontrado</p>
+          <p className="text-xl mb-4" style={{ color: 'var(--text-primary)' }}>Artigo não encontrado</p>
           <button
             onClick={() => router.push('/dashboard/noticias')}
             className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 font-bold rounded-xl hover:scale-105 transition"
@@ -242,7 +242,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
         {/* Botão Voltar */}
         <button
           onClick={() => router.push('/dashboard/noticias')}
-          className="mb-6 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition flex items-center gap-2"
+          className="mb-6 px-4 py-2 rounded-xl transition flex items-center gap-2"
+          style={{ backgroundColor: 'var(--bg-elevated)', color: 'var(--text-primary)' }}
         >
           <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
           Voltar para Notícias
@@ -253,7 +254,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
             {/* Conteúdo Principal */}
             <div className="flex-1 max-w-4xl">
               {/* Header do Artigo */}
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border-2 border-white/30 shadow-xl mb-6">
+              <div className="backdrop-blur-lg rounded-2xl p-8 border-2 shadow-xl mb-6" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
 
               {/* Velocímetro de Sentimento */}
               {(() => {
@@ -304,7 +305,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                       <span className={`${sentimentData.textColor} font-bold text-lg`}>
                         {sentimentData.label}
                       </span>
-                      <p className="text-white/60 text-xs">Análise de sentimento da notícia</p>
+                      <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Análise de sentimento da notícia</p>
                     </div>
                   </div>
                 );
@@ -312,23 +313,23 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
 
               {/* Meta Info */}
               <div className="flex items-center gap-3 mb-4 flex-wrap text-sm">
-                <span className="text-white/70 font-semibold">Baseado em: {article.source}</span>
-                <span className="text-white/50">•</span>
-                <span className="text-white/50">{getTimeAgo(article.publishedAt)}</span>
-                <span className="text-white/50">•</span>
-                <span className="text-white/50 flex items-center gap-1">
+                <span className="font-semibold" style={{ color: 'var(--text-secondary)' }}>Baseado em: {article.source}</span>
+                <span style={{ color: 'var(--text-muted)' }}>•</span>
+                <span style={{ color: 'var(--text-muted)' }}>{getTimeAgo(article.publishedAt)}</span>
+                <span style={{ color: 'var(--text-muted)' }}>•</span>
+                <span className="flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
                   <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
                   {readingTime} min de leitura
                 </span>
               </div>
 
               {/* Título */}
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight" style={{ color: 'var(--text-primary)' }}>
                 {article.title}
               </h1>
 
               {/* Data de Publicação */}
-              <div className="mb-6 flex items-center gap-2 text-white/60">
+              <div className="mb-6 flex items-center gap-2" style={{ color: 'var(--text-tertiary)' }}>
                 <FontAwesomeIcon icon={faCalendar} className="w-4 h-4" />
                 <span className="text-sm font-medium">
                   Publicado em: {new Date(article.publishedAt).toLocaleDateString('pt-BR', {
@@ -343,7 +344,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
               </div>
 
               {/* Resumo */}
-              <p className="text-white/80 text-xl mb-6 leading-relaxed font-light">
+              <p className="text-xl mb-6 leading-relaxed font-light" style={{ color: 'var(--text-secondary)' }}>
                 {article.summary}
               </p>
 
@@ -352,7 +353,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 {article.keywords.map((keyword, idx) => (
                   <span
                     key={idx}
-                    className="px-3 py-1 bg-white/10 rounded-full text-sm text-white/80 flex items-center gap-1"
+                    className="px-3 py-1 rounded-full text-sm flex items-center gap-1"
+                    style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-secondary)' }}
                   >
                     <FontAwesomeIcon icon={faHashtag} className="w-3 h-3" />
                     {keyword}
@@ -361,8 +363,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
               </div>
 
               {/* Botões de Compartilhamento */}
-              <div className="pt-6 border-t border-white/10">
-                <p className="text-white/60 text-sm mb-3">Compartilhar:</p>
+              <div className="pt-6 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                <p className="text-sm mb-3" style={{ color: 'var(--text-tertiary)' }}>Compartilhar:</p>
                 <div className="flex gap-3 flex-wrap">
                   <button
                     onClick={shareOnX}
@@ -387,7 +389,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                   </button>
                   <button
                     onClick={copyLink}
-                    className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition flex items-center gap-2"
+                    className="px-4 py-2 rounded-lg transition flex items-center gap-2"
+                    style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
                   >
                     <FontAwesomeIcon icon={faLink} className="w-4 h-4" />
                     Copiar link
@@ -397,42 +400,42 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
             </div>
 
             {/* Conteúdo do Artigo */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 md:p-12 border-2 border-white/30 shadow-xl mb-8">
-              <article className="prose prose-lg prose-invert max-w-none">
+            <div className="backdrop-blur-lg rounded-2xl p-8 md:p-12 border-2 shadow-xl mb-8" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
+              <article className="prose prose-lg max-w-none">
                 <ReactMarkdown
                   components={{
                     h2: ({ children }) => {
                       const text = String(children);
                       const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
                       return (
-                        <h2 id={id} className="text-3xl font-bold text-white mt-12 mb-6 pb-3 border-b-2 border-white/20 scroll-mt-24">
+                        <h2 id={id} className="text-3xl font-bold mt-12 mb-6 pb-3 border-b-2 scroll-mt-24" style={{ color: 'var(--text-primary)', borderColor: 'var(--border-light)' }}>
                           {children}
                         </h2>
                       );
                     },
                     h3: ({ children }) => (
-                      <h3 className="text-2xl font-bold text-white mt-8 mb-4">{children}</h3>
+                      <h3 className="text-2xl font-bold mt-8 mb-4" style={{ color: 'var(--text-primary)' }}>{children}</h3>
                     ),
                     p: ({ children }) => (
-                      <p className="text-white/80 mb-6 leading-relaxed text-lg">{children}</p>
+                      <p className="mb-6 leading-relaxed text-lg" style={{ color: 'var(--text-secondary)' }}>{children}</p>
                     ),
                     ul: ({ children }) => (
-                      <ul className="list-disc list-inside mb-6 text-white/80 space-y-3 text-lg">{children}</ul>
+                      <ul className="list-disc list-inside mb-6 space-y-3 text-lg" style={{ color: 'var(--text-secondary)' }}>{children}</ul>
                     ),
                     ol: ({ children }) => (
-                      <ol className="list-decimal list-inside mb-6 text-white/80 space-y-3 text-lg">{children}</ol>
+                      <ol className="list-decimal list-inside mb-6 space-y-3 text-lg" style={{ color: 'var(--text-secondary)' }}>{children}</ol>
                     ),
                     li: ({ children }) => (
-                      <li className="text-white/80 ml-4">{children}</li>
+                      <li className="ml-4" style={{ color: 'var(--text-secondary)' }}>{children}</li>
                     ),
                     strong: ({ children }) => (
-                      <strong className="text-white font-bold">{children}</strong>
+                      <strong className="font-bold" style={{ color: 'var(--text-primary)' }}>{children}</strong>
                     ),
                     em: ({ children }) => (
                       <em className="text-yellow-300 not-italic font-semibold">{children}</em>
                     ),
                     blockquote: ({ children }) => (
-                      <blockquote className="border-l-4 border-yellow-400 pl-6 my-6 italic text-white/90 bg-white/5 py-4 rounded-r-lg">
+                      <blockquote className="border-l-4 border-yellow-400 pl-6 my-6 italic py-4 rounded-r-lg" style={{ color: 'var(--text-primary)', backgroundColor: 'var(--bg-secondary)' }}>
                         {children}
                       </blockquote>
                     ),
@@ -453,13 +456,13 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
               </article>
 
               {/* CTA Comunitário */}
-              <div className="mt-12 pt-8 border-t-2 border-white/20">
+              <div className="mt-12 pt-8 border-t-2" style={{ borderColor: 'var(--border-light)' }}>
                 <div className="bg-gradient-to-r from-yellow-400/10 via-amber-400/10 to-yellow-400/10 border-2 border-yellow-400/30 rounded-2xl p-8">
-                  <h3 className="text-white font-bold text-2xl mb-4 flex items-center gap-2">
+                  <h3 className="font-bold text-2xl mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                     <FontAwesomeIcon icon={faComments} className="w-6 h-6" />
                     Participe da Discussão
                   </h3>
-                  <p className="text-white/80 mb-6 text-lg">
+                  <p className="mb-6 text-lg" style={{ color: 'var(--text-secondary)' }}>
                     O que você acha sobre este tema? Compartilhe sua opinião com a comunidade $MILAGRE!
                   </p>
                   <div className="flex flex-wrap gap-4">
@@ -482,9 +485,9 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                       Telegram $MILAGRE
                     </a>
                   </div>
-                  <div className="mt-6 pt-6 border-t border-white/10">
-                    <p className="text-white/60 text-sm mb-3">
-                      <span className="font-semibold text-white">Quer aprender mais sobre Bitcoin e reservas nacionais?</span>
+                  <div className="mt-6 pt-6 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                    <p className="text-sm mb-3" style={{ color: 'var(--text-tertiary)' }}>
+                      <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>Quer aprender mais sobre Bitcoin e reservas nacionais?</span>
                     </p>
                     <a
                       href="/educacao"
@@ -500,8 +503,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
 
               {/* Múltiplas Fontes */}
               {article.sources && article.sources.length > 0 && (
-                <div className="mt-8 pt-8 border-t-2 border-white/20">
-                  <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                <div className="mt-8 pt-8 border-t-2" style={{ borderColor: 'var(--border-light)' }}>
+                  <h3 className="font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                     <FontAwesomeIcon icon={faBook} className="w-5 h-5" />
                     Fontes Consultadas:
                   </h3>
@@ -541,7 +544,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                           href={url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-sm text-white/80 hover:bg-yellow-400/20 hover:border-yellow-400/40 hover:text-yellow-300 transition flex items-center gap-2"
+                          className="px-4 py-2 border rounded-lg text-sm hover:bg-yellow-400/20 hover:border-yellow-400/40 hover:text-yellow-300 transition flex items-center gap-2"
+                          style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
                         >
                           {source}
                           <FontAwesomeIcon icon={faExternalLinkAlt} className="w-3 h-3 opacity-60" />
@@ -553,10 +557,11 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
               )}
 
               {/* Botão Voltar para Notícias */}
-              <div className="mt-8 pt-8 border-t-2 border-white/20">
+              <div className="mt-8 pt-8 border-t-2" style={{ borderColor: 'var(--border-light)' }}>
                 <button
                   onClick={() => router.push('/dashboard/noticias')}
-                  className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-semibold transition text-lg"
+                  className="inline-flex items-center gap-2 font-semibold transition text-lg"
+                  style={{ color: 'var(--brand-primary)' }}
                 >
                   <span>←</span>
                   Voltar para Notícias
@@ -565,7 +570,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
 
               {/* Info de Verificação */}
               {article.lastVerified && (
-                <div className="mt-4 text-white/50 text-sm">
+                <div className="mt-4 text-sm" style={{ color: 'var(--text-muted)' }}>
                   Última verificação: {new Date(article.lastVerified).toLocaleString('pt-BR')}
                 </div>
               )}
@@ -578,8 +583,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
               <div className="sticky top-24 space-y-6">
                 {/* Card Índice */}
                 {headings.length > 0 && (
-                  <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-                    <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                  <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
+                    <h3 className="font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                       <FontAwesomeIcon icon={faBook} className="w-4 h-4" />
                       Índice
                     </h3>
@@ -588,7 +593,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                         <a
                           key={idx}
                           href={`#${heading.id}`}
-                          className="block text-white/70 hover:text-white text-sm transition py-1 hover:pl-2 duration-200"
+                          className="block text-sm transition py-1 hover:pl-2 duration-200"
+                          style={{ color: 'var(--text-secondary)' }}
                         >
                           {heading.text}
                         </a>
@@ -599,32 +605,34 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
 
                 {/* Card Navegação Anterior/Próximo */}
                 {(previousArticle || nextArticle) && (
-                  <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-                    <h3 className="text-white font-bold mb-4 text-sm">Navegação</h3>
+                  <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
+                    <h3 className="font-bold mb-4 text-sm" style={{ color: 'var(--text-primary)' }}>Navegação</h3>
                     <div className="space-y-3">
                       {previousArticle && (
                         <button
                           onClick={() => router.push(`/dashboard/noticias/${previousArticle.slug || previousArticle.id}`)}
-                          className="w-full text-left bg-white/5 hover:bg-white/10 p-3 rounded-xl transition border border-white/10 hover:border-white/20 group"
+                          className="w-full text-left p-3 rounded-xl transition border group"
+                          style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-light)' }}
                         >
                           <div className="flex items-center gap-2 mb-1">
-                            <FontAwesomeIcon icon={faChevronLeft} className="w-3 h-3 text-white/50" />
-                            <span className="text-white/50 text-xs">Anterior</span>
+                            <FontAwesomeIcon icon={faChevronLeft} className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
+                            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Anterior</span>
                           </div>
-                          <h4 className="text-white font-semibold text-sm line-clamp-2 group-hover:text-yellow-300 transition">{previousArticle.title}</h4>
+                          <h4 className="font-semibold text-sm line-clamp-2 transition" style={{ color: 'var(--text-primary)' }}>{previousArticle.title}</h4>
                         </button>
                       )}
 
                       {nextArticle && (
                         <button
                           onClick={() => router.push(`/dashboard/noticias/${nextArticle.slug || nextArticle.id}`)}
-                          className="w-full text-left bg-white/5 hover:bg-white/10 p-3 rounded-xl transition border border-white/10 hover:border-white/20 group"
+                          className="w-full text-left p-3 rounded-xl transition border group"
+                          style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-light)' }}
                         >
                           <div className="flex items-center gap-2 mb-1">
-                            <FontAwesomeIcon icon={faChevronRight} className="w-3 h-3 text-white/50" />
-                            <span className="text-white/50 text-xs">Próximo</span>
+                            <FontAwesomeIcon icon={faChevronRight} className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
+                            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Próximo</span>
                           </div>
-                          <h4 className="text-white font-semibold text-sm line-clamp-2 group-hover:text-yellow-300 transition">{nextArticle.title}</h4>
+                          <h4 className="font-semibold text-sm line-clamp-2 transition" style={{ color: 'var(--text-primary)' }}>{nextArticle.title}</h4>
                         </button>
                       )}
                     </div>
@@ -633,8 +641,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
 
                 {/* Card Continue Lendo */}
                 {relatedArticles.length > 0 && (
-                  <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-                    <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                  <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
+                    <h3 className="font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                       <FontAwesomeIcon icon={faBookOpen} className="w-4 h-4" />
                       Continue Lendo
                     </h3>
@@ -643,14 +651,15 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                         <button
                           key={idx}
                           onClick={() => router.push(`/dashboard/noticias/${related.slug || related.id}`)}
-                          className="w-full text-left bg-white/5 hover:bg-white/10 p-3 rounded-xl transition border border-white/10 hover:border-white/20"
+                          className="w-full text-left p-3 rounded-xl transition border"
+                          style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-light)' }}
                         >
                           <div className="flex items-center gap-2 mb-2">
                             <span className="text-sm">{getSentimentIcon(related.sentiment)}</span>
-                            <span className="text-white/60 text-xs">{related.category[0]}</span>
+                            <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{related.category[0]}</span>
                           </div>
-                          <h4 className="text-white font-semibold text-sm mb-1 line-clamp-2">{related.title}</h4>
-                          <p className="text-white/60 text-xs line-clamp-2">{related.summary}</p>
+                          <h4 className="font-semibold text-sm mb-1 line-clamp-2" style={{ color: 'var(--text-primary)' }}>{related.title}</h4>
+                          <p className="text-xs line-clamp-2" style={{ color: 'var(--text-tertiary)' }}>{related.summary}</p>
                         </button>
                       ))}
                     </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { createChart, ColorType, ISeriesApi, CandlestickSeries, HistogramSeries, Time } from 'lightweight-charts';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface LightweightChartProps {
   symbol: string; // Ex: BTCUSDT, ETHUSDT, SOLUSDT
@@ -13,15 +14,20 @@ type Timeframe = '15m' | '4h' | '1d';
 export default function LightweightChart({ symbol, name }: LightweightChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const [timeframe, setTimeframe] = useState<Timeframe>('1d');
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!chartContainerRef.current) return;
+
+    // Obter cores do tema atual
+    const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim();
+    const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--border-medium').trim();
 
     // Criar gráfico com fundo transparente sem grade
     const chart = createChart(chartContainerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
-        textColor: '#ffffff',
+        textColor: textColor || '#ffffff',
       },
       grid: {
         vertLines: { visible: false },
@@ -30,35 +36,35 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
       width: chartContainerRef.current.clientWidth,
       height: 500,
       timeScale: {
-        borderColor: 'rgba(255, 255, 255, 0.2)',
+        borderColor: borderColor || 'rgba(255, 255, 255, 0.2)',
         timeVisible: true,
         secondsVisible: false,
       },
       rightPriceScale: {
-        borderColor: 'rgba(255, 255, 255, 0.2)',
+        borderColor: borderColor || 'rgba(255, 255, 255, 0.2)',
       },
       crosshair: {
         vertLine: {
-          color: 'rgba(255, 255, 255, 0.4)',
+          color: textColor || 'rgba(255, 255, 255, 0.4)',
           width: 1,
           style: 1,
         },
         horzLine: {
-          color: 'rgba(255, 255, 255, 0.4)',
+          color: textColor || 'rgba(255, 255, 255, 0.4)',
           width: 1,
           style: 1,
         },
       },
     });
 
-    // Série de candlestick verde/vermelho forte
+    // Série de candlestick verde/vermelho vibrante (visível em ambos os modos)
     const candlestickSeries = chart.addSeries(CandlestickSeries, {
-      upColor: '#16a34a', // Verde forte (alta)
-      downColor: '#dc2626', // Vermelho forte (baixa)
-      borderUpColor: '#16a34a', // Mesma cor do corpo
-      borderDownColor: '#dc2626', // Mesma cor do corpo
-      wickUpColor: '#15803d',
-      wickDownColor: '#b91c1c',
+      upColor: '#22c55e',        // Verde mais vibrante (alta)
+      downColor: '#ef4444',      // Vermelho mais vibrante (baixa)
+      borderUpColor: '#22c55e',
+      borderDownColor: '#ef4444',
+      wickUpColor: '#16a34a',    // Verde médio
+      wickDownColor: '#dc2626',  // Vermelho médio
     });
 
     // Série de volume (histograma)
@@ -95,7 +101,7 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
       window.removeEventListener('resize', handleResize);
       chart.remove();
     };
-  }, [symbol, timeframe]);
+  }, [symbol, timeframe, theme]);
 
   const fetchBinanceData = async (
     symbol: string,
@@ -142,7 +148,7 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
         return {
           time: ((candle[0] as number) / 1000) as Time,
           value: parseFloat(candle[5] as string), // Volume
-          color: close >= open ? '#16a34a80' : '#dc262680', // Verde/vermelho forte com transparência
+          color: close >= open ? '#22c55e80' : '#ef444480', // Verde/vermelho vibrante com transparência
         };
       });
 
@@ -154,22 +160,26 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden">
+    <div className="backdrop-blur-lg rounded-2xl border-2 shadow-xl overflow-hidden" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
       {name && (
         <div className="px-4 pt-4 pb-2 flex items-center justify-between">
-          <h4 className="text-white font-bold text-lg">{name}</h4>
+          <h4 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>{name}</h4>
 
           {/* Timeframe Selector */}
-          <div className="flex gap-1 bg-white/5 rounded-lg p-1">
+          <div className="flex gap-1 rounded-lg p-1" style={{ backgroundColor: 'var(--bg-secondary)' }}>
             {(['15m', '4h', '1d'] as Timeframe[]).map((tf) => (
               <button
                 key={tf}
                 onClick={() => setTimeframe(tf)}
                 className={`px-3 py-1 rounded text-sm font-medium transition-all ${
-                  timeframe === tf
-                    ? 'bg-white/20 text-white shadow-sm'
-                    : 'text-white/60 hover:text-white hover:bg-white/10'
+                  timeframe === tf ? 'shadow-sm' : ''
                 }`}
+                style={timeframe === tf ? {
+                  backgroundColor: 'var(--brand-bg)',
+                  color: 'var(--text-primary)'
+                } : {
+                  color: 'var(--text-tertiary)'
+                }}
               >
                 {tf.toUpperCase()}
               </button>

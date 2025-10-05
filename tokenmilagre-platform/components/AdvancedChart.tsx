@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { createChart, ColorType, ISeriesApi, CandlestickSeries, LineSeries, Time } from 'lightweight-charts';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface AdvancedChartProps {
   symbol: string;
@@ -13,6 +14,7 @@ type Timeframe = '15m' | '4h' | '1d';
 export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const [timeframe, setTimeframe] = useState<Timeframe>('1d');
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!chartContainerRef.current) return;
@@ -24,9 +26,6 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
         candlestick: ISeriesApi<'Candlestick'>;
         sma20: ISeriesApi<'Line'>;
         sma50: ISeriesApi<'Line'>;
-        bbUpper: ISeriesApi<'Line'>;
-        bbMiddle: ISeriesApi<'Line'>;
-        bbLower: ISeriesApi<'Line'>;
         rsi: ISeriesApi<'Line'>;
       }
     ) => {
@@ -77,23 +76,6 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
           value,
         })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
 
-        // Bandas de Bollinger
-        const bbData = calculateBollingerBands(closes, 20, 2);
-        const bbUpperData = bbData.upper.map((value, index) => ({
-          time: candleData[index].time,
-          value,
-        })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
-
-        const bbMiddleData = bbData.middle.map((value, index) => ({
-          time: candleData[index].time,
-          value,
-        })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
-
-        const bbLowerData = bbData.lower.map((value, index) => ({
-          time: candleData[index].time,
-          value,
-        })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
-
         // RSI
         const rsiData = calculateRSI(closes, 14).map((value, index) => ({
           time: candleData[index].time,
@@ -103,9 +85,6 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
         // Aplicar dados aos gráficos
         series.sma20.setData(sma20Data);
         series.sma50.setData(sma50Data);
-        series.bbUpper.setData(bbUpperData);
-        series.bbMiddle.setData(bbMiddleData);
-        series.bbLower.setData(bbLowerData);
         series.rsi.setData(rsiData);
 
       } catch (error) {
@@ -113,11 +92,15 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       }
     };
 
+    // Obter cor do texto do tema atual
+    const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim();
+    const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--border-medium').trim();
+
     // Criar gráfico principal com fundo transparente
     const chart = createChart(chartContainerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
-        textColor: '#ffffff',
+        textColor: textColor || '#ffffff',
       },
       grid: {
         vertLines: { visible: false },
@@ -126,77 +109,55 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       width: chartContainerRef.current.clientWidth,
       height: 600,
       timeScale: {
-        borderColor: 'rgba(255, 255, 255, 0.2)',
+        borderColor: borderColor || 'rgba(255, 255, 255, 0.2)',
         timeVisible: true,
         secondsVisible: false,
       },
       rightPriceScale: {
-        borderColor: 'rgba(255, 255, 255, 0.2)',
+        borderColor: borderColor || 'rgba(255, 255, 255, 0.2)',
       },
       crosshair: {
         vertLine: {
-          color: 'rgba(255, 255, 255, 0.4)',
+          color: textColor || 'rgba(255, 255, 255, 0.4)',
           width: 1,
           style: 1,
         },
         horzLine: {
-          color: 'rgba(255, 255, 255, 0.4)',
+          color: textColor || 'rgba(255, 255, 255, 0.4)',
           width: 1,
           style: 1,
         },
       },
     });
 
-    // Série de candlestick verde/vermelho forte
+    // Série de candlestick verde/vermelho forte (visível em ambos os modos)
     const candlestickSeries = chart.addSeries(CandlestickSeries, {
-      upColor: '#16a34a',
-      downColor: '#dc2626',
-      borderUpColor: '#16a34a',
-      borderDownColor: '#dc2626',
-      wickUpColor: '#15803d',
-      wickDownColor: '#b91c1c',
+      upColor: '#22c55e',        // Verde mais vibrante
+      downColor: '#ef4444',      // Vermelho mais vibrante
+      borderUpColor: '#22c55e',
+      borderDownColor: '#ef4444',
+      wickUpColor: '#16a34a',    // Verde médio
+      wickDownColor: '#dc2626',  // Vermelho médio
     });
 
-    // SMA 20 (amarelo brilhante)
+    // SMA 20 (azul vibrante - visível em ambos os modos)
     const sma20Series = chart.addSeries(LineSeries, {
-      color: '#fbbf24',
+      color: '#3b82f6',
       lineWidth: 3,
       title: 'SMA 20',
     });
 
-    // SMA 50 (laranja brilhante)
+    // SMA 50 (laranja forte - visível em ambos os modos)
     const sma50Series = chart.addSeries(LineSeries, {
-      color: '#fb923c',
+      color: '#f97316',
       lineWidth: 3,
       title: 'SMA 50',
     });
 
-    // Bandas de Bollinger - Banda Superior (branco)
-    const bbUpperSeries = chart.addSeries(LineSeries, {
-      color: '#ffffff',
-      lineWidth: 2,
-      lineStyle: 0, // Solid
-      title: 'BB Upper',
-    });
 
-    // Bandas de Bollinger - Média (branco)
-    const bbMiddleSeries = chart.addSeries(LineSeries, {
-      color: '#ffffff',
-      lineWidth: 2,
-      title: 'BB Middle',
-    });
-
-    // Bandas de Bollinger - Banda Inferior (branco)
-    const bbLowerSeries = chart.addSeries(LineSeries, {
-      color: '#ffffff',
-      lineWidth: 2,
-      lineStyle: 0, // Solid
-      title: 'BB Lower',
-    });
-
-    // RSI - em painel separado
+    // RSI - em painel separado (pink vibrante - visível em ambos)
     const rsiSeries = chart.addSeries(LineSeries, {
-      color: '#8b5cf6',
+      color: '#ec4899',
       lineWidth: 2,
       priceScaleId: 'rsi',
       title: 'RSI',
@@ -214,9 +175,6 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       candlestick: candlestickSeries,
       sma20: sma20Series,
       sma50: sma50Series,
-      bbUpper: bbUpperSeries,
-      bbMiddle: bbMiddleSeries,
-      bbLower: bbLowerSeries,
       rsi: rsiSeries,
     });
 
@@ -235,7 +193,7 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       window.removeEventListener('resize', handleResize);
       chart.remove();
     };
-  }, [symbol, timeframe]);
+  }, [symbol, timeframe, theme]);
 
   // Calcular SMA (Simple Moving Average)
   const calculateSMA = (data: number[], period: number): (number | null)[] => {
@@ -309,19 +267,18 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden">
+    <div className="backdrop-blur-lg rounded-2xl border-2 shadow-xl overflow-hidden" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
       {/* Timeframe Selector - Compacto no topo */}
       <div className="px-4 pt-3 pb-2 flex items-center justify-between">
-        <div className="flex gap-1 bg-white/5 rounded-lg p-1">
+        <div className="flex gap-1 rounded-lg p-1" style={{ backgroundColor: 'var(--bg-secondary)' }}>
           {(['15m', '4h', '1d'] as Timeframe[]).map((tf) => (
             <button
               key={tf}
               onClick={() => setTimeframe(tf)}
               className={`px-3 py-1 rounded text-sm font-medium transition-all ${
-                timeframe === tf
-                  ? 'bg-yellow-400/30 text-white shadow-sm'
-                  : 'text-white/60 hover:text-white hover:bg-white/10'
+                timeframe === tf ? 'bg-yellow-400/30 shadow-sm' : ''
               }`}
+              style={timeframe === tf ? { color: 'var(--text-primary)' } : { color: 'var(--text-tertiary)' }}
             >
               {tf.toUpperCase()}
             </button>
@@ -331,20 +288,16 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
         {/* Legenda compacta */}
         <div className="flex flex-wrap gap-3 text-xs">
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5 bg-yellow-400"></div>
-            <span className="text-white/80">SMA 20</span>
+            <div className="w-3 h-0.5" style={{ backgroundColor: '#3b82f6' }}></div>
+            <span style={{ color: 'var(--text-secondary)' }}>SMA 20</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5 bg-orange-400"></div>
-            <span className="text-white/80">SMA 50</span>
+            <div className="w-3 h-0.5" style={{ backgroundColor: '#f97316' }}></div>
+            <span style={{ color: 'var(--text-secondary)' }}>SMA 50</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5 bg-white"></div>
-            <span className="text-white/80">Bollinger</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5 bg-purple-500"></div>
-            <span className="text-white/80">RSI</span>
+            <div className="w-3 h-0.5" style={{ backgroundColor: '#ec4899' }}></div>
+            <span style={{ color: 'var(--text-secondary)' }}>RSI</span>
           </div>
         </div>
       </div>

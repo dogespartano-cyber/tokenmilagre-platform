@@ -87,17 +87,17 @@ export default function NoticiasPage() {
       <div className="space-y-8">
         {/* Header */}
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-3 font-[family-name:var(--font-poppins)]">
+          <h1 className="text-4xl font-bold mb-3 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
             📰 Notícias Cripto
           </h1>
-          <p className="text-white/70 text-lg">
+          <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
             Resumos inteligentes das principais notícias do mercado
           </p>
         </div>
 
         {/* Filtros de Categoria */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-          <h3 className="text-white font-bold text-lg mb-4">Filtrar por categoria:</h3>
+        <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
+          <h3 className="font-bold text-lg mb-4" style={{ color: 'var(--text-primary)' }}>Filtrar por categoria:</h3>
           <div className="flex flex-wrap gap-3">
             {categories.map((cat) => (
               <button
@@ -106,8 +106,12 @@ export default function NoticiasPage() {
                 className={`px-4 py-2 rounded-xl font-semibold transition-all ${
                   selectedCategory === cat.id
                     ? 'bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900'
-                    : 'bg-white/10 text-white/80 hover:bg-white/20'
+                    : ''
                 }`}
+                style={selectedCategory !== cat.id ? {
+                  backgroundColor: 'var(--bg-secondary)',
+                  color: 'var(--text-secondary)'
+                } : undefined}
               >
                 <span className="mr-2">{cat.icon}</span>
                 {cat.label}
@@ -120,7 +124,7 @@ export default function NoticiasPage() {
         {loading && (
           <div className="text-center py-20">
             <div className="text-6xl mb-4 animate-pulse">📰</div>
-            <p className="text-white text-xl">Carregando notícias...</p>
+            <p className="text-xl" style={{ color: 'var(--text-primary)' }}>Carregando notícias...</p>
           </div>
         )}
 
@@ -131,24 +135,25 @@ export default function NoticiasPage() {
               <Link
                 key={index}
                 href={`/dashboard/noticias/${item.slug || item.id}`}
-                className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl hover:shadow-2xl transition-all hover:scale-105 group cursor-pointer block"
+                className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl hover:shadow-2xl transition-all hover:scale-105 group cursor-pointer block"
+                style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}
               >
                 {/* Header do Card */}
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <span className="text-2xl">{getSentimentIcon(item.sentiment)}</span>
-                    <span className="text-white/60 text-sm">{getSentimentLabel(item.sentiment)}</span>
+                    <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>{getSentimentLabel(item.sentiment)}</span>
                   </div>
-                  <span className="text-white/50 text-xs">{getTimeAgo(item.publishedAt)}</span>
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{getTimeAgo(item.publishedAt)}</span>
                 </div>
 
                 {/* Título */}
-                <h3 className="text-white font-bold text-lg mb-3 line-clamp-2 group-hover:text-yellow-300 transition">
+                <h3 className="font-bold text-lg mb-3 line-clamp-2 transition" style={{ color: 'var(--text-primary)' }}>
                   {item.title}
                 </h3>
 
                 {/* Resumo */}
-                <p className="text-white/70 text-sm mb-4 line-clamp-3">
+                <p className="text-sm mb-4 line-clamp-3" style={{ color: 'var(--text-secondary)' }}>
                   {item.summary}
                 </p>
 
@@ -157,7 +162,8 @@ export default function NoticiasPage() {
                   {item.keywords.slice(0, 3).map((keyword, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-1 bg-white/10 rounded-lg text-xs text-white/80"
+                      className="px-2 py-1 rounded-lg text-xs"
+                      style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-tertiary)' }}
                     >
                       {keyword}
                     </span>
@@ -169,7 +175,8 @@ export default function NoticiasPage() {
                   {item.category.map((cat, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-1 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-300/30 rounded-lg text-xs text-white font-semibold"
+                      className="px-2 py-1 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-300/30 rounded-lg text-xs font-semibold"
+                      style={{ color: 'var(--text-primary)' }}
                     >
                       {cat}
                     </span>
@@ -177,8 +184,8 @@ export default function NoticiasPage() {
                 </div>
 
                 {/* Link Leia Mais */}
-                <div className="mt-4 pt-4 border-t border-white/10">
-                  <span className="inline-flex items-center gap-1 text-sm text-yellow-400 font-semibold group-hover:text-yellow-300 transition">
+                <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                  <span className="inline-flex items-center gap-1 text-sm font-semibold transition" style={{ color: 'var(--brand-primary)' }}>
                     Leia mais
                     <span className="group-hover:translate-x-1 transition-transform">→</span>
                   </span>
@@ -192,8 +199,8 @@ export default function NoticiasPage() {
         {!loading && news.length === 0 && (
           <div className="text-center py-20">
             <div className="text-6xl mb-4">📭</div>
-            <p className="text-white text-xl">Nenhuma notícia encontrada</p>
-            <p className="text-white/60 mt-2">Tente selecionar outra categoria</p>
+            <p className="text-xl" style={{ color: 'var(--text-primary)' }}>Nenhuma notícia encontrada</p>
+            <p className="mt-2" style={{ color: 'var(--text-tertiary)' }}>Tente selecionar outra categoria</p>
           </div>
         )}
       </div>
