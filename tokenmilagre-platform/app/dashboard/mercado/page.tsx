@@ -166,7 +166,7 @@ export default function MercadoPage() {
         {loading ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4 animate-pulse">📊</div>
-            <p className="text-white text-xl">Carregando dados do mercado...</p>
+            <p className="text-xl" style={{ color: 'var(--text-primary)' }}>Carregando dados do mercado...</p>
           </div>
         ) : (
           <div className="space-y-10">
@@ -262,31 +262,34 @@ export default function MercadoPage() {
             {/* Análise de Mercado e Links */}
             <div className="grid md:grid-cols-3 gap-6">
               {/* Sentimento & Análise do Mercado */}
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-xl">
-                <h3 className="text-white font-bold text-xl mb-6 font-[family-name:var(--font-poppins)]">
+              <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{
+                backgroundColor: 'var(--bg-elevated)',
+                borderColor: 'var(--border-medium)'
+              }}>
+                <h3 className="font-bold text-xl mb-6 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                   📊 Análise de Mercado
                 </h3>
 
                 {/* Sentimento do Mercado */}
                 {fearGreed && (
-                  <div className="mb-6 pb-6 border-b border-white/20">
-                    <p className="text-white/70 text-sm mb-3 font-semibold">Sentimento do Mercado</p>
+                  <div className="mb-6 pb-6 border-b" style={{ borderColor: 'var(--border-medium)' }}>
+                    <p className="text-sm mb-3 font-semibold" style={{ color: 'var(--text-tertiary)' }}>Sentimento do Mercado</p>
                     <div className="flex items-center gap-4">
                       <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${getFearGreedColor(parseInt(fearGreed.value))} flex items-center justify-center shadow-lg flex-shrink-0`}>
                         <div className="bg-white/20 backdrop-blur-sm w-16 h-16 rounded-full flex flex-col items-center justify-center">
                           <span className="text-2xl">{getFearGreedEmoji(fearGreed.value_classification)}</span>
-                          <span className="text-white font-bold text-sm">{fearGreed.value}</span>
+                          <span className="font-bold text-sm" style={{ color: 'var(--text-inverse)' }}>{fearGreed.value}</span>
                         </div>
                       </div>
                       <div className="flex-1">
-                        <p className="text-white font-bold text-lg mb-1">
+                        <p className="font-bold text-lg mb-1" style={{ color: 'var(--text-primary)' }}>
                           {fearGreed.value_classification === 'Extreme Fear' && 'Medo Extremo'}
                           {fearGreed.value_classification === 'Fear' && 'Medo'}
                           {fearGreed.value_classification === 'Neutral' && 'Neutro'}
                           {fearGreed.value_classification === 'Greed' && 'Ganância'}
                           {fearGreed.value_classification === 'Extreme Greed' && 'Ganância Extrema'}
                         </p>
-                        <p className="text-white/70 text-sm leading-relaxed">
+                        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>
                           {parseInt(fearGreed.value) <= 25 && 'Mercado em pânico - possível oportunidade de compra'}
                           {parseInt(fearGreed.value) > 25 && parseInt(fearGreed.value) <= 45 && 'Investidores cautelosos - sentimento negativo'}
                           {parseInt(fearGreed.value) > 45 && parseInt(fearGreed.value) <= 55 && 'Mercado equilibrado - sem tendência clara'}
@@ -301,7 +304,7 @@ export default function MercadoPage() {
                 {/* Altcoin Season */}
                 {marketData && (
                   <div>
-                    <p className="text-white/70 text-sm mb-3 font-semibold">Ciclo de Mercado</p>
+                    <p className="text-sm mb-3 font-semibold" style={{ color: 'var(--text-tertiary)' }}>Ciclo de Mercado</p>
                     <div className="flex items-center gap-4">
                       <div className={`w-20 h-20 rounded-full ${
                         marketData.btcDominance < 40
@@ -315,7 +318,7 @@ export default function MercadoPage() {
                         </span>
                       </div>
                       <div className="flex-1">
-                        <p className="text-white font-bold text-lg mb-1">
+                        <p className="font-bold text-lg mb-1" style={{ color: 'var(--text-primary)' }}>
                           {marketData.btcDominance < 40
                             ? `Altseason Ativa! ${Math.round(100 - marketData.btcDominance)}% de intensidade`
                             : marketData.btcDominance < 50
@@ -323,7 +326,7 @@ export default function MercadoPage() {
                             : `Bitcoin Dominante: ${Math.round((100 - marketData.btcDominance) / 2)}% de chance de Altseason`
                           }
                         </p>
-                        <p className="text-white/70 text-sm leading-relaxed">
+                        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>
                           {marketData.btcDominance < 40 && 'Altcoins superando BTC - momento ideal para diversificação'}
                           {marketData.btcDominance >= 40 && marketData.btcDominance < 50 && 'Transição em curso - monitore oportunidades em altcoins'}
                           {marketData.btcDominance >= 50 && 'BTC lidera o mercado - foco em Bitcoin e grandes caps'}
@@ -432,10 +435,10 @@ export default function MercadoPage() {
 
             {/* Gráfico Bitcoin Avançado com Indicadores */}
             <div className="space-y-6">
-              <h2 className="text-white font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2">
+              <h2 className="font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2" style={{ color: "var(--text-primary)" }}>
                 👑 Bitcoin - Análise Completa
               </h2>
-              <p className="text-white/70 text-center mb-6">
+              <p className="text-center mb-6" style={{ color: "var(--text-tertiary)" }}>
                 Gráfico avançado com Médias Móveis, Bandas de Bollinger e RSI
               </p>
 
@@ -447,10 +450,10 @@ export default function MercadoPage() {
 
             {/* Gráficos TradingView */}
             <div className="space-y-6">
-              <h2 className="text-white font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2">
+              <h2 className="font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2" style={{ color: "var(--text-primary)" }}>
                 📈 Gráficos ao Vivo
               </h2>
-              <p className="text-white/70 text-center mb-6">Acompanhe BTC, ETH e SOL em tempo real</p>
+              <p className="text-center mb-6" style={{ color: "var(--text-tertiary)" }}>Acompanhe BTC, ETH e SOL em tempo real</p>
 
               <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                 {/* BTC Chart */}
@@ -475,15 +478,15 @@ export default function MercadoPage() {
 
             {/* Análise Técnica Avançada */}
             <div className="space-y-6">
-              <h2 className="text-white font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2">
+              <h2 className="font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2" style={{ color: "var(--text-primary)" }}>
                 🔬 Análise Técnica Avançada
               </h2>
-              <p className="text-white/70 text-center mb-6">Indicadores técnicos e recomendações de trading</p>
+              <p className="text-center mb-6" style={{ color: "var(--text-tertiary)" }}>Indicadores técnicos e recomendações de trading</p>
 
               <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                 {/* Análise Técnica BTC */}
                 <div>
-                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                  <h3 className="font-semibold text-lg mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
                     <span>₿</span>
                     <span>Bitcoin - Indicadores</span>
                   </h3>
@@ -492,7 +495,7 @@ export default function MercadoPage() {
 
                 {/* Análise Técnica ETH */}
                 <div>
-                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                  <h3 className="font-semibold text-lg mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
                     <span>Ξ</span>
                     <span>Ethereum - Indicadores</span>
                   </h3>
@@ -501,7 +504,7 @@ export default function MercadoPage() {
 
                 {/* Análise Técnica SOL */}
                 <div>
-                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                  <h3 className="font-semibold text-lg mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
                     <span>◎</span>
                     <span>Solana - Indicadores</span>
                   </h3>
@@ -515,15 +518,15 @@ export default function MercadoPage() {
 
             {/* Mapa de Calor & Rastreador */}
             <div className="space-y-6">
-              <h2 className="text-white font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2">
+              <h2 className="font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2" style={{ color: "var(--text-primary)" }}>
                 🗺️ Mapa de Mercado & Rastreador
               </h2>
-              <p className="text-white/70 text-center mb-6">Visualize o mercado completo e filtre oportunidades</p>
+              <p className="text-center mb-6" style={{ color: "var(--text-tertiary)" }}>Visualize o mercado completo e filtre oportunidades</p>
 
               <div className="space-y-8">
                 {/* Mapa de Calor Cripto */}
                 <div>
-                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                  <h3 className="font-semibold text-lg mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
                     <span>🔥</span>
                     <span>Mapa de Calor Cripto</span>
                   </h3>
@@ -532,7 +535,7 @@ export default function MercadoPage() {
 
                 {/* Rastreador de Mercado */}
                 <div>
-                  <h3 className="text-white font-semibold text-lg mb-3 flex items-center gap-2">
+                  <h3 className="font-semibold text-lg mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
                     <span>📋</span>
                     <span>Rastreador de Mercado</span>
                   </h3>
@@ -543,10 +546,10 @@ export default function MercadoPage() {
 
             {/* Token $MILAGRE CTA */}
             <div className="bg-gradient-to-r from-yellow-400/20 to-amber-400/20 backdrop-blur-lg rounded-2xl p-8 border-2 border-yellow-300/40 shadow-xl text-center">
-              <h3 className="text-white font-bold text-2xl mb-4 font-[family-name:var(--font-poppins)]">
+              <h3 className="font-bold text-2xl mb-4 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                 🌟 Acompanhe $MILAGRE
               </h3>
-              <p className="text-white/90 mb-6 max-w-2xl mx-auto">
+              <p className="mb-6 max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                 O token da educação financeira descentralizada. Monitore o mercado e aprenda a investir com sabedoria.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
@@ -568,7 +571,7 @@ export default function MercadoPage() {
             </div>
 
             {/* Atualização */}
-            <p className="text-center text-white/60 text-sm">
+            <p className="text-center text-sm" style={{ color: 'var(--text-muted)' }}>
               🔄 Dados atualizados automaticamente a cada 30 segundos
             </p>
           </div>
