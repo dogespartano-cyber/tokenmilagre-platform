@@ -114,20 +114,27 @@ export default function DashboardPage() {
         {!walletAddress ? (
           // Wallet Not Connected
           <div className="max-w-2xl mx-auto">
-            <div className="bg-gradient-to-br from-[#142841] to-[#1E3A5F] backdrop-blur-lg rounded-3xl p-12 border-2 border-[#2A4A6E] shadow-2xl text-center">
+            <div className="backdrop-blur-lg rounded-3xl p-12 border-2 shadow-2xl text-center" style={{
+              background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+              borderColor: 'var(--border-medium)'
+            }}>
               <div className="text-6xl mb-6">
-                <FontAwesomeIcon icon={faLink} className="w-16 h-16 text-[#10B981]" />
+                <FontAwesomeIcon icon={faLink} className="w-16 h-16" style={{ color: 'var(--brand-primary)' }} />
               </div>
-              <h1 className="text-3xl font-bold text-[#FFFFFF] mb-4 font-[family-name:var(--font-poppins)]">
+              <h1 className="text-3xl font-bold mb-4 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                 Conecte sua Wallet
               </h1>
-              <p className="text-[#94A3B8] mb-8">
+              <p className="mb-8" style={{ color: 'var(--text-tertiary)' }}>
                 Conecte sua carteira Phantom para acessar seu dashboard pessoal
               </p>
               <button
                 onClick={connectWallet}
                 disabled={loading}
-                className="px-8 py-4 bg-gradient-to-r from-[#10B981] to-[#059669] hover:brightness-110 text-white font-bold text-lg rounded-full transition-all shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-8 py-4 hover:brightness-110 font-bold text-lg rounded-full transition-all shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{
+                  background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+                  color: 'var(--text-inverse)'
+                }}
               >
                 {loading ? (
                   <span className="flex items-center gap-2">
@@ -147,17 +154,25 @@ export default function DashboardPage() {
           // Dashboard Content
           <div className="space-y-6">
             {/* Header com Wallet Info */}
-            <div className="bg-gradient-to-br from-[#142841] to-[#1E3A5F] backdrop-blur-lg rounded-2xl p-6 border-2 border-[#2A4A6E] shadow-xl">
+            <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{
+              background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+              borderColor: 'var(--border-medium)'
+            }}>
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                  <p className="text-[#94A3B8] text-sm mb-1">Wallet Conectada</p>
-                  <p className="text-[#E0E6ED] font-mono text-lg">
+                  <p className="text-sm mb-1" style={{ color: 'var(--text-tertiary)' }}>Wallet Conectada</p>
+                  <p className="font-mono text-lg" style={{ color: 'var(--text-secondary)' }}>
                     {walletAddress.slice(0, 8)}...{walletAddress.slice(-8)}
                   </p>
                 </div>
                 <button
                   onClick={disconnectWallet}
-                  className="px-6 py-2 bg-[#EF4444]/20 hover:bg-[#EF4444]/30 text-[#FFFFFF] border border-[#EF4444]/40 rounded-full transition-all flex items-center gap-2"
+                  className="px-6 py-2 border rounded-full transition-all flex items-center gap-2 hover:brightness-90"
+                  style={{
+                    backgroundColor: 'var(--error-bg)',
+                    borderColor: 'var(--error-border)',
+                    color: 'var(--error)'
+                  }}
                 >
                   <FontAwesomeIcon icon={faUnlink} className="w-4 h-4" />
                   Desconectar
@@ -168,35 +183,44 @@ export default function DashboardPage() {
             {/* Portfolio Overview */}
             <div className="grid md:grid-cols-3 gap-6">
               {/* Token Balance */}
-              <div className="bg-gradient-to-br from-[#142841] to-[#1E3A5F] backdrop-blur-lg rounded-2xl p-6 border-2 border-[#10B981]/40 shadow-xl">
-                <p className="text-[#94A3B8] text-sm mb-2">$MILAGRE Balance</p>
-                <p className="text-[#FFFFFF] font-bold text-3xl mb-1">
+              <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{
+                background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                borderColor: 'var(--brand-border)'
+              }}>
+                <p className="text-sm mb-2" style={{ color: 'var(--text-tertiary)' }}>$MILAGRE Balance</p>
+                <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
                   {tokenBalance.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}
                 </p>
-                <p className="text-[#64748B] text-sm">
+                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
                   ≈ ${(tokenBalance * priceUSD).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD
                 </p>
               </div>
 
               {/* SOL Balance */}
-              <div className="bg-gradient-to-br from-[#142841] to-[#1E3A5F] backdrop-blur-lg rounded-2xl p-6 border-2 border-[#3B82F6]/40 shadow-xl">
-                <p className="text-[#94A3B8] text-sm mb-2">SOL Balance</p>
-                <p className="text-[#FFFFFF] font-bold text-3xl mb-1">
+              <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{
+                background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                borderColor: 'var(--info-border)'
+              }}>
+                <p className="text-sm mb-2" style={{ color: 'var(--text-tertiary)' }}>SOL Balance</p>
+                <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
                   {solBalance.toFixed(4)}
                 </p>
-                <p className="text-[#64748B] text-sm">
+                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
                   Solana
                 </p>
               </div>
 
               {/* Current Tier */}
-              <div className="bg-gradient-to-br from-[#142841] to-[#1E3A5F] backdrop-blur-lg rounded-2xl p-6 border-2 border-[#F59E0B]/40 shadow-xl">
-                <p className="text-[#94A3B8] text-sm mb-2">Tier Atual</p>
-                <p className="text-[#FFFFFF] font-bold text-3xl mb-1 flex items-center gap-2">
-                  <FontAwesomeIcon icon={tier.icon} className="w-10 h-10 text-[#10B981]" />
+              <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{
+                background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                borderColor: 'var(--warning-border)'
+              }}>
+                <p className="text-sm mb-2" style={{ color: 'var(--text-tertiary)' }}>Tier Atual</p>
+                <p className="font-bold text-3xl mb-1 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                  <FontAwesomeIcon icon={tier.icon} className="w-10 h-10" style={{ color: 'var(--brand-primary)' }} />
                   <span>{tier.name}</span>
                 </p>
-                <p className="text-[#64748B] text-sm">
+                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
                   Status do holder
                 </p>
               </div>
@@ -204,70 +228,92 @@ export default function DashboardPage() {
 
             {/* Tier Progress */}
             {nextTier && (
-              <div className="bg-gradient-to-br from-[#142841] to-[#1E3A5F] backdrop-blur-lg rounded-2xl p-6 border-2 border-[#2A4A6E] shadow-xl">
+              <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{
+                background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                borderColor: 'var(--border-medium)'
+              }}>
                 <div className="flex justify-between items-center mb-3">
-                  <h3 className="text-[#FFFFFF] font-bold text-lg">Progresso para {nextTier.name}</h3>
-                  <p className="text-[#94A3B8] text-sm">
+                  <h3 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>Progresso para {nextTier.name}</h3>
+                  <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
                     {tokenBalance.toLocaleString()} / {nextTier.required.toLocaleString()}
                   </p>
                 </div>
-                <div className="w-full bg-[#2A4A6E]/50 rounded-full h-4 overflow-hidden">
+                <div className="w-full rounded-full h-4 overflow-hidden" style={{ backgroundColor: 'var(--border-medium)' }}>
                   <div
-                    className="bg-gradient-to-r from-[#10B981] to-[#059669] h-full rounded-full transition-all duration-500"
-                    style={{ width: `${Math.min(progressPercent, 100)}%` }}
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{
+                      background: 'linear-gradient(90deg, var(--brand-primary), var(--brand-hover))',
+                      width: `${Math.min(progressPercent, 100)}%`
+                    }}
                   />
                 </div>
-                <p className="text-[#64748B] text-sm mt-2">
+                <p className="text-sm mt-2" style={{ color: 'var(--text-muted)' }}>
                   Faltam {(nextTier.required - tokenBalance).toLocaleString()} $MILAGRE
                 </p>
               </div>
             )}
 
             {/* Badge Collection */}
-            <div className="bg-gradient-to-br from-[#142841] to-[#1E3A5F] backdrop-blur-lg rounded-2xl p-6 border-2 border-[#2A4A6E] shadow-xl">
-              <h3 className="text-[#FFFFFF] font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2">
-                <FontAwesomeIcon icon={faTrophy} className="w-6 h-6 text-[#F59E0B]" />
+            <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{
+              background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+              borderColor: 'var(--border-medium)'
+            }}>
+              <h3 className="font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                <FontAwesomeIcon icon={faTrophy} className="w-6 h-6" style={{ color: 'var(--warning)' }} />
                 Coleção de Badges
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {badges.map((badge) => (
                   <div
                     key={badge.id}
-                    className={`${
-                      badge.earned
-                        ? 'bg-gradient-to-br from-[#10B981]/30 to-[#059669]/30 border-[#10B981]/50'
-                        : 'bg-[#0A1628]/50 border-[#2A4A6E]/40 opacity-50'
-                    } backdrop-blur-sm rounded-xl p-4 border-2 text-center transition-all hover:scale-105`}
+                    className="backdrop-blur-sm rounded-xl p-4 border-2 text-center transition-all hover:scale-105"
+                    style={badge.earned ? {
+                      background: 'linear-gradient(135deg, var(--success-bg), var(--bg-tertiary))',
+                      borderColor: 'var(--success-border)',
+                      opacity: 1
+                    } : {
+                      backgroundColor: 'var(--bg-primary)',
+                      borderColor: 'var(--border-light)',
+                      opacity: 0.5
+                    }}
                     title={badge.description}
                   >
                     <div className="text-4xl mb-2">
-                      <FontAwesomeIcon icon={badge.icon} className="w-10 h-10 text-[#E0E6ED]" />
+                      <FontAwesomeIcon icon={badge.icon} className="w-10 h-10" style={{ color: 'var(--text-secondary)' }} />
                     </div>
-                    <p className="text-[#E0E6ED] text-xs font-semibold">{badge.name}</p>
+                    <p className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>{badge.name}</p>
                   </div>
                 ))}
               </div>
-              <p className="text-[#64748B] text-sm mt-4 text-center">
+              <p className="text-sm mt-4 text-center" style={{ color: 'var(--text-muted)' }}>
                 💡 Ganhe badges ao contribuir com a comunidade
               </p>
             </div>
 
             {/* Histórico de Transações */}
-            <div className="bg-gradient-to-br from-[#142841] to-[#1E3A5F] backdrop-blur-lg rounded-2xl p-6 border-2 border-[#2A4A6E] shadow-xl">
-              <h3 className="text-[#FFFFFF] font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2">
-                <FontAwesomeIcon icon={faChartSimple} className="w-6 h-6 text-[#3B82F6]" />
+            <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{
+              background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+              borderColor: 'var(--border-medium)'
+            }}>
+              <h3 className="font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                <FontAwesomeIcon icon={faChartSimple} className="w-6 h-6" style={{ color: 'var(--info)' }} />
                 Histórico de Transações
               </h3>
               <div className="space-y-3">
                 <div className="text-center py-8">
-                  <p className="text-[#94A3B8] mb-4">
+                  <p className="mb-4" style={{ color: 'var(--text-tertiary)' }}>
                     Visualize suas transações no blockchain
                   </p>
                   <a
                     href={`https://solscan.io/account/${walletAddress}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#3B82F6]/20 hover:bg-[#3B82F6]/30 text-[#FFFFFF] border border-[#3B82F6]/40 rounded-full transition-all"
+                    className="inline-flex items-center gap-2 px-6 py-3 border rounded-full transition-all hover:brightness-90"
+                    style={{
+                      backgroundColor: 'var(--info-bg)',
+                      borderColor: 'var(--info-border)',
+                      color: 'var(--info)'
+                    }}
                   >
                     <FontAwesomeIcon icon={faMagnifyingGlass} className="w-4 h-4" />
                     Ver Transações no Solscan
@@ -282,14 +328,22 @@ export default function DashboardPage() {
                 href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gradient-to-r from-[#10B981] to-[#059669] hover:brightness-110 text-white font-bold text-lg px-8 py-6 rounded-2xl transition-all shadow-xl hover:scale-105 text-center flex items-center justify-center gap-2"
+                className="hover:brightness-110 font-bold text-lg px-8 py-6 rounded-2xl transition-all shadow-xl hover:scale-105 text-center flex items-center justify-center gap-2"
+                style={{
+                  background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+                  color: 'var(--text-inverse)'
+                }}
               >
                 <FontAwesomeIcon icon={faRocket} className="w-5 h-5" />
                 Comprar Mais $MILAGRE
               </Link>
               <Link
                 href="/manifesto"
-                className="bg-gradient-to-r from-[#F59E0B] to-[#D97706] hover:brightness-110 text-white font-bold text-lg px-8 py-6 rounded-2xl transition-all shadow-xl hover:scale-105 text-center flex items-center justify-center gap-2"
+                className="hover:brightness-110 font-bold text-lg px-8 py-6 rounded-2xl transition-all shadow-xl hover:scale-105 text-center flex items-center justify-center gap-2"
+                style={{
+                  background: 'linear-gradient(135deg, var(--warning), #D97706)',
+                  color: 'var(--text-inverse)'
+                }}
               >
                 <FontAwesomeIcon icon={faPenNib} className="w-5 h-5" />
                 Assinar Manifesto
