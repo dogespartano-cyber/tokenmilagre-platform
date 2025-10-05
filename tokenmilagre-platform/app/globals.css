@@ -1,13 +1,42 @@
 @import "tailwindcss";
 
 :root {
-  /* Backgrounds - WCAG AAA Compliant */
+  /* Light Mode - WCAG AAA Compliant */
+  --bg-primary: #F8FAFC;
+  --bg-secondary: #F1F5F9;
+  --bg-tertiary: #E2E8F0;
+  --bg-elevated: #FFFFFF;
+
+  /* Textos Light Mode - High Contrast */
+  --text-primary: #0F172A;
+  --text-secondary: #1E293B;
+  --text-tertiary: #475569;
+  --text-muted: #64748B;
+
+  /* Brand $MILAGRE */
+  --brand-primary: #059669;
+  --brand-hover: #047857;
+  --brand-light: #10B981;
+
+  /* Funcional */
+  --success: #059669;
+  --error: #DC2626;
+  --warning: #D97706;
+  --info: #2563EB;
+
+  /* Legacy fallbacks */
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+}
+
+[data-theme="dark"] {
+  /* Dark Mode - WCAG AAA Compliant */
   --bg-primary: #0A1628;
   --bg-secondary: #142841;
   --bg-tertiary: #1E3A5F;
   --bg-elevated: #2A4A6E;
 
-  /* Textos - High Contrast */
+  /* Textos Dark Mode - High Contrast */
   --text-primary: #FFFFFF;
   --text-secondary: #E0E6ED;
   --text-tertiary: #94A3B8;

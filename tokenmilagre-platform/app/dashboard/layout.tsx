@@ -5,7 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBriefcase, faChartLine, faNewspaper } from '@fortawesome/free-solid-svg-icons';
+import { faBriefcase, faChartLine, faNewspaper, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
 
@@ -16,6 +17,7 @@ export default function DashboardLayout({
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
 
   const menuItems = [
     { href: '/dashboard/mercado', label: 'Mercado', icon: faChartLine },
@@ -24,9 +26,9 @@ export default function DashboardLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0A1628] via-[#142841] to-[#1E3A5F]">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-tertiary)]">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#142841]/95 backdrop-blur-lg border-b-2 border-[#2A4A6E]/60 shadow-xl">
+      <header className="sticky top-0 z-50 bg-[var(--bg-secondary)]/95 backdrop-blur-lg border-b-2 border-[var(--bg-elevated)]/60 shadow-xl">
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
@@ -70,6 +72,13 @@ export default function DashboardLayout({
                   {item.label}
                 </Link>
               ))}
+              <button
+                onClick={toggleTheme}
+                className="px-4 py-2 rounded-lg bg-[#142841]/50 border-2 border-[#2A4A6E]/40 text-[#E0E6ED] hover:bg-[#1E3A5F] hover:text-[#10B981] transition-all"
+                title={theme === 'light' ? 'Mudar para modo escuro' : 'Mudar para modo claro'}
+              >
+                <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-5 h-5" />
+              </button>
               <Link
                 href="/"
                 className="text-[#E0E6ED] hover:text-[#34D399] transition font-semibold"
@@ -78,13 +87,22 @@ export default function DashboardLayout({
               </Link>
             </nav>
 
-            {/* Botão Voltar - Mobile */}
-            <Link
-              href="/"
-              className="md:hidden text-[#E0E6ED] hover:text-[#34D399] transition font-semibold"
-            >
-              ← Voltar
-            </Link>
+            {/* Theme Toggle + Voltar - Mobile */}
+            <div className="md:hidden flex items-center gap-3">
+              <button
+                onClick={toggleTheme}
+                className="px-3 py-2 rounded-lg bg-[#142841]/50 border-2 border-[#2A4A6E]/40 text-[#E0E6ED] hover:bg-[#1E3A5F] hover:text-[#10B981] transition-all"
+                title={theme === 'light' ? 'Mudar para modo escuro' : 'Mudar para modo claro'}
+              >
+                <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4" />
+              </button>
+              <Link
+                href="/"
+                className="text-[#E0E6ED] hover:text-[#34D399] transition font-semibold"
+              >
+                ← Voltar
+              </Link>
+            </div>
           </div>
         </div>
       </header>
