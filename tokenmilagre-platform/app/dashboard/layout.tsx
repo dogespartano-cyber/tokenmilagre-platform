@@ -26,23 +26,31 @@ export default function DashboardLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-tertiary)]">
+    <div className="min-h-screen" style={{ background: 'var(--bg-secondary)' }}>
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[var(--bg-secondary)]/95 backdrop-blur-lg border-b-2 border-[var(--bg-elevated)]/60 shadow-xl">
+      <header className="sticky top-0 z-50 backdrop-blur-lg border-b shadow-theme-sm" style={{
+        backgroundColor: 'var(--bg-elevated)',
+        borderColor: 'var(--border-medium)'
+      }}>
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
               {/* Mobile Menu Toggle */}
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden text-white text-2xl focus:outline-none"
+                className="lg:hidden text-2xl focus:outline-none text-theme-primary"
               >
                 {sidebarOpen ? '✕' : '☰'}
               </button>
 
               <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition group">
-                <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 border-[#10B981]/50 group-hover:border-[#10B981] transition-all group-hover:scale-110">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#10B981]/20 to-[#059669]/20 blur-sm"></div>
+                <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 group-hover:scale-110 transition-all" style={{
+                  borderColor: 'var(--brand-primary)'
+                }}>
+                  <div className="absolute inset-0 blur-sm" style={{
+                    background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+                    opacity: 0.2
+                  }}></div>
                   <Image
                     src="/images/TOKEN-MILAGRE-Hero.webp"
                     alt="$MILAGRE"
@@ -51,7 +59,7 @@ export default function DashboardLayout({
                     className="w-full h-full object-cover relative z-10"
                   />
                 </div>
-                <div className="text-xl sm:text-2xl font-bold text-[#E0E6ED] drop-shadow-lg group-hover:text-[#34D399] transition font-[family-name:var(--font-poppins)]">
+                <div className="text-xl sm:text-2xl font-bold drop-shadow-lg transition font-[family-name:var(--font-poppins)] text-theme-primary group-hover:text-brand-primary">
                   $MILAGRE
                 </div>
               </Link>
@@ -63,10 +71,10 @@ export default function DashboardLayout({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-[#E0E6ED] font-semibold transition ${
+                  className={`font-semibold transition ${
                     pathname === item.href
-                      ? 'text-[#10B981]'
-                      : 'hover:text-[#34D399]'
+                      ? 'text-brand-primary'
+                      : 'text-theme-tertiary hover:text-brand-primary'
                   }`}
                 >
                   {item.label}
@@ -74,14 +82,19 @@ export default function DashboardLayout({
               ))}
               <button
                 onClick={toggleTheme}
-                className="px-4 py-2 rounded-lg bg-[#142841]/50 border-2 border-[#2A4A6E]/40 text-[#E0E6ED] hover:bg-[#1E3A5F] hover:text-[#10B981] transition-all"
+                className="px-4 py-2 rounded-lg border-2 transition-all shadow-theme-sm hover:shadow-theme-md"
+                style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  borderColor: 'var(--border-medium)',
+                  color: 'var(--text-primary)'
+                }}
                 title={theme === 'light' ? 'Mudar para modo escuro' : 'Mudar para modo claro'}
               >
                 <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-5 h-5" />
               </button>
               <Link
                 href="/"
-                className="text-[#E0E6ED] hover:text-[#34D399] transition font-semibold"
+                className="font-semibold transition text-theme-tertiary hover:text-brand-primary"
               >
                 ← Voltar
               </Link>
@@ -91,14 +104,19 @@ export default function DashboardLayout({
             <div className="md:hidden flex items-center gap-3">
               <button
                 onClick={toggleTheme}
-                className="px-3 py-2 rounded-lg bg-[#142841]/50 border-2 border-[#2A4A6E]/40 text-[#E0E6ED] hover:bg-[#1E3A5F] hover:text-[#10B981] transition-all"
+                className="px-3 py-2 rounded-lg border-2 transition-all"
+                style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  borderColor: 'var(--border-medium)',
+                  color: 'var(--text-primary)'
+                }}
                 title={theme === 'light' ? 'Mudar para modo escuro' : 'Mudar para modo claro'}
               >
                 <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4" />
               </button>
               <Link
                 href="/"
-                className="text-[#E0E6ED] hover:text-[#34D399] transition font-semibold"
+                className="transition font-semibold text-theme-tertiary hover:text-brand-primary"
               >
                 ← Voltar
               </Link>
@@ -109,7 +127,10 @@ export default function DashboardLayout({
 
       <div className="flex">
         {/* Sidebar - Desktop */}
-        <aside className="hidden lg:block w-64 bg-[#0A1628] backdrop-blur-lg border-r-2 border-[#2A4A6E]/60 sticky top-[73px] h-[calc(100vh-73px)] overflow-y-auto">
+        <aside className="hidden lg:block w-64 backdrop-blur-lg border-r sticky top-[73px] h-[calc(100vh-73px)] overflow-y-auto" style={{
+          backgroundColor: 'var(--bg-elevated)',
+          borderColor: 'var(--border-medium)'
+        }}>
           <nav className="p-6 space-y-2">
             {menuItems.map((item) => (
               <Link
@@ -117,9 +138,18 @@ export default function DashboardLayout({
                 href={item.href}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   pathname === item.href
-                    ? 'bg-[#142841] border-l-4 border-[#10B981] text-[#FFFFFF] font-bold shadow-lg'
-                    : 'bg-[#142841]/50 border-2 border-[#2A4A6E]/40 text-[#94A3B8] hover:bg-[#1E3A5F] hover:text-[#E0E6ED]'
+                    ? 'font-bold shadow-theme-md'
+                    : 'border-2 hover:shadow-theme-sm'
                 }`}
+                style={pathname === item.href ? {
+                  backgroundColor: 'var(--brand-bg)',
+                  borderLeft: '4px solid var(--brand-primary)',
+                  color: 'var(--brand-primary)'
+                } : {
+                  backgroundColor: 'var(--bg-secondary)',
+                  borderColor: 'var(--border-medium)',
+                  color: 'var(--text-tertiary)'
+                }}
               >
                 <FontAwesomeIcon icon={item.icon} className="w-5 h-5" />
                 <span className="font-semibold">{item.label}</span>
@@ -127,12 +157,17 @@ export default function DashboardLayout({
             ))}
 
             {/* Comprar $MILAGRE Button */}
-            <div className="pt-4 mt-4 border-t-2 border-[#2A4A6E]/60">
+            <div className="pt-4 mt-4 border-t-2" style={{ borderColor: 'var(--border-medium)' }}>
               <a
                 href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all bg-gradient-to-r from-[#10B981] to-[#059669] hover:brightness-110 text-white font-bold shadow-lg hover:scale-105"
+                className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all shadow-theme-md hover:shadow-theme-lg hover:scale-105"
+                style={{
+                  background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+                  color: 'var(--text-inverse)',
+                  fontWeight: 'bold'
+                }}
               >
                 <span className="text-2xl">🚀</span>
                 <span className="font-semibold">Comprar $MILAGRE</span>
@@ -145,7 +180,11 @@ export default function DashboardLayout({
         {sidebarOpen && (
           <div className="lg:hidden fixed inset-0 z-40 bg-black/70" onClick={() => setSidebarOpen(false)}>
             <aside
-              className="absolute left-0 top-16 bottom-0 w-64 bg-[#0A1628] backdrop-blur-lg border-r-2 border-[#2A4A6E]/60"
+              className="absolute left-0 top-16 bottom-0 w-64 backdrop-blur-lg border-r"
+              style={{
+                backgroundColor: 'var(--bg-elevated)',
+                borderColor: 'var(--border-medium)'
+              }}
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="p-6 space-y-2">
@@ -156,9 +195,18 @@ export default function DashboardLayout({
                     onClick={() => setSidebarOpen(false)}
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                       pathname === item.href
-                        ? 'bg-[#142841] border-l-4 border-[#10B981] text-[#FFFFFF] font-bold shadow-lg'
-                        : 'bg-[#142841]/50 border-2 border-[#2A4A6E]/40 text-[#94A3B8] hover:bg-[#1E3A5F] hover:text-[#E0E6ED]'
+                        ? 'font-bold shadow-theme-md'
+                        : 'border-2 hover:shadow-theme-sm'
                     }`}
+                    style={pathname === item.href ? {
+                      backgroundColor: 'var(--brand-bg)',
+                      borderLeft: '4px solid var(--brand-primary)',
+                      color: 'var(--brand-primary)'
+                    } : {
+                      backgroundColor: 'var(--bg-secondary)',
+                      borderColor: 'var(--border-medium)',
+                      color: 'var(--text-tertiary)'
+                    }}
                   >
                     <FontAwesomeIcon icon={item.icon} className="w-5 h-5" />
                     <span className="font-semibold">{item.label}</span>
@@ -166,12 +214,17 @@ export default function DashboardLayout({
                 ))}
 
                 {/* Comprar $MILAGRE Button */}
-                <div className="pt-4 mt-4 border-t-2 border-[#2A4A6E]/60">
+                <div className="pt-4 mt-4 border-t-2" style={{ borderColor: 'var(--border-medium)' }}>
                   <a
                     href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all bg-gradient-to-r from-[#10B981] to-[#059669] hover:brightness-110 text-white font-bold shadow-lg"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all shadow-theme-md"
+                    style={{
+                      background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+                      color: 'var(--text-inverse)',
+                      fontWeight: 'bold'
+                    }}
                   >
                     <span className="text-2xl">🚀</span>
                     <span className="font-semibold">Comprar $MILAGRE</span>
