@@ -373,7 +373,7 @@ export default function NoticiasPage() {
                 <div className="flex flex-wrap gap-2">
                   {searchTerm && (
                     <span className="px-3 py-1 rounded-lg text-sm flex items-center gap-2 bg-gradient-to-r from-yellow-400/20 to-amber-500/20 border border-yellow-400/30" style={{ color: 'var(--text-primary)' }}>
-                      🔍 "{searchTerm}"
+                      🔍 &quot;{searchTerm}&quot;
                       <button onClick={() => setSearchTerm('')} className="hover:scale-110 transition-transform">✕</button>
                     </span>
                   )}

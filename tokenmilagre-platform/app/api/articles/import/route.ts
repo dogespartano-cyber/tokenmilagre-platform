@@ -214,7 +214,7 @@ export async function POST(request: NextRequest) {
         excerpt: frontmatter.summary,
         category: frontmatter.category,
         tags: JSON.stringify(tags),
-        sentiment: sentiment as any,
+        sentiment: sentiment,
         published: frontmatter.published !== false, // Publicar por padrão
         authorId,
         ...factCheckData

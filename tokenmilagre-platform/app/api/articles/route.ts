@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get('category');
     const published = searchParams.get('published');
 
-    const where: any = {};
+    const where: { category?: string; published?: boolean } = {};
 
     // Filtrar por categoria
     if (category && category !== 'all') {
