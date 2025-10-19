@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Connection } from '@solana/web3.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,14 +16,13 @@ import {
   faSignature,
   faMagnifyingGlass,
   faRocket,
-  faPenNib,
   faTrophy,
   faChartSimple,
   faUnlink,
 } from '@fortawesome/free-solid-svg-icons';
 
 const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
-const RPC_URL = 'https://api.mainnet-beta.solana.com';
+const RPC_URL = process.env.NEXT_PUBLIC_SOLANA_RPC_URL || 'https://mainnet.helius-rpc.com/?api-key=demo';
 
 interface Badge {
   id: string;
@@ -38,6 +37,7 @@ export default function DashboardPage() {
   const [tokenBalance, setTokenBalance] = useState<number>(0);
   const [solBalance, setsolBalance] = useState<number>(0);
   const [loading, setLoading] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const priceUSD = 0.00001; // Mock price
 
   // Badges mockup
@@ -108,6 +108,18 @@ export default function DashboardPage() {
   const tier = getTier();
   const nextTier = getNextTier();
   const progressPercent = nextTier ? (tokenBalance / nextTier.required) * 100 : 100;
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -323,12 +335,12 @@ export default function DashboardPage() {
             </div>
 
             {/* Quick Actions */}
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="flex justify-center">
               <Link
                 href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:brightness-110 font-bold text-lg px-8 py-6 rounded-2xl transition-all shadow-xl hover:scale-105 text-center flex items-center justify-center gap-2"
+                className="hover:brightness-110 font-bold text-lg px-8 py-6 rounded-2xl transition-all shadow-xl hover:scale-105 text-center flex items-center justify-center gap-2 w-full max-w-md"
                 style={{
                   background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
                   color: 'var(--text-inverse)'
@@ -337,19 +349,26 @@ export default function DashboardPage() {
                 <FontAwesomeIcon icon={faRocket} className="w-5 h-5" />
                 Comprar Mais $MILAGRE
               </Link>
-              <Link
-                href="/manifesto"
-                className="hover:brightness-110 font-bold text-lg px-8 py-6 rounded-2xl transition-all shadow-xl hover:scale-105 text-center flex items-center justify-center gap-2"
-                style={{
-                  background: 'linear-gradient(135deg, var(--warning), #D97706)',
-                  color: 'var(--text-inverse)'
-                }}
-              >
-                <FontAwesomeIcon icon={faPenNib} className="w-5 h-5" />
-                Assinar Manifesto
-              </Link>
             </div>
           </div>
+        )}
+
+        {/* Scroll to top button */}
+        {showScrollTop && (
+          <button
+            onClick={scrollToTop}
+            className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 border-2"
+            style={{
+              background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+              borderColor: 'var(--brand-primary)',
+              color: 'var(--text-inverse)'
+            }}
+            aria-label="Voltar ao topo"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+          </button>
         )}
       </div>
   );

@@ -6,11 +6,7 @@ export function HolderCounter() {
   const { count, loading, error } = useHolderCount();
 
   if (error) {
-    return (
-      <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/20 backdrop-blur-sm rounded-full border border-red-300/30">
-        <span className="text-red-300 text-sm">⚠️ Erro ao carregar holders</span>
-      </div>
-    );
+    return null;
   }
 
   if (loading || count === null) {

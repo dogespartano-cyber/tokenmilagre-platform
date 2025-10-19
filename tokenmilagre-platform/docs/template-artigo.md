@@ -105,4 +105,41 @@
 
 ---
 
-**Nota de Transparência:** Este artigo foi pesquisado via Claude com busca web em tempo real e verificação de fontes primárias, formatado pela equipe $MILAGRE Research. O conteúdo é educacional e informativo, não constituindo aconselhamento financeiro ou de investimento.
+<!--
+✅ NOTA DE TRANSPARÊNCIA - ADICIONADA AUTOMATICAMENTE COM DESIGN VISUAL
+
+A nota de transparência é adicionada AUTOMATICAMENTE pela API de import.
+NÃO inclua a nota manualmente neste template.
+
+DESIGN DA NOTA:
+- Box visual com gradiente roxo/azul
+- Borda amarela à esquerda
+- Texto simples e direto
+- Formatação profissional
+
+CONTEÚDO DA NOTA:
+"Publicado por **$MILAGRE Research** | Última atualização: {DATE}
+
+Este conteúdo é educacional e informativo, baseado em fontes verificadas
+do mercado cripto. Não constitui aconselhamento financeiro ou recomendação
+de investimento. Criptomoedas envolvem riscos - sempre conduza sua própria
+pesquisa (DYOR)."
+
+FLUXO AUTOMATIZADO:
+1. Gemini CLI gera artigo SEM nota (foco em conteúdo de qualidade)
+2. Watcher detecta novo arquivo .md
+3. Watcher → API /api/articles/import
+4. API adiciona nota estilizada automaticamente
+5. Artigo é salvo no banco COM nota visual padronizada
+
+FERRAMENTA DE MANUTENÇÃO:
+- scripts/add-transparency-note.js → Para adicionar nota em artigos antigos no banco
+  (Usa o mesmo design visual da API)
+
+RESPONSABILIDADES:
+- gemini-central.sh: Gera conteúdo de qualidade
+- API import: Adiciona formatação padrão (nota de transparência estilizada)
+- add-transparency-note.js: Ferramenta de manutenção para artigos existentes
+-->
+
+---

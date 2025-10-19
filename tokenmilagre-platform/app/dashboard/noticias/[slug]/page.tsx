@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
 import ArtigoClient from './ArtigoClient';
-import { promises as fs } from 'fs';
-import path from 'path';
 
 interface NewsItem {
   id: string;
@@ -23,11 +21,18 @@ interface NewsItem {
 
 async function getArticle(slug: string): Promise<NewsItem | null> {
   try {
-    const newsFilePath = path.join(process.cwd(), 'data', 'news.json');
-    const fileContent = await fs.readFile(newsFilePath, 'utf-8');
-    const news: NewsItem[] = JSON.parse(fileContent);
+    // Buscar via API que verifica banco + news.json
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    const response = await fetch(`${baseUrl}/api/articles/${slug}`, {
+      cache: 'no-store' // Sempre buscar dados frescos
+    });
 
-    return news.find(item => item.slug === slug || item.id === slug) || null;
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+    return data.success ? data.data : null;
   } catch (error) {
     console.error('Erro ao buscar artigo:', error);
     return null;
@@ -83,12 +88,20 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
 
   if (article) {
     try {
-      const newsFilePath = path.join(process.cwd(), 'data', 'news.json');
-      const fileContent = await fs.readFile(newsFilePath, 'utf-8');
-      const allNews: NewsItem[] = JSON.parse(fileContent);
+      // Buscar todos os artigos via API
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+
+      const articlesRes = await fetch(`${baseUrl}/api/articles?category=all`, { cache: 'no-store' });
+      const articlesData = await articlesRes.json();
+
+      // Ordenar por data
+      const allNews: NewsItem[] = (articlesData.success ? articlesData.data : [])
+        .sort((a: NewsItem, b: NewsItem) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
       // Encontrar índice do artigo atual
-      const currentIndex = allNews.findIndex(item => item.id === article.id);
+      const currentIndex = allNews.findIndex(item =>
+        item.id === article.id || item.slug === article.slug
+      );
 
       // Artigo anterior (mais novo)
       if (currentIndex > 0) {

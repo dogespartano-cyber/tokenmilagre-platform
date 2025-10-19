@@ -1,1352 +1,690 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Script from 'next/script';
 import Link from 'next/link';
-import { HolderCounter } from '@/components/HolderCounter';
-import { DexScreenerChart } from '@/components/DexScreenerChart';
-import { ManifestoSignersCount } from '@/components/ManifestoSignersCount';
+import dynamic from 'next/dynamic';
 
-export default function Home() {
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
-  const [tokenBalance, setTokenBalance] = useState<number>(0);
-  const [loading, setLoading] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const LightweightChart = dynamic(() => import('@/components/LightweightChart'), {
+  ssr: false,
+});
+
+const AdvancedChart = dynamic(() => import('@/components/AdvancedChart'), {
+  ssr: false,
+});
+
+const TechnicalAnalysisWidget = dynamic(() => import('@/components/TechnicalAnalysisWidget'), {
+  ssr: false,
+});
+
+const CustomCryptoScreener = dynamic(() => import('@/components/CustomCryptoScreener'), {
+  ssr: false,
+});
+
+const CryptoHeatmapWidget = dynamic(() => import('@/components/CryptoHeatmapWidget'), {
+  ssr: false,
+});
+
+const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
+  ssr: false,
+});
+
+const StockHeatmapWidget = dynamic(() => import('@/components/StockHeatmapWidget'), {
+  ssr: false,
+});
+
+interface MarketData {
+  totalMarketCap: number;
+  totalVolume: number;
+  btcDominance: number;
+  ethDominance: number;
+  marketCapChange24h: number;
+}
+
+interface FearGreedData {
+  value: string;
+  value_classification: string;
+}
+
+interface NewsItem {
+  id: string;
+  slug?: string;
+  title: string;
+  summary: string;
+  publishedAt: string;
+  category: string[];
+  sentiment: 'positive' | 'neutral' | 'negative';
+}
+
+export default function HomePage() {
+  const [marketData, setMarketData] = useState<MarketData | null>(null);
+  const [fearGreed, setFearGreed] = useState<FearGreedData | null>(null);
+  const [news, setNews] = useState<NewsItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
-  const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
+  useEffect(() => {
+    fetchMarketData();
+    fetchFearGreed();
+    fetchNews();
 
-  const faqItems = [
-    {
-      icon: '❓',
-      question: 'Por que $MILAGRE foi criado?',
-      answer: '$MILAGRE nasceu da necessidade de criar uma comunidade onde as pessoas realmente se apoiam. Muitos tokens prometem "comunidade", mas poucos entregam valor humano real. Nós queremos mudar isso, oferecendo mentorias, networking e suporte emocional genuíno para todos os holders.'
-    },
-    {
-      icon: '🔒',
-      question: '$MILAGRE é seguro?',
-      answer: 'Sim! $MILAGRE é um token SPL na blockchain Solana, uma das blockchains mais rápidas e seguras do mundo. Todas as transações são verificadas e registradas publicamente. Sempre use carteiras oficiais como Phantom e nunca compartilhe suas seed phrases com ninguém.'
-    },
-    {
-      icon: '🎯',
-      question: 'Como funciona o sistema de guardiões?',
-      answer: 'Os três guardiões (Prosperidade, Sabedoria e Esperança) representam os pilares da nossa comunidade. Dependendo da quantidade de $MILAGRE que você possui, você desbloqueia diferentes níveis de acesso: Apoiador (1.000+), Guardião (10.000+) e Anjo Guardião (50.000+). Cada nível oferece benefícios exclusivos.'
-    },
-    {
-      icon: '💰',
-      question: 'Onde posso vender meus tokens?',
-      answer: 'Você pode vender seus tokens $MILAGRE na mesma plataforma onde comprou (Pump.fun) ou em qualquer DEX da Solana que suporte o token. Basta conectar sua carteira e fazer a troca por SOL ou outros tokens.'
-    },
-    {
-      icon: '🚀',
-      question: 'Qual é o roadmap do projeto?',
-      answer: 'Fase 1 (Atual): Landing page e integração blockchain ✅ | Fase 2: Dashboard de holders com estatísticas em tempo real | Fase 3: Sistema de mentoria e fórum comunitário | Fase 4: Governança on-chain e sistema de recompensas/staking'
-    },
-    {
-      icon: '🌐',
-      question: 'O que é Solana?',
-      answer: 'Solana é uma blockchain de alta performance que processa milhares de transações por segundo com taxas extremamente baixas (centavos de dólar). É ideal para projetos que precisam de velocidade e eficiência, como $MILAGRE.'
-    },
-    {
-      icon: '🛡️',
-      question: 'Dicas de segurança para holders',
-      answer: '• Nunca compartilhe sua seed phrase (12-24 palavras) | • Use apenas sites oficiais - verifique sempre o domínio | • Habilite autenticação 2FA em exchanges | • Desconfie de mensagens privadas - não pedimos informações por DM | • Faça backup da sua carteira em local seguro'
-    }
-  ];
+    // Atualizar a cada 30 segundos
+    const interval = setInterval(() => {
+      fetchMarketData();
+      fetchFearGreed();
+      fetchNews();
+    }, 30000);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setMobileMenuOpen(false);
-    }
-  };
+    return () => clearInterval(interval);
+  }, []);
+
+  // Scroll to top button
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(TOKEN_ADDRESS);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  // Mostrar botão de scroll quando descer
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const connectWallet = async () => {
-    setLoading(true);
+  const fetchMarketData = async () => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if ((window as any).solana && (window as any).solana.isPhantom) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const response = await (window as any).solana.connect();
-        setWalletAddress(response.publicKey.toString());
-        await checkTokenBalance(response.publicKey.toString());
-      } else {
-        alert('Por favor, instale a carteira Phantom: https://phantom.app/');
-      }
-    } catch (err) {
-      console.error('Erro ao conectar:', err);
-    } finally {
+      const response = await fetch(
+        'https://api.coingecko.com/api/v3/global'
+      );
+      const data = await response.json();
+
+      setMarketData({
+        totalMarketCap: data.data.total_market_cap.usd,
+        totalVolume: data.data.total_volume.usd,
+        btcDominance: data.data.market_cap_percentage.btc,
+        ethDominance: data.data.market_cap_percentage.eth,
+        marketCapChange24h: data.data.market_cap_change_percentage_24h_usd,
+      });
+      setLoading(false);
+    } catch (error) {
+      console.error('Erro ao buscar dados do mercado:', error);
       setLoading(false);
     }
   };
 
-  const checkTokenBalance = async (address: string) => {
+  const fetchFearGreed = async () => {
     try {
-      const { Connection, PublicKey } = await import('@solana/web3.js');
-      const connection = new Connection('https://api.mainnet-beta.solana.com', 'confirmed');
-      const walletPublicKey = new PublicKey(address);
-      const tokenMintAddress = new PublicKey(TOKEN_ADDRESS);
-
-      const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
-        walletPublicKey,
-        { mint: tokenMintAddress }
-      );
-
-      if (tokenAccounts.value.length > 0) {
-        const balance = tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount;
-        setTokenBalance(balance || 0);
-      } else {
-        setTokenBalance(0);
-      }
+      const response = await fetch('https://api.alternative.me/fng/');
+      const data = await response.json();
+      setFearGreed(data.data[0]);
     } catch (error) {
-      console.error('Erro ao buscar saldo:', error);
-      setTokenBalance(0);
+      console.error('Erro ao buscar Fear & Greed Index:', error);
     }
   };
 
-  const disconnectWallet = () => {
-    setWalletAddress(null);
-    setTokenBalance(0);
+  const fetchNews = async () => {
+    try {
+      const response = await fetch('/api/articles');
+      const data = await response.json();
+      if (data.success && data.data) {
+        // Ordenar por data (mais recentes primeiro) e pegar apenas as 4 últimas
+        const sortedNews = data.data
+          .sort((a: NewsItem, b: NewsItem) =>
+            new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+          )
+          .slice(0, 4);
+        setNews(sortedNews);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar notícias:', error);
+      setNews([]); // Garantir que news seja um array vazio em caso de erro
+    }
   };
 
-  const getTier = (balance: number) => {
-    if (balance >= 50000) return { name: 'Anjo Guardião', color: 'text-yellow-400', emoji: '👼', benefits: 'Acesso total + Badge exclusivo' };
-    if (balance >= 10000) return { name: 'Guardião', color: 'text-blue-300', emoji: '🛡️', benefits: 'Grupos privados + Mentorias' };
-    if (balance >= 1000) return { name: 'Apoiador', color: 'text-teal-300', emoji: '🤝', benefits: 'Acesso à plataforma' };
-    return { name: 'Visitante', color: 'text-gray-300', emoji: '👋', benefits: 'Compre $MILAGRE para começar' };
+  const formatNumber = (num: number) => {
+    if (num >= 1e12) return `$${(num / 1e12).toFixed(2)}T`;
+    if (num >= 1e9) return `$${(num / 1e9).toFixed(2)}B`;
+    if (num >= 1e6) return `$${(num / 1e6).toFixed(2)}M`;
+    return `$${num.toLocaleString('pt-BR')}`;
   };
 
-  const tier = getTier(tokenBalance);
+  const getFearGreedColor = (value: number) => {
+    if (value <= 25) return 'from-red-500 to-red-600';
+    if (value <= 45) return 'from-orange-500 to-orange-600';
+    if (value <= 55) return 'from-yellow-500 to-yellow-600';
+    if (value <= 75) return 'from-green-500 to-green-600';
+    return 'from-emerald-500 to-emerald-600';
+  };
+
+  const getFearGreedEmoji = (classification: string) => {
+    const map: { [key: string]: string } = {
+      'Extreme Fear': '😱',
+      'Fear': '😰',
+      'Neutral': '😐',
+      'Greed': '🤑',
+      'Extreme Greed': '🚀'
+    };
+    return map[classification] || '📊';
+  };
+
+  const getSentimentIcon = (sentiment: string) => {
+    switch (sentiment) {
+      case 'positive': return '🟢';
+      case 'negative': return '🔴';
+      default: return '🟡';
+    }
+  };
+
+  const getTimeAgo = (date: string) => {
+    const now = new Date();
+    const published = new Date(date);
+    const diffMs = now.getTime() - published.getTime();
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+
+    if (diffHours < 1) return 'Agora mesmo';
+    if (diffHours < 24) return `Há ${diffHours}h`;
+    const diffDays = Math.floor(diffHours / 24);
+    return `Há ${diffDays}d`;
+  };
 
   return (
-    <>
-      {/* Schema.org JSON-LD para SEO */}
-      <Script id="faq-schema" type="application/ld+json" strategy="afterInteractive">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": faqItems.map(item => ({
-            "@type": "Question",
-            "name": item.question,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": item.answer.replace(/ \| /g, '. ')
-            }
-          }))
-        })}
-      </Script>
-
-      <Script id="organization-schema" type="application/ld+json" strategy="afterInteractive">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "name": "$MILAGRE Token",
-          "url": "https://tokenmilagre.xyz",
-          "logo": "https://tokenmilagre.xyz/images/TOKEN-MILAGRE-Hero.webp",
-          "description": "Token SPL comunitário de apoio mútuo na blockchain Solana",
-          "sameAs": [
-            "https://x.com/TokenMilagre",
-            "https://t.me/+Bop_TVFc_mg3Njlh"
-          ]
-        })}
-      </Script>
-
-      <Script id="crypto-schema" type="application/ld+json" strategy="afterInteractive">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Product",
-          "name": "$MILAGRE Token",
-          "description": "Token SPL comunitário na Solana. Guardiões da Prosperidade, Sabedoria e Esperança guiando holders.",
-          "brand": {
-            "@type": "Brand",
-            "name": "$MILAGRE"
-          },
-          "offers": {
-            "@type": "Offer",
-            "url": `https://pump.fun/coin/${TOKEN_ADDRESS}`,
-            "priceCurrency": "SOL",
-            "availability": "https://schema.org/InStock"
-          }
-        })}
-      </Script>
-
-    <div className="min-h-screen bg-gradient-to-br from-[#5DD4D4] via-[#4DB8D8] to-[#E8F4F4]">
-      {/* Navigation Menu - Fixed */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#4DB8D8]/95 to-[#5DD4D4]/95 backdrop-blur-lg border-b-2 border-white/20 shadow-xl">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex justify-between items-center">
-            {/* Logo */}
-            <button onClick={() => scrollToSection('home')} className="flex items-center gap-3 hover:opacity-90 transition group">
-              <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 border-yellow-300/50 group-hover:border-yellow-300 transition-all group-hover:scale-110">
-                <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-cyan-400/20 blur-sm"></div>
-                <Image
-                  src="/images/TOKEN-MILAGRE-Hero.webp"
-                  alt="$MILAGRE"
-                  width={40}
-                  height={40}
-                  className="w-full h-full object-cover relative z-10"
-                />
-              </div>
-              <h1 className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg group-hover:text-yellow-200 transition font-[family-name:var(--font-poppins)]">$MILAGRE</h1>
-            </button>
-
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center gap-6">
-              <button onClick={() => scrollToSection('sobre')} className="text-white hover:text-yellow-300 transition font-semibold">
-                O que é?
-              </button>
-              <button onClick={() => scrollToSection('token')} className="text-white hover:text-yellow-300 transition font-semibold">
-                Token
-              </button>
-              <button onClick={() => scrollToSection('guardioes')} className="text-white hover:text-yellow-300 transition font-semibold">
-                Guardiões
-              </button>
-              <button onClick={() => scrollToSection('comprar')} className="text-white hover:text-yellow-300 transition font-semibold">
-                Como Comprar
-              </button>
-              <button onClick={() => scrollToSection('contribuir')} className="text-white hover:text-yellow-300 transition font-semibold">
-                Contribuir
-              </button>
-              <button onClick={() => scrollToSection('faq')} className="text-white hover:text-yellow-300 transition font-semibold">
-                FAQ
-              </button>
-              <button onClick={() => scrollToSection('contato')} className="text-white hover:text-yellow-300 transition font-semibold">
-                Sobre
-              </button>
-              <Link href="/manifesto" className="text-white hover:text-yellow-300 transition font-semibold">
-                Manifesto
-              </Link>
-              <Link href="/dashboard/mercado" className="text-white hover:text-yellow-300 transition font-semibold">
-                Dashboard
-              </Link>
-
-              {/* Social Icons */}
-              <div className="flex gap-4 items-center ml-4 pl-4 border-l-2 border-white/30">
-                <a href="https://x.com/TokenMilagre" target="_blank" rel="noopener noreferrer" className="w-6 h-6 flex items-center justify-center hover:opacity-70 transition">
-                  <Image src="/images/X-twitter.png" alt="X/Twitter" width={24} height={24} className="w-full h-full object-contain" />
-                </a>
-                <a href="https://t.me/+Bop_TVFc_mg3Njlh" target="_blank" rel="noopener noreferrer" className="w-6 h-6 flex items-center justify-center hover:opacity-70 transition">
-                  <Image src="/images/telegrama.png" alt="Telegram" width={24} height={24} className="w-full h-full object-contain" />
-                </a>
-              </div>
-
-              {/* CTA Button */}
-              <a
-                href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-gray-900 font-bold px-6 py-2 rounded-full transition-all shadow-lg transform hover:scale-105"
-              >
-                🚀 Comprar
-              </a>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden text-white text-3xl focus:outline-none"
-            >
-              {mobileMenuOpen ? '✕' : '☰'}
-            </button>
+    <div className="container mx-auto px-4 py-8">
+        {loading ? (
+          <div className="text-center py-20">
+            <div className="text-6xl mb-4 animate-pulse">📊</div>
+            <p className="text-xl" style={{ color: 'var(--text-primary)' }}>Carregando dados do mercado...</p>
           </div>
+        ) : (
+          <div className="space-y-10">
+            {/* Ticker Tape - Fita de Preços */}
+            <div className="rounded-2xl overflow-hidden shadow-xl border-2 border-yellow-400/40 bg-gradient-to-r from-yellow-400/10 via-amber-400/10 to-yellow-400/10">
+              <TickerTapeWidget />
+            </div>
 
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 border-t border-white/20 pt-4 space-y-3">
-              <button onClick={() => scrollToSection('sobre')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
-                O que é?
-              </button>
-              <button onClick={() => scrollToSection('token')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
-                Token
-              </button>
-              <button onClick={() => scrollToSection('guardioes')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
-                Guardiões
-              </button>
-              <button onClick={() => scrollToSection('comprar')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
-                Como Comprar
-              </button>
-              <button onClick={() => scrollToSection('contribuir')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
-                Contribuir
-              </button>
-              <button onClick={() => scrollToSection('faq')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
-                FAQ
-              </button>
-              <button onClick={() => scrollToSection('contato')} className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
-                Sobre
-              </button>
-              <Link href="/manifesto" className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
-                Manifesto
-              </Link>
-              <Link href="/dashboard/mercado" className="block w-full text-left text-white hover:text-yellow-300 transition font-semibold py-2">
-                Dashboard
-              </Link>
-
-              <div className="flex gap-6 items-center pt-3 border-t border-white/20">
-                <a href="https://x.com/TokenMilagre" target="_blank" rel="noopener noreferrer" className="w-8 h-8 flex items-center justify-center hover:opacity-70 transition">
-                  <Image src="/images/X-twitter.png" alt="X/Twitter" width={32} height={32} className="w-full h-full object-contain" />
-                </a>
-                <a href="https://t.me/+Bop_TVFc_mg3Njlh" target="_blank" rel="noopener noreferrer" className="w-8 h-8 flex items-center justify-center hover:opacity-70 transition">
-                  <Image src="/images/telegrama.png" alt="Telegram" width={32} height={32} className="w-full h-full object-contain" />
-                </a>
+            {/* Visão Geral do Mercado */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Capitalização Total */}
+              <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300" style={{
+                background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                borderColor: 'var(--border-medium)'
+              }}>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Capitalização Total</p>
+                  <span className="text-2xl">💰</span>
+                </div>
+                <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
+                  {marketData && formatNumber(marketData.totalMarketCap)}
+                </p>
+                <p className="text-sm font-semibold" style={{
+                  color: marketData && marketData.marketCapChange24h >= 0 ? 'var(--success)' : 'var(--error)'
+                }}>
+                  {marketData && marketData.marketCapChange24h >= 0 ? '▲' : '▼'}
+                  {marketData && Math.abs(marketData.marketCapChange24h).toFixed(2)}% (24h)
+                </p>
               </div>
 
-              <a
-                href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-center bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 font-bold px-6 py-3 rounded-full transition-all shadow-lg mt-4"
-              >
-                🚀 Comprar Agora
-              </a>
+              {/* Volume 24h */}
+              <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300" style={{
+                background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                borderColor: 'var(--border-medium)'
+              }}>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Volume 24h</p>
+                  <span className="text-2xl">📈</span>
+                </div>
+                <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
+                  {marketData && formatNumber(marketData.totalVolume)}
+                </p>
+                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Negociação global</p>
+              </div>
+
+              {/* Dominância BTC */}
+              <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300" style={{
+                background: 'linear-gradient(135deg, var(--warning-bg), var(--bg-elevated))',
+                borderColor: 'var(--warning-border)'
+              }}>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Dominância BTC</p>
+                  <span className="text-2xl">₿</span>
+                </div>
+                <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
+                  {marketData && marketData.btcDominance.toFixed(2)}%
+                </p>
+                <div className="w-full rounded-full h-2 mt-2" style={{ backgroundColor: 'var(--border-medium)' }}>
+                  <div
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{
+                      background: 'linear-gradient(90deg, #F59E0B, #D97706)',
+                      width: `${marketData?.btcDominance}%`
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Dominância ETH */}
+              <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300" style={{
+                background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                borderColor: 'var(--border-medium)'
+              }}>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Dominância ETH</p>
+                  <span className="text-2xl">Ξ</span>
+                </div>
+                <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
+                  {marketData && marketData.ethDominance.toFixed(2)}%
+                </p>
+                <div className="w-full rounded-full h-2 mt-2" style={{ backgroundColor: 'var(--border-medium)' }}>
+                  <div
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{
+                      background: 'linear-gradient(90deg, #8B5CF6, #7C3AED)',
+                      width: `${marketData?.ethDominance}%`
+                    }}
+                  />
+                </div>
+              </div>
             </div>
-          )}
-        </div>
-      </nav>
 
-      {/* Hero Section */}
-      <main className="container mx-auto px-4 pt-28 pb-12">
-        <div id="home" className="grid lg:grid-cols-2 gap-12 items-center mb-20 scroll-mt-24">
-          {/* Left - Text Content */}
-          <div className="text-center lg:text-left order-2 lg:order-1">
-            <h2 className="text-5xl lg:text-7xl font-extrabold text-white mb-6 drop-shadow-xl font-[family-name:var(--font-poppins)] tracking-tight flex items-center justify-center lg:justify-start gap-3">
-              <span>Nunca Estarás Sozinho</span>
-              <span className="text-6xl lg:text-7xl animate-pulse">❤️</span>
-            </h2>
-            <p className="text-lg sm:text-xl text-white mb-8 leading-relaxed drop-shadow-md">
-              Nos momentos mais difíceis, <span className="font-bold text-yellow-200">$MILAGRE</span> surge como um farol de esperança.
-              Juntos, criamos novas chances para um novo começo.
-            </p>
+            {/* Últimas Notícias com Fear & Greed */}
+            <div>
+              <div className="backdrop-blur-xl rounded-3xl p-8 border-2 shadow-2xl hover:shadow-3xl transition-all duration-500 group overflow-hidden relative" style={{
+                backgroundColor: 'var(--bg-elevated)',
+                borderColor: 'var(--border-medium)'
+              }}>
+                {/* Background gradient animado */}
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-yellow-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
 
-            {!walletAddress ? (
-              <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
-                <button
-                  onClick={connectWallet}
-                  disabled={loading}
-                  className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-gray-900 font-bold text-lg sm:text-xl px-8 sm:px-12 py-4 sm:py-5 rounded-full transition-all shadow-2xl disabled:opacity-50 transform hover:scale-105"
-                >
-                  {loading ? 'Conectando...' : '🔗 Conectar Carteira'}
-                </button>
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="font-bold text-2xl font-[family-name:var(--font-poppins)] flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                      <span className="text-3xl">📰</span>
+                      <span>Últimas Notícias</span>
+                    </h3>
+                    <div className="px-3 py-1 rounded-full text-xs font-bold" style={{
+                      background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                      color: 'white'
+                    }}>
+                      HOJE
+                    </div>
+                  </div>
+
+                  {/* Índice Fear & Greed */}
+                  {fearGreed && (
+                    <div className="mb-6 p-5 rounded-2xl backdrop-blur-sm border transition-all duration-300 hover:scale-[1.02]" style={{
+                      background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                      borderColor: 'var(--border-light)'
+                    }}>
+                      <div className="flex items-center gap-2 mb-4">
+                        <div className="w-2 h-2 rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 animate-pulse"></div>
+                        <p className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--text-tertiary)' }}>Índice Fear & Greed - Sentimento do Mercado</p>
+                      </div>
+
+                      <div className="flex flex-col lg:flex-row items-center gap-5">
+                        {/* Fear & Greed Info */}
+                        <div className="flex items-center gap-5 flex-1">
+                          <div className="relative">
+                            <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${getFearGreedColor(parseInt(fearGreed.value))} flex items-center justify-center shadow-2xl transform group-hover:rotate-3 transition-transform duration-500`}>
+                              <div className="bg-white/20 backdrop-blur-md w-20 h-20 rounded-xl flex flex-col items-center justify-center border border-white/30">
+                                <span className="text-3xl mb-1">{getFearGreedEmoji(fearGreed.value_classification)}</span>
+                                <span className="font-black text-lg" style={{ color: 'var(--text-inverse)' }}>{fearGreed.value}</span>
+                              </div>
+                            </div>
+                            <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 animate-ping"></div>
+                          </div>
+
+                          <div className="flex-1">
+                            <p className="font-bold text-xl mb-2" style={{ color: 'var(--text-primary)' }}>
+                              {fearGreed.value_classification === 'Extreme Fear' && '😱 Medo Extremo'}
+                              {fearGreed.value_classification === 'Fear' && '😰 Medo'}
+                              {fearGreed.value_classification === 'Neutral' && '😐 Neutro'}
+                              {fearGreed.value_classification === 'Greed' && '🤑 Ganância'}
+                              {fearGreed.value_classification === 'Extreme Greed' && '🚀 Ganância Extrema'}
+                            </p>
+                            <p className="text-sm leading-relaxed font-medium" style={{ color: 'var(--text-secondary)' }}>
+                              {parseInt(fearGreed.value) <= 25 && '💎 Oportunidade de acumular'}
+                              {parseInt(fearGreed.value) > 25 && parseInt(fearGreed.value) <= 45 && '⚠️ Cautela recomendada'}
+                              {parseInt(fearGreed.value) > 45 && parseInt(fearGreed.value) <= 55 && '⚖️ Mercado equilibrado'}
+                              {parseInt(fearGreed.value) > 55 && parseInt(fearGreed.value) <= 75 && '📈 Otimismo crescente'}
+                              {parseInt(fearGreed.value) > 75 && '🔥 Alta volatilidade esperada'}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Community Buttons - Lateral */}
+                        <div className="flex flex-col gap-3 lg:border-l lg:pl-5" style={{ borderColor: 'var(--border-light)' }}>
+                          <p className="text-xs font-bold uppercase tracking-wider text-center lg:text-left" style={{ color: 'var(--text-tertiary)' }}>
+                            💬 Comunidade
+                          </p>
+                          <div className="flex flex-row gap-2">
+                            <a
+                              href="https://discord.gg/skaX8bFY"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="group flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs transition-all shadow-lg hover:shadow-xl hover:scale-105 whitespace-nowrap"
+                              style={{
+                                background: 'linear-gradient(135deg, #5865F2, #4752C4)',
+                                color: 'white'
+                              }}
+                            >
+                              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                              </svg>
+                              <span>Discord</span>
+                              <span className="group-hover:translate-x-1 transition-transform">→</span>
+                            </a>
+
+                            <a
+                              href="https://t.me/+Bop_TVFc_mg3Njlh"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="group flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs transition-all shadow-lg hover:shadow-xl hover:scale-105 whitespace-nowrap"
+                              style={{
+                                background: 'linear-gradient(135deg, #0088cc, #006699)',
+                                color: 'white'
+                              }}
+                            >
+                              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12s12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21l-1.446 1.394c-.14.18-.357.295-.6.295c-.002 0-.003 0-.005 0l.213-3.054l5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326l-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
+                              </svg>
+                              <span>Telegram</span>
+                              <span className="group-hover:translate-x-1 transition-transform">→</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Divisor */}
+                  <div className="border-t-2 mb-6" style={{ borderColor: 'var(--border-light)' }}></div>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {news.length > 0 ? (
+                      news.map((item, idx) => (
+                        <Link
+                          key={idx}
+                          href={`/dashboard/noticias/${item.slug || item.id}`}
+                          className="block rounded-2xl p-4 border-2 transition-all duration-300 group/item hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1 relative overflow-hidden"
+                          style={{
+                            background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                            borderColor: 'var(--border-light)'
+                          }}
+                        >
+                          {/* Hover gradient */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 to-amber-400/10 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300"></div>
+
+                          <div className="relative z-10">
+                            {/* Header da notícia */}
+                            <div className="flex items-center gap-2 mb-3">
+                              <span className="text-lg flex-shrink-0">{getSentimentIcon(item.sentiment)}</span>
+                              <span className="px-2 py-1 rounded-lg text-xs font-bold uppercase" style={{
+                                backgroundColor: 'var(--bg-primary)',
+                                color: 'var(--brand-primary)'
+                              }}>
+                                {item.category[0]}
+                              </span>
+                              <span className="text-xs ml-auto font-medium" style={{ color: 'var(--text-muted)' }}>{getTimeAgo(item.publishedAt)}</span>
+                            </div>
+
+                            {/* Título */}
+                            <h4 className="font-bold text-base mb-2 line-clamp-2 group-hover/item:text-yellow-400 transition-colors duration-300" style={{ color: 'var(--text-primary)' }}>
+                              {item.title}
+                            </h4>
+
+                            {/* Resumo */}
+                            <p className="text-sm line-clamp-2 mb-3" style={{ color: 'var(--text-tertiary)' }}>
+                              {item.summary}
+                            </p>
+
+                            {/* Footer - Ler mais */}
+                            <div className="flex items-center gap-2 text-sm font-bold" style={{ color: 'var(--brand-primary)' }}>
+                              <span>Ler artigo completo</span>
+                              <span className="group-hover/item:translate-x-1 transition-transform duration-300">→</span>
+                            </div>
+                          </div>
+                        </Link>
+                      ))
+                    ) : (
+                      <div className="text-center py-8">
+                        <div className="text-5xl mb-3 animate-pulse">📰</div>
+                        <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>Carregando notícias...</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Ver todas */}
+                  <Link
+                    href="/dashboard/noticias"
+                    className="mt-6 block text-center py-3 px-6 rounded-xl font-bold text-base transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                    style={{
+                      background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+                      color: 'var(--text-inverse)'
+                    }}
+                  >
+                    Ver todas as notícias →
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="border-t-2 border-white/20"></div>
+
+            {/* Análise de Mercado Cripto */}
+            <div className="space-y-8">
+              <div className="text-center">
+                <h2 className="font-bold text-3xl font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
+                  📊 Análise de Mercado Cripto
+                </h2>
+                <p style={{ color: "var(--text-tertiary)" }}>
+                  Acompanhe gráficos ao vivo, análise técnica e indicadores profissionais
+                </p>
+              </div>
+
+              {/* Bitcoin - Análise Completa */}
+              <div className="space-y-4">
+                <h3 className="font-semibold text-xl flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+                  <span>👑</span>
+                  <span>Bitcoin</span>
+                </h3>
+                <p className="text-sm" style={{ color: "var(--text-tertiary)" }}>
+                  Gráfico com Médias Móveis, Bandas de Bollinger e RSI
+                </p>
+                <AdvancedChart symbol="BTCUSDT" name="₿ Bitcoin (BTC/USDT) - Gráfico Profissional" />
+              </div>
+
+              {/* Gráficos ao Vivo */}
+              <div className="space-y-4">
+                <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
+                  {/* BTC Chart */}
+                  <div>
+                    <LightweightChart symbol="BTCUSDT" name="₿ Bitcoin (BTC/USDT)" />
+                  </div>
+
+                  {/* ETH Chart */}
+                  <div>
+                    <LightweightChart symbol="ETHUSDT" name="Ξ Ethereum (ETH/USDT)" />
+                  </div>
+
+                  {/* SOL Chart */}
+                  <div>
+                    <LightweightChart symbol="SOLUSDT" name="◎ Solana (SOL/USDT)" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Análise Técnica Avançada */}
+              <div className="space-y-4">
+                <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
+                  {/* Análise Técnica BTC */}
+                  <div>
+                    <h4 className="font-semibold text-base mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+                      <span>₿</span>
+                      <span>Bitcoin - Sentimento</span>
+                    </h4>
+                    <TechnicalAnalysisWidget symbol="BINANCE:BTCUSDT" />
+                  </div>
+
+                  {/* Análise Técnica ETH */}
+                  <div>
+                    <h4 className="font-semibold text-base mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+                      <span>Ξ</span>
+                      <span>Ethereum - Sentimento</span>
+                    </h4>
+                    <TechnicalAnalysisWidget symbol="BINANCE:ETHUSDT" />
+                  </div>
+
+                  {/* Análise Técnica SOL */}
+                  <div>
+                    <h4 className="font-semibold text-base mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+                      <span>◎</span>
+                      <span>Solana - Sentimento</span>
+                    </h4>
+                    <TechnicalAnalysisWidget symbol="BINANCE:SOLUSDT" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="border-t-2 border-white/20"></div>
+
+            {/* Mapa de Calor S&P 500 */}
+            <div className="space-y-6">
+              <h2 className="font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2" style={{ color: "var(--text-primary)" }}>
+                📊 Mapa de Calor - S&P 500
+              </h2>
+              <p className="text-center mb-6" style={{ color: "var(--text-tertiary)" }}>
+                Visualize o desempenho das principais ações dos EUA
+              </p>
+
+              <StockHeatmapWidget />
+            </div>
+
+            {/* Divider */}
+            <div className="border-t-2 border-white/20"></div>
+
+            {/* Mapa de Calor & Rastreador */}
+            <div className="space-y-6">
+              <h2 className="font-bold text-3xl font-[family-name:var(--font-poppins)] text-center mb-2" style={{ color: "var(--text-primary)" }}>
+                🗺️ Mapa de Mercado de Criptomoedas
+              </h2>
+              <p className="text-center mb-6" style={{ color: "var(--text-tertiary)" }}>Visualize o mercado completo e filtre oportunidades</p>
+
+              <div className="space-y-8">
+                {/* Mapa de Calor Cripto */}
+                <div>
+                  <h3 className="font-semibold text-lg mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+                    <span>🔥</span>
+                    <span>Mapa de Calor Cripto</span>
+                  </h3>
+                  <CryptoHeatmapWidget />
+                </div>
+
+                {/* CryptoBubbles */}
+                <div>
+                  <h3 className="font-semibold text-lg mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+                    <span>🫧</span>
+                    <span>Crypto Bubbles - Visualização Interativa</span>
+                  </h3>
+                  <div className="backdrop-blur-xl rounded-2xl p-2 border-2 shadow-2xl overflow-hidden" style={{
+                    backgroundColor: 'var(--bg-elevated)',
+                    borderColor: 'var(--border-medium)'
+                  }}>
+                    <div className="rounded-xl overflow-hidden" style={{
+                      height: '800px',
+                      maxHeight: '80vh'
+                    }}>
+                      <iframe
+                        src="https://cryptobubbles.net"
+                        className="w-full h-full"
+                        style={{ border: 'none' }}
+                        loading="lazy"
+                        title="CryptoBubbles - Visualização do Mercado Cripto"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Rastreador de Mercado */}
+                <div>
+                  <h3 className="font-semibold text-lg mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+                    <span>📋</span>
+                    <span>Rastreador de Mercado</span>
+                  </h3>
+                  <CustomCryptoScreener />
+                </div>
+              </div>
+            </div>
+
+            {/* Token $MILAGRE CTA */}
+            <div className="bg-gradient-to-r from-yellow-400/20 to-amber-400/20 backdrop-blur-lg rounded-2xl p-8 border-2 border-yellow-300/40 shadow-xl text-center">
+              <h3 className="font-bold text-2xl mb-4 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                🌟 Acompanhe $MILAGRE
+              </h3>
+              <p className="mb-6 max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+                O token da educação financeira descentralizada. Monitore o mercado e aprenda a investir com sabedoria.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
                 <a
-                  href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+                  href="https://discord.gg/skaX8bFY"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold text-lg sm:text-xl px-8 sm:px-12 py-4 sm:py-5 rounded-full transition-all shadow-2xl transform hover:scale-105 flex items-center justify-center gap-2"
+                  className="group flex items-center justify-center gap-3 px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-theme-xl hover:shadow-2xl hover:scale-105"
+                  style={{
+                    background: 'linear-gradient(135deg, #5865F2, #4752C4)',
+                    color: 'white'
+                  }}
                 >
-                  <span>🪙</span>
-                  <span className="hidden sm:inline">Comprar $MILAGRE</span>
-                  <span className="sm:hidden">Comprar</span>
+                  <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                  </svg>
+                  <span>Discord</span>
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+
+                <a
+                  href="https://t.me/+Bop_TVFc_mg3Njlh"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-center gap-3 px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-theme-xl hover:shadow-2xl hover:scale-105"
+                  style={{
+                    background: 'linear-gradient(135deg, #0088cc, #006699)',
+                    color: 'white'
+                  }}
+                >
+                  <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12s12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21l-1.446 1.394c-.14.18-.357.295-.6.295c-.002 0-.003 0-.005 0l.213-3.054l5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326l-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
+                  </svg>
+                  <span>Telegram</span>
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </a>
               </div>
-            ) : (
-              <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-8 border-2 border-white/30 shadow-2xl">
-                <div className="mb-4">
-                  <p className="text-white/80 text-sm mb-1">Sua carteira:</p>
-                  <p className="text-white font-mono text-base font-semibold">
-                    {walletAddress.slice(0, 4)}...{walletAddress.slice(-4)}
-                  </p>
-                </div>
+            </div>
 
-                <div className="mb-4">
-                  <p className="text-white/80 text-sm mb-1">Seu saldo:</p>
-                  <p className="text-3xl sm:text-4xl font-bold text-white drop-shadow-lg">{tokenBalance.toLocaleString()} $MILAGRE</p>
-                </div>
-
-                <div className="mb-6 p-4 bg-gradient-to-br from-yellow-400/20 to-yellow-600/20 rounded-2xl border border-yellow-300/30">
-                  <p className="text-sm text-white/80 mb-2">Seu nível:</p>
-                  <p className={`text-3xl font-bold ${tier.color} drop-shadow-lg`}>
-                    {tier.emoji} {tier.name}
-                  </p>
-                  <p className="text-sm text-white/90 mt-2">{tier.benefits}</p>
-                </div>
-
-                <button
-                  onClick={disconnectWallet}
-                  className="w-full bg-red-500/80 hover:bg-red-500 text-white font-semibold py-3 rounded-xl transition-all"
-                >
-                  Desconectar
-                </button>
-              </div>
-            )}
+            {/* Atualização */}
+            <p className="text-center text-sm" style={{ color: 'var(--text-muted)' }}>
+              🔄 Dados atualizados automaticamente a cada 30 segundos
+            </p>
           </div>
+        )}
 
-          {/* Right - Hero Image */}
-          <div className="order-1 lg:order-2 flex justify-center">
-            <div className="relative w-full max-w-lg group">
-              {/* Aura espiritual base */}
-              <div className="absolute inset-0 bg-gradient-to-r from-yellow-300/20 via-cyan-300/20 to-purple-300/20 blur-3xl rounded-full animate-pulse"></div>
-
-              {/* Iluminação ao hover - Camadas múltiplas */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-yellow-200/0 via-yellow-400/0 to-white/0 blur-2xl rounded-full opacity-0 group-hover:opacity-70 transition-opacity duration-700"></div>
-              <div className="absolute inset-0 bg-gradient-to-bl from-cyan-200/0 via-cyan-400/0 to-white/0 blur-2xl rounded-full opacity-0 group-hover:opacity-60 transition-opacity duration-1000 delay-100"></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-purple-200/0 via-purple-400/0 to-white/0 blur-2xl rounded-full opacity-0 group-hover:opacity-50 transition-opacity duration-1000 delay-200"></div>
-
-              {/* Raios de luz */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                <div className="absolute top-0 left-1/2 w-1 h-full bg-gradient-to-b from-yellow-200/80 to-transparent blur-sm -translate-x-1/2 animate-pulse"></div>
-                <div className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-200/80 to-transparent blur-sm -translate-y-1/2 animate-pulse delay-150"></div>
-              </div>
-
-              {/* Partículas flutuantes */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-                <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-yellow-300 rounded-full blur-sm animate-float"></div>
-                <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-cyan-300 rounded-full blur-sm animate-float-delayed"></div>
-                <div className="absolute bottom-1/3 left-1/3 w-2 h-2 bg-purple-300 rounded-full blur-sm animate-float-slow"></div>
-                <div className="absolute bottom-1/4 right-1/3 w-1 h-1 bg-white rounded-full blur-sm animate-float"></div>
-              </div>
-
-              {/* Imagem com efeito de levitação */}
-              <div className="relative z-10 transform group-hover:scale-105 group-hover:-translate-y-2 transition-all duration-700">
-                <Image
-                  src="/images/TOKEN-MILAGRE-Hero.webp"
-                  alt="Anjo Guardião do Milagre"
-                  width={500}
-                  height={500}
-                  className="drop-shadow-2xl rounded-3xl"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* O que é $MILAGRE */}
-        <div id="sobre" className="mb-20 scroll-mt-24">
-          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 md:p-12 border-2 border-white/30 shadow-2xl">
-            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-6 drop-shadow-lg font-[family-name:var(--font-poppins)]">
-              O que é $MILAGRE? 💡
-            </h3>
-            <div className="max-w-4xl mx-auto space-y-6 text-white/95 text-lg leading-relaxed">
-              <p className="text-center text-xl font-semibold text-yellow-300">
-                Um token comunitário peer-to-peer criado na blockchain Solana para conectar pessoas através de apoio mútuo genuíno.
-              </p>
-
-              <div className="grid md:grid-cols-2 gap-6 mt-8">
-                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-                  <h4 className="text-xl sm:text-2xl font-bold mb-4 text-yellow-200 font-[family-name:var(--font-poppins)]">🌐 Tecnologia Solana</h4>
-                  <p className="text-white leading-relaxed">
-                    Construído na blockchain Solana, $MILAGRE oferece transações rápidas, taxas baixas e segurança descentralizada.
-                    Não é apenas um token - é uma ponte entre tecnologia e humanidade.
-                  </p>
-                </div>
-
-                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-                  <h4 className="text-xl sm:text-2xl font-bold mb-4 text-yellow-200 font-[family-name:var(--font-poppins)]">🤝 Apoio Mútuo Real</h4>
-                  <p className="text-white leading-relaxed">
-                    Diferente de outros tokens, $MILAGRE existe para criar valor humano real: mentorias, networking,
-                    suporte emocional e oportunidades de crescimento pessoal e profissional.
-                  </p>
-                </div>
-
-                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-                  <h4 className="text-xl sm:text-2xl font-bold mb-4 text-yellow-200 font-[family-name:var(--font-poppins)]">👼 Guardiões Celestiais</h4>
-                  <p className="text-white leading-relaxed">
-                    Nossa comunidade é guiada por três pilares: Prosperidade (crescimento financeiro),
-                    Sabedoria (educação contínua) e Esperança (apoio emocional). Cada holder tem acesso a esses guardiões.
-                  </p>
-                </div>
-
-                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:bg-white/25 transition">
-                  <h4 className="text-xl sm:text-2xl font-bold mb-4 text-yellow-200 font-[family-name:var(--font-poppins)]">🎯 Missão Clara</h4>
-                  <p className="text-white leading-relaxed">
-                    &quot;Nunca estarás sozinho&quot; não é só um slogan - é nosso compromisso. Criamos um ecossistema onde
-                    holders se ajudam mutuamente a superar desafios e alcançar seus objetivos.
-                  </p>
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-r from-yellow-400/20 to-yellow-600/20 rounded-2xl p-6 mt-8 border border-yellow-300/30">
-                <p className="text-center font-semibold text-xl">
-                  💡 <strong className="text-yellow-300">Do Only Good Everyday</strong> - Fazemos apenas o bem, todos os dias.
-                  Cada transação fortalece nossa comunidade e expande nossa capacidade de ajudar uns aos outros.
-                </p>
-              </div>
-
-              {/* Contador de Holders */}
-              <div className="flex justify-center mt-8">
-                <HolderCounter />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Gráfico de Preço */}
-        <div className="mb-20">
-          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-6 drop-shadow-lg font-[family-name:var(--font-poppins)]">
-            Gráfico de Preço 📈
-          </h3>
-          <p className="text-white/90 text-center text-lg mb-8 max-w-2xl mx-auto">
-            Acompanhe o desempenho de $MILAGRE em tempo real
-          </p>
-          <div className="max-w-6xl mx-auto">
-            <DexScreenerChart />
-          </div>
-        </div>
-
-        {/* Informações Técnicas do Token */}
-        <div id="token" className="mb-20 scroll-mt-24">
-          <div className="relative overflow-hidden bg-gradient-to-br from-cyan-400/20 via-teal-400/20 to-emerald-400/20 backdrop-blur-xl rounded-3xl p-8 md:p-12 border-2 border-cyan-300/40 shadow-2xl">
-            {/* Background decorativo */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-400/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
-
-            <div className="relative z-10">
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
-                Informações do Token
-              </h3>
-              <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
-                Criado com as melhores tecnologias do ecossistema <span className="text-cyan-200 font-semibold">Solana</span>
-              </p>
-
-              {/* Token Card - Estilo Cartão de Crédito Premium */}
-              <div className="max-w-5xl mx-auto mb-12">
-                <div className="relative bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-2xl rounded-3xl p-8 md:p-10 border-2 border-white/30 shadow-2xl hover:shadow-cyan-400/30 transition-all duration-500 group">
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-
-                  <div className="relative z-10">
-                    {/* Header do Card */}
-                    <div className="flex items-center justify-between mb-8">
-                      <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 bg-gradient-to-br from-cyan-400/20 to-teal-500/20 rounded-2xl flex items-center justify-center shadow-lg border-2 border-cyan-300/40 overflow-hidden">
-                          <Image
-                            src="/images/TOKEN-MILAGRE-.webp"
-                            alt="$MILAGRE Logo"
-                            width={64}
-                            height={64}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <h4 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-lg font-[family-name:var(--font-poppins)]">$MILAGRE</h4>
-                          <p className="text-cyan-200 text-sm font-semibold">SPL Token • Solana</p>
-                        </div>
-                      </div>
-                      <div className="hidden md:flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur flex items-center justify-center border border-white/20">
-                          <Image src="/images/solana-logo.png" alt="Solana" width={32} height={32} />
-                        </div>
-                        <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur flex items-center justify-center border border-white/20">
-                          <Image src="/images/pumpfun-logo.png" alt="Pump.fun" width={32} height={32} />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Contrato */}
-                    <div className="mb-8">
-                      <p className="text-cyan-200 text-sm font-semibold mb-3 flex items-center gap-2">
-                        <span>🔐</span>
-                        <span>Endereço do Contrato</span>
-                      </p>
-                      <div className="bg-gradient-to-r from-teal-900/40 to-cyan-900/40 rounded-2xl p-4 border border-cyan-300/20 mb-4">
-                        <code className="text-yellow-100 font-mono text-sm md:text-base break-all block">
-                          {TOKEN_ADDRESS}
-                        </code>
-                      </div>
-                      <div className="flex flex-col sm:flex-row gap-3">
-                        <button
-                          onClick={copyToClipboard}
-                          className="flex-1 sm:flex-none px-6 py-3 bg-gradient-to-r from-cyan-400 to-teal-400 hover:from-cyan-300 hover:to-teal-300 text-white font-bold text-base rounded-xl transition-all shadow-lg hover:scale-105 hover:shadow-cyan-400/50 flex items-center justify-center gap-2"
-                        >
-                          {copied ? (
-                            <>
-                              <span className="text-xl">✓</span>
-                              <span>Endereço Copiado!</span>
-                            </>
-                          ) : (
-                            <>
-                              <span className="text-xl">📋</span>
-                              <span>Copiar Endereço</span>
-                            </>
-                          )}
-                        </button>
-                        <a
-                          href={`https://solscan.io/token/${TOKEN_ADDRESS}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 sm:flex-none px-6 py-3 bg-gradient-to-r from-purple-400 to-purple-500 hover:from-purple-300 hover:to-purple-400 text-white font-bold text-base rounded-xl transition-all shadow-lg hover:scale-105 hover:shadow-purple-400/50 flex items-center justify-center gap-2"
-                        >
-                          <span>🔍</span>
-                          <span>Solscan</span>
-                        </a>
-                        <a
-                          href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 sm:flex-none px-6 py-3 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold text-base rounded-xl transition-all shadow-lg hover:scale-105 hover:shadow-green-400/50 flex items-center justify-center gap-2"
-                        >
-                          <span>🪙</span>
-                          <span>Comprar</span>
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Stats Grid */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20 text-center hover:bg-white/15 transition">
-                        <p className="text-cyan-200 text-xs mb-1 font-semibold">Blockchain</p>
-                        <p className="text-white font-bold text-lg">Solana</p>
-                      </div>
-                      <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20 text-center hover:bg-white/15 transition">
-                        <p className="text-cyan-200 text-xs mb-1 font-semibold">Tipo</p>
-                        <p className="text-white font-bold text-lg">SPL Token</p>
-                      </div>
-                      <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20 text-center hover:bg-white/15 transition">
-                        <p className="text-cyan-200 text-xs mb-1 font-semibold">Plataforma</p>
-                        <p className="text-white font-bold text-lg">Pump.fun</p>
-                      </div>
-                      <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20 text-center hover:bg-white/15 transition">
-                        <p className="text-cyan-200 text-xs mb-1 font-semibold">Velocidade</p>
-                        <p className="text-white font-bold text-lg">&lt;1s</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Cards Pump.fun e Solana - Reformulados */}
-              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {/* Card Pump.fun */}
-              <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 border-2 border-cyan-200/40 hover:border-yellow-300/60 hover:bg-white/25 transition-all group shadow-lg hover:shadow-yellow-300/30">
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-24 h-24 mb-6 bg-gradient-to-br from-yellow-100/20 to-amber-100/20 rounded-2xl p-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 flex items-center justify-center border border-yellow-200/30">
-                    <Image
-                      src="/images/pumpfun-logo.png"
-                      alt="Pump.fun"
-                      width={80}
-                      height={80}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  <h4 className="text-xl sm:text-2xl font-bold text-white mb-3 drop-shadow font-[family-name:var(--font-poppins)]">Criado na Pump.fun</h4>
-                  <p className="text-white leading-relaxed mb-4">
-                    Lançado na <strong className="text-yellow-200">Pump.fun</strong>, a plataforma líder para criação de tokens na Solana.
-                    Garantia de liquidez e transparência total desde o primeiro dia.
-                  </p>
-                  <a
-                    href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-yellow-400 to-amber-400 hover:from-yellow-300 hover:to-amber-300 text-gray-900 font-bold rounded-full transition-all shadow-lg hover:shadow-yellow-400/50 hover:scale-105"
-                  >
-                    <span>Ver na Pump.fun</span>
-                    <span>↗</span>
-                  </a>
-                </div>
-              </div>
-
-              {/* Card Solana */}
-              <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 border-2 border-cyan-200/40 hover:border-teal-300/60 hover:bg-white/25 transition-all group shadow-lg hover:shadow-teal-300/30">
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-24 h-24 mb-6 bg-gradient-to-br from-teal-100/20 to-cyan-100/20 rounded-2xl p-4 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 flex items-center justify-center border border-teal-200/30">
-                    <Image
-                      src="/images/solana-logo.png"
-                      alt="Solana"
-                      width={80}
-                      height={80}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  <h4 className="text-xl sm:text-2xl font-bold text-white mb-3 drop-shadow font-[family-name:var(--font-poppins)]">Rede Solana</h4>
-                  <p className="text-white leading-relaxed mb-4">
-                    Construído na <strong className="text-teal-200">blockchain Solana</strong>, conhecida por suas transações ultra-rápidas
-                    (menos de 1 segundo) e taxas extremamente baixas (centavos de dólar).
-                  </p>
-                  <a
-                    href="https://solana.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-teal-400 to-cyan-400 hover:from-teal-300 hover:to-cyan-300 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-teal-400/50 hover:scale-105"
-                  >
-                    <span>Sobre Solana</span>
-                    <span>↗</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Guardiões Detalhados */}
-        <div id="guardioes" className="mb-20 scroll-mt-24">
-          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
-            Nossos Guardiões Celestiais 🛡️
-          </h3>
-          <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
-            Cada guardião representa um pilar fundamental da nossa comunidade, guiando holders em sua jornada de prosperidade e crescimento.
-          </p>
-
-          <div className="max-w-5xl mx-auto space-y-8">
-            {/* Guardiã da Prosperidade */}
-            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl border-2 border-white/30 shadow-2xl hover:shadow-yellow-300/50 hover:bg-white/20 transition-all duration-300 overflow-hidden">
-              <div className="flex flex-col md:flex-row items-center gap-6 p-6 md:p-8">
-                {/* Imagem Circular */}
-                <div className="relative w-48 h-48 md:w-56 md:h-56 flex-shrink-0">
-                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/30 to-yellow-600/30 rounded-full blur-2xl"></div>
-                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-yellow-300/50 shadow-xl">
-                    <Image
-                      src="/images/Token-MILAGRE-1.webp"
-                      alt="Guardiã da Prosperidade"
-                      width={400}
-                      height={400}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                </div>
-
-                {/* Conteúdo */}
-                <div className="flex-1 text-center md:text-left">
-                  <div className="inline-block px-4 py-2 bg-yellow-400/90 backdrop-blur-sm rounded-full mb-3 shadow-lg">
-                    <span className="text-sm font-bold text-gray-900">👼 Prosperidade</span>
-                  </div>
-                  <h4 className="text-2xl sm:text-3xl font-bold text-white mb-3 drop-shadow-lg font-[family-name:var(--font-poppins)]">Guardiã da Prosperidade</h4>
-                  <p className="text-white/95 mb-4 text-lg leading-relaxed">
-                    <span className="font-bold text-yellow-200">Proteção Financeira:</span> Orienta holders em decisões de investimento sábias e sustentáveis.
-                  </p>
-                  <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                    <span className="px-4 py-2 bg-yellow-400/20 backdrop-blur-sm border border-yellow-300/30 rounded-full text-white text-sm">
-                      ✓ Alertas de oportunidades
-                    </span>
-                    <span className="px-4 py-2 bg-yellow-400/20 backdrop-blur-sm border border-yellow-300/30 rounded-full text-white text-sm">
-                      ✓ Educação financeira
-                    </span>
-                    <span className="px-4 py-2 bg-yellow-400/20 backdrop-blur-sm border border-yellow-300/30 rounded-full text-white text-sm">
-                      ✓ Recompensas long-term
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Guardião da Sabedoria */}
-            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl border-2 border-white/30 shadow-2xl hover:shadow-blue-300/50 hover:bg-white/20 transition-all duration-300 overflow-hidden">
-              <div className="flex flex-col md:flex-row items-center gap-6 p-6 md:p-8">
-                {/* Imagem Circular */}
-                <div className="relative w-48 h-48 md:w-56 md:h-56 flex-shrink-0">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400/30 to-cyan-600/30 rounded-full blur-2xl"></div>
-                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-blue-300/50 shadow-xl">
-                    <Image
-                      src="/images/Token-MILAGRE-2.webp"
-                      alt="Guardião da Sabedoria"
-                      width={400}
-                      height={400}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                </div>
-
-                {/* Conteúdo */}
-                <div className="flex-1 text-center md:text-left">
-                  <div className="inline-block px-4 py-2 bg-blue-400/90 backdrop-blur-sm rounded-full mb-3 shadow-lg">
-                    <span className="text-sm font-bold text-white">🧙 Sabedoria</span>
-                  </div>
-                  <h4 className="text-2xl sm:text-3xl font-bold text-white mb-3 drop-shadow-lg font-[family-name:var(--font-poppins)]">Guardião da Sabedoria</h4>
-                  <p className="text-white/95 mb-4 text-lg leading-relaxed">
-                    <span className="font-bold text-blue-200">Conhecimento Compartilhado:</span> Cultiva uma comunidade de aprendizado contínuo e mentoria.
-                  </p>
-                  <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                    <span className="px-4 py-2 bg-blue-400/20 backdrop-blur-sm border border-blue-300/30 rounded-full text-white text-sm">
-                      ✓ Workshops blockchain & DeFi
-                    </span>
-                    <span className="px-4 py-2 bg-blue-400/20 backdrop-blur-sm border border-blue-300/30 rounded-full text-white text-sm">
-                      ✓ Mentorias especializadas
-                    </span>
-                    <span className="px-4 py-2 bg-blue-400/20 backdrop-blur-sm border border-blue-300/30 rounded-full text-white text-sm">
-                      ✓ Biblioteca educacional
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Anjo da Esperança */}
-            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl border-2 border-white/30 shadow-2xl hover:shadow-purple-300/50 hover:bg-white/20 transition-all duration-300 overflow-hidden">
-              <div className="flex flex-col md:flex-row items-center gap-6 p-6 md:p-8">
-                {/* Imagem Circular */}
-                <div className="relative w-48 h-48 md:w-56 md:h-56 flex-shrink-0">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-400/30 to-pink-600/30 rounded-full blur-2xl"></div>
-                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-purple-300/50 shadow-xl">
-                    <Image
-                      src="/images/Token-MILAGRE-7.webp"
-                      alt="Anjo da Esperança"
-                      width={400}
-                      height={400}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                </div>
-
-                {/* Conteúdo */}
-                <div className="flex-1 text-center md:text-left">
-                  <div className="inline-block px-4 py-2 bg-purple-400/90 backdrop-blur-sm rounded-full mb-3 shadow-lg">
-                    <span className="text-sm font-bold text-white">💫 Esperança</span>
-                  </div>
-                  <h4 className="text-2xl sm:text-3xl font-bold text-white mb-3 drop-shadow-lg font-[family-name:var(--font-poppins)]">Anjo da Esperança</h4>
-                  <p className="text-white/95 mb-4 text-lg leading-relaxed">
-                    <span className="font-bold text-purple-200">Apoio Emocional:</span> Oferece suporte e motivação em momentos de incerteza.
-                  </p>
-                  <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                    <span className="px-4 py-2 bg-purple-400/20 backdrop-blur-sm border border-purple-300/30 rounded-full text-white text-sm">
-                      ✓ Grupos de apoio emocional
-                    </span>
-                    <span className="px-4 py-2 bg-purple-400/20 backdrop-blur-sm border border-purple-300/30 rounded-full text-white text-sm">
-                      ✓ Histórias de superação
-                    </span>
-                    <span className="px-4 py-2 bg-purple-400/20 backdrop-blur-sm border border-purple-300/30 rounded-full text-white text-sm">
-                      ✓ Ajuda mútua 24/7
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Tutorial de Compra */}
-        <div id="comprar" className="mb-20 scroll-mt-24">
-          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
-            Como Comprar $MILAGRE 🚀
-          </h3>
-          <p className="text-white/90 text-center text-lg mb-10 max-w-2xl mx-auto">
-            Siga este guia passo a passo para adquirir seus tokens e se juntar à nossa comunidade.
-          </p>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {/* Passo 1 */}
-            <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-6 border-2 border-white/30 shadow-xl">
-              <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
-                <span className="text-3xl font-bold text-white">1</span>
-              </div>
-              <h4 className="text-lg sm:text-xl font-bold text-white mb-3 text-center font-[family-name:var(--font-poppins)]">Instale a Phantom</h4>
-              <p className="text-white/85 text-sm text-center leading-relaxed">
-                Baixe a carteira <a href="https://phantom.app/" target="_blank" rel="noopener noreferrer" className="text-yellow-300 underline">Phantom</a> (extensão do navegador ou app mobile).
-              </p>
-            </div>
-
-            {/* Passo 2 */}
-            <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-6 border-2 border-white/30 shadow-xl">
-              <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
-                <span className="text-3xl font-bold text-white">2</span>
-              </div>
-              <h4 className="text-lg sm:text-xl font-bold text-white mb-3 text-center font-[family-name:var(--font-poppins)]">Compre Solana (SOL)</h4>
-              <p className="text-white/85 text-sm text-center leading-relaxed">
-                Adquira SOL em exchanges como Binance, Coinbase ou diretamente na Phantom com cartão.
-              </p>
-            </div>
-
-            {/* Passo 3 */}
-            <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-6 border-2 border-white/30 shadow-xl">
-              <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
-                <span className="text-3xl font-bold text-white">3</span>
-              </div>
-              <h4 className="text-lg sm:text-xl font-bold text-white mb-3 text-center font-[family-name:var(--font-poppins)]">Acesse Pump.fun</h4>
-              <p className="text-white/85 text-sm text-center leading-relaxed">
-                Visite <a href={`https://pump.fun/coin/${TOKEN_ADDRESS}`} target="_blank" rel="noopener noreferrer" className="text-yellow-300 underline">pump.fun</a> e conecte sua Phantom Wallet.
-              </p>
-            </div>
-
-            {/* Passo 4 */}
-            <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-6 border-2 border-white/30 shadow-xl">
-              <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
-                <span className="text-3xl font-bold text-white">4</span>
-              </div>
-              <h4 className="text-lg sm:text-xl font-bold text-white mb-3 text-center font-[family-name:var(--font-poppins)]">Troque por $MILAGRE</h4>
-              <p className="text-white/85 text-sm text-center leading-relaxed">
-                Insira a quantidade de SOL, confirme a transação e receba seus $MILAGRE!
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <a
-              href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-white font-bold text-lg sm:text-xl px-8 sm:px-12 py-4 sm:py-5 rounded-full transition-all shadow-2xl transform hover:scale-105"
-            >
-              🚀 Comprar Agora no Pump.fun
-            </a>
-          </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="mb-20 bg-gradient-to-br from-yellow-400/30 to-yellow-600/30 backdrop-blur-lg rounded-3xl p-12 border-2 border-yellow-300/50 shadow-2xl text-center">
-          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 drop-shadow-lg font-[family-name:var(--font-poppins)] text-center">
-            Por que investir em $MILAGRE?
-          </h3>
-          <p className="text-white/95 text-lg sm:text-xl max-w-3xl mx-auto mb-10 leading-relaxed px-4">
-            $MILAGRE é construído sobre colaboração e confiança. Aqui, você nunca está sozinho.
-            Nossa comunidade está unida pelo propósito de superar desafios e apoiar uns aos outros.
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-6 mb-10 max-w-4xl mx-auto">
-            <div className="bg-white/10 rounded-2xl p-6">
-              <div className="text-4xl mb-3">🛡️</div>
-              <h4 className="text-white font-bold text-lg mb-2">Comunidade Real</h4>
-              <p className="text-white/80 text-sm">Apoio mútuo e crescimento conjunto</p>
-            </div>
-            <div className="bg-white/10 rounded-2xl p-6">
-              <div className="text-4xl mb-3">📈</div>
-              <h4 className="text-white font-bold text-lg mb-2">Utilidade Genuína</h4>
-              <p className="text-white/80 text-sm">Acesso a mentorias e recursos exclusivos</p>
-            </div>
-            <div className="bg-white/10 rounded-2xl p-6">
-              <div className="text-4xl mb-3">💎</div>
-              <h4 className="text-white font-bold text-lg mb-2">Transparência Total</h4>
-              <p className="text-white/80 text-sm">Sem promessas vazias, apenas ação real</p>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-stretch sm:items-center px-4">
-            <a
-              href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-white font-bold text-lg sm:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-full transition-all shadow-xl transform hover:scale-105 text-center"
-            >
-              🚀 Comprar $MILAGRE
-            </a>
-            <a
-              href="https://t.me/+Bop_TVFc_mg3Njlh"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 text-white font-bold text-lg sm:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-full transition-all shadow-xl transform hover:scale-105 text-center flex items-center justify-center gap-3"
-            >
-              <Image src="/images/telegrama.png" alt="Telegram" width={28} height={28} className="w-7 h-7 object-contain" />
-              <span>Entrar na Comunidade</span>
-            </a>
-          </div>
-        </div>
-
-        {/* Manifesto Open Source - Resumo */}
-        <div id="manifesto" className="mb-20 scroll-mt-24">
-          <div className="bg-gradient-to-br from-yellow-400/20 via-amber-400/20 to-orange-400/20 backdrop-blur-xl rounded-3xl p-8 md:p-12 border-2 border-yellow-300/40 shadow-2xl">
-            <div className="text-center mb-8">
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
-                Manifesto Open Source 📜
-              </h3>
-              <p className="text-2xl sm:text-3xl font-bold text-yellow-200 mb-4 flex items-center justify-center gap-3">
-                <span>Nunca Estarás Sozinho</span>
-                <span className="text-3xl animate-pulse">❤️</span>
-              </p>
-              <p className="text-white/95 text-lg max-w-3xl mx-auto">
-                Um movimento de apoio mútuo genuíno construído sobre os princípios do código aberto,
-                colaboração peer-to-peer e a crença fundamental de que <strong className="text-yellow-200">juntos somos mais fortes</strong>.
-              </p>
-            </div>
-
-            {/* Valores Principais */}
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                <div className="text-4xl mb-3 text-center">🌐</div>
-                <h4 className="text-lg font-bold text-yellow-200 mb-2 text-center">Transparência Radical</h4>
-                <p className="text-white/90 text-sm text-center">
-                  Todas as decisões, transações e processos são públicos e auditáveis on-chain
-                </p>
-              </div>
-
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                <div className="text-4xl mb-3 text-center">🤝</div>
-                <h4 className="text-lg font-bold text-yellow-200 mb-2 text-center">Colaboração Aberta</h4>
-                <p className="text-white/90 text-sm text-center">
-                  Qualquer holder pode contribuir com código, ideias ou suporte à comunidade
-                </p>
-              </div>
-
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                <div className="text-4xl mb-3 text-center">⚖️</div>
-                <h4 className="text-lg font-bold text-yellow-200 mb-2 text-center">Meritocracia de Contribuição</h4>
-                <p className="text-white/90 text-sm text-center">
-                  Influência vem de ajudar ativamente, não apenas de acumular tokens
-                </p>
-              </div>
-            </div>
-
-            {/* Contador de Signatários + CTA */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center">
-              <div className="mb-4">
-                <ManifestoSignersCount />
-              </div>
-
-              <p className="text-white/95 mb-6 max-w-2xl mx-auto">
-                Assine o manifesto com sua wallet e demonstre seu compromisso com transparência,
-                colaboração e apoio mútuo
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/manifesto"
-                  className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-gray-900 font-bold text-lg rounded-full transition-all shadow-xl hover:scale-105 inline-block"
-                >
-                  📖 Ler Manifesto Completo
-                </Link>
-                <Link
-                  href="/manifesto"
-                  className="px-8 py-4 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold text-lg rounded-full transition-all shadow-xl hover:scale-105 inline-block"
-                >
-                  ✍️ Assinar Manifesto
-                </Link>
-              </div>
-
-              <p className="text-white/70 text-sm mt-4">
-                💡 Código 100% open source • Licença CC BY-SA 4.0
-              </p>
-            </div>
-
-            {/* Resumo dos 7 Valores */}
-            <div className="mt-8 bg-white/5 rounded-2xl p-6 border border-white/10">
-              <h4 className="text-xl font-bold text-white mb-4 text-center">7 Valores Fundamentais</h4>
-              <div className="grid md:grid-cols-2 gap-3 text-sm text-white/90">
-                <div className="flex items-start gap-2">
-                  <span className="text-yellow-300 mt-1">1.</span>
-                  <span><strong className="text-yellow-200">Transparência Radical</strong> - Tudo é público</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-yellow-300 mt-1">2.</span>
-                  <span><strong className="text-yellow-200">Colaboração Aberta</strong> - Qualquer um pode contribuir</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-yellow-300 mt-1">3.</span>
-                  <span><strong className="text-yellow-200">Inclusão</strong> - Para todos, sem exceção</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-yellow-300 mt-1">4.</span>
-                  <span><strong className="text-yellow-200">Meritocracia</strong> - Contribuição = Influência</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-yellow-300 mt-1">5.</span>
-                  <span><strong className="text-yellow-200">Apoio Mútuo</strong> - Genuinamente nos importamos</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-yellow-300 mt-1">6.</span>
-                  <span><strong className="text-yellow-200">Inovação Responsável</strong> - Experimentar com cuidado</span>
-                </div>
-                <div className="flex items-start gap-2 md:col-span-2 justify-center">
-                  <span className="text-yellow-300 mt-1">7.</span>
-                  <span><strong className="text-yellow-200">Sustentabilidade</strong> - Construindo para gerações</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Como Contribuir */}
-        <div id="contribuir" className="mb-20 scroll-mt-24">
-          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
-            Como Contribuir 🤝
-          </h3>
-          <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
-            O $MILAGRE é construído pela comunidade, para a comunidade. Sua contribuição fortalece nosso ecossistema.
-          </p>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {/* Educar */}
-            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl p-8 border-2 border-white/30 shadow-xl hover:shadow-yellow-300/50 hover:bg-white/20 hover:border-yellow-300/50 transition-all duration-300">
-              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">📚</div>
-              <h4 className="text-xl sm:text-2xl font-bold text-white mb-3 font-[family-name:var(--font-poppins)]">Educar</h4>
-              <p className="text-white/90 mb-6 leading-relaxed">
-                Crie tutoriais, faça mentorias, responda dúvidas e compartilhe conhecimento com a comunidade.
-              </p>
-              <a
-                href="https://t.me/+Bop_TVFc_mg3Njlh"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block w-full text-center px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 text-white font-bold rounded-xl transition-all shadow-lg hover:scale-105"
-              >
-                Começar a Ajudar
-              </a>
-            </div>
-
-            {/* Desenvolver */}
-            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl p-8 border-2 border-white/30 shadow-xl hover:shadow-purple-300/50 hover:bg-white/20 hover:border-purple-300/50 transition-all duration-300">
-              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">💻</div>
-              <h4 className="text-xl sm:text-2xl font-bold text-white mb-3 font-[family-name:var(--font-poppins)]">Desenvolver</h4>
-              <p className="text-white/90 mb-6 leading-relaxed">
-                Contribua código open source, reporte bugs, sugira features e melhore nossa plataforma.
-              </p>
-              <a
-                href="https://github.com/dogespartano-cyber/tokenmilagre-platform"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block w-full text-center px-4 py-3 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-400 hover:to-purple-500 text-white font-bold rounded-xl transition-all shadow-lg hover:scale-105"
-              >
-                Ver GitHub
-              </a>
-            </div>
-
-            {/* Governar */}
-            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl p-8 border-2 border-white/30 shadow-xl hover:shadow-green-300/50 hover:bg-white/20 hover:border-green-300/50 transition-all duration-300">
-              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">🗳️</div>
-              <h4 className="text-xl sm:text-2xl font-bold text-white mb-3 font-[family-name:var(--font-poppins)]">Governar</h4>
-              <p className="text-white/90 mb-6 leading-relaxed">
-                Vote em proposals, crie propostas, delegue votos e participe das decisões comunitárias.
-              </p>
-              <a
-                href="https://t.me/+Bop_TVFc_mg3Njlh"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block w-full text-center px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-white font-bold rounded-xl transition-all shadow-lg hover:scale-105"
-              >
-                Participar
-              </a>
-            </div>
-
-            {/* Apoiar */}
-            <div className="group bg-white/15 backdrop-blur-xl rounded-3xl p-8 border-2 border-white/30 shadow-xl hover:shadow-pink-300/50 hover:bg-white/20 hover:border-pink-300/50 transition-all duration-300">
-              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">🤝</div>
-              <h4 className="text-xl sm:text-2xl font-bold text-white mb-3 font-[family-name:var(--font-poppins)]">Apoiar</h4>
-              <p className="text-white/90 mb-6 leading-relaxed">
-                Dê suporte emocional, celebre vitórias, ajude novatos e fortaleça nossa comunidade.
-              </p>
-              <a
-                href="https://t.me/+Bop_TVFc_mg3Njlh"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block w-full text-center px-4 py-3 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-400 hover:to-pink-500 text-white font-bold rounded-xl transition-all shadow-lg hover:scale-105"
-              >
-                Entrar na Comunidade
-              </a>
-            </div>
-          </div>
-
-          <div className="mt-12 text-center">
-            <div className="inline-block bg-gradient-to-r from-yellow-400/20 to-amber-400/20 backdrop-blur-lg rounded-2xl p-6 border-2 border-yellow-300/40">
-              <p className="text-white text-lg font-semibold">
-                💡 <strong className="text-yellow-300">Contribuição = Influência</strong> - No $MILAGRE, seu poder vem de ajudar ativamente, não apenas de acumular tokens.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* FAQ / Milagrépedia - Accordion Interativa */}
-        <div id="faq" className="mb-20 scroll-mt-24">
-          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
-            Milagrépedia 📚
-          </h3>
-          <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
-            Perguntas frequentes sobre $MILAGRE e nossa comunidade
-          </p>
-
-          <div className="max-w-4xl mx-auto space-y-3">
-            {faqItems.map((item, index) => (
-              <div
-                key={index}
-                className={`
-                  bg-white/20 backdrop-blur-lg rounded-2xl border-2 transition-all duration-300
-                  ${openFaqIndex === index
-                    ? 'border-yellow-300/60 bg-white/25 shadow-xl shadow-yellow-300/20'
-                    : 'border-white/30 hover:border-white/40 hover:bg-white/22'
-                  }
-                `}
-              >
-                <button
-                  onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
-                  className="w-full p-6 text-left flex items-center justify-between gap-4 group"
-                >
-                  <div className="flex items-center gap-4 flex-1">
-                    <span className="text-3xl group-hover:scale-110 transition-transform duration-200">
-                      {item.icon}
-                    </span>
-                    <h4 className="text-lg md:text-xl font-bold text-yellow-300 group-hover:text-yellow-200 transition">
-                      {item.question}
-                    </h4>
-                  </div>
-                  <svg
-                    className={`w-6 h-6 text-yellow-300 transition-transform duration-300 flex-shrink-0 ${
-                      openFaqIndex === index ? 'rotate-180' : ''
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-
-                <div
-                  className={`
-                    overflow-hidden transition-all duration-300
-                    ${openFaqIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
-                  `}
-                >
-                  <div className="px-6 pb-6 pt-2">
-                    <div className="pl-14">
-                      <p className="text-white/90 leading-relaxed">
-                        {item.answer.split(' | ').map((part, i, arr) => (
-                          <span key={i}>
-                            {part}
-                            {i < arr.length - 1 && <><br /><br /></>}
-                          </span>
-                        ))}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Sobre o Projeto */}
-        <div id="contato" className="mb-20 scroll-mt-24">
-          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-yellow-200 text-center mb-4 drop-shadow-lg font-[family-name:var(--font-poppins)]">
-            Sobre o Projeto $MILAGRE 💫
-          </h3>
-          <p className="text-white/90 text-center text-lg mb-12 max-w-3xl mx-auto">
-            $MILAGRE é mais que um token - é um movimento de apoio mútuo genuíno na blockchain,
-            onde cada holder encontra <span className="font-bold text-yellow-300">prosperidade, sabedoria e esperança</span>.
-          </p>
-
-          <div className="max-w-5xl mx-auto space-y-8">
-            {/* Grid de Missão e Valores */}
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Missão */}
-              <div className="group bg-white/15 backdrop-blur-xl rounded-3xl border-2 border-white/30 shadow-2xl hover:shadow-yellow-300/50 hover:bg-white/20 transition-all duration-300 p-8">
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="w-14 h-14 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center shadow-lg">
-                    <span className="text-3xl">🎯</span>
-                  </div>
-                  <h4 className="text-xl sm:text-2xl font-bold text-yellow-200 font-[family-name:var(--font-poppins)]">Nossa Missão</h4>
-                </div>
-                <p className="text-white/95 leading-relaxed text-lg">
-                  Criar um ecossistema descentralizado onde holders se <strong className="text-yellow-200">conectam</strong>,
-                  <strong className="text-yellow-200"> aprendem</strong> e <strong className="text-yellow-200">crescem juntos</strong>.
-                  Oferecemos mentorias, networking, educação financeira e suporte emocional para todos que acreditam
-                  que <span className="text-yellow-300 font-semibold">juntos somos mais fortes</span>.
-                </p>
-              </div>
-
-              {/* Valores */}
-              <div className="group bg-white/15 backdrop-blur-xl rounded-3xl border-2 border-white/30 shadow-2xl hover:shadow-yellow-300/50 hover:bg-white/20 transition-all duration-300 p-8">
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="w-14 h-14 bg-gradient-to-br from-yellow-400 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg">
-                    <span className="text-3xl">💎</span>
-                  </div>
-                  <h4 className="text-xl sm:text-2xl font-bold text-yellow-200 font-[family-name:var(--font-poppins)]">Nossos Valores</h4>
-                </div>
-                <div className="space-y-3 text-lg">
-                  <div className="flex items-start gap-3">
-                    <span className="text-yellow-300 mt-1 text-xl">✦</span>
-                    <p className="text-white/95"><strong className="text-yellow-200">Transparência:</strong> Sem promessas vazias</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-yellow-300 mt-1 text-xl">✦</span>
-                    <p className="text-white/95"><strong className="text-yellow-200">Apoio Mútuo:</strong> Crescemos juntos</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-yellow-300 mt-1 text-xl">✦</span>
-                    <p className="text-white/95"><strong className="text-yellow-200">Inclusão:</strong> Todos são bem-vindos</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-yellow-300 mt-1 text-xl">✦</span>
-                    <p className="text-white/95"><strong className="text-yellow-200">Ação:</strong> Resultados reais, não apenas palavras</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Citação e Informações do Token */}
-            <div className="text-center space-y-8">
-              <div className="text-6xl mb-6">❤️</div>
-              <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-400 mb-6 drop-shadow-lg leading-relaxed px-4">
-                &quot;Nunca estarás sozinho&quot;
-              </p>
-              <p className="text-white/95 text-lg max-w-3xl mx-auto leading-relaxed">
-                Este é nosso compromisso com cada holder. Em momentos de dúvida, celebração ou desafio,
-                nossa <span className="font-semibold text-yellow-300">comunidade estará sempre presente</span>.
-              </p>
-
-              {/* Endereço do Contrato */}
-              <div className="flex flex-col items-center justify-center gap-4 max-w-4xl mx-auto px-4">
-                <code className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-mono font-bold text-yellow-200 break-all text-center">
-                  {TOKEN_ADDRESS}
-                </code>
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={copyToClipboard}
-                    className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-gray-900 font-bold text-base rounded-2xl transition-all shadow-lg hover:scale-105 hover:shadow-yellow-400/50 flex items-center gap-2"
-                  >
-                    {copied ? (
-                      <>
-                        <span className="text-xl">✓</span>
-                        <span>Copiado!</span>
-                      </>
-                    ) : (
-                      <>
-                        <span className="text-xl">📋</span>
-                        <span>Copiar</span>
-                      </>
-                    )}
-                  </button>
-                  <a
-                    href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 py-3 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold text-base rounded-2xl transition-all shadow-lg hover:scale-105 hover:shadow-green-400/50 flex items-center gap-2"
-                  >
-                    <span>🪙</span>
-                    <span className="hidden sm:inline">Comprar $MILAGRE</span>
-                    <span className="sm:hidden">Comprar</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-
-      {/* Botão Flutuante - Subir */}
+      {/* Scroll to top button */}
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-40 w-14 h-14 bg-gradient-to-br from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 rounded-full shadow-2xl hover:shadow-yellow-400/50 flex items-center justify-center transition-all duration-300 hover:scale-110 group border-2 border-yellow-300/50"
+          className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 border-2"
+          style={{
+            background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+            borderColor: 'var(--brand-primary)',
+            color: 'var(--text-inverse)'
+          }}
           aria-label="Voltar ao topo"
         >
-          <svg
-            className="w-6 h-6 text-gray-900 group-hover:translate-y-[-2px] transition-transform"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
           </svg>
         </button>
       )}
-
-      {/* Footer */}
-      <footer className="container mx-auto px-4 py-12 mt-20 border-t-2 border-white/30">
-        <div className="text-center text-white/80">
-          <p className="mb-3 text-lg">
-            $MILAGRE é um token comunitário criado para conectar pessoas através de apoio mútuo e esperança.
-          </p>
-          <p className="text-sm">© 2025 by $MILAGRE. Todos os direitos reservados!</p>
-        </div>
-      </footer>
-    </div>
-    </>
+      </div>
   );
 }

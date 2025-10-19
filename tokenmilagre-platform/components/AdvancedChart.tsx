@@ -27,6 +27,9 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
         sma20: ISeriesApi<'Line'>;
         sma50: ISeriesApi<'Line'>;
         rsi: ISeriesApi<'Line'>;
+        bbUpper: ISeriesApi<'Line'>;
+        bbMiddle: ISeriesApi<'Line'>;
+        bbLower: ISeriesApi<'Line'>;
       }
     ) => {
       try {
@@ -82,10 +85,30 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
           value,
         })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
 
+        // Bandas de Bollinger
+        const bollingerBands = calculateBollingerBands(closes, 20, 2);
+        const bbUpperData = bollingerBands.upper.map((value, index) => ({
+          time: candleData[index].time,
+          value,
+        })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
+
+        const bbMiddleData = bollingerBands.middle.map((value, index) => ({
+          time: candleData[index].time,
+          value,
+        })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
+
+        const bbLowerData = bollingerBands.lower.map((value, index) => ({
+          time: candleData[index].time,
+          value,
+        })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
+
         // Aplicar dados aos gráficos
         series.sma20.setData(sma20Data);
         series.sma50.setData(sma50Data);
         series.rsi.setData(rsiData);
+        series.bbUpper.setData(bbUpperData);
+        series.bbMiddle.setData(bbMiddleData);
+        series.bbLower.setData(bbLowerData);
 
       } catch (error) {
         console.error('Erro ao buscar dados da Binance:', error);
@@ -154,6 +177,27 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       title: 'SMA 50',
     });
 
+    // Bandas de Bollinger
+    const bbUpperSeries = chart.addSeries(LineSeries, {
+      color: '#a855f7',
+      lineWidth: 2,
+      lineStyle: 2, // Linha tracejada
+      title: 'BB Superior',
+    });
+
+    const bbMiddleSeries = chart.addSeries(LineSeries, {
+      color: '#d946ef',
+      lineWidth: 1,
+      lineStyle: 3, // Linha pontilhada
+      title: 'BB Média',
+    });
+
+    const bbLowerSeries = chart.addSeries(LineSeries, {
+      color: '#a855f7',
+      lineWidth: 2,
+      lineStyle: 2, // Linha tracejada
+      title: 'BB Inferior',
+    });
 
     // RSI - em painel separado (pink vibrante - visível em ambos)
     const rsiSeries = chart.addSeries(LineSeries, {
@@ -176,6 +220,9 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       sma20: sma20Series,
       sma50: sma50Series,
       rsi: rsiSeries,
+      bbUpper: bbUpperSeries,
+      bbMiddle: bbMiddleSeries,
+      bbLower: bbLowerSeries,
     });
 
     // Responsivo
@@ -294,6 +341,10 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-0.5" style={{ backgroundColor: '#f97316' }}></div>
             <span style={{ color: 'var(--text-secondary)' }}>SMA 50</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-0.5" style={{ backgroundColor: '#a855f7' }}></div>
+            <span style={{ color: 'var(--text-secondary)' }}>Bollinger</span>
           </div>
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-0.5" style={{ backgroundColor: '#ec4899' }}></div>

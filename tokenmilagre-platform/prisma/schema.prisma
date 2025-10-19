@@ -1,0 +1,114 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum Role {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum Sentiment {
+  positive
+  neutral
+  negative
+}
+
+// NextAuth Models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Application Models
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String
+  image         String?
+  role          Role      @default(VIEWER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts Account[]
+  sessions Session[]
+  articles Article[]
+}
+
+model Article {
+  id                 String    @id @default(cuid())
+  title              String
+  slug               String    @unique
+  content            String    // Markdown content
+
+  // Alinhado com API: excerpt usado internamente, exposto como summary
+  excerpt            String?   // Resumo do artigo (API: summary)
+
+  published          Boolean   @default(false)
+  authorId           String
+  author             User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  // Alinhado com API: category armazenada como string slug, exposta como array
+  category           String    // Slug único (ex: "bitcoin", "ethereum")
+
+  // Alinhado com API: tags armazenadas como JSON, expostas como keywords
+  tags               String    // JSON array (API: keywords)
+
+  sentiment          Sentiment @default(neutral)
+
+  // Fact-checking fields
+  factCheckScore     Float?    // Score de 0-100 (threshold padrão: 70%)
+  factCheckSources   String?   // JSON array com URLs das fontes consultadas
+  factCheckDate      DateTime? // Data da verificação
+  factCheckStatus    String?   // verified (>=70%), failed (<70%), skipped (sem APIs)
+
+  createdAt          DateTime  @default(now()) // API: publishedAt
+  updatedAt          DateTime  @updatedAt      // API: lastVerified
+
+  @@index([authorId])
+  @@index([published])
+  @@index([slug])
+  @@index([category])
+}

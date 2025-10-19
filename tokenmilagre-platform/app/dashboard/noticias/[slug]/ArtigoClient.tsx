@@ -3,31 +3,9 @@
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowLeft,
-  faClock,
-  faHashtag,
-  faBook,
-  faBookOpen,
-  faLink,
-  faChevronLeft,
-  faChevronRight,
-  faCalendar,
-  faComments,
-  faGraduationCap,
-  faExternalLinkAlt,
-  faCircle,
-  faArrowUp,
-  faArrowDown,
-  faMinus,
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  faXTwitter,
-  faWhatsapp,
-  faTelegram,
-  faDiscord,
-} from '@fortawesome/free-brands-svg-icons';
+import type React from 'react';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import Link from 'next/link';
 
 interface NewsItem {
   id: string;
@@ -54,10 +32,86 @@ interface ArtigoClientProps {
   nextArticle?: NewsItem | null;
 }
 
+interface TableOfContentsItem {
+  id: string;
+  text: string;
+}
+
 export default function ArtigoClient({ article, relatedArticles = [], previousArticle = null, nextArticle = null }: ArtigoClientProps) {
   const router = useRouter();
   const [readingProgress, setReadingProgress] = useState(0);
-  const [activeSection, setActiveSection] = useState('');
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
+  const [activeSection, setActiveSection] = useState<string>('');
+
+  const createSlug = (text: string) => {
+    return text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 100;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Extrair fontes do markdown
+  const extractSourcesFromMarkdown = (content: string): { name: string; url: string }[] => {
+    const sources: { name: string; url: string }[] = [];
+    const markdownRegex = /^-\s+\[(.+?)\]\((https?:\/\/[^\)]+)\)/gm;
+    let match;
+
+    while ((match = markdownRegex.exec(content)) !== null) {
+      sources.push({
+        name: match[1].trim(),
+        url: match[2].trim()
+      });
+    }
+
+    const oldFormatRegex = /^-\s+([^\[\(]+?)\s+\((https?:\/\/[^\)]+)\)/gm;
+    while ((match = oldFormatRegex.exec(content)) !== null) {
+      sources.push({
+        name: match[1].trim(),
+        url: match[2].trim()
+      });
+    }
+
+    return sources;
+  };
+
+  // Remover H1 do início do conteúdo (título já aparece no header)
+  const removeH1FromContent = (content: string): string => {
+    // Remove H1 do início (# Título)
+    const h1Regex = /^#\s+.+?\n+/;
+    return content.replace(h1Regex, '').trim();
+  };
+
+  // Remover seção de fontes do conteúdo
+  const removeSourcesSection = (content: string): string => {
+    const sourcesIndex = content.search(/\*\*Fontes:\*\*|---\s*\n\s*\*\*Fontes:\*\*/);
+    if (sourcesIndex !== -1) {
+      return content.substring(0, sourcesIndex).trim();
+    }
+    return content;
+  };
 
   // Calcular tempo de leitura (250 palavras por minuto)
   const calculateReadingTime = (content: string) => {
@@ -66,34 +120,58 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
     return minutes;
   };
 
-  // Barra de progresso de leitura
+  // Extrai headings do conteúdo para criar índice (apenas H2)
+  useEffect(() => {
+    if (!article || !article.content) return;
+
+    // Remove H1 antes de extrair headings
+    const contentWithoutH1 = removeH1FromContent(article.content);
+    const headings: TableOfContentsItem[] = [];
+    const lines = contentWithoutH1.split('\n');
+
+    lines.forEach((line) => {
+      const h2Match = line.match(/^## (.+)$/);
+      if (h2Match) {
+        const text = h2Match[1].trim();
+        headings.push({
+          id: createSlug(text),
+          text
+        });
+      }
+    });
+
+    setTableOfContents(headings);
+  }, [article]);
+
+  // Calcula progresso de leitura e rastreia seção ativa
   useEffect(() => {
     const handleScroll = () => {
       const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight - windowHeight;
+      const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.scrollY;
-      const progress = (scrollTop / documentHeight) * 100;
-      setReadingProgress(Math.min(progress, 100));
+      const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
+      setReadingProgress(Math.min(scrollPercent, 100));
+      setShowScrollTop(window.scrollY > 400);
+
+      // Encontra a seção ativa
+      const headingElements = tableOfContents.map(item => ({
+        id: item.id,
+        element: document.getElementById(item.id)
+      })).filter(item => item.element);
+
+      for (let i = headingElements.length - 1; i >= 0; i--) {
+        const element = headingElements[i].element;
+        if (element && element.getBoundingClientRect().top <= 150) {
+          setActiveSection(headingElements[i].id);
+          break;
+        }
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Extrair headings para índice
-  const extractHeadings = (content: string) => {
-    const headingRegex = /^##\s+(.+)$/gm;
-    const headings: { text: string; id: string }[] = [];
-    let match;
-
-    while ((match = headingRegex.exec(content)) !== null) {
-      const text = match[1];
-      const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
-      headings.push({ text, id });
-    }
-
-    return headings;
-  };
+  }, [tableOfContents]);
 
   const getTimeAgo = (date: string) => {
     const now = new Date();
@@ -107,49 +185,19 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
     return `Há ${diffDays}d`;
   };
 
-  const getSentimentIcon = (sentiment: string) => {
+  const getSentimentLabel = (sentiment: string) => {
     switch (sentiment) {
-      case 'positive':
-        return <FontAwesomeIcon icon={faCircle} className="text-green-500" />;
-      case 'negative':
-        return <FontAwesomeIcon icon={faCircle} className="text-red-500" />;
-      default:
-        return <FontAwesomeIcon icon={faCircle} className="text-yellow-500" />;
+      case 'positive': return 'Positivo';
+      case 'negative': return 'Negativo';
+      default: return 'Neutro';
     }
   };
 
-  const getSentimentData = (sentiment: string) => {
+  const getSentimentColor = (sentiment: string) => {
     switch (sentiment) {
-      case 'positive':
-        return {
-          label: 'Sentimento Positivo',
-          color: 'from-green-500 to-emerald-600',
-          bgColor: 'bg-green-500/20',
-          borderColor: 'border-green-400/40',
-          textColor: 'text-green-300',
-          rotation: 45, // Velocímetro aponta para direita (positivo)
-          icon: faArrowUp
-        };
-      case 'negative':
-        return {
-          label: 'Sentimento Negativo',
-          color: 'from-red-500 to-red-600',
-          bgColor: 'bg-red-500/20',
-          borderColor: 'border-red-400/40',
-          textColor: 'text-red-300',
-          rotation: -45, // Velocímetro aponta para esquerda (negativo)
-          icon: faArrowDown
-        };
-      default:
-        return {
-          label: 'Sentimento Neutro',
-          color: 'from-yellow-500 to-yellow-600',
-          bgColor: 'bg-yellow-500/20',
-          borderColor: 'border-yellow-400/40',
-          textColor: 'text-yellow-300',
-          rotation: 0, // Velocímetro aponta para centro (neutro)
-          icon: faMinus
-        };
+      case 'positive': return '#22c55e';
+      case 'negative': return '#ef4444';
+      default: return '#eab308';
     }
   };
 
@@ -171,167 +219,112 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
     window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
   };
 
-  const copyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    alert('Link copiado para a área de transferência!');
-  };
-
+  // Artigo não encontrado
   if (!article) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center py-20">
-          <div className="text-6xl mb-4">❌</div>
-          <p className="text-xl mb-4" style={{ color: 'var(--text-primary)' }}>Artigo não encontrado</p>
-          <button
-            onClick={() => router.push('/dashboard/noticias')}
-            className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 font-bold rounded-xl hover:scale-105 transition"
-          >
-            ← Voltar para Notícias
-          </button>
+      <div className="py-8 max-w-4xl" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
+        <div className="space-y-8">
+          <Breadcrumbs />
+          <div className="text-center py-20">
+            <div className="text-6xl mb-4">📰</div>
+            <h1 className="text-3xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+              Notícia não encontrada
+            </h1>
+            <p className="mb-8" style={{ color: 'var(--text-secondary)' }}>
+              A notícia que você procura não existe ou foi removida.
+            </p>
+            <button
+              onClick={() => router.push('/dashboard/noticias')}
+              className="px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
+              style={{
+                backgroundColor: 'var(--brand-primary)',
+                color: 'var(--text-inverse)'
+              }}
+            >
+              ← Voltar para Notícias
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
-  const readingTime = calculateReadingTime(article.content || '');
-  const headings = extractHeadings(article.content || '');
-
-  // Schema Markup para SEO
-  const schemaMarkup = {
-    "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    "headline": article.title,
-    "description": article.summary,
-    "datePublished": article.publishedAt,
-    "dateModified": article.publishedAt,
-    "author": {
-      "@type": "Organization",
-      "name": article.source
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "$MILAGRE",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://tokenmilagre.xyz/logo.png"
-      }
-    },
-    "articleSection": article.category.join(", "),
-    "keywords": article.keywords.join(", "),
-    "inLanguage": "pt-BR",
-    "isAccessibleForFree": true
-  };
+  const markdownSources = extractSourcesFromMarkdown(article.content || '');
+  // Remove H1 primeiro, depois remove seção de fontes
+  const contentWithoutH1 = removeH1FromContent(article.content || '');
+  const cleanContent = removeSourcesSection(contentWithoutH1);
+  const readingTime = calculateReadingTime(cleanContent);
 
   return (
     <>
-      {/* Schema Markup JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
+      {/* Barra de progresso de leitura */}
+      <div
+        className="fixed top-0 left-0 h-1 z-50 transition-all"
+        style={{
+          width: `${readingProgress}%`,
+          backgroundColor: 'var(--brand-primary)'
+        }}
       />
 
-      {/* Barra de Progresso de Leitura - Cor fixa laranja/amarelo */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-white/10 z-50">
-        <div
-          className="h-full bg-gradient-to-r from-orange-500 to-yellow-500 transition-all duration-300"
-          style={{ width: `${readingProgress}%` }}
-        />
-      </div>
+      <div className="py-8">
+        <div className="flex gap-8" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
+          <div className="flex-1 max-w-4xl space-y-8">
+            {/* Breadcrumbs */}
+            <Breadcrumbs />
 
-      <div className="container mx-auto px-4 py-8">
-        {/* Botão Voltar */}
-        <button
-          onClick={() => router.push('/dashboard/noticias')}
-          className="mb-6 px-4 py-2 rounded-xl transition flex items-center gap-2"
-          style={{ backgroundColor: 'var(--bg-elevated)', color: 'var(--text-primary)' }}
-        >
-          <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
-          Voltar para Notícias
-        </button>
+            {/* Voltar */}
+            <button
+              onClick={() => router.push('/dashboard/noticias')}
+              className="inline-flex items-center gap-2 text-sm font-semibold transition-colors hover:opacity-80"
+              style={{ color: 'var(--brand-primary)' }}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Voltar para Notícias
+            </button>
 
-        <div className="max-w-7xl mx-auto">
-          <div className="flex gap-8 items-start">
-            {/* Conteúdo Principal */}
-            <div className="flex-1 max-w-4xl">
-              {/* Header do Artigo */}
-              <div className="backdrop-blur-lg rounded-2xl p-8 border-2 shadow-xl mb-6" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
-
-              {/* Velocímetro de Sentimento */}
-              {(() => {
-                const sentimentData = getSentimentData(article.sentiment);
-                return (
-                  <div className="mb-6 flex items-center gap-6">
-                    {/* Velocímetro Visual */}
-                    <div className="relative w-24 h-16 shrink-0">
-                      {/* Arco do velocímetro */}
-                      <div className="absolute bottom-0 left-0 right-0 h-14">
-                        <svg viewBox="0 0 200 100" className="w-full h-full">
-                          {/* Fundo do arco */}
-                          <path
-                            d="M 20 90 A 80 80 0 0 1 180 90"
-                            fill="none"
-                            stroke="rgba(255,255,255,0.1)"
-                            strokeWidth="12"
-                            strokeLinecap="round"
-                          />
-                          {/* Arco colorido gradiente */}
-                          <defs>
-                            <linearGradient id={`gradient-${article.id}`} x1="0%" y1="0%" x2="100%" y2="0%">
-                              <stop offset="0%" style={{ stopColor: '#ef4444' }} />
-                              <stop offset="50%" style={{ stopColor: '#eab308' }} />
-                              <stop offset="100%" style={{ stopColor: '#22c55e' }} />
-                            </linearGradient>
-                          </defs>
-                          <path
-                            d="M 20 90 A 80 80 0 0 1 180 90"
-                            fill="none"
-                            stroke={`url(#gradient-${article.id})`}
-                            strokeWidth="8"
-                            strokeLinecap="round"
-                          />
-                        </svg>
-                      </div>
-
-                      {/* Ponteiro do velocímetro */}
-                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-10 origin-bottom transition-transform duration-500"
-                           style={{ transform: `translateX(-50%) rotate(${sentimentData.rotation}deg)` }}>
-                        <div className={`w-1 h-full bg-gradient-to-t ${sentimentData.color} rounded-full shadow-lg`}></div>
-                        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white rounded-full shadow-lg"></div>
-                      </div>
-                    </div>
-
-                    {/* Label do Sentimento */}
-                    <div>
-                      <span className={`${sentimentData.textColor} font-bold text-lg`}>
-                        {sentimentData.label}
-                      </span>
-                      <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Análise de sentimento da notícia</p>
-                    </div>
-                  </div>
-                );
-              })()}
-
-              {/* Meta Info */}
-              <div className="flex items-center gap-3 mb-4 flex-wrap text-sm">
-                <span className="font-semibold" style={{ color: 'var(--text-secondary)' }}>Baseado em: {article.source}</span>
-                <span style={{ color: 'var(--text-muted)' }}>•</span>
-                <span style={{ color: 'var(--text-muted)' }}>{getTimeAgo(article.publishedAt)}</span>
-                <span style={{ color: 'var(--text-muted)' }}>•</span>
-                <span className="flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
-                  <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
-                  {readingTime} min de leitura
+            {/* Header do Artigo */}
+            <div className="space-y-6">
+              {/* Meta info */}
+              <div className="flex flex-wrap items-center gap-3">
+                <span
+                  className="px-3 py-1 rounded-lg text-sm font-semibold"
+                  style={{
+                    backgroundColor: getSentimentColor(article.sentiment),
+                    color: 'white'
+                  }}
+                >
+                  {getSentimentLabel(article.sentiment)}
+                </span>
+                <span
+                  className="px-3 py-1 rounded-lg text-sm font-semibold"
+                  style={{
+                    backgroundColor: 'var(--bg-secondary)',
+                    color: 'var(--text-primary)'
+                  }}
+                >
+                  {article.source}
+                </span>
+                <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                  📖 {readingTime} min de leitura
+                </span>
+                <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                  {getTimeAgo(article.publishedAt)}
                 </span>
               </div>
 
               {/* Título */}
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight" style={{ color: 'var(--text-primary)' }}>
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                 {article.title}
               </h1>
 
               {/* Data de Publicação */}
-              <div className="mb-6 flex items-center gap-2" style={{ color: 'var(--text-tertiary)' }}>
-                <FontAwesomeIcon icon={faCalendar} className="w-4 h-4" />
-                <span className="text-sm font-medium">
+              <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span>
                   Publicado em: {new Date(article.publishedAt).toLocaleDateString('pt-BR', {
                     day: 'numeric',
                     month: 'long',
@@ -344,332 +337,343 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
               </div>
 
               {/* Resumo */}
-              <p className="text-xl mb-6 leading-relaxed font-light" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                 {article.summary}
               </p>
 
-              {/* Keywords */}
-              <div className="flex flex-wrap gap-2 mb-4">
+              {/* Keywords/Tags */}
+              <div className="flex flex-wrap gap-2">
                 {article.keywords.map((keyword, idx) => (
-                  <span
+                  <button
                     key={idx}
-                    className="px-3 py-1 rounded-full text-sm flex items-center gap-1"
-                    style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-secondary)' }}
+                    onClick={() => router.push(`/dashboard/noticias?search=${encodeURIComponent(keyword)}`)}
+                    className="px-3 py-1 rounded-lg text-sm transition-all hover:opacity-80 cursor-pointer"
+                    style={{
+                      backgroundColor: 'var(--bg-secondary)',
+                      color: 'var(--text-tertiary)'
+                    }}
+                    title={`Buscar artigos sobre: ${keyword}`}
                   >
-                    <FontAwesomeIcon icon={faHashtag} className="w-3 h-3" />
-                    {keyword}
-                  </span>
+                    #{keyword}
+                  </button>
                 ))}
               </div>
-
-              {/* Botões de Compartilhamento */}
-              <div className="pt-6 border-t" style={{ borderColor: 'var(--border-light)' }}>
-                <p className="text-sm mb-3" style={{ color: 'var(--text-tertiary)' }}>Compartilhar:</p>
-                <div className="flex gap-3 flex-wrap">
-                  <button
-                    onClick={shareOnX}
-                    className="w-10 h-10 bg-black hover:bg-gray-900 text-white rounded-lg transition flex items-center justify-center"
-                    title="Compartilhar no X"
-                  >
-                    <FontAwesomeIcon icon={faXTwitter} className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={shareOnWhatsApp}
-                    className="px-4 py-2 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-lg transition flex items-center gap-2"
-                  >
-                    <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
-                    WhatsApp
-                  </button>
-                  <button
-                    onClick={shareOnTelegram}
-                    className="px-4 py-2 bg-[#0088cc] hover:bg-[#0077b3] text-white rounded-lg transition flex items-center gap-2"
-                  >
-                    <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
-                    Telegram
-                  </button>
-                  <button
-                    onClick={copyLink}
-                    className="px-4 py-2 rounded-lg transition flex items-center gap-2"
-                    style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
-                  >
-                    <FontAwesomeIcon icon={faLink} className="w-4 h-4" />
-                    Copiar link
-                  </button>
-                </div>
-              </div>
             </div>
+
+            {/* Divider */}
+            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
             {/* Conteúdo do Artigo */}
-            <div className="backdrop-blur-lg rounded-2xl p-8 md:p-12 border-2 shadow-xl mb-8" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
-              <article className="prose prose-lg max-w-none">
-                <ReactMarkdown
-                  components={{
-                    h2: ({ children }) => {
-                      const text = String(children);
-                      const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
-                      return (
-                        <h2 id={id} className="text-3xl font-bold mt-12 mb-6 pb-3 border-b-2 scroll-mt-24" style={{ color: 'var(--text-primary)', borderColor: 'var(--border-light)' }}>
-                          {children}
-                        </h2>
-                      );
-                    },
-                    h3: ({ children }) => (
-                      <h3 className="text-2xl font-bold mt-8 mb-4" style={{ color: 'var(--text-primary)' }}>{children}</h3>
-                    ),
-                    p: ({ children }) => (
-                      <p className="mb-6 leading-relaxed text-lg" style={{ color: 'var(--text-secondary)' }}>{children}</p>
-                    ),
-                    ul: ({ children }) => (
-                      <ul className="list-disc list-inside mb-6 space-y-3 text-lg" style={{ color: 'var(--text-secondary)' }}>{children}</ul>
-                    ),
-                    ol: ({ children }) => (
-                      <ol className="list-decimal list-inside mb-6 space-y-3 text-lg" style={{ color: 'var(--text-secondary)' }}>{children}</ol>
-                    ),
-                    li: ({ children }) => (
-                      <li className="ml-4" style={{ color: 'var(--text-secondary)' }}>{children}</li>
-                    ),
-                    strong: ({ children }) => (
-                      <strong className="font-bold" style={{ color: 'var(--text-primary)' }}>{children}</strong>
-                    ),
-                    em: ({ children }) => (
-                      <em className="text-yellow-300 not-italic font-semibold">{children}</em>
-                    ),
-                    blockquote: ({ children }) => (
-                      <blockquote className="border-l-4 border-yellow-400 pl-6 my-6 italic py-4 rounded-r-lg" style={{ color: 'var(--text-primary)', backgroundColor: 'var(--bg-secondary)' }}>
+            <article
+              className="prose prose-lg max-w-none"
+              style={{
+                color: 'var(--text-primary)',
+              }}
+            >
+              <ReactMarkdown
+                components={{
+                  h1: ({ children }) => (
+                    <h1 className="text-3xl font-bold mt-8 mb-4 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                      {children}
+                    </h1>
+                  ),
+                  h2: ({ children }) => {
+                    const text = String(children);
+                    const id = createSlug(text);
+                    return (
+                      <h2 id={id} className="text-2xl font-bold mt-8 mb-4 font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
                         {children}
-                      </blockquote>
-                    ),
-                    a: ({ href, children }) => (
-                      <a
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-yellow-400 hover:text-yellow-300 underline decoration-yellow-400/50 hover:decoration-yellow-300 transition-colors font-medium"
-                      >
+                      </h2>
+                    );
+                  },
+                  h3: ({ children }) => {
+                    const text = String(children);
+                    const id = createSlug(text);
+                    return (
+                      <h3 id={id} className="text-xl font-bold mt-6 mb-3 font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
                         {children}
-                      </a>
-                    ),
-                  }}
-                >
-                  {article.content || 'Conteúdo não disponível.'}
-                </ReactMarkdown>
-              </article>
-
-              {/* CTA Comunitário */}
-              <div className="mt-12 pt-8 border-t-2" style={{ borderColor: 'var(--border-light)' }}>
-                <div className="bg-gradient-to-r from-yellow-400/10 via-amber-400/10 to-yellow-400/10 border-2 border-yellow-400/30 rounded-2xl p-8">
-                  <h3 className="font-bold text-2xl mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-                    <FontAwesomeIcon icon={faComments} className="w-6 h-6" />
-                    Participe da Discussão
-                  </h3>
-                  <p className="mb-6 text-lg" style={{ color: 'var(--text-secondary)' }}>
-                    O que você acha sobre este tema? Compartilhe sua opinião com a comunidade $MILAGRE!
-                  </p>
-                  <div className="flex flex-wrap gap-4">
-                    <a
-                      href="https://discord.gg/ybJ4Mgxu"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-6 py-3 bg-[#5865F2] hover:bg-[#4752C4] text-white rounded-xl font-semibold transition flex items-center gap-2 shadow-lg"
-                    >
-                      <FontAwesomeIcon icon={faDiscord} className="w-5 h-5" />
-                      Discord $MILAGRE
-                    </a>
-                    <a
-                      href="https://t.me/+Bop_TVFc_mg3Njlh"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-6 py-3 bg-[#0088cc] hover:bg-[#0077b3] text-white rounded-xl font-semibold transition flex items-center gap-2 shadow-lg"
-                    >
-                      <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
-                      Telegram $MILAGRE
-                    </a>
-                  </div>
-                  <div className="mt-6 pt-6 border-t" style={{ borderColor: 'var(--border-light)' }}>
-                    <p className="text-sm mb-3" style={{ color: 'var(--text-tertiary)' }}>
-                      <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>Quer aprender mais sobre Bitcoin e reservas nacionais?</span>
+                      </h3>
+                    );
+                  },
+                  p: ({ children }) => (
+                    <p className="mb-4 leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                      {children}
                     </p>
-                    <a
-                      href="/educacao"
-                      className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-semibold transition"
+                  ),
+                  ul: ({ children }) => (
+                    <ul className="mb-4 space-y-2 list-disc list-inside" style={{ color: 'var(--text-primary)' }}>
+                      {children}
+                    </ul>
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="mb-4 space-y-2 list-decimal list-inside" style={{ color: 'var(--text-primary)' }}>
+                      {children}
+                    </ol>
+                  ),
+                  li: ({ children }) => (
+                    <li className="ml-4" style={{ color: 'var(--text-primary)' }}>
+                      {children}
+                    </li>
+                  ),
+                  strong: ({ children }) => (
+                    <strong className="font-bold" style={{ color: 'var(--text-primary)' }}>
+                      {children}
+                    </strong>
+                  ),
+                  em: ({ children }) => (
+                    <em className="italic" style={{ color: 'var(--text-secondary)' }}>
+                      {children}
+                    </em>
+                  ),
+                  code: ({ children }) => (
+                    <code
+                      className="px-2 py-1 rounded text-sm font-mono"
+                      style={{
+                        backgroundColor: 'var(--bg-secondary)',
+                        color: 'var(--brand-primary)'
+                      }}
                     >
-                      <FontAwesomeIcon icon={faGraduationCap} className="w-5 h-5" />
-                      Explore nossa Biblioteca Educacional $MILAGRE
-                      <FontAwesomeIcon icon={faChevronRight} className="w-4 h-4" />
+                      {children}
+                    </code>
+                  ),
+                  blockquote: ({ children }) => (
+                    <blockquote
+                      className="pl-4 border-l-4 italic my-4"
+                      style={{
+                        borderColor: 'var(--brand-primary)',
+                        color: 'var(--text-secondary)'
+                      }}
+                    >
+                      {children}
+                    </blockquote>
+                  ),
+                  a: ({ href, children }) => (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="transition-colors hover:opacity-80"
+                      style={{ color: 'var(--brand-primary)' }}
+                    >
+                      {children}
                     </a>
-                  </div>
-                </div>
-              </div>
+                  ),
+                }}
+              >
+                {cleanContent || 'Conteúdo não disponível.'}
+              </ReactMarkdown>
+            </article>
 
-              {/* Múltiplas Fontes */}
-              {article.sources && article.sources.length > 0 && (
-                <div className="mt-8 pt-8 border-t-2" style={{ borderColor: 'var(--border-light)' }}>
-                  <h3 className="font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-                    <FontAwesomeIcon icon={faBook} className="w-5 h-5" />
-                    Fontes Consultadas:
+            {/* Divider */}
+            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+            {/* Nota de Transparência */}
+            <div className="p-6 rounded-xl border" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-light)' }}>
+              <div className="flex items-start gap-3">
+                <div className="text-2xl">📊</div>
+                <div className="flex-1 space-y-2">
+                  <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>
+                    Nota de Transparência
                   </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {article.sources.map((source, idx) => {
-                      // Mapear nome da fonte para URL
-                      const sourceUrls: { [key: string]: string } = {
-                        'Cointelegraph': 'https://cointelegraph.com',
-                        'PANews': 'https://www.panewslab.com',
-                        'Bitbo.io': 'https://bitbo.io',
-                        'Yahoo Finance': 'https://finance.yahoo.com',
-                        'TicoTimes': 'https://ticotimes.net',
-                        'Reuters': 'https://www.reuters.com',
-                        'Crystal Intelligence': 'https://crystalintelligence.com',
-                        'WebProNews': 'https://www.webpronews.com',
-                        'Anadolu Agency': 'https://www.aa.com.tr',
-                        'BBC Portuguese': 'https://www.bbc.com/portuguese',
-                        'CoinDesk': 'https://www.coindesk.com',
-                        'The Block': 'https://www.theblock.co',
-                        'InfoMoney': 'https://www.infomoney.com.br',
-                        'Bloomberg Crypto': 'https://www.bloomberg.com/crypto',
-                        'Coinfomania': 'https://coinfomania.com',
-                        '99Bitcoins': 'https://99bitcoins.com',
-                        'Coin Central': 'https://coincentral.com',
-                        'CoinGecko': 'https://www.coingecko.com',
-                        'Coin Bureau': 'https://www.coinbureau.com',
-                        'Standard Chartered': 'https://www.sc.com',
-                        'Morningstar': 'https://www.morningstar.com',
-                        'CoinMarketCap': 'https://coinmarketcap.com'
-                      };
-
-                      const url = sourceUrls[source] || '#';
-
-                      return (
-                        <a
-                          key={idx}
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-4 py-2 border rounded-lg text-sm hover:bg-yellow-400/20 hover:border-yellow-400/40 hover:text-yellow-300 transition flex items-center gap-2"
-                          style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
-                        >
-                          {source}
-                          <FontAwesomeIcon icon={faExternalLinkAlt} className="w-3 h-3 opacity-60" />
-                        </a>
-                      );
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    Publicado por $MILAGRE Research | Última atualização: {new Date(article.publishedAt).toLocaleDateString('pt-BR', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric'
                     })}
-                  </div>
+                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    Este conteúdo é educacional e informativo, baseado em fontes verificadas do mercado cripto. Não constitui aconselhamento financeiro ou recomendação de investimento. Criptomoedas envolvem riscos - sempre conduza sua própria pesquisa (DYOR).
+                  </p>
                 </div>
-              )}
-
-              {/* Botão Voltar para Notícias */}
-              <div className="mt-8 pt-8 border-t-2" style={{ borderColor: 'var(--border-light)' }}>
-                <button
-                  onClick={() => router.push('/dashboard/noticias')}
-                  className="inline-flex items-center gap-2 font-semibold transition text-lg"
-                  style={{ color: 'var(--brand-primary)' }}
-                >
-                  <span>←</span>
-                  Voltar para Notícias
-                </button>
               </div>
-
-              {/* Info de Verificação */}
-              {article.lastVerified && (
-                <div className="mt-4 text-sm" style={{ color: 'var(--text-muted)' }}>
-                  Última verificação: {new Date(article.lastVerified).toLocaleString('pt-BR')}
-                </div>
-              )}
             </div>
 
+            {/* Divider */}
+            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+            {/* Compartilhar */}
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                Compartilhe esta notícia
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                <button
+                  onClick={shareOnX}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
+                  style={{ backgroundColor: '#000000', color: 'white' }}
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                  X (Twitter)
+                </button>
+                <button
+                  onClick={shareOnTelegram}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
+                  style={{ backgroundColor: '#0088cc', color: 'white' }}
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12s12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21l-1.446 1.394c-.14.18-.357.295-.6.295c-.002 0-.003 0-.005 0l.213-3.054l5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326l-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
+                  </svg>
+                  Telegram
+                </button>
+                <button
+                  onClick={shareOnWhatsApp}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
+                  style={{ backgroundColor: '#25D366', color: 'white' }}
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                  </svg>
+                  WhatsApp
+                </button>
+              </div>
+            </div>
+
+            {/* Artigos Relacionados */}
+            {relatedArticles.length > 0 && (
+              <>
+                <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+                <div className="space-y-6">
+                  <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                    Notícias Relacionadas
+                  </h3>
+                  <div className="grid gap-4">
+                    {relatedArticles.slice(0, 3).map((related) => (
+                      <Link
+                        key={related.id}
+                        href={`/dashboard/noticias/${related.slug || related.id}`}
+                        className="block p-6 rounded-xl border transition-all hover:shadow-lg"
+                        style={{
+                          backgroundColor: 'var(--bg-secondary)',
+                          borderColor: 'var(--border-light)'
+                        }}
+                      >
+                        <div className="flex items-center gap-2 mb-2">
+                          <span
+                            className="px-2 py-1 rounded text-xs font-semibold"
+                            style={{
+                              backgroundColor: getSentimentColor(related.sentiment),
+                              color: 'white'
+                            }}
+                          >
+                            {getSentimentLabel(related.sentiment)}
+                          </span>
+                          <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+                            {related.category[0]}
+                          </span>
+                        </div>
+                        <h4 className="text-lg font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
+                          {related.title}
+                        </h4>
+                        <p className="text-sm line-clamp-2" style={{ color: 'var(--text-secondary)' }}>
+                          {related.summary}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
-            {/* Sidebar - Índice, Navegação e Artigos Relacionados (Desktop) */}
-            <div className="hidden lg:block w-64 shrink-0">
-              <div className="sticky top-24 space-y-6">
-                {/* Card Índice */}
-                {headings.length > 0 && (
-                  <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
-                    <h3 className="font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-                      <FontAwesomeIcon icon={faBook} className="w-4 h-4" />
-                      Índice
-                    </h3>
-                    <nav className="space-y-2">
-                      {headings.map((heading, idx) => (
-                        <a
-                          key={idx}
-                          href={`#${heading.id}`}
-                          className="block text-sm transition py-1 hover:pl-2 duration-200"
-                          style={{ color: 'var(--text-secondary)' }}
-                        >
-                          {heading.text}
-                        </a>
-                      ))}
-                    </nav>
-                  </div>
-                )}
+          {/* Sidebar - Índice (Desktop) */}
+          <div className="hidden xl:block w-64 shrink-0">
+            <div className="sticky top-24 space-y-6">
+              {/* Índice */}
+              {tableOfContents.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+                    Neste Artigo
+                  </h3>
+                  <nav className="space-y-2">
+                    {tableOfContents.map((item, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => scrollToSection(item.id)}
+                        className={`block text-sm text-left transition-all hover:pl-2 py-1 ${
+                          activeSection === item.id ? 'pl-2 font-semibold' : ''
+                        }`}
+                        style={{
+                          color: activeSection === item.id ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                        }}
+                      >
+                        {item.text}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              )}
 
-                {/* Card Navegação Anterior/Próximo */}
-                {(previousArticle || nextArticle) && (
-                  <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
-                    <h3 className="font-bold mb-4 text-sm" style={{ color: 'var(--text-primary)' }}>Navegação</h3>
+              {/* Navegação Anterior/Próximo */}
+              {(previousArticle || nextArticle) && (
+                <>
+                  <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+                  <div>
+                    <h3 className="text-sm font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+                      Navegação
+                    </h3>
                     <div className="space-y-3">
                       {previousArticle && (
-                        <button
-                          onClick={() => router.push(`/dashboard/noticias/${previousArticle.slug || previousArticle.id}`)}
-                          className="w-full text-left p-3 rounded-xl transition border group"
-                          style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-light)' }}
+                        <Link
+                          href={`/dashboard/noticias/${previousArticle.slug || previousArticle.id}`}
+                          className="block p-3 rounded-lg border transition-all hover:shadow-md"
+                          style={{
+                            backgroundColor: 'var(--bg-secondary)',
+                            borderColor: 'var(--border-light)'
+                          }}
                         >
-                          <div className="flex items-center gap-2 mb-1">
-                            <FontAwesomeIcon icon={faChevronLeft} className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
-                            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Anterior</span>
+                          <div className="text-xs mb-1" style={{ color: 'var(--text-tertiary)' }}>
+                            ← Anterior
                           </div>
-                          <h4 className="font-semibold text-sm line-clamp-2 transition" style={{ color: 'var(--text-primary)' }}>{previousArticle.title}</h4>
-                        </button>
+                          <div className="text-sm font-semibold line-clamp-2" style={{ color: 'var(--text-primary)' }}>
+                            {previousArticle.title}
+                          </div>
+                        </Link>
                       )}
-
                       {nextArticle && (
-                        <button
-                          onClick={() => router.push(`/dashboard/noticias/${nextArticle.slug || nextArticle.id}`)}
-                          className="w-full text-left p-3 rounded-xl transition border group"
-                          style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-light)' }}
+                        <Link
+                          href={`/dashboard/noticias/${nextArticle.slug || nextArticle.id}`}
+                          className="block p-3 rounded-lg border transition-all hover:shadow-md"
+                          style={{
+                            backgroundColor: 'var(--bg-secondary)',
+                            borderColor: 'var(--border-light)'
+                          }}
                         >
-                          <div className="flex items-center gap-2 mb-1">
-                            <FontAwesomeIcon icon={faChevronRight} className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
-                            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Próximo</span>
+                          <div className="text-xs mb-1" style={{ color: 'var(--text-tertiary)' }}>
+                            Próxima →
                           </div>
-                          <h4 className="font-semibold text-sm line-clamp-2 transition" style={{ color: 'var(--text-primary)' }}>{nextArticle.title}</h4>
-                        </button>
+                          <div className="text-sm font-semibold line-clamp-2" style={{ color: 'var(--text-primary)' }}>
+                            {nextArticle.title}
+                          </div>
+                        </Link>
                       )}
                     </div>
                   </div>
-                )}
-
-                {/* Card Continue Lendo */}
-                {relatedArticles.length > 0 && (
-                  <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
-                    <h3 className="font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-                      <FontAwesomeIcon icon={faBookOpen} className="w-4 h-4" />
-                      Continue Lendo
-                    </h3>
-                    <div className="space-y-3">
-                      {relatedArticles.slice(0, 3).map((related, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => router.push(`/dashboard/noticias/${related.slug || related.id}`)}
-                          className="w-full text-left p-3 rounded-xl transition border"
-                          style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-light)' }}
-                        >
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="text-sm">{getSentimentIcon(related.sentiment)}</span>
-                            <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{related.category[0]}</span>
-                          </div>
-                          <h4 className="font-semibold text-sm mb-1 line-clamp-2" style={{ color: 'var(--text-primary)' }}>{related.title}</h4>
-                          <p className="text-xs line-clamp-2" style={{ color: 'var(--text-tertiary)' }}>{related.summary}</p>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+                </>
+              )}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Scroll to top button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
+          style={{
+            backgroundColor: 'var(--brand-primary)',
+            color: 'var(--text-inverse)'
+          }}
+          aria-label="Voltar ao topo"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      )}
     </>
   );
 }
