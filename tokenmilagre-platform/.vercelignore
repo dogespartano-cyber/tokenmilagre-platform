@@ -1,0 +1,17 @@
+# Scripts de gerenciamento local (não necessários no deploy)
+scripts/
+
+# CLI local
+cli/
+
+# Arquivos de desenvolvimento
+*.log
+.env.local
+.DS_Store
+
+# Banco de dados local
+prisma/dev.db
+prisma/dev.db-journal
+
+# Backups
+*.backup
