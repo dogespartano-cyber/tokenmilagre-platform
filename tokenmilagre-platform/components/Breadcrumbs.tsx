@@ -59,7 +59,6 @@ export default function Breadcrumbs({ items, customLabels }: BreadcrumbsProps) {
                 <span
                   className="px-3 py-1.5 rounded-lg text-sm font-semibold"
                   style={{
-                    color: 'var(--text-primary)',
                     backgroundColor: 'var(--brand-primary)',
                     color: 'var(--text-inverse)'
                   }}
