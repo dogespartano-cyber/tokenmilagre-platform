@@ -19,10 +19,21 @@ interface NewsItem {
   lastVerified?: string;
 }
 
+// Helper para obter URL base
+function getBaseUrl() {
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  }
+  return 'http://localhost:3000';
+}
+
 async function getArticle(slug: string): Promise<NewsItem | null> {
   try {
     // Buscar via API que verifica banco + news.json
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    const baseUrl = getBaseUrl();
     const response = await fetch(`${baseUrl}/api/articles/${slug}`, {
       cache: 'no-store' // Sempre buscar dados frescos
     });
@@ -89,7 +100,7 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
   if (article) {
     try {
       // Buscar todos os artigos via API
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+      const baseUrl = getBaseUrl();
 
       const articlesRes = await fetch(`${baseUrl}/api/articles?category=all`, { cache: 'no-store' });
       const articlesData = await articlesRes.json();
