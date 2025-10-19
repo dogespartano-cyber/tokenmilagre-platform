@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { prisma } from '@/lib/prisma';
 import ArtigoClient from './ArtigoClient';
 
 interface NewsItem {
@@ -19,31 +20,42 @@ interface NewsItem {
   lastVerified?: string;
 }
 
-// Helper para obter URL base
-function getBaseUrl() {
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
-  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
-    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
-  }
-  return 'http://localhost:3000';
-}
-
 async function getArticle(slug: string): Promise<NewsItem | null> {
   try {
-    // Buscar via API que verifica banco + news.json
-    const baseUrl = getBaseUrl();
-    const response = await fetch(`${baseUrl}/api/articles/${slug}`, {
-      cache: 'no-store' // Sempre buscar dados frescos
+    // Buscar direto no banco de dados
+    const article = await prisma.article.findUnique({
+      where: { slug },
+      include: {
+        author: {
+          select: {
+            name: true,
+            email: true
+          }
+        }
+      }
     });
 
-    if (!response.ok) {
+    if (!article) {
       return null;
     }
 
-    const data = await response.json();
-    return data.success ? data.data : null;
+    // Formatar para NewsItem
+    return {
+      id: article.id,
+      slug: article.slug,
+      title: article.title,
+      summary: article.excerpt || '',
+      content: article.content,
+      url: `/dashboard/noticias/${article.slug}`,
+      source: '$MILAGRE Research',
+      sources: ['$MILAGRE Research'],
+      publishedAt: article.createdAt.toISOString(),
+      category: [article.category.charAt(0).toUpperCase() + article.category.slice(1)],
+      sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
+      keywords: JSON.parse(article.tags || '[]'),
+      factChecked: true,
+      lastVerified: article.updatedAt.toISOString(),
+    };
   } catch (error) {
     console.error('Erro ao buscar artigo:', error);
     return null;
@@ -99,15 +111,39 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
 
   if (article) {
     try {
-      // Buscar todos os artigos via API
-      const baseUrl = getBaseUrl();
+      // Buscar todos os artigos direto do banco
+      const articles = await prisma.article.findMany({
+        where: { published: true },
+        include: {
+          author: {
+            select: {
+              name: true,
+              email: true
+            }
+          }
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
 
-      const articlesRes = await fetch(`${baseUrl}/api/articles?category=all`, { cache: 'no-store' });
-      const articlesData = await articlesRes.json();
-
-      // Ordenar por data
-      const allNews: NewsItem[] = (articlesData.success ? articlesData.data : [])
-        .sort((a: NewsItem, b: NewsItem) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+      // Formatar para NewsItem
+      const allNews: NewsItem[] = articles.map(a => ({
+        id: a.id,
+        slug: a.slug,
+        title: a.title,
+        summary: a.excerpt || '',
+        content: a.content,
+        url: `/dashboard/noticias/${a.slug}`,
+        source: '$MILAGRE Research',
+        sources: ['$MILAGRE Research'],
+        publishedAt: a.createdAt.toISOString(),
+        category: [a.category.charAt(0).toUpperCase() + a.category.slice(1)],
+        sentiment: a.sentiment as 'positive' | 'neutral' | 'negative',
+        keywords: JSON.parse(a.tags || '[]'),
+        factChecked: true,
+        lastVerified: a.updatedAt.toISOString(),
+      }));
 
       // Encontrar índice do artigo atual
       const currentIndex = allNews.findIndex(item =>
