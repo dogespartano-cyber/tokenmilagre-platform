@@ -31,8 +31,40 @@ async function removeClaudeSignature() {
       let cleanedContent = article.content;
       let wasModified = false;
 
-      // Remover linha horizontal no final (vários formatos possíveis)
-      // Remove ---\n no final
+      // 1. Remover título H1 do início (# Título...)
+      const h1Pattern = /^#\s+.+?\n+/;
+      if (h1Pattern.test(cleanedContent)) {
+        cleanedContent = cleanedContent.replace(h1Pattern, '');
+        wasModified = true;
+        console.log(`  → Removido título H1 duplicado`);
+      }
+
+      // 2. Remover linha de data (Publicado em: ...)
+      const datePattern = /^Publicado em:.+?\n+/m;
+      if (datePattern.test(cleanedContent)) {
+        cleanedContent = cleanedContent.replace(datePattern, '');
+        wasModified = true;
+        console.log(`  → Removida data de publicação duplicada`);
+      }
+
+      // 3. Remover resumo duplicado (primeiro parágrafo se for igual ao excerpt)
+      if (article.excerpt) {
+        // Pegar primeiro parágrafo do conteúdo
+        const firstParagraphMatch = cleanedContent.match(/^(.+?)(?:\n\n|$)/);
+        if (firstParagraphMatch) {
+          const firstParagraph = firstParagraphMatch[1].trim();
+          const excerpt = article.excerpt.trim();
+
+          // Se o primeiro parágrafo for similar ao excerpt (70% de match)
+          if (firstParagraph.includes(excerpt.substring(0, 50)) || excerpt.includes(firstParagraph.substring(0, 50))) {
+            cleanedContent = cleanedContent.replace(firstParagraphMatch[0], '');
+            wasModified = true;
+            console.log(`  → Removido resumo duplicado`);
+          }
+        }
+      }
+
+      // 4. Remover linha horizontal no final (vários formatos possíveis)
       if (cleanedContent.endsWith('\n---\n')) {
         cleanedContent = cleanedContent.slice(0, -5);
         wasModified = true;
@@ -47,14 +79,16 @@ async function removeClaudeSignature() {
         wasModified = true;
       }
 
-      // Remover <hr> no final
+      // 5. Remover <hr> no final
       if (cleanedContent.endsWith('<hr>') || cleanedContent.endsWith('<hr/>') || cleanedContent.endsWith('<hr />')) {
         cleanedContent = cleanedContent.replace(/<hr\s*\/?>$/g, '');
         wasModified = true;
       }
 
-      // Remover múltiplas linhas em branco no final
-      cleanedContent = cleanedContent.replace(/\n\n+$/g, '\n');
+      // 6. Limpar múltiplas linhas em branco
+      cleanedContent = cleanedContent.replace(/\n\n\n+/g, '\n\n'); // Max 2 quebras
+      cleanedContent = cleanedContent.replace(/^\n+/, ''); // Remove do início
+      cleanedContent = cleanedContent.replace(/\n+$/g, '\n'); // Remove do final
 
       if (wasModified) {
         await prisma.article.update({
@@ -62,7 +96,7 @@ async function removeClaudeSignature() {
           data: { content: cleanedContent }
         });
 
-        console.log(`✅ Removida linha horizontal de: ${article.title}`);
+        console.log(`✅ Corrigido: ${article.title}\n`);
         updated++;
       }
     }
