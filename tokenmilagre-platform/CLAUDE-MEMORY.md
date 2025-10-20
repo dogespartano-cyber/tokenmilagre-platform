@@ -4,6 +4,87 @@ Este documento contém diretrizes, padrões e decisões de design estabelecidas 
 
 ---
 
+## 🗄️ Banco de Dados e Infraestrutura
+
+### Configuração Atual
+
+**Banco de Dados**: Neon PostgreSQL (Vercel Marketplace)
+**ORM**: Prisma
+**Localização do Client**: `lib/generated/prisma`
+**Total de Artigos**: 43 publicados
+**Total de Usuários**: 2 (Admin + Editor)
+
+### ⚠️ REGRAS CRÍTICAS - Banco de Dados
+
+1. **SEMPRE usar Prisma diretamente em Server Components**
+   - ❌ ERRADO: `fetch('http://localhost:3000/api/articles')`
+   - ✅ CORRETO: `await prisma.article.findMany()`
+   - Não fazer fetch HTTP em Server Components
+   - Acesso direto ao banco é mais rápido e confiável
+
+2. **Caminho CORRETO do Prisma Client**
+   ```typescript
+   // ✅ CORRETO - Este projeto usa caminho customizado
+   import { prisma } from '@/lib/prisma';
+
+   // OU em scripts Node.js:
+   const { PrismaClient } = require('../lib/generated/prisma');
+
+   // ❌ ERRADO - Não usar caminho padrão
+   import { PrismaClient } from '@prisma/client';
+   ```
+
+3. **Script postinstall OBRIGATÓRIO**
+   - Sempre manter `"postinstall": "prisma generate"` no package.json
+   - Garante geração do Prisma Client no build do Vercel
+   - Sem isso, build falha com "Module not found: Can't resolve './generated/prisma'"
+
+### Variáveis de Ambiente
+
+**Produção (Vercel)** - Configuradas automaticamente pela integração Neon:
+```env
+DATABASE_URL=postgresql://... (com pooling)
+DIRECT_URL=postgresql://... (sem pooling, para migrations)
+```
+
+**Desenvolvimento Local** - Copiar do Vercel Settings → Environment Variables:
+```env
+DATABASE_URL="postgresql://..."
+DIRECT_URL="postgresql://..."
+```
+
+### Scripts de Banco de Dados
+
+```bash
+# Gerar Prisma Client
+npx prisma generate
+
+# Aplicar mudanças no schema (development)
+npx prisma db push
+
+# Abrir Prisma Studio (visualizar dados)
+npm run db:studio
+
+# Exportar dados do SQLite (backup)
+npm run db:export
+
+# Importar dados para PostgreSQL
+npm run db:import
+```
+
+### Migração SQLite → PostgreSQL
+
+**✅ Concluída em 2025-10-19**
+
+- Banco anterior: SQLite (`prisma/dev.db`)
+- Banco atual: Neon PostgreSQL
+- Backup mantido: `prisma/backup-sqlite.json` (gitignored)
+- Documentação completa: `MIGRACAO-POSTGRES.md`
+
+**NUNCA usar SQLite em produção no Vercel** - ambiente serverless não mantém arquivos.
+
+---
+
 ## 📝 Criação de Artigos Educacionais
 
 ### Artigos Existentes
@@ -464,8 +545,64 @@ Copyright: "© 2025 $MILAGRE Community"
 
 ---
 
+## ⚛️ Next.js e Server Components
+
+### Boas Práticas
+
+1. **Server Components (RSC) - Buscar Dados**
+   ```typescript
+   // ✅ CORRETO - Buscar direto do Prisma
+   import { prisma } from '@/lib/prisma';
+
+   async function getArticle(slug: string) {
+     return await prisma.article.findUnique({
+       where: { slug }
+     });
+   }
+
+   // ❌ ERRADO - Fazer fetch HTTP em Server Component
+   async function getArticle(slug: string) {
+     const res = await fetch('http://localhost:3000/api/articles/' + slug);
+     return await res.json();
+   }
+   ```
+
+2. **Por que evitar fetch HTTP em Server Components?**
+   - Requer variáveis de ambiente (`NEXT_PUBLIC_API_URL`, `VERCEL_URL`)
+   - Adiciona overhead de HTTP (serialização, rede, desserialização)
+   - Propenso a erros em diferentes ambientes
+   - Mais lento que acesso direto ao banco
+
+3. **Quando usar API Routes (/api/...)?**
+   - ✅ Endpoints públicos (webhooks, integrações externas)
+   - ✅ Client Components fazendo mutações
+   - ✅ Scripts externos (CLI, watchers)
+   - ❌ Server Components buscando dados do banco
+
+### ESLint Configuration
+
+**NUNCA tentar verificar arquivos gerados do Prisma**
+
+- Arquivos em `lib/generated/prisma/` são gerados automaticamente
+- Configurar `next.config.ts` com `ignoreDuringBuilds: true`
+- Linting deve ser feito localmente, não no build do Vercel
+- Prisma Client sempre usa sintaxe CommonJS (require)
+
+### Build no Vercel
+
+**Checklist para build bem-sucedido:**
+
+- [ ] Script `postinstall` presente no package.json
+- [ ] `next.config.ts` com `eslint.ignoreDuringBuilds: true`
+- [ ] `prisma/schema.prisma` apontando para PostgreSQL
+- [ ] Variáveis `DATABASE_URL` e `DIRECT_URL` configuradas no Vercel
+- [ ] Integração Neon conectada ao projeto
+
+---
+
 ## 🚫 O Que Evitar
 
+### Design e UI
 1. **Ícones excessivos**: Manter apenas essenciais
 2. **Títulos duplicados**: Nunca repetir H1 no conteúdo (artigos e notícias)
 3. **Notas de transparência manuais**: Template adiciona automaticamente (notícias)
@@ -474,6 +611,13 @@ Copyright: "© 2025 $MILAGRE Community"
 6. **Textos brancos no modo claro**: Sempre usar CSS variables
 7. **Criar arquivos desnecessários**: Editar existentes quando possível
 8. **Emojis sem solicitação**: Usar apenas quando pedido
+
+### Código e Arquitetura
+9. **Fetch HTTP em Server Components**: Usar Prisma diretamente
+10. **SQLite em produção**: Vercel não suporta bancos baseados em arquivo
+11. **Caminho padrão do Prisma**: Sempre usar `../lib/generated/prisma`
+12. **Build sem postinstall**: Prisma Client não será gerado
+13. **Lint de arquivos gerados**: Configurar ignoreDuringBuilds no ESLint
 
 ---
 
@@ -498,10 +642,21 @@ Este documento deve ser atualizado sempre que:
 
 ## 📝 Histórico de Atualizações
 
+**2025-10-19 (noite)**: 🔥 MIGRAÇÃO COMPLETA PARA POSTGRESQL
+- Migração de SQLite para Neon PostgreSQL concluída com sucesso
+- 43 artigos + 2 usuários migrados
+- Adicionada seção completa "Banco de Dados e Infraestrutura"
+- Adicionada seção "Next.js e Server Components" com boas práticas
+- Documentadas regras críticas: usar Prisma diretamente, nunca fetch HTTP em RSC
+- Script postinstall obrigatório para gerar Prisma Client
+- Atualizada lista "O Que Evitar" com erros de arquitetura
+- Documentação de scripts de banco de dados (`db:export`, `db:import`, etc)
+- Problemas resolvidos: build no Vercel, páginas de artigos individuais
+
 **2025-10-19 (tarde)**: Adicionada seção "Como Criar Notícias via Script" com configuração correta do Prisma, IDs de usuários, template completo de script, comandos úteis e tabela de erros comuns.
 
 **2025-10-19 (manhã)**: Adicionadas diretrizes completas para criação de notícias, template automático, processamento de conteúdo, lista de artigos educacionais existentes, e checklists separados para artigos e notícias.
 
 **2025-01-19**: Criação do documento inicial com diretrizes para artigos educacionais, padrões de design, e filosofia do projeto.
 
-**Última atualização**: 2025-10-19
+**Última atualização**: 2025-10-19 (noite)

@@ -84,26 +84,36 @@ model Article {
   slug               String    @unique
   content            String    // Markdown content
 
+  // Tipo de artigo: 'news' ou 'educational'
+  type               String    @default("news") // 'news' | 'educational'
+
+  // Campos compartilhados
   // Alinhado com API: excerpt usado internamente, exposto como summary
-  excerpt            String?   // Resumo do artigo (API: summary)
+  excerpt            String?   // Resumo do artigo (API: summary) - também usado como description em educacionais
 
   published          Boolean   @default(false)
   authorId           String
   author             User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   // Alinhado com API: category armazenada como string slug, exposta como array
-  category           String    // Slug único (ex: "bitcoin", "ethereum")
+  category           String    // Slug único (ex: "bitcoin", "ethereum", "blockchain", "trading", etc)
 
   // Alinhado com API: tags armazenadas como JSON, expostas como keywords
   tags               String    // JSON array (API: keywords)
 
+  // Campos específicos de NOTÍCIAS
   sentiment          Sentiment @default(neutral)
 
-  // Fact-checking fields
+  // Fact-checking fields (apenas notícias)
   factCheckScore     Float?    // Score de 0-100 (threshold padrão: 70%)
   factCheckSources   String?   // JSON array com URLs das fontes consultadas
   factCheckDate      DateTime? // Data da verificação
   factCheckStatus    String?   // verified (>=70%), failed (<70%), skipped (sem APIs)
+
+  // Campos específicos de ARTIGOS EDUCACIONAIS
+  level              String?   // 'iniciante' | 'intermediario' | 'avancado'
+  contentType        String?   // 'Artigo' | 'Tutorial'
+  readTime           String?   // Ex: '8 min', '15 min'
 
   createdAt          DateTime  @default(now()) // API: publishedAt
   updatedAt          DateTime  @updatedAt      // API: lastVerified
@@ -112,4 +122,5 @@ model Article {
   @@index([published])
   @@index([slug])
   @@index([category])
+  @@index([type])
 }

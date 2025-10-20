@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import ArtigoEducacionalClient from './ArtigoEducacionalClient';
+import { prisma } from '@/lib/prisma';
 
 interface EducationalArticle {
   id: string;
@@ -16,8 +18,9 @@ interface EducationalArticle {
   publishedAt: string;
 }
 
-// Mock de dados - futuramente pode vir de um banco de dados ou CMS
-const articles: EducationalArticle[] = [
+// **DEPRECATED** - Array mantido apenas para referência histórica
+// Os dados agora vêm do banco de dados PostgreSQL
+const articles_DEPRECATED: EducationalArticle[] = [
   {
     id: '1',
     slug: 'introducao-ao-blockchain',
@@ -1862,13 +1865,62 @@ Seja você um artista buscando monetizar seu trabalho, um colecionador procurand
 ];
 
 async function getArticle(slug: string): Promise<EducationalArticle | null> {
-  // Simular busca no banco de dados
-  const article = articles.find(a => a.slug === slug);
-  return article || null;
+  const article = await prisma.article.findFirst({
+    where: {
+      slug: slug,
+      type: 'educational',
+      published: true,
+    },
+  });
+
+  if (!article) return null;
+
+  return {
+    id: article.id,
+    slug: article.slug,
+    title: article.title,
+    description: article.excerpt || '',
+    content: article.content,
+    category: article.category,
+    level: (article.level || 'iniciante') as 'iniciante' | 'intermediario' | 'avancado',
+    type: (article.contentType || 'Artigo') as 'Artigo' | 'Tutorial',
+    readTime: article.readTime || '10 min',
+    tags: JSON.parse(article.tags || '[]'),
+    author: 'Comunidade $MILAGRE',
+    publishedAt: article.createdAt.toISOString().split('T')[0],
+  };
 }
 
 async function getRelatedArticles(category: string, currentSlug: string): Promise<EducationalArticle[]> {
-  return articles.filter(a => a.category === category && a.slug !== currentSlug).slice(0, 3);
+  const articles = await prisma.article.findMany({
+    where: {
+      type: 'educational',
+      published: true,
+      category: category,
+      slug: {
+        not: currentSlug,
+      },
+    },
+    take: 3,
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
+  return articles.map(article => ({
+    id: article.id,
+    slug: article.slug,
+    title: article.title,
+    description: article.excerpt || '',
+    content: article.content,
+    category: article.category,
+    level: (article.level || 'iniciante') as 'iniciante' | 'intermediario' | 'avancado',
+    type: (article.contentType || 'Artigo') as 'Artigo' | 'Tutorial',
+    readTime: article.readTime || '10 min',
+    tags: JSON.parse(article.tags || '[]'),
+    author: 'Comunidade $MILAGRE',
+    publishedAt: article.createdAt.toISOString().split('T')[0],
+  }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -1900,7 +1952,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function ArtigoEducacionalPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const article = await getArticle(slug);
-  const relatedArticles = article ? await getRelatedArticles(article.category, slug) : [];
+
+  if (!article) {
+    notFound();
+  }
+
+  const relatedArticles = await getRelatedArticles(article.category, slug);
 
   return (
     <ArtigoEducacionalClient
