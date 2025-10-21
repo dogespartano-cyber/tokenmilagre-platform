@@ -40,9 +40,9 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
         };
 
         const limitMap = {
-          '15m': 200,
-          '4h': 200,
-          '1d': 200,
+          '15m': 500,  // ~5 dias (500 velas de 15min)
+          '4h': 500,   // ~83 dias (500 velas de 4h)
+          '1d': 500,   // 500 dias (~1.4 anos)
         };
 
         const interval = intervalMap[timeframe];
@@ -314,7 +314,7 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
   };
 
   return (
-    <div className="backdrop-blur-lg rounded-2xl border-2 shadow-xl overflow-hidden" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
+    <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: 'transparent' }}>
       {/* Timeframe Selector - Compacto no topo */}
       <div className="px-4 pt-3 pb-2 flex items-center justify-between">
         <div className="flex gap-1 rounded-lg p-1" style={{ backgroundColor: 'var(--bg-secondary)' }}>
