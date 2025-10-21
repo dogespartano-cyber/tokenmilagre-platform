@@ -486,22 +486,19 @@ export default function NoticiasPage() {
                     </div>
                   </div>
 
-                  {/* Categorias */}
+                  {/* Categoria */}
                   <div className="mb-4 pb-4 border-b" style={{ borderColor: 'var(--border-light)' }}>
                     <div className="flex flex-wrap gap-1.5">
-                      {item.category.slice(0, 2).map((cat, idx) => (
-                        <span
-                          key={idx}
-                          className="px-2 py-0.5 rounded text-xs font-medium border"
-                          style={{
-                            backgroundColor: 'var(--bg-secondary)',
-                            borderColor: 'var(--border-light)',
-                            color: 'var(--text-tertiary)'
-                          }}
-                        >
-                          {cat}
-                        </span>
-                      ))}
+                      <span
+                        className="px-2 py-0.5 rounded text-xs font-medium border"
+                        style={{
+                          backgroundColor: 'var(--bg-secondary)',
+                          borderColor: 'var(--border-light)',
+                          color: 'var(--text-tertiary)'
+                        }}
+                      >
+                        {item.category}
+                      </span>
                     </div>
                   </div>
 
