@@ -39,6 +39,7 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
         borderColor: borderColor || 'rgba(255, 255, 255, 0.2)',
         timeVisible: true,
         secondsVisible: false,
+        rightOffset: 12, // Espaço entre último candle e borda direita (aproximadamente 55px)
       },
       rightPriceScale: {
         borderColor: borderColor || 'rgba(255, 255, 255, 0.2)',
