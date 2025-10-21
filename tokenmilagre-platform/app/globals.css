@@ -47,8 +47,8 @@ html {
 }
 
 :root {
-  /* Light Mode - WCAG AAA Compliant - BRANCO PURO */
-  --bg-primary: #FFFFFF;
+  /* Light Mode - WCAG AAA Compliant */
+  --bg-primary: #f5f4f6;
   --bg-secondary: #F9FAFB;
   --bg-tertiary: #F3F4F6;
   --bg-elevated: #FFFFFF;
@@ -61,14 +61,14 @@ html {
   --text-inverse: #FFFFFF;
 
   /* Borders */
-  --border-light: #F3F4F6;
+  --border-light: #F5F5F7;
   --border-medium: #E5E7EB;
   --border-strong: #D1D5DB;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 2px 8px 0 rgba(0, 0, 0, 0.04), 0 1px 3px 0 rgba(0, 0, 0, 0.02);
+  --shadow-lg: 0 4px 12px 0 rgba(0, 0, 0, 0.06), 0 2px 6px 0 rgba(0, 0, 0, 0.03);
 
   /* Brand $MILAGRE */
   --brand-primary: #0D9488;
@@ -95,7 +95,7 @@ html {
   --info-border: #BFDBFE;
 
   /* Legacy fallbacks */
-  --background: #FFFFFF;
+  --background: #f5f4f6;
   --foreground: #111827;
 }
 
@@ -114,14 +114,14 @@ html {
   --text-inverse: #111827;
 
   /* Borders */
-  --border-light: #2A4A6E;
+  --border-light: #34547A;
   --border-medium: #2A4A6E;
   --border-strong: #475569;
 
   /* Shadows */
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 2px 8px 0 rgba(0, 0, 0, 0.25), 0 1px 4px 0 rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 4px 12px 0 rgba(0, 0, 0, 0.3), 0 2px 6px 0 rgba(0, 0, 0, 0.2);
 
   /* Brand $MILAGRE - VERDE ORIGINAL */
   --brand-primary: #10B981;

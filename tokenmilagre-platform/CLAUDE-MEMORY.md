@@ -364,7 +364,16 @@ node scripts/list-users.js
 
 ### Cores e Temas
 
-- Usar sempre CSS variables para adaptação ao tema:
+**Modo Claro**:
+- Fundo primário: `#f5f4f6` (levemente off-white para conforto visual)
+- Bordas quase invisíveis: `#F5F5F7`
+- Sombras sutis: `0 2px 8px 0 rgba(0, 0, 0, 0.04), 0 1px 3px 0 rgba(0, 0, 0, 0.02)`
+
+**Modo Escuro**:
+- Bordas sutis: `#34547A`
+- Sombras mais pronunciadas: `0 2px 8px 0 rgba(0, 0, 0, 0.25), 0 1px 4px 0 rgba(0, 0, 0, 0.15)`
+
+**CSS Variables** (usar sempre para adaptação ao tema):
   - `var(--text-primary)` - Texto principal
   - `var(--text-secondary)` - Texto secundário
   - `var(--text-tertiary)` - Texto terciário
@@ -373,8 +382,34 @@ node scripts/list-users.js
   - `var(--bg-elevated)` - Fundos elevados (cards)
   - `var(--brand-primary)` - Cor primária da marca
   - `var(--brand-hover)` - Hover da cor primária
-  - `var(--border-light)` - Bordas claras
+  - `var(--border-light)` - Bordas claras (quase invisíveis)
   - `var(--border-medium)` - Bordas médias
+  - `var(--shadow-md)` - Sombra média (cards)
+  - `var(--shadow-lg)` - Sombra grande (hover)
+
+### Cards e Efeitos
+
+**Padrão Minimalista** (páginas: Home, Educação, Notícias, Manifesto):
+- Borda: `border` (1px) com cor `--border-light` (quase invisível)
+- Sombra: `shadow-md` (sutil e harmônica)
+- Hover: `hover:-translate-y-1 hover:shadow-lg`
+- Transição: `transition-all duration-500 ease-out`
+- Background: `var(--bg-elevated)`
+- Border radius: `rounded-2xl`
+
+**Padrão Gradiente** (página Recursos):
+- Background: Gradiente linear baseado na categoria
+- Cores por categoria:
+  - 🟠 Wallets: `linear-gradient(135deg, #F6851B 0%, #E2761B 100%)`
+  - 🟡 Exchanges: `linear-gradient(135deg, #F3BA2F 0%, #EAA42D 100%)`
+  - 🔴 DeFi: `linear-gradient(135deg, #FF007A 0%, #E6006E 100%)`
+  - 🔵 Explorers: `linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)`
+  - 🟢 Tools: `linear-gradient(135deg, #10B981 0%, #059669 100%)`
+  - 🟣 Default: `linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)`
+- Overlay: `bg-black/10` → `bg-black/5` no hover
+- Texto: Branco com badges translúcidos
+- Hover: `hover:-translate-y-2 hover:shadow-2xl`
+- Transição: `duration-500`
 
 ### Ícones
 
@@ -382,9 +417,11 @@ node scripts/list-users.js
 - **Ícones permitidos**:
   - 📖 Tempo de leitura (único ícone nos cards de educação)
   - Ícones de navegação (setas, menu, etc)
+  - Números em círculos (substituindo emojis decorativos)
 - **Ícones removidos**:
   - ❌ Ícones de categorias nos cards
-  - ❌ Ícones de níveis (🌱, 🚀, 💎)
+  - ❌ Ícones de níveis (🌱, 🚀, 💎) → Substituídos por números (1, 2, 3)
+  - ❌ Ícones de busca/filtros (🔍)
   - ❌ Ícones de plataformas nos recursos
 
 ### Breadcrumbs
@@ -430,6 +467,61 @@ node scripts/list-users.js
 - Filtro combinado: Ordenação + Sentimento em um único dropdown
 - Menu posicionado ao lado das categorias (grid layout)
 - Badges de sentimento: 🟢 Positivo, 🟡 Neutro, 🔴 Negativo
+
+### Doações (`/doacoes`)
+
+**Características:**
+- Hero section com mesmo padrão visual da página Sobre
+- Badge "Apoie a Comunidade" + Título impactante
+- Card destacado explicando importância das doações
+- Seções organizadas com dividers
+
+**Seções da Página:**
+
+1. **Como Sua Doação é Utilizada** (4 cards com percentuais)
+   - 🎓 Educação Gratuita (40%)
+   - 💻 Desenvolvimento (30%)
+   - 🤝 Apoio Comunitário (20%)
+   - 🌱 Crescimento (10%)
+
+2. **Por Que Confiar em Nós?** (4 razões)
+   - 🔍 100% Transparente
+   - ⚡ Sem Intermediários
+   - 🎯 Impacto Real
+   - 👥 Comunidade Ativa
+
+3. **Métodos de Doação** (3 opções)
+   - ⚡ Solana (SOL) - Em breve
+   - 🪙 $MILAGRE Token - Com endereço copiável
+   - 💰 PIX - Em breve
+
+4. **Aviso de Segurança**
+   - Verificação de endereços
+   - Orientações sobre rede correta
+   - Avisos sobre chaves privadas
+
+5. **Outras Formas de Ajudar**
+   - 📣 Divulgue
+   - ✍️ Contribua
+   - 💬 Participe
+   - 🐛 Reporte Bugs
+
+6. **CTA Final**
+   - Mensagem de agradecimento
+   - Botões Discord e Telegram
+
+**Funcionalidades:**
+- Botão "Copiar endereço" com feedback visual
+- Scroll to top button
+- Schema.org JSON-LD para SEO
+- Breadcrumbs de navegação
+- Design responsivo com CSS variables
+
+**Texto Persuasivo:**
+- Projeto 100% comunitário e sem fins lucrativos
+- Transparência total na blockchain
+- Sem investidores, mensalidades ou venda de dados
+- Impacto real na educação de milhares de pessoas
 
 ---
 
@@ -642,6 +734,59 @@ Este documento deve ser atualizado sempre que:
 
 ## 📝 Histórico de Atualizações
 
+**2025-10-21**: 🎨 REDESIGN COMPLETO DA UI - MINIMALISMO E GRADIENTES
+- **Padrões de Design Atualizados**:
+  - Bordas reduzidas: `border-2` → `border` (1px)
+  - Bordas quase invisíveis: `--border-light` (#F5F5F7 light, #34547A dark)
+  - Sombras mais sutis e harmônicas (redução de intensidade)
+  - Fundo modo dia alterado: `#FFFFFF` → `#f5f4f6` (off-white confortável)
+  - Efeito hover padrão: `-translate-y-1` com `duration-500 ease-out`
+
+- **Mudanças na Página Educação**:
+  - Ícones de níveis (🌱, 🚀, 💎) substituídos por números em círculos (1, 2, 3)
+  - Círculos numerados usam cor primária da marca
+
+- **Mudanças em Todas as Páginas**:
+  - Remoção de ícone 🔍 das seções "Busca e Filtros"
+  - Cards padronizados com bordas sutis + sombras harmônicas
+  - Remoção de hover amarelo/verde em favor de translação vertical
+  - TradingView ticker adaptado ao tema usando MutationObserver
+
+- **Novos Cards na Home Page**:
+  - Card "Aprenda sobre Cripto": Exibe 4 artigos educacionais do banco
+  - Card "Ferramentas Essenciais": Design criativo com 3 cards gradiente (MetaMask, Binance, Uniswap)
+  - Botões de categoria com links diretos para recursos
+  - API `/api/articles` atualizada para filtrar por `type` (news/educational)
+
+- **Redesign da Página Recursos**:
+  - Cards com gradientes categorizados (Wallets laranja, Exchanges dourado, DeFi rosa, etc.)
+  - Função `getCategoryGradient()` mapeia cores por categoria
+  - Cards com texto branco + overlay translúcido
+  - Hover mais intenso: `-translate-y-2` + `shadow-2xl`
+  - Badges translúcidos para tags e plataformas
+  - CTA com seta animada no hover
+
+- **Arquivos Modificados**:
+  - `/app/globals.css`: Novas variáveis de sombra e borda
+  - `/app/educacao/EducacaoClient.tsx`: Números ao invés de emojis
+  - `/app/dashboard/noticias/page.tsx`: Bordas e sombras atualizadas
+  - `/app/recursos/page.tsx`: Design gradiente completo
+  - `/app/page.tsx`: Novos cards de Educação e Recursos
+  - `/app/api/articles/route.ts`: Suporte ao filtro `type`
+  - `/components/TickerTapeWidget.tsx`: Adaptação ao tema
+
+**2025-10-20**: 💝 NOVA PÁGINA DE DOAÇÕES
+- Criada página completa de Doações (`/app/doacoes/page.tsx`)
+- Hero section com mesmo padrão visual da página Sobre
+- 6 seções principais: Uso de Doações, Confiança, Métodos, Segurança, Outras Formas, CTA Final
+- Distribuição transparente: Educação (40%), Desenvolvimento (30%), Apoio (20%), Crescimento (10%)
+- 3 métodos de doação: Solana (SOL), $MILAGRE Token, PIX
+- Funcionalidade de copiar endereço com feedback visual
+- Texto persuasivo enfatizando projeto 100% comunitário sem fins lucrativos
+- Schema.org JSON-LD para SEO
+- Design responsivo com CSS variables
+- Documentação completa adicionada em "Páginas Principais"
+
 **2025-10-19 (noite)**: 🔥 MIGRAÇÃO COMPLETA PARA POSTGRESQL
 - Migração de SQLite para Neon PostgreSQL concluída com sucesso
 - 43 artigos + 2 usuários migrados
@@ -659,4 +804,4 @@ Este documento deve ser atualizado sempre que:
 
 **2025-01-19**: Criação do documento inicial com diretrizes para artigos educacionais, padrões de design, e filosofia do projeto.
 
-**Última atualização**: 2025-10-19 (noite)
+**Última atualização**: 2025-10-21

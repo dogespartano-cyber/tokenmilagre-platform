@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faNewspaper, faSun, faMoon, faHome, faInfoCircle, faCoins, faBars, faTimes, faBook, faGraduationCap, faStore } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faNewspaper, faSun, faMoon, faHome, faInfoCircle, faCoins, faBars, faTimes, faBook, faGraduationCap, faStore, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
@@ -28,6 +28,7 @@ export default function RootLayoutNav({
     { href: '/sobre', label: 'Sobre', icon: faInfoCircle },
     { href: '/token', label: 'Token', icon: faCoins },
     { href: '/manifesto', label: 'Manifesto', icon: faBook },
+    { href: '/doacoes', label: 'Doações', icon: faHeart },
   ];
 
   return (
@@ -188,6 +189,7 @@ export default function RootLayoutNav({
                 {pathname === '/sobre' && 'Sobre'}
                 {pathname === '/token' && 'Token'}
                 {pathname === '/manifesto' && 'Manifesto'}
+                {pathname === '/doacoes' && 'Doações'}
               </h1>
             </div>
 

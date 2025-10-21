@@ -231,10 +231,10 @@ export default function NoticiasPage() {
         </div>
 
         {/* Filtros */}
-        <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
+        <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-md" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-light)' }}>
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
-              🔍 Busca e Filtros
+              Busca e Filtros
               {getActiveFiltersCount() > 0 && (
                 <span className="ml-2 px-2 py-1 text-xs rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 font-bold">
                   {getActiveFiltersCount()}
@@ -316,17 +316,16 @@ export default function NoticiasPage() {
                     <button
                       key={cat.id}
                       onClick={() => setSelectedCategory(cat.id)}
-                      className={`px-4 py-2 rounded-xl font-semibold transition-all ${
+                      className={`px-4 py-2 rounded-xl font-semibold transition-all hover:scale-105 hover:shadow-lg ${
                         selectedCategory === cat.id
                           ? 'bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900'
-                          : ''
+                          : 'hover:opacity-80'
                       }`}
                       style={selectedCategory !== cat.id ? {
                         backgroundColor: 'var(--bg-secondary)',
                         color: 'var(--text-secondary)'
                       } : undefined}
                     >
-                      <span className="mr-2">{cat.icon}</span>
                       {cat.label}
                     </button>
                   ))}
@@ -353,14 +352,14 @@ export default function NoticiasPage() {
                   }}
                 >
                   <optgroup label="Ordenação">
-                    <option value="newest-all">🆕 Mais Recentes</option>
-                    <option value="oldest-all">⏰ Mais Antigas</option>
-                    <option value="alphabetical-all">🔤 Alfabética (A-Z)</option>
+                    <option value="newest-all">Mais Recentes</option>
+                    <option value="oldest-all">Mais Antigas</option>
+                    <option value="alphabetical-all">Alfabética (A-Z)</option>
                   </optgroup>
                   <optgroup label="Sentimento">
-                    <option value="newest-positive">🟢 Positivo</option>
-                    <option value="newest-neutral">🟡 Neutro</option>
-                    <option value="newest-negative">🔴 Negativo</option>
+                    <option value="newest-positive">Positivo</option>
+                    <option value="newest-neutral">Neutro</option>
+                    <option value="newest-negative">Negativo</option>
                   </optgroup>
                 </select>
               </div>
@@ -379,19 +378,19 @@ export default function NoticiasPage() {
                   )}
                   {selectedCategory !== 'all' && (
                     <span className="px-3 py-1 rounded-lg text-sm flex items-center gap-2 bg-gradient-to-r from-yellow-400/20 to-amber-500/20 border border-yellow-400/30" style={{ color: 'var(--text-primary)' }}>
-                      {categories.find(c => c.id === selectedCategory)?.icon} {categories.find(c => c.id === selectedCategory)?.label}
+                      {categories.find(c => c.id === selectedCategory)?.label}
                       <button onClick={() => setSelectedCategory('all')} className="hover:scale-110 transition-transform">✕</button>
                     </span>
                   )}
                   {selectedSentiment !== 'all' && (
                     <span className="px-3 py-1 rounded-lg text-sm flex items-center gap-2 bg-gradient-to-r from-blue-400/20 to-cyan-500/20 border border-blue-400/30" style={{ color: 'var(--text-primary)' }}>
-                      {selectedSentiment === 'positive' ? '🟢 Positivo' : selectedSentiment === 'neutral' ? '🟡 Neutro' : '🔴 Negativo'}
+                      {selectedSentiment === 'positive' ? 'Positivo' : selectedSentiment === 'neutral' ? 'Neutro' : 'Negativo'}
                       <button onClick={() => setSelectedSentiment('all')} className="hover:scale-110 transition-transform">✕</button>
                     </span>
                   )}
                   {sortBy !== 'newest' && (
                     <span className="px-3 py-1 rounded-lg text-sm flex items-center gap-2 bg-gradient-to-r from-purple-400/20 to-pink-500/20 border border-purple-400/30" style={{ color: 'var(--text-primary)' }}>
-                      {sortBy === 'oldest' ? '⏰ Mais Antigas' : '🔤 Alfabética'}
+                      {sortBy === 'oldest' ? 'Mais Antigas' : 'Alfabética'}
                       <button onClick={() => setSortBy('newest')} className="hover:scale-110 transition-transform">✕</button>
                     </span>
                   )}
@@ -428,66 +427,100 @@ export default function NoticiasPage() {
               <Link
                 key={index}
                 href={`/dashboard/noticias/${item.slug || item.id}`}
-                className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl hover:shadow-2xl transition-all hover:scale-105 group cursor-pointer block"
-                style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}
+                className="group backdrop-blur-lg rounded-2xl p-6 border shadow-md transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-lg cursor-pointer block"
+                style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-light)' }}
               >
-                {/* Header do Card */}
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl">{getSentimentIcon(item.sentiment)}</span>
-                    <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>{getSentimentLabel(item.sentiment)}</span>
-                  </div>
-                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{getTimeAgo(item.publishedAt)}</span>
-                </div>
-
-                {/* Título */}
-                <h3 className="font-bold text-lg mb-3 line-clamp-2 transition" style={{ color: 'var(--text-primary)' }}>
-                  {item.title}
-                </h3>
-
-                {/* Resumo */}
-                <p className="text-sm mb-4 line-clamp-3" style={{ color: 'var(--text-secondary)' }}>
-                  {item.summary}
-                </p>
-
-                {/* Keywords - Clicáveis */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {item.keywords.slice(0, 3).map((keyword, idx) => (
-                    <button
-                      key={idx}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleTagClick(keyword);
-                      }}
-                      className="px-2 py-1 rounded-lg text-xs transition-all hover:scale-105 hover:shadow-md cursor-pointer hover:bg-gradient-to-r hover:from-yellow-400/20 hover:to-amber-500/20"
-                      style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-tertiary)' }}
-                      title={`🔍 Buscar por: ${keyword}`}
-                    >
-                      #{keyword}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Categorias */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {item.category.map((cat, idx) => (
-                    <span
-                      key={idx}
-                      className="px-2 py-1 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-300/30 rounded-lg text-xs font-semibold"
-                      style={{ color: 'var(--text-primary)' }}
-                    >
-                      {cat}
+                {/* Content wrapper */}
+                <div className="flex flex-col h-full">
+                  {/* Header do Card */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">{getSentimentIcon(item.sentiment)}</span>
+                      <span className="text-xs font-semibold px-2 py-1 rounded-full" style={{
+                        backgroundColor: item.sentiment === 'positive' ? '#22c55e20' : item.sentiment === 'negative' ? '#ef444420' : '#eab30820',
+                        color: item.sentiment === 'positive' ? '#22c55e' : item.sentiment === 'negative' ? '#ef4444' : '#eab308'
+                      }}>
+                        {item.sentiment === 'positive' ? 'Positivo' : item.sentiment === 'negative' ? 'Negativo' : 'Neutro'}
+                      </span>
+                    </div>
+                    <span className="text-xs font-medium px-2 py-1 rounded-md" style={{
+                      backgroundColor: 'var(--bg-secondary)',
+                      color: 'var(--text-tertiary)'
+                    }}>
+                      {getTimeAgo(item.publishedAt)}
                     </span>
-                  ))}
-                </div>
+                  </div>
 
-                {/* Link Leia Mais */}
-                <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--border-light)' }}>
-                  <span className="inline-flex items-center gap-1 text-sm font-semibold transition" style={{ color: 'var(--brand-primary)' }}>
-                    Leia mais
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  </span>
+                  {/* Título */}
+                  <h3 className="font-bold text-lg mb-3 line-clamp-2 group-hover:text-blue-400 transition-colors min-h-[3.5rem]" style={{ color: 'var(--text-primary)' }}>
+                    {item.title}
+                  </h3>
+
+                  {/* Resumo */}
+                  <p className="text-sm mb-4 line-clamp-3 leading-relaxed min-h-[4.5rem]" style={{ color: 'var(--text-secondary)' }}>
+                    {item.summary}
+                  </p>
+
+                  {/* Keywords - Clicáveis */}
+                  <div className="mb-4">
+                    <div className="flex flex-wrap gap-1.5">
+                      {item.keywords.slice(0, 3).map((keyword, idx) => (
+                        <button
+                          key={idx}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleTagClick(keyword);
+                          }}
+                          className="px-2 py-0.5 rounded text-xs font-medium border transition-all hover:scale-105 hover:shadow-md cursor-pointer"
+                          style={{
+                            backgroundColor: 'var(--bg-secondary)',
+                            borderColor: 'var(--border-light)',
+                            color: 'var(--text-tertiary)'
+                          }}
+                          title={`🔍 Buscar por: ${keyword}`}
+                        >
+                          {keyword}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Categorias */}
+                  <div className="mb-4 pb-4 border-b" style={{ borderColor: 'var(--border-light)' }}>
+                    <div className="flex flex-wrap gap-1.5">
+                      {item.category.slice(0, 2).map((cat, idx) => (
+                        <span
+                          key={idx}
+                          className="px-2 py-0.5 rounded text-xs font-medium border"
+                          style={{
+                            backgroundColor: 'var(--bg-secondary)',
+                            borderColor: 'var(--border-light)',
+                            color: 'var(--text-tertiary)'
+                          }}
+                        >
+                          {cat}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Spacer to push link to bottom */}
+                  <div className="flex-grow"></div>
+
+                  {/* Link Leia Mais */}
+                  <div className="pt-3">
+                    <div className="flex items-center justify-between px-4 py-3 rounded-xl border transition-all group-hover:shadow-md" style={{
+                      backgroundColor: 'var(--bg-secondary)',
+                      borderColor: 'var(--border-light)',
+                      color: 'var(--text-primary)'
+                    }}>
+                      <span className="font-bold text-sm">Ler notícia completa</span>
+                      <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
               </Link>
             ))}

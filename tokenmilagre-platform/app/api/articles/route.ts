@@ -9,8 +9,14 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const category = searchParams.get('category');
     const published = searchParams.get('published');
+    const type = searchParams.get('type');
 
-    const where: { category?: string; published?: boolean } = {};
+    const where: { category?: string; published?: boolean; type?: string } = {};
+
+    // Filtrar por tipo (news ou educational)
+    if (type) {
+      where.type = type;
+    }
 
     // Filtrar por categoria
     if (category && category !== 'all') {
@@ -42,24 +48,44 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    // Transformar para formato compatível com NewsItem
-    const formattedArticles = articles.map((article) => ({
-      id: article.id,
-      slug: article.slug,
-      title: article.title,
-      summary: article.excerpt || '',
-      content: article.content,
-      url: `/dashboard/noticias/${article.slug}`,
-      source: '$MILAGRE Research',
-      sources: ['$MILAGRE Research'],
-      publishedAt: article.createdAt.toISOString(),
-      category: [article.category.charAt(0).toUpperCase() + article.category.slice(1)],
-      sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
-      keywords: JSON.parse(article.tags || '[]'),
-      factChecked: true,
-      lastVerified: article.updatedAt.toISOString(),
-      author: article.author.name || article.author.email
-    }));
+    // Transformar para formato compatível com NewsItem ou EducationItem
+    const formattedArticles = articles.map((article) => {
+      const baseData = {
+        id: article.id,
+        slug: article.slug,
+        title: article.title,
+        summary: article.excerpt || '',
+        content: article.content,
+        publishedAt: article.createdAt.toISOString(),
+        author: article.author.name || article.author.email
+      };
+
+      // Se for artigo educacional, incluir campos específicos
+      if (article.type === 'educational') {
+        return {
+          ...baseData,
+          type: article.type,
+          level: article.level || 'iniciante',
+          contentType: article.contentType || 'Artigo',
+          readTime: article.readTime || '5 min',
+          category: article.category
+        };
+      }
+
+      // Se for notícia, incluir campos específicos
+      return {
+        ...baseData,
+        type: article.type,
+        url: `/dashboard/noticias/${article.slug}`,
+        source: '$MILAGRE Research',
+        sources: ['$MILAGRE Research'],
+        category: [article.category.charAt(0).toUpperCase() + article.category.slice(1)],
+        sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
+        keywords: JSON.parse(article.tags || '[]'),
+        factChecked: true,
+        lastVerified: article.updatedAt.toISOString()
+      };
+    });
 
     return NextResponse.json({
       success: true,

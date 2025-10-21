@@ -145,10 +145,10 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
           {/* Busca e Filtros */}
-          <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
+          <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-md" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-light)' }}>
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
-                🔍 Busca e Filtros
+                Busca e Filtros
                 {getActiveFiltersCount() > 0 && (
                   <span className="ml-2 px-2 py-1 text-xs rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 font-bold">
                     {getActiveFiltersCount()}
@@ -225,7 +225,7 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
                     <button
                       key={cat.id}
                       onClick={() => setSelectedCategory(cat.id)}
-                      className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                      className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${
                         selectedCategory === cat.id
                           ? 'shadow-md'
                           : 'hover:opacity-80'
@@ -251,7 +251,7 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
                     <button
                       key={level.id}
                       onClick={() => setSelectedLevel(level.id)}
-                      className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                      className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${
                         selectedLevel === level.id
                           ? 'shadow-md'
                           : 'hover:opacity-80'
@@ -280,7 +280,7 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
               <Link
                 key={resource.id}
                 href={`/educacao/${resource.slug}`}
-                className="block p-6 rounded-xl border transition-all hover:shadow-lg cursor-pointer"
+                className="block p-6 rounded-xl border shadow-md transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-lg cursor-pointer"
                 style={{
                   backgroundColor: 'var(--bg-secondary)',
                   borderColor: 'var(--border-light)'
@@ -344,13 +344,13 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
           {/* Roadmap de Aprendizagem */}
           <div className="space-y-6">
             <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-              Trilha de Aprendizagem
+              O que você vai aprender
             </h2>
 
             <div className="space-y-4">
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                  🌱
+                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold" style={{ backgroundColor: 'var(--brand-primary)', color: 'var(--text-inverse)' }}>
+                  1
                 </div>
                 <div className="flex-1">
                   <h3 className="font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Iniciante</h3>
@@ -361,8 +361,8 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                  🚀
+                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold" style={{ backgroundColor: 'var(--brand-primary)', color: 'var(--text-inverse)' }}>
+                  2
                 </div>
                 <div className="flex-1">
                   <h3 className="font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Intermediário</h3>
@@ -373,8 +373,8 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                  💎
+                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold" style={{ backgroundColor: 'var(--brand-primary)', color: 'var(--text-inverse)' }}>
+                  3
                 </div>
                 <div className="flex-1">
                   <h3 className="font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Avançado</h3>

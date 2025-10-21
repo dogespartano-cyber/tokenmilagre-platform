@@ -208,12 +208,33 @@ export default function RecursosPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Função para retornar gradiente baseado na categoria
+  const getCategoryGradient = (category: string) => {
+    const gradients: Record<string, string> = {
+      'wallets': 'linear-gradient(135deg, #F6851B 0%, #E2761B 100%)', // Laranja (MetaMask)
+      'exchanges': 'linear-gradient(135deg, #F3BA2F 0%, #EAA42D 100%)', // Dourado (Binance)
+      'defi': 'linear-gradient(135deg, #FF007A 0%, #E6006E 100%)', // Rosa (Uniswap)
+      'explorers': 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)', // Azul
+      'tools': 'linear-gradient(135deg, #10B981 0%, #059669 100%)', // Verde
+    };
+    return gradients[category] || 'linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)'; // Roxo padrão
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 400);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Ler parâmetro de busca da URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    if (searchParam) {
+      setSearchTerm(searchParam);
+    }
   }, []);
 
   const clearAllFilters = () => {
@@ -288,10 +309,10 @@ export default function RecursosPage() {
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
           {/* Busca e Filtros */}
-          <div className="backdrop-blur-lg rounded-2xl p-6 border-2 shadow-xl" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
+          <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-md" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-light)' }}>
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
-                🔍 Busca e Filtros
+                Busca e Filtros
                 {getActiveFiltersCount() > 0 && (
                   <span className="ml-2 px-2 py-1 text-xs rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 font-bold">
                     {getActiveFiltersCount()}
@@ -368,7 +389,7 @@ export default function RecursosPage() {
                     <button
                       key={cat.id}
                       onClick={() => setSelectedCategory(cat.id)}
-                      className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                      className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${
                         selectedCategory === cat.id
                           ? 'shadow-md'
                           : 'hover:opacity-80'
@@ -391,88 +412,85 @@ export default function RecursosPage() {
             </div>
           </div>
 
-          {/* Grid de Recursos */}
+          {/* Grid de Recursos - DESIGN GRADIENTE */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredResources.map((resource) => (
-              <div
+              <a
                 key={resource.id}
-                className="p-6 rounded-xl border-2 transition-all hover:shadow-xl"
+                href={resource.officialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
                 style={{
-                  backgroundColor: 'var(--bg-elevated)',
-                  borderColor: 'var(--border-medium)'
+                  background: getCategoryGradient(resource.category),
+                  minHeight: '240px'
                 }}
               >
-                {/* Header */}
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                    {resource.name}
-                  </h3>
-                  {resource.verified && (
-                    <span className="px-2 py-1 rounded text-xs font-bold flex items-center gap-1" style={{
-                      backgroundColor: '#22c55e',
-                      color: 'white'
-                    }}>
-                      ✓ Verificado
-                    </span>
-                  )}
+                {/* Overlay escuro sutil */}
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
+
+                {/* Conteúdo */}
+                <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                  <div>
+                    {/* Header - Badge categoria e verificado */}
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="inline-block px-2 py-1 rounded-md text-xs font-bold bg-white/20 backdrop-blur-sm">
+                        {categories.find(c => c.id === resource.category)?.label || resource.category}
+                      </div>
+                      {resource.verified && (
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </div>
+
+                    {/* Nome */}
+                    <h3 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                      {resource.name}
+                    </h3>
+
+                    {/* Descrição */}
+                    <p className="text-sm opacity-90 mb-4 line-clamp-2">
+                      {resource.description}
+                    </p>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {resource.tags.slice(0, 3).map((tag, index) => (
+                        <span
+                          key={index}
+                          className="px-2 py-0.5 rounded text-xs font-medium bg-white/15 backdrop-blur-sm"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Footer */}
+                  <div className="space-y-3">
+                    {/* Plataformas */}
+                    <div className="flex flex-wrap gap-1.5">
+                      {resource.platforms.map((platform, index) => (
+                        <span
+                          key={index}
+                          className="px-2 py-0.5 rounded text-xs font-semibold bg-white/20 backdrop-blur-sm"
+                        >
+                          {platform}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* CTA com seta */}
+                    <div className="flex items-center justify-between pt-2 border-t border-white/20">
+                      <span className="text-sm font-bold">Acessar plataforma</span>
+                      <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
-
-                {/* Descrição */}
-                <p className="text-sm mb-4 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  {resource.description}
-                </p>
-
-                {/* Plataformas */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {resource.platforms.map((platform, index) => (
-                    <span
-                      key={index}
-                      className="px-2 py-1 rounded text-xs font-medium"
-                      style={{
-                        backgroundColor: 'var(--bg-secondary)',
-                        color: 'var(--text-tertiary)'
-                      }}
-                    >
-                      {platform}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {resource.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="px-2 py-1 rounded text-xs"
-                      style={{
-                        backgroundColor: 'var(--bg-secondary)',
-                        color: 'var(--text-tertiary)'
-                      }}
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Link Oficial */}
-                <a
-                  href={resource.officialUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-center px-4 py-3 rounded-lg font-bold transition-all hover:opacity-90"
-                  style={{
-                    backgroundColor: 'var(--brand-primary)',
-                    color: 'var(--text-inverse)'
-                  }}
-                >
-                  Acessar Site Oficial →
-                </a>
-
-                {/* URL exibida */}
-                <p className="text-xs mt-2 text-center break-all" style={{ color: 'var(--text-tertiary)' }}>
-                  {resource.officialUrl}
-                </p>
-              </div>
+              </a>
             ))}
           </div>
 

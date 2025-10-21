@@ -76,7 +76,7 @@ export default function CustomCryptoScreener() {
       columnHelper.accessor('market_cap_rank', {
         header: '#',
         cell: info => (
-          <span className="text-[#64748B] font-mono text-sm">
+          <span className="font-mono text-sm" style={{ color: 'var(--text-tertiary)' }}>
             {info.getValue()}
           </span>
         ),
@@ -93,10 +93,10 @@ export default function CustomCryptoScreener() {
               className="w-6 h-6 rounded-full"
             />
             <div>
-              <p className="text-[#E0E6ED] font-semibold text-sm">
+              <p className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>
                 {info.getValue()}
               </p>
-              <p className="text-[#64748B] text-xs uppercase">
+              <p className="text-xs uppercase" style={{ color: 'var(--text-tertiary)' }}>
                 {info.row.original.symbol}
               </p>
             </div>
@@ -107,7 +107,7 @@ export default function CustomCryptoScreener() {
       columnHelper.accessor('current_price', {
         header: 'Preço',
         cell: info => (
-          <span className="text-[#FFFFFF] font-semibold font-mono">
+          <span className="font-semibold font-mono" style={{ color: 'var(--text-primary)' }}>
             ${info.getValue().toLocaleString('en-US', {
               minimumFractionDigits: 2,
               maximumFractionDigits: info.getValue() < 1 ? 6 : 2
@@ -140,7 +140,7 @@ export default function CustomCryptoScreener() {
       columnHelper.accessor('market_cap', {
         header: 'Market Cap',
         cell: info => (
-          <span className="text-[#94A3B8] font-mono">
+          <span className="font-mono" style={{ color: 'var(--text-secondary)' }}>
             ${(info.getValue() / 1e9).toFixed(2)}B
           </span>
         ),
@@ -149,7 +149,7 @@ export default function CustomCryptoScreener() {
       columnHelper.accessor('total_volume', {
         header: 'Volume 24h',
         cell: info => (
-          <span className="text-[#94A3B8] font-mono">
+          <span className="font-mono" style={{ color: 'var(--text-secondary)' }}>
             ${(info.getValue() / 1e9).toFixed(2)}B
           </span>
         ),
@@ -159,7 +159,7 @@ export default function CustomCryptoScreener() {
         header: '7 Dias',
         cell: info => {
           const prices = info.getValue() || [];
-          if (prices.length === 0) return <span className="text-[#64748B]">—</span>;
+          if (prices.length === 0) return <span style={{ color: 'var(--text-tertiary)' }}>—</span>;
 
           const firstPrice = prices[0];
           const lastPrice = prices[prices.length - 1];
@@ -217,30 +217,42 @@ export default function CustomCryptoScreener() {
 
   if (loading) {
     return (
-      <div className="bg-gradient-to-br from-[#142841] to-[#1E3A5F] rounded-2xl p-12 border-2 border-[#2A4A6E] shadow-xl">
+      <div className="rounded-2xl p-12 border-2 shadow-xl" style={{
+        backgroundColor: 'var(--bg-elevated)',
+        borderColor: 'var(--border-medium)'
+      }}>
         <div className="flex flex-col items-center justify-center gap-4">
-          <FontAwesomeIcon icon={faSpinner} className="w-12 h-12 text-[#10B981] animate-spin" />
-          <p className="text-[#94A3B8] text-lg">Carregando dados do mercado...</p>
+          <FontAwesomeIcon icon={faSpinner} className="w-12 h-12 animate-spin" style={{ color: 'var(--brand-primary)' }} />
+          <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>Carregando dados do mercado...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-gradient-to-br from-[#142841] to-[#1E3A5F] rounded-2xl border-2 border-[#2A4A6E] shadow-xl overflow-hidden">
+    <div className="rounded-2xl border-2 shadow-xl overflow-hidden" style={{
+      backgroundColor: 'var(--bg-elevated)',
+      borderColor: 'var(--border-medium)'
+    }}>
       {/* Search Bar */}
-      <div className="p-4 border-b border-[#2A4A6E]/60">
+      <div className="p-4 border-b" style={{ borderColor: 'var(--border-light)' }}>
         <div className="relative">
           <FontAwesomeIcon
             icon={faSearch}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-[#64748B] w-4 h-4"
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4"
+            style={{ color: 'var(--text-tertiary)' }}
           />
           <input
             type="text"
             value={globalFilter ?? ''}
             onChange={e => setGlobalFilter(e.target.value)}
             placeholder="Buscar criptomoeda..."
-            className="w-full bg-[#0A1628] border border-[#2A4A6E] rounded-lg pl-12 pr-4 py-3 text-[#E0E6ED] placeholder-[#64748B] focus:outline-none focus:border-[#10B981] transition-colors"
+            className="w-full border rounded-lg pl-12 pr-4 py-3 focus:outline-none transition-colors"
+            style={{
+              backgroundColor: 'var(--bg-secondary)',
+              borderColor: 'var(--border-medium)',
+              color: 'var(--text-primary)'
+            }}
           />
         </div>
       </div>
@@ -250,12 +262,13 @@ export default function CustomCryptoScreener() {
         <table className="w-full">
           <thead>
             {table.getHeaderGroups().map(headerGroup => (
-              <tr key={headerGroup.id} className="border-b border-[#2A4A6E]/60">
+              <tr key={headerGroup.id} className="border-b" style={{ borderColor: 'var(--border-light)' }}>
                 {headerGroup.headers.map(header => (
                   <th
                     key={header.id}
-                    className="px-4 py-3 text-left text-[#94A3B8] text-xs font-semibold uppercase tracking-wider cursor-pointer hover:text-[#E0E6ED] transition-colors"
+                    className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider cursor-pointer hover:opacity-80 transition-colors"
                     onClick={header.column.getToggleSortingHandler()}
+                    style={{ color: 'var(--text-secondary)' }}
                   >
                     <div className="flex items-center gap-2">
                       {flexRender(
@@ -263,8 +276,8 @@ export default function CustomCryptoScreener() {
                         header.getContext()
                       )}
                       {{
-                        asc: <FontAwesomeIcon icon={faArrowUp} className="w-3 h-3 text-[#10B981]" />,
-                        desc: <FontAwesomeIcon icon={faArrowDown} className="w-3 h-3 text-[#10B981]" />,
+                        asc: <FontAwesomeIcon icon={faArrowUp} className="w-3 h-3" style={{ color: 'var(--brand-primary)' }} />,
+                        desc: <FontAwesomeIcon icon={faArrowDown} className="w-3 h-3" style={{ color: 'var(--brand-primary)' }} />,
                       }[header.column.getIsSorted() as string] ?? null}
                     </div>
                   </th>
@@ -276,7 +289,14 @@ export default function CustomCryptoScreener() {
             {table.getRowModel().rows.map(row => (
               <tr
                 key={row.id}
-                className="border-b border-[#2A4A6E]/30 hover:bg-[#1E3A5F]/50 transition-colors duration-200"
+                className="border-b transition-colors duration-200"
+                style={{ borderColor: 'var(--border-light)' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--bg-secondary)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
               >
                 {row.getVisibleCells().map(cell => (
                   <td key={cell.id} className="px-4 py-4">
@@ -290,8 +310,8 @@ export default function CustomCryptoScreener() {
       </div>
 
       {/* Pagination */}
-      <div className="p-4 border-t border-[#2A4A6E]/60 flex items-center justify-between">
-        <div className="text-[#94A3B8] text-sm">
+      <div className="p-4 border-t flex items-center justify-between" style={{ borderColor: 'var(--border-light)' }}>
+        <div className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           Mostrando {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} a{' '}
           {Math.min(
             (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
@@ -303,17 +323,27 @@ export default function CustomCryptoScreener() {
           <button
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-            className="px-4 py-2 bg-[#0A1628] border border-[#2A4A6E] rounded-lg text-[#E0E6ED] hover:bg-[#1E3A5F] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-4 py-2 border rounded-lg hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            style={{
+              backgroundColor: 'var(--bg-secondary)',
+              borderColor: 'var(--border-medium)',
+              color: 'var(--text-primary)'
+            }}
           >
             <FontAwesomeIcon icon={faChevronLeft} className="w-4 h-4" />
           </button>
-          <span className="text-[#94A3B8] text-sm px-4">
+          <span className="text-sm px-4" style={{ color: 'var(--text-secondary)' }}>
             Página {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
           </span>
           <button
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-            className="px-4 py-2 bg-[#0A1628] border border-[#2A4A6E] rounded-lg text-[#E0E6ED] hover:bg-[#1E3A5F] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-4 py-2 border rounded-lg hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            style={{
+              backgroundColor: 'var(--bg-secondary)',
+              borderColor: 'var(--border-medium)',
+              color: 'var(--text-primary)'
+            }}
           >
             <FontAwesomeIcon icon={faChevronRight} className="w-4 h-4" />
           </button>

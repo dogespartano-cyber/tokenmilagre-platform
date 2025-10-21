@@ -1,9 +1,29 @@
 'use client';
 
-import { useEffect, useRef, memo } from 'react';
+import { useEffect, useRef, memo, useState } from 'react';
 
 function TickerTapeWidget() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  useEffect(() => {
+    // Detectar tema atual
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    setTheme(isDark ? 'dark' : 'light');
+
+    // Observar mudanças no tema
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      setTheme(isDark ? 'dark' : 'light');
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -31,7 +51,7 @@ function TickerTapeWidget() {
       showSymbolLogo: true,
       isTransparent: true,
       displayMode: 'adaptive',
-      colorTheme: 'dark',
+      colorTheme: theme,
       locale: 'br'
     });
 
@@ -42,7 +62,7 @@ function TickerTapeWidget() {
         container.innerHTML = '';
       }
     };
-  }, []);
+  }, [theme]);
 
   return (
     <div className="tradingview-widget-container">
