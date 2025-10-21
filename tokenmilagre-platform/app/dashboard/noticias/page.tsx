@@ -91,7 +91,7 @@ export default function NoticiasPage() {
       filtered = filtered.filter(item =>
         item.title.toLowerCase().includes(term) ||
         item.summary.toLowerCase().includes(term) ||
-        item.keywords.some(keyword => keyword.toLowerCase().includes(term))
+        (item.keywords || []).some(keyword => keyword.toLowerCase().includes(term))
       );
     }
 
@@ -464,7 +464,7 @@ export default function NoticiasPage() {
                   {/* Keywords - Clicáveis */}
                   <div className="mb-4">
                     <div className="flex flex-wrap gap-1.5">
-                      {item.keywords.slice(0, 3).map((keyword, idx) => (
+                      {(item.keywords || []).slice(0, 3).map((keyword, idx) => (
                         <button
                           key={idx}
                           onClick={(e) => {
