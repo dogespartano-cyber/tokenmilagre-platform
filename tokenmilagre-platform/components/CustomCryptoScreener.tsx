@@ -61,12 +61,20 @@ export default function CustomCryptoScreener() {
       const response = await fetch(
         'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=24h'
       );
+
+      if (!response.ok) {
+        console.warn(`CoinGecko API returned status ${response.status}. Using cached data.`);
+        setLoading(false);
+        return;
+      }
+
       const json = await response.json();
       setData(json);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching crypto data:', error);
+      console.warn('Error fetching crypto data from CoinGecko (rate limit or CORS):', error);
       setLoading(false);
+      // Keep existing data if available, don't break the UI
     }
   };
 
@@ -224,6 +232,23 @@ export default function CustomCryptoScreener() {
         <div className="flex flex-col items-center justify-center gap-4">
           <FontAwesomeIcon icon={faSpinner} className="w-12 h-12 animate-spin" style={{ color: 'var(--brand-primary)' }} />
           <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>Carregando dados do mercado...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (data.length === 0) {
+    return (
+      <div className="rounded-2xl p-12 border-2 shadow-xl" style={{
+        backgroundColor: 'var(--bg-elevated)',
+        borderColor: 'var(--border-medium)'
+      }}>
+        <div className="flex flex-col items-center justify-center gap-4">
+          <div className="text-4xl">📊</div>
+          <p className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Dados temporariamente indisponíveis</p>
+          <p className="text-sm text-center max-w-md" style={{ color: 'var(--text-secondary)' }}>
+            A API do CoinGecko pode estar com rate limit. Os dados serão atualizados automaticamente quando disponíveis.
+          </p>
         </div>
       </div>
     );
