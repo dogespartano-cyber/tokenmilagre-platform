@@ -117,11 +117,11 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
         '1d': '1d',
       };
 
-      // Definir limite de candles baseado no timeframe
+      // Definir limite de candles baseado no timeframe (máximo permitido pela Binance é 1000)
       const limitMap = {
-        '15m': 96,  // 24 horas (96 velas de 15min)
-        '4h': 168,  // 4 semanas (168 velas de 4h)
-        '1d': 100,  // 100 dias
+        '15m': 500,  // ~5 dias (500 velas de 15min)
+        '4h': 500,   // ~83 dias (500 velas de 4h)
+        '1d': 500,   // 500 dias (~1.4 anos)
       };
 
       const interval = intervalMap[timeframe];
@@ -160,7 +160,7 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
   };
 
   return (
-    <div className="backdrop-blur-lg rounded-2xl border-2 shadow-xl overflow-hidden" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-medium)' }}>
+    <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: 'transparent' }}>
       {name && (
         <div className="px-4 pt-4 pb-2 flex items-center justify-between">
           <h4 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>{name}</h4>
