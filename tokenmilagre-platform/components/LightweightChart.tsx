@@ -14,6 +14,7 @@ type Timeframe = '15m' | '4h' | '1d';
 export default function LightweightChart({ symbol, name }: LightweightChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const [timeframe, setTimeframe] = useState<Timeframe>('1d');
+  const [currentPrice, setCurrentPrice] = useState<number | null>(null);
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -155,6 +156,12 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
 
       candlestickSeries.setData(formattedData);
       volumeSeries.setData(volumeData);
+
+      // Atualizar preço atual (último candle)
+      if (formattedData.length > 0) {
+        const lastCandle = formattedData[formattedData.length - 1];
+        setCurrentPrice(lastCandle.close);
+      }
     } catch (error) {
       console.error('Erro ao buscar dados da Binance:', error);
     }
@@ -164,7 +171,17 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
     <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: 'transparent' }}>
       {name && (
         <div className="px-4 pt-4 pb-2 flex items-center justify-between">
-          <h4 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>{name}</h4>
+          <div className="flex items-center gap-3">
+            <h4 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>{name}</h4>
+            {currentPrice && (
+              <div className="px-3 py-1 rounded-lg font-bold text-lg" style={{
+                backgroundColor: 'var(--brand-primary)',
+                color: 'white'
+              }}>
+                ${currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </div>
+            )}
+          </div>
 
           {/* Timeframe Selector */}
           <div className="flex gap-1 rounded-lg p-1" style={{ backgroundColor: 'var(--bg-secondary)' }}>

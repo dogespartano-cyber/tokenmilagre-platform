@@ -14,6 +14,7 @@ type Timeframe = '15m' | '4h' | '1d';
 export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const [timeframe, setTimeframe] = useState<Timeframe>('1d');
+  const [currentPrice, setCurrentPrice] = useState<number | null>(null);
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -63,6 +64,12 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
         }));
 
         series.candlestick.setData(candleData);
+
+        // Atualizar preço atual (último candle)
+        if (candleData.length > 0) {
+          const lastCandle = candleData[candleData.length - 1];
+          setCurrentPrice(lastCandle.close);
+        }
 
         // Calcular indicadores
         const closes = candleData.map((d) => d.close);
@@ -316,6 +323,23 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
 
   return (
     <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: 'transparent' }}>
+      {/* Título e Preço */}
+      {name && (
+        <div className="px-4 pt-4 pb-2">
+          <div className="flex items-center gap-3">
+            <h4 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>{name}</h4>
+            {currentPrice && (
+              <div className="px-3 py-1 rounded-lg font-bold text-lg" style={{
+                backgroundColor: 'var(--brand-primary)',
+                color: 'white'
+              }}>
+                ${currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Timeframe Selector - Compacto no topo */}
       <div className="px-4 pt-3 pb-2 flex items-center justify-between">
         <div className="flex gap-1 rounded-lg p-1" style={{ backgroundColor: 'var(--bg-secondary)' }}>
