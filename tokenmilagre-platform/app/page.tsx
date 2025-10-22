@@ -1093,19 +1093,14 @@ export default function HomePage() {
                 <AdvancedChart symbol="BTCUSDT" name="Bitcoin (BTC/USDT)" />
               </div>
 
-              {/* Gráficos ao Vivo */}
+              {/* Ethereum - Análise Completa */}
               <div className="space-y-4">
-                <div className="grid lg:grid-cols-2 md:grid-cols-2 gap-6">
-                  {/* ETH Chart */}
-                  <div>
-                    <LightweightChart symbol="ETHUSDT" name="Ethereum (ETH/USDT)" />
-                  </div>
+                <AdvancedChart symbol="ETHUSDT" name="Ethereum (ETH/USDT)" />
+              </div>
 
-                  {/* SOL Chart */}
-                  <div>
-                    <LightweightChart symbol="SOLUSDT" name="Solana (SOL/USDT)" />
-                  </div>
-                </div>
+              {/* Solana - Análise Completa */}
+              <div className="space-y-4">
+                <AdvancedChart symbol="SOLUSDT" name="Solana (SOL/USDT)" />
               </div>
 
               {/* Análise Técnica Avançada */}
