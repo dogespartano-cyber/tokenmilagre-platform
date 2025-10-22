@@ -12,6 +12,9 @@
 # Instalar dependências
 npm install
 
+# Gerar Prisma Client
+npx prisma generate
+
 # Rodar servidor de desenvolvimento
 npm run dev
 
@@ -30,360 +33,270 @@ npm start
 
 ## 🔧 Stack Tecnológico
 
-- **Framework:** Next.js 15.5.4 (App Router)
+- **Framework:** Next.js 15.5.4 (App Router + Turbopack)
 - **Linguagem:** TypeScript
-- **Estilização:** Tailwind CSS 4
+- **Banco de Dados:** Neon PostgreSQL
+- **ORM:** Prisma
+- **Estilização:** Tailwind CSS 4 + CSS Variables
 - **Blockchain:** Solana (via @solana/web3.js)
-- **Wallet:** Phantom Integration
-- **Markdown:** react-markdown para artigos
+- **Markdown:** react-markdown
 - **Gráficos:** TradingView Widgets + Lightweight Charts
-- **Deploy:** Vercel (CI/CD via GitHub)
+- **Deploy:** Vercel
 
 ## ✨ Features Principais
 
 ### 🏠 Homepage
-- ✅ Landing page com design celestial (gradiente azul/roxo)
-- ✅ Integração Phantom Wallet
-- ✅ Sistema de tiers baseado em holdings:
-  - 1.000+ $MILAGRE = Apoiador
-  - 10.000+ $MILAGRE = Guardião
-  - 50.000+ $MILAGRE = Anjo Guardião
-- ✅ FAQ interativa com acordeões
-- ✅ Links para compra (Pump.fun) e comunidade
-- ✅ Design responsivo mobile-first
+- Hero section com ticker de preços em tempo real
+- Dados de mercado (Market Cap, Volume, Dominância BTC/ETH)
+- Fear & Greed Index com velocímetro interativo
+- Gráfico Bitcoin (TradingView Lightweight Charts)
+- Últimas notícias (4 cards)
+- Cards de artigos educacionais (carousel 2 slides)
+- Ferramentas essenciais (MetaMask, Binance, Uniswap)
+- Design minimalista com bordas sutis e sombras harmônicas
 
-### 📜 Manifesto
-- ✅ Página dedicada ao Manifesto $MILAGRE
-- ✅ 12 seções completas renderizadas
-- ✅ Seção de resumo na homepage
-- ✅ Contador dinâmico de signatários (sincronizado globalmente)
-- ✅ Sistema de assinatura do manifesto
+### 📚 Educação (`/educacao`)
+- 6 artigos educacionais completos armazenados em PostgreSQL
+- Sistema de filtros (Busca + Categorias + Níveis)
+- Níveis: Iniciante (1), Intermediário (2), Avançado (3)
+- Categorias: Blockchain, Trading, DeFi, NFTs, Segurança, Desenvolvimento
+- Artigos com índice lateral e scroll tracking
+- Compartilhamento social (Twitter, Telegram, WhatsApp)
 
-### 💼 Dashboard do Holder
+### 🔗 Recursos (`/recursos`)
+- Links oficiais verificados de ferramentas cripto
+- Design com gradientes categorizados:
+  - Wallets (laranja), Exchanges (dourado), DeFi (rosa)
+  - Explorers (azul), Tools (verde)
+- Sistema de busca e filtros por categoria
+- Badge de verificação em todos os recursos
+- Avisos de segurança destacados
 
-#### Portfolio Tracker
-- ✅ Conexão segura com Phantom Wallet
-- ✅ Exibição de saldo $MILAGRE em tempo real
-- ✅ Cálculo automático de tier/nível
-- ✅ Badge visual do nível do holder
-- ✅ Link direto para Solscan (histórico blockchain)
+### 📰 Notícias (`/dashboard/noticias`)
+- Notícias armazenadas em PostgreSQL via Prisma
+- Filtros combinados (Ordenação + Sentimento)
+- Análise de sentimento (🟢 Positivo, 🟡 Neutro, 🔴 Negativo)
+- Páginas dinâmicas `/dashboard/noticias/[slug]`
+- Template com processamento automático (remove H1, fontes, adiciona nota de transparência)
+- Índice lateral navegável
 
-#### Análise de Mercado
-- ✅ **TradingView Ticker Tape** horizontal (BTC, ETH, SOL)
-- ✅ **Gráfico Bitcoin Avançado** com indicadores técnicos:
-  - SMA 20 e SMA 50 (Médias Móveis)
-  - Bandas de Bollinger
-  - RSI (Relative Strength Index)
-- ✅ **3 Gráficos Lightweight Charts** profissionais (BTC, ETH, SOL)
-  - Candlesticks com cores fortes (verde/vermelho)
-  - Volume bars sincronizados
-  - Timeframes: 15m, 4h, 1d
-  - Dados em tempo real da Binance API
-- ✅ 3 Widgets de Análise Técnica (RSI, MACD, Médias Móveis)
-- ✅ Crypto Heatmap (visão geral do mercado)
-- ✅ Market Screener (tabela de todas criptos)
-- ✅ Market Insights em tempo real:
-  - Fear & Greed Index (via Alternative.me)
-  - Altcoin Season Index
-  - Métricas de mercado (Market Cap, Volume 24h, Dominância BTC/ETH)
-- ✅ Links úteis (CoinGecko, DeFi Llama, CoinMarketCap)
+### 💝 Doações (`/doacoes`)
+- 4 razões para confiar (Transparência, Sem Intermediários, Impacto Real, Comunidade)
+- Distribuição de recursos (40% Educação, 30% Dev, 20% Apoio, 10% Crescimento)
+- Métodos: Solana (SOL), $MILAGRE Token, PIX
+- Botão copiar endereço com feedback visual
+- Avisos de segurança
 
-#### Sistema de Notícias Cripto
-- ✅ **Workflow Perplexity + Claude Code** (conteúdo verificado)
-- ✅ Artigos completos em Markdown (500-1500 palavras)
-- ✅ Fontes REAIS e verificáveis
-- ✅ Páginas dinâmicas `/dashboard/noticias/[slug]`
-- ✅ Filtros por categoria (Bitcoin, Ethereum, Solana, DeFi, NFTs, Regulação)
-- ✅ Análise de sentimento (🟢 Positivo, 🟡 Neutro, 🔴 Negativo)
-- ✅ Cards clicáveis com "Leia mais"
-- ✅ URLs amigáveis (slug-based)
-- ✅ Interface de leitura otimizada com prose styling
-- ✅ Armazenamento em `data/news.json`
+### 📜 Manifesto (`/manifesto`)
+- Manifesto completo da comunidade $MILAGRE
+- 12 seções com navegação lateral
+- Sistema de scroll suave
 
-### 🎨 UI/UX
-- ✅ Design glassmorphism (backdrop-blur + transparências)
-- ✅ Sidebar navegação sticky/fixa
-- ✅ Botões de ação estratégicos ("Comprar $MILAGRE")
-- ✅ Logos consistentes em todas as páginas
-- ✅ Animações suaves e transições
-- ✅ Estados de loading e empty states
-- ✅ Backgrounds transparentes para integração com gradiente
+### ℹ️ Sobre (`/sobre`)
+- História e missão do projeto
+- Valores da comunidade
+- Links sociais e de contato
 
 ## 📁 Estrutura do Projeto
 
 ```
 tokenmilagre-platform/
-├── app/
-│   ├── api/
-│   │   ├── news/route.ts              # API de notícias com cache
-│   │   └── process-news/route.ts      # Processamento de notícias
-│   ├── dashboard/
-│   │   ├── layout.tsx                 # Layout com sidebar
-│   │   ├── page.tsx                   # Portfolio tracker
-│   │   ├── mercado/page.tsx           # Análise de mercado
-│   │   ├── noticias/
-│   │   │   ├── page.tsx               # Listagem de notícias
-│   │   │   └── [slug]/page.tsx        # Artigo completo
-│   ├── manifesto/page.tsx             # Página do manifesto
-│   ├── page.tsx                       # Homepage
-│   └── layout.tsx                     # Root layout
-├── components/
-│   ├── AdvancedChart.tsx              # 🆕 Chart BTC com indicadores
-│   ├── LightweightChart.tsx           # 🆕 Charts profissionais
-│   ├── TickerTapeWidget.tsx           # 🆕 Ticker horizontal
-│   ├── TradingViewWidget.tsx          # Gráfico TradingView
-│   ├── TechnicalAnalysisWidget.tsx    # Análise técnica
-│   ├── CryptoHeatmapWidget.tsx        # Heatmap
-│   └── CryptoScreenerWidget.tsx       # Screener
-├── data/
-│   └── news.json                      # Artigos persistidos
-├── public/
-│   └── images/                        # Assets
-└── README.md
+├── app/                          # Next.js App Router
+│   ├── api/                      # API Routes
+│   │   └── articles/             # API de artigos/notícias
+│   ├── dashboard/                # Dashboard com sidebar
+│   │   └── noticias/             # Sistema de notícias
+│   │       ├── page.tsx          # Listagem
+│   │       └── [slug]/           # Artigo individual
+│   ├── educacao/                 # Artigos educacionais
+│   │   ├── page.tsx              # Server Component (Prisma)
+│   │   ├── EducacaoClient.tsx    # Client Component
+│   │   └── [slug]/               # Artigo individual
+│   ├── recursos/                 # Links e ferramentas
+│   ├── doacoes/                  # Página de doações
+│   ├── manifesto/                # Manifesto
+│   ├── sobre/                    # Sobre o projeto
+│   ├── page.tsx                  # Homepage
+│   ├── layout.tsx                # Root layout
+│   └── globals.css               # CSS global + variables
+├── components/                   # Componentes React
+│   ├── AdvancedChart.tsx         # Gráfico BTC com indicadores
+│   ├── LightweightChart.tsx      # Charts profissionais
+│   ├── TickerTapeWidget.tsx      # Ticker horizontal
+│   ├── Sidebar.tsx               # Navegação lateral
+│   ├── Header.tsx                # Header do site
+│   └── ...                       # Outros componentes
+├── contexts/                     # React Contexts
+│   └── ThemeContext.tsx          # Tema claro/escuro
+├── hooks/                        # Custom React Hooks
+├── lib/                          # Bibliotecas e utilitários
+│   ├── prisma.ts                 # Prisma Client singleton
+│   └── generated/prisma/         # Prisma Client gerado
+├── prisma/                       # Prisma ORM
+│   ├── schema.prisma             # Schema do banco
+│   └── seed.ts                   # Seed inicial
+├── scripts/                      # Scripts utilitários
+│   ├── check-*.js                # Scripts de verificação
+│   ├── list-*.js                 # Scripts de listagem
+│   ├── delete-*.js               # Scripts de remoção
+│   └── watch-articles.js         # Watcher de artigos
+├── public/                       # Assets estáticos
+│   └── images/                   # Imagens
+├── types/                        # TypeScript types
+└── README.md                     # Este arquivo
+```
+
+## 🗄️ Banco de Dados
+
+### PostgreSQL + Prisma
+
+**Banco:** Neon PostgreSQL (Vercel Marketplace)
+**Client:** `lib/generated/prisma` (caminho customizado)
+
+```bash
+# Gerar Prisma Client
+npx prisma generate
+
+# Aplicar mudanças no schema
+npx prisma db push
+
+# Abrir Prisma Studio
+npm run db:studio
+```
+
+### Schema Principal
+
+```prisma
+model Article {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  excerpt     String
+  content     String
+  category    String
+  tags        String   // JSON array
+  sentiment   String?
+  type        String   // 'news' | 'educational'
+  level       String?  // 'iniciante' | 'intermediario' | 'avancado'
+  contentType String?  // 'Artigo' | 'Tutorial'
+  readTime    String?
+  published   Boolean  @default(false)
+  authorId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  author      User     @relation(fields: [authorId], references: [id])
+}
 ```
 
 ## 🔌 APIs e Integrações
 
 ### Blockchain
 - **Solana Web3.js**: Conexão com blockchain Solana
-- **Phantom Wallet**: Autenticação e transações
 - **Token Address**: `3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump`
 
 ### Dados de Mercado
-- **Binance API**: Dados de candlesticks e volume em tempo real
+- **Binance API**: Candlesticks e volume em tempo real
 - **CoinGecko API**: Market cap, volume, dominância
 - **Alternative.me API**: Fear & Greed Index
-- **TradingView**: Gráficos e análise técnica embarcada
-
-### Gráficos Profissionais
-- **Lightweight Charts v5.0.9**: Biblioteca TradingView para gráficos avançados
-- **Indicadores Técnicos**:
-  - SMA (Simple Moving Average) 20 e 50 períodos
-  - Bollinger Bands (20 períodos, 2 desvios padrão)
-  - RSI (Relative Strength Index, 14 períodos)
-- **Timeframes**: 15 minutos, 4 horas, 1 dia
-- **Fonte de Dados**: Binance Klines API
-
-## 🎯 Sistema de Criação de Artigos
-
-### Workflow Recomendado (Perplexity + Claude Code)
-
-Este é o método mais eficiente e confiável para criar artigos de notícias:
-
-#### 1. Pesquisa com Perplexity Pro
-```
-Prompt: "Pesquise notícias recentes sobre [tema] em fontes confiáveis de criptomoedas.
-Inclua dados verificáveis e cite as fontes."
-```
-
-**Vantagens:**
-- ✅ Fontes REAIS e verificáveis
-- ✅ Fact-checking automático
-- ✅ Múltiplas fontes citadas
-- ✅ Dados atualizados
-
-#### 2. Formatação com Claude Code
-
-Cole o texto do Perplexity no Claude Code e peça:
-```
-"Formate este conteúdo como artigo para o $MILAGRE seguindo o padrão:
-- Sentimento: [positive/neutral/negative]
-- Keywords: [lista]
-- Categorias: [Bitcoin, Ethereum, etc]"
-```
-
-Claude irá:
-- ✅ Estruturar o JSON
-- ✅ Adicionar metadata
-- ✅ Gerar slug amigável
-- ✅ Fazer commit automático
-
-#### 3. Commit & Deploy
-```bash
-# Claude Code faz automaticamente:
-git add data/news.json
-git commit -m "feat: Novo artigo sobre [tema]"
-git push
-```
-
-### Estrutura de um Artigo
-
-```typescript
-{
-  id: string;              // ID único
-  slug: string;            // URL amigável
-  title: string;           // Título
-  summary: string;         // Resumo (200 chars)
-  content: string;         // Artigo em Markdown
-  url: string;             // "#" para artigos próprios
-  source: string;          // "$MILAGRE Research"
-  publishedAt: string;     // ISO timestamp
-  category: string[];      // Categorias
-  sentiment: 'positive' | 'neutral' | 'negative';
-  keywords: string[];      // Keywords extraídas
-}
-```
-
-### Comparação de Métodos
-
-| Método | Tokens Claude | Fontes | Fact-check | Custo |
-|--------|---------------|--------|------------|-------|
-| **Perplexity + Claude** | ~10k | ✅ Reais | ✅ Auto | $ |
-| Claude + Gemini MCP | ~41k | ❌ Fictícias | ❌ Não | $$ |
-| Manual | ~8k | ✅ Reais | Manual | $ |
-
-**Recomendado**: Perplexity + Claude (melhor custo-benefício + fontes verificáveis)
+- **TradingView**: Gráficos embarcados
 
 ## 📝 Configuração
 
 ### Variáveis de Ambiente
 
-Copie `.env.local.example` para `.env.local`:
+Crie `.env` na raiz do projeto (copiar de `.env.example`):
 
 ```bash
+# Database (Neon PostgreSQL)
+DATABASE_URL="postgresql://..."
+DIRECT_URL="postgresql://..."
+
+# Solana
 NEXT_PUBLIC_SOLANA_NETWORK=mainnet-beta
 NEXT_PUBLIC_TOKEN_ADDRESS=3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump
 ```
 
-### Dependências Principais
+### Scripts Disponíveis
 
-```json
-{
-  "next": "15.5.4",
-  "react": "^19.0.0",
-  "typescript": "^5",
-  "@solana/web3.js": "^1.99.5",
-  "react-markdown": "^9.0.1",
-  "tailwindcss": "^4.1.0",
-  "lightweight-charts": "^5.0.9"
-}
+```bash
+# Desenvolvimento
+npm run dev              # Dev server (Turbopack)
+npm run build            # Build produção
+npm start                # Rodar build
+
+# Banco de Dados
+npm run db:push          # Aplicar schema
+npm run db:studio        # Prisma Studio
+npm run db:seed          # Seed inicial
+
+# Utilitários
+npm run lint             # ESLint
+npm run watch            # Watcher de artigos
 ```
 
 ## 🚀 Deploy
 
 ### Vercel (Recomendado)
 
-Este projeto está configurado para deploy automático via Vercel:
-
 1. Conecte o repositório GitHub à Vercel
-2. Configure as variáveis de ambiente
-3. Deploy automático a cada push na branch `main`
+2. Integre Neon PostgreSQL via Vercel Marketplace
+3. Variáveis de ambiente são configuradas automaticamente
+4. Deploy automático a cada push em `main`
 
-### Build Manual
+**IMPORTANTE**:
+- Manter script `postinstall: "prisma generate"` no package.json
+- Configurar `eslint.ignoreDuringBuilds: true` no next.config.ts
 
-```bash
-npm run build
-npm start
+## 🎨 Design System
+
+### CSS Variables
+
+Modo claro e escuro via CSS Variables:
+
+```css
+--text-primary, --text-secondary, --text-tertiary
+--bg-primary, --bg-secondary, --bg-elevated
+--brand-primary, --brand-hover
+--border-light, --border-medium
+--shadow-md, --shadow-lg
 ```
 
-## 📊 Métricas do Projeto
+### Padrões
 
-- **First Load JS**: ~120 KB (com lightweight-charts)
-- **Rotas estáticas**: 9 páginas
-- **Rotas dinâmicas**: 2 APIs
-- **Tempo de build**: ~15-20s
-- **Lighthouse Score**: 90+ (Performance, A11y, Best Practices)
+- **Bordas**: 1px quase invisíveis (`--border-light`)
+- **Sombras**: Sutis e harmônicas
+- **Hover**: `-translate-y-1` + `shadow-lg`
+- **Transições**: `duration-500 ease-out`
+- **Fundo claro**: `#f5f4f6` (off-white confortável)
+
+## 🛠️ Scripts Utilitários
+
+### Verificação
+- `check-article-content.js` - Valida conteúdo
+- `check-duplicates.js` - Verifica duplicatas
+- `check-educational.js` - Verifica artigos educacionais
+
+### Listagem
+- `list-articles.js` - Lista todos os artigos
+- `list-users.js` - Lista usuários do sistema
+
+### Outros
+- `count-articles.js` - Conta artigos por tipo
+- `delete-article.js` - Remove artigo do banco
+- `test-api-sentiment.js` - Testa API de sentimento
+- `watch-articles.js` - Watcher de mudanças
 
 ## 🔗 Links Importantes
 
 - **Token Contract**: [3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump](https://solscan.io/token/3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump)
-- **Website**: [tokenmilagre.xyz](https://tokenmilagre.xyz)
-- **Comprar**: [Pump.fun](https://pump.fun/coin/3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump)
-- **Rede**: Solana Mainnet
-- **Explorer**: Solscan
-
-## 📋 Histórico de Implementações
-
-### Últimas Atualizações (Outubro 2025)
-
-#### ✅ **Remoção do Gemini + Workflow Perplexity** (04/10/2025)
-- Removido sistema de geração com Gemini MCP
-- Implementado workflow Perplexity + Claude Code
-- Redução de ~70% no consumo de tokens
-- Fontes REAIS e verificáveis
-- Documentação atualizada
-
-#### ✅ **Gráficos Profissionais com Lightweight Charts** (04/10/2025)
-- AdvancedChart com SMA 20/50, Bollinger Bands e RSI
-- LightweightChart para BTC, ETH, SOL
-- TickerTapeWidget horizontal
-- Integração com Binance API
-- Backgrounds transparentes
-- Timeframes múltiplos (15m, 4h, 1d)
-
-#### ✅ **UX de Notícias Melhorada** (04/10/2025)
-- URLs amigáveis com slugs
-- Cards clicáveis
-- Sentimento em português ("Notícia otimista/pessimista/neutra")
-- Fonte "$MILAGRE Research" transparente
-- Nota de transparência em artigos gerados por IA
-
-#### ✅ **Sistema de Notícias Completo** (03/10/2025)
-- API `/api/news` com cache
-- Páginas dinâmicas `/dashboard/noticias/[slug]`
-- Filtros por categoria
-- Interface de leitura otimizada
-
-#### ✅ **Dashboard de Mercado** (02/10/2025)
-- 3 Gráficos TradingView (BTC, ETH, SOL)
-- 3 Widgets de Análise Técnica
-- Crypto Heatmap e Screener
-- Fear & Greed Index
-- Métricas de mercado em tempo real
-
-#### ✅ **Manifesto $MILAGRE** (01/10/2025)
-- Página dedicada com 12 seções
-- Sistema de assinatura
-- Contador de signatários
-- Navegação lateral com scroll
-
-#### ✅ **Portfolio Tracker** (30/09/2025)
-- Integração Phantom Wallet
-- Sistema de tiers/badges
-- Exibição de saldos $MILAGRE e SOL
-- Link para Solscan
-
-## 🛠️ Desenvolvimento
-
-### Comandos Úteis
-
-```bash
-# Instalar dependências
-npm install
-
-# Dev server com hot reload
-npm run dev
-
-# Build de produção
-npm run build
-
-# Verificar tipos TypeScript
-npm run type-check
-
-# Lint do código
-npm run lint
-
-# Limpar cache
-npm cache clean --force
-```
-
-### Estrutura de Commits
-
-Este projeto segue conventional commits:
-
-```
-feat: Nova funcionalidade
-fix: Correção de bug
-docs: Atualização de documentação
-style: Formatação de código
-refactor: Refatoração
-test: Testes
-chore: Manutenção
-```
+- **Discord**: [discord.gg/skaX8bFY](https://discord.gg/skaX8bFY)
+- **Telegram**: [t.me/+Bop_TVFc_mg3Njlh](https://t.me/+Bop_TVFc_mg3Njlh)
+- **Pump.fun**: [pump.fun/coin/3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump](https://pump.fun/coin/3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump)
 
 ## 📜 Licença
 
-© 2025 by $MILAGRE Community. Todos os direitos reservados.
+© 2025 by $MILAGRE Community. Projeto 100% comunitário e sem fins lucrativos.
 
 ---
 
