@@ -1090,7 +1090,7 @@ export default function HomePage() {
 
               {/* Bitcoin - Análise Completa */}
               <div className="space-y-4">
-                <AdvancedChart symbol="BTCUSDT" name="Bitcoin (BTC/USDT) - Gráfico Profissional" />
+                <AdvancedChart symbol="BTCUSDT" name="Bitcoin (BTC/USDT)" />
               </div>
 
               {/* Gráficos ao Vivo */}
