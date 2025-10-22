@@ -400,26 +400,9 @@ export default function HomePage() {
                 borderColor: 'var(--border-light)'
               }}>
                 <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                      Últimas Notícias
-                    </h3>
-                    <div className="px-3 py-1 rounded-full text-xs font-bold" style={{
-                      background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                      color: 'white'
-                    }}>
-                      HOJE
-                    </div>
-                  </div>
-
                   {/* Índice Fear & Greed - Velocímetro */}
                   {fearGreed && (
                     <div className="mb-4">
-                      <div className="flex items-center gap-2 mb-4">
-                        <div className="w-2 h-2 rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 animate-pulse"></div>
-                        <p className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--text-tertiary)' }}>Índice Fear & Greed - Sentimento do Mercado</p>
-                      </div>
-
                       <div className="grid lg:grid-cols-[1fr_auto] gap-6 items-center">
                         {/* Coluna 1: Gráfico Bitcoin */}
                         <div>
@@ -428,6 +411,12 @@ export default function HomePage() {
 
                         {/* Coluna 2: Velocímetro + Informações do Sentimento */}
                         <div className="flex flex-col items-center gap-4">
+                          {/* Título */}
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="w-2 h-2 rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 animate-pulse"></div>
+                            <p className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--text-tertiary)' }}>Índice Fear & Greed - Sentimento do Mercado</p>
+                          </div>
+
                           {/* Velocímetro SVG Redesenhado */}
                           <div className="relative flex items-center justify-center" style={{ width: '400px', height: '280px' }}>
                             <svg viewBox="-20 -30 320 250" className="w-full h-full" style={{ overflow: 'visible' }}>
@@ -615,7 +604,7 @@ export default function HomePage() {
                               {/* Valor numérico grande */}
                               <text
                                 x="140"
-                                y="155"
+                                y="100"
                                 fill="var(--text-primary)"
                                 fontSize="32"
                                 fontWeight="900"
@@ -671,6 +660,19 @@ export default function HomePage() {
 
                   {/* Divisor */}
                   <div className="border-t-2 mb-6" style={{ borderColor: 'var(--border-light)' }}></div>
+
+                  {/* Título Últimas Notícias */}
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                      Últimas Notícias
+                    </h3>
+                    <div className="px-3 py-1 rounded-full text-xs font-bold" style={{
+                      background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                      color: 'white'
+                    }}>
+                      HOJE
+                    </div>
+                  </div>
 
                   <div className="grid md:grid-cols-2 gap-4">
                     {news.length > 0 ? (
@@ -764,10 +766,10 @@ export default function HomePage() {
                       <div className="overflow-hidden rounded-2xl">
                         <div
                           className="flex transition-transform duration-500 ease-out"
-                          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                          style={{ transform: `translateX(-${currentSlide * 50}%)` }}
                         >
                           {education.map((item, idx) => (
-                            <div key={idx} className="w-full flex-shrink-0 px-2">
+                            <div key={idx} className="w-1/2 flex-shrink-0 px-2">
                               <Link
                                 href={`/educacao/${item.slug}`}
                                 className="block rounded-3xl p-8 border-2 shadow-lg relative overflow-hidden"

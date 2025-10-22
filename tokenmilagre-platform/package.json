@@ -9,12 +9,9 @@
     "postinstall": "prisma generate",
     "lint": "eslint",
     "db:seed": "tsx prisma/seed.ts",
-    "db:export": "node scripts/export-sqlite-data.js",
-    "db:import": "node scripts/import-to-postgres.js",
     "db:push": "npx prisma db push",
     "db:studio": "npx prisma studio",
-    "watch": "node scripts/watch-articles.js",
-    "cli": "node cli/tokenmilagre-cli.js"
+    "watch": "node scripts/watch-articles.js"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
