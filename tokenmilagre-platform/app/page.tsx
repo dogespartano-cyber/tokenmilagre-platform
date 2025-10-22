@@ -604,7 +604,7 @@ export default function HomePage() {
                               {/* Valor numérico grande */}
                               <text
                                 x="140"
-                                y="100"
+                                y="145"
                                 fill="var(--text-primary)"
                                 fontSize="32"
                                 fontWeight="900"
