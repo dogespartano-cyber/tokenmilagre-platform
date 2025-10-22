@@ -48,3 +48,12 @@ next-env.d.ts
 *.db
 *.db-journal
 prisma/backup-*.json
+
+# Local documentation (kept locally, not in git)
+CLAUDE-MEMORY.md
+MANIFESTO.md
+MIGRACAO-POSTGRES.md
+*.backup.md
+
+# Example scripts (create new ones as needed)
+scripts/publish-*.js
