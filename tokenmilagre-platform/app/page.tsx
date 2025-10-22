@@ -1021,32 +1021,6 @@ export default function HomePage() {
                   )}
                 </div>
 
-                {/* Categorias Rápidas */}
-                <div className="rounded-2xl p-5 mb-6" style={{
-                  backgroundColor: 'var(--bg-secondary)',
-                  borderLeft: '4px solid var(--brand-primary)'
-                }}>
-                  <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: 'var(--text-tertiary)' }}>
-                    Explorar por Categoria
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {['Wallets', 'Exchanges', 'DeFi', 'NFT', 'Segurança', 'Análise'].map((cat, idx) => (
-                      <Link
-                        key={idx}
-                        href={`/recursos?search=${cat}`}
-                        className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all hover:scale-105 hover:shadow-md"
-                        style={{
-                          backgroundColor: 'var(--bg-elevated)',
-                          color: 'var(--text-primary)',
-                          border: '1px solid var(--border-light)'
-                        }}
-                      >
-                        {cat}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-
                 {/* CTA Final */}
                 <div className="flex items-center justify-between">
                   <div>

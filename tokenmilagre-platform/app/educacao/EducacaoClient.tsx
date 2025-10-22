@@ -141,9 +141,6 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
             </div>
           </div>
 
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
           {/* Busca e Filtros */}
           <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-md" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-light)' }}>
             <div className="flex items-center justify-between mb-4">
