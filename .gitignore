@@ -11,6 +11,20 @@ __pycache__/
 
 # Arquivos de sistema
 .DS_Store
+.directory
 
 # Claude Code - arquivos com credenciais
 .claude/settings.local.json
+
+# Diretórios e arquivos fora do projeto principal
+/Log importante/
+/gemini/
+/imagens/
+/sombras .txt
+/*.tar.gz
+/CHANGELOG-*.md
+/CORRECTIONS-*.md
+/SYSTEM-*.md
+/guia-*.md
+/template-*.md
+/sugestões.txt
