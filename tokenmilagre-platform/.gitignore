@@ -33,6 +33,7 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 !.env.example
+!.env.sentry-example
 
 # vercel
 .vercel
@@ -57,3 +58,7 @@ MIGRACAO-POSTGRES.md
 
 # Example scripts (create new ones as needed)
 scripts/publish-*.js
+
+# Sentry
+.sentryclirc
+sentry.properties

@@ -3,6 +3,26 @@ import { notFound } from 'next/navigation';
 import ArtigoEducacionalClient from './ArtigoEducacionalClient';
 import { prisma } from '@/lib/prisma';
 
+// Cache ISR: Revalida a cada 1 hora (artigos educacionais mudam raramente)
+export const revalidate = 3600;
+
+// Gera páginas estáticas em build time para todos os artigos educacionais
+export async function generateStaticParams() {
+  const articles = await prisma.article.findMany({
+    where: {
+      type: 'educational',
+      published: true,
+    },
+    select: {
+      slug: true,
+    },
+  });
+
+  return articles.map((article) => ({
+    slug: article.slug,
+  }));
+}
+
 interface EducationalArticle {
   id: string;
   slug: string;

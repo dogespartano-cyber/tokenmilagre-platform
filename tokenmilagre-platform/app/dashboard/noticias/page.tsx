@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { NewsGridSkeleton } from '@/components/SkeletonLoader';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 
 interface NewsItem {
   id: string;
@@ -39,6 +40,11 @@ export default function NoticiasPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [fearGreed, setFearGreed] = useState<FearGreedData | null>(null);
   const [gaugeValue, setGaugeValue] = useState(0);
+
+  // Estados de paginação para infinite scroll
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // Capturar parâmetro de busca da URL
   useEffect(() => {
@@ -102,34 +108,70 @@ export default function NoticiasPage() {
     { id: 'regulação', label: 'Regulação', icon: '⚖️' },
   ];
 
-  const fetchNews = useCallback(async () => {
-    setLoading(true);
+  const fetchNews = useCallback(async (pageNum: number = 1, append: boolean = false) => {
+    if (append) {
+      setIsLoadingMore(true);
+    } else {
+      setLoading(true);
+    }
+
     try {
-      // Buscar artigos do banco de dados
-      const articlesRes = await fetch(`/api/articles?category=${selectedCategory}`);
+      // Buscar artigos do banco de dados com paginação
+      const categoryParam = selectedCategory !== 'all' ? `&category=${selectedCategory}` : '';
+      const url = `/api/articles?type=news&page=${pageNum}&limit=12${categoryParam}`;
+
+      const articlesRes = await fetch(url);
       const articlesData = await articlesRes.json();
 
-      const allItems: NewsItem[] = articlesData.success ? articlesData.data : [];
+      if (articlesData.success) {
+        const newItems: NewsItem[] = articlesData.data;
+        const { hasMore: moreAvailable } = articlesData.pagination;
 
-      // Ordenar por data (mais recente primeiro)
-      allItems.sort((a, b) => {
-        const dateA = new Date(a.publishedAt).getTime();
-        const dateB = new Date(b.publishedAt).getTime();
-        return dateB - dateA;
-      });
+        if (append) {
+          // Adicionar aos artigos existentes (infinite scroll)
+          setNews(prev => [...prev, ...newItems]);
+          setFilteredNews(prev => [...prev, ...newItems]);
+        } else {
+          // Substituir artigos (primeira carga ou mudança de filtro)
+          setNews(newItems);
+          setFilteredNews(newItems);
+        }
 
-      setNews(allItems);
-      setFilteredNews(allItems);
+        setHasMore(moreAvailable);
+        setPage(pageNum);
+      }
     } catch (error) {
       console.error('Erro ao buscar notícias:', error);
     } finally {
       setLoading(false);
+      setIsLoadingMore(false);
     }
   }, [selectedCategory]);
 
+  // Carregar mais artigos (infinite scroll)
+  const loadMore = useCallback(() => {
+    if (!isLoadingMore && hasMore) {
+      fetchNews(page + 1, true);
+    }
+  }, [page, hasMore, isLoadingMore, fetchNews]);
+
+  // Resetar paginação e carregar primeira página quando categoria mudar
   useEffect(() => {
-    fetchNews();
-  }, [fetchNews]);
+    setPage(1);
+    setHasMore(true);
+    setNews([]);
+    setFilteredNews([]);
+    fetchNews(1, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCategory]);
+
+  // Hook de infinite scroll
+  const { sentinelRef } = useInfiniteScroll({
+    hasMore,
+    isLoading: isLoadingMore,
+    onLoadMore: loadMore,
+    threshold: 300
+  });
 
   // Filtrar e ordenar notícias
   useEffect(() => {
@@ -769,6 +811,33 @@ export default function NoticiasPage() {
                 </div>
               </Link>
             ))}
+
+            {/* Elemento sentinela para infinite scroll */}
+            <div ref={sentinelRef} className="col-span-full h-1" />
+
+            {/* Loader para infinite scroll */}
+            {isLoadingMore && (
+              <div className="col-span-full flex justify-center py-8">
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-10 h-10 rounded-full border-4 border-t-transparent animate-spin" style={{
+                    borderColor: 'var(--brand-primary)',
+                    borderTopColor: 'transparent'
+                  }} />
+                  <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
+                    Carregando mais notícias...
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Indicador de fim da lista */}
+            {!hasMore && filteredNews.length > 0 && (
+              <div className="col-span-full text-center py-8">
+                <p className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
+                  📰 Você visualizou todas as {filteredNews.length} notícias disponíveis
+                </p>
+              </div>
+            )}
           </div>
         )}
 

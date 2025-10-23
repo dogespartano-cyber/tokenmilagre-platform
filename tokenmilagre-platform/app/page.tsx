@@ -393,24 +393,19 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Últimas Notícias com Fear & Greed */}
+            {/* Gráfico Bitcoin e Velocímetro - SEM CARD */}
             <div>
-              <div className="backdrop-blur-xl rounded-3xl p-8 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-500 ease-out overflow-hidden" style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)'
-              }}>
-                <div>
-                  {/* Índice Fear & Greed - Velocímetro */}
-                  {fearGreed && (
-                    <div className="mb-4">
-                      <div className="grid lg:grid-cols-[1fr_auto] gap-6 items-center">
-                        {/* Coluna 1: Gráfico Bitcoin */}
-                        <div>
-                          <LightweightChart symbol="BTCUSDT" name="Bitcoin (BTC/USDT)" />
-                        </div>
+              {/* Índice Fear & Greed - Velocímetro */}
+              {fearGreed && (
+                <div className="mb-8">
+                  <div className="grid lg:grid-cols-[1fr_auto] gap-6 items-center">
+                    {/* Coluna 1: Gráfico Bitcoin */}
+                    <div>
+                      <LightweightChart symbol="BTCUSDT" name="Bitcoin (BTC/USDT)" />
+                    </div>
 
-                        {/* Coluna 2: Velocímetro + Informações do Sentimento */}
-                        <div className="flex flex-col items-center gap-4">
+                    {/* Coluna 2: Velocímetro + Informações do Sentimento */}
+                    <div className="flex flex-col items-center gap-4">
                           {/* Título */}
                           <div className="flex items-center gap-2 mb-2">
                             <div className="w-2 h-2 rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 animate-pulse"></div>
@@ -656,25 +651,29 @@ export default function HomePage() {
                         </div>
                       </div>
                     </div>
-                  )}
+                )}
+            </div>
 
-                  {/* Divisor */}
-                  <div className="border-t-2 mb-6" style={{ borderColor: 'var(--border-light)' }}></div>
-
-                  {/* Título Últimas Notícias */}
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                      Últimas Notícias
-                    </h3>
-                    <div className="px-3 py-1 rounded-full text-xs font-bold" style={{
-                      background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                      color: 'white'
-                    }}>
-                      HOJE
-                    </div>
+            {/* Últimas Notícias - COM CARD */}
+            <div>
+              <div className="backdrop-blur-xl rounded-3xl p-8 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-500 ease-out overflow-hidden" style={{
+                backgroundColor: 'var(--bg-elevated)',
+                borderColor: 'var(--border-light)'
+              }}>
+                {/* Título Últimas Notícias */}
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                    Últimas Notícias
+                  </h3>
+                  <div className="px-3 py-1 rounded-full text-xs font-bold" style={{
+                    background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                    color: 'white'
+                  }}>
+                    HOJE
                   </div>
+                </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-4">
                     {news.length > 0 ? (
                       news.map((item, idx) => (
                         <Link
@@ -725,18 +724,17 @@ export default function HomePage() {
                     )}
                   </div>
 
-                  {/* Ver todas */}
-                  <Link
-                    href="/dashboard/noticias"
-                    className="mt-6 inline-block py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                    style={{
-                      background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-                      color: 'var(--text-inverse)'
-                    }}
-                  >
-                    Ver todas as notícias →
-                  </Link>
-                </div>
+                {/* Ver todas */}
+                <Link
+                  href="/dashboard/noticias"
+                  className="mt-6 inline-block py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  style={{
+                    background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+                    color: 'var(--text-inverse)'
+                  }}
+                >
+                  Ver todas as notícias →
+                </Link>
               </div>
             </div>
 

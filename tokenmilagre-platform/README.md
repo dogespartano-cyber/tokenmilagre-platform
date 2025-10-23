@@ -56,7 +56,7 @@ npm start
 - Design minimalista com bordas sutis e sombras harmônicas
 
 ### 📚 Educação (`/educacao`)
-- 6 artigos educacionais completos armazenados em PostgreSQL
+- Artigos educacionais completos armazenados em PostgreSQL
 - Sistema de filtros (Busca + Categorias + Níveis)
 - Níveis: Iniciante (1), Intermediário (2), Avançado (3)
 - Categorias: Blockchain, Trading, DeFi, NFTs, Segurança, Desenvolvimento

@@ -38,6 +38,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
   const [activeSection, setActiveSection] = useState<string>('');
+  const [currentUrl, setCurrentUrl] = useState<string>('');
 
   const getLevelLabel = (level: string) => {
     switch (level) {
@@ -109,6 +110,13 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
     setTableOfContents(headings);
   }, [article]);
 
+  // Define URL atual (apenas no cliente)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentUrl(window.location.href);
+    }
+  }, []);
+
   // Calcula progresso de leitura e rastreia seção ativa
   useEffect(() => {
     const handleScroll = () => {
@@ -142,7 +150,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
   // Artigo não encontrado
   if (!article) {
     return (
-      <div className="py-8 max-w-4xl" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
+      <div className="container mx-auto px-4 py-8">
         <div className="space-y-8">
           <Breadcrumbs />
           <div className="text-center py-20">
@@ -180,9 +188,9 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
         }}
       />
 
-      <div className="py-8">
-        <div className="flex gap-8" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
-          <div className="flex-1 max-w-4xl space-y-8">
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex gap-8">
+          <div className="flex-1 space-y-8">
             {/* Breadcrumbs */}
             <Breadcrumbs />
 
@@ -350,7 +358,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
             </h3>
             <div className="flex flex-wrap gap-3">
               <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(window.location.href)}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(currentUrl)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
@@ -362,7 +370,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                 Twitter
               </a>
               <a
-                href={`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(article.title)}`}
+                href={`https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(article.title)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
@@ -374,7 +382,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                 Telegram
               </a>
               <a
-                href={`https://wa.me/?text=${encodeURIComponent(article.title + ' ' + window.location.href)}`}
+                href={`https://wa.me/?text=${encodeURIComponent(article.title + ' ' + currentUrl)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"

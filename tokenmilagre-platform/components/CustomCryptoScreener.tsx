@@ -21,6 +21,7 @@ import {
   faChevronRight,
   faSpinner
 } from '@fortawesome/free-solid-svg-icons';
+import * as Sentry from '@sentry/nextjs';
 
 interface CryptoData {
   id: string;
@@ -40,14 +41,24 @@ interface CryptoData {
 
 const columnHelper = createColumnHelper<CryptoData>();
 
+const CACHE_KEY = 'coingecko_crypto_data';
+const CACHE_TIMESTAMP_KEY = 'coingecko_cache_timestamp';
+
 export default function CustomCryptoScreener() {
   const [data, setData] = useState<CryptoData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [usingCache, setUsingCache] = useState(false);
+  const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
   const [sorting, setSorting] = useState<SortingState>([
     { id: 'market_cap_rank', desc: false }
   ]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
+
+  // Carregar cache do localStorage na montagem
+  useEffect(() => {
+    loadFromCache();
+  }, []);
 
   // Fetch data from CoinGecko
   useEffect(() => {
@@ -56,6 +67,32 @@ export default function CustomCryptoScreener() {
     return () => clearInterval(interval);
   }, []);
 
+  const loadFromCache = () => {
+    try {
+      const cachedData = localStorage.getItem(CACHE_KEY);
+      const cachedTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
+
+      if (cachedData && cachedTimestamp) {
+        setData(JSON.parse(cachedData));
+        setLastUpdate(new Date(parseInt(cachedTimestamp)));
+        setUsingCache(true);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.warn('Error loading cache:', error);
+    }
+  };
+
+  const saveToCache = (data: CryptoData[]) => {
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+      localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+      setLastUpdate(new Date());
+    } catch (error) {
+      console.warn('Error saving to cache:', error);
+    }
+  };
+
   const fetchCryptoData = async () => {
     try {
       const response = await fetch(
@@ -63,18 +100,57 @@ export default function CustomCryptoScreener() {
       );
 
       if (!response.ok) {
+        const statusError = new Error(`CoinGecko API returned status ${response.status}`);
+
+        // Reportar ao Sentry apenas se não for rate limit esperado
+        if (response.status !== 429) {
+          Sentry.captureException(statusError, {
+            tags: {
+              component: 'CustomCryptoScreener',
+              api: 'coingecko',
+              status: response.status.toString(),
+            },
+            level: 'warning',
+          });
+        }
+
         console.warn(`CoinGecko API returned status ${response.status}. Using cached data.`);
+        // Se já temos dados em cache, apenas marca como usando cache
+        if (data.length > 0) {
+          setUsingCache(true);
+        }
         setLoading(false);
         return;
       }
 
       const json = await response.json();
       setData(json);
+      saveToCache(json); // Salva resposta válida no cache
+      setUsingCache(false); // Dados são frescos da API
       setLoading(false);
     } catch (error) {
-      console.warn('Error fetching crypto data from CoinGecko (rate limit or CORS):', error);
+      console.warn('Error fetching crypto data from CoinGecko:', error);
+
+      // Reportar erro ao Sentry com contexto
+      Sentry.captureException(error, {
+        tags: {
+          component: 'CustomCryptoScreener',
+          api: 'coingecko',
+        },
+        extra: {
+          hasCache: data.length > 0,
+          lastUpdate: lastUpdate?.toISOString(),
+        },
+        level: 'error',
+      });
+
+      // Se falhar, tenta usar cache se disponível
+      if (data.length === 0) {
+        loadFromCache();
+      } else {
+        setUsingCache(true);
+      }
       setLoading(false);
-      // Keep existing data if available, don't break the UI
     }
   };
 
@@ -254,11 +330,49 @@ export default function CustomCryptoScreener() {
     );
   }
 
+  // Função para formatar tempo atrás
+  const getTimeAgo = (date: Date | null) => {
+    if (!date) return '';
+
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return 'agora';
+    if (diffMins < 60) return `${diffMins}min atrás`;
+    if (diffHours < 24) return `${diffHours}h atrás`;
+    return `${diffDays}d atrás`;
+  };
+
   return (
     <div className="rounded-2xl border-2 shadow-xl overflow-hidden" style={{
       backgroundColor: 'var(--bg-elevated)',
       borderColor: 'var(--border-medium)'
     }}>
+      {/* Cache Status Banner */}
+      {usingCache && (
+        <div className="px-4 py-2 border-b flex items-center justify-between" style={{
+          backgroundColor: 'rgba(251, 191, 36, 0.1)',
+          borderColor: 'var(--border-light)'
+        }}>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-semibold" style={{ color: '#F59E0B' }}>
+              ⚠️ Usando dados em cache
+            </span>
+            {lastUpdate && (
+              <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+                • Última atualização: {getTimeAgo(lastUpdate)}
+              </span>
+            )}
+          </div>
+          <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+            A API CoinGecko pode estar temporariamente indisponível
+          </span>
+        </div>
+      )}
+
       {/* Search Bar */}
       <div className="p-4 border-b" style={{ borderColor: 'var(--border-light)' }}>
         <div className="relative">

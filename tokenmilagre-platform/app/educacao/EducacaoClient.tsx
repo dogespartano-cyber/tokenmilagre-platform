@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Script from 'next/script';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Link from 'next/link';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 
 interface Resource {
   id: string;
@@ -28,6 +29,12 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
+  // Estados para infinite scroll
+  const [allResources, setAllResources] = useState<Resource[]>(resources);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(resources.length === 12);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+
   const categories = [
     { id: 'all', label: 'Todos' },
     { id: 'blockchain', label: 'Blockchain' },
@@ -45,20 +52,82 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
     { id: 'avancado', label: 'Avançado' },
   ];
 
-  const filteredResources = resources.filter(resource => {
-    // Filtro por categoria
-    const categoryMatch = selectedCategory === 'all' || resource.category === selectedCategory;
+  // Função para buscar mais recursos da API
+  const fetchMoreResources = useCallback(async (pageNum: number = 1, append: boolean = false) => {
+    if (append) {
+      setIsLoadingMore(true);
+    }
 
-    // Filtro por nível
-    const levelMatch = selectedLevel === 'all' || resource.level === selectedLevel;
+    try {
+      const categoryParam = selectedCategory !== 'all' ? `&category=${selectedCategory}` : '';
+      const levelParam = selectedLevel !== 'all' ? `&level=${selectedLevel}` : '';
+      const url = `/api/articles?type=educational&page=${pageNum}&limit=12${categoryParam}${levelParam}`;
 
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (data.success) {
+        const newItems: Resource[] = data.data.map((article: any) => ({
+          id: article.id,
+          slug: article.slug,
+          title: article.title,
+          category: article.category,
+          level: article.level || 'iniciante',
+          type: article.contentType || 'Artigo',
+          description: article.summary || '',
+          readTime: article.readTime || '5 min',
+          tags: article.keywords || []
+        }));
+
+        if (append) {
+          setAllResources(prev => [...prev, ...newItems]);
+        } else {
+          setAllResources(newItems);
+        }
+
+        setHasMore(data.pagination.hasMore);
+        setPage(pageNum);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar recursos:', error);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  }, [selectedCategory, selectedLevel]);
+
+  // Carregar mais recursos (infinite scroll)
+  const loadMore = useCallback(() => {
+    if (!isLoadingMore && hasMore) {
+      fetchMoreResources(page + 1, true);
+    }
+  }, [page, hasMore, isLoadingMore, fetchMoreResources]);
+
+  // Hook de infinite scroll
+  const { sentinelRef } = useInfiniteScroll({
+    hasMore,
+    isLoading: isLoadingMore,
+    onLoadMore: loadMore,
+    threshold: 300
+  });
+
+  // Resetar paginação quando filtros mudarem (categoria ou nível)
+  useEffect(() => {
+    setPage(1);
+    setHasMore(true);
+    setAllResources([]);
+    fetchMoreResources(1, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCategory, selectedLevel]);
+
+  // Filtrar recursos localmente (apenas por termo de busca)
+  const filteredResources = allResources.filter(resource => {
     // Filtro por termo de busca
     const searchMatch = !searchTerm.trim() ||
       resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       resource.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
       resource.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    return categoryMatch && levelMatch && searchMatch;
+    return searchMatch;
   });
 
   const scrollToTop = () => {
@@ -100,7 +169,7 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
         })}
       </Script>
 
-      <div className="py-8 max-w-4xl" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
+      <div className="container mx-auto px-4 py-8">
         <div className="space-y-16">
           {/* Breadcrumbs */}
           <Breadcrumbs />
@@ -127,7 +196,7 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
             {/* Stats */}
             <div className="flex flex-wrap gap-8 pt-4">
               <div>
-                <div className="text-3xl font-bold text-brand-primary">{resources.length}</div>
+                <div className="text-3xl font-bold text-brand-primary">{allResources.length}</div>
                 <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Recursos</div>
               </div>
               <div>
@@ -212,55 +281,58 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
 
             {/* Filtros - Desktop sempre visível, Mobile toggle */}
             <div className={`space-y-4 ${showFilters ? 'block' : 'hidden lg:block'}`}>
-              {/* Categorias */}
-              <div>
-                <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
-                  Categorias:
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {categories.map((cat) => (
-                    <button
-                      key={cat.id}
-                      onClick={() => setSelectedCategory(cat.id)}
-                      className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${
-                        selectedCategory === cat.id
-                          ? 'shadow-md'
-                          : 'hover:opacity-80'
-                      }`}
-                      style={{
-                        backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
-                        color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
-                      }}
-                    >
-                      {cat.label}
-                    </button>
-                  ))}
+              {/* Categorias e Níveis - Lado a Lado */}
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Categorias */}
+                <div>
+                  <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
+                    Categorias:
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {categories.map((cat) => (
+                      <button
+                        key={cat.id}
+                        onClick={() => setSelectedCategory(cat.id)}
+                        className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${
+                          selectedCategory === cat.id
+                            ? 'shadow-md'
+                            : 'hover:opacity-80'
+                        }`}
+                        style={{
+                          backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
+                          color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
+                        }}
+                      >
+                        {cat.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              {/* Níveis */}
-              <div>
-                <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
-                  Nível:
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {levels.map((level) => (
-                    <button
-                      key={level.id}
-                      onClick={() => setSelectedLevel(level.id)}
-                      className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${
-                        selectedLevel === level.id
-                          ? 'shadow-md'
-                          : 'hover:opacity-80'
-                      }`}
-                      style={{
-                        backgroundColor: selectedLevel === level.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
-                        color: selectedLevel === level.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
-                      }}
-                    >
-                      {level.label}
-                    </button>
-                  ))}
+                {/* Níveis */}
+                <div>
+                  <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
+                    Nível:
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {levels.map((level) => (
+                      <button
+                        key={level.id}
+                        onClick={() => setSelectedLevel(level.id)}
+                        className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${
+                          selectedLevel === level.id
+                            ? 'shadow-md'
+                            : 'hover:opacity-80'
+                        }`}
+                        style={{
+                          backgroundColor: selectedLevel === level.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
+                          color: selectedLevel === level.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
+                        }}
+                      >
+                        {level.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -272,43 +344,67 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
           </div>
 
           {/* Lista de Recursos */}
-          <div className="space-y-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredResources.map((resource) => (
               <Link
                 key={resource.id}
                 href={`/educacao/${resource.slug}`}
-                className="block p-6 rounded-xl border shadow-md transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-lg cursor-pointer"
-                style={{
-                  backgroundColor: 'var(--bg-secondary)',
-                  borderColor: 'var(--border-light)'
-                }}
+                className="group backdrop-blur-lg rounded-2xl p-6 border shadow-md transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-lg cursor-pointer block"
+                style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-light)' }}
               >
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="px-2 py-1 rounded text-xs font-semibold" style={{
-                        backgroundColor: 'var(--brand-primary)',
-                        color: 'var(--text-inverse)'
-                      }}>
-                        {resource.type}
+                {/* Content wrapper */}
+                <div className="flex flex-col h-full">
+                  {/* Header do Card */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">
+                        {resource.level === 'iniciante' ? '🟢' : resource.level === 'intermediario' ? '🟡' : '🔴'}
                       </span>
-                      <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-                        📖 {resource.readTime} de leitura
+                      <span className="text-xs font-semibold px-2 py-1 rounded-full" style={{
+                        backgroundColor: resource.level === 'iniciante' ? '#22c55e20' : resource.level === 'intermediario' ? '#eab30820' : '#ef444420',
+                        color: resource.level === 'iniciante' ? '#22c55e' : resource.level === 'intermediario' ? '#eab308' : '#ef4444'
+                      }}>
+                        {resource.level === 'iniciante' ? 'Iniciante' : resource.level === 'intermediario' ? 'Intermediário' : 'Avançado'}
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold mb-2 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                      {resource.title}
-                    </h3>
-                    <p className="mb-3" style={{ color: 'var(--text-secondary)' }}>
-                      {resource.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {resource.tags.map((tag, index) => (
+                    <span className="text-xs font-medium px-2 py-1 rounded-md" style={{
+                      backgroundColor: 'var(--bg-secondary)',
+                      color: 'var(--text-tertiary)'
+                    }}>
+                      📖 {resource.readTime}
+                    </span>
+                  </div>
+
+                  {/* Tipo do Conteúdo */}
+                  <div className="mb-3">
+                    <span className="text-xs font-semibold px-2 py-1 rounded" style={{
+                      backgroundColor: 'var(--brand-primary)',
+                      color: 'var(--text-inverse)'
+                    }}>
+                      {resource.type}
+                    </span>
+                  </div>
+
+                  {/* Título */}
+                  <h3 className="font-bold text-lg mb-3 line-clamp-2 group-hover:text-blue-400 transition-colors min-h-[3.5rem]" style={{ color: 'var(--text-primary)' }}>
+                    {resource.title}
+                  </h3>
+
+                  {/* Descrição */}
+                  <p className="text-sm mb-4 line-clamp-3 leading-relaxed min-h-[4.5rem]" style={{ color: 'var(--text-secondary)' }}>
+                    {resource.description}
+                  </p>
+
+                  {/* Tags */}
+                  <div className="mb-4">
+                    <div className="flex flex-wrap gap-1.5">
+                      {resource.tags.slice(0, 3).map((tag, index) => (
                         <span
                           key={index}
-                          className="px-2 py-1 rounded text-xs"
+                          className="px-2 py-0.5 rounded text-xs font-medium border"
                           style={{
-                            backgroundColor: 'var(--bg-elevated)',
+                            backgroundColor: 'var(--bg-secondary)',
+                            borderColor: 'var(--border-light)',
                             color: 'var(--text-tertiary)'
                           }}
                         >
@@ -317,9 +413,69 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
                       ))}
                     </div>
                   </div>
+
+                  {/* Categoria */}
+                  <div className="mb-4 pb-4 border-b" style={{ borderColor: 'var(--border-light)' }}>
+                    <div className="flex flex-wrap gap-1.5">
+                      <span
+                        className="px-2 py-0.5 rounded text-xs font-medium border"
+                        style={{
+                          backgroundColor: 'var(--bg-secondary)',
+                          borderColor: 'var(--border-light)',
+                          color: 'var(--text-tertiary)'
+                        }}
+                      >
+                        {resource.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Spacer to push link to bottom */}
+                  <div className="flex-grow"></div>
+
+                  {/* Link Ler Mais */}
+                  <div className="pt-3">
+                    <div className="flex items-center justify-between px-4 py-3 rounded-xl border transition-all group-hover:shadow-md" style={{
+                      backgroundColor: 'var(--bg-secondary)',
+                      borderColor: 'var(--border-light)',
+                      color: 'var(--text-primary)'
+                    }}>
+                      <span className="font-bold text-sm">Ler artigo completo</span>
+                      <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
               </Link>
             ))}
+
+            {/* Elemento sentinela para infinite scroll */}
+            {!searchTerm && <div ref={sentinelRef} className="col-span-full h-1" />}
+
+            {/* Loader para infinite scroll */}
+            {isLoadingMore && (
+              <div className="col-span-full flex justify-center py-8">
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-10 h-10 rounded-full border-4 border-t-transparent animate-spin" style={{
+                    borderColor: 'var(--brand-primary)',
+                    borderTopColor: 'transparent'
+                  }} />
+                  <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
+                    Carregando mais recursos...
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Indicador de fim da lista */}
+            {!hasMore && !searchTerm && filteredResources.length > 0 && (
+              <div className="col-span-full text-center py-8">
+                <p className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
+                  📚 Você visualizou todos os {filteredResources.length} recursos disponíveis
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Empty State */}

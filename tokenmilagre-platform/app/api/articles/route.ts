@@ -3,15 +3,21 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
-// GET /api/articles - Listar artigos
+// GET /api/articles - Listar artigos com paginação
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
     const category = searchParams.get('category');
     const published = searchParams.get('published');
     const type = searchParams.get('type');
+    const level = searchParams.get('level');
 
-    const where: { category?: string; published?: boolean; type?: string } = {};
+    // Paginação
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '12');
+    const skip = (page - 1) * limit;
+
+    const where: { category?: string; published?: boolean; type?: string; level?: string } = {};
 
     // Filtrar por tipo (news ou educational)
     if (type) {
@@ -23,6 +29,11 @@ export async function GET(request: NextRequest) {
       where.category = category;
     }
 
+    // Filtrar por nível (para artigos educacionais)
+    if (level && level !== 'all') {
+      where.level = level;
+    }
+
     // Filtrar por publicados/rascunhos
     if (published !== null) {
       where.published = published === 'true';
@@ -31,6 +42,10 @@ export async function GET(request: NextRequest) {
       where.published = true;
     }
 
+    // Buscar total de artigos (para calcular hasMore)
+    const total = await prisma.article.count({ where });
+
+    // Buscar artigos com paginação
     const articles = await prisma.article.findMany({
       where,
       include: {
@@ -45,7 +60,9 @@ export async function GET(request: NextRequest) {
       },
       orderBy: {
         createdAt: 'desc'
-      }
+      },
+      skip,
+      take: limit
     });
 
     // Transformar para formato compatível com NewsItem ou EducationItem
@@ -87,10 +104,21 @@ export async function GET(request: NextRequest) {
       };
     });
 
+    // Calcular metadados de paginação
+    const totalPages = Math.ceil(total / limit);
+    const hasMore = page < totalPages;
+
     return NextResponse.json({
       success: true,
       data: formattedArticles,
-      count: formattedArticles.length
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages,
+        hasMore,
+        count: formattedArticles.length
+      }
     });
   } catch (error) {
     console.error('Erro ao buscar artigos:', error);
