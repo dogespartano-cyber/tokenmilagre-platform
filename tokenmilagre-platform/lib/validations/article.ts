@@ -27,13 +27,11 @@ export const createArticleSchema = z.object({
 
   category: z.enum(
     ['bitcoin', 'ethereum', 'defi', 'politica', 'nfts', 'altcoins', 'blockchain', 'trading', 'seguranca', 'desenvolvimento'],
-    {
-      errorMap: () => ({ message: 'Categoria inválida' }),
-    }
+    { message: 'Categoria inválida' }
   ),
 
   sentiment: z.enum(['positive', 'neutral', 'negative'], {
-    errorMap: () => ({ message: 'Sentiment deve ser positive, neutral ou negative' }),
+    message: 'Sentiment deve ser positive, neutral ou negative',
   }),
 
   tags: z
