@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import Breadcrumbs from '@/components/Breadcrumbs';
 import { NewsGridSkeleton } from '@/components/SkeletonLoader';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 
@@ -270,17 +269,14 @@ export default function NoticiasPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="space-y-8">
-        {/* Breadcrumbs */}
-        <Breadcrumbs />
-
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-          <div className="flex items-start gap-4">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div className="flex items-center gap-4">
             {/* Velocímetro Fear & Greed */}
             {fearGreed && (
-              <div className="hidden lg:flex items-start">
+              <div className="hidden lg:flex items-center">
                 {/* Velocímetro SVG */}
-                <div className="relative flex items-center justify-center" style={{ width: '240px', height: '160px', marginTop: '-20px' }}>
+                <div className="relative flex items-center justify-center" style={{ width: '240px', height: '160px' }}>
                   <svg viewBox="-20 -30 320 250" className="w-full h-full" style={{ overflow: 'visible' }}>
                     <defs>
                       {/* Gradiente arco-íris */}
@@ -472,7 +468,7 @@ export default function NoticiasPage() {
               </div>
             )}
 
-            <div className="mt-8">
+            <div>
               <h1 className="text-4xl font-bold mb-1 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                 Notícias Cripto
               </h1>

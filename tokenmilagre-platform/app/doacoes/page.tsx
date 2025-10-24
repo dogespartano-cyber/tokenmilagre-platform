@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
-import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function DoacoesPage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -107,9 +106,6 @@ export default function DoacoesPage() {
 
       <div className="py-8 max-w-4xl" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
         <div className="space-y-16">
-          {/* Breadcrumbs */}
-          <Breadcrumbs />
-
           {/* Hero */}
           <div className="space-y-6">
             <div className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold" style={{

@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
 import { HolderCounter } from '@/components/HolderCounter';
-import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function SobrePage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -106,11 +105,6 @@ export default function SobrePage() {
       </Script>
 
       <div className="min-h-screen">
-        {/* Breadcrumbs */}
-        <div className="container mx-auto px-4 pt-8">
-          <Breadcrumbs />
-        </div>
-
         {/* Hero Section - Fullscreen */}
         <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
           {/* Background gradients */}

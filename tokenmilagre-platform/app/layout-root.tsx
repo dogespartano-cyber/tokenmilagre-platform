@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faNewspaper, faSun, faMoon, faHome, faInfoCircle, faCoins, faBars, faTimes, faBook, faGraduationCap, faStore, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@/contexts/ThemeContext';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
 
@@ -179,18 +180,9 @@ export default function RootLayoutNav({
                 </div>
               </Link>
 
-            {/* Page Title or Logo - Desktop */}
-            <div className="hidden lg:flex items-center gap-3">
-              <h1 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
-                {pathname === '/' && 'Início'}
-                {pathname.startsWith('/dashboard/noticias') && 'Notícias'}
-                {pathname === '/educacao' && 'Educação'}
-                {pathname === '/recursos' && 'Recursos'}
-                {pathname === '/sobre' && 'Sobre'}
-                {pathname === '/token' && 'Token'}
-                {pathname === '/manifesto' && 'Manifesto'}
-                {pathname === '/doacoes' && 'Doações'}
-              </h1>
+            {/* Breadcrumbs - Desktop */}
+            <div className="hidden lg:flex items-center">
+              <Breadcrumbs inline={true} />
             </div>
 
             {/* Desktop Actions */}

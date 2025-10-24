@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Script from 'next/script';
-import Breadcrumbs from '@/components/Breadcrumbs';
 
 interface TableOfContentsItem {
   id: string;
@@ -82,9 +81,6 @@ export default function ManifestoPage() {
       <div className="py-8" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
         <div className="flex gap-8">
           <div className="flex-1 max-w-4xl space-y-16">
-            {/* Breadcrumbs */}
-            <Breadcrumbs />
-
           {/* Hero */}
           <div className="space-y-6">
             <div className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold" style={{

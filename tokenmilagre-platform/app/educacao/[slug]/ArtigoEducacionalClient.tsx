@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import { useEffect, useState } from 'react';
-import Breadcrumbs from '@/components/Breadcrumbs';
 import Link from 'next/link';
 
 interface EducationalArticle {
@@ -150,9 +149,8 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
   // Artigo não encontrado
   if (!article) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="py-8 max-w-4xl" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
         <div className="space-y-8">
-          <Breadcrumbs />
           <div className="text-center py-20">
             <div className="text-6xl mb-4">📚</div>
             <h1 className="text-3xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
@@ -188,12 +186,9 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
         }}
       />
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex gap-8">
-          <div className="flex-1 space-y-8">
-            {/* Breadcrumbs */}
-            <Breadcrumbs />
-
+      <div className="py-8">
+        <div className="flex gap-8" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
+          <div className="flex-1 max-w-4xl space-y-8">
           {/* Voltar */}
           <button
             onClick={() => router.push('/educacao')}

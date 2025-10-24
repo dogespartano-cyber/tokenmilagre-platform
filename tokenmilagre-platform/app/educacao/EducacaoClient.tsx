@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Script from 'next/script';
-import Breadcrumbs from '@/components/Breadcrumbs';
 import Link from 'next/link';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 
@@ -171,11 +170,8 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
 
       <div className="container mx-auto px-4 py-8">
         <div className="space-y-16">
-          {/* Breadcrumbs */}
-          <Breadcrumbs />
-
           {/* Hero */}
-          <div className="space-y-6">
+          <div className="space-y-6 max-w-3xl">
             <div className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold" style={{
               backgroundColor: 'var(--bg-secondary)',
               color: 'var(--brand-primary)'
