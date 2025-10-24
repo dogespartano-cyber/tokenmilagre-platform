@@ -148,18 +148,14 @@ export default function HomePage() {
 
   const fetchMarketData = async () => {
     try {
-      const response = await fetch(
-        'https://api.coingecko.com/api/v3/global'
-      );
-      const data = await response.json();
+      const response = await fetch('/api/market');
+      const result = await response.json();
 
-      setMarketData({
-        totalMarketCap: data.data.total_market_cap.usd,
-        totalVolume: data.data.total_volume.usd,
-        btcDominance: data.data.market_cap_percentage.btc,
-        ethDominance: data.data.market_cap_percentage.eth,
-        marketCapChange24h: data.data.market_cap_change_percentage_24h_usd,
-      });
+      if (result.success && result.data) {
+        setMarketData(result.data);
+      } else {
+        console.error('Erro ao buscar dados do mercado:', result.error);
+      }
       setLoading(false);
     } catch (error) {
       console.error('Erro ao buscar dados do mercado:', error);
@@ -169,9 +165,14 @@ export default function HomePage() {
 
   const fetchFearGreed = async () => {
     try {
-      const response = await fetch('https://api.alternative.me/fng/');
-      const data = await response.json();
-      setFearGreed(data.data[0]);
+      const response = await fetch('/api/fear-greed');
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        setFearGreed(result.data);
+      } else {
+        console.error('Erro ao buscar Fear & Greed Index:', result.error);
+      }
     } catch (error) {
       console.error('Erro ao buscar Fear & Greed Index:', error);
     }
