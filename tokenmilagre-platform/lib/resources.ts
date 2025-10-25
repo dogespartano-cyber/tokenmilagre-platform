@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+import { resources as hardcodedResources } from '@/lib/data/resources-data';
 
 // Types matching the database schema
 export interface ResourceFromDB {
@@ -135,24 +136,59 @@ export async function getAllResources(filters?: {
   category?: string;
   verified?: boolean;
 }): Promise<Resource[]> {
-  const where: any = {};
+  try {
+    const where: any = {};
 
-  if (filters?.category) {
-    where.category = filters.category;
+    if (filters?.category) {
+      where.category = filters.category;
+    }
+
+    if (filters?.verified !== undefined) {
+      where.verified = filters.verified;
+    }
+
+    const dbResources = await prisma.resource.findMany({
+      where,
+      orderBy: {
+        name: 'asc',
+      },
+    });
+
+    // If database has resources, use them
+    if (dbResources.length > 0) {
+      return dbResources.map(parseResource);
+    }
+
+    // Fallback to hardcoded data if database is empty
+    console.log('⚠️ Database empty, using hardcoded resources');
+    let resources = hardcodedResources;
+
+    // Apply filters to hardcoded data
+    if (filters?.category) {
+      resources = resources.filter(r => r.category === filters.category);
+    }
+
+    if (filters?.verified !== undefined) {
+      resources = resources.filter(r => r.verified === filters.verified);
+    }
+
+    return resources.sort((a, b) => a.name.localeCompare(b.name));
+  } catch (error) {
+    console.error('Error fetching resources, using hardcoded fallback:', error);
+
+    // Fallback on error
+    let resources = hardcodedResources;
+
+    if (filters?.category) {
+      resources = resources.filter(r => r.category === filters.category);
+    }
+
+    if (filters?.verified !== undefined) {
+      resources = resources.filter(r => r.verified === filters.verified);
+    }
+
+    return resources.sort((a, b) => a.name.localeCompare(b.name));
   }
-
-  if (filters?.verified !== undefined) {
-    where.verified = filters.verified;
-  }
-
-  const dbResources = await prisma.resource.findMany({
-    where,
-    orderBy: {
-      name: 'asc',
-    },
-  });
-
-  return dbResources.map(parseResource);
 }
 
 /**
@@ -161,15 +197,25 @@ export async function getAllResources(filters?: {
  * @returns Resource or null if not found
  */
 export async function getResourceBySlug(slug: string): Promise<Resource | null> {
-  const dbResource = await prisma.resource.findUnique({
-    where: { slug },
-  });
+  try {
+    const dbResource = await prisma.resource.findUnique({
+      where: { slug },
+    });
 
-  if (!dbResource) {
-    return null;
+    if (dbResource) {
+      return parseResource(dbResource);
+    }
+
+    // Fallback to hardcoded data
+    const hardcodedResource = hardcodedResources.find(r => r.slug === slug);
+    return hardcodedResource || null;
+  } catch (error) {
+    console.error('Error fetching resource, using hardcoded fallback:', error);
+
+    // Fallback on error
+    const hardcodedResource = hardcodedResources.find(r => r.slug === slug);
+    return hardcodedResource || null;
   }
-
-  return parseResource(dbResource);
 }
 
 /**
@@ -186,13 +232,23 @@ export async function getResourcesByCategory(category: string): Promise<Resource
  * @returns Array of slugs
  */
 export async function getAllResourceSlugs(): Promise<string[]> {
-  const resources = await prisma.resource.findMany({
-    select: {
-      slug: true,
-    },
-  });
+  try {
+    const resources = await prisma.resource.findMany({
+      select: {
+        slug: true,
+      },
+    });
 
-  return resources.map((r) => r.slug);
+    if (resources.length > 0) {
+      return resources.map((r) => r.slug);
+    }
+
+    // Fallback to hardcoded data
+    return hardcodedResources.map(r => r.slug);
+  } catch (error) {
+    console.error('Error fetching resource slugs, using hardcoded fallback:', error);
+    return hardcodedResources.map(r => r.slug);
+  }
 }
 
 /**
@@ -207,21 +263,37 @@ export async function getRelatedResources(
   currentSlug: string,
   limit: number = 3
 ): Promise<Resource[]> {
-  const dbResources = await prisma.resource.findMany({
-    where: {
-      category,
-      slug: {
-        not: currentSlug,
+  try {
+    const dbResources = await prisma.resource.findMany({
+      where: {
+        category,
+        slug: {
+          not: currentSlug,
+        },
+        verified: true,
       },
-      verified: true,
-    },
-    take: limit,
-    orderBy: {
-      views: 'desc',
-    },
-  });
+      take: limit,
+      orderBy: {
+        views: 'desc',
+      },
+    });
 
-  return dbResources.map(parseResource);
+    if (dbResources.length > 0) {
+      return dbResources.map(parseResource);
+    }
+
+    // Fallback to hardcoded data
+    return hardcodedResources
+      .filter(r => r.category === category && r.slug !== currentSlug && r.verified)
+      .slice(0, limit);
+  } catch (error) {
+    console.error('Error fetching related resources, using hardcoded fallback:', error);
+
+    // Fallback on error
+    return hardcodedResources
+      .filter(r => r.category === category && r.slug !== currentSlug && r.verified)
+      .slice(0, limit);
+  }
 }
 
 /**

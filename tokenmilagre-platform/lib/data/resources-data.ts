@@ -1,4 +1,5 @@
 export interface ResourceDetail {
+  id: string;
   slug: string;
   name: string;
   category: string;
@@ -7,6 +8,10 @@ export interface ResourceDetail {
   officialUrl: string;
   platforms: string[];
   tags: string[];
+  views: number;
+  createdAt: Date;
+  updatedAt: Date;
+  lastVerified: Date;
 
   // Conteúdo da página dedicada
   hero: {
@@ -60,6 +65,7 @@ export interface ResourceDetail {
 
 export const resourcesDetails: Record<string, ResourceDetail> = {
   brave: {
+    id: 'brave-browser',
     slug: 'brave',
     name: 'Brave Browser',
     category: 'browsers',
@@ -68,6 +74,10 @@ export const resourcesDetails: Record<string, ResourceDetail> = {
     officialUrl: 'https://brave.com',
     platforms: ['Web', 'Windows', 'macOS', 'Linux', 'iOS', 'Android'],
     tags: ['Web3', 'Privacy', 'BAT', 'DApps'],
+    views: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    lastVerified: new Date(),
 
     hero: {
       title: 'Brave Browser: O Navegador Ideal para Web3',
@@ -228,6 +238,7 @@ export const resourcesDetails: Record<string, ResourceDetail> = {
   },
 
   firefox: {
+    id: 'firefox-browser',
     slug: 'firefox',
     name: 'Firefox',
     category: 'browsers',
@@ -236,6 +247,10 @@ export const resourcesDetails: Record<string, ResourceDetail> = {
     officialUrl: 'https://www.mozilla.org/firefox',
     platforms: ['Web', 'Windows', 'macOS', 'Linux', 'iOS', 'Android'],
     tags: ['Privacy', 'Open Source', 'Extensions', 'Web3'],
+    views: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    lastVerified: new Date(),
 
     hero: {
       title: 'Firefox: Privacidade e Liberdade na Web',
@@ -396,6 +411,7 @@ export const resourcesDetails: Record<string, ResourceDetail> = {
   },
 
   metamask: {
+    id: 'metamask-wallet',
     slug: 'metamask',
     name: 'MetaMask',
     category: 'wallets',
@@ -404,6 +420,10 @@ export const resourcesDetails: Record<string, ResourceDetail> = {
     officialUrl: 'https://metamask.io',
     platforms: ['Web', 'iOS', 'Android', 'Chrome', 'Firefox', 'Brave', 'Edge'],
     tags: ['EVM', 'Ethereum', 'DeFi', 'NFTs'],
+    views: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    lastVerified: new Date(),
 
     hero: {
       title: 'MetaMask: Sua Porta de Entrada para Web3',
