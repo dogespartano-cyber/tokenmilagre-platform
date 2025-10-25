@@ -124,3 +124,57 @@ model Article {
   @@index([category])
   @@index([type])
 }
+
+model Resource {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  category    String   // wallets, exchanges, browsers, defi, explorers, tools
+  verified    Boolean  @default(true)
+
+  // Básico
+  shortDescription String
+  officialUrl      String
+  platforms        String   // JSON array: ["Web", "iOS", "Android"]
+  tags             String   // JSON array: ["DeFi", "NFTs"]
+
+  // Hero section
+  heroTitle       String
+  heroDescription String
+  heroGradient    String
+
+  // Why good section
+  whyGoodTitle   String
+  whyGoodContent String  // JSON array de paragraphs
+
+  // Features
+  features String  // JSON array: [{ icon, title, description }]
+
+  // How to start
+  howToStartTitle String
+  howToStartSteps String  // JSON array: [{ number, title, description }]
+
+  // Pros and Cons
+  pros  String  // JSON array
+  cons  String  // JSON array
+
+  // FAQ
+  faq String  // JSON array: [{ question, answer }]
+
+  // Security tips
+  securityTips String  // JSON array: [{ icon, title, description }]
+
+  // Opcionais
+  showCompatibleWallets Boolean @default(false)
+  relatedResources      String? // JSON array de slugs
+
+  // Metadados
+  views         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  lastVerified  DateTime @default(now())
+
+  @@index([slug])
+  @@index([category])
+  @@index([verified])
+}
