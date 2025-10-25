@@ -261,10 +261,10 @@ export default function RecursosPage() {
         })}
       </Script>
 
-      <div className="py-8 max-w-6xl" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
+      <div className="container mx-auto px-4 py-8">
         <div className="space-y-16">
           {/* Hero */}
-          <div className="space-y-6">
+          <div className="space-y-6 max-w-3xl">
             <div className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold" style={{
               backgroundColor: 'var(--bg-secondary)',
               color: 'var(--brand-primary)'
@@ -406,7 +406,7 @@ export default function RecursosPage() {
           </div>
 
           {/* Grid de Recursos - DESIGN GRADIENTE */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredResources.map((resource) => (
               <a
                 key={resource.id}

@@ -352,32 +352,38 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
                 <div className="flex flex-col h-full">
                   {/* Header do Card */}
                   <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">
-                        {resource.level === 'iniciante' ? '🟢' : resource.level === 'intermediario' ? '🟡' : '🔴'}
-                      </span>
-                      <span className="text-xs font-semibold px-2 py-1 rounded-full" style={{
-                        backgroundColor: resource.level === 'iniciante' ? '#22c55e20' : resource.level === 'intermediario' ? '#eab30820' : '#ef444420',
+                    {/* Badge de Nível - Design com barra lateral */}
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border-l-4" style={{
+                      backgroundColor: resource.level === 'iniciante' ? '#22c55e15' : resource.level === 'intermediario' ? '#eab30815' : '#ef444415',
+                      borderLeftColor: resource.level === 'iniciante' ? '#22c55e' : resource.level === 'intermediario' ? '#eab308' : '#ef4444'
+                    }}>
+                      <svg className="w-4 h-4" style={{
+                        color: resource.level === 'iniciante' ? '#22c55e' : resource.level === 'intermediario' ? '#eab308' : '#ef4444'
+                      }} fill="currentColor" viewBox="0 0 20 20">
+                        {resource.level === 'iniciante' && (
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        )}
+                        {resource.level === 'intermediario' && (
+                          <>
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </>
+                        )}
+                        {resource.level === 'avancado' && (
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        )}
+                      </svg>
+                      <span className="text-xs font-bold uppercase tracking-wide" style={{
                         color: resource.level === 'iniciante' ? '#22c55e' : resource.level === 'intermediario' ? '#eab308' : '#ef4444'
                       }}>
                         {resource.level === 'iniciante' ? 'Iniciante' : resource.level === 'intermediario' ? 'Intermediário' : 'Avançado'}
                       </span>
                     </div>
+
                     <span className="text-xs font-medium px-2 py-1 rounded-md" style={{
                       backgroundColor: 'var(--bg-secondary)',
                       color: 'var(--text-tertiary)'
                     }}>
                       📖 {resource.readTime}
-                    </span>
-                  </div>
-
-                  {/* Tipo do Conteúdo */}
-                  <div className="mb-3">
-                    <span className="text-xs font-semibold px-2 py-1 rounded" style={{
-                      backgroundColor: 'var(--brand-primary)',
-                      color: 'var(--text-inverse)'
-                    }}>
-                      {resource.type}
                     </span>
                   </div>
 

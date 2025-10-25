@@ -298,7 +298,8 @@ export default function HomePage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <>
+      <div className="container mx-auto px-4 py-8">
         {loading ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4 animate-pulse">📊</div>
@@ -307,7 +308,9 @@ export default function HomePage() {
         ) : (
           <div className="space-y-10">
             {/* Ticker Tape - Fita de Preços */}
-            <div className="rounded-2xl overflow-hidden shadow-md border" style={{
+            <div
+              className="rounded-2xl overflow-hidden shadow-md border"
+              style={{
               borderColor: 'var(--border-light)',
               backgroundColor: 'var(--bg-elevated)'
             }}>
@@ -317,7 +320,9 @@ export default function HomePage() {
             {/* Visão Geral do Mercado */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Capitalização Total */}
-              <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-500 ease-out" style={{
+              <div
+                className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
+                style={{
                 background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
                 borderColor: 'var(--border-light)'
               }}>
@@ -336,7 +341,9 @@ export default function HomePage() {
               </div>
 
               {/* Volume 24h */}
-              <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-500 ease-out" style={{
+              <div
+                className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
+                style={{
                 background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
                 borderColor: 'var(--border-light)'
               }}>
@@ -350,7 +357,9 @@ export default function HomePage() {
               </div>
 
               {/* Dominância BTC */}
-              <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-500 ease-out" style={{
+              <div
+                className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
+                style={{
                 background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
                 borderColor: 'var(--border-light)'
               }}>
@@ -372,7 +381,9 @@ export default function HomePage() {
               </div>
 
               {/* Dominância ETH */}
-              <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-500 ease-out" style={{
+              <div
+                className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
+                style={{
                 background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
                 borderColor: 'var(--border-light)'
               }}>
@@ -655,23 +666,13 @@ export default function HomePage() {
                 )}
             </div>
 
-            {/* Últimas Notícias - COM CARD */}
-            <div>
-              <div className="backdrop-blur-xl rounded-3xl p-8 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-500 ease-out overflow-hidden" style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)'
-              }}>
+            {/* Últimas Notícias */}
+            <div className="space-y-6">
                 {/* Título Últimas Notícias */}
-                <div className="flex items-center justify-between mb-6">
+                <div>
                   <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                     Últimas Notícias
                   </h3>
-                  <div className="px-3 py-1 rounded-full text-xs font-bold" style={{
-                    background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                    color: 'white'
-                  }}>
-                    HOJE
-                  </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
@@ -728,7 +729,7 @@ export default function HomePage() {
                 {/* Ver todas */}
                 <Link
                   href="/dashboard/noticias"
-                  className="mt-6 inline-block py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  className="inline-block py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
                   style={{
                     background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
                     color: 'var(--text-inverse)'
@@ -736,25 +737,14 @@ export default function HomePage() {
                 >
                   Ver todas as notícias →
                 </Link>
-              </div>
             </div>
 
             {/* Educação - Carousel */}
-            <div>
-              <div className="backdrop-blur-xl rounded-3xl p-8 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-500 ease-out overflow-hidden" style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)'
-              }}>
-                <div className="flex items-center justify-between mb-6">
+            <div className="space-y-6">
+                <div>
                   <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                     Aprenda sobre Cripto
                   </h3>
-                  <div className="px-3 py-1 rounded-full text-xs font-bold" style={{
-                    background: 'linear-gradient(135deg, #0D9488, #0F766E)',
-                    color: 'white'
-                  }}>
-                    EDUCAÇÃO
-                  </div>
                 </div>
 
                 {/* Carousel Container */}
@@ -919,7 +909,7 @@ export default function HomePage() {
                 {/* Ver todos */}
                 <Link
                   href="/educacao"
-                  className="mt-6 inline-flex items-center gap-2 py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  className="inline-flex items-center gap-2 py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
                   style={{
                     background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
                     color: 'var(--text-inverse)'
@@ -930,35 +920,22 @@ export default function HomePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </Link>
-              </div>
             </div>
 
-            {/* Recursos - REDESENHADO */}
-            <div>
-              <div className="backdrop-blur-xl rounded-3xl p-8 border shadow-md transition-all duration-500 ease-out overflow-hidden" style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)'
-              }}>
+            {/* Recursos */}
+            <div className="space-y-6">
                 {/* Header */}
-                <div className="mb-8">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                      Ferramentas Essenciais
-                    </h3>
-                    <div className="px-3 py-1 rounded-full text-xs font-bold" style={{
-                      background: 'linear-gradient(135deg, #0D9488, #0F766E)',
-                      color: 'white'
-                    }}>
-                      VERIFICADAS
-                    </div>
-                  </div>
+                <div>
+                  <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] mb-3" style={{ color: 'var(--text-primary)' }}>
+                    Ferramentas Essenciais
+                  </h3>
                   <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                     Plataformas confiáveis utilizadas por milhões de usuários globalmente
                   </p>
                 </div>
 
                 {/* Grid de Recursos em Destaque */}
-                <div className="grid md:grid-cols-3 gap-4 mb-8">
+                <div className="grid md:grid-cols-3 gap-4">
                   {resources.length > 0 ? (
                     resources.map((resource, idx) => (
                       <Link
@@ -1021,15 +998,7 @@ export default function HomePage() {
                 </div>
 
                 {/* CTA Final */}
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
-                      Descubra mais ferramentas
-                    </p>
-                    <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-                      +50 recursos verificados e categorizados
-                    </p>
-                  </div>
+                <div>
                   <Link
                     href="/recursos"
                     className="inline-flex items-center gap-2 py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
@@ -1044,7 +1013,6 @@ export default function HomePage() {
                     </svg>
                   </Link>
                 </div>
-              </div>
             </div>
 
             {/* Divider */}
@@ -1066,14 +1034,17 @@ export default function HomePage() {
                 <AdvancedChart symbol="BTCUSDT" name="Bitcoin (BTC/USDT)" />
               </div>
 
-              {/* Ethereum - Análise Completa */}
-              <div className="space-y-4">
-                <AdvancedChart symbol="ETHUSDT" name="Ethereum (ETH/USDT)" />
-              </div>
+              {/* Ethereum e Solana - 2 Colunas */}
+              <div className="grid lg:grid-cols-2 gap-6">
+                {/* Ethereum */}
+                <div>
+                  <AdvancedChart symbol="ETHUSDT" name="Ethereum (ETH/USDT)" />
+                </div>
 
-              {/* Solana - Análise Completa */}
-              <div className="space-y-4">
-                <AdvancedChart symbol="SOLUSDT" name="Solana (SOL/USDT)" />
+                {/* Solana */}
+                <div>
+                  <AdvancedChart symbol="SOLUSDT" name="Solana (SOL/USDT)" />
+                </div>
               </div>
 
               {/* Análise Técnica Avançada */}
@@ -1248,5 +1219,6 @@ export default function HomePage() {
         </button>
       )}
       </div>
+    </>
   );
 }
