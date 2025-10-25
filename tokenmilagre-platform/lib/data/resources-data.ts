@@ -231,8 +231,11 @@ export const resourcesDetails: Record<string, ResourceDetail> = {
     slug: 'firefox',
     name: 'Firefox',
     category: 'browsers',
+    verified: true,
     shortDescription: 'Navegador de código aberto focado em privacidade e extensibilidade',
     officialUrl: 'https://www.mozilla.org/firefox',
+    platforms: ['Web', 'Windows', 'macOS', 'Linux', 'iOS', 'Android'],
+    tags: ['Privacy', 'Open Source', 'Extensions', 'Web3'],
 
     hero: {
       title: 'Firefox: Privacidade e Liberdade na Web',
@@ -396,8 +399,11 @@ export const resourcesDetails: Record<string, ResourceDetail> = {
     slug: 'metamask',
     name: 'MetaMask',
     category: 'wallets',
+    verified: true,
     shortDescription: 'Wallet não custodial líder para Ethereum e redes EVM',
     officialUrl: 'https://metamask.io',
+    platforms: ['Web', 'iOS', 'Android', 'Chrome', 'Firefox', 'Brave', 'Edge'],
+    tags: ['EVM', 'Ethereum', 'DeFi', 'NFTs'],
 
     hero: {
       title: 'MetaMask: Sua Porta de Entrada para Web3',
