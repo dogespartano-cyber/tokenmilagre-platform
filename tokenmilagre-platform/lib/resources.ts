@@ -1,132 +1,7 @@
-import { PrismaClient } from '@/lib/generated/prisma';
+import { resources } from '@/lib/data/resources-data';
 
-const prisma = new PrismaClient();
-
-// Types matching the database schema
-export interface ResourceFromDB {
-  id: string;
-  slug: string;
-  name: string;
-  category: string;
-  verified: boolean;
-  shortDescription: string;
-  officialUrl: string;
-  platforms: string; // JSON
-  tags: string; // JSON
-  heroTitle: string;
-  heroDescription: string;
-  heroGradient: string;
-  whyGoodTitle: string;
-  whyGoodContent: string; // JSON
-  features: string; // JSON
-  howToStartTitle: string;
-  howToStartSteps: string; // JSON
-  pros: string; // JSON
-  cons: string; // JSON
-  faq: string; // JSON
-  securityTips: string; // JSON
-  showCompatibleWallets: boolean;
-  relatedResources: string | null; // JSON
-  views: number;
-  createdAt: Date;
-  updatedAt: Date;
-  lastVerified: Date;
-}
-
-// Parsed types for frontend
-export interface Resource {
-  id: string;
-  slug: string;
-  name: string;
-  category: string;
-  verified: boolean;
-  shortDescription: string;
-  officialUrl: string;
-  platforms: string[];
-  tags: string[];
-  hero: {
-    title: string;
-    description: string;
-    gradient: string;
-  };
-  whyGood: {
-    title: string;
-    content: string[];
-  };
-  features: {
-    icon: string;
-    title: string;
-    description: string;
-  }[];
-  howToStart: {
-    title: string;
-    steps: {
-      number: number;
-      title: string;
-      description: string;
-    }[];
-  };
-  prosAndCons: {
-    pros: string[];
-    cons: string[];
-  };
-  faq: {
-    question: string;
-    answer: string;
-  }[];
-  securityTips: {
-    icon: string;
-    title: string;
-    description: string;
-  }[];
-  showCompatibleWallets: boolean;
-  relatedResources?: string[];
-  views: number;
-  createdAt: Date;
-  updatedAt: Date;
-  lastVerified: Date;
-}
-
-// Transform DB resource to frontend format
-function parseResource(dbResource: ResourceFromDB): Resource {
-  return {
-    id: dbResource.id,
-    slug: dbResource.slug,
-    name: dbResource.name,
-    category: dbResource.category,
-    verified: dbResource.verified,
-    shortDescription: dbResource.shortDescription,
-    officialUrl: dbResource.officialUrl,
-    platforms: JSON.parse(dbResource.platforms),
-    tags: JSON.parse(dbResource.tags),
-    hero: {
-      title: dbResource.heroTitle,
-      description: dbResource.heroDescription,
-      gradient: dbResource.heroGradient,
-    },
-    whyGood: {
-      title: dbResource.whyGoodTitle,
-      content: JSON.parse(dbResource.whyGoodContent),
-    },
-    features: JSON.parse(dbResource.features),
-    howToStart: {
-      title: dbResource.howToStartTitle,
-      steps: JSON.parse(dbResource.howToStartSteps),
-    },
-    prosAndCons: {
-      pros: JSON.parse(dbResource.pros),
-      cons: JSON.parse(dbResource.cons),
-    },
-    faq: JSON.parse(dbResource.faq),
-    securityTips: JSON.parse(dbResource.securityTips),
-    showCompatibleWallets: dbResource.showCompatibleWallets,
-    relatedResources: dbResource.relatedResources ? JSON.parse(dbResource.relatedResources) : undefined,
-    views: dbResource.views,
-    createdAt: dbResource.createdAt,
-    updatedAt: dbResource.updatedAt,
-    lastVerified: dbResource.lastVerified,
-  };
-}
+// Export the Resource type from resources-data
+export type { ResourceDetail as Resource } from '@/lib/data/resources-data';
 
 /**
  * Get all resources
@@ -136,25 +11,18 @@ function parseResource(dbResource: ResourceFromDB): Resource {
 export async function getAllResources(filters?: {
   category?: string;
   verified?: boolean;
-}): Promise<Resource[]> {
-  const where: any = {};
+}): Promise<typeof resources> {
+  let filtered = resources;
 
   if (filters?.category) {
-    where.category = filters.category;
+    filtered = filtered.filter(r => r.category === filters.category);
   }
 
   if (filters?.verified !== undefined) {
-    where.verified = filters.verified;
+    filtered = filtered.filter(r => r.verified === filters.verified);
   }
 
-  const dbResources = await prisma.resource.findMany({
-    where,
-    orderBy: {
-      name: 'asc',
-    },
-  });
-
-  return dbResources.map(parseResource);
+  return filtered.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 /**
@@ -162,16 +30,9 @@ export async function getAllResources(filters?: {
  * @param slug The resource slug
  * @returns Resource or null if not found
  */
-export async function getResourceBySlug(slug: string): Promise<Resource | null> {
-  const dbResource = await prisma.resource.findUnique({
-    where: { slug },
-  });
-
-  if (!dbResource) {
-    return null;
-  }
-
-  return parseResource(dbResource);
+export async function getResourceBySlug(slug: string) {
+  const resource = resources.find(r => r.slug === slug);
+  return resource || null;
 }
 
 /**
@@ -179,7 +40,7 @@ export async function getResourceBySlug(slug: string): Promise<Resource | null> 
  * @param category The category to filter by
  * @returns Array of resources in that category
  */
-export async function getResourcesByCategory(category: string): Promise<Resource[]> {
+export async function getResourcesByCategory(category: string) {
   return getAllResources({ category, verified: true });
 }
 
@@ -188,26 +49,22 @@ export async function getResourcesByCategory(category: string): Promise<Resource
  * @returns Array of slugs
  */
 export async function getAllResourceSlugs(): Promise<string[]> {
-  const resources = await prisma.resource.findMany({
-    select: {
-      slug: true,
-    },
-  });
-
-  return resources.map((r: { slug: string }) => r.slug);
+  return resources.map(r => r.slug);
 }
 
 /**
- * Increment view count for a resource
- * @param slug The resource slug
+ * Get related resources (same category, different slug)
+ * @param category The category to match
+ * @param currentSlug The current resource slug to exclude
+ * @param limit Maximum number of related resources
+ * @returns Array of related resources
  */
-export async function incrementResourceViews(slug: string): Promise<void> {
-  await prisma.resource.update({
-    where: { slug },
-    data: {
-      views: {
-        increment: 1,
-      },
-    },
-  });
+export async function getRelatedResources(
+  category: string,
+  currentSlug: string,
+  limit: number = 3
+) {
+  return resources
+    .filter(r => r.category === category && r.slug !== currentSlug)
+    .slice(0, limit);
 }

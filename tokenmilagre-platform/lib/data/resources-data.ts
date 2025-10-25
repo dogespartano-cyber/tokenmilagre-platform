@@ -2,8 +2,11 @@ export interface ResourceDetail {
   slug: string;
   name: string;
   category: string;
+  verified: boolean;
   shortDescription: string;
   officialUrl: string;
+  platforms: string[];
+  tags: string[];
 
   // Conteúdo da página dedicada
   hero: {
@@ -60,8 +63,11 @@ export const resourcesDetails: Record<string, ResourceDetail> = {
     slug: 'brave',
     name: 'Brave Browser',
     category: 'browsers',
+    verified: true,
     shortDescription: 'Navegador mais indicado para usuários de criptomoedas',
     officialUrl: 'https://brave.com',
+    platforms: ['Web', 'Windows', 'macOS', 'Linux', 'iOS', 'Android'],
+    tags: ['Web3', 'Privacy', 'BAT', 'DApps'],
 
     hero: {
       title: 'Brave Browser: O Navegador Ideal para Web3',
@@ -553,8 +559,11 @@ export const resourcesDetails: Record<string, ResourceDetail> = {
     slug: 'phantom',
     name: 'Phantom',
     category: 'wallets',
+    verified: true,
     shortDescription: 'Wallet não-custodial líder do ecossistema Solana',
     officialUrl: 'https://phantom.app',
+    platforms: ['Web', 'iOS', 'Android', 'Chrome'],
+    tags: ['Solana', 'NFTs', 'DeFi', 'Staking'],
 
     hero: {
       title: 'Phantom: A Melhor Wallet para Solana',
@@ -712,3 +721,6 @@ export const resourcesDetails: Record<string, ResourceDetail> = {
     relatedResources: ['metamask', 'brave', 'raydium'],
   },
 };
+
+// Export array for easier consumption
+export const resources: ResourceDetail[] = Object.values(resourcesDetails);
