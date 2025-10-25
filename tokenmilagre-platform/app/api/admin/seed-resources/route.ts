@@ -3,31 +3,23 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
-// Seed resources data from prisma/seed.ts
-// This is a subset - only the resources part
+// Seed resources data from prisma/additional-resources
 const seedResources = async () => {
-  const { PrismaClient } = await import('@/lib/generated/prisma');
-  const prismaTemp = new PrismaClient();
+  // Import resources from additional-resources
+  const { additionalResources } = await import('@/prisma/additional-resources');
 
-  try {
-    // Import resources from additional-resources
-    const { additionalResources } = await import('@/prisma/additional-resources');
+  let count = 0;
 
-    let count = 0;
-
-    for (const resource of additionalResources) {
-      await prismaTemp.resource.upsert({
-        where: { slug: resource.slug },
-        update: resource,
-        create: resource,
-      });
-      count++;
-    }
-
-    return { success: true, count };
-  } finally {
-    await prismaTemp.$disconnect();
+  for (const resource of additionalResources) {
+    await prisma.resource.upsert({
+      where: { slug: resource.slug },
+      update: resource,
+      create: resource,
+    });
+    count++;
   }
+
+  return { success: true, count };
 };
 
 export async function POST(request: Request) {
