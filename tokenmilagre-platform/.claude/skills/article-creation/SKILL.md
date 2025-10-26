@@ -170,6 +170,122 @@ Parágrafo final sem nota de transparência ou fontes.
 - Se o `content` começar com texto = duplicação visual
 - Começar direto com ## evita repetição e melhora a estrutura
 
+### 📐 Padrão de Estruturação Jornalística (Template Oficial)
+
+**Descoberto e validado em**: 2025-10-26 (artigo Strategy/Bitcoin)
+
+**Fluxo narrativo ideal para notícias digitais:**
+
+```
+Fato → Contexto → Impacto → Visão → Reflexão → Desafios
+```
+
+Este padrão funciona porque:
+- **Captura atenção** (fato impactante abre a notícia)
+- **Contextualiza** (números, comparações, dados)
+- **Analisa** (impacto no mercado/setor)
+- **Humaniza** (visão do protagonista/especialista)
+- **Reflete** (significado maior, análise profunda)
+- **Equilibra** (desafios, riscos, realismo)
+
+#### Técnicas de Estruturação
+
+1. **Agrupar parágrafos por tema** (não por tamanho)
+   - ✅ CORRETO: Seção agrupa todos parágrafos sobre "Impacto no Mercado"
+   - ❌ ERRADO: Seção mistura temas diferentes só para balancear tamanho
+
+2. **Títulos de seção descritivos** (não genéricos)
+   - ✅ CORRETO: "Disparada na Liderança", "Visão de Michael Saylor"
+   - ❌ ERRADO: "Introdução", "Desenvolvimento", "Informações"
+
+3. **H2 para navegação, H3 para profundidade**
+   - H2 (##) aparece no índice lateral → máximo 5-7 seções
+   - H3 (###) adiciona profundidade sem poluir índice
+
+4. **Conclusão integrada** (não separada)
+   - ✅ CORRETO: Converter "Conclusão" em subseção (###) da última seção
+   - ❌ ERRADO: "## Conclusão" como seção isolada no final
+
+5. **Número ideal de seções**
+   - Mínimo: 4 seções H2
+   - Ideal: 5-6 seções H2
+   - Máximo: 7 seções H2
+   - Evita índice muito longo e mantém foco
+
+#### Exemplo Prático: Artigo Strategy/Bitcoin
+
+**Texto original recebido:**
+```markdown
+**Strategy se torna a maior tesouraria...**
+
+Em outubro de 2025, um marco histórico...
+A empresa alcançou recentemente...
+Enquanto outras companhias...
+O movimento estratégico...
+A razão por trás...
+Essa virada reforça...
+
+### Conclusão
+A trajetória da Strategy...
+```
+
+**Texto estruturado (padrão aplicado):**
+```markdown
+## Marco Histórico no Mercado Cripto
+[Fato: October 2025, 640.000 BTC]
+
+## Disparada na Liderança
+[Contexto: Comparação com MARA, XXI, outras empresas]
+
+## Impacto no Mercado Institucional
+[Impacto: Fortalecimento institucional, influência]
+
+## Visão de Michael Saylor
+[Visão: Convicção em Bitcoin como reserva de valor]
+
+## Novo Paradigma Corporativo
+[Reflexão: Protagonismo, debates, ponto de inflexão]
+
+### Legado e Desafios
+[Desafios: Diluição, volatilidade, concentração]
+```
+
+**Benefícios confirmados:**
+- ✅ Hierarquia visual clara
+- ✅ Leitura dinâmica facilitada
+- ✅ SEO otimizado (subtítulos semânticos)
+- ✅ Navegação funcional (índice lateral)
+- ✅ Mobile-friendly (seções curtas)
+- ✅ Profissionalismo editorial
+
+#### Quando Aplicar Este Padrão
+
+**✅ SEMPRE usar para:**
+- Notícias longas (3+ parágrafos originais)
+- Análises de mercado
+- Anúncios corporativos
+- Notícias regulatórias
+- Tutoriais de notícias
+
+**❌ NÃO usar para:**
+- Notícias flash (1-2 parágrafos curtos)
+- Alertas urgentes
+- Atualizações rápidas de preço
+
+#### Checklist de Estruturação
+
+Ao transformar texto bruto em notícia estruturada:
+
+- [ ] Identificar o **fato central** (primeira seção)
+- [ ] Extrair **dados/números** para contextualizar
+- [ ] Analisar **impacto** no mercado/setor
+- [ ] Incluir **visão humana** (CEO, especialista, protagonista)
+- [ ] Adicionar **reflexão** sobre significado maior
+- [ ] Integrar **conclusão como subseção** (###) da última seção
+- [ ] Garantir 5-6 seções H2 (não menos de 4, não mais de 7)
+- [ ] Verificar títulos descritivos (não genéricos)
+- [ ] Remover fontes/referências (template processa)
+
 ### Template de Notícias - Características
 
 **Design**: Minimalista, idêntico aos artigos educacionais
@@ -426,6 +542,10 @@ Ao criar uma nova notícia:
 - [ ] **NÃO repetir excerpt no início do content (começar direto com ##)**
 - [ ] Verificar se content começa com ## (H2), não com parágrafo
 - [ ] Verificar se as seções usam ## (H2) e ### (H3) corretamente
+- [ ] **Aplicar Padrão de Estruturação Jornalística** (Fato → Contexto → Impacto → Visão → Reflexão → Desafios)
+- [ ] Garantir 5-6 seções H2 temáticas (mínimo 4, máximo 7)
+- [ ] Usar títulos descritivos nas seções (não genéricos)
+- [ ] Integrar conclusão como subseção (###) da última seção
 - [ ] Definir categoria apropriada (bitcoin, ethereum, defi, politica, etc)
 - [ ] Definir sentiment (positive, neutral, negative)
 - [ ] Adicionar excerpt/resumo (1-2 frases)
@@ -438,4 +558,4 @@ Ao criar uma nova notícia:
 ---
 
 **Skill criada por**: Claude Code
-**Última atualização**: 2025-10-24 (adicionada regra 4: anti-duplicação excerpt/content)
+**Última atualização**: 2025-10-26 (adicionado Padrão de Estruturação Jornalística oficial)
