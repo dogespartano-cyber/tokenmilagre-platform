@@ -2,30 +2,37 @@
 
 import { useState, useEffect } from 'react';
 import Script from 'next/script';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp, faHandshake, faBook, faLockOpen, faGlobe, faBullseye, faRocket, faUserShield, faBookOpen, faStar, faLaptopCode, faCheckToSlot } from '@fortawesome/free-solid-svg-icons';
+import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
 export default function SobrePage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const coreValues = [
     {
-      icon: '🤝',
+      icon: faHandshake,
       title: 'Apoio Mútuo',
-      description: 'Ninguém caminha sozinho em nossa comunidade'
+      description: 'Ninguém caminha sozinho em nossa comunidade',
+      color: '#22c55e'
     },
     {
-      icon: '📚',
+      icon: faBook,
       title: 'Educação Livre',
-      description: 'Conhecimento acessível para todos'
+      description: 'Conhecimento acessível para todos',
+      color: '#3b82f6'
     },
     {
-      icon: '🔓',
+      icon: faLockOpen,
       title: 'Transparência',
-      description: 'Decisões abertas e processos claros'
+      description: 'Decisões abertas e processos claros',
+      color: '#eab308'
     },
     {
-      icon: '🌍',
+      icon: faGlobe,
       title: 'Impacto Real',
-      description: 'Fazemos a diferença na vida das pessoas'
+      description: 'Fazemos a diferença na vida das pessoas',
+      color: '#8b5cf6'
     }
   ];
 
@@ -91,9 +98,7 @@ export default function SobrePage() {
                   color: 'white'
                 }}
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
-                </svg>
+                <FontAwesomeIcon icon={faDiscord} className="w-5 h-5" />
                 Discord
               </a>
 
@@ -107,9 +112,7 @@ export default function SobrePage() {
                   color: 'white'
                 }}
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12s12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21l-1.446 1.394c-.14.18-.357.295-.6.295c-.002 0-.003 0-.005 0l.213-3.054l5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326l-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
-                </svg>
+                <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
                 Telegram
               </a>
             </div>
@@ -159,7 +162,12 @@ export default function SobrePage() {
             <div className="grid sm:grid-cols-2 gap-8">
               {coreValues.map((value, index) => (
                 <div key={index} className="space-y-3">
-                  <div className="text-4xl">{value.icon}</div>
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{
+                    backgroundColor: `${value.color}15`,
+                    border: `2px solid ${value.color}30`
+                  }}>
+                    <FontAwesomeIcon icon={value.icon} className="text-3xl" style={{ color: value.color }} />
+                  </div>
                   <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                     {value.title}
                   </h3>
@@ -182,8 +190,11 @@ export default function SobrePage() {
 
             <div className="space-y-6">
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                  🎯
+                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  border: '2px solid var(--brand-primary)'
+                }}>
+                  <FontAwesomeIcon icon={faBullseye} className="text-lg" style={{ color: 'var(--brand-primary)' }} />
                 </div>
                 <div className="space-y-1 flex-1">
                   <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>Fundação da Comunidade</h3>
@@ -192,8 +203,11 @@ export default function SobrePage() {
               </div>
 
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                  🚀
+                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  border: '2px solid var(--brand-primary)'
+                }}>
+                  <FontAwesomeIcon icon={faRocket} className="text-lg" style={{ color: 'var(--brand-primary)' }} />
                 </div>
                 <div className="space-y-1 flex-1">
                   <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>Lançamento do Token</h3>
@@ -202,8 +216,11 @@ export default function SobrePage() {
               </div>
 
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                  👼
+                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  border: '2px solid var(--brand-primary)'
+                }}>
+                  <FontAwesomeIcon icon={faUserShield} className="text-lg" style={{ color: 'var(--brand-primary)' }} />
                 </div>
                 <div className="space-y-1 flex-1">
                   <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>Primeiros Guardiões</h3>
@@ -212,8 +229,11 @@ export default function SobrePage() {
               </div>
 
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                  📖
+                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  border: '2px solid var(--brand-primary)'
+                }}>
+                  <FontAwesomeIcon icon={faBookOpen} className="text-lg" style={{ color: 'var(--brand-primary)' }} />
                 </div>
                 <div className="space-y-1 flex-1">
                   <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>Plataforma Educacional</h3>
@@ -222,8 +242,11 @@ export default function SobrePage() {
               </div>
 
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                  🌟
+                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  border: '2px solid var(--brand-primary)'
+                }}>
+                  <FontAwesomeIcon icon={faStar} className="text-lg" style={{ color: 'var(--brand-primary)' }} />
                 </div>
                 <div className="space-y-1 flex-1">
                   <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>Crescimento Contínuo</h3>
@@ -249,7 +272,12 @@ export default function SobrePage() {
 
             <div className="grid sm:grid-cols-2 gap-6">
               <div className="space-y-3">
-                <div className="text-3xl">📚</div>
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{
+                  backgroundColor: '#3b82f615',
+                  border: '2px solid #3b82f630'
+                }}>
+                  <FontAwesomeIcon icon={faBook} className="text-2xl" style={{ color: '#3b82f6' }} />
+                </div>
                 <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Educar</h3>
                 <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                   Crie tutoriais, faça mentorias e compartilhe conhecimento
@@ -257,7 +285,12 @@ export default function SobrePage() {
               </div>
 
               <div className="space-y-3">
-                <div className="text-3xl">💻</div>
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{
+                  backgroundColor: '#8b5cf615',
+                  border: '2px solid #8b5cf630'
+                }}>
+                  <FontAwesomeIcon icon={faLaptopCode} className="text-2xl" style={{ color: '#8b5cf6' }} />
+                </div>
                 <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Desenvolver</h3>
                 <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                   Contribua com código open source e melhorias
@@ -265,7 +298,12 @@ export default function SobrePage() {
               </div>
 
               <div className="space-y-3">
-                <div className="text-3xl">🗳️</div>
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{
+                  backgroundColor: '#eab30815',
+                  border: '2px solid #eab30830'
+                }}>
+                  <FontAwesomeIcon icon={faCheckToSlot} className="text-2xl" style={{ color: '#eab308' }} />
+                </div>
                 <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Governar</h3>
                 <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                   Participe das decisões da comunidade
@@ -273,7 +311,12 @@ export default function SobrePage() {
               </div>
 
               <div className="space-y-3">
-                <div className="text-3xl">🤝</div>
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{
+                  backgroundColor: '#22c55e15',
+                  border: '2px solid #22c55e30'
+                }}>
+                  <FontAwesomeIcon icon={faHandshake} className="text-2xl" style={{ color: '#22c55e' }} />
+                </div>
                 <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Apoiar</h3>
                 <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                   Dê suporte e fortaleça a comunidade
@@ -309,9 +352,7 @@ export default function SobrePage() {
               }}
               aria-label="Voltar ao topo"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-              </svg>
+              <FontAwesomeIcon icon={faArrowUp} className="w-5 h-5" />
             </button>
           )}
         </div>

@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Resource } from '@/lib/resources';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faTimes, faCheckCircle, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 interface RecursosClientProps {
   resources: Resource[];
@@ -170,24 +172,18 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
                   color: 'var(--text-primary)'
                 }}
               />
-              <svg
+              <FontAwesomeIcon
+                icon={faSearch}
                 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5"
                 style={{ color: 'var(--text-tertiary)' }}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+              />
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm('')}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                   aria-label="Limpar busca"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
+                  <FontAwesomeIcon icon={faTimes} className="w-5 h-5" />
                 </button>
               )}
             </div>
@@ -256,9 +252,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
                       {categories.find(c => c.id === resource.category)?.label || resource.category}
                     </div>
                     {resource.verified && (
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
+                      <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" />
                     )}
                   </div>
 
@@ -302,9 +296,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
                   {/* CTA com seta */}
                   <div className="flex items-center justify-between pt-2 border-t border-white/20">
                     <span className="text-sm font-bold">Ver detalhes</span>
-                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
+                    <FontAwesomeIcon icon={faArrowRight} className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </div>
@@ -405,9 +397,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
             }}
             aria-label="Voltar ao topo"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-            </svg>
+            <FontAwesomeIcon icon={faArrowUp} className="w-5 h-5" />
           </button>
         )}
       </div>

@@ -1,7 +1,7 @@
 ---
 name: project-context
-description: ALWAYS use this skill at the start of EVERY conversation to load essential project guidelines, critical rules, interaction protocols, documentation structure, and philosophy. This is the foundation skill that must be loaded first. Automatically starts development server if not running.
-allowed-tools: Read, Bash
+description: ALWAYS use this skill at the start of EVERY conversation to load essential project guidelines, critical rules, interaction protocols, documentation structure, and philosophy. This is the foundation skill that must be loaded first.
+allowed-tools: Read
 ---
 
 # Project Context Skill
@@ -39,45 +39,6 @@ Once you've read CLAUDE-MEMORY.md, you'll know:
 
 ---
 
-## 🚀 Auto-Start Development Server
-
-**IMPORTANT**: After loading CLAUDE-MEMORY.md, automatically check and start the development server.
-
-### Check if Server is Running
-
-```bash
-# Check for Next.js dev server on port 3000
-lsof -i :3000 -t > /dev/null 2>&1 || echo "NOT_RUNNING"
-```
-
-### If Server is NOT Running
-
-**Automatically execute** (without asking, as per user request):
-
-```bash
-npm run dev > /dev/null 2>&1 &
-```
-
-**Then inform the user**:
-```
-✅ Servidor de desenvolvimento iniciado automaticamente
-🌐 http://localhost:3000
-```
-
-### If Server IS Running
-
-**Silently skip** (no need to inform the user)
-
-### Exception to "Always Ask" Rule
-
-This is an **explicit exception** to the "ALWAYS ask before executing" rule because:
-1. User explicitly requested this automation
-2. Starting dev server is non-destructive
-3. Improves workflow efficiency
-4. Equivalent to "Rode o servidor" command (immediate execution)
-
----
-
 ## 🔗 Related Skills
 
 After loading project context, use these specialized skills when needed:
@@ -94,19 +55,17 @@ After loading project context, use these specialized skills when needed:
 When this skill is invoked:
 
 1. Read `/home/destakar/Trabalho/CLAUDE-MEMORY.md` completely
-2. **Check and auto-start development server** (see section above)
-   - Check if port 3000 is in use
-   - If not, start `npm run dev` in background
-   - Inform user if server was started
-3. Acknowledge that you've loaded the project context
-4. Be ready to follow all critical rules, especially:
-   - ALWAYS ask before executing code (except auto-start server)
+2. Acknowledge that you've loaded the project context
+3. Be ready to follow all critical rules, especially:
+   - ALWAYS ask before executing code
    - NEVER commit files outside tokenmilagre-platform/
    - Use Prisma directly in Server Components (no HTTP fetch)
-5. Consult LOG.md when historical context is needed
-6. Consult sugestões.md before suggesting improvements
+4. Consult LOG.md when historical context is needed
+5. Consult sugestões.md before suggesting improvements
+
+**Note**: Use `/home/destakar/Trabalho/server-manager.sh` to manage the development server (start/stop/restart/status).
 
 ---
 
 **Skill criada por**: Claude Code
-**Última atualização**: 2025-10-24 (adicionado auto-start server)
+**Última atualização**: 2025-10-25 (removido auto-start server)

@@ -4,6 +4,9 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { NewsGridSkeleton } from '@/components/SkeletonLoader';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faTimes, faClock, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
 interface NewsItem {
   id: string;
@@ -26,6 +29,43 @@ interface FearGreedData {
   value: string;
   value_classification: string;
 }
+
+// Helper functions for card styling (baseado em sentimento)
+const getSentimentGradient = (sentiment: 'positive' | 'neutral' | 'negative') => {
+  switch(sentiment) {
+    case 'positive': return 'rgba(34, 197, 94, 0.08)';  // Verde
+    case 'negative': return 'rgba(239, 68, 68, 0.08)';  // Vermelho
+    case 'neutral': return 'rgba(234, 179, 8, 0.08)';   // Amarelo
+    default: return 'rgba(100, 116, 139, 0.05)';
+  }
+};
+
+const getSentimentColor = (sentiment: 'positive' | 'neutral' | 'negative') => {
+  switch(sentiment) {
+    case 'positive': return '#22c55e';
+    case 'negative': return '#ef4444';
+    case 'neutral': return '#eab308';
+    default: return '#64748b';
+  }
+};
+
+const getSentimentIcon = (sentiment: 'positive' | 'neutral' | 'negative') => {
+  switch(sentiment) {
+    case 'positive': return '🟢';
+    case 'negative': return '🔴';
+    case 'neutral': return '🟡';
+    default: return '⚪';
+  }
+};
+
+const getSentimentLabel = (sentiment: 'positive' | 'neutral' | 'negative') => {
+  switch(sentiment) {
+    case 'positive': return 'Positivo';
+    case 'negative': return 'Negativo';
+    case 'neutral': return 'Neutro';
+    default: return 'Neutro';
+  }
+};
 
 export default function NoticiasPage() {
   const [news, setNews] = useState<NewsItem[]>([]);
@@ -57,9 +97,14 @@ export default function NoticiasPage() {
   // Buscar Fear & Greed Index
   const fetchFearGreed = useCallback(async () => {
     try {
-      const response = await fetch('https://api.alternative.me/fng/');
-      const data = await response.json();
-      setFearGreed(data.data[0]);
+      const response = await fetch('/api/fear-greed');
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        setFearGreed(result.data);
+      } else {
+        console.error('Erro ao buscar Fear & Greed Index:', result.error);
+      }
     } catch (error) {
       console.error('Erro ao buscar Fear & Greed Index:', error);
     }
@@ -490,9 +535,7 @@ export default function NoticiasPage() {
                 color: 'white'
               }}
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
-              </svg>
+              <FontAwesomeIcon icon={faDiscord} className="w-5 h-5" />
               <span>Discord</span>
               <span className="group-hover:translate-x-1 transition-transform">→</span>
             </a>
@@ -507,9 +550,7 @@ export default function NoticiasPage() {
                 color: 'white'
               }}
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12s12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21l-1.446 1.394c-.14.18-.357.295-.6.295c-.002 0-.003 0-.005 0l.213-3.054l5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326l-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
-              </svg>
+              <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
               <span>Telegram</span>
               <span className="group-hover:translate-x-1 transition-transform">→</span>
             </a>
@@ -562,24 +603,18 @@ export default function NoticiasPage() {
                   color: 'var(--text-primary)'
                 }}
               />
-              <svg
+              <FontAwesomeIcon
+                icon={faSearch}
                 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5"
                 style={{ color: 'var(--text-tertiary)' }}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+              />
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm('')}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                   aria-label="Limpar busca"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
+                  <FontAwesomeIcon icon={faTimes} className="w-5 h-5" />
                 </button>
               )}
             </div>
@@ -713,95 +748,118 @@ export default function NoticiasPage() {
               <Link
                 key={index}
                 href={`/dashboard/noticias/${item.slug || item.id}`}
-                className="group backdrop-blur-lg rounded-2xl p-6 border shadow-md transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-lg cursor-pointer block"
-                style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-light)' }}
+                className="group block rounded-3xl p-8 border-2 shadow-lg relative overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                style={{
+                  background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                  borderColor: 'var(--border-light)',
+                  minHeight: '380px'
+                }}
               >
-                {/* Content wrapper */}
-                <div className="flex flex-col h-full">
-                  {/* Header do Card */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">{getSentimentIcon(item.sentiment)}</span>
-                      <span className="text-xs font-semibold px-2 py-1 rounded-full" style={{
-                        backgroundColor: item.sentiment === 'positive' ? '#22c55e20' : item.sentiment === 'negative' ? '#ef444420' : '#eab30820',
-                        color: item.sentiment === 'positive' ? '#22c55e' : item.sentiment === 'negative' ? '#ef4444' : '#eab308'
-                      }}>
+                {/* Glow sutil no topo no hover - Efeito Neon */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{
+                    background: `linear-gradient(90deg, transparent, ${
+                      item.sentiment === 'positive' ? '#22c55e' :
+                      item.sentiment === 'negative' ? '#ef4444' :
+                      '#eab308'
+                    }, transparent)`,
+                    boxShadow: `0 0 20px ${
+                      item.sentiment === 'positive' ? '#22c55e' :
+                      item.sentiment === 'negative' ? '#ef4444' :
+                      '#eab308'
+                    }40`
+                  }}
+                />
+
+                {/* Número decorativo do índice */}
+                <div className="absolute -top-4 -right-4 text-9xl font-black opacity-5 select-none" style={{
+                  color: item.sentiment === 'positive' ? '#22c55e' : item.sentiment === 'negative' ? '#ef4444' : '#eab308'
+                }}>
+                  {index + 1}
+                </div>
+
+                {/* Conteúdo */}
+                <div className="relative z-10 h-full flex flex-col">
+                  {/* Header - Sentimento e Badges em linha */}
+                  <div className="flex items-center gap-3 mb-6">
+                    {/* Badge de Sentimento - Compacto */}
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm" style={{
+                      background: `linear-gradient(135deg, ${
+                        item.sentiment === 'positive' ? '#22c55e' :
+                        item.sentiment === 'negative' ? '#ef4444' :
+                        '#eab308'
+                      }, ${
+                        item.sentiment === 'positive' ? '#16a34a' :
+                        item.sentiment === 'negative' ? '#dc2626' :
+                        '#d97706'
+                      })`,
+                      color: 'white'
+                    }}>
+                      <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></div>
+                      <span className="uppercase tracking-wide">
                         {item.sentiment === 'positive' ? 'Positivo' : item.sentiment === 'negative' ? 'Negativo' : 'Neutro'}
                       </span>
                     </div>
-                    <span className="text-xs font-medium px-2 py-1 rounded-md" style={{
+
+                    {/* Tempo - Compacto */}
+                    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold ml-auto" style={{
                       backgroundColor: 'var(--bg-secondary)',
-                      color: 'var(--text-tertiary)'
+                      color: 'var(--text-secondary)'
                     }}>
+                      <FontAwesomeIcon icon={faClock} className="w-3.5 h-3.5" />
                       {getTimeAgo(item.publishedAt)}
-                    </span>
+                    </div>
                   </div>
 
-                  {/* Título */}
-                  <h3 className="font-bold text-lg mb-3 line-clamp-2 group-hover:text-blue-400 transition-colors min-h-[3.5rem]" style={{ color: 'var(--text-primary)' }}>
+                  {/* Título - Grande e Destacado */}
+                  <h3 className="font-black text-2xl mb-4 leading-tight line-clamp-2" style={{ color: 'var(--text-primary)' }}>
                     {item.title}
                   </h3>
 
-                  {/* Resumo */}
-                  <p className="text-sm mb-4 line-clamp-3 leading-relaxed min-h-[4.5rem]" style={{ color: 'var(--text-secondary)' }}>
+                  {/* Resumo - Maior e mais legível */}
+                  <p className="text-base leading-relaxed mb-4 line-clamp-3 flex-grow" style={{ color: 'var(--text-secondary)' }}>
                     {item.summary}
                   </p>
 
                   {/* Keywords - Clicáveis */}
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-1.5">
-                      {(item.keywords || []).slice(0, 3).map((keyword, idx) => (
-                        <button
-                          key={idx}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            handleTagClick(keyword);
-                          }}
-                          className="px-2 py-0.5 rounded text-xs font-medium border transition-all hover:scale-105 hover:shadow-md cursor-pointer"
-                          style={{
-                            backgroundColor: 'var(--bg-secondary)',
-                            borderColor: 'var(--border-light)',
-                            color: 'var(--text-tertiary)'
-                          }}
-                          title={`🔍 Buscar por: ${keyword}`}
-                        >
-                          {keyword}
-                        </button>
-                      ))}
+                  {(item.keywords || []).length > 0 && (
+                    <div className="mb-4">
+                      <div className="flex flex-wrap gap-2">
+                        {(item.keywords || []).slice(0, 3).map((keyword, idx) => (
+                          <button
+                            key={idx}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleTagClick(keyword);
+                            }}
+                            className="px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all hover:scale-105 hover:shadow-md cursor-pointer"
+                            style={{
+                              backgroundColor: 'var(--bg-secondary)',
+                              borderColor: 'var(--border-light)',
+                              color: 'var(--text-tertiary)'
+                            }}
+                            title={`🔍 Buscar por: ${keyword}`}
+                          >
+                            #{keyword}
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
-                  {/* Categoria */}
-                  <div className="mb-4 pb-4 border-b" style={{ borderColor: 'var(--border-light)' }}>
-                    <div className="flex flex-wrap gap-1.5">
-                      <span
-                        className="px-2 py-0.5 rounded text-xs font-medium border"
-                        style={{
-                          backgroundColor: 'var(--bg-secondary)',
-                          borderColor: 'var(--border-light)',
-                          color: 'var(--text-tertiary)'
-                        }}
-                      >
-                        {item.category}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Spacer to push link to bottom */}
-                  <div className="flex-grow"></div>
-
-                  {/* Link Leia Mais */}
-                  <div className="pt-3">
-                    <div className="flex items-center justify-between px-4 py-3 rounded-xl border transition-all group-hover:shadow-md" style={{
-                      backgroundColor: 'var(--bg-secondary)',
-                      borderColor: 'var(--border-light)',
-                      color: 'var(--text-primary)'
+                  {/* CTA - Botão de Ação */}
+                  <div className="flex items-center pt-6 border-t-2" style={{
+                    borderColor: 'var(--border-light)'
+                  }}>
+                    <div className="flex items-center gap-2 text-sm font-bold" style={{
+                      color: item.sentiment === 'positive' ? '#22c55e' :
+                             item.sentiment === 'negative' ? '#ef4444' :
+                             '#eab308'
                     }}>
-                      <span className="font-bold text-sm">Ler notícia completa</span>
-                      <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
+                      <span>Ler Notícia Completa</span>
+                      <FontAwesomeIcon icon={faArrowRight} className="w-5 h-5" />
                     </div>
                   </div>
                 </div>
@@ -875,9 +933,7 @@ export default function NoticiasPage() {
             }}
             aria-label="Voltar ao topo"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-            </svg>
+            <FontAwesomeIcon icon={faArrowUp} className="w-6 h-6" />
           </button>
         )}
       </div>

@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import Script from 'next/script';
 import Link from 'next/link';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock, faArrowRight, faSearch, faTimes, faArrowUp, faSeedling, faBook, faRocket, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 
 interface Resource {
   id: string;
@@ -20,6 +22,47 @@ interface Resource {
 interface EducacaoClientProps {
   resources: Resource[];
 }
+
+// Helper functions for card styling
+const getLevelGradient = (level: string | null) => {
+  switch(level) {
+    case 'iniciante': return 'rgba(34, 197, 94, 0.08)';     // Verde 8%
+    case 'intermediario': return 'rgba(234, 179, 8, 0.08)'; // Amarelo 8%
+    case 'avancado': return 'rgba(239, 68, 68, 0.08)';      // Vermelho 8%
+    default: return 'rgba(100, 116, 139, 0.05)';            // Cinza neutro
+  }
+};
+
+const getLevelColor = (level: string | null) => {
+  switch(level) {
+    case 'iniciante': return '#22c55e';
+    case 'intermediario': return '#eab308';
+    case 'avancado': return '#ef4444';
+    default: return '#64748b';
+  }
+};
+
+const getLevelIcon = (level: string | null) => {
+  switch(level) {
+    case 'iniciante': return faSeedling;
+    case 'intermediario': return faGraduationCap;
+    case 'avancado': return faRocket;
+    default: return faBook;
+  }
+};
+
+const getCategoryIcon = (category: string) => {
+  const icons: Record<string, string> = {
+    'blockchain': '⛓️',
+    'defi': '🏦',
+    'nfts': '🎨',
+    'trading': '📈',
+    'wallets': '💼',
+    'seguranca': '🔐',
+    'desenvolvimento': '💻'
+  };
+  return icons[category] || '📚';
+};
 
 export default function EducacaoClient({ resources }: EducacaoClientProps) {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -252,24 +295,18 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
                     color: 'var(--text-primary)'
                   }}
                 />
-                <svg
+                <FontAwesomeIcon
+                  icon={faSearch}
                   className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5"
                   style={{ color: 'var(--text-tertiary)' }}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
+                />
                 {searchTerm && (
                   <button
                     onClick={() => setSearchTerm('')}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                     aria-label="Limpar busca"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <FontAwesomeIcon icon={faTimes} className="w-5 h-5" />
                   </button>
                 )}
               </div>
@@ -339,98 +376,95 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
             </div>
           </div>
 
-          {/* Lista de Recursos */}
+          {/* Lista de Recursos - NOVO DESIGN COM GRADIENTES SUTIS */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredResources.map((resource) => (
               <Link
                 key={resource.id}
                 href={`/educacao/${resource.slug}`}
-                className="group backdrop-blur-lg rounded-2xl p-6 border shadow-md transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-lg cursor-pointer block"
-                style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-light)' }}
+                className="group relative rounded-2xl p-6 overflow-hidden border shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer block"
+                style={{
+                  background: `linear-gradient(135deg, ${getLevelGradient(resource.level)}, var(--bg-elevated))`,
+                  borderColor: 'var(--border-light)'
+                }}
               >
+                {/* Glow sutil no topo no hover */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{
+                    background: `linear-gradient(90deg, transparent, ${getLevelColor(resource.level)}, transparent)`,
+                    boxShadow: `0 0 20px ${getLevelColor(resource.level)}40`
+                  }}
+                />
+
                 {/* Content wrapper */}
-                <div className="flex flex-col h-full">
+                <div className="relative flex flex-col h-full">
                   {/* Header do Card */}
                   <div className="flex items-start justify-between mb-4">
-                    {/* Badge de Nível - Design com barra lateral */}
-                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border-l-4" style={{
-                      backgroundColor: resource.level === 'iniciante' ? '#22c55e15' : resource.level === 'intermediario' ? '#eab30815' : '#ef444415',
-                      borderLeftColor: resource.level === 'iniciante' ? '#22c55e' : resource.level === 'intermediario' ? '#eab308' : '#ef4444'
+                    {/* Badge de Nível com ícone (sem borda lateral) */}
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg backdrop-blur-sm" style={{
+                      backgroundColor: `${getLevelColor(resource.level)}15`,
+                      border: `1px solid ${getLevelColor(resource.level)}30`
                     }}>
+                      <FontAwesomeIcon
+                        icon={getLevelIcon(resource.level)}
+                        className="w-3.5 h-3.5"
+                        style={{ color: getLevelColor(resource.level) }}
+                      />
                       <span className="text-xs font-bold uppercase tracking-wide" style={{
-                        color: resource.level === 'iniciante' ? '#22c55e' : resource.level === 'intermediario' ? '#eab308' : '#ef4444'
+                        color: getLevelColor(resource.level)
                       }}>
-                        {resource.level === 'iniciante' ? 'Iniciante' : resource.level === 'intermediario' ? 'Intermediário' : 'Avançado'}
+                        {resource.level === 'iniciante' ? 'Iniciante' : resource.level === 'intermediario' ? 'Intermediário' : resource.level === 'avancado' ? 'Avançado' : 'Geral'}
                       </span>
                     </div>
 
-                    <span className="text-xs font-medium px-2 py-1 rounded-md" style={{
+                    {/* Tempo de leitura */}
+                    <span className="text-xs font-medium px-2.5 py-1 rounded-md backdrop-blur-sm flex items-center gap-1.5" style={{
                       backgroundColor: 'var(--bg-secondary)',
                       color: 'var(--text-tertiary)'
                     }}>
-                      📖 {resource.readTime}
+                      <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
+                      {resource.readTime || '5 min'}
                     </span>
                   </div>
 
                   {/* Título */}
-                  <h3 className="font-bold text-lg mb-3 line-clamp-2 group-hover:text-blue-400 transition-colors min-h-[3.5rem]" style={{ color: 'var(--text-primary)' }}>
+                  <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-brand-primary transition-colors min-h-[3.5rem]" style={{ color: 'var(--text-primary)' }}>
                     {resource.title}
                   </h3>
 
                   {/* Descrição */}
-                  <p className="text-sm mb-4 line-clamp-3 leading-relaxed min-h-[4.5rem]" style={{ color: 'var(--text-secondary)' }}>
+                  <p className="text-sm mb-4 line-clamp-3 leading-relaxed opacity-90 min-h-[4.5rem]" style={{ color: 'var(--text-secondary)' }}>
                     {resource.description}
                   </p>
 
                   {/* Tags */}
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-1.5">
-                      {resource.tags.slice(0, 3).map((tag, index) => (
-                        <span
-                          key={index}
-                          className="px-2 py-0.5 rounded text-xs font-medium border"
-                          style={{
-                            backgroundColor: 'var(--bg-secondary)',
-                            borderColor: 'var(--border-light)',
-                            color: 'var(--text-tertiary)'
-                          }}
-                        >
-                          #{tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Categoria */}
-                  <div className="mb-4 pb-4 border-b" style={{ borderColor: 'var(--border-light)' }}>
-                    <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {resource.tags.slice(0, 3).map((tag, index) => (
                       <span
-                        className="px-2 py-0.5 rounded text-xs font-medium border"
+                        key={index}
+                        className="px-2 py-0.5 rounded text-xs font-medium backdrop-blur-sm"
                         style={{
                           backgroundColor: 'var(--bg-secondary)',
-                          borderColor: 'var(--border-light)',
                           color: 'var(--text-tertiary)'
                         }}
                       >
-                        {resource.category}
+                        #{tag}
                       </span>
-                    </div>
+                    ))}
                   </div>
 
-                  {/* Spacer to push link to bottom */}
+                  {/* Spacer to push footer to bottom */}
                   <div className="flex-grow"></div>
 
-                  {/* Link Ler Mais */}
-                  <div className="pt-3">
-                    <div className="flex items-center justify-between px-4 py-3 rounded-xl border transition-all group-hover:shadow-md" style={{
-                      backgroundColor: 'var(--bg-secondary)',
-                      borderColor: 'var(--border-light)',
-                      color: 'var(--text-primary)'
-                    }}>
-                      <span className="font-bold text-sm">Ler artigo completo</span>
-                      <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
+                  {/* Footer */}
+                  <div className="pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                    <div className="flex items-center justify-end">
+                      {/* CTA com seta animada */}
+                      <div className="flex items-center gap-2 text-sm font-bold group-hover:gap-3 transition-all" style={{ color: 'var(--text-primary)' }}>
+                        Ler artigo
+                        <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -567,9 +601,7 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
               }}
               aria-label="Voltar ao topo"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-              </svg>
+              <FontAwesomeIcon icon={faArrowUp} className="w-5 h-5" />
             </button>
           )}
         </div>

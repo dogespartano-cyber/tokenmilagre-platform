@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faArrowLeft, faArrowRight, faExternalLinkAlt, faCheckCircle, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { Resource } from '@/lib/resources';
 import Link from 'next/link';
 
@@ -68,9 +68,7 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
                 color: 'var(--text-primary)'
               }}
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
+              <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
               Voltar para Recursos
             </button>
 
@@ -118,9 +116,7 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
                   style={{ background: getCategoryGradient(resource.category) }}
                 >
                   Acessar site oficial
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
+                  <FontAwesomeIcon icon={faExternalLinkAlt} className="w-5 h-5" />
                 </a>
               </div>
             </div>
@@ -493,9 +489,7 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
           }}
           aria-label="Voltar ao topo"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-          </svg>
+          <FontAwesomeIcon icon={faArrowUp} className="w-5 h-5" />
         </button>
       )}
     </>

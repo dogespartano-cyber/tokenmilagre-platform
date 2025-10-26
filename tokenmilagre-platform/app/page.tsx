@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBook, faClock, faArrowRight, faChevronLeft, faChevronRight, faCheckCircle, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
 const LightweightChart = dynamic(() => import('@/components/LightweightChart'), {
   ssr: false,
@@ -223,7 +226,7 @@ export default function HomePage() {
           gradient: 'linear-gradient(135deg, #F6851B 0%, #E2761B 100%)',
           stats: '10M+ usuários',
           verified: true,
-          url: '/recursos?search=MetaMask'
+          url: '/recursos/metamask'
         },
         {
           name: 'Binance',
@@ -232,7 +235,7 @@ export default function HomePage() {
           gradient: 'linear-gradient(135deg, #F3BA2F 0%, #EAA42D 100%)',
           stats: '120M+ usuários',
           verified: true,
-          url: '/recursos?search=Binance'
+          url: '/recursos/binance'
         },
         {
           name: 'Uniswap',
@@ -241,7 +244,7 @@ export default function HomePage() {
           gradient: 'linear-gradient(135deg, #FF007A 0%, #E6006E 100%)',
           stats: '$1T+ negociado',
           verified: true,
-          url: '/recursos?search=Uniswap'
+          url: '/recursos/uniswap'
         }
       ];
       setResources(featuredResources);
@@ -782,9 +785,7 @@ export default function HomePage() {
                                       background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.15))',
                                       border: '2px solid #F59E0B'
                                     }}>
-                                      <svg className="w-5 h-5" fill="none" stroke="#F59E0B" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                      </svg>
+                                      <FontAwesomeIcon icon={faBook} className="w-5 h-5" style={{ color: '#F59E0B' }} />
                                     </div>
 
                                     {/* Badge de Nível - Compacto */}
@@ -801,9 +802,7 @@ export default function HomePage() {
                                       backgroundColor: 'var(--bg-secondary)',
                                       color: 'var(--text-secondary)'
                                     }}>
-                                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                      </svg>
+                                      <FontAwesomeIcon icon={faClock} className="w-3.5 h-3.5" />
                                       {item.readTime}
                                     </div>
 
@@ -832,9 +831,7 @@ export default function HomePage() {
                                   }}>
                                     <div className="flex items-center gap-2 text-sm font-bold" style={{ color: '#F59E0B' }}>
                                       <span>Começar a Aprender</span>
-                                      <svg className="w-5 h-5" fill="none" stroke="#F59E0B" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                      </svg>
+                                      <FontAwesomeIcon icon={faArrowRight} className="w-5 h-5" />
                                     </div>
                                   </div>
                                 </div>
@@ -857,9 +854,7 @@ export default function HomePage() {
                             }}
                             aria-label="Slide anterior"
                           >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
-                            </svg>
+                            <FontAwesomeIcon icon={faChevronLeft} className="w-6 h-6" />
                           </button>
 
                           <button
@@ -872,9 +867,7 @@ export default function HomePage() {
                             }}
                             aria-label="Próximo slide"
                           >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
-                            </svg>
+                            <FontAwesomeIcon icon={faChevronRight} className="w-6 h-6" />
                           </button>
                         </>
                       )}
@@ -916,9 +909,7 @@ export default function HomePage() {
                   }}
                 >
                   <span>Ver todos os artigos</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
+                  <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
                 </Link>
             </div>
 
@@ -973,17 +964,13 @@ export default function HomePage() {
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-1">
                               {resource.verified && (
-                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                </svg>
+                                <FontAwesomeIcon icon={faCheckCircle} className="w-4 h-4" />
                               )}
                               <span className="text-xs font-semibold opacity-90">{resource.stats}</span>
                             </div>
 
                             {/* Ícone seta */}
-                            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                            </svg>
+                            <FontAwesomeIcon icon={faArrowRight} className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                           </div>
                         </div>
                       </Link>
@@ -1008,9 +995,7 @@ export default function HomePage() {
                     }}
                   >
                     Ver todos
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
+                    <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
                   </Link>
                 </div>
             </div>
@@ -1167,9 +1152,7 @@ export default function HomePage() {
                     color: 'white'
                   }}
                 >
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
-                  </svg>
+                  <FontAwesomeIcon icon={faDiscord} className="w-5 h-5" />
                   <span>Discord</span>
                 </a>
 
@@ -1183,9 +1166,7 @@ export default function HomePage() {
                     color: 'white'
                   }}
                 >
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12s12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21l-1.446 1.394c-.14.18-.357.295-.6.295c-.002 0-.003 0-.005 0l.213-3.054l5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326l-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
-                  </svg>
+                  <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
                   <span>Telegram</span>
                 </a>
               </div>
@@ -1213,9 +1194,7 @@ export default function HomePage() {
           }}
           aria-label="Voltar ao topo"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-          </svg>
+          <FontAwesomeIcon icon={faArrowUp} className="w-6 h-6" />
         </button>
       )}
       </div>

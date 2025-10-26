@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
 import { HolderCounter } from '@/components/HolderCounter';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp, faCoins, faBrain, faHeart, faStar, faShield, faHandHoldingHeart, faRocket, faWandSparkles } from '@fortawesome/free-solid-svg-icons';
+import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
 export default function SobrePage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -15,21 +18,21 @@ export default function SobrePage() {
   const guardians = [
     {
       name: 'Prosperidade',
-      icon: '💰',
+      icon: faCoins,
       color: 'from-yellow-400 to-amber-500',
       description: 'Crescimento financeiro e oportunidades de investimento',
       benefits: ['Análises de mercado', 'Estratégias de trading', 'Comunidade de investidores']
     },
     {
       name: 'Sabedoria',
-      icon: '🧠',
+      icon: faBrain,
       color: 'from-cyan-400 to-blue-500',
       description: 'Educação contínua e desenvolvimento pessoal',
       benefits: ['Mentorias exclusivas', 'Cursos e workshops', 'Networking profissional']
     },
     {
       name: 'Esperança',
-      icon: '❤️',
+      icon: faHeart,
       color: 'from-pink-400 to-purple-500',
       description: 'Apoio emocional e suporte da comunidade',
       benefits: ['Grupo de apoio', 'Eventos comunitários', 'Conexões verdadeiras']
@@ -40,21 +43,21 @@ export default function SobrePage() {
     {
       name: 'Apoiador',
       amount: '1.000+',
-      icon: '🌟',
+      icon: faStar,
       color: 'from-blue-400 to-cyan-500',
       benefits: ['Acesso ao grupo exclusivo', 'Newsletter semanal', 'Badge de apoiador']
     },
     {
       name: 'Guardião',
       amount: '10.000+',
-      icon: '🛡️',
+      icon: faShield,
       color: 'from-purple-400 to-pink-500',
       benefits: ['Todos os benefícios anteriores', 'Acesso a mentorias', 'Eventos VIP', 'Voto em decisões']
     },
     {
       name: 'Anjo Guardião',
       amount: '50.000+',
-      icon: '👼',
+      icon: faHandHoldingHeart,
       color: 'from-amber-400 to-orange-500',
       benefits: ['Todos os benefícios anteriores', 'Mentoria 1-on-1', 'Acesso antecipado', 'Reconhecimento especial']
     }
@@ -106,18 +109,21 @@ export default function SobrePage() {
 
       <div className="min-h-screen">
         {/* Hero Section - Fullscreen */}
-        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[90vh] flex items-center overflow-hidden">
           {/* Background gradients */}
           <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-transparent to-purple-500/10"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(168,85,247,0.1),transparent_50%)]"></div>
 
-          <div className="container mx-auto px-4 py-20 relative z-10">
+          <div className="py-20 relative z-10 max-w-7xl" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left - Content */}
-              <div className="text-center lg:text-left space-y-8">
+              <div className="space-y-8">
                 <div className="inline-block px-6 py-2 rounded-full border-2 border-brand-primary/50 backdrop-blur-sm mb-4" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                  <span className="text-brand-primary font-bold">✨ Token Comunitário SPL</span>
+                  <span className="text-brand-primary font-bold inline-flex items-center gap-2">
+                    <FontAwesomeIcon icon={faWandSparkles} />
+                    Token Comunitário SPL
+                  </span>
                 </div>
 
                 <h1 className="text-6xl lg:text-8xl font-extrabold font-[family-name:var(--font-poppins)] leading-tight" style={{ color: 'var(--text-primary)' }}>
@@ -132,7 +138,7 @@ export default function SobrePage() {
                   Apoio mútuo, crescimento real, conexões verdadeiras.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <a
                     href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                     target="_blank"
@@ -162,7 +168,7 @@ export default function SobrePage() {
                 </div>
 
                 {/* Holder Counter */}
-                <div className="flex justify-center lg:justify-start">
+                <div className="flex">
                   <HolderCounter />
                 </div>
               </div>
@@ -207,18 +213,18 @@ export default function SobrePage() {
 
         {/* Os Três Guardiões */}
         <section id="guardioes" className="py-24 relative overflow-hidden" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
+          <div className="max-w-7xl" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
+            <div className="mb-16">
               <h2 className="text-5xl lg:text-6xl font-bold mb-6 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                Os Três Guardiões ✨
+                Os Três Guardiões
               </h2>
-              <p className="text-xl max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-xl max-w-3xl" style={{ color: 'var(--text-secondary)' }}>
                 Nossa comunidade é guiada por três pilares fundamentais que representam o equilíbrio entre crescimento material, intelectual e emocional.
               </p>
             </div>
 
             {/* Guardian Cards */}
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mb-12">
               {guardians.map((guardian, index) => (
                 <div
                   key={index}
@@ -238,8 +244,8 @@ export default function SobrePage() {
 
                   <div className="relative z-10">
                     {/* Icon */}
-                    <div className={`w-24 h-24 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${guardian.color} flex items-center justify-center text-5xl shadow-theme-lg transform group-hover:rotate-6 transition-transform`}>
-                      {guardian.icon}
+                    <div className={`w-24 h-24 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${guardian.color} flex items-center justify-center shadow-theme-lg transform group-hover:rotate-6 transition-transform`}>
+                      <FontAwesomeIcon icon={guardian.icon} className="text-5xl text-white" />
                     </div>
 
                     {/* Name */}
@@ -280,8 +286,10 @@ export default function SobrePage() {
             </div>
 
             {/* Community Section */}
-            <div className="text-center mb-8 max-w-2xl mx-auto">
-              <div className="text-6xl mb-4">❤️</div>
+            <div className="mb-8 max-w-2xl">
+              <div className="w-20 h-20 mb-4 rounded-2xl bg-gradient-to-br from-pink-400 to-purple-500 flex items-center justify-center">
+                <FontAwesomeIcon icon={faHeart} className="text-5xl text-white" />
+              </div>
               <h3 className="text-3xl md:text-4xl font-bold mb-4 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                 Faça Parte da Família $MILAGRE
               </h3>
@@ -294,7 +302,7 @@ export default function SobrePage() {
             </div>
 
             {/* Community Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-2xl mx-auto">
+            <div className="flex flex-col sm:flex-row gap-4 max-w-2xl">
               <a
                 href="https://discord.gg/skaX8bFY"
                 target="_blank"
@@ -305,9 +313,7 @@ export default function SobrePage() {
                   color: 'white'
                 }}
               >
-                <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
-                </svg>
+                <FontAwesomeIcon icon={faDiscord} className="w-7 h-7" />
                 <span>Discord</span>
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </a>
@@ -322,9 +328,7 @@ export default function SobrePage() {
                   color: 'white'
                 }}
               >
-                <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12s12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21l-1.446 1.394c-.14.18-.357.295-.6.295c-.002 0-.003 0-.005 0l.213-3.054l5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326l-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
-                </svg>
+                <FontAwesomeIcon icon={faTelegram} className="w-7 h-7" />
                 <span>Telegram</span>
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </a>
@@ -337,7 +341,10 @@ export default function SobrePage() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-5xl lg:text-6xl font-bold mb-6 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                Níveis de Participação 🎯
+                <span className="flex items-center justify-center gap-3">
+                  Níveis de Participação
+                  <FontAwesomeIcon icon={faBullseye} style={{ color: 'var(--brand-primary)' }} />
+                </span>
               </h2>
               <p className="text-xl max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                 Quanto mais você acredita e apoia, mais benefícios desbloqueia na comunidade.
@@ -358,8 +365,8 @@ export default function SobrePage() {
 
                   <div className="relative z-10">
                     <div className="flex items-center justify-between mb-6">
-                      <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${tier.color} flex items-center justify-center text-3xl shadow-theme-md`}>
-                        {tier.icon}
+                      <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${tier.color} flex items-center justify-center shadow-theme-md`}>
+                        <FontAwesomeIcon icon={tier.icon} className="text-3xl text-white" />
                       </div>
                       <div className="px-4 py-2 rounded-full text-sm font-bold" style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}>
                         {tier.amount} $MILAGRE
@@ -397,7 +404,7 @@ export default function SobrePage() {
                   color: 'var(--text-inverse)'
                 }}
               >
-                <span>🚀</span>
+                <FontAwesomeIcon icon={faRocket} />
                 <span>Começar Agora</span>
               </a>
             </div>
@@ -406,24 +413,24 @@ export default function SobrePage() {
 
         {/* Informações do Token */}
         <section className="py-24 relative overflow-hidden" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
+          <div className="max-w-7xl" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
+            <div className="mb-16">
               <h2 className="text-5xl lg:text-6xl font-bold mb-6 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                Informações do Token 🔐
+                Informações do Token
               </h2>
-              <p className="text-xl max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-xl max-w-3xl" style={{ color: 'var(--text-secondary)' }}>
                 Transparência total. Tecnologia de ponta. Segurança garantida pela blockchain Solana.
               </p>
             </div>
 
             {/* Main Token Card */}
-            <div className="max-w-4xl mx-auto mb-16">
+            <div className="max-w-4xl mb-16">
               <div className="backdrop-blur-xl rounded-3xl p-8 md:p-12 border-2 shadow-theme-xl" style={{
                 backgroundColor: 'var(--bg-elevated)',
                 borderColor: 'var(--border-medium)'
               }}>
                 {/* Header */}
-                <div className="flex items-center justify-center md:justify-start gap-6 mb-8">
+                <div className="flex items-center gap-6 mb-8">
                   <div className="flex items-center gap-4">
                     <div className="w-20 h-20 rounded-2xl overflow-hidden border-2" style={{ borderColor: 'var(--brand-primary)' }}>
                       <Image
@@ -491,16 +498,15 @@ export default function SobrePage() {
                 {/* Stats Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {[
-                    { label: 'Blockchain', value: 'Solana', icon: '⚡' },
-                    { label: 'Tipo', value: 'SPL Token', icon: '🎯' },
-                    { label: 'Plataforma', value: 'Pump.fun', icon: '🚀' },
-                    { label: 'Velocidade', value: '<1s', icon: '⏱️' }
+                    { label: 'Blockchain', value: 'Solana' },
+                    { label: 'Tipo', value: 'SPL Token' },
+                    { label: 'Plataforma', value: 'Pump.fun' },
+                    { label: 'Velocidade', value: '<1s' }
                   ].map((stat, index) => (
                     <div key={index} className="backdrop-blur rounded-xl p-4 border text-center hover:scale-105 transition-all" style={{
                       backgroundColor: 'var(--bg-secondary)',
                       borderColor: 'var(--border-medium)'
                     }}>
-                      <p className="text-2xl mb-1">{stat.icon}</p>
                       <p className="text-xs mb-1 font-semibold text-brand-primary">{stat.label}</p>
                       <p className="font-bold" style={{ color: 'var(--text-primary)' }}>{stat.value}</p>
                     </div>
@@ -513,19 +519,19 @@ export default function SobrePage() {
 
         {/* Como Comprar $MILAGRE */}
         <section className="mb-20 py-24" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-          <div className="container mx-auto px-4">
+          <div className="max-w-7xl" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
             {/* Header */}
-            <div className="text-center mb-12">
+            <div className="mb-12">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                Como Comprar $MILAGRE 🚀
+                Como Comprar $MILAGRE
               </h2>
-              <p className="text-lg md:text-xl max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-lg md:text-xl max-w-3xl" style={{ color: 'var(--text-secondary)' }}>
                 Siga este guia passo a passo para adquirir seus tokens e se juntar à nossa comunidade.
               </p>
             </div>
 
             {/* Steps Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 max-w-7xl">
               {[
                 {
                   step: '1',
@@ -579,7 +585,7 @@ export default function SobrePage() {
             </div>
 
             {/* CTA Button */}
-            <div className="text-center">
+            <div>
               <a
                 href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                 target="_blank"
@@ -589,7 +595,7 @@ export default function SobrePage() {
                   background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)'
                 }}
               >
-                <span className="text-xl">🚀</span>
+                <FontAwesomeIcon icon={faRocket} className="text-xl text-white" />
                 <span>Comprar Agora no Pump.fun</span>
               </a>
             </div>
@@ -608,9 +614,7 @@ export default function SobrePage() {
             }}
             aria-label="Voltar ao topo"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-            </svg>
+            <FontAwesomeIcon icon={faArrowUp} className="w-6 h-6" />
           </button>
         )}
       </div>
