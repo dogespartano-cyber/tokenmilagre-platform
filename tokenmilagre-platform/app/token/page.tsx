@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Script from 'next/script';
 import { HolderCounter } from '@/components/HolderCounter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faCoins, faBrain, faHeart, faStar, faShield, faHandHoldingHeart, faRocket, faWandSparkles } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp, faCoins, faBrain, faHeart, faStar, faShield, faHandHoldingHeart, faRocket, faWandSparkles, faCopy, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
 export default function SobrePage() {
@@ -120,8 +120,7 @@ export default function SobrePage() {
               {/* Left - Content */}
               <div className="space-y-8">
                 <div className="inline-block px-6 py-2 rounded-full border-2 border-brand-primary/50 backdrop-blur-sm mb-4" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                  <span className="text-brand-primary font-bold inline-flex items-center gap-2">
-                    <FontAwesomeIcon icon={faWandSparkles} />
+                  <span className="text-brand-primary font-bold">
                     Token Comunitário SPL
                   </span>
                 </div>
@@ -149,7 +148,6 @@ export default function SobrePage() {
                       color: 'var(--text-inverse)'
                     }}
                   >
-                    <span className="text-2xl">🪙</span>
                     <span>Adquirir $MILAGRE</span>
                     <span className="group-hover:translate-x-1 transition-transform">→</span>
                   </a>
@@ -287,9 +285,6 @@ export default function SobrePage() {
 
             {/* Community Section */}
             <div className="mb-8 max-w-2xl">
-              <div className="w-20 h-20 mb-4 rounded-2xl bg-gradient-to-br from-pink-400 to-purple-500 flex items-center justify-center">
-                <FontAwesomeIcon icon={faHeart} className="text-5xl text-white" />
-              </div>
               <h3 className="text-3xl md:text-4xl font-bold mb-4 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                 Faça Parte da Família $MILAGRE
               </h3>
@@ -469,7 +464,7 @@ export default function SobrePage() {
                         color: 'var(--text-inverse)'
                       }}
                     >
-                      <span>{copied ? '✓' : '📋'}</span>
+                      <FontAwesomeIcon icon={faCopy} />
                       <span>{copied ? 'Copiado!' : 'Copiar'}</span>
                     </button>
 
@@ -479,7 +474,7 @@ export default function SobrePage() {
                       rel="noopener noreferrer"
                       className="px-6 py-3 bg-gradient-to-r from-purple-400 to-purple-500 hover:from-purple-300 hover:to-purple-400 text-white font-bold rounded-xl transition-all shadow-theme-md hover:scale-105 flex items-center justify-center gap-2"
                     >
-                      <span>🔍</span>
+                      <FontAwesomeIcon icon={faMagnifyingGlass} />
                       <span>Solscan</span>
                     </a>
 
@@ -489,7 +484,7 @@ export default function SobrePage() {
                       rel="noopener noreferrer"
                       className="px-6 py-3 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-white font-bold rounded-xl transition-all shadow-theme-md hover:scale-105 flex items-center justify-center gap-2"
                     >
-                      <span>🪙</span>
+                      <FontAwesomeIcon icon={faCoins} />
                       <span>Comprar</span>
                     </a>
                   </div>
@@ -595,7 +590,7 @@ export default function SobrePage() {
                   background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)'
                 }}
               >
-                <FontAwesomeIcon icon={faRocket} className="text-xl text-white" />
+                <FontAwesomeIcon icon={faHeart} className="text-xl text-white" />
                 <span>Comprar Agora no Pump.fun</span>
               </a>
             </div>

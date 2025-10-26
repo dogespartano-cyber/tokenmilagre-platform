@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faClock, faArrowRight, faChevronLeft, faChevronRight, faCheckCircle, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faArrowRight, faChevronLeft, faChevronRight, faCheckCircle, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
 const LightweightChart = dynamic(() => import('@/components/LightweightChart'), {
@@ -743,7 +743,7 @@ export default function HomePage() {
             </div>
 
             {/* Educação - Carousel */}
-            <div className="space-y-6">
+            <div className="space-y-6 mt-20">
                 <div>
                   <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                     Aprenda sobre Cripto
@@ -780,14 +780,6 @@ export default function HomePage() {
                                 <div className="relative z-10 h-full flex flex-col">
                                   {/* Header - Ícone e Badges em linha */}
                                   <div className="flex items-center gap-3 mb-6">
-                                    {/* Ícone de Educação - Compacto */}
-                                    <div className="w-10 h-10 rounded-lg flex items-center justify-center shadow-md flex-shrink-0" style={{
-                                      background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.15))',
-                                      border: '2px solid #F59E0B'
-                                    }}>
-                                      <FontAwesomeIcon icon={faBook} className="w-5 h-5" style={{ color: '#F59E0B' }} />
-                                    </div>
-
                                     {/* Badge de Nível - Compacto */}
                                     <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm" style={{
                                       background: 'linear-gradient(135deg, #F59E0B, #D97706)',
@@ -914,7 +906,7 @@ export default function HomePage() {
             </div>
 
             {/* Recursos */}
-            <div className="space-y-6">
+            <div className="space-y-6 mt-20">
                 {/* Header */}
                 <div>
                   <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] mb-3" style={{ color: 'var(--text-primary)' }}>
