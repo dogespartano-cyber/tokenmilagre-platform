@@ -2,11 +2,16 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { NewsGridSkeleton } from '@/components/SkeletonLoader';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faClock, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
+
+const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
+  ssr: false,
+});
 
 interface NewsItem {
   id: string;
@@ -555,6 +560,16 @@ export default function NoticiasPage() {
               <span className="group-hover:translate-x-1 transition-transform">→</span>
             </a>
           </div>
+        </div>
+
+        {/* Ticker Tape */}
+        <div
+          className="rounded-2xl overflow-hidden shadow-md border"
+          style={{
+            borderColor: 'var(--border-light)',
+            backgroundColor: 'var(--bg-elevated)'
+          }}>
+          <TickerTapeWidget />
         </div>
 
         {/* Filtros */}

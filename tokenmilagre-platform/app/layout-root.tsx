@@ -24,6 +24,7 @@ export default function RootLayoutNav({
   const menuItems = [
     { href: '/', label: 'Início', icon: faHome },
     { href: '/dashboard/noticias', label: 'Notícias', icon: faNewspaper },
+    { href: '/graficos', label: 'Gráficos', icon: faChartLine },
     { href: '/educacao', label: 'Educação', icon: faGraduationCap },
     { href: '/recursos', label: 'Recursos', icon: faStore },
     { href: '/sobre', label: 'Sobre', icon: faInfoCircle },

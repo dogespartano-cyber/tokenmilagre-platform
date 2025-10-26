@@ -46,6 +46,74 @@ function TickerTapeWidget() {
         {
           description: 'Solana',
           proName: 'BINANCE:SOLUSDT'
+        },
+        {
+          description: 'BNB',
+          proName: 'BINANCE:BNBUSDT'
+        },
+        {
+          description: 'XRP',
+          proName: 'BINANCE:XRPUSDT'
+        },
+        {
+          description: 'Cardano',
+          proName: 'BINANCE:ADAUSDT'
+        },
+        {
+          description: 'Avalanche',
+          proName: 'BINANCE:AVAXUSDT'
+        },
+        {
+          description: 'Dogecoin',
+          proName: 'BINANCE:DOGEUSDT'
+        },
+        {
+          description: 'Polkadot',
+          proName: 'BINANCE:DOTUSDT'
+        },
+        {
+          description: 'Chainlink',
+          proName: 'BINANCE:LINKUSDT'
+        },
+        {
+          description: 'Polygon',
+          proName: 'BINANCE:POLUSDT'
+        },
+        {
+          description: 'Shiba Inu',
+          proName: 'BINANCE:SHIBUSDT'
+        },
+        {
+          description: 'Tron',
+          proName: 'BINANCE:TRXUSDT'
+        },
+        {
+          description: 'Uniswap',
+          proName: 'BINANCE:UNIUSDT'
+        },
+        {
+          description: 'Cosmos',
+          proName: 'BINANCE:ATOMUSDT'
+        },
+        {
+          description: 'Litecoin',
+          proName: 'BINANCE:LTCUSDT'
+        },
+        {
+          description: 'NEAR Protocol',
+          proName: 'BINANCE:NEARUSDT'
+        },
+        {
+          description: 'Aptos',
+          proName: 'BINANCE:APTUSDT'
+        },
+        {
+          description: 'Arbitrum',
+          proName: 'BINANCE:ARBUSDT'
+        },
+        {
+          description: 'Optimism',
+          proName: 'BINANCE:OPUSDT'
         }
       ],
       showSymbolLogo: true,

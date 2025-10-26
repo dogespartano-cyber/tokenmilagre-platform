@@ -161,31 +161,32 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       },
     });
 
-    // Série de candlestick verde/vermelho forte (visível em ambos os modos)
+    // Série de candlestick preto (contorno muda conforme tema)
+    const candleBorderColor = theme === 'dark' ? '#ffffff' : '#000000';
     const candlestickSeries = chart.addSeries(CandlestickSeries, {
-      upColor: '#22c55e',        // Verde mais vibrante
-      downColor: '#ef4444',      // Vermelho mais vibrante
-      borderUpColor: '#22c55e',
-      borderDownColor: '#ef4444',
-      wickUpColor: '#16a34a',    // Verde médio
-      wickDownColor: '#dc2626',  // Vermelho médio
+      upColor: '#000000',        // Preto
+      downColor: '#000000',      // Preto
+      borderUpColor: candleBorderColor,  // Branco (dark) ou Preto (light)
+      borderDownColor: candleBorderColor, // Branco (dark) ou Preto (light)
+      wickUpColor: candleBorderColor,    // Branco (dark) ou Preto (light)
+      wickDownColor: candleBorderColor,  // Branco (dark) ou Preto (light)
     });
 
-    // SMA 20 (azul vibrante - visível em ambos os modos)
+    // SMA 20 (azul vibrante)
     const sma20Series = chart.addSeries(LineSeries, {
       color: '#3b82f6',
       lineWidth: 3,
       title: 'SMA 20',
     });
 
-    // SMA 50 (laranja forte - visível em ambos os modos)
+    // SMA 50 (laranja vibrante)
     const sma50Series = chart.addSeries(LineSeries, {
       color: '#f97316',
       lineWidth: 3,
       title: 'SMA 50',
     });
 
-    // Bandas de Bollinger
+    // Bandas de Bollinger (roxo vibrante)
     const bbUpperSeries = chart.addSeries(LineSeries, {
       color: '#a855f7',
       lineWidth: 2,
@@ -207,7 +208,7 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       title: 'BB Inferior',
     });
 
-    // RSI - em painel separado (pink vibrante - visível em ambos)
+    // RSI - em painel separado (rosa vibrante)
     const rsiSeries = chart.addSeries(LineSeries, {
       color: '#ec4899',
       lineWidth: 2,
@@ -323,25 +324,25 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
 
   return (
     <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: 'transparent' }}>
-      {/* Título e Preço */}
-      {name && (
-        <div className="px-4 pt-4 pb-2">
+      {/* Título, Preço e Timeframe - Mesma Linha */}
+      <div className="px-4 pt-4 pb-2 flex items-center justify-between gap-4">
+        {/* Esquerda: Título + Preço */}
+        {name && (
           <div className="flex items-center gap-3">
             <h4 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>{name}</h4>
             {currentPrice && (
-              <div className="px-3 py-1 rounded-lg font-bold text-lg" style={{
-                backgroundColor: 'var(--brand-primary)',
-                color: 'white'
+              <div className="px-3 py-1 rounded-lg font-bold text-lg border" style={{
+                backgroundColor: 'var(--bg-secondary)',
+                borderColor: 'var(--border-medium)',
+                color: 'var(--text-primary)'
               }}>
                 ${currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </div>
             )}
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Timeframe Selector - Compacto no topo */}
-      <div className="px-4 pt-3 pb-2 flex items-center justify-between">
+        {/* Direita: Timeframe Selector */}
         <div className="flex gap-1 rounded-lg p-1" style={{ backgroundColor: 'var(--bg-secondary)' }}>
           {(['15m', '4h', '1d'] as Timeframe[]).map((tf) => (
             <button
@@ -356,8 +357,10 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
             </button>
           ))}
         </div>
+      </div>
 
-        {/* Legenda compacta */}
+      {/* Legenda compacta */}
+      <div className="px-4 pb-2">
         <div className="flex flex-wrap gap-3 text-xs">
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-0.5" style={{ backgroundColor: '#3b82f6' }}></div>

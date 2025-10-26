@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export const runtime = 'edge';
-export const revalidate = 60; // Cache por 60 segundos
+export const revalidate = 0; // Sem cache - dados sempre atualizados
 
 interface FearGreedResponse {
   data: Array<{
@@ -15,9 +15,7 @@ interface FearGreedResponse {
 export async function GET() {
   try {
     const response = await fetch('https://api.alternative.me/fng/', {
-      next: {
-        revalidate: 60, // Cache por 60 segundos
-      },
+      cache: 'no-store', // Sem cache - busca sempre dados frescos
     });
 
     if (!response.ok) {
@@ -29,7 +27,7 @@ export async function GET() {
     return NextResponse.json({
       success: true,
       data: data.data[0],
-      cached: true,
+      cached: false,
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
