@@ -48,9 +48,9 @@ const CACHE_DURATION = 5 * 60 * 1000;
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = params;
+  const { slug } = await params;
 
   try {
     // 1. Buscar no banco de dados
