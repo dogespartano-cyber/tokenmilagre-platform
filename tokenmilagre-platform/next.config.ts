@@ -4,6 +4,14 @@ import { withSentryConfig } from "@sentry/nextjs";
 const nextConfig: NextConfig = {
   images: {
     unoptimized: false,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'coin-images.coingecko.com',
+        port: '',
+        pathname: '/coins/images/**',
+      },
+    ],
   },
   eslint: {
     // Desabilitar ESLint durante builds (arquivos gerados do Prisma causam erros)

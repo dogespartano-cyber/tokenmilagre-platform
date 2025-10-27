@@ -8,8 +8,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faNewspaper, faSun, faMoon, faHome, faInfoCircle, faCoins, faBars, faTimes, faBook, faGraduationCap, faStore, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@/contexts/ThemeContext';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import DashboardHeader from '@/app/components/DashboardHeader';
 
 const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
+
+// Configuração do DashboardHeader por pathname
+const dashboardHeaderConfig: Record<string, { title: string; description: string }> = {
+  '/': {
+    title: 'Token Milagre',
+    description: 'Educação financeira descentralizada para todos'
+  },
+  '/graficos': {
+    title: 'Gráficos e Análises de Mercado',
+    description: 'Acompanhe o mercado em tempo real com gráficos avançados, análise técnica e indicadores profissionais'
+  },
+  '/dashboard/noticias': {
+    title: 'Notícias Cripto',
+    description: 'Resumos inteligentes das principais notícias do mercado'
+  }
+};
 
 export default function RootLayoutNav({
   children,
@@ -20,6 +37,9 @@ export default function RootLayoutNav({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
+
+  // Verificar se deve mostrar o DashboardHeader
+  const headerConfig = dashboardHeaderConfig[pathname];
 
   const menuItems = [
     { href: '/', label: 'Início', icon: faHome },
@@ -221,6 +241,15 @@ export default function RootLayoutNav({
         </header>
 
         <main>
+          {/* Renderizar DashboardHeader apenas nas páginas configuradas */}
+          {headerConfig && (
+            <div className="container mx-auto px-4 py-8">
+              <DashboardHeader
+                title={headerConfig.title}
+                description={headerConfig.description}
+              />
+            </div>
+          )}
           {children}
         </main>
 

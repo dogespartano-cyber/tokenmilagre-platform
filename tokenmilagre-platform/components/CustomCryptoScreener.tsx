@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
+import Link from 'next/link';
 import {
   useReactTable,
   getCoreRowModel,
@@ -168,24 +169,30 @@ export default function CustomCryptoScreener() {
       }),
       columnHelper.accessor('name', {
         header: 'Nome',
-        cell: info => (
-          <div className="flex items-center gap-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={info.row.original.image}
-              alt={info.getValue()}
-              className="w-6 h-6 rounded-full"
-            />
-            <div>
-              <p className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>
-                {info.getValue()}
-              </p>
-              <p className="text-xs uppercase" style={{ color: 'var(--text-tertiary)' }}>
-                {info.row.original.symbol}
-              </p>
-            </div>
-          </div>
-        ),
+        cell: info => {
+          const slug = info.row.original.id; // CoinGecko ID é usado como slug
+          return (
+            <Link
+              href={`/cripto/${slug}`}
+              className="flex items-center gap-3 hover:opacity-70 transition-opacity"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={info.row.original.image}
+                alt={info.getValue()}
+                className="w-6 h-6 rounded-full"
+              />
+              <div>
+                <p className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>
+                  {info.getValue()}
+                </p>
+                <p className="text-xs uppercase" style={{ color: 'var(--text-tertiary)' }}>
+                  {info.row.original.symbol}
+                </p>
+              </div>
+            </Link>
+          );
+        },
         size: 200,
       }),
       columnHelper.accessor('current_price', {

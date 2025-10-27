@@ -178,3 +178,51 @@ model Resource {
   @@index([category])
   @@index([verified])
 }
+
+model Cryptocurrency {
+  id                String   @id @default(cuid())
+
+  // Identificadores CoinGecko
+  coingeckoId       String   @unique  // bitcoin, ethereum, solana
+  symbol            String   // BTC, ETH, SOL
+  name              String   // Bitcoin, Ethereum, Solana
+
+  // Dados de Mercado (atualizados via API)
+  currentPrice      Float?
+  marketCap         Float?
+  marketCapRank     Int?
+  totalVolume       Float?
+  high24h           Float?
+  low24h            Float?
+  priceChange24h    Float?
+  priceChangePercentage24h Float?
+  circulatingSupply Float?
+  totalSupply       Float?
+  maxSupply         Float?
+  ath               Float?   // All-Time High
+  athDate           DateTime?
+  atl               Float?   // All-Time Low
+  atlDate           DateTime?
+
+  // Informações Descritivas
+  description       String?  // Descrição em português
+  homepage          String?  // Site oficial
+  whitepaper        String?
+  blockchain        String?  // Solana, Ethereum, etc
+
+  // Links sociais (JSON)
+  socialLinks       String?  // { twitter, telegram, discord, reddit }
+
+  // Imagens
+  imageSmall        String?  // 32x32
+  imageLarge        String?  // 256x256
+
+  // Metadados
+  slug              String   @unique  // bitcoin, ethereum (para URL)
+  lastUpdated       DateTime @default(now())
+  createdAt         DateTime @default(now())
+
+  @@index([symbol])
+  @@index([slug])
+  @@index([marketCapRank])
+}
