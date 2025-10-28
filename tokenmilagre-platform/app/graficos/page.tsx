@@ -23,6 +23,10 @@ const StockHeatmapWidget = dynamic(() => import('@/components/StockHeatmapWidget
   ssr: false,
 });
 
+const ETFMetricsSection = dynamic(() => import('@/components/ETFMetricsSection'), {
+  ssr: false,
+});
+
 export default function GraficosPage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -46,7 +50,7 @@ export default function GraficosPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           "name": "Gráficos e Análises de Mercado Cripto",
-          "description": "Acompanhe o mercado de criptomoedas em tempo real com gráficos avançados, análise técnica e indicadores profissionais",
+          "description": "Acompanhe o mercado de criptomoedas em tempo real com gráficos avançados, análise técnica, indicadores profissionais e dados de ETFs de Bitcoin e Ethereum",
           "url": "https://tokenmilagre.xyz/graficos"
         })}
       </Script>
@@ -104,6 +108,12 @@ export default function GraficosPage() {
               </div>
             </div>
           </div>
+
+          {/* Divider */}
+          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+          {/* ETFs de Bitcoin e Ethereum */}
+          <ETFMetricsSection />
 
           {/* Divider */}
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>

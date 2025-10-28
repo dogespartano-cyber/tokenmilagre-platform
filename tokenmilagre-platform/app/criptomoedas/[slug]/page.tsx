@@ -97,7 +97,7 @@ interface NewsItem {
 
 export default function CryptoPage() {
   const params = useParams();
-  const slug = params?.slug as string;
+  const coingeckoId = params?.slug as string; // URL param ainda se chama "slug" mas contém o coingeckoId
 
   const [crypto, setCrypto] = useState<CryptoData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -111,10 +111,10 @@ export default function CryptoPage() {
   // Forçar scroll para o topo ao montar ou mudar de moeda (fix para bug de scroll)
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, [slug]);
+  }, [coingeckoId]);
 
   useEffect(() => {
-    if (!slug) return;
+    if (!coingeckoId) return;
 
     // Fade out ao mudar de moeda
     setFadeIn(false);
@@ -122,7 +122,7 @@ export default function CryptoPage() {
     const fetchCrypto = async () => {
       try {
         // Tentar carregar do cache primeiro
-        const cacheKey = `crypto_${slug}`;
+        const cacheKey = `crypto_${coingeckoId}`;
         const cached = sessionStorage.getItem(cacheKey);
 
         if (cached) {
@@ -146,7 +146,7 @@ export default function CryptoPage() {
         }
 
         // Fazer fetch (sempre, para manter atualizado)
-        const response = await fetch(`/api/crypto/${slug}`);
+        const response = await fetch(`/api/crypto/${coingeckoId}`);
         const result = await response.json();
 
         if (result.success) {
@@ -174,20 +174,20 @@ export default function CryptoPage() {
     };
 
     fetchCrypto();
-  }, [slug]);
+  }, [coingeckoId]);
 
   // Prefetch inteligente das top moedas em background
   useEffect(() => {
-    if (!slug) return;
+    if (!coingeckoId) return;
 
     // Aguardar 1.5s para não interferir com carregamento da moeda atual
     const prefetchTimer = setTimeout(() => {
-      TOP_CRYPTO_SLUGS.forEach((topSlug) => {
+      TOP_CRYPTO_SLUGS.forEach((topCryptoId) => {
         // Pular a moeda atual
-        if (topSlug === slug) return;
+        if (topCryptoId === coingeckoId) return;
 
         // Verificar se já está em cache
-        const cacheKey = `crypto_${topSlug}`;
+        const cacheKey = `crypto_${topCryptoId}`;
         const cached = sessionStorage.getItem(cacheKey);
 
         if (cached) {
@@ -205,7 +205,7 @@ export default function CryptoPage() {
         }
 
         // Fazer prefetch silencioso
-        fetch(`/api/crypto/${topSlug}`)
+        fetch(`/api/crypto/${topCryptoId}`)
           .then((res) => res.json())
           .then((result) => {
             if (result.success) {
@@ -226,16 +226,16 @@ export default function CryptoPage() {
     }, 1500);
 
     return () => clearTimeout(prefetchTimer);
-  }, [slug]);
+  }, [coingeckoId]);
 
   // Buscar notícias relacionadas
   useEffect(() => {
-    if (!slug) return;
+    if (!coingeckoId) return;
 
     const fetchRelatedNews = async () => {
       setLoadingNews(true);
       try {
-        const response = await fetch(`/api/news/related/${slug}`);
+        const response = await fetch(`/api/news/related/${coingeckoId}`);
         const result = await response.json();
 
         if (result.success) {
@@ -249,7 +249,7 @@ export default function CryptoPage() {
     };
 
     fetchRelatedNews();
-  }, [slug]);
+  }, [coingeckoId]);
 
   const formatPrice = (price: number | null) => {
     if (!price) return '$0.00';
@@ -864,7 +864,7 @@ export default function CryptoPage() {
 
         {/* Sidebar - Top Cryptos */}
         <aside className="lg:block">
-          <TopCryptosList currentSlug={slug} />
+          <TopCryptosList currentCryptoId={coingeckoId} />
         </aside>
       </div>
     </div>

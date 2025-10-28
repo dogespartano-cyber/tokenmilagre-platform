@@ -31,10 +31,9 @@ export async function GET() {
       take: 10,
       select: {
         id: true,
-        slug: true,
+        coingeckoId: true,
         name: true,
         symbol: true,
-        coingeckoId: true,
         currentPrice: true,
         priceChangePercentage24h: true,
         marketCapRank: true,

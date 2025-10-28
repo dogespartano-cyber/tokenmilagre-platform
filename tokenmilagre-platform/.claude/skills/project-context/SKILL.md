@@ -68,5 +68,35 @@ When this skill is invoked:
 
 ---
 
+## 📊 Atualização de Dados de ETFs
+
+**Localização**: `docs/ATUALIZAR-ETFS.md`
+
+Quando o usuário pedir para atualizar dados de ETFs:
+
+1. **Leia o guia**: `docs/ATUALIZAR-ETFS.md`
+2. **Arquivo alvo**: `components/ETFMetricsSection.tsx` (dados na linha ~30)
+3. **Fontes de dados**:
+   - Farside Investors: https://farside.co.uk/btc/ e https://farside.co.uk/eth/
+   - CoinGlass: https://www.coinglass.com/bitcoin-etf e /eth-etf
+   - SoSoValue: https://m.sosovalue.com/assets/etf/us-btc-spot
+
+**Comandos comuns do usuário**:
+- "Atualize os dados dos ETFs"
+- "Atualize ETFMetricsSection com dados de hoje"
+- "Dados de ETF desatualizados, atualize"
+
+**Dados a atualizar** (marcados com `// ← ATUALIZAR` no código):
+- `lastUpdate` - Data atual
+- `totalAUM` - Assets Under Management total
+- `inflows7d` - Inflows dos últimos 7 dias
+- `inflows30d` - Inflows dos últimos 30 dias
+- `topETFs` - Top 3 ETFs (nome, participação %, AUM)
+- `trend` - 'positive' ou 'negative'
+
+**Frequência recomendada**: Toda segunda-feira ou após grandes movimentos de mercado.
+
+---
+
 **Skill criada por**: Claude Code
-**Última atualização**: 2025-10-28 (adicionada skill troubleshooting)
+**Última atualização**: 2025-10-28 (adicionada seção de atualização de ETFs)

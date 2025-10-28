@@ -218,11 +218,10 @@ model Cryptocurrency {
   imageLarge        String?  // 256x256
 
   // Metadados
-  slug              String   @unique  // bitcoin, ethereum (para URL)
+  slug              String?  // bitcoin, ethereum (para URL - opcional, derivado de coingeckoId)
   lastUpdated       DateTime @default(now())
   createdAt         DateTime @default(now())
 
   @@index([symbol])
-  @@index([slug])
   @@index([marketCapRank])
 }

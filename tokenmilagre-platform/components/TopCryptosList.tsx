@@ -8,7 +8,7 @@ import { faArrowUp, faArrowDown, faCoins } from '@fortawesome/free-solid-svg-ico
 
 interface TopCrypto {
   id: string;
-  slug: string;
+  coingeckoId: string;
   name: string;
   symbol: string;
   currentPrice: number | null;
@@ -18,10 +18,10 @@ interface TopCrypto {
 }
 
 interface TopCryptosListProps {
-  currentSlug?: string;
+  currentCryptoId?: string;
 }
 
-export default function TopCryptosList({ currentSlug }: TopCryptosListProps) {
+export default function TopCryptosList({ currentCryptoId }: TopCryptosListProps) {
   const [cryptos, setCryptos] = useState<TopCrypto[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -135,7 +135,7 @@ export default function TopCryptosList({ currentSlug }: TopCryptosListProps) {
 
       <div className="space-y-2">
         {cryptos.map((crypto) => {
-          const isActive = crypto.slug === currentSlug;
+          const isActive = crypto.coingeckoId === currentCryptoId;
           const priceChangeColor =
             crypto.priceChangePercentage24h && crypto.priceChangePercentage24h > 0
               ? '#22c55e'
@@ -144,7 +144,7 @@ export default function TopCryptosList({ currentSlug }: TopCryptosListProps) {
           return (
             <Link
               key={crypto.id}
-              href={`/criptomoedas/${crypto.slug}`}
+              href={`/criptomoedas/${crypto.coingeckoId}`}
               className="block p-3 rounded-lg transition-all hover:scale-[1.02]"
               style={{
                 backgroundColor: isActive ? 'var(--bg-secondary)' : 'transparent',

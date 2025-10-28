@@ -150,7 +150,20 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { title, slug, content, excerpt, category, tags, published } = body;
+    const {
+      title,
+      slug,
+      content,
+      excerpt,
+      category,
+      tags,
+      published,
+      type,
+      level,
+      sentiment,
+      readTime,
+      authorId // Permite passar authorId explicitamente (para geração por IA)
+    } = body;
 
     // Validação
     if (!title || !slug || !content || !category) {
@@ -180,9 +193,13 @@ export async function POST(request: NextRequest) {
         content,
         excerpt: excerpt || '',
         category,
-        tags: JSON.stringify(tags || []),
+        tags: typeof tags === 'string' ? tags : JSON.stringify(tags || []),
         published: published ?? false,
-        authorId: session.user.id
+        type: type || 'news',
+        level: level || null,
+        sentiment: sentiment || 'neutral',
+        readTime: readTime || null,
+        authorId: authorId || session.user.id // Usa authorId passado ou do session
       },
       include: {
         author: {

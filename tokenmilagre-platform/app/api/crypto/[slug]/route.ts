@@ -50,12 +50,12 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = await params;
+  const { slug: coingeckoId } = await params;
 
   try {
-    // 1. Buscar no banco de dados
+    // 1. Buscar no banco de dados usando coingeckoId
     const crypto = await prisma.cryptocurrency.findUnique({
-      where: { slug },
+      where: { coingeckoId },
     });
 
     // 2. Se existe e está atualizado (< 5 min), retornar do cache
@@ -71,7 +71,6 @@ export async function GET(
     }
 
     // 3. Buscar dados atualizados do CoinGecko
-    const coingeckoId = crypto?.coingeckoId || slug;
     const response = await fetch(
       `https://api.coingecko.com/api/v3/coins/${coingeckoId}?localization=pt&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`,
       {
@@ -91,7 +90,7 @@ export async function GET(
 
       // Se pegou rate limit (429) e temos dados em cache, retornar cache antigo
       if (response.status === 429 && crypto) {
-        console.warn(`Rate limit atingido para ${slug}. Retornando cache antigo.`);
+        console.warn(`Rate limit atingido para ${coingeckoId}. Retornando cache antigo.`);
         return NextResponse.json({
           success: true,
           data: crypto,
@@ -128,7 +127,7 @@ export async function GET(
       coingeckoId: data.id,
       symbol: data.symbol.toUpperCase(),
       name: data.name,
-      slug: slug,
+      slug: data.id, // slug derivado do coingeckoId para URLs amigáveis
 
       // Dados de mercado
       currentPrice: data.market_data?.current_price?.usd || null,
@@ -165,7 +164,7 @@ export async function GET(
 
     // 7. Criar ou atualizar no banco
     const savedCrypto = await prisma.cryptocurrency.upsert({
-      where: { slug },
+      where: { coingeckoId },
       update: cryptoData,
       create: cryptoData,
     });
@@ -180,7 +179,7 @@ export async function GET(
 
     // Se temos dados em cache, retornar mesmo com erro
     if (crypto) {
-      console.warn(`Erro na API, retornando cache para ${slug}`);
+      console.warn(`Erro na API, retornando cache para ${coingeckoId}`);
       return NextResponse.json({
         success: true,
         data: crypto,
