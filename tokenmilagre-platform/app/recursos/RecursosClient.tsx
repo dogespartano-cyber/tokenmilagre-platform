@@ -43,17 +43,30 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Função para retornar gradiente baseado na categoria
+  // Função para retornar cor RGBA inicial do gradiente (usado no background)
   const getCategoryGradient = (category: string) => {
     const gradients: Record<string, string> = {
-      'wallets': 'linear-gradient(135deg, #F6851B 0%, #E2761B 100%)', // Laranja (MetaMask)
-      'exchanges': 'linear-gradient(135deg, #F3BA2F 0%, #EAA42D 100%)', // Dourado (Binance)
-      'defi': 'linear-gradient(135deg, #FF007A 0%, #E6006E 100%)', // Rosa (Uniswap)
-      'explorers': 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)', // Azul
-      'tools': 'linear-gradient(135deg, #10B981 0%, #059669 100%)', // Verde
-      'browsers': 'linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%)', // Roxo-azul
+      'wallets': 'rgba(246, 133, 27, 0.08)',   // Laranja (MetaMask) 8%
+      'exchanges': 'rgba(243, 186, 47, 0.08)', // Dourado (Binance) 8%
+      'defi': 'rgba(255, 0, 122, 0.08)',       // Rosa (Uniswap) 8%
+      'explorers': 'rgba(59, 130, 246, 0.08)', // Azul 8%
+      'tools': 'rgba(16, 185, 129, 0.08)',     // Verde 8%
+      'browsers': 'rgba(139, 92, 246, 0.08)',  // Roxo-azul 8%
     };
-    return gradients[category] || 'linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)'; // Roxo padrão
+    return gradients[category] || 'rgba(99, 102, 241, 0.05)'; // Roxo padrão 5%
+  };
+
+  // Função para retornar cor sólida baseada na categoria
+  const getCategoryColor = (category: string) => {
+    const colors: Record<string, string> = {
+      'wallets': '#F6851B', // Laranja (MetaMask)
+      'exchanges': '#F3BA2F', // Dourado (Binance)
+      'defi': '#FF007A', // Rosa (Uniswap)
+      'explorers': '#3B82F6', // Azul
+      'tools': '#10B981', // Verde
+      'browsers': '#8B5CF6', // Roxo-azul
+    };
+    return colors[category] || '#6366F1'; // Roxo padrão
   };
 
   useEffect(() => {
@@ -127,39 +140,10 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
         </div>
 
         {/* Busca e Filtros */}
-        <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-md" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-light)' }}>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
-              Busca e Filtros
-              {getActiveFiltersCount() > 0 && (
-                <span className="ml-2 px-2 py-1 text-xs rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 font-bold">
-                  {getActiveFiltersCount()}
-                </span>
-              )}
-            </h3>
-            <div className="flex items-center gap-3">
-              {getActiveFiltersCount() > 0 && (
-                <button
-                  onClick={clearAllFilters}
-                  className="text-sm font-semibold transition-colors hover:scale-105"
-                  style={{ color: 'var(--brand-primary)' }}
-                >
-                  Limpar tudo
-                </button>
-              )}
-              <button
-                onClick={() => setShowFilters(!showFilters)}
-                className="lg:hidden px-4 py-2 rounded-xl font-semibold transition-all"
-                style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
-              >
-                {showFilters ? 'Ocultar' : 'Mostrar'} Filtros
-              </button>
-            </div>
-          </div>
-
-          {/* Campo de Busca */}
-          <div className="mb-6">
-            <div className="relative">
+        <div className="space-y-6">
+          {/* Campo de Busca + Botão Limpar */}
+          <div className="flex items-center gap-3 max-w-2xl">
+            <div className="relative flex-1">
               <input
                 type="text"
                 placeholder="Buscar por nome, descrição ou tag..."
@@ -180,141 +164,181 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors hover:scale-110"
+                  style={{ color: 'var(--text-tertiary)' }}
                   aria-label="Limpar busca"
                 >
                   <FontAwesomeIcon icon={faTimes} className="w-5 h-5" />
                 </button>
               )}
             </div>
-          </div>
-
-          {/* Filtros - Desktop sempre visível, Mobile toggle */}
-          <div className={`space-y-4 ${showFilters ? 'block' : 'hidden lg:block'}`}>
-            {/* Categorias */}
-            <div>
-              <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
-                Categorias:
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setSelectedCategory(cat.id)}
-                    className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${
-                      selectedCategory === cat.id
-                        ? 'shadow-md'
-                        : 'hover:opacity-80'
-                    }`}
-                    style={{
-                      backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
-                      color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
-                    }}
-                  >
-                    {cat.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Contador */}
-            <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
-              {filteredResources.length} {filteredResources.length === 1 ? 'recurso encontrado' : 'recursos encontrados'}
-            </p>
-          </div>
-        </div>
-
-        {/* Grid de Recursos - DESIGN GRADIENTE */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredResources.map((resource) => {
-            const CardWrapper = Link;
-            const cardProps = { href: `/recursos/${resource.slug}` };
-
-            return (
-              <CardWrapper
-                key={resource.id}
-                {...cardProps}
-                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+            {getActiveFiltersCount() > 0 && (
+              <button
+                onClick={clearAllFilters}
+                className="px-4 py-3 rounded-xl font-semibold transition-all hover:scale-105 whitespace-nowrap"
                 style={{
-                  background: getCategoryGradient(resource.category),
-                  minHeight: '240px'
+                  backgroundColor: 'var(--bg-secondary)',
+                  color: 'var(--brand-primary)',
+                  border: '2px solid var(--border-medium)'
                 }}
               >
-              {/* Overlay escuro sutil */}
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
+                Limpar filtros
+              </button>
+            )}
+          </div>
 
-              {/* Conteúdo */}
-              <div className="relative z-10 h-full flex flex-col justify-between text-white">
-                <div>
-                  {/* Header - Badge categoria e verificado */}
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="inline-block px-2 py-1 rounded-md text-xs font-bold bg-white/20 backdrop-blur-sm">
+          {/* Filtros */}
+          <div className="flex flex-wrap items-center gap-4">
+            {/* Categorias */}
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${
+                    selectedCategory === cat.id
+                      ? 'shadow-md'
+                      : 'hover:opacity-80'
+                  }`}
+                  style={{
+                    backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
+                    color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
+                  }}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Separador */}
+            <div className="h-8 w-px" style={{ backgroundColor: 'var(--border-light)' }}></div>
+
+            {/* Contador */}
+            <div className="ml-auto">
+              <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
+                {filteredResources.length} {filteredResources.length === 1 ? 'recurso' : 'recursos'}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Grid de Recursos - NOVO DESIGN COM GRADIENTES SUTIS */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredResources.map((resource) => (
+            <Link
+              key={resource.id}
+              href={`/recursos/${resource.slug}`}
+              className="group relative rounded-2xl p-6 overflow-hidden border shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer block"
+              style={{
+                background: `linear-gradient(135deg, ${getCategoryGradient(resource.category)}, var(--bg-elevated))`,
+                borderColor: 'var(--border-light)'
+              }}
+            >
+              {/* Glow sutil no topo no hover */}
+              <div
+                className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                  background: `linear-gradient(90deg, transparent, ${getCategoryColor(resource.category)}, transparent)`,
+                  boxShadow: `0 0 20px ${getCategoryColor(resource.category)}40`
+                }}
+              />
+
+              {/* Content wrapper */}
+              <div className="relative flex flex-col h-full">
+                {/* Header do Card */}
+                <div className="flex items-start justify-between mb-4">
+                  {/* Badge de Categoria */}
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg backdrop-blur-sm" style={{
+                    backgroundColor: `${getCategoryColor(resource.category)}15`,
+                    border: `1px solid ${getCategoryColor(resource.category)}30`
+                  }}>
+                    <span className="text-xs font-bold uppercase tracking-wide" style={{
+                      color: getCategoryColor(resource.category)
+                    }}>
                       {categories.find(c => c.id === resource.category)?.label || resource.category}
+                    </span>
+                  </div>
+
+                  {/* Verificado */}
+                  {resource.verified && (
+                    <div className="flex items-center gap-1 px-2.5 py-1 rounded-md backdrop-blur-sm" style={{
+                      backgroundColor: 'var(--bg-secondary)',
+                      color: '#10B981'
+                    }}>
+                      <FontAwesomeIcon icon={faCheckCircle} className="w-3.5 h-3.5" />
+                      <span className="text-xs font-bold">Oficial</span>
                     </div>
-                    {resource.verified && (
-                      <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" />
-                    )}
-                  </div>
-
-                  {/* Nome */}
-                  <h3 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
-                    {resource.name}
-                  </h3>
-
-                  {/* Descrição */}
-                  <p className="text-sm opacity-90 mb-4 line-clamp-2">
-                    {resource.shortDescription}
-                  </p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-1.5 mb-3">
-                    {resource.tags.slice(0, 3).map((tag, index) => (
-                      <span
-                        key={index}
-                        className="px-2 py-0.5 rounded text-xs font-medium bg-white/15 backdrop-blur-sm"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                  )}
                 </div>
 
-                {/* Footer */}
-                <div className="space-y-3">
-                  {/* Plataformas */}
-                  <div className="flex flex-wrap gap-1.5">
-                    {resource.platforms.map((platform, index) => (
-                      <span
-                        key={index}
-                        className="px-2 py-0.5 rounded text-xs font-semibold bg-white/20 backdrop-blur-sm"
-                      >
-                        {platform}
-                      </span>
-                    ))}
-                  </div>
+                {/* Título */}
+                <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-brand-primary transition-colors min-h-[3.5rem]" style={{ color: 'var(--text-primary)' }}>
+                  {resource.name}
+                </h3>
 
-                  {/* CTA com seta */}
-                  <div className="flex items-center justify-between pt-2 border-t border-white/20">
-                    <span className="text-sm font-bold">Ver detalhes</span>
-                    <FontAwesomeIcon icon={faArrowRight} className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                {/* Descrição */}
+                <p className="text-sm mb-4 line-clamp-3 leading-relaxed opacity-90 min-h-[4.5rem]" style={{ color: 'var(--text-secondary)' }}>
+                  {resource.shortDescription}
+                </p>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {resource.tags.slice(0, 3).map((tag, index) => (
+                    <span
+                      key={index}
+                      className="px-2 py-0.5 rounded text-xs font-medium backdrop-blur-sm"
+                      style={{
+                        backgroundColor: 'var(--bg-secondary)',
+                        color: 'var(--text-tertiary)'
+                      }}
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Plataformas */}
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {resource.platforms.map((platform, index) => (
+                    <span
+                      key={index}
+                      className="px-2 py-0.5 rounded text-xs font-semibold backdrop-blur-sm"
+                      style={{
+                        backgroundColor: `${getCategoryColor(resource.category)}10`,
+                        color: getCategoryColor(resource.category),
+                        border: `1px solid ${getCategoryColor(resource.category)}20`
+                      }}
+                    >
+                      {platform}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Spacer to push footer to bottom */}
+                <div className="flex-grow"></div>
+
+                {/* Footer */}
+                <div className="pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                  <div className="flex items-center justify-end">
+                    {/* CTA com seta animada */}
+                    <div className="flex items-center gap-2 text-sm font-bold group-hover:gap-3 transition-all" style={{ color: 'var(--text-primary)' }}>
+                      Ver recurso
+                      <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </CardWrapper>
-            );
-          })}
+            </Link>
+          ))}
         </div>
 
-        {/* Empty State */}
+        {/* Loader minimalista */}
         {filteredResources.length === 0 && (
-          <div className="text-center py-12">
-            <div className="text-6xl mb-4">🔍</div>
-            <p className="text-xl mb-2" style={{ color: 'var(--text-primary)' }}>
-              Nenhum recurso encontrado
-            </p>
-            <p style={{ color: 'var(--text-tertiary)' }}>
-              Tente ajustar os filtros
-            </p>
+          <div className="flex justify-center py-12">
+            <div
+              className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin"
+              style={{ borderColor: 'var(--brand-primary)', borderTopColor: 'transparent' }}
+            ></div>
           </div>
         )}
 

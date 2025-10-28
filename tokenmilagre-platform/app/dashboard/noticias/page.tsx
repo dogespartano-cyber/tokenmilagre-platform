@@ -2,8 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
-import { NewsGridSkeleton } from '@/components/SkeletonLoader';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faClock, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
@@ -71,7 +69,6 @@ export default function NoticiasPage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedSentiment, setSelectedSentiment] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'alphabetical'>('newest');
-  const [showFilters, setShowFilters] = useState(false);
 
   // Estados de paginação para infinite scroll
   const [page, setPage] = useState(1);
@@ -219,22 +216,6 @@ export default function NoticiasPage() {
     return `Há ${diffDays}d`;
   };
 
-  const getSentimentIcon = (sentiment: string) => {
-    switch (sentiment) {
-      case 'positive': return '🟢';
-      case 'negative': return '🔴';
-      default: return '🟡';
-    }
-  };
-
-  const getSentimentLabel = (sentiment: string) => {
-    switch (sentiment) {
-      case 'positive': return 'Notícia otimista';
-      case 'negative': return 'Notícia pessimista';
-      default: return 'Notícia neutra';
-    }
-  };
-
   const handleTagClick = (tag: string) => {
     setSearchTerm(tag);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -259,40 +240,11 @@ export default function NoticiasPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="space-y-8">
-        {/* Filtros */}
-        <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-md" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-light)' }}>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
-              Busca e Filtros
-              {getActiveFiltersCount() > 0 && (
-                <span className="ml-2 px-2 py-1 text-xs rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 font-bold">
-                  {getActiveFiltersCount()}
-                </span>
-              )}
-            </h3>
-            <div className="flex items-center gap-3">
-              {getActiveFiltersCount() > 0 && (
-                <button
-                  onClick={clearAllFilters}
-                  className="text-sm font-semibold transition-colors hover:scale-105"
-                  style={{ color: 'var(--brand-primary)' }}
-                >
-                  Limpar tudo
-                </button>
-              )}
-              <button
-                onClick={() => setShowFilters(!showFilters)}
-                className="lg:hidden px-4 py-2 rounded-xl font-semibold transition-all"
-                style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
-              >
-                {showFilters ? 'Ocultar' : 'Mostrar'} Filtros
-              </button>
-            </div>
-          </div>
-
-          {/* Campo de Busca */}
-          <div className="mb-6">
-            <div className="relative">
+        {/* Busca e Filtros */}
+        <div className="space-y-6">
+          {/* Campo de Busca + Botão Limpar */}
+          <div className="flex items-center gap-3 max-w-2xl">
+            <div className="relative flex-1">
               <input
                 type="text"
                 placeholder="Buscar notícias por título, resumo ou palavra-chave..."
@@ -320,131 +272,82 @@ export default function NoticiasPage() {
                 </button>
               )}
             </div>
-            {searchTerm && (
-              <p className="mt-2 text-sm" style={{ color: 'var(--text-tertiary)' }}>
-                {filteredNews.length} {filteredNews.length === 1 ? 'resultado encontrado' : 'resultados encontrados'}
-              </p>
+
+            {getActiveFiltersCount() > 0 && (
+              <button
+                onClick={clearAllFilters}
+                className="px-4 py-3 rounded-xl font-semibold transition-all hover:opacity-80 whitespace-nowrap"
+                style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--brand-primary)' }}
+              >
+                Limpar filtros
+              </button>
             )}
           </div>
 
-          {/* Filtros Avançados */}
-          <div className={`space-y-6 ${showFilters ? 'block' : 'hidden lg:block'}`}>
-            {/* Categorias e Filtro */}
-            <div className="grid lg:grid-cols-[1fr_300px] gap-6 items-start">
-              {/* Categorias */}
-              <div>
-                <h4 className="font-semibold mb-3 text-sm" style={{ color: 'var(--text-secondary)' }}>Categorias:</h4>
-                <div className="flex flex-wrap gap-3">
-                  {categories.map((cat) => (
-                    <button
-                      key={cat.id}
-                      onClick={() => setSelectedCategory(cat.id)}
-                      className={`px-4 py-2 rounded-xl font-semibold transition-all hover:scale-105 hover:shadow-lg ${
-                        selectedCategory === cat.id
-                          ? 'bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900'
-                          : 'hover:opacity-80'
-                      }`}
-                      style={selectedCategory !== cat.id ? {
-                        backgroundColor: 'var(--bg-secondary)',
-                        color: 'var(--text-secondary)'
-                      } : undefined}
-                    >
-                      {cat.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Menu Combinado - Filtrar e Ordenar */}
-              <div>
-                <label className="block font-semibold mb-3 text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  Filtrar e Ordenar:
-                </label>
-                <select
-                  value={`${sortBy}-${selectedSentiment}`}
-                  onChange={(e) => {
-                    const [sort, sentiment] = e.target.value.split('-');
-                    setSortBy(sort as typeof sortBy);
-                    setSelectedSentiment(sentiment);
-                  }}
-                  className="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none focus:ring-2 focus:ring-brand-primary font-semibold cursor-pointer"
+          {/* Filtros */}
+          <div className="flex flex-wrap items-center gap-4">
+            {/* Categorias */}
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 ${
+                    selectedCategory === cat.id
+                      ? 'shadow-md'
+                      : 'hover:opacity-80'
+                  }`}
                   style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border-medium)',
-                    color: 'var(--text-primary)'
+                    backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
+                    color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
                   }}
                 >
-                  <optgroup label="Ordenação">
-                    <option value="newest-all">Mais Recentes</option>
-                    <option value="oldest-all">Mais Antigas</option>
-                    <option value="alphabetical-all">Alfabética (A-Z)</option>
-                  </optgroup>
-                  <optgroup label="Sentimento">
-                    <option value="newest-positive">Positivo</option>
-                    <option value="newest-neutral">Neutro</option>
-                    <option value="newest-negative">Negativo</option>
-                  </optgroup>
-                </select>
-              </div>
+                  {cat.label}
+                </button>
+              ))}
             </div>
 
-            {/* Filtros Ativos */}
-            {getActiveFiltersCount() > 0 && (
-              <div className="pt-4 border-t" style={{ borderColor: 'var(--border-light)' }}>
-                <h4 className="font-semibold mb-3 text-sm" style={{ color: 'var(--text-secondary)' }}>Filtros ativos:</h4>
-                <div className="flex flex-wrap gap-2">
-                  {searchTerm && (
-                    <span className="px-3 py-1 rounded-lg text-sm flex items-center gap-2 bg-gradient-to-r from-yellow-400/20 to-amber-500/20 border border-yellow-400/30" style={{ color: 'var(--text-primary)' }}>
-                      🔍 &quot;{searchTerm}&quot;
-                      <button onClick={() => setSearchTerm('')} className="hover:scale-110 transition-transform">✕</button>
-                    </span>
-                  )}
-                  {selectedCategory !== 'all' && (
-                    <span className="px-3 py-1 rounded-lg text-sm flex items-center gap-2 bg-gradient-to-r from-yellow-400/20 to-amber-500/20 border border-yellow-400/30" style={{ color: 'var(--text-primary)' }}>
-                      {categories.find(c => c.id === selectedCategory)?.label}
-                      <button onClick={() => setSelectedCategory('all')} className="hover:scale-110 transition-transform">✕</button>
-                    </span>
-                  )}
-                  {selectedSentiment !== 'all' && (
-                    <span className="px-3 py-1 rounded-lg text-sm flex items-center gap-2 bg-gradient-to-r from-blue-400/20 to-cyan-500/20 border border-blue-400/30" style={{ color: 'var(--text-primary)' }}>
-                      {selectedSentiment === 'positive' ? 'Positivo' : selectedSentiment === 'neutral' ? 'Neutro' : 'Negativo'}
-                      <button onClick={() => setSelectedSentiment('all')} className="hover:scale-110 transition-transform">✕</button>
-                    </span>
-                  )}
-                  {sortBy !== 'newest' && (
-                    <span className="px-3 py-1 rounded-lg text-sm flex items-center gap-2 bg-gradient-to-r from-purple-400/20 to-pink-500/20 border border-purple-400/30" style={{ color: 'var(--text-primary)' }}>
-                      {sortBy === 'oldest' ? 'Mais Antigas' : 'Alfabética'}
-                      <button onClick={() => setSortBy('newest')} className="hover:scale-110 transition-transform">✕</button>
-                    </span>
-                  )}
-                </div>
-              </div>
-            )}
+            {/* Divider */}
+            <div className="h-8 w-px" style={{ backgroundColor: 'var(--border-light)' }}></div>
+
+            {/* Select Ordenar/Sentimento */}
+            <select
+              value={`${sortBy}-${selectedSentiment}`}
+              onChange={(e) => {
+                const [sort, sentiment] = e.target.value.split('-');
+                setSortBy(sort as typeof sortBy);
+                setSelectedSentiment(sentiment);
+              }}
+              className="px-4 py-2 rounded-lg border-2 transition-all focus:outline-none focus:ring-2 focus:ring-brand-primary font-medium cursor-pointer"
+              style={{
+                backgroundColor: 'var(--bg-secondary)',
+                borderColor: 'var(--border-medium)',
+                color: 'var(--text-primary)'
+              }}
+            >
+              <optgroup label="Ordenação">
+                <option value="newest-all">Mais Recentes</option>
+                <option value="oldest-all">Mais Antigas</option>
+                <option value="alphabetical-all">Alfabética (A-Z)</option>
+              </optgroup>
+              <optgroup label="Sentimento">
+                <option value="newest-positive">Positivo</option>
+                <option value="newest-neutral">Neutro</option>
+                <option value="newest-negative">Negativo</option>
+              </optgroup>
+            </select>
+
+            {/* Contador */}
+            <div className="ml-auto">
+              <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
+                {filteredNews.length} {filteredNews.length === 1 ? 'notícia' : 'notícias'}
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Resultado da Busca */}
-        {!loading && (
-          <div className="flex items-center justify-between px-4">
-            <p className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
-              Mostrando {filteredNews.length} de {news.length} notícias
-            </p>
-          </div>
-        )}
-
-        {/* Loading State */}
-        {loading && (
-          <div className="space-y-8">
-            <div className="text-center py-4">
-              <div className="text-4xl mb-2 animate-pulse">📰</div>
-              <p className="text-lg font-semibold" style={{ color: 'var(--text-secondary)' }}>Carregando notícias...</p>
-            </div>
-            <NewsGridSkeleton count={9} />
-          </div>
-        )}
-
         {/* News Grid */}
-        {!loading && filteredNews.length > 0 && (
+        {!loading && (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredNews.map((item, index) => (
               <Link
@@ -571,54 +474,14 @@ export default function NoticiasPage() {
             {/* Elemento sentinela para infinite scroll */}
             <div ref={sentinelRef} className="col-span-full h-1" />
 
-            {/* Loader para infinite scroll */}
-            {isLoadingMore && (
-              <div className="col-span-full flex justify-center py-8">
-                <div className="flex flex-col items-center gap-3">
-                  <div className="w-10 h-10 rounded-full border-4 border-t-transparent animate-spin" style={{
-                    borderColor: 'var(--brand-primary)',
-                    borderTopColor: 'transparent'
-                  }} />
-                  <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
-                    Carregando mais notícias...
-                  </p>
-                </div>
+            {/* Loader minimalista */}
+            {(isLoadingMore || loading || filteredNews.length === 0) && (
+              <div className="col-span-full flex justify-center py-12">
+                <div className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin" style={{
+                  borderColor: 'var(--border-medium)',
+                  borderTopColor: 'var(--brand-primary)'
+                }} />
               </div>
-            )}
-
-            {/* Indicador de fim da lista */}
-            {!hasMore && filteredNews.length > 0 && (
-              <div className="col-span-full text-center py-8">
-                <p className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
-                  📰 Você visualizou todas as {filteredNews.length} notícias disponíveis
-                </p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Empty State */}
-        {!loading && filteredNews.length === 0 && (
-          <div className="text-center py-20">
-            <div className="text-6xl mb-4">
-              {searchTerm ? '🔍' : '📭'}
-            </div>
-            <p className="text-xl" style={{ color: 'var(--text-primary)' }}>
-              {searchTerm ? 'Nenhum resultado encontrado' : 'Nenhuma notícia encontrada'}
-            </p>
-            <p className="mt-2" style={{ color: 'var(--text-tertiary)' }}>
-              {searchTerm
-                ? `Nenhuma notícia corresponde a "${searchTerm}". Tente buscar por outros termos.`
-                : 'Tente selecionar outra categoria'
-              }
-            </p>
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm('')}
-                className="mt-4 px-6 py-2 rounded-xl font-semibold bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 hover:shadow-lg transition-all"
-              >
-                Limpar busca
-              </button>
             )}
           </div>
         )}

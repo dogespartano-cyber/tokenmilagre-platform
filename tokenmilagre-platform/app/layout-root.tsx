@@ -47,6 +47,7 @@ export default function RootLayoutNav({
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
 
+
   // Verificar se deve mostrar o DashboardHeader
   const headerConfig = dashboardHeaderConfig[pathname];
 
@@ -174,7 +175,7 @@ export default function RootLayoutNav({
       </aside>
 
       {/* Main Content Wrapper */}
-      <div className="lg:ml-72 min-h-screen">
+      <div className="lg:ml-72 min-h-screen flex flex-col">
         {/* Header */}
         <header className="sticky top-0 z-30 backdrop-blur-lg border-b shadow-theme-sm" style={{
           backgroundColor: 'var(--bg-elevated)',
@@ -250,7 +251,7 @@ export default function RootLayoutNav({
           </div>
         </header>
 
-        <main>
+        <main className="flex-1">
           {/* Renderizar DashboardHeader apenas nas páginas configuradas */}
           {headerConfig && (
             <div className="container mx-auto px-4 py-8">

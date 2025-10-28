@@ -46,7 +46,8 @@ After loading project context, use these specialized skills when needed:
 - **`article-creation`** - When creating/editing articles or news
 - **`design-system`** - When working with design, CSS, or components
 - **`database-setup`** - When working with Prisma, database, or deployment
-- **pages-reference** - When modifying or understanding page-specific features
+- **`pages-reference`** - When modifying or understanding page-specific features
+- **`troubleshooting`** - When encountering bugs or performance issues (scroll, cache, flash visual)
 
 ---
 
@@ -68,4 +69,4 @@ When this skill is invoked:
 ---
 
 **Skill criada por**: Claude Code
-**Última atualização**: 2025-10-25 (removido auto-start server)
+**Última atualização**: 2025-10-28 (adicionada skill troubleshooting)

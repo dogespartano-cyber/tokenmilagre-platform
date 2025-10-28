@@ -23,6 +23,30 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import TopCryptosList from '@/components/TopCryptosList';
 
+// Lista de top moedas para prefetch inteligente
+const TOP_CRYPTO_SLUGS = [
+  'bitcoin',
+  'ethereum',
+  'tether',
+  'binancecoin',
+  'solana',
+  'ripple',
+  'usd-coin',
+  'cardano',
+  'dogecoin',
+  'tron',
+  'avalanche-2',
+  'shiba-inu',
+  'polkadot',
+  'chainlink',
+  'bitcoin-cash',
+  'litecoin',
+  'polygon',
+  'dai',
+  'uniswap',
+  'internet-computer',
+];
+
 interface CryptoData {
   id: string;
   coingeckoId: string;
@@ -65,6 +89,11 @@ export default function CryptoPage() {
   const [error, setError] = useState<string | null>(null);
   const [isStale, setIsStale] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
+
+  // Forçar scroll para o topo ao montar ou mudar de moeda (fix para bug de scroll)
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [slug]);
 
   useEffect(() => {
     if (!slug) return;
@@ -127,6 +156,58 @@ export default function CryptoPage() {
     };
 
     fetchCrypto();
+  }, [slug]);
+
+  // Prefetch inteligente das top moedas em background
+  useEffect(() => {
+    if (!slug) return;
+
+    // Aguardar 1.5s para não interferir com carregamento da moeda atual
+    const prefetchTimer = setTimeout(() => {
+      TOP_CRYPTO_SLUGS.forEach((topSlug) => {
+        // Pular a moeda atual
+        if (topSlug === slug) return;
+
+        // Verificar se já está em cache
+        const cacheKey = `crypto_${topSlug}`;
+        const cached = sessionStorage.getItem(cacheKey);
+
+        if (cached) {
+          try {
+            const cachedData = JSON.parse(cached);
+            const cacheAge = Date.now() - cachedData.timestamp;
+
+            // Se cache ainda é válido (< 1 hora), não fazer prefetch
+            if (cacheAge < 60 * 60 * 1000) {
+              return;
+            }
+          } catch (error) {
+            // Cache inválido, continuar com prefetch
+          }
+        }
+
+        // Fazer prefetch silencioso
+        fetch(`/api/crypto/${topSlug}`)
+          .then((res) => res.json())
+          .then((result) => {
+            if (result.success) {
+              // Salvar no cache
+              sessionStorage.setItem(
+                cacheKey,
+                JSON.stringify({
+                  data: result.data,
+                  timestamp: Date.now(),
+                })
+              );
+            }
+          })
+          .catch(() => {
+            // Ignorar erros - prefetch é opcional
+          });
+      });
+    }, 1500);
+
+    return () => clearTimeout(prefetchTimer);
   }, [slug]);
 
   const formatPrice = (price: number | null) => {

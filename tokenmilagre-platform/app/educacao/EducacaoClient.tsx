@@ -249,40 +249,141 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
             </div>
           </div>
 
-          {/* Busca e Filtros */}
-          <div className="backdrop-blur-lg rounded-2xl p-6 border shadow-md" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-light)' }}>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
-                Busca e Filtros
-                {getActiveFiltersCount() > 0 && (
-                  <span className="ml-2 px-2 py-1 text-xs rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 font-bold">
-                    {getActiveFiltersCount()}
-                  </span>
-                )}
-              </h3>
-              <div className="flex items-center gap-3">
-                {getActiveFiltersCount() > 0 && (
-                  <button
-                    onClick={clearAllFilters}
-                    className="text-sm font-semibold transition-colors hover:scale-105"
-                    style={{ color: 'var(--brand-primary)' }}
-                  >
-                    Limpar tudo
-                  </button>
-                )}
-                <button
-                  onClick={() => setShowFilters(!showFilters)}
-                  className="lg:hidden px-4 py-2 rounded-xl font-semibold transition-all"
-                  style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
-                >
-                  {showFilters ? 'Ocultar' : 'Mostrar'} Filtros
-                </button>
-              </div>
+          {/* Cards Principais em Destaque */}
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] mb-3" style={{ color: 'var(--text-primary)' }}>
+                Comece por Aqui
+              </h2>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                Artigos essenciais para dar seus primeiros passos no mundo cripto
+              </p>
             </div>
 
-            {/* Campo de Busca */}
-            <div className="mb-6">
-              <div className="relative">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Card 1: O que é Bitcoin */}
+              <Link
+                href="/educacao/o-que-e-bitcoin"
+                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                style={{
+                  background: 'linear-gradient(135deg, #F7931A 0%, #E67E22 100%)',
+                  minHeight: '180px'
+                }}
+              >
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
+                <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                  <div>
+                    <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
+                      Iniciante
+                    </div>
+                    <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                      O que é Bitcoin?
+                    </h4>
+                    <p className="text-sm opacity-90 mb-3">
+                      Entenda a primeira criptomoeda do mundo
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold opacity-90">Leitura essencial</span>
+                    <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </Link>
+
+              {/* Card 2: Carteiras Digitais */}
+              <Link
+                href="/educacao/como-criar-wallet-segura"
+                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                style={{
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  minHeight: '180px'
+                }}
+              >
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
+                <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                  <div>
+                    <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
+                      Iniciante
+                    </div>
+                    <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                      Carteiras Digitais
+                    </h4>
+                    <p className="text-sm opacity-90 mb-3">
+                      Aprenda a guardar suas criptomoedas com segurança
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold opacity-90">Segurança</span>
+                    <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </Link>
+
+              {/* Card 3: Como Investir */}
+              <Link
+                href="/educacao/trading-basico-criptomoedas"
+                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                style={{
+                  background: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+                  minHeight: '180px'
+                }}
+              >
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
+                <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                  <div>
+                    <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
+                      Intermediário
+                    </div>
+                    <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                      Como Investir
+                    </h4>
+                    <p className="text-sm opacity-90 mb-3">
+                      Primeiros passos para investir em cripto
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold opacity-90">Investimento</span>
+                    <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </Link>
+
+              {/* Card 4: Segurança Cripto */}
+              <Link
+                href="/educacao/como-criar-wallet-segura"
+                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                style={{
+                  background: 'linear-gradient(135deg, #ee0979 0%, #ff6a00 100%)',
+                  minHeight: '180px'
+                }}
+              >
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
+                <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                  <div>
+                    <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
+                      Essencial
+                    </div>
+                    <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                      Segurança Cripto
+                    </h4>
+                    <p className="text-sm opacity-90 mb-3">
+                      Proteja-se de golpes e fraudes
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold opacity-90">Proteção</span>
+                    <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          {/* Busca e Filtros */}
+          <div className="space-y-6">
+            {/* Campo de Busca + Botão Limpar */}
+            <div className="flex items-center gap-3 max-w-2xl">
+              <div className="relative flex-1">
                 <input
                   type="text"
                   placeholder="Buscar por título, descrição ou tag..."
@@ -310,69 +411,71 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
                   </button>
                 )}
               </div>
+
+              {getActiveFiltersCount() > 0 && (
+                <button
+                  onClick={clearAllFilters}
+                  className="px-4 py-3 rounded-xl font-semibold transition-all hover:opacity-80 whitespace-nowrap"
+                  style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--brand-primary)' }}
+                >
+                  Limpar filtros
+                </button>
+              )}
             </div>
 
-            {/* Filtros - Desktop sempre visível, Mobile toggle */}
-            <div className={`space-y-4 ${showFilters ? 'block' : 'hidden lg:block'}`}>
-              {/* Categorias e Níveis - Lado a Lado */}
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Categorias */}
-                <div>
-                  <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
-                    Categorias:
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {categories.map((cat) => (
-                      <button
-                        key={cat.id}
-                        onClick={() => setSelectedCategory(cat.id)}
-                        className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${
-                          selectedCategory === cat.id
-                            ? 'shadow-md'
-                            : 'hover:opacity-80'
-                        }`}
-                        style={{
-                          backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
-                          color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
-                        }}
-                      >
-                        {cat.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+            {/* Filtros */}
+            <div className="flex flex-wrap items-center gap-4">
+              {/* Categorias */}
+              <div className="flex flex-wrap gap-2">
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 ${
+                      selectedCategory === cat.id
+                        ? 'shadow-md'
+                        : 'hover:opacity-80'
+                    }`}
+                    style={{
+                      backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
+                      color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
+                    }}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
 
-                {/* Níveis */}
-                <div>
-                  <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
-                    Nível:
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {levels.map((level) => (
-                      <button
-                        key={level.id}
-                        onClick={() => setSelectedLevel(level.id)}
-                        className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${
-                          selectedLevel === level.id
-                            ? 'shadow-md'
-                            : 'hover:opacity-80'
-                        }`}
-                        style={{
-                          backgroundColor: selectedLevel === level.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
-                          color: selectedLevel === level.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
-                        }}
-                      >
-                        {level.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+              {/* Divider */}
+              <div className="h-8 w-px" style={{ backgroundColor: 'var(--border-light)' }}></div>
+
+              {/* Níveis */}
+              <div className="flex flex-wrap gap-2">
+                {levels.map((level) => (
+                  <button
+                    key={level.id}
+                    onClick={() => setSelectedLevel(level.id)}
+                    className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 ${
+                      selectedLevel === level.id
+                        ? 'shadow-md'
+                        : 'hover:opacity-80'
+                    }`}
+                    style={{
+                      backgroundColor: selectedLevel === level.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
+                      color: selectedLevel === level.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
+                    }}
+                  >
+                    {level.label}
+                  </button>
+                ))}
               </div>
 
               {/* Contador */}
-              <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
-                {filteredResources.length} {filteredResources.length === 1 ? 'recurso encontrado' : 'recursos encontrados'}
-              </p>
+              <div className="ml-auto">
+                <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
+                  {filteredResources.length} {filteredResources.length === 1 ? 'recurso' : 'recursos'}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -474,43 +577,16 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
             {/* Elemento sentinela para infinite scroll */}
             {!searchTerm && <div ref={sentinelRef} className="col-span-full h-1" />}
 
-            {/* Loader para infinite scroll */}
-            {isLoadingMore && (
-              <div className="col-span-full flex justify-center py-8">
-                <div className="flex flex-col items-center gap-3">
-                  <div className="w-10 h-10 rounded-full border-4 border-t-transparent animate-spin" style={{
-                    borderColor: 'var(--brand-primary)',
-                    borderTopColor: 'transparent'
-                  }} />
-                  <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
-                    Carregando mais recursos...
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {/* Indicador de fim da lista */}
-            {!hasMore && !searchTerm && filteredResources.length > 0 && (
-              <div className="col-span-full text-center py-8">
-                <p className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
-                  📚 Você visualizou todos os {filteredResources.length} recursos disponíveis
-                </p>
+            {/* Loader minimalista */}
+            {(isLoadingMore || filteredResources.length === 0) && (
+              <div className="col-span-full flex justify-center py-12">
+                <div className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin" style={{
+                  borderColor: 'var(--border-medium)',
+                  borderTopColor: 'var(--brand-primary)'
+                }} />
               </div>
             )}
           </div>
-
-          {/* Empty State */}
-          {filteredResources.length === 0 && (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">📚</div>
-              <p className="text-xl mb-2" style={{ color: 'var(--text-primary)' }}>
-                Nenhum recurso encontrado
-              </p>
-              <p style={{ color: 'var(--text-tertiary)' }}>
-                Tente ajustar os filtros para encontrar o que procura
-              </p>
-            </div>
-          )}
 
           {/* Divider */}
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
