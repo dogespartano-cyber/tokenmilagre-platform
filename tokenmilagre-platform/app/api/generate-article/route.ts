@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import {
   processArticleContent,
   extractExcerpt,
@@ -14,7 +16,6 @@ interface GenerateArticleRequest {
   category: string;
   level?: 'iniciante' | 'intermediario' | 'avancado'; // Apenas para educacional
   model?: 'sonar' | 'sonar-pro';
-  apiKey: string; // Perplexity API key
 }
 
 interface GenerateArticleResponse {
@@ -172,14 +173,43 @@ Retorne APENAS o JSON, sem explicações adicionais.`;
 /**
  * POST /api/generate-article
  * Gera artigo usando Perplexity API
+ * Protegido: Apenas ADMIN e EDITOR
  */
 export async function POST(request: NextRequest) {
   try {
+    // Verificar autenticação
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+      return NextResponse.json(
+        { success: false, error: 'Não autenticado' },
+        { status: 401 }
+      );
+    }
+
+    // Verificar permissão de ADMIN ou EDITOR
+    if (session.user.role !== 'ADMIN' && session.user.role !== 'EDITOR') {
+      return NextResponse.json(
+        { success: false, error: 'Sem permissão. Apenas ADMIN e EDITOR podem gerar artigos.' },
+        { status: 403 }
+      );
+    }
+
+    // Obter API key do ambiente (segurança)
+    const apiKey = process.env.PERPLEXITY_API_KEY;
+
+    if (!apiKey) {
+      return NextResponse.json(
+        { success: false, error: 'API key não configurada no servidor' },
+        { status: 500 }
+      );
+    }
+
     const body: GenerateArticleRequest = await request.json();
-    const { topic, type, category, level, model = 'sonar', apiKey } = body;
+    const { topic, type, category, level, model = 'sonar' } = body;
 
     // Validação
-    if (!topic || !type || !category || !apiKey) {
+    if (!topic || !type || !category) {
       return NextResponse.json(
         { success: false, error: 'Parâmetros obrigatórios faltando' },
         { status: 400 }

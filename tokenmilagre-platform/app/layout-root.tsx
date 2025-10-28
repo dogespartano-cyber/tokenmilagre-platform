@@ -142,32 +142,6 @@ export default function RootLayoutNav({
               ))}
             </div>
 
-            {/* Admin Link - Only for ADMIN */}
-            {session?.user?.role === 'ADMIN' && (
-              <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--border-medium)' }}>
-                <Link
-                  href="/dashboard/admin"
-                  onClick={() => setSidebarOpen(false)}
-                  className={`group flex items-center gap-3 px-4 py-2 rounded-xl font-semibold transition-all duration-300 ${
-                    pathname.startsWith('/dashboard/admin')
-                      ? 'shadow-theme-md'
-                      : 'hover:bg-opacity-50 hover:scale-105 hover:translate-x-2'
-                  }`}
-                  style={{
-                    backgroundColor: pathname.startsWith('/dashboard/admin')
-                      ? 'var(--brand-primary)'
-                      : 'transparent',
-                    color: pathname.startsWith('/dashboard/admin')
-                      ? 'var(--text-inverse)'
-                      : 'var(--text-primary)'
-                  }}
-                >
-                  <FontAwesomeIcon icon={faShieldAlt} className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
-                  <span>Admin</span>
-                </Link>
-              </div>
-            )}
-
             {/* Theme Toggle in Sidebar */}
             <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--border-medium)' }}>
               <button

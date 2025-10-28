@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faRobot,
@@ -16,8 +17,7 @@ import {
   faEye,
   faArrowLeft,
   faInfoCircle,
-  faDollarSign,
-  faKey
+  faDollarSign
 } from '@fortawesome/free-solid-svg-icons';
 import AdminRoute from '@/components/AdminRoute';
 
@@ -41,6 +41,7 @@ interface Usage {
 
 export default function CriarArtigoPage() {
   const router = useRouter();
+  const { data: session } = useSession();
 
   // Form state
   const [topic, setTopic] = useState('');
@@ -48,7 +49,6 @@ export default function CriarArtigoPage() {
   const [category, setCategory] = useState('bitcoin');
   const [level, setLevel] = useState<'iniciante' | 'intermediario' | 'avancado'>('intermediario');
   const [model, setModel] = useState<'sonar' | 'sonar-pro'>('sonar');
-  const [apiKey, setApiKey] = useState('');
 
   // Generation state
   const [loading, setLoading] = useState(false);
@@ -62,27 +62,15 @@ export default function CriarArtigoPage() {
 
   // Publishing state
   const [publishing, setPublishing] = useState(false);
-
-  // Load API key from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('perplexity_api_key');
-    if (saved) setApiKey(saved);
-  }, []);
-
-  // Save API key to localStorage
-  useEffect(() => {
-    if (apiKey) {
-      localStorage.setItem('perplexity_api_key', apiKey);
-    }
-  }, [apiKey]);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const categories = type === 'news'
     ? ['bitcoin', 'ethereum', 'defi', 'politica', 'nfts', 'altcoins', 'regulacao', 'mercado']
     : ['blockchain', 'trading', 'defi', 'nfts', 'seguranca', 'desenvolvimento'];
 
   const handleGenerate = async () => {
-    if (!topic.trim() || !apiKey.trim()) {
-      setError('Preencha o tópico e a chave da API');
+    if (!topic.trim()) {
+      setError('Preencha o tópico do artigo');
       return;
     }
 
@@ -99,8 +87,7 @@ export default function CriarArtigoPage() {
           type,
           category,
           level: type === 'educational' ? level : undefined,
-          model,
-          apiKey
+          model
         })
       });
 
@@ -120,11 +107,18 @@ export default function CriarArtigoPage() {
     }
   };
 
-  const handlePublish = async () => {
+  const confirmPublish = async () => {
     if (!article) return;
+
+    if (!session?.user?.id) {
+      setError('Sessão expirada. Faça login novamente.');
+      setShowConfirmModal(false);
+      return;
+    }
 
     setPublishing(true);
     setError(null);
+    setShowConfirmModal(false);
 
     try {
       const response = await fetch('/api/articles', {
@@ -142,7 +136,7 @@ export default function CriarArtigoPage() {
           sentiment: article.sentiment || 'neutral',
           published: true,
           readTime: article.readTime,
-          authorId: 'cmggcrcr40001ijinifhwp0zq' // Editor user ID
+          authorId: session.user.id
         })
       });
 
@@ -165,7 +159,7 @@ export default function CriarArtigoPage() {
   };
 
   return (
-    <AdminRoute allowEditor={false}>
+    <AdminRoute allowEditor={true}>
       <div className="min-h-screen" style={{ background: 'var(--bg-secondary)' }}>
         <div className="container mx-auto px-4 py-8">
         {/* Header */}
@@ -230,29 +224,6 @@ export default function CriarArtigoPage() {
             </h2>
 
             <div className="space-y-4">
-              {/* API Key */}
-              <div>
-                <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
-                  <FontAwesomeIcon icon={faKey} className="mr-2" />
-                  Perplexity API Key
-                </label>
-                <input
-                  type="password"
-                  value={apiKey}
-                  onChange={(e) => setApiKey(e.target.value)}
-                  placeholder="pplx-..."
-                  className="w-full px-4 py-2 rounded-lg border focus:outline-none transition-colors"
-                  style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border-medium)',
-                    color: 'var(--text-primary)'
-                  }}
-                />
-                <p className="text-xs mt-1" style={{ color: 'var(--text-tertiary)' }}>
-                  Salva automaticamente no navegador
-                </p>
-              </div>
-
               {/* Topic */}
               <div>
                 <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
@@ -383,7 +354,7 @@ export default function CriarArtigoPage() {
               {/* Generate Button */}
               <button
                 onClick={handleGenerate}
-                disabled={loading || !topic.trim() || !apiKey.trim()}
+                disabled={loading || !topic.trim()}
                 className="w-full px-6 py-3 rounded-lg font-bold transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
                 style={{
                   background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
@@ -493,7 +464,7 @@ export default function CriarArtigoPage() {
                       {editing ? 'Preview' : 'Editar'}
                     </button>
                     <button
-                      onClick={handlePublish}
+                      onClick={() => setShowConfirmModal(true)}
                       disabled={publishing}
                       className="px-6 py-2 rounded-lg font-bold transition-all hover:opacity-90 disabled:opacity-50 shadow-md"
                       style={{
@@ -587,6 +558,58 @@ export default function CriarArtigoPage() {
             )}
           </div>
         </div>
+
+        {/* Modal de Confirmação */}
+        {showConfirmModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div
+              className="w-full max-w-md rounded-2xl border-2 shadow-2xl p-6"
+              style={{
+                backgroundColor: 'var(--bg-elevated)',
+                borderColor: 'var(--border-medium)'
+              }}
+            >
+              <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+                Confirmar Publicação
+              </h3>
+              <p className="mb-6" style={{ color: 'var(--text-secondary)' }}>
+                Tem certeza que deseja publicar este artigo? Ele ficará visível publicamente.
+              </p>
+
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => setShowConfirmModal(false)}
+                  className="px-4 py-2 rounded-lg border-2 font-semibold transition-all hover:opacity-80"
+                  style={{
+                    backgroundColor: 'var(--bg-secondary)',
+                    borderColor: 'var(--border-medium)',
+                    color: 'var(--text-primary)'
+                  }}
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={confirmPublish}
+                  disabled={publishing}
+                  className="px-4 py-2 rounded-lg font-bold transition-all hover:opacity-90 disabled:opacity-50 shadow-md"
+                  style={{
+                    background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                    color: 'white'
+                  }}
+                >
+                  {publishing ? (
+                    <>
+                      <FontAwesomeIcon icon={faSpinner} className="mr-2 animate-spin" />
+                      Publicando...
+                    </>
+                  ) : (
+                    'Confirmar'
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
     </AdminRoute>

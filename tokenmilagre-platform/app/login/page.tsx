@@ -1,8 +1,9 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
+import { signIn, getSession } from 'next-auth/react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -27,7 +28,28 @@ export default function LoginPage() {
         setError('Credenciais inválidas');
         setLoading(false);
       } else {
-        router.push('/dashboard');
+        // Buscar sessão para obter a role do usuário
+        const session = await getSession();
+
+        if (session?.user?.role) {
+          // Redirecionar baseado na role
+          switch (session.user.role) {
+            case 'ADMIN':
+              router.push('/dashboard/admin');
+              break;
+            case 'EDITOR':
+              router.push('/dashboard/criar-artigo');
+              break;
+            case 'VIEWER':
+              router.push('/dashboard/noticias');
+              break;
+            default:
+              router.push('/');
+          }
+        } else {
+          router.push('/');
+        }
+
         router.refresh();
       }
     } catch (error) {
@@ -50,27 +72,42 @@ export default function LoginPage() {
           borderColor: 'var(--border-medium)'
         }}
       >
-        {/* Header */}
+        {/* Header with Logo */}
         <div className="text-center mb-8">
+          {/* Logo with effects */}
+          <div className="flex justify-center mb-6">
+            <div className="relative w-32 h-32">
+              {/* Animated rings */}
+              <div className="absolute inset-0 animate-spin-slow">
+                <div className="absolute inset-0 rounded-full border-2 border-dashed border-yellow-400/30"></div>
+              </div>
+              <div className="absolute inset-2 animate-spin-reverse">
+                <div className="absolute inset-0 rounded-full border-2 border-dashed border-purple-400/30"></div>
+              </div>
+
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-300/30 via-pink-300/30 to-purple-300/30 blur-2xl animate-pulse"></div>
+
+              {/* Image */}
+              <div className="relative z-10 transform hover:scale-105 transition-all duration-700">
+                <Image
+                  src="/images/TOKEN-MILAGRE-Hero.webp"
+                  alt="$MILAGRE"
+                  width={128}
+                  height={128}
+                  className="drop-shadow-2xl rounded-full"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+
           <h1
-            className="text-3xl font-bold mb-2"
+            className="text-3xl font-bold mb-4 font-[family-name:var(--font-poppins)]"
             style={{ color: 'var(--text-primary)' }}
           >
-            🌟 TokenMilagre
+            Token Milagre
           </h1>
-          <p style={{ color: 'var(--text-secondary)' }} className="mb-3">
-            Área Administrativa
-          </p>
-          <div
-            className="p-3 rounded-lg border text-sm"
-            style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border-medium)',
-              color: 'var(--text-tertiary)'
-            }}
-          >
-            ℹ️ O dashboard é público. Login necessário apenas para criar/editar artigos.
-          </div>
         </div>
 
         {/* Form */}
@@ -109,7 +146,7 @@ export default function LoginPage() {
                 borderColor: 'var(--border-light)',
                 color: 'var(--text-primary)'
               }}
-              placeholder="admin@tokenmilagre.xyz"
+              placeholder="seu@email.com"
             />
           </div>
 
@@ -142,27 +179,32 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-6 rounded-xl font-bold text-gray-900 bg-gradient-to-r from-yellow-400 to-amber-500 hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 px-6 rounded-xl font-bold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 shadow-xl hover:shadow-2xl"
+            style={{
+              background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))'
+            }}
           >
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
-
-        {/* Footer */}
-        <div
-          className="mt-8 pt-6 border-t-2 text-center text-sm"
-          style={{
-            borderColor: 'var(--border-light)',
-            color: 'var(--text-tertiary)'
-          }}
-        >
-          <p>Credenciais de teste:</p>
-          <div className="mt-2 space-y-1 text-xs">
-            <p>Admin: admin@tokenmilagre.xyz / admin123</p>
-            <p>Editor: editor@tokenmilagre.xyz / editor123</p>
-          </div>
-        </div>
       </div>
+
+      <style jsx>{`
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes spin-reverse {
+          from { transform: rotate(360deg); }
+          to { transform: rotate(0deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
+        .animate-spin-reverse {
+          animation: spin-reverse 15s linear infinite;
+        }
+      `}</style>
     </div>
   );
 }

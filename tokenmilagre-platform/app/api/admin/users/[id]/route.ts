@@ -46,20 +46,19 @@ export async function PATCH(
       );
     }
 
+    // Parse body (UMA VEZ)
+    const body = await request.json();
+    const { name, email, role, password } = body;
+
     // Impedir que admin se remova como admin (última linha de defesa)
     if (session.user.id === id) {
-      const body = await request.json();
-      if (body.role && body.role !== 'ADMIN') {
+      if (role && role !== 'ADMIN') {
         return NextResponse.json(
           { success: false, error: 'Você não pode alterar sua própria role' },
           { status: 400 }
         );
       }
     }
-
-    // Parse body
-    const body = await request.json();
-    const { name, email, role, password } = body;
 
     // Validar role se fornecida
     if (role && !['ADMIN', 'EDITOR', 'VIEWER'].includes(role)) {
