@@ -507,6 +507,136 @@ export default function HomePage() {
               </div>
             </div>
 
+            {/* Recursos Essenciais */}
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] mb-3" style={{ color: 'var(--text-primary)' }}>
+                  Recursos Essenciais
+                </h2>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                  Ferramentas e conhecimento para navegar o mercado cripto com segurança
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* Card 1: Gráficos Avançados */}
+                <Link
+                  href="/graficos"
+                  className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                  style={{
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    minHeight: '180px'
+                  }}
+                >
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
+                  <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                    <div>
+                      <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
+                        Análise
+                      </div>
+                      <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                        Gráficos Avançados
+                      </h4>
+                      <p className="text-sm opacity-90 mb-3">
+                        Análise técnica profissional em tempo real
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-semibold opacity-90">TradingView</span>
+                      <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </Link>
+
+                {/* Card 2: Exchanges Verificadas */}
+                <Link
+                  href="/recursos?search=exchange"
+                  className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                  style={{
+                    background: 'linear-gradient(135deg, #F3BA2F 0%, #EAA42D 100%)',
+                    minHeight: '180px'
+                  }}
+                >
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
+                  <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                    <div>
+                      <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
+                        Segurança
+                      </div>
+                      <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                        Exchanges Verificadas
+                      </h4>
+                      <p className="text-sm opacity-90 mb-3">
+                        Links oficiais de plataformas confiáveis
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-semibold opacity-90">Links seguros</span>
+                      <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </Link>
+
+                {/* Card 3: Como Investir */}
+                <Link
+                  href="/educacao/trading-basico-criptomoedas"
+                  className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                  style={{
+                    background: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+                    minHeight: '180px'
+                  }}
+                >
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
+                  <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                    <div>
+                      <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
+                        Educação
+                      </div>
+                      <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                        Como Investir
+                      </h4>
+                      <p className="text-sm opacity-90 mb-3">
+                        Guia completo para começar a investir
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-semibold opacity-90">Intermediário</span>
+                      <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </Link>
+
+                {/* Card 4: Notícias do Mercado */}
+                <Link
+                  href="/dashboard/noticias"
+                  className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                  style={{
+                    background: 'linear-gradient(135deg, #F7931A 0%, #E67E22 100%)',
+                    minHeight: '180px'
+                  }}
+                >
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
+                  <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                    <div>
+                      <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
+                        Atualizado
+                      </div>
+                      <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                        Notícias do Mercado
+                      </h4>
+                      <p className="text-sm opacity-90 mb-3">
+                        Últimas atualizações do mundo cripto
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-semibold opacity-90">Tempo real</span>
+                      <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+
             {/* Últimas Notícias */}
             <div className="space-y-6">
                 {/* Título Últimas Notícias */}
