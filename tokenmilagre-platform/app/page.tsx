@@ -114,23 +114,59 @@ export default function HomePage() {
   };
 
   const fetchMarketData = async () => {
+    const CACHE_KEY = 'home_market_data';
+
+    // Carregar do cache imediatamente (elimina flash visual)
+    const cached = sessionStorage.getItem(CACHE_KEY);
+    if (cached) {
+      try {
+        const cachedData = JSON.parse(cached);
+        setMarketData(cachedData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Erro ao carregar cache de market data:', error);
+      }
+    }
+
+    // Buscar dados atualizados em background
     try {
       const response = await fetch('/api/market');
       const result = await response.json();
 
       if (result.success && result.data) {
         setMarketData(result.data);
+        // Salvar no cache
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify(result.data));
       } else {
         console.error('Erro ao buscar dados do mercado:', result.error);
       }
       setLoading(false);
     } catch (error) {
       console.error('Erro ao buscar dados do mercado:', error);
-      setLoading(false);
+      // Manter loading false se temos cache
+      if (cached) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
     }
   };
 
   const fetchNews = async () => {
+    const CACHE_KEY = 'home_news_list';
+
+    // Carregar do cache imediatamente (elimina flash visual)
+    const cached = sessionStorage.getItem(CACHE_KEY);
+    if (cached) {
+      try {
+        const cachedData = JSON.parse(cached);
+        setNews(cachedData);
+      } catch (error) {
+        console.error('Erro ao carregar cache de notícias:', error);
+      }
+    }
+
+    // Buscar dados atualizados em background
     try {
       const response = await fetch('/api/articles?type=news');
       const data = await response.json();
@@ -142,14 +178,33 @@ export default function HomePage() {
           )
           .slice(0, 6);
         setNews(sortedNews);
+        // Salvar no cache
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify(sortedNews));
       }
     } catch (error) {
       console.error('Erro ao buscar notícias:', error);
-      setNews([]);
+      // Manter dados em cache se houver erro
+      if (!cached) {
+        setNews([]);
+      }
     }
   };
 
   const fetchEducation = async () => {
+    const CACHE_KEY = 'home_education_list';
+
+    // Carregar do cache imediatamente (elimina flash visual)
+    const cached = sessionStorage.getItem(CACHE_KEY);
+    if (cached) {
+      try {
+        const cachedData = JSON.parse(cached);
+        setEducation(cachedData);
+      } catch (error) {
+        console.error('Erro ao carregar cache de educação:', error);
+      }
+    }
+
+    // Buscar dados atualizados em background
     try {
       const response = await fetch('/api/articles?type=educational');
       const data = await response.json();
@@ -157,10 +212,15 @@ export default function HomePage() {
         // Pegar apenas os 4 primeiros artigos educacionais
         const educationalArticles = data.data.slice(0, 4);
         setEducation(educationalArticles);
+        // Salvar no cache
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify(educationalArticles));
       }
     } catch (error) {
       console.error('Erro ao buscar artigos educacionais:', error);
-      setEducation([]);
+      // Manter dados em cache se houver erro
+      if (!cached) {
+        setEducation([]);
+      }
     }
   };
 

@@ -2,13 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import dynamic from 'next/dynamic';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
-
-const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
-  ssr: false,
-});
 
 interface DashboardHeaderProps {
   title: string;
@@ -28,6 +23,20 @@ export default function DashboardHeader({ title, description }: DashboardHeaderP
 
   // Buscar Fear & Greed Index
   useEffect(() => {
+    const CACHE_KEY = 'fear_greed_index';
+
+    // Carregar do cache imediatamente (elimina flash visual)
+    const cached = sessionStorage.getItem(CACHE_KEY);
+    if (cached) {
+      try {
+        const cachedData = JSON.parse(cached);
+        setFearGreed(cachedData);
+      } catch (error) {
+        console.error('Erro ao carregar cache:', error);
+      }
+    }
+
+    // Buscar dados atualizados em background
     const fetchFearGreed = async () => {
       try {
         const response = await fetch('/api/fear-greed');
@@ -35,6 +44,8 @@ export default function DashboardHeader({ title, description }: DashboardHeaderP
 
         if (result.success && result.data) {
           setFearGreed(result.data);
+          // Salvar no cache
+          sessionStorage.setItem(CACHE_KEY, JSON.stringify(result.data));
         } else {
           console.error('Erro ao buscar Fear & Greed Index:', result.error);
         }
@@ -364,20 +375,6 @@ export default function DashboardHeader({ title, description }: DashboardHeaderP
             <span className="group-hover:translate-x-1 transition-transform">→</span>
           </a>
         </div>
-      </div>
-
-      {/* Ticker Tape - Fita de Preços */}
-      <div
-        className="rounded-2xl overflow-hidden shadow-md border"
-        style={{
-          borderColor: 'var(--border-light)',
-          backgroundColor: 'var(--bg-elevated)',
-          opacity: animateTitle ? 1 : 0,
-          transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
-          transition: 'opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s'
-        }}
-      >
-        <TickerTapeWidget />
       </div>
     </div>
   );

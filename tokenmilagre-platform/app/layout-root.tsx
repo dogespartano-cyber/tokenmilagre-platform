@@ -4,11 +4,16 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faNewspaper, faSun, faMoon, faHome, faInfoCircle, faCoins, faBars, faTimes, faBook, faGraduationCap, faStore, faHeart, faBitcoinSign } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@/contexts/ThemeContext';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import DashboardHeader from '@/app/components/DashboardHeader';
+
+const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
+  ssr: false,
+});
 
 const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
 
@@ -255,6 +260,25 @@ export default function RootLayoutNav({
               />
             </div>
           )}
+
+          {/* Ticker Tape - Sempre montado para evitar recarregamento */}
+          <div
+            className="container mx-auto px-4"
+            style={{
+              display: headerConfig ? 'block' : 'none',
+            }}
+          >
+            <div
+              className="rounded-2xl overflow-hidden shadow-md border"
+              style={{
+                borderColor: 'var(--border-light)',
+                backgroundColor: 'var(--bg-elevated)',
+              }}
+            >
+              <TickerTapeWidget />
+            </div>
+          </div>
+
           {children}
         </main>
 
