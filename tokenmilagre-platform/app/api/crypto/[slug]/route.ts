@@ -43,8 +43,8 @@ interface CoinGeckoData {
   asset_platform_id?: string | null;
 }
 
-// Cache de 5 minutos
-const CACHE_DURATION = 5 * 60 * 1000;
+// Cache de 1 hora para maximizar uso de cache e evitar rate limiting
+const CACHE_DURATION = 60 * 60 * 1000;
 
 export async function GET(
   request: NextRequest,
@@ -88,6 +88,19 @@ export async function GET(
           { status: 404 }
         );
       }
+
+      // Se pegou rate limit (429) e temos dados em cache, retornar cache antigo
+      if (response.status === 429 && crypto) {
+        console.warn(`Rate limit atingido para ${slug}. Retornando cache antigo.`);
+        return NextResponse.json({
+          success: true,
+          data: crypto,
+          cached: true,
+          stale: true, // Indica que dados podem estar desatualizados
+          message: 'Dados em cache (API temporariamente indisponível)',
+        });
+      }
+
       throw new Error(`CoinGecko API error: ${response.status}`);
     }
 
@@ -164,6 +177,19 @@ export async function GET(
     });
   } catch (error) {
     console.error('Erro ao buscar criptomoeda:', error);
+
+    // Se temos dados em cache, retornar mesmo com erro
+    if (crypto) {
+      console.warn(`Erro na API, retornando cache para ${slug}`);
+      return NextResponse.json({
+        success: true,
+        data: crypto,
+        cached: true,
+        stale: true,
+        message: 'Dados em cache (API temporariamente indisponível)',
+      });
+    }
+
     return NextResponse.json(
       {
         success: false,

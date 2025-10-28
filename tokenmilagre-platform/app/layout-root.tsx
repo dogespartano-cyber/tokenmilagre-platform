@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faNewspaper, faSun, faMoon, faHome, faInfoCircle, faCoins, faBars, faTimes, faBook, faGraduationCap, faStore, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faNewspaper, faSun, faMoon, faHome, faInfoCircle, faCoins, faBars, faTimes, faBook, faGraduationCap, faStore, faHeart, faBitcoinSign } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@/contexts/ThemeContext';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import DashboardHeader from '@/app/components/DashboardHeader';
@@ -21,6 +21,10 @@ const dashboardHeaderConfig: Record<string, { title: string; description: string
   '/graficos': {
     title: 'Gráficos e Análises de Mercado',
     description: 'Acompanhe o mercado em tempo real com gráficos avançados, análise técnica e indicadores profissionais'
+  },
+  '/criptomoedas': {
+    title: 'Criptomoedas',
+    description: 'Rastreador completo das principais criptomoedas do mercado em tempo real'
   },
   '/dashboard/noticias': {
     title: 'Notícias Cripto',
@@ -45,6 +49,7 @@ export default function RootLayoutNav({
     { href: '/', label: 'Início', icon: faHome },
     { href: '/dashboard/noticias', label: 'Notícias', icon: faNewspaper },
     { href: '/graficos', label: 'Gráficos', icon: faChartLine },
+    { href: '/criptomoedas', label: 'Criptomoedas', icon: faBitcoinSign },
     { href: '/educacao', label: 'Educação', icon: faGraduationCap },
     { href: '/recursos', label: 'Recursos', icon: faStore },
     { href: '/sobre', label: 'Sobre', icon: faInfoCircle },

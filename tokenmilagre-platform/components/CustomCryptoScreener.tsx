@@ -173,7 +173,7 @@ export default function CustomCryptoScreener() {
           const slug = info.row.original.id; // CoinGecko ID é usado como slug
           return (
             <Link
-              href={`/cripto/${slug}`}
+              href={`/criptomoedas/${slug}`}
               className="flex items-center gap-3 hover:opacity-70 transition-opacity"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -358,28 +358,6 @@ export default function CustomCryptoScreener() {
       backgroundColor: 'var(--bg-elevated)',
       borderColor: 'var(--border-medium)'
     }}>
-      {/* Cache Status Banner */}
-      {usingCache && (
-        <div className="px-4 py-2 border-b flex items-center justify-between" style={{
-          backgroundColor: 'rgba(251, 191, 36, 0.1)',
-          borderColor: 'var(--border-light)'
-        }}>
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold" style={{ color: '#F59E0B' }}>
-              ⚠️ Usando dados em cache
-            </span>
-            {lastUpdate && (
-              <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-                • Última atualização: {getTimeAgo(lastUpdate)}
-              </span>
-            )}
-          </div>
-          <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-            A API CoinGecko pode estar temporariamente indisponível
-          </span>
-        </div>
-      )}
-
       {/* Search Bar */}
       <div className="p-4 border-b" style={{ borderColor: 'var(--border-light)' }}>
         <div className="relative">

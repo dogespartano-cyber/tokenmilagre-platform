@@ -21,6 +21,7 @@ import {
   faTelegram,
   faReddit
 } from '@fortawesome/free-brands-svg-icons';
+import TopCryptosList from '@/components/TopCryptosList';
 
 interface CryptoData {
   id: string;
@@ -60,19 +61,59 @@ export default function CryptoPage() {
 
   const [crypto, setCrypto] = useState<CryptoData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isStale, setIsStale] = useState(false);
+  const [fadeIn, setFadeIn] = useState(false);
 
   useEffect(() => {
     if (!slug) return;
 
+    // Fade out ao mudar de moeda
+    setFadeIn(false);
+
     const fetchCrypto = async () => {
       try {
-        setLoading(true);
+        // Tentar carregar do cache primeiro
+        const cacheKey = `crypto_${slug}`;
+        const cached = sessionStorage.getItem(cacheKey);
+
+        if (cached) {
+          const cachedData = JSON.parse(cached);
+          const cacheAge = Date.now() - cachedData.timestamp;
+
+          // Se cache tem menos de 1 hora, usar imediatamente
+          if (cacheAge < 60 * 60 * 1000) {
+            setCrypto(cachedData.data);
+            setLoading(false);
+            setIsRefreshing(true); // Atualizar em background
+
+            // Fade in após carregar do cache
+            setTimeout(() => setFadeIn(true), 50);
+          }
+        }
+
+        // Se não tem cache, mostrar loading
+        if (!cached) {
+          setLoading(true);
+        }
+
+        // Fazer fetch (sempre, para manter atualizado)
         const response = await fetch(`/api/crypto/${slug}`);
         const result = await response.json();
 
         if (result.success) {
           setCrypto(result.data);
+          setIsStale(result.stale || false);
+
+          // Salvar no cache
+          sessionStorage.setItem(cacheKey, JSON.stringify({
+            data: result.data,
+            timestamp: Date.now(),
+          }));
+
+          // Fade in após carregar da API
+          setTimeout(() => setFadeIn(true), 50);
         } else {
           setError(result.error || 'Erro ao carregar dados');
         }
@@ -81,6 +122,7 @@ export default function CryptoPage() {
         console.error(err);
       } finally {
         setLoading(false);
+        setIsRefreshing(false);
       }
     };
 
@@ -135,13 +177,15 @@ export default function CryptoPage() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-12">
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-center">
-            <div className="text-6xl mb-4 animate-pulse">💰</div>
-            <p className="text-xl" style={{ color: 'var(--text-primary)' }}>
-              Carregando dados...
-            </p>
-          </div>
+        <div className="flex items-center justify-center min-h-[calc(100vh-300px)] animate-fade-in">
+          {/* Spinner circular */}
+          <div
+            className="w-12 h-12 border-4 rounded-full animate-spin"
+            style={{
+              borderColor: 'var(--border-light)',
+              borderTopColor: 'var(--brand-primary)',
+            }}
+          />
         </div>
       </div>
     );
@@ -156,7 +200,7 @@ export default function CryptoPage() {
             {error || 'Criptomoeda não encontrada'}
           </h1>
           <Link
-            href="/"
+            href="/criptomoedas"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
             style={{
               background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
@@ -164,7 +208,7 @@ export default function CryptoPage() {
             }}
           >
             <FontAwesomeIcon icon={faArrowLeft} />
-            Voltar para Home
+            Voltar para Criptomoedas
           </Link>
         </div>
       </div>
@@ -179,18 +223,27 @@ export default function CryptoPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="space-y-8">
-        {/* Breadcrumb */}
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-70"
-          style={{ color: 'var(--text-secondary)' }}
-        >
-          <FontAwesomeIcon icon={faArrowLeft} />
-          Voltar para Home
-        </Link>
+      {/* Breadcrumb */}
+      <Link
+        href="/criptomoedas"
+        className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-70 mb-4"
+        style={{ color: 'var(--text-secondary)' }}
+      >
+        <FontAwesomeIcon icon={faArrowLeft} />
+        Voltar para Criptomoedas
+      </Link>
 
-        {/* Hero Section */}
+      {/* Grid Layout: Content + Sidebar */}
+      <div
+        className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-8 transition-all duration-300 ease-in-out"
+        style={{
+          opacity: fadeIn ? 1 : 0,
+          transform: fadeIn ? 'translateY(0)' : 'translateY(10px)',
+        }}
+      >
+        {/* Main Content */}
+        <div className="space-y-8">
+          {/* Hero Section */}
         <div
           className="rounded-2xl p-8 border shadow-lg"
           style={{
@@ -558,11 +611,12 @@ export default function CryptoPage() {
             </a>
           )}
         </div>
+        </div>
 
-        {/* Last Updated */}
-        <p className="text-sm text-center" style={{ color: 'var(--text-tertiary)' }}>
-          Última atualização: {formatDate(crypto.lastUpdated)}
-        </p>
+        {/* Sidebar - Top Cryptos */}
+        <aside className="lg:block">
+          <TopCryptosList currentSlug={slug} />
+        </aside>
       </div>
     </div>
   );

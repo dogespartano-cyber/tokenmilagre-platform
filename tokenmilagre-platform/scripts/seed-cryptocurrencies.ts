@@ -1,26 +1,52 @@
 import { prisma } from '../lib/prisma';
 
-// Top 10 criptomoedas principais (para testar primeiro)
+// Top 10 criptomoedas principais (atualizado 2025-10-27)
 const TOP_CRYPTOS = [
   { coingeckoId: 'bitcoin', slug: 'bitcoin' },
   { coingeckoId: 'ethereum', slug: 'ethereum' },
   { coingeckoId: 'tether', slug: 'tether' },
+  { coingeckoId: 'ripple', slug: 'xrp' },
   { coingeckoId: 'binancecoin', slug: 'bnb' },
   { coingeckoId: 'solana', slug: 'solana' },
-  { coingeckoId: 'ripple', slug: 'xrp' },
-  { coingeckoId: 'cardano', slug: 'cardano' },
+  { coingeckoId: 'usd-coin', slug: 'usd-coin' },
+  { coingeckoId: 'staked-ether', slug: 'lido-staked-ether' },
   { coingeckoId: 'dogecoin', slug: 'dogecoin' },
-  { coingeckoId: 'polygon', slug: 'polygon' },
+  { coingeckoId: 'tron', slug: 'tron' },
+  // Outras moedas relevantes
+  { coingeckoId: 'cardano', slug: 'cardano' },
   { coingeckoId: 'chainlink', slug: 'chainlink' },
+  { coingeckoId: 'polygon-ecosystem-token', slug: 'polygon' },
 ];
 
 async function seedCryptocurrencies() {
   console.log('🚀 Iniciando seed de criptomoedas...\n');
 
+  // Verificar quais moedas já existem no banco
+  console.log('🔍 Verificando moedas existentes no banco...');
+  const existingCryptos = await prisma.cryptocurrency.findMany({
+    select: { slug: true, name: true },
+  });
+  const existingSlugs = new Set(existingCryptos.map(c => c.slug));
+
+  console.log(`   ✅ ${existingCryptos.length} moedas já existem no banco:`);
+  existingCryptos.forEach(c => console.log(`      - ${c.name} (${c.slug})`));
+
+  // Filtrar apenas moedas que ainda não existem
+  const missingCryptos = TOP_CRYPTOS.filter(crypto => !existingSlugs.has(crypto.slug));
+
+  if (missingCryptos.length === 0) {
+    console.log('\n✨ Todas as moedas do top 10 já estão no banco!');
+    return;
+  }
+
+  console.log(`\n📥 ${missingCryptos.length} moedas faltando. Buscando da API...`);
+  missingCryptos.forEach(c => console.log(`   - ${c.coingeckoId} (${c.slug})`));
+  console.log('');
+
   let successCount = 0;
   let errorCount = 0;
 
-  for (const crypto of TOP_CRYPTOS) {
+  for (const crypto of missingCryptos) {
     try {
       console.log(`📊 Buscando dados de ${crypto.coingeckoId}...`);
 
@@ -120,8 +146,11 @@ async function seedCryptocurrencies() {
       console.log(`✅ ${data.name} (${data.symbol.toUpperCase()}) - Salvo com sucesso!`);
       successCount++;
 
-      // Delay para respeitar rate limit do CoinGecko (aumentado para 6s = 10 calls/min)
-      await new Promise((resolve) => setTimeout(resolve, 6000));
+      // Delay para respeitar rate limit do CoinGecko (10s = 6 calls/min - mais seguro)
+      if (missingCryptos.indexOf(crypto) < missingCryptos.length - 1) {
+        console.log('   ⏳ Aguardando 10s para evitar rate limit...\n');
+        await new Promise((resolve) => setTimeout(resolve, 10000));
+      }
     } catch (error) {
       console.error(`❌ Erro ao processar ${crypto.coingeckoId}:`, error);
       errorCount++;

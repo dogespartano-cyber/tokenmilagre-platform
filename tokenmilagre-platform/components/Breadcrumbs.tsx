@@ -49,6 +49,11 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
     'token': 'Token',
     'manifesto': 'Manifesto',
     'mercado': 'Mercado',
+    'criptomoedas': 'Criptomoedas',
+    'graficos': 'Gráficos',
+    'educacao': 'Educação',
+    'recursos': 'Recursos',
+    'doacoes': 'Doações',
     ...customLabels
   };
 
@@ -150,14 +155,51 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
   // Filtrar segmentos ocultos e criar breadcrumb items
   const filteredSegments = pathSegments.filter(segment => !hiddenSegments.includes(segment));
 
-  const breadcrumbItems: BreadcrumbItem[] = filteredSegments.map((segment, index) => {
-    // Reconstruir href mantendo a estrutura original da URL
-    const originalIndex = pathSegments.indexOf(segment);
-    const href = '/' + pathSegments.slice(0, originalIndex + 1).join('/');
-    const label = defaultLabels[segment] || decodeURIComponent(segment);
+  // Tratamento especial para rotas de criptomoedas (/criptomoedas/*)
+  let breadcrumbItems: BreadcrumbItem[] = [];
 
-    return { label, href };
-  });
+  if (pathSegments[0] === 'criptomoedas' && pathSegments.length > 1) {
+    // Para rotas /criptomoedas/[slug], criar: Criptomoedas > [Nome da Moeda]
+    const cryptoSlug = pathSegments[1];
+
+    // Mapeamento de slugs conhecidos para nomes corretos
+    const cryptoNameMap: Record<string, string> = {
+      'bitcoin': 'Bitcoin',
+      'ethereum': 'Ethereum',
+      'tether': 'Tether',
+      'xrp': 'XRP',
+      'bnb': 'BNB',
+      'solana': 'Solana',
+      'usd-coin': 'USDC',
+      'lido-staked-ether': 'Lido Staked Ether',
+      'dogecoin': 'Dogecoin',
+      'tron': 'TRON',
+      'cardano': 'Cardano',
+      'chainlink': 'Chainlink',
+      'polygon': 'Polygon',
+    };
+
+    // Usar nome do mapa ou formatar slug
+    const cryptoName = cryptoNameMap[cryptoSlug] || decodeURIComponent(cryptoSlug)
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+
+    breadcrumbItems = [
+      { label: 'Criptomoedas', href: '/criptomoedas' },
+      { label: cryptoName, href: `/criptomoedas/${cryptoSlug}` }
+    ];
+  } else {
+    // Comportamento padrão para outras rotas
+    breadcrumbItems = filteredSegments.map((segment, index) => {
+      // Reconstruir href mantendo a estrutura original da URL
+      const originalIndex = pathSegments.indexOf(segment);
+      const href = '/' + pathSegments.slice(0, originalIndex + 1).join('/');
+      const label = defaultLabels[segment] || decodeURIComponent(segment);
+
+      return { label, href };
+    });
+  }
 
   // Se não há itens após filtrar, não mostrar breadcrumb
   if (breadcrumbItems.length === 0) {

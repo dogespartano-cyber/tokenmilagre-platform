@@ -10,10 +10,6 @@ const LightweightChart = dynamic(() => import('@/components/LightweightChart'), 
   ssr: false,
 });
 
-const CustomCryptoScreener = dynamic(() => import('@/components/CustomCryptoScreener'), {
-  ssr: false,
-});
-
 interface MarketData {
   totalMarketCap: number;
   totalVolume: number;
@@ -733,18 +729,6 @@ export default function HomePage() {
               <LightweightChart symbol="BTCUSDT" name="Bitcoin (BTC/USDT)" />
             </div>
 
-            {/* Rastreador de Mercado */}
-            <div className="space-y-6 mt-20">
-              <div>
-                <h3 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
-                  Rastreador de Mercado
-                </h3>
-                <p style={{ color: "var(--text-tertiary)" }}>
-                  Visualize e filtre as principais criptomoedas do mercado
-                </p>
-              </div>
-              <CustomCryptoScreener />
-            </div>
           </div>
         )}
       </div>
