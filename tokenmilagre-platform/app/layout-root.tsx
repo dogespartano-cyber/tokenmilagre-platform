@@ -5,11 +5,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import { useSession } from 'next-auth/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faNewspaper, faSun, faMoon, faHome, faInfoCircle, faCoins, faBars, faTimes, faBook, faGraduationCap, faStore, faHeart, faBitcoinSign } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faNewspaper, faSun, faMoon, faHome, faInfoCircle, faCoins, faBars, faTimes, faBook, faGraduationCap, faStore, faHeart, faBitcoinSign, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@/contexts/ThemeContext';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import DashboardHeader from '@/app/components/DashboardHeader';
+import UserDropdown from '@/components/UserDropdown';
 
 const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
   ssr: false,
@@ -46,6 +48,7 @@ export default function RootLayoutNav({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
+  const { data: session } = useSession();
 
 
   // Verificar se deve mostrar o DashboardHeader
@@ -83,7 +86,7 @@ export default function RootLayoutNav({
       }}>
         <div className="flex flex-col h-full">
           {/* Sidebar Header */}
-          <div className="p-6 border-b" style={{ borderColor: 'var(--border-medium)' }}>
+          <div className="p-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
             <div className="flex items-center justify-between">
               <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-all duration-300 group" onClick={() => setSidebarOpen(false)}>
                 <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 group-hover:scale-110 transition-all duration-300 group-hover:rotate-12" style={{
@@ -112,14 +115,14 @@ export default function RootLayoutNav({
           </div>
 
           {/* Sidebar Navigation */}
-          <nav className="flex-1 p-6 overflow-y-auto">
-            <div className="space-y-2">
+          <nav className="flex-1 p-4 overflow-y-auto">
+            <div className="space-y-1">
               {menuItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setSidebarOpen(false)}
-                  className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                  className={`group flex items-center gap-3 px-4 py-2 rounded-xl font-semibold transition-all duration-300 ${
                     (item.href === '/' ? pathname === '/' : pathname.startsWith(item.href))
                       ? 'shadow-theme-md'
                       : 'hover:bg-opacity-50 hover:scale-105 hover:translate-x-2'
@@ -139,11 +142,37 @@ export default function RootLayoutNav({
               ))}
             </div>
 
+            {/* Admin Link - Only for ADMIN */}
+            {session?.user?.role === 'ADMIN' && (
+              <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--border-medium)' }}>
+                <Link
+                  href="/dashboard/admin"
+                  onClick={() => setSidebarOpen(false)}
+                  className={`group flex items-center gap-3 px-4 py-2 rounded-xl font-semibold transition-all duration-300 ${
+                    pathname.startsWith('/dashboard/admin')
+                      ? 'shadow-theme-md'
+                      : 'hover:bg-opacity-50 hover:scale-105 hover:translate-x-2'
+                  }`}
+                  style={{
+                    backgroundColor: pathname.startsWith('/dashboard/admin')
+                      ? 'var(--brand-primary)'
+                      : 'transparent',
+                    color: pathname.startsWith('/dashboard/admin')
+                      ? 'var(--text-inverse)'
+                      : 'var(--text-primary)'
+                  }}
+                >
+                  <FontAwesomeIcon icon={faShieldAlt} className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
+                  <span>Admin</span>
+                </Link>
+              </div>
+            )}
+
             {/* Theme Toggle in Sidebar */}
-            <div className="mt-6 pt-6 border-t" style={{ borderColor: 'var(--border-medium)' }}>
+            <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--border-medium)' }}>
               <button
                 onClick={toggleTheme}
-                className="group w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-theme-md hover:scale-105 hover:translate-x-2"
+                className="group w-full flex items-center gap-3 px-4 py-2 rounded-xl font-semibold transition-all duration-300 hover:shadow-theme-md hover:scale-105 hover:translate-x-2"
                 style={{
                   backgroundColor: 'var(--bg-secondary)',
                   color: 'var(--text-primary)'
@@ -156,7 +185,7 @@ export default function RootLayoutNav({
           </nav>
 
           {/* Sidebar Footer - CTA */}
-          <div className="p-6 border-t" style={{ borderColor: 'var(--border-medium)' }}>
+          <div className="p-4 border-t" style={{ borderColor: 'var(--border-medium)' }}>
             <a
               href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
               target="_blank"
@@ -220,18 +249,7 @@ export default function RootLayoutNav({
 
             {/* Desktop Actions */}
             <nav className="hidden lg:flex items-center gap-4">
-              <button
-                onClick={toggleTheme}
-                className="group px-4 py-2 rounded-lg border-2 transition-all duration-300 shadow-theme-sm hover:shadow-theme-md hover:scale-110"
-                style={{
-                  backgroundColor: 'var(--bg-secondary)',
-                  borderColor: 'var(--border-medium)',
-                  color: 'var(--text-primary)'
-                }}
-                title={theme === 'light' ? 'Mudar para modo escuro' : 'Mudar para modo claro'}
-              >
-                <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-5 h-5 transition-transform duration-300 group-hover:rotate-180" />
-              </button>
+              <UserDropdown />
 
               <a
                 href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
