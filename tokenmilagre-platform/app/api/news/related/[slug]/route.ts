@@ -34,7 +34,7 @@ export async function GET(
 
     // Buscar a criptomoeda no banco para obter nome e símbolo
     const crypto = await prisma.cryptocurrency.findUnique({
-      where: { slug },
+      where: { coingeckoId: slug },
       select: {
         name: true,
         symbol: true,
