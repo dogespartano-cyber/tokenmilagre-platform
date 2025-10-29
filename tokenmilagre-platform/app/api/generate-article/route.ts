@@ -370,6 +370,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Calcula custo estimado (usado em todos os tipos)
+    const inputTokens = perplexityData.usage?.prompt_tokens || 0;
+    const outputTokens = perplexityData.usage?.completion_tokens || 0;
+
+    // Custos por modelo (por 1M tokens)
+    let inputCost: number;
+    let outputCost: number;
+
+    if (model === 'sonar-pro') {
+      inputCost = (inputTokens / 1000000) * 3;
+      outputCost = (outputTokens / 1000000) * 15;
+    } else if (model === 'sonar-base') {
+      inputCost = (inputTokens / 1000000) * 0.2; // $0.20 por 1M tokens
+      outputCost = (outputTokens / 1000000) * 0.2;
+    } else {
+      inputCost = (inputTokens / 1000000) * 1;
+      outputCost = (outputTokens / 1000000) * 1;
+    }
+
+    const requestCost = 0.005; // Taxa de requisição
+    const estimatedCost = inputCost + outputCost + requestCost;
+
     // Para recursos, retornar estrutura diretamente sem processar
     if (type === 'resource') {
       return NextResponse.json({
@@ -394,28 +416,6 @@ export async function POST(request: NextRequest) {
     const slug = titleToSlug(articleData.title);
     const readTime = calculateReadTime(processedContent);
     const tags = articleData.tags || extractTags(processedContent);
-
-    // Calcula custo estimado
-    const inputTokens = perplexityData.usage?.prompt_tokens || 0;
-    const outputTokens = perplexityData.usage?.completion_tokens || 0;
-
-    // Custos por modelo (por 1M tokens)
-    let inputCost: number;
-    let outputCost: number;
-
-    if (model === 'sonar-pro') {
-      inputCost = (inputTokens / 1000000) * 3;
-      outputCost = (outputTokens / 1000000) * 15;
-    } else if (model === 'sonar-base') {
-      inputCost = (inputTokens / 1000000) * 0.2; // $0.20 por 1M tokens
-      outputCost = (outputTokens / 1000000) * 0.2;
-    } else {
-      inputCost = (inputTokens / 1000000) * 1;
-      outputCost = (outputTokens / 1000000) * 1;
-    }
-
-    const requestCost = 0.005; // Taxa de requisição
-    const estimatedCost = inputCost + outputCost + requestCost;
 
     // Monta resposta
     const response: GenerateArticleResponse = {
