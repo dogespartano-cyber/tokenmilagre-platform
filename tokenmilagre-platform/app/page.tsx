@@ -5,6 +5,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faArrowRight, faCheckCircle, faArrowUp, faSeedling, faGraduationCap, faRocket, faBook } from '@fortawesome/free-solid-svg-icons';
+import { TokenBTC, TokenETH } from '@token-icons/react';
 
 const LightweightChart = dynamic(() => import('@/components/LightweightChart'), {
   ssr: false,
@@ -80,6 +81,7 @@ export default function HomePage() {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [education, setEducation] = useState<EducationItem[]>([]);
   const [resources, setResources] = useState<ResourceItem[]>([]);
+  const [dailyAnalysis, setDailyAnalysis] = useState<NewsItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -88,6 +90,7 @@ export default function HomePage() {
     fetchNews();
     fetchEducation();
     fetchResources();
+    fetchDailyAnalysis();
 
     // Atualizar a cada 30 segundos
     const interval = setInterval(() => {
@@ -95,6 +98,7 @@ export default function HomePage() {
       fetchNews();
       fetchEducation();
       fetchResources();
+      fetchDailyAnalysis();
     }, 30000);
 
     return () => clearInterval(interval);
@@ -269,6 +273,65 @@ export default function HomePage() {
     } catch (error) {
       console.error('Erro ao buscar recursos:', error);
       setResources([]);
+    }
+  };
+
+  const fetchDailyAnalysis = async () => {
+    const CACHE_KEY = 'home_daily_analysis';
+
+    // Carregar do cache imediatamente
+    const cached = sessionStorage.getItem(CACHE_KEY);
+    if (cached) {
+      try {
+        const cachedData = JSON.parse(cached);
+        // Verificar se o cache é de hoje
+        const cacheDate = new Date(cachedData.publishedAt).toDateString();
+        const today = new Date().toDateString();
+        if (cacheDate === today) {
+          setDailyAnalysis(cachedData);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar cache da análise diária:', error);
+      }
+    }
+
+    // Buscar análise do dia com tag 'analise-diaria'
+    try {
+      const response = await fetch('/api/articles?type=news&limit=20');
+      const data = await response.json();
+
+      if (data.success && data.data) {
+        // Encontrar artigo com tag 'analise-diaria' publicado hoje
+        const today = new Date().toDateString();
+
+        const analysis = data.data.find((article: any) => {
+          const articleDate = new Date(article.publishedAt).toDateString();
+
+          // keywords contém as tags (parse do campo tags do banco)
+          const articleTags = article.keywords || [];
+
+          // Verificar se tem tag 'analise-diaria' e foi publicado hoje
+          const hasTag = articleTags.some((tag: string) =>
+            tag.toLowerCase() === 'analise-diaria'
+          );
+
+          return hasTag && articleDate === today;
+        });
+
+        if (analysis) {
+          setDailyAnalysis(analysis);
+          // Salvar no cache
+          sessionStorage.setItem(CACHE_KEY, JSON.stringify(analysis));
+        } else {
+          setDailyAnalysis(null);
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao buscar análise diária:', error);
+      // Manter cache se houver erro
+      if (!cached) {
+        setDailyAnalysis(null);
+      }
     }
   };
 
@@ -506,6 +569,118 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+
+            {/* Análise do Dia - Simple Card */}
+            {dailyAnalysis && (
+              <div className="rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
+                style={{
+                  background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                  borderColor: 'var(--border-light)'
+                }}>
+
+                {/* Header */}
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="text-lg font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                      📊 Análise do Dia
+                    </h3>
+                    <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+                      Todos os dias as 21h
+                    </p>
+                  </div>
+                  <div className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                    {new Date(dailyAnalysis.publishedAt).toLocaleDateString('pt-BR', {
+                      day: 'numeric',
+                      month: 'short'
+                    })}
+                  </div>
+                </div>
+
+                {/* Título da Análise */}
+                <Link href={`/dashboard/noticias/${dailyAnalysis.slug || dailyAnalysis.id}`}>
+                  <h4 className="text-xl font-bold mb-3 line-clamp-2 hover:text-brand-primary transition-colors cursor-pointer"
+                    style={{ color: 'var(--text-primary)' }}>
+                    {dailyAnalysis.title}
+                  </h4>
+                </Link>
+
+                {/* Resumo */}
+                <p className="text-sm leading-relaxed mb-4 line-clamp-2" style={{ color: 'var(--text-secondary)' }}>
+                  {dailyAnalysis.summary}
+                </p>
+
+                {/* Destaques do Mercado */}
+                {marketData && (
+                  <div className="grid grid-cols-3 gap-3 mb-4">
+                    {/* BTC */}
+                    <div className="p-3 rounded-lg"
+                      style={{
+                        backgroundColor: 'var(--bg-elevated)',
+                        border: '1px solid var(--border-light)'
+                      }}>
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <TokenBTC size={16} variant="branded" />
+                        <span className="text-xs font-bold" style={{ color: 'var(--text-tertiary)' }}>
+                          BTC
+                        </span>
+                      </div>
+                      <p className="text-sm font-bold" style={{
+                        color: marketData.marketCapChange24h >= 0 ? 'var(--success)' : 'var(--error)'
+                      }}>
+                        {marketData.marketCapChange24h >= 0 ? '+' : ''}{marketData.marketCapChange24h.toFixed(2)}%
+                      </p>
+                    </div>
+
+                    {/* ETH */}
+                    <div className="p-3 rounded-lg"
+                      style={{
+                        backgroundColor: 'var(--bg-elevated)',
+                        border: '1px solid var(--border-light)'
+                      }}>
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <TokenETH size={16} variant="branded" />
+                        <span className="text-xs font-bold" style={{ color: 'var(--text-tertiary)' }}>
+                          ETH
+                        </span>
+                      </div>
+                      <p className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
+                        {marketData.ethDominance.toFixed(2)}%
+                      </p>
+                    </div>
+
+                    {/* Sentimento */}
+                    <div className="p-3 rounded-lg"
+                      style={{
+                        backgroundColor: 'var(--bg-elevated)',
+                        border: '1px solid var(--border-light)'
+                      }}>
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="text-sm">{getSentimentIcon(dailyAnalysis.sentiment)}</span>
+                        <span className="text-xs font-bold" style={{ color: 'var(--text-tertiary)' }}>
+                          Mercado
+                        </span>
+                      </div>
+                      <p className="text-sm font-bold capitalize" style={{ color: 'var(--text-primary)' }}>
+                        {dailyAnalysis.sentiment === 'positive' ? 'Positivo' :
+                         dailyAnalysis.sentiment === 'negative' ? 'Negativo' : 'Neutro'}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* CTA */}
+                <Link
+                  href={`/dashboard/noticias/${dailyAnalysis.slug || dailyAnalysis.id}`}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm transition-all hover:opacity-80"
+                  style={{
+                    backgroundColor: 'var(--brand-primary)',
+                    color: 'var(--text-inverse)'
+                  }}>
+                  <span>Ler Análise Completa</span>
+                  <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
+                </Link>
+              </div>
+            )}
 
             {/* Recursos Essenciais */}
             <div className="space-y-6">

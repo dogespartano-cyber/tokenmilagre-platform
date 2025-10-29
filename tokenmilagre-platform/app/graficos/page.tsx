@@ -6,6 +6,7 @@ import Script from 'next/script';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
+import { TokenBTC, TokenETH, TokenSOL } from '@token-icons/react';
 
 const AdvancedChart = dynamic(() => import('@/components/AdvancedChart'), {
   ssr: false,
@@ -84,7 +85,8 @@ export default function GraficosPage() {
               <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                 {/* Análise Técnica BTC */}
                 <div>
-                  <h4 className="text-lg font-bold mb-3" style={{ color: "var(--text-primary)" }}>
+                  <h4 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+                    <TokenBTC size={24} variant="branded" />
                     Bitcoin - Sentimento
                   </h4>
                   <TechnicalAnalysisWidget symbol="BINANCE:BTCUSDT" />
@@ -92,7 +94,8 @@ export default function GraficosPage() {
 
                 {/* Análise Técnica ETH */}
                 <div>
-                  <h4 className="text-lg font-bold mb-3" style={{ color: "var(--text-primary)" }}>
+                  <h4 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+                    <TokenETH size={24} variant="branded" />
                     Ethereum - Sentimento
                   </h4>
                   <TechnicalAnalysisWidget symbol="BINANCE:ETHUSDT" />
@@ -100,7 +103,8 @@ export default function GraficosPage() {
 
                 {/* Análise Técnica SOL */}
                 <div>
-                  <h4 className="text-lg font-bold mb-3" style={{ color: "var(--text-primary)" }}>
+                  <h4 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+                    <TokenSOL size={24} variant="branded" />
                     Solana - Sentimento
                   </h4>
                   <TechnicalAnalysisWidget symbol="BINANCE:SOLUSDT" />

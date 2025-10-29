@@ -46,12 +46,49 @@ html {
   animation: fadeIn 0.5s ease-out;
 }
 
+/* Scale in animation */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.3s ease-out;
+}
+
+/* Shake animation */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
 :root {
   /* Light Mode - WCAG AAA Compliant */
   --bg-primary: #f5f4f6;
   --bg-secondary: #F9FAFB;
   --bg-tertiary: #F3F4F6;
   --bg-elevated: #FFFFFF;
+
+  /* RGB values for transparency */
+  --bg-elevated-rgb: 255, 255, 255;
+  --bg-secondary-rgb: 249, 250, 251;
 
   /* Textos Light Mode - High Contrast (ESCUROS!) */
   --text-primary: #111827;
@@ -105,6 +142,10 @@ html {
   --bg-secondary: #142841;
   --bg-tertiary: #1E3A5F;
   --bg-elevated: #2A4A6E;
+
+  /* RGB values for transparency */
+  --bg-elevated-rgb: 42, 74, 110;
+  --bg-secondary-rgb: 20, 40, 65;
 
   /* Textos Dark Mode - High Contrast */
   --text-primary: #FFFFFF;

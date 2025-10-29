@@ -12,10 +12,8 @@ import {
 // Types
 interface GenerateArticleRequest {
   topic: string;
-  type: 'news' | 'educational';
-  category: string;
-  level?: 'iniciante' | 'intermediario' | 'avancado'; // Apenas para educacional
-  model?: 'sonar' | 'sonar-pro';
+  type: 'news' | 'educational' | 'resource';
+  model?: 'sonar' | 'sonar-pro' | 'sonar-base';
 }
 
 interface GenerateArticleResponse {
@@ -43,14 +41,12 @@ interface GenerateArticleResponse {
  * Monta prompt para Perplexity seguindo regras da skill article-creation
  */
 function buildPrompt(params: GenerateArticleRequest): string {
-  const { topic, type, category, level } = params;
+  const { topic, type } = params;
 
   if (type === 'news') {
     return `Você é um jornalista especializado em criptomoedas e blockchain.
 
 **TAREFA**: Escrever uma notícia completa em português (PT-BR) sobre: "${topic}"
-
-**CATEGORIA**: ${category}
 
 **ESTRUTURA OBRIGATÓRIA** (Padrão Jornalístico):
 Siga o fluxo: Fato → Contexto → Impacto → Visão → Reflexão → Desafios
@@ -92,24 +88,24 @@ Siga o fluxo: Fato → Contexto → Impacto → Visão → Reflexão → Desafio
 ✅ Tom jornalístico profissional
 ✅ Dados e números concretos
 
+**CATEGORIAS DISPONÍVEIS**: bitcoin, ethereum, defi, politica, nfts, altcoins, regulacao, mercado
+
 **FORMATO DE SAÍDA**:
 {
   "title": "Título atrativo da notícia (máx 80 caracteres)",
   "excerpt": "Resumo de 1-2 frases (máx 200 caracteres)",
   "content": "## Primeira Seção\\n\\nConteúdo...",
+  "category": "bitcoin", // Escolha a categoria mais apropriada baseada no tópico
   "sentiment": "positive" | "neutral" | "negative",
   "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"]
 }
 
 Retorne APENAS o JSON, sem explicações adicionais.`;
-  } else {
+  } else if (type === 'educational') {
     // Educational
     return `Você é um educador especializado em criptomoedas e blockchain.
 
 **TAREFA**: Escrever um artigo educacional completo em português (PT-BR) sobre: "${topic}"
-
-**CATEGORIA**: ${category}
-**NÍVEL**: ${level || 'intermediario'}
 
 **ESTRUTURA DO ARTIGO**:
 
@@ -153,7 +149,9 @@ Retorne APENAS o JSON, sem explicações adicionais.`;
 ✅ Tom educacional e acessível
 ✅ Exemplos práticos e analogias
 
-**AJUSTE DE COMPLEXIDADE**:
+**CATEGORIAS DISPONÍVEIS**: blockchain, trading, defi, nfts, seguranca, desenvolvimento
+
+**NÍVEIS**:
 - Iniciante: Linguagem simples, muitas analogias, evitar jargões
 - Intermediário: Termos técnicos explicados, exemplos práticos
 - Avançado: Detalhes técnicos, implementações, casos complexos
@@ -163,7 +161,91 @@ Retorne APENAS o JSON, sem explicações adicionais.`;
   "title": "Título educacional claro (máx 80 caracteres)",
   "description": "Breve descrição do que o leitor aprenderá (1-2 frases)",
   "content": "Parágrafo introdutório...\\n\\n## Primeira Seção...",
+  "category": "blockchain", // Escolha a categoria mais apropriada baseada no tópico
+  "level": "iniciante" | "intermediario" | "avancado", // Determine o nível baseado na complexidade do tópico
   "tags": ["tag1", "tag2", "tag3"]
+}
+
+Retorne APENAS o JSON, sem explicações adicionais.`;
+  } else {
+    // Resource
+    return `Você é um especialista em recursos e ferramentas de criptomoedas e blockchain.
+
+**TAREFA**: Criar uma página completa de recurso em português (PT-BR) sobre: "${topic}"
+
+**CATEGORIAS DISPONÍVEIS**: wallets, exchanges, browsers, defi, explorers, tools
+
+**ESTRUTURA COMPLETA DO RECURSO**:
+
+1. **Informações Básicas**:
+   - Nome do recurso
+   - Descrição curta (1-2 linhas)
+   - URL oficial
+   - Plataformas disponíveis (Web, iOS, Android, Desktop)
+   - Tags descritivas
+
+2. **Hero Section** (Seção de destaque):
+   - Título chamativo
+   - Descrição envolvente (2-3 linhas)
+   - Gradiente sugerido (ex: "from-blue-500 to-purple-600")
+
+3. **Por Que É Bom** (3-4 parágrafos explicando benefícios)
+
+4. **Características** (4-6 features com ícone, título e descrição)
+   Ícones disponíveis: faWallet, faShield, faGlobe, faRocket, faLock, faChartLine, faBolt, faUsers, faCog, faCheckCircle
+
+5. **Como Começar** (3-5 passos numerados com título e descrição)
+
+6. **Prós e Contras** (3-5 de cada)
+
+7. **FAQ** (4-6 perguntas e respostas)
+
+8. **Dicas de Segurança** (3-4 dicas com ícone, título e descrição)
+
+**FORMATO DE SAÍDA**:
+{
+  "name": "Nome do Recurso",
+  "slug": "nome-do-recurso-em-slug",
+  "category": "wallets", // Escolha a categoria apropriada
+  "shortDescription": "Descrição curta",
+  "officialUrl": "https://...",
+  "platforms": ["Web", "iOS", "Android"],
+  "tags": ["tag1", "tag2", "tag3"],
+  "heroTitle": "Título chamativo",
+  "heroDescription": "Descrição envolvente",
+  "heroGradient": "from-blue-500 to-purple-600",
+  "whyGoodTitle": "Por Que Escolher [Nome]?",
+  "whyGoodContent": ["Parágrafo 1...", "Parágrafo 2...", "Parágrafo 3..."],
+  "features": [
+    {
+      "icon": "faWallet",
+      "title": "Título da Feature",
+      "description": "Descrição da feature"
+    }
+  ],
+  "howToStartTitle": "Como Começar com [Nome]",
+  "howToStartSteps": [
+    {
+      "number": 1,
+      "title": "Título do Passo",
+      "description": "Descrição detalhada"
+    }
+  ],
+  "pros": ["Prós 1", "Prós 2", "Prós 3"],
+  "cons": ["Contra 1", "Contra 2", "Contra 3"],
+  "faq": [
+    {
+      "question": "Pergunta?",
+      "answer": "Resposta detalhada..."
+    }
+  ],
+  "securityTips": [
+    {
+      "icon": "faShield",
+      "title": "Título da Dica",
+      "description": "Descrição da dica de segurança"
+    }
+  ]
 }
 
 Retorne APENAS o JSON, sem explicações adicionais.`;
@@ -206,12 +288,19 @@ export async function POST(request: NextRequest) {
     }
 
     const body: GenerateArticleRequest = await request.json();
-    const { topic, type, category, level, model = 'sonar' } = body;
+    const { topic, type, model = 'sonar' } = body;
 
     // Validação
-    if (!topic || !type || !category) {
+    if (!topic || !type) {
       return NextResponse.json(
-        { success: false, error: 'Parâmetros obrigatórios faltando' },
+        { success: false, error: 'Parâmetros obrigatórios faltando (topic, type)' },
+        { status: 400 }
+      );
+    }
+
+    if (!['news', 'educational', 'resource'].includes(type)) {
+      return NextResponse.json(
+        { success: false, error: 'Tipo inválido. Use: news, educational ou resource' },
         { status: 400 }
       );
     }
@@ -220,9 +309,14 @@ export async function POST(request: NextRequest) {
     const prompt = buildPrompt(body);
 
     // Determina modelo Perplexity
-    const perplexityModel = model === 'sonar-pro'
-      ? 'sonar-pro'
-      : 'sonar';
+    let perplexityModel: string;
+    if (model === 'sonar-pro') {
+      perplexityModel = 'sonar-pro';
+    } else if (model === 'sonar-base') {
+      perplexityModel = 'sonar'; // sonar-base usa o modelo 'sonar' da Perplexity
+    } else {
+      perplexityModel = 'sonar';
+    }
 
     // Chama Perplexity API
     const perplexityResponse = await fetch('https://api.perplexity.ai/chat/completions', {
@@ -276,7 +370,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Processa conteúdo seguindo regras da skill
+    // Para recursos, retornar estrutura diretamente sem processar
+    if (type === 'resource') {
+      return NextResponse.json({
+        success: true,
+        data: articleData, // Retorna todo o JSON do resource
+        usage: {
+          inputTokens,
+          outputTokens,
+          estimatedCost: parseFloat(estimatedCost.toFixed(6))
+        }
+      });
+    }
+
+    // Processa conteúdo seguindo regras da skill (apenas para news/educational)
     const processedContent = processArticleContent(articleData.content, type);
 
     // Extrai/gera metadados
@@ -292,13 +399,20 @@ export async function POST(request: NextRequest) {
     const inputTokens = perplexityData.usage?.prompt_tokens || 0;
     const outputTokens = perplexityData.usage?.completion_tokens || 0;
 
-    const inputCost = model === 'sonar-pro'
-      ? (inputTokens / 1000000) * 3
-      : (inputTokens / 1000000) * 1;
+    // Custos por modelo (por 1M tokens)
+    let inputCost: number;
+    let outputCost: number;
 
-    const outputCost = model === 'sonar-pro'
-      ? (outputTokens / 1000000) * 15
-      : (outputTokens / 1000000) * 1;
+    if (model === 'sonar-pro') {
+      inputCost = (inputTokens / 1000000) * 3;
+      outputCost = (outputTokens / 1000000) * 15;
+    } else if (model === 'sonar-base') {
+      inputCost = (inputTokens / 1000000) * 0.2; // $0.20 por 1M tokens
+      outputCost = (outputTokens / 1000000) * 0.2;
+    } else {
+      inputCost = (inputTokens / 1000000) * 1;
+      outputCost = (outputTokens / 1000000) * 1;
+    }
 
     const requestCost = 0.005; // Taxa de requisição
     const estimatedCost = inputCost + outputCost + requestCost;
@@ -311,8 +425,8 @@ export async function POST(request: NextRequest) {
         slug,
         excerpt,
         content: processedContent,
-        category,
-        level: type === 'educational' ? level : undefined,
+        category: articleData.category, // Categoria determinada pela IA
+        level: type === 'educational' ? articleData.level : undefined, // Nível determinado pela IA
         tags,
         readTime,
         sentiment: type === 'news' ? articleData.sentiment : undefined,

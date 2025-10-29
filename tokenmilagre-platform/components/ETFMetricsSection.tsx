@@ -11,6 +11,7 @@ import {
   faDollarSign,
   faBuilding
 } from '@fortawesome/free-solid-svg-icons';
+import { TokenBTC, TokenETH } from '@token-icons/react';
 
 // ==========================================
 // 📊 DADOS DE ETFs - ATUALIZAR SEMANALMENTE
@@ -146,13 +147,16 @@ export default function ETFMetricsSection() {
         >
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
-            <div>
-              <h3 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
-                {ETF_DATA.bitcoin.name}
-              </h3>
-              <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
-                Atualizado: {new Date(ETF_DATA.bitcoin.lastUpdate).toLocaleDateString('pt-BR')}
-              </p>
+            <div className="flex items-center gap-3">
+              <TokenBTC size={32} variant="branded" />
+              <div>
+                <h3 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
+                  {ETF_DATA.bitcoin.name}
+                </h3>
+                <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                  Atualizado: {new Date(ETF_DATA.bitcoin.lastUpdate).toLocaleDateString('pt-BR')}
+                </p>
+              </div>
             </div>
             <FontAwesomeIcon
               icon={getTrendIcon(ETF_DATA.bitcoin.trend)}
@@ -253,13 +257,16 @@ export default function ETFMetricsSection() {
         >
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
-            <div>
-              <h3 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
-                {ETF_DATA.ethereum.name}
-              </h3>
-              <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
-                Atualizado: {new Date(ETF_DATA.ethereum.lastUpdate).toLocaleDateString('pt-BR')}
-              </p>
+            <div className="flex items-center gap-3">
+              <TokenETH size={32} variant="branded" />
+              <div>
+                <h3 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
+                  {ETF_DATA.ethereum.name}
+                </h3>
+                <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                  Atualizado: {new Date(ETF_DATA.ethereum.lastUpdate).toLocaleDateString('pt-BR')}
+                </p>
+              </div>
             </div>
             <FontAwesomeIcon
               icon={getTrendIcon(ETF_DATA.ethereum.trend)}

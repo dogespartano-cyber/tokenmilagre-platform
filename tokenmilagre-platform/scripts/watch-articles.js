@@ -12,8 +12,6 @@ const os = require('os');
 const ARTICLES_DIR = process.env.ARTICLES_DIR || path.join(os.homedir(), 'Trabalho', 'gemini', 'articles');
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 const IMPORT_ENDPOINT = `${API_URL}/api/articles/import`;
-const FACT_CHECK_ENDPOINT = `${API_URL}/api/articles/fact-check`;
-const ENABLE_FACT_CHECK = process.env.ENABLE_FACT_CHECK !== 'false'; // Habilitado por padrão
 
 // Cores para console
 const colors = {
@@ -47,51 +45,6 @@ function logWarn(message) {
   log(`⚠️  ${message}`, 'yellow');
 }
 
-// Fact-check do artigo
-async function factCheckArticle(markdown) {
-  try {
-    logInfo('🔍 Realizando fact-checking...');
-
-    const response = await fetch(FACT_CHECK_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        markdown,
-        threshold: 70, // Score mínimo: 70%
-        maxClaims: 10  // Máximo de claims: 10
-      })
-    });
-
-    const result = await response.json();
-
-    if (!result.success) {
-      logWarn(`Erro no fact-check: ${result.error}`);
-      return null; // Em caso de erro, prosseguir sem fact-check
-    }
-
-    const data = result.data;
-
-    // Exibir resultado do fact-check
-    if (data.status === 'skipped') {
-      logWarn('⚠️  Fact-check pulado (APIs não configuradas)');
-      return null;
-    }
-
-    logInfo(`   Status: ${data.passed ? '✅ APROVADO' : '❌ REPROVADO'}`);
-    logInfo(`   Score: ${data.score}/${data.threshold}`);
-    logInfo(`   Claims verificados: ${data.verifiedClaims}/${data.totalClaims}`);
-    logInfo(`   Fontes consultadas: ${data.sources.length}`);
-    logInfo(`   APIs usadas: ${data.searchAPIsUsed.join(', ')}`);
-
-    return data;
-  } catch (error) {
-    logError(`Erro ao realizar fact-check: ${error.message}`);
-    return null; // Em caso de erro, prosseguir sem fact-check
-  }
-}
-
 // Importar artigo para API
 async function importArticle(filePath) {
   try {
@@ -113,29 +66,7 @@ async function importArticle(filePath) {
     // Ler conteúdo do arquivo
     const markdown = fs.readFileSync(filePath, 'utf8');
 
-    // Realizar fact-checking (se habilitado)
-    let factCheckResult = null;
-    if (ENABLE_FACT_CHECK) {
-      factCheckResult = await factCheckArticle(markdown);
-
-      // Se fact-check falhou, mover para pasta de revisão
-      if (factCheckResult && !factCheckResult.passed) {
-        logWarn('⚠️  Artigo reprovado no fact-checking!');
-
-        const reviewDir = path.join(ARTICLES_DIR, '.review');
-        if (!fs.existsSync(reviewDir)) {
-          fs.mkdirSync(reviewDir, { recursive: true });
-        }
-
-        const reviewPath = path.join(reviewDir, filename);
-        fs.renameSync(filePath, reviewPath);
-        logWarn(`   Movido para revisão: .review/${filename}`);
-        logInfo('   💡 Revise manualmente e mova para /articles se aprovar');
-        return;
-      }
-    }
-
-    // Enviar para API com resultado do fact-check
+    // Enviar para API
     const headers = {
       'Content-Type': 'application/json'
     };
@@ -151,8 +82,7 @@ async function importArticle(filePath) {
       headers,
       body: JSON.stringify({
         markdown,
-        filename,
-        factCheckResult
+        filename
       })
     });
 
@@ -199,11 +129,6 @@ console.log(colors.reset);
 
 logInfo(`Monitorando: ${ARTICLES_DIR}`);
 logInfo(`API: ${IMPORT_ENDPOINT}`);
-logInfo(`Fact-checking: ${ENABLE_FACT_CHECK ? '✅ HABILITADO' : '❌ DESABILITADO'}`);
-if (ENABLE_FACT_CHECK) {
-  logInfo(`   Threshold: 70%`);
-  logInfo(`   APIs necessárias: Google Custom Search, Brave Search`);
-}
 logInfo('');
 logSuccess('✨ Watcher iniciado! Aguardando arquivos .md...\n');
 
