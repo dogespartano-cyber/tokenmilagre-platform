@@ -146,7 +146,7 @@ export default function UserDropdown() {
             {/* Admin Link (only for ADMIN) */}
             {user.role === 'ADMIN' && (
               <Link
-                href="/dashboard/admin"
+                href="/dashboard"
                 onClick={() => setIsOpen(false)}
                 className="group flex items-center gap-3 px-4 py-2 transition-all duration-200 hover:translate-x-1"
                 style={{ color: 'var(--text-primary)' }}

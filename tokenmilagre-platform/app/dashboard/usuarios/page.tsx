@@ -246,12 +246,12 @@ export default function GerenciarUsuariosPage() {
           {/* Header */}
           <div className="mb-8">
             <Link
-              href="/dashboard/admin"
+              href="/dashboard"
               className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-70 mb-4"
               style={{ color: 'var(--text-secondary)' }}
             >
               <FontAwesomeIcon icon={faArrowLeft} />
-              Voltar ao Admin
+              Voltar ao Dashboard
             </Link>
 
             <div className="flex items-center justify-between flex-wrap gap-4">

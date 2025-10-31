@@ -35,7 +35,7 @@ export default function LoginPage() {
           // Redirecionar baseado na role
           switch (session.user.role) {
             case 'ADMIN':
-              router.push('/dashboard/admin');
+              router.push('/dashboard');
               break;
             case 'EDITOR':
               router.push('/dashboard/criar-artigo');

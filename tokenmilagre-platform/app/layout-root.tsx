@@ -36,6 +36,10 @@ const dashboardHeaderConfig: Record<string, { title: string; description: string
   '/dashboard/noticias': {
     title: 'Notícias Cripto',
     description: 'Resumos inteligentes das principais notícias do mercado'
+  },
+  '/dashboard': {
+    title: 'Painel Administrativo',
+    description: 'Gerencie todo o conteúdo e configurações da plataforma'
   }
 };
 
@@ -66,6 +70,11 @@ export default function RootLayoutNav({
     { href: '/manifesto', label: 'Manifesto', icon: faBook },
     { href: '/doacoes', label: 'Doações', icon: faHeart },
   ];
+
+  // Adicionar link para dashboard se usuário for ADMIN
+  if (session?.user?.role === 'ADMIN') {
+    menuItems.push({ href: '/dashboard', label: 'Admin', icon: faShieldAlt });
+  }
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-secondary)' }}>
@@ -178,7 +187,7 @@ export default function RootLayoutNav({
       </aside>
 
       {/* Main Content Wrapper */}
-      <div className="lg:ml-72 min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col lg:ml-72">
         {/* Header */}
         <header className="sticky top-0 z-30 backdrop-blur-lg border-b shadow-theme-sm" style={{
           backgroundColor: 'var(--bg-elevated)',
@@ -276,21 +285,21 @@ export default function RootLayoutNav({
         </main>
 
         {/* Footer */}
-        <footer className="border-t mt-12" style={{
-          backgroundColor: 'var(--bg-elevated)',
-          borderColor: 'var(--border-medium)'
-        }}>
-          <div className="container mx-auto px-4 py-8">
-            <div className="space-y-4">
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                $MILAGRE é um projeto comunitário criado para conectar pessoas através de apoio mútuo e esperança.
-              </p>
-              <p className="text-sm font-semibold" style={{ color: 'var(--text-tertiary)' }}>
-                © 2025 $MILAGRE Community
-              </p>
+          <footer className="border-t mt-12" style={{
+            backgroundColor: 'var(--bg-elevated)',
+            borderColor: 'var(--border-medium)'
+          }}>
+            <div className="container mx-auto px-4 py-8">
+              <div className="space-y-4">
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                  $MILAGRE é um projeto comunitário criado para conectar pessoas através de apoio mútuo e esperança.
+                </p>
+                <p className="text-sm font-semibold" style={{ color: 'var(--text-tertiary)' }}>
+                  © 2025 $MILAGRE Community
+                </p>
+              </div>
             </div>
-          </div>
-        </footer>
+          </footer>
       </div>
     </div>
   );

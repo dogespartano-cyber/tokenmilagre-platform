@@ -1,4 +1,18 @@
-// Dashboard layout simplificado - navegação unificada agora está no layout root
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  },
+};
+
 export default function DashboardLayout({
   children,
 }: {

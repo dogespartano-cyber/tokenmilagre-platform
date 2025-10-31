@@ -8,6 +8,8 @@ import {
   calculateReadTime,
   extractTags
 } from '@/lib/article-processor';
+import { validateArticleContent, ValidationResult } from '@/lib/content-validator';
+import { callPerplexity } from '@/lib/perplexity-client';
 
 // Types
 interface GenerateArticleRequest {
@@ -35,6 +37,7 @@ interface GenerateArticleResponse {
     outputTokens: number;
     estimatedCost: number;
   };
+  validation?: ValidationResult;
 }
 
 /**
@@ -81,12 +84,14 @@ Siga o fluxo: Fato → Contexto → Impacto → Visão → Reflexão → Desafio
 ❌ NÃO incluir seção de fontes/referências
 ❌ NÃO incluir nota de transparência
 ❌ NÃO repetir o resumo no conteúdo
+❌ NÃO incluir referências numéricas no texto (como [1], [2], [3], [1][5], etc)
 ✅ Começar DIRETO com ## (H2)
 ✅ Usar 5-6 seções H2 (mínimo 4, máximo 7)
 ✅ Títulos descritivos (não genéricos como "Introdução")
 ✅ Conclusão integrada como ### (H3) na última seção
 ✅ Tom jornalístico profissional
 ✅ Dados e números concretos
+✅ Escrever informações diretamente no texto, sem marcadores de citação
 
 **CATEGORIAS DISPONÍVEIS**: bitcoin, ethereum, defi, politica, nfts, altcoins, regulacao, mercado
 
@@ -95,12 +100,16 @@ Siga o fluxo: Fato → Contexto → Impacto → Visão → Reflexão → Desafio
   "title": "Título atrativo da notícia (máx 80 caracteres)",
   "excerpt": "Resumo de 1-2 frases (máx 200 caracteres)",
   "content": "## Primeira Seção\\n\\nConteúdo...",
-  "category": "bitcoin", // Escolha a categoria mais apropriada baseada no tópico
-  "sentiment": "positive" | "neutral" | "negative",
+  "category": "bitcoin",
+  "sentiment": "positive",
   "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"]
 }
 
-Retorne APENAS o JSON, sem explicações adicionais.`;
+⚠️ **IMPORTANTE**: Retorne APENAS o objeto JSON puro, sem:
+- Markdown code blocks (\`\`\`json)
+- Texto explicativo antes ou depois
+- Comentários no JSON
+- Apenas o objeto JSON limpo começando com { e terminando com }`;
   } else if (type === 'educational') {
     // Educational
     return `Você é um educador especializado em criptomoedas e blockchain.
@@ -143,11 +152,13 @@ Retorne APENAS o JSON, sem explicações adicionais.`;
 **REGRAS CRÍTICAS**:
 ❌ NÃO incluir título H1 no início (# Título)
 ❌ NÃO incluir seção de fontes/referências
+❌ NÃO incluir referências numéricas no texto (como [1], [2], [3], [1][5], etc)
 ✅ Começar com parágrafo introdutório (não com ##)
 ✅ Usar ## (H2) para seções principais
 ✅ Usar ### (H3) para subseções
 ✅ Tom educacional e acessível
 ✅ Exemplos práticos e analogias
+✅ Escrever informações diretamente no texto, sem marcadores de citação
 
 **CATEGORIAS DISPONÍVEIS**: blockchain, trading, defi, nfts, seguranca, desenvolvimento
 
@@ -161,12 +172,16 @@ Retorne APENAS o JSON, sem explicações adicionais.`;
   "title": "Título educacional claro (máx 80 caracteres)",
   "description": "Breve descrição do que o leitor aprenderá (1-2 frases)",
   "content": "Parágrafo introdutório...\\n\\n## Primeira Seção...",
-  "category": "blockchain", // Escolha a categoria mais apropriada baseada no tópico
-  "level": "iniciante" | "intermediario" | "avancado", // Determine o nível baseado na complexidade do tópico
+  "category": "blockchain",
+  "level": "iniciante",
   "tags": ["tag1", "tag2", "tag3"]
 }
 
-Retorne APENAS o JSON, sem explicações adicionais.`;
+⚠️ **IMPORTANTE**: Retorne APENAS o objeto JSON puro, sem:
+- Markdown code blocks (\`\`\`json)
+- Texto explicativo antes ou depois
+- Comentários no JSON
+- Apenas o objeto JSON limpo começando com { e terminando com }`;
   } else {
     // Resource
     return `Você é um especialista em recursos e ferramentas de criptomoedas e blockchain.
@@ -201,6 +216,12 @@ Retorne APENAS o JSON, sem explicações adicionais.`;
 7. **FAQ** (4-6 perguntas e respostas)
 
 8. **Dicas de Segurança** (3-4 dicas com ícone, título e descrição)
+
+**REGRAS CRÍTICAS**:
+❌ NÃO incluir referências numéricas no texto (como [1], [2], [3], [1][5], etc)
+✅ Escrever informações diretamente no texto, sem marcadores de citação
+✅ Tom profissional e objetivo
+✅ Informações precisas e atualizadas
 
 **FORMATO DE SAÍDA**:
 {
@@ -248,7 +269,11 @@ Retorne APENAS o JSON, sem explicações adicionais.`;
   ]
 }
 
-Retorne APENAS o JSON, sem explicações adicionais.`;
+⚠️ **IMPORTANTE**: Retorne APENAS o objeto JSON puro, sem:
+- Markdown code blocks (\`\`\`json)
+- Texto explicativo antes ou depois
+- Comentários no JSON
+- Apenas o objeto JSON limpo começando com { e terminando com }`;
   }
 }
 
@@ -308,24 +333,17 @@ export async function POST(request: NextRequest) {
     // Monta prompt
     const prompt = buildPrompt(body);
 
-    // Determina modelo Perplexity
-    let perplexityModel: string;
-    if (model === 'sonar-pro') {
-      perplexityModel = 'sonar-pro';
-    } else if (model === 'sonar-base') {
-      perplexityModel = 'sonar'; // sonar-base usa o modelo 'sonar' da Perplexity
-    } else {
-      perplexityModel = 'sonar';
+    // 🎯 Determina modelo otimizado baseado no tipo de artigo
+    let perplexityModel: 'sonar' | 'sonar-pro' = model === 'sonar-pro' ? 'sonar-pro' : 'sonar';
+    let search_recency_filter: 'day' | 'week' | 'month' | undefined;
+
+    if (type === 'news') {
+      search_recency_filter = 'day'; // Notícias: apenas últimas 24h
     }
 
-    // Chama Perplexity API
-    const perplexityResponse = await fetch('https://api.perplexity.ai/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    // Chama Perplexity API com otimizações
+    const perplexityData = await callPerplexity(
+      {
         model: perplexityModel,
         messages: [
           {
@@ -338,34 +356,45 @@ export async function POST(request: NextRequest) {
           }
         ],
         temperature: 0.7,
+        top_p: 0.9, // Melhora foco das respostas
         max_tokens: model === 'sonar-pro' ? 2000 : 1500,
-      })
-    });
+        search_recency_filter, // Apenas para notícias
+      },
+      apiKey
+    );
 
-    if (!perplexityResponse.ok) {
-      const errorData = await perplexityResponse.json();
-      return NextResponse.json(
-        { success: false, error: `Perplexity API error: ${errorData.error?.message || 'Unknown error'}` },
-        { status: perplexityResponse.status }
-      );
-    }
-
-    const perplexityData = await perplexityResponse.json();
     const generatedText = perplexityData.choices[0].message.content;
 
-    // Parse JSON gerado
+    // Parse JSON gerado (com múltiplas estratégias)
     let articleData;
     try {
-      // Tenta extrair JSON se vier com texto adicional
-      const jsonMatch = generatedText.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        articleData = JSON.parse(jsonMatch[0]);
-      } else {
-        articleData = JSON.parse(generatedText);
+      let cleanedText = generatedText.trim();
+
+      // Estratégia 1: Remover markdown code blocks se existirem
+      if (cleanedText.startsWith('```')) {
+        cleanedText = cleanedText.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
       }
+
+      // Estratégia 2: Extrair apenas o JSON (do primeiro { ao último })
+      const firstBrace = cleanedText.indexOf('{');
+      const lastBrace = cleanedText.lastIndexOf('}');
+
+      if (firstBrace !== -1 && lastBrace !== -1) {
+        cleanedText = cleanedText.substring(firstBrace, lastBrace + 1);
+      }
+
+      // Tentar parsear
+      articleData = JSON.parse(cleanedText);
     } catch (parseError) {
+      console.error('Erro ao parsear resposta do Perplexity:', parseError);
+      console.error('Resposta recebida:', generatedText.substring(0, 500)); // Log primeiros 500 chars
+
       return NextResponse.json(
-        { success: false, error: 'Erro ao parsear resposta da API' },
+        {
+          success: false,
+          error: 'Erro ao parsear resposta da API. A IA não retornou JSON válido.',
+          debug: generatedText.substring(0, 200) // Retorna início da resposta para debug
+        },
         { status: 500 }
       );
     }
@@ -408,6 +437,9 @@ export async function POST(request: NextRequest) {
     // Processa conteúdo seguindo regras da skill (apenas para news/educational)
     const processedContent = processArticleContent(articleData.content, type);
 
+    // Valida conteúdo processado
+    const validation = validateArticleContent(processedContent, type);
+
     // Extrai/gera metadados
     const excerpt = type === 'news'
       ? articleData.excerpt
@@ -435,7 +467,8 @@ export async function POST(request: NextRequest) {
         inputTokens,
         outputTokens,
         estimatedCost: parseFloat(estimatedCost.toFixed(6))
-      }
+      },
+      validation // Adiciona resultado da validação
     };
 
     return NextResponse.json(response);

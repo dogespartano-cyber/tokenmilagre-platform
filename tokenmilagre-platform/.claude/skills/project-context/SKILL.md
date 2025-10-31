@@ -61,10 +61,112 @@ When this skill is invoked:
    - ALWAYS ask before executing code
    - NEVER commit files outside tokenmilagre-platform/
    - Use Prisma directly in Server Components (no HTTP fetch)
+   - **BE CONCISE** - Respostas curtas e diretas (usuário prefere economia de tokens)
 4. Consult LOG.md when historical context is needed
 5. Consult sugestões.md before suggesting improvements
 
 **Note**: Use `/home/destakar/Trabalho/server-manager.sh` to manage the development server (start/stop/restart/status).
+
+---
+
+## 🤖 Dashboard AI Assistant - Sistema de Linguagem Natural
+
+**Status Atual**: Sistema 100% funcional (atualizado 2025-10-30)
+
+### 🎯 Arquitetura Atual
+
+**Interface**: Estilo Claude (minimalista)
+- `/dashboard/page.tsx` - Tela limpa: header pequeno + chat full screen
+- `_components/AIAssistant.tsx` - Input central quando vazio, chat quando ativo
+- Sem sidebar, header, ou footer (dashboard isolado)
+- Menu hamburger para navegação (artigos, usuários, config)
+
+**Sistema Backend** (100% Linguagem Natural):
+- `lib/admin-chat-context.ts` - Prompts sem menção a comandos `/`
+- `app/api/admin-chat/route.ts` - Detector de intenção natural (`detectIntent`)
+- `hooks/useAdminChat.ts` - Hook gerenciador de chat
+- `lib/intent-detector.ts` - Reconhece ações em linguagem natural
+
+### ⚡ Como Funciona
+
+**Usuário fala naturalmente**:
+- "Crie uma notícia sobre Bitcoin atingindo $100k"
+- "Liste os últimos 10 artigos publicados"
+- "Valide este artigo"
+- "Mostre as estatísticas do blog"
+- "Publique o artigo"
+
+**Sistema**:
+1. Detecta intenção com confiança ≥50%
+2. Executa ação automaticamente (criar, listar, validar, publicar)
+3. IA responde naturalmente (sem mencionar comandos técnicos)
+
+### 🔧 Arquivos Críticos
+
+```
+app/dashboard/
+├── page.tsx                       # Dashboard principal (limpo)
+├── _components/
+│   ├── AIAssistant.tsx           # Chat estilo Claude
+│   └── StatsCards.tsx            # Cards de métricas (não usado no dashboard principal)
+
+lib/
+├── admin-chat-context.ts         # Prompts linguagem natural
+└── intent-detector.ts            # Detecção de intenções
+
+app/api/admin-chat/route.ts      # API com processIntent()
+hooks/useAdminChat.ts             # Hook de gerenciamento
+```
+
+### 🚫 O QUE NÃO EXISTE MAIS
+
+- ❌ Comandos `/create`, `/validate`, `/publish`, etc
+- ❌ Botão flutuante de IA (agora é full screen)
+- ❌ Sidebar em `/dashboard` (removida)
+- ❌ Footer em `/dashboard` (removido)
+- ❌ Cards/stats no dashboard principal (limpo estilo Claude)
+- ❌ Instruções de comandos nos prompts
+
+### ✅ Capacidades da IA
+
+**Criar Conteúdo**:
+- Notícias, artigos educacionais, recursos
+- Geração automática via Perplexity (sonar model)
+- Filtro de recência: 24h para news, 7d para pesquisas
+
+**Gerenciar**:
+- Listar artigos publicados
+- Buscar por termo/categoria
+- Deletar artigos
+- Mostrar estatísticas
+
+**Validar**:
+- Score 0-100 de qualidade
+- Detecta H1 duplicado, estrutura incorreta
+- Verifica regras da skill article-creation
+
+**Publicar**:
+- Salva no banco PostgreSQL
+- Redireciona automaticamente para artigo publicado
+
+### 🔐 Segurança
+
+- ✅ Auth obrigatória (ADMIN ou EDITOR)
+- ✅ Rate limiting: 10 req/min
+- ✅ Validação input: max 4000 chars
+- ✅ Sanitização output: ReactMarkdown
+
+### 💡 Dicas para Desenvolvedores
+
+**Para adicionar nova ação**:
+1. Adicionar intenção em `lib/intent-detector.ts`
+2. Processar em `processIntent()` (`app/api/admin-chat/route.ts`)
+3. Criar evento/handler em `hooks/useAdminChat.ts`
+
+**Para melhorar detecção**:
+- Adicionar mais padrões em `detectIntent()`
+- Ajustar threshold de confiança (atual: 50%)
+- Adicionar sinônimos e variações
 
 ---
 
@@ -99,4 +201,4 @@ Quando o usuário pedir para atualizar dados de ETFs:
 ---
 
 **Skill criada por**: Claude Code
-**Última atualização**: 2025-10-28 (adicionada seção de atualização de ETFs)
+**Última atualização**: 2025-10-30 (adicionada seção AI Assistant 100% linguagem natural)

@@ -11,13 +11,24 @@ export async function GET(request: NextRequest) {
     const published = searchParams.get('published');
     const type = searchParams.get('type');
     const level = searchParams.get('level');
+    const query = searchParams.get('query'); // Busca por texto
 
     // Paginação
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '12');
     const skip = (page - 1) * limit;
 
-    const where: { category?: string; published?: boolean; type?: string; level?: string } = {};
+    const where: any = {};
+
+    // Filtrar por busca de texto (título, excerpt, conteúdo, tags)
+    if (query) {
+      where.OR = [
+        { title: { contains: query, mode: 'insensitive' } },
+        { excerpt: { contains: query, mode: 'insensitive' } },
+        { content: { contains: query, mode: 'insensitive' } },
+        { tags: { contains: query } }
+      ];
+    }
 
     // Filtrar por tipo (news ou educational)
     if (type) {
@@ -35,9 +46,13 @@ export async function GET(request: NextRequest) {
     }
 
     // Filtrar por publicados/rascunhos
-    if (published !== null) {
-      where.published = published === 'true';
-    } else {
+    if (published === 'all') {
+      // Não filtrar - mostrar todos
+    } else if (published === 'true') {
+      where.published = true;
+    } else if (published === 'false') {
+      where.published = false;
+    } else if (!published) {
       // Por padrão, mostrar apenas publicados
       where.published = true;
     }
