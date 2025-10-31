@@ -66,9 +66,9 @@ Aí sim você deve buscar na web e fornecer informações atualizadas.
 - Sempre responda em português brasileiro
 - Seja conciso e direto
 - NUNCA busque na web quando usuário pede artigos do site (deixe sistema processar)
-- Para edições, use blocos markdown: \`\`\`markdown\n...\n\`\`\`
+- Para edições, use blocos markdown com três backticks
 - Se não souber algo, diga honestamente
-- Não mencione comandos `/` - usuário não precisa saber que eles existem
+- Não mencione comandos com barra - usuário não precisa saber que eles existem
 
 `;
 
@@ -115,7 +115,7 @@ ${context.data ? JSON.stringify(context.data, null, 2) : 'Nenhum artigo em ediç
 **QUANDO EDITAR TEXTO**:
 1. Identifique a seção
 2. Reescreva seguindo as regras
-3. Forneça em bloco: \`\`\`markdown\n...\n\`\`\`
+3. Forneça em bloco de código markdown
 4. Explique as mudanças`;
 
     case 'listar-noticias':
@@ -221,7 +221,7 @@ export function formatArticleContext(article: {
 - Tamanho do conteúdo: ${article.content?.length || 0} caracteres
 
 **Conteúdo**:
-\`\`\`markdown
+"""
 ${article.content || '(vazio)'}
-\`\`\``;
+"""`;
 }
