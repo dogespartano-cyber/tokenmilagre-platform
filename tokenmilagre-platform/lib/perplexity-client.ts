@@ -17,6 +17,7 @@ export interface PerplexityRequestOptions {
   stream?: boolean;
   search_recency_filter?: 'day' | 'week' | 'month';
   return_related_questions?: boolean;
+  return_citations?: boolean;
 }
 
 export interface PerplexityUsage {
@@ -39,6 +40,13 @@ export interface PerplexityResponse {
     };
   }[];
   related_questions?: string[];
+}
+
+/**
+ * Remove referências numéricas do texto (ex: [1], [2], [1][2][3])
+ */
+function removeReferences(text: string): string {
+  return text.replace(/\[\d+\]/g, '');
 }
 
 /**
@@ -79,7 +87,8 @@ export async function callPerplexity(
     top_p = 0.9,
     max_tokens = 2000,
     search_recency_filter,
-    return_related_questions = false
+    return_related_questions = false,
+    return_citations = false
   } = options;
 
   // Validar que todas as mensagens têm content como string
@@ -94,6 +103,7 @@ export async function callPerplexity(
     temperature,
     top_p,
     max_tokens,
+    return_citations,
   };
 
   // Adicionar parâmetros opcionais apenas se fornecidos
@@ -121,7 +131,14 @@ export async function callPerplexity(
     throw new Error(`Perplexity API error: ${errorMessage}`);
   }
 
-  return await response.json();
+  const data = await response.json();
+
+  // Remove referências do conteúdo da resposta
+  if (data.choices?.[0]?.message?.content) {
+    data.choices[0].message.content = removeReferences(data.choices[0].message.content);
+  }
+
+  return data;
 }
 
 /**
@@ -139,7 +156,8 @@ export async function callPerplexityStreaming(
     top_p = 0.9,
     max_tokens = 2000,
     search_recency_filter,
-    return_related_questions = false
+    return_related_questions = false,
+    return_citations = false
   } = options;
 
   // Validar que todas as mensagens têm content como string
@@ -155,6 +173,7 @@ export async function callPerplexityStreaming(
     top_p,
     max_tokens,
     stream: true, // Habilita streaming
+    return_citations,
   };
 
   // Adicionar parâmetros opcionais apenas se fornecidos
@@ -191,6 +210,7 @@ export async function callPerplexityStreaming(
 
 /**
  * Processa stream SSE (Server-Sent Events) do Perplexity
+ * Remove automaticamente referências numéricas [1][2][3] do texto
  */
 export function parsePerplexityStream(stream: ReadableStream): ReadableStream {
   const reader = stream.getReader();
@@ -225,7 +245,11 @@ export function parsePerplexityStream(stream: ReadableStream): ReadableStream {
               const parsed = JSON.parse(data);
               const content = parsed.choices?.[0]?.delta?.content;
               if (content) {
-                controller.enqueue(new TextEncoder().encode(content));
+                // Remove referências antes de enviar ao frontend
+                const cleanContent = removeReferences(content);
+                if (cleanContent) { // Só envia se sobrou conteúdo
+                  controller.enqueue(new TextEncoder().encode(cleanContent));
+                }
               }
             } catch (err) {
               // Ignorar erros de parsing silenciosamente
