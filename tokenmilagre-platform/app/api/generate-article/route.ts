@@ -359,6 +359,7 @@ export async function POST(request: NextRequest) {
         top_p: 0.9, // Melhora foco das respostas
         max_tokens: model === 'sonar-pro' ? 2000 : 1500,
         search_recency_filter, // Apenas para notícias
+        return_citations: false, // Desativa referências [1][2][3]
       },
       apiKey
     );

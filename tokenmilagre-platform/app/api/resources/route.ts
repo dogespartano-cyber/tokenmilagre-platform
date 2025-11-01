@@ -79,22 +79,24 @@ export async function POST(request: NextRequest) {
         verified: true, // Recursos criados por ADMIN/EDITOR são automaticamente verificados
         shortDescription,
         officialUrl,
-        platforms: JSON.stringify(platforms || []),
-        tags: JSON.stringify(tags || []),
+        platforms: typeof platforms === 'string' ? platforms : JSON.stringify(platforms || []),
+        tags: typeof tags === 'string' ? tags : JSON.stringify(tags || []),
         heroTitle,
         heroDescription,
         heroGradient,
         whyGoodTitle,
-        whyGoodContent: JSON.stringify(whyGoodContent || []),
-        features: JSON.stringify(features || []),
+        whyGoodContent: typeof whyGoodContent === 'string' ? whyGoodContent : JSON.stringify(whyGoodContent || []),
+        features: typeof features === 'string' ? features : JSON.stringify(features || []),
         howToStartTitle,
-        howToStartSteps: JSON.stringify(howToStartSteps || []),
-        pros: JSON.stringify(pros || []),
-        cons: JSON.stringify(cons || []),
-        faq: JSON.stringify(faq || []),
-        securityTips: JSON.stringify(securityTips || []),
+        howToStartSteps: typeof howToStartSteps === 'string' ? howToStartSteps : JSON.stringify(howToStartSteps || []),
+        pros: typeof pros === 'string' ? pros : JSON.stringify(pros || []),
+        cons: typeof cons === 'string' ? cons : JSON.stringify(cons || []),
+        faq: typeof faq === 'string' ? faq : JSON.stringify(faq || []),
+        securityTips: typeof securityTips === 'string' ? securityTips : JSON.stringify(securityTips || []),
         showCompatibleWallets,
-        relatedResources: relatedResources ? JSON.stringify(relatedResources) : null
+        relatedResources: relatedResources
+          ? (typeof relatedResources === 'string' ? relatedResources : JSON.stringify(relatedResources))
+          : null
       }
     });
 

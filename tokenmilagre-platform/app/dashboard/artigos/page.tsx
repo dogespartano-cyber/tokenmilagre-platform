@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNewspaper,
   faGraduationCap,
+  faBox,
   faArrowLeft,
   faSpinner,
   faExclamationTriangle,
@@ -38,38 +39,65 @@ interface Article {
   };
 }
 
+interface Resource {
+  id: string;
+  slug: string;
+  name: string;
+  shortDescription: string;
+  category: string;
+  type: 'resource';
+  verified: boolean;
+  createdAt: string;
+}
+
+type ContentItem = Article | Resource;
+
 export default function GerenciarArtigosPage() {
   const router = useRouter();
   const [articles, setArticles] = useState<Article[]>([]);
+  const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
 
   // Filters
   const [search, setSearch] = useState('');
-  const [typeFilter, setTypeFilter] = useState<'all' | 'news' | 'educational'>('all');
+  const [typeFilter, setTypeFilter] = useState<'all' | 'news' | 'educational' | 'resource'>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
 
   useEffect(() => {
-    fetchArticles();
+    fetchContent();
   }, []);
 
-  const fetchArticles = async () => {
+  const fetchContent = async () => {
     try {
       setLoading(true);
-      const params = new URLSearchParams({
+
+      // Fetch articles
+      const articlesParams = new URLSearchParams({
         published: 'all',
         limit: '100'
       });
+      const articlesResponse = await fetch(`/api/admin/articles?${articlesParams}`);
+      const articlesData = await articlesResponse.json();
 
-      const response = await fetch(`/api/admin/articles?${params}`);
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error || 'Erro ao buscar artigos');
+      if (!articlesData.success) {
+        throw new Error(articlesData.error || 'Erro ao buscar artigos');
       }
 
-      setArticles(data.data);
+      // Fetch resources
+      const resourcesResponse = await fetch('/api/resources');
+      const resourcesData = await resourcesResponse.json();
+
+      if (!resourcesData.success) {
+        throw new Error(resourcesData.error || 'Erro ao buscar recursos');
+      }
+
+      setArticles(articlesData.data);
+      setResources(resourcesData.data.map((r: any) => ({
+        ...r,
+        type: 'resource' as const
+      })));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro desconhecido');
     } finally {
@@ -77,26 +105,31 @@ export default function GerenciarArtigosPage() {
     }
   };
 
-  const handleDelete = async (slug: string, title: string) => {
+  const handleDelete = async (slug: string, title: string, type: 'article' | 'resource') => {
     if (!confirm(`Tem certeza que deseja deletar "${title}"?`)) {
       return;
     }
 
     setDeleting(slug);
     try {
-      const response = await fetch(`/api/articles/${slug}`, {
+      const endpoint = type === 'resource' ? `/api/resources/${slug}` : `/api/articles/${slug}`;
+      const response = await fetch(endpoint, {
         method: 'DELETE'
       });
 
       const data = await response.json();
 
       if (!data.success) {
-        throw new Error(data.error || 'Erro ao deletar artigo');
+        throw new Error(data.error || 'Erro ao deletar');
       }
 
       // Remove from list
-      setArticles(articles.filter(a => a.slug !== slug));
-      alert('Artigo deletado com sucesso!');
+      if (type === 'resource') {
+        setResources(resources.filter(r => r.slug !== slug));
+      } else {
+        setArticles(articles.filter(a => a.slug !== slug));
+      }
+      alert('Item deletado com sucesso!');
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Erro ao deletar');
     } finally {
@@ -127,27 +160,58 @@ export default function GerenciarArtigosPage() {
     }
   };
 
-  // Filter articles
-  const filteredArticles = articles.filter(article => {
+  const handleEdit = (item: ContentItem) => {
+    // Determine type
+    let itemType = 'news';
+    if ('type' in item && item.type === 'resource') {
+      itemType = 'resource';
+    } else if ('type' in item && item.type === 'educational') {
+      itemType = 'educational';
+    }
+
+    // Redirect to editor page
+    router.push(`/dashboard/editor?type=${itemType}&slug=${item.slug}`);
+  };
+
+  // Unify and filter content
+  const allContent: ContentItem[] = [
+    ...articles,
+    ...resources
+  ];
+
+  const filteredContent = allContent.filter(item => {
     // Search filter
-    if (search && !article.title.toLowerCase().includes(search.toLowerCase())) {
+    const title = 'title' in item ? item.title : item.name;
+    if (search && !title.toLowerCase().includes(search.toLowerCase())) {
       return false;
     }
 
     // Type filter
-    if (typeFilter !== 'all' && article.type !== typeFilter) {
+    if (typeFilter !== 'all' && item.type !== typeFilter) {
       return false;
     }
 
-    // Status filter
-    if (statusFilter === 'published' && !article.published) {
-      return false;
-    }
-    if (statusFilter === 'draft' && article.published) {
-      return false;
+    // Status filter (only for articles)
+    if ('published' in item) {
+      if (statusFilter === 'published' && !item.published) {
+        return false;
+      }
+      if (statusFilter === 'draft' && item.published) {
+        return false;
+      }
+    } else {
+      // Resources don't have published status, skip if filtering by draft
+      if (statusFilter === 'draft') {
+        return false;
+      }
     }
 
     return true;
+  });
+
+  // Sort by date
+  const sortedContent = filteredContent.sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 
   return (
@@ -172,10 +236,10 @@ export default function GerenciarArtigosPage() {
                   style={{ color: 'var(--text-primary)' }}
                 >
                   <FontAwesomeIcon icon={faNewspaper} className="mr-3" />
-                  Gerenciar Artigos
+                  Gerenciar Conteúdo
                 </h1>
                 <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-                  {filteredArticles.length} artigo{filteredArticles.length !== 1 ? 's' : ''} encontrado{filteredArticles.length !== 1 ? 's' : ''}
+                  {sortedContent.length} item{sortedContent.length !== 1 ? 's' : ''} encontrado{sortedContent.length !== 1 ? 's' : ''}
                 </p>
               </div>
 
@@ -188,7 +252,7 @@ export default function GerenciarArtigosPage() {
                 }}
               >
                 <FontAwesomeIcon icon={faPlus} />
-                Criar Novo Artigo
+                Criar Novo
               </Link>
             </div>
           </div>
@@ -207,7 +271,7 @@ export default function GerenciarArtigosPage() {
                 <p className="font-semibold text-red-700">Erro</p>
                 <p className="text-sm text-red-600">{error}</p>
                 <button
-                  onClick={fetchArticles}
+                  onClick={fetchContent}
                   className="mt-2 text-sm font-semibold text-red-700 hover:underline"
                 >
                   Tentar novamente
@@ -264,6 +328,7 @@ export default function GerenciarArtigosPage() {
                   <option value="all">Todos</option>
                   <option value="news">Notícias</option>
                   <option value="educational">Educacionais</option>
+                  <option value="resource">Recursos</option>
                 </select>
               </div>
 
@@ -290,7 +355,7 @@ export default function GerenciarArtigosPage() {
             </div>
           </div>
 
-          {/* Articles Table */}
+          {/* Content Table */}
           {loading ? (
             <div className="flex justify-center py-12">
               <FontAwesomeIcon
@@ -332,104 +397,160 @@ export default function GerenciarArtigosPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredArticles.map((article, index) => (
-                      <tr
-                        key={article.id}
-                        className="border-t transition-colors hover:bg-opacity-50"
-                        style={{
-                          borderColor: 'var(--border-light)',
-                          backgroundColor: index % 2 === 0 ? 'transparent' : 'var(--bg-secondary)'
-                        }}
-                      >
-                        <td className="px-6 py-4">
-                          <div>
-                            <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>
-                              {article.title}
-                            </p>
-                            <p className="text-sm truncate max-w-md" style={{ color: 'var(--text-tertiary)' }}>
-                              {article.excerpt}
-                            </p>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span
-                            className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold"
-                            style={{
-                              backgroundColor: article.type === 'news' ? '#dbeafe' : '#fef3c7',
-                              color: article.type === 'news' ? '#1e40af' : '#92400e'
-                            }}
-                          >
-                            <FontAwesomeIcon icon={article.type === 'news' ? faNewspaper : faGraduationCap} className="w-3 h-3" />
-                            {article.type === 'news' ? 'Notícia' : 'Educacional'}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                            {article.category}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <button
-                            onClick={() => handleTogglePublish(article.slug, article.published)}
-                            className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold transition-all hover:opacity-80"
-                            style={{
-                              backgroundColor: article.published ? '#d1fae5' : '#fee2e2',
-                              color: article.published ? '#065f46' : '#991b1b'
-                            }}
-                          >
-                            <FontAwesomeIcon icon={article.published ? faCheckCircle : faTimesCircle} className="w-3 h-3" />
-                            {article.published ? 'Publicado' : 'Rascunho'}
-                          </button>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
-                            {new Date(article.createdAt).toLocaleDateString('pt-BR')}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className="flex items-center justify-end gap-2">
-                            {/* View */}
-                            <Link
-                              href={article.type === 'news' ? `/dashboard/noticias/${article.slug}` : `/educacao/${article.slug}`}
-                              className="p-2 rounded-lg transition-all hover:scale-110"
-                              style={{
-                                backgroundColor: 'var(--bg-secondary)',
-                                color: 'var(--text-primary)'
-                              }}
-                              title="Visualizar"
-                            >
-                              <FontAwesomeIcon icon={faEye} className="w-4 h-4" />
-                            </Link>
+                    {sortedContent.map((item, index) => {
+                      const isResource = 'type' in item && item.type === 'resource';
+                      const title = isResource ? (item as Resource).name : (item as Article).title;
+                      const description = isResource ? (item as Resource).shortDescription : (item as Article).excerpt;
+                      const isPublished = isResource ? (item as Resource).verified : (item as Article).published;
 
-                            {/* Delete */}
-                            <button
-                              onClick={() => handleDelete(article.slug, article.title)}
-                              disabled={deleting === article.slug}
-                              className="p-2 rounded-lg transition-all hover:scale-110 disabled:opacity-50"
+                      let typeIcon = faNewspaper;
+                      let typeLabel = 'Notícia';
+                      let typeBgColor = '#dbeafe';
+                      let typeTextColor = '#1e40af';
+
+                      if (isResource) {
+                        typeIcon = faBox;
+                        typeLabel = 'Recurso';
+                        typeBgColor = '#e0e7ff';
+                        typeTextColor = '#4338ca';
+                      } else if ((item as Article).type === 'educational') {
+                        typeIcon = faGraduationCap;
+                        typeLabel = 'Educacional';
+                        typeBgColor = '#fef3c7';
+                        typeTextColor = '#92400e';
+                      }
+
+                      return (
+                        <tr
+                          key={item.id}
+                          className="border-t transition-colors hover:bg-opacity-50"
+                          style={{
+                            borderColor: 'var(--border-light)',
+                            backgroundColor: index % 2 === 0 ? 'transparent' : 'var(--bg-secondary)'
+                          }}
+                        >
+                          <td className="px-6 py-4">
+                            <div>
+                              <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>
+                                {title}
+                              </p>
+                              <p className="text-sm truncate max-w-md" style={{ color: 'var(--text-tertiary)' }}>
+                                {description}
+                              </p>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span
+                              className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold"
                               style={{
-                                backgroundColor: '#fee2e2',
-                                color: '#991b1b'
+                                backgroundColor: typeBgColor,
+                                color: typeTextColor
                               }}
-                              title="Deletar"
                             >
-                              {deleting === article.slug ? (
-                                <FontAwesomeIcon icon={faSpinner} className="w-4 h-4 animate-spin" />
-                              ) : (
-                                <FontAwesomeIcon icon={faTrash} className="w-4 h-4" />
-                              )}
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                              <FontAwesomeIcon icon={typeIcon} className="w-3 h-3" />
+                              {typeLabel}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                              {item.category}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
+                            {isResource ? (
+                              <span
+                                className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold"
+                                style={{
+                                  backgroundColor: isPublished ? '#d1fae5' : '#fee2e2',
+                                  color: isPublished ? '#065f46' : '#991b1b'
+                                }}
+                              >
+                                <FontAwesomeIcon icon={isPublished ? faCheckCircle : faTimesCircle} className="w-3 h-3" />
+                                {isPublished ? 'Verificado' : 'Não Verificado'}
+                              </span>
+                            ) : (
+                              <button
+                                onClick={() => handleTogglePublish(item.slug, (item as Article).published)}
+                                className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold transition-all hover:opacity-80"
+                                style={{
+                                  backgroundColor: isPublished ? '#d1fae5' : '#fee2e2',
+                                  color: isPublished ? '#065f46' : '#991b1b'
+                                }}
+                              >
+                                <FontAwesomeIcon icon={isPublished ? faCheckCircle : faTimesCircle} className="w-3 h-3" />
+                                {isPublished ? 'Publicado' : 'Rascunho'}
+                              </button>
+                            )}
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                              {new Date(item.createdAt).toLocaleDateString('pt-BR')}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex items-center justify-end gap-2">
+                              {/* View */}
+                              <Link
+                                href={
+                                  isResource
+                                    ? `/recursos/${item.slug}`
+                                    : (item as Article).type === 'news'
+                                    ? `/dashboard/noticias/${item.slug}`
+                                    : `/educacao/${item.slug}`
+                                }
+                                className="p-2 rounded-lg transition-all hover:scale-110"
+                                style={{
+                                  backgroundColor: 'var(--bg-secondary)',
+                                  color: 'var(--text-primary)'
+                                }}
+                                title="Visualizar"
+                              >
+                                <FontAwesomeIcon icon={faEye} className="w-4 h-4" />
+                              </Link>
+
+                              {/* Edit */}
+                              <button
+                                onClick={() => handleEdit(item)}
+                                className="p-2 rounded-lg transition-all hover:scale-110"
+                                style={{
+                                  backgroundColor: '#dbeafe',
+                                  color: '#1e40af'
+                                }}
+                                title="Editar com IA"
+                              >
+                                <FontAwesomeIcon icon={faEdit} className="w-4 h-4" />
+                              </button>
+
+                              {/* Delete */}
+                              <button
+                                onClick={() => handleDelete(item.slug, title, isResource ? 'resource' : 'article')}
+                                disabled={deleting === item.slug}
+                                className="p-2 rounded-lg transition-all hover:scale-110 disabled:opacity-50"
+                                style={{
+                                  backgroundColor: '#fee2e2',
+                                  color: '#991b1b'
+                                }}
+                                title="Deletar"
+                              >
+                                {deleting === item.slug ? (
+                                  <FontAwesomeIcon icon={faSpinner} className="w-4 h-4 animate-spin" />
+                                ) : (
+                                  <FontAwesomeIcon icon={faTrash} className="w-4 h-4" />
+                                )}
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
 
                 {/* Empty State */}
-                {filteredArticles.length === 0 && !loading && (
+                {sortedContent.length === 0 && !loading && (
                   <div className="py-12 text-center">
                     <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-                      Nenhum artigo encontrado
+                      Nenhum conteúdo encontrado
                     </p>
                   </div>
                 )}

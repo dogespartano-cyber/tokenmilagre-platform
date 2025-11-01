@@ -6,6 +6,9 @@ import { prisma } from '@/lib/prisma';
 // Cache ISR: Revalida a cada 1 hora (artigos educacionais mudam raramente)
 export const revalidate = 3600;
 
+// Permite gerar páginas dinamicamente para slugs não pré-gerados
+export const dynamicParams = true;
+
 // Gera páginas estáticas em build time para todos os artigos educacionais
 export async function generateStaticParams() {
   const articles = await prisma.article.findMany({

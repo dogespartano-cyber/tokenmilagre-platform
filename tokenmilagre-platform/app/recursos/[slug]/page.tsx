@@ -3,6 +3,12 @@ import Script from 'next/script';
 import { getResourceBySlug, getAllResourceSlugs } from '@/lib/resources';
 import ResourceDetailClient from './ResourceDetailClient';
 
+// Cache ISR: Revalida a cada 1 hora
+export const revalidate = 3600;
+
+// Permite gerar páginas dinamicamente para slugs não pré-gerados
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   const slugs = await getAllResourceSlugs();
   return slugs.map((slug) => ({

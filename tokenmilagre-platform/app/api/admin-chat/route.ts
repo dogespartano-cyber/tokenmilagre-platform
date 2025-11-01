@@ -385,7 +385,8 @@ export async function POST(request: NextRequest) {
         top_p: 0.9,
         max_tokens: 2000,
         search_recency_filter: modelConfig.search_recency_filter,
-        return_related_questions: true // Sempre retornar perguntas relacionadas
+        return_related_questions: true, // Sempre retornar perguntas relacionadas
+        return_citations: false // Desativa referências [1][2][3]
       },
       apiKey
     );
