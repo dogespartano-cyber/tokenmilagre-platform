@@ -42,11 +42,27 @@ export default function CriarArtigoPage() {
   const [refining, setRefining] = useState(false);
   const [copiedRaw, setCopiedRaw] = useState(false);
   const [copiedProcessed, setCopiedProcessed] = useState(false);
+  const [generatingCover, setGeneratingCover] = useState(false);
 
   // Garantir que a página sempre inicie no topo
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // 🐛 DEBUG: Monitorar mudanças na coverImage
+  useEffect(() => {
+    if (generatedArticle?.coverImage) {
+      console.log('🖼️ [DEBUG RENDER] generatedArticle.coverImage mudou:');
+      console.log('- Valor:', generatedArticle.coverImage);
+      console.log('- Tipo:', typeof generatedArticle.coverImage);
+      console.log('- É array:', Array.isArray(generatedArticle.coverImage));
+      if (typeof generatedArticle.coverImage === 'string') {
+        console.log('- Comprimento:', generatedArticle.coverImage.length);
+        console.log('- É URL (/images/):', generatedArticle.coverImage.startsWith('/images/'));
+        console.log('- É base64 (data:):', generatedArticle.coverImage.startsWith('data:'));
+      }
+    }
+  }, [generatedArticle?.coverImage]);
 
   // Auto-scroll ao adicionar mensagens (somente dentro do container do chat)
   useEffect(() => {
@@ -195,8 +211,15 @@ export default function CriarArtigoPage() {
     if (!rawArticle) return;
 
     setProcessing(true);
+    setGeneratingCover(true);
 
     try {
+      // Feedback no chat
+      setConversation(prev => [...prev, {
+        role: 'assistant',
+        content: '⚙️ **Processando artigo com Gemini...**\n\n1. Refinando conteúdo\n2. 🎨 Gerando imagem de capa personalizada\n3. Validando qualidade\n\nAguarde alguns segundos...'
+      }]);
+
       const geminiResponse = await fetch('/api/process-gemini', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -214,6 +237,23 @@ export default function CriarArtigoPage() {
       const { article: processedArticle } = await geminiResponse.json();
 
       // Salvar artigo processado
+      // 🐛 DEBUG: Ver dados da imagem
+      console.log('🖼️ [DEBUG] Artigo processado recebido:');
+      console.log('- coverImage:', processedArticle.coverImage);
+      console.log('- coverImageAlt:', processedArticle.coverImageAlt);
+      console.log('- Tipo da coverImage:', typeof processedArticle.coverImage);
+
+      // 🔧 FIX: Se coverImage for array, pegar apenas primeiro elemento
+      if (Array.isArray(processedArticle.coverImage)) {
+        console.warn('⚠️ coverImage veio como array! Pegando primeiro elemento.');
+        processedArticle.coverImage = processedArticle.coverImage[0];
+      }
+
+      console.log('- Após normalização:', processedArticle.coverImage);
+      console.log('- Começa com /images/:', processedArticle.coverImage?.startsWith('/images/'));
+      console.log('- Começa com data:image:', processedArticle.coverImage?.startsWith('data:image'));
+      console.log('- Primeiros 100 chars:', processedArticle.coverImage?.substring(0, 100));
+
       setGeneratedArticle({
         ...processedArticle,
         type: selectedType
@@ -222,10 +262,14 @@ export default function CriarArtigoPage() {
       // Limpar artigo bruto
       setRawArticle(null);
 
-      // Adicionar confirmação no chat
-      setConversation(prev => [...prev, {
+      // Adicionar confirmação no chat com info sobre capa
+      const coverMessage = processedArticle.coverImage
+        ? '\n\n🎨 **Imagem de capa gerada com sucesso!** A capa aparecerá no artigo publicado.'
+        : '\n\n⚠️ Não foi possível gerar a imagem de capa (não crítico).';
+
+      setConversation(prev => [...prev.slice(0, -1), {
         role: 'assistant',
-        content: '✅ **Artigo processado com Gemini!**\n\nConfira o preview completo abaixo. Você pode refiná-lo usando a caixa de edição no card de preview.'
+        content: `✅ **Artigo processado com Gemini!**${coverMessage}\n\nConfira o preview completo abaixo. Você pode refiná-lo usando a caixa de edição no card de preview.`
       }]);
 
     } catch (error: any) {
@@ -236,6 +280,7 @@ export default function CriarArtigoPage() {
       }]);
     } finally {
       setProcessing(false);
+      setGeneratingCover(false);
     }
   };
 
@@ -752,12 +797,12 @@ export default function CriarArtigoPage() {
                         {processing ? (
                           <>
                             <FontAwesomeIcon icon={faSpinner} spin />
-                            Processando...
+                            {generatingCover ? 'Gerando capa...' : 'Processando...'}
                           </>
                         ) : (
                           <>
                             <FontAwesomeIcon icon={faCheck} />
-                            Processar com Gemini
+                            Processar com Gemini + Gerar Capa 🎨
                           </>
                         )}
                       </button>
@@ -861,9 +906,14 @@ export default function CriarArtigoPage() {
                       borderLeft: '4px solid var(--brand-primary)'
                     }}
                   >
-                    <p className="text-sm" style={{ color: 'var(--text-primary)' }}>
-                      ℹ️ Este é o conteúdo gerado pelo Perplexity. Revise e clique em <strong>"Processar com Gemini"</strong> para aplicar melhorias de formatação e qualidade.
+                    <p className="text-sm mb-2" style={{ color: 'var(--text-primary)' }}>
+                      ℹ️ Este é o conteúdo gerado pelo Perplexity. Revise e clique em <strong>"Processar com Gemini + Gerar Capa 🎨"</strong> para:
                     </p>
+                    <ul className="text-sm space-y-1 ml-4" style={{ color: 'var(--text-primary)' }}>
+                      <li>✅ Aplicar melhorias de formatação e qualidade</li>
+                      <li>🎨 Gerar imagem de capa personalizada com IA</li>
+                      <li>🔍 Validar estrutura do conteúdo</li>
+                    </ul>
                   </div>
                 </div>
               )}
@@ -878,12 +928,22 @@ export default function CriarArtigoPage() {
                   }}
                 >
                   <div className="flex items-center justify-between mb-6">
-                    <h2
-                      className="text-2xl font-bold font-[family-name:var(--font-poppins)]"
-                      style={{ color: 'var(--text-primary)' }}
-                    >
-                      Preview do Artigo
-                    </h2>
+                    <div className="flex items-center gap-3">
+                      <h2
+                        className="text-2xl font-bold font-[family-name:var(--font-poppins)]"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        Preview do Artigo
+                      </h2>
+                      {generatedArticle.coverImage && (
+                        <span className="px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1" style={{
+                          backgroundColor: '#10B981',
+                          color: 'white'
+                        }}>
+                          🎨 Com capa
+                        </span>
+                      )}
+                    </div>
                     <div className="flex gap-3">
                       <button
                         onClick={handleCopyProcessedArticle}
@@ -919,6 +979,27 @@ export default function CriarArtigoPage() {
                       </button>
                     </div>
                   </div>
+
+                  {/* Imagem de Capa Preview */}
+                  {generatedArticle.coverImage && (
+                    <div className="mb-6 rounded-xl overflow-hidden shadow-lg">
+                      {/* 🐛 DEBUG: Log antes de renderizar */}
+                      {console.log('🖼️ [DEBUG IMG TAG] Renderizando <img> com src:', generatedArticle.coverImage)}
+                      <img
+                        src={generatedArticle.coverImage}
+                        alt={generatedArticle.coverImageAlt || generatedArticle.title || 'Capa do artigo'}
+                        className="w-full h-[300px] object-cover"
+                        onError={(e) => {
+                          console.error('❌ [DEBUG IMG TAG] Erro ao carregar imagem!');
+                          console.error('- src tentado:', generatedArticle.coverImage);
+                          console.error('- Evento de erro:', e);
+                        }}
+                        onLoad={() => {
+                          console.log('✅ [DEBUG IMG TAG] Imagem carregada com sucesso!');
+                        }}
+                      />
+                    </div>
+                  )}
 
                   {/* Metadata */}
                   <div className="mb-6 pb-4 border-b" style={{ borderColor: 'var(--border-light)' }}>

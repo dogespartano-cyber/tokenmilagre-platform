@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { generateCoverImage, estimateImageSize } from '@/lib/gemini-image';
+import { saveCoverImage, generateImageAltText, validateImageSize } from '@/lib/image-utils';
 
 export async function POST(request: NextRequest) {
   try {
@@ -272,7 +274,120 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 10. Retornar artigo processado
+    // 10. Gerar imagem de capa (apenas para news e educational)
+    let coverImageUrl: string | undefined;
+    let coverImageAlt: string | undefined;
+    const coverGenerationLog: string[] = [];
+
+    // Verificar se geração de capas está habilitada
+    const ENABLE_COVER_GENERATION = process.env.ENABLE_COVER_GENERATION !== 'false';
+
+    if (ENABLE_COVER_GENERATION && articleType !== 'resource' && processedArticle.title && processedArticle.slug) {
+      try {
+        console.log('========================================');
+        console.log('🎨 INÍCIO - Geração de Imagem de Capa');
+        console.log('========================================');
+        console.log('Título:', processedArticle.title);
+        console.log('Slug:', processedArticle.slug);
+        console.log('Categoria:', processedArticle.category || 'default');
+        console.log('Sentiment:', processedArticle.sentiment);
+        console.log('Tipo:', articleType);
+        coverGenerationLog.push('Iniciando geração de capa');
+
+        const imageResult = await generateCoverImage(
+          {
+            title: processedArticle.title,
+            category: processedArticle.category || 'default',
+            sentiment: processedArticle.sentiment,
+            articleType
+          },
+          GEMINI_API_KEY
+        );
+
+        console.log('📊 Resultado da API Gemini Image:');
+        console.log('- Success:', imageResult.success);
+        console.log('- Tem imageBase64:', !!imageResult.imageBase64);
+        console.log('- MimeType:', imageResult.mimeType);
+        console.log('- Erro:', imageResult.error);
+        coverGenerationLog.push(`API chamada: ${imageResult.success ? 'sucesso' : 'falha'}`);
+
+        if (imageResult.success && imageResult.imageBase64) {
+          console.log('✅ Imagem gerada pela API com sucesso');
+
+          const imageSize = estimateImageSize(imageResult.imageBase64);
+          const imageSizeMB = (imageSize / (1024 * 1024)).toFixed(2);
+          console.log(`📦 Tamanho da imagem: ${imageSizeMB} MB (${imageSize} bytes)`);
+          coverGenerationLog.push(`Tamanho: ${imageSizeMB} MB`);
+
+          // Validar tamanho da imagem (máx 2MB)
+          if (validateImageSize(imageResult.imageBase64, 2)) {
+            console.log('✅ Tamanho validado (< 2MB)');
+            coverGenerationLog.push('Tamanho validado');
+
+            // Salvar imagem no filesystem
+            console.log('💾 Salvando imagem no filesystem...');
+            const saveResult = await saveCoverImage({
+              imageBase64: imageResult.imageBase64,
+              mimeType: imageResult.mimeType || 'image/jpeg',
+              slug: processedArticle.slug,
+              articleType
+            });
+
+            console.log('📊 Resultado do salvamento:');
+            console.log('- Success:', saveResult.success);
+            console.log('- URL:', saveResult.url);
+            console.log('- Erro:', saveResult.error);
+            coverGenerationLog.push(`Salvamento: ${saveResult.success ? 'sucesso' : 'falha'}`);
+
+            if (saveResult.success && saveResult.url) {
+              coverImageUrl = saveResult.url;
+              coverImageAlt = generateImageAltText(
+                processedArticle.title,
+                processedArticle.category || 'crypto',
+                articleType
+              );
+
+              console.log('✅✅✅ SUCESSO COMPLETO! ✅✅✅');
+              console.log('🖼️ URL da capa:', coverImageUrl);
+              console.log('📝 Alt text:', coverImageAlt);
+              coverGenerationLog.push(`✅ Capa gerada: ${coverImageUrl}`);
+            } else {
+              console.error('❌ ERRO ao salvar imagem:', saveResult.error);
+              coverGenerationLog.push(`❌ Erro ao salvar: ${saveResult.error}`);
+            }
+          } else {
+            console.warn(`⚠️ Imagem muito grande (${imageSizeMB} MB > 2 MB), pulando geração`);
+            coverGenerationLog.push(`⚠️ Imagem muito grande: ${imageSizeMB} MB`);
+          }
+        } else {
+          console.error('❌ API não retornou imagem:', imageResult.error);
+          coverGenerationLog.push(`❌ API falhou: ${imageResult.error}`);
+        }
+      } catch (imageError: any) {
+        // Não bloquear publicação se imagem falhar
+        console.error('❌❌❌ EXCEÇÃO na geração de capa:', imageError);
+        console.error('Stack:', imageError.stack);
+        coverGenerationLog.push(`❌ Exceção: ${imageError.message}`);
+      } finally {
+        console.log('========================================');
+        console.log('🏁 FIM - Geração de Imagem de Capa');
+        console.log('Log completo:', coverGenerationLog.join(' → '));
+        console.log('========================================');
+      }
+    } else if (!ENABLE_COVER_GENERATION) {
+      console.log('⏭️ Pulando geração de capa (ENABLE_COVER_GENERATION=false)');
+      console.log('ℹ️  Para habilitar, defina ENABLE_COVER_GENERATION=true no .env');
+    } else {
+      console.log('⏭️ Pulando geração de capa (tipo: resource ou dados insuficientes)');
+    }
+
+    // 11. Adicionar campos de imagem ao artigo processado
+    if (coverImageUrl) {
+      processedArticle.coverImage = coverImageUrl;
+      processedArticle.coverImageAlt = coverImageAlt;
+    }
+
+    // 12. Retornar artigo processado
     return NextResponse.json({
       success: true,
       article: processedArticle
