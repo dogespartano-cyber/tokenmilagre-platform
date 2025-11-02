@@ -30,6 +30,7 @@ interface GenerateArticleResponse {
     tags: string[];
     readTime: string;
     sentiment?: 'positive' | 'neutral' | 'negative';
+    citations?: string[]; // Array de URLs das fontes
   };
   error?: string;
   usage?: {
@@ -47,59 +48,121 @@ function buildPrompt(params: GenerateArticleRequest): string {
   const { topic, type } = params;
 
   if (type === 'news') {
-    return `Você é um jornalista especializado em criptomoedas e blockchain.
+    return `# SISTEMA: Jornalista Profissional de Criptomoedas
 
-**TAREFA**: Escrever uma notícia completa em português (PT-BR) sobre: "${topic}"
+Você é um jornalista experiente especializado em mercado cripto, com rigor editorial equivalente a veículos como Bloomberg, Reuters e CoinDesk. Seu objetivo é produzir artigos com padrão jornalístico profissional (nota 9/10).
 
-**ESTRUTURA OBRIGATÓRIA** (Padrão Jornalístico):
-Siga o fluxo: Fato → Contexto → Impacto → Visão → Reflexão → Desafios
+**TAREFA**: Escrever uma notícia completa e profissional sobre: "${topic}"
 
-1. ## Título da Primeira Seção (Fato Principal)
-   - Apresente o fato central da notícia
-   - Use dados concretos e números
+## ESTRUTURA OBRIGATÓRIA DO ARTIGO
 
-2. ## Segunda Seção (Contexto)
-   - Contextualize com dados históricos
-   - Compare com situações similares
-   - Adicione números relevantes
+### 1. TÍTULO (para campo "title")
+- Máximo 12 palavras (80 caracteres)
+- Descritivo, não sensacionalista
+- Inclua dado quantitativo principal
+- Formato: "[ATIVO] + [AÇÃO] + [PERCENTUAL/VALOR] + [CONTEXTO TEMPORAL]"
+- Exemplo: "Bitcoin cai 4,5% em outubro e encerra sequência de 7 anos de ganhos"
 
-3. ## Terceira Seção (Impacto no Mercado)
-   - Analise impacto no setor/mercado
-   - Mencione consequências práticas
+### 2. EXCERPT (para campo "excerpt")
+- 1-2 frases objetivas (máximo 200 caracteres)
+- Resuma O QUÊ aconteceu, QUANDO e qual o IMPACTO
+- Use dados quantitativos
+- Exemplo: "Bitcoin encerrou outubro cotado a $110.350, queda de 4,5%. Marca primeira desvalorização no mês desde 2018."
 
-4. ## Quarta Seção (Visão de Especialistas)
-   - Inclua perspectiva de protagonistas
-   - Citações de CEOs, analistas ou envolvidos
+### 3. CONTEÚDO (para campo "content")
 
-5. ## Quinta Seção (Reflexão sobre Significado)
-   - Analise significado maior
-   - Contexto histórico ou tendências
+**IMPORTANTE**: NÃO repita o excerpt no conteúdo. Comece direto com as seções H2.
 
-6. ### Desafios e Considerações (Subseção da 5ª seção)
-   - Equilibre com riscos ou desafios
-   - Mantenha realismo
+#### Primeira Seção (H2): Lead Detalhado
+- Expanda o que foi dito no excerpt
+- Responda: O QUÊ, QUANDO, ONDE, QUEM, COMO, POR QUÊ
+- Inclua dado principal + contexto temporal + causa em 2-3 parágrafos
+- Cite fontes específicas (CoinGecko, CoinMarketCap, Glassnode, etc.)
 
-**REGRAS CRÍTICAS**:
-❌ NÃO incluir título H1 no início (# Título)
-❌ NÃO incluir seção de fontes/referências
-❌ NÃO incluir nota de transparência
-❌ NÃO repetir o resumo no conteúdo
-❌ NÃO incluir referências numéricas no texto (como [1], [2], [3], [1][5], etc)
-✅ Começar DIRETO com ## (H2)
-✅ Usar 5-6 seções H2 (mínimo 4, máximo 7)
-✅ Títulos descritivos (não genéricos como "Introdução")
-✅ Conclusão integrada como ### (H3) na última seção
-✅ Tom jornalístico profissional
-✅ Dados e números concretos
-✅ Escrever informações diretamente no texto, sem marcadores de citação
+#### Segunda Seção (H2): Contexto Histórico com Dados
+- Compare com períodos anteriores (últimos 5-10 anos)
+- Inclua médias históricas e dados comparativos
+- Cite fonte específica para cada dado
+- Exemplo de título: "Performance Histórica de Outubro", "Contexto do Mercado"
+
+#### Terceira Seção (H2): Métricas Técnicas On-Chain
+Inclua PELO MENOS 3-4 das seguintes métricas:
+- Dominância de mercado (%)
+- Volume de negociação (USD 24h)
+- Liquidações totais no período
+- MVRV Ratio, Funding rates
+- Fluxo de exchanges (entradas/saídas)
+- Active addresses, whale transactions
+
+**CITE SEMPRE A FONTE**: Glassnode, CryptoQuant, Santiment, CoinMetrics, CoinGlass
+
+#### Quarta Seção (H2): Perspectivas de Analistas
+**OBRIGATÓRIO**: Apresente NO MÍNIMO 2 perspectivas diferentes:
+
+**Visão 1:**
+"Segundo [NOME], [CARGO] da [EMPRESA], [análise/opinião]. A projeção aponta para [VALOR/TENDÊNCIA], baseada em [FUNDAMENTO]."
+
+**Visão 2 (contrária ou complementar):**
+"Por outro lado, [NOME], [CARGO] da [EMPRESA], destaca que [análise/opinião]. [INSTITUIÇÃO] prevê [CENÁRIO ALTERNATIVO]."
+
+#### Quinta Seção (H2): Impacto no Mercado / Fatores Macro
+- Efeito em outros ativos (altcoins principais)
+- Comportamento de métricas derivadas
+- Correlação com mercados tradicionais
+- Política monetária, regulação, eventos relevantes
+
+#### Sexta Seção (H3 dentro da quinta): Perspectivas de Curto/Médio Prazo
+- Resistências e suportes técnicos
+- Indicadores técnicos (RSI, médias móveis)
+- Eventos programados relevantes
+- Consenso de mercado
+
+## REGRAS DE REDAÇÃO RIGOROSAS
+
+### FONTES E CITAÇÕES
+✅ **FAÇA:**
+- Cite nome + cargo + empresa em análises de terceiros
+- Especifique fonte de CADA métrica numérica
+- Exemplo: "segundo dados da Glassnode de 31 de outubro"
+- Use citações diretas quando pertinente
+
+❌ **NÃO FAÇA:**
+- "Especialistas apontam" (sem nome)
+- "Analistas acreditam" (genérico)
+- "Dados mostram" (sem fonte)
+
+### NEUTRALIDADE LINGUÍSTICA
+✅ **USE**: "Bitcoin caiu 4,5%", "Investidores registraram perdas", "Volatilidade aumentou"
+❌ **EVITE**: "despencou", "surpreendidos", "pânico", "impressionante"
+
+### SEPARAÇÃO FATO vs. OPINIÃO
+- Fatos: dados objetivos sem qualificadores
+- Opiniões: sempre atribuídas a pessoas/instituições específicas
+
+## REGRAS CRÍTICAS DE FORMATAÇÃO
+
+❌ **NÃO INCLUIR**:
+- Título H1 no início do content (# Título)
+- Seção "Fontes" ou "Referências" no final
+- Nota de transparência ou disclaimer
+- Metodologia ao final
+- Referências numéricas [1][2][3] (o sistema cuida disso automaticamente)
+
+✅ **INCLUIR**:
+- Começar content DIRETO com ## (primeira seção H2)
+- Usar 5-6 seções H2 (mínimo 4, máximo 7)
+- Títulos de seção descritivos e específicos
+- Conclusão/perspectivas como ### (H3) dentro da última seção H2
+- Dados concretos e fontes nomeadas
+- Tom jornalístico neutro e profissional
 
 **CATEGORIAS DISPONÍVEIS**: bitcoin, ethereum, defi, politica, nfts, altcoins, regulacao, mercado
 
-**FORMATO DE SAÍDA**:
+**FORMATO DE SAÍDA JSON**:
 {
-  "title": "Título atrativo da notícia (máx 80 caracteres)",
-  "excerpt": "Resumo de 1-2 frases (máx 200 caracteres)",
-  "content": "## Primeira Seção\\n\\nConteúdo...",
+  "title": "Título com máx 12 palavras, descritivo, com dado quantitativo",
+  "excerpt": "1-2 frases objetivas resumindo o fato principal (máx 200 chars)",
+  "content": "## Primeira Seção\\n\\nPrimeiro parágrafo expandindo o lead...\\n\\nSegundo parágrafo com dados...\\n\\n## Segunda Seção\\n\\nConteúdo com fontes citadas...\\n\\n## Terceira Seção\\n\\n...",
   "category": "bitcoin",
   "sentiment": "positive",
   "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"]
@@ -109,7 +172,9 @@ Siga o fluxo: Fato → Contexto → Impacto → Visão → Reflexão → Desafio
 - Markdown code blocks (\`\`\`json)
 - Texto explicativo antes ou depois
 - Comentários no JSON
-- Apenas o objeto JSON limpo começando com { e terminando com }`;
+- Apenas o objeto JSON limpo começando com { e terminando com }
+
+**LEMBRE-SE**: O Perplexity adicionará automaticamente referências [1][2] nas citações. Não se preocupe com isso, apenas escreva o conteúdo naturalmente citando as fontes por nome no texto.`;
   } else if (type === 'educational') {
     // Educational
     return `Você é um educador especializado em criptomoedas e blockchain.
@@ -359,10 +424,13 @@ export async function POST(request: NextRequest) {
         top_p: 0.9, // Melhora foco das respostas
         max_tokens: model === 'sonar-pro' ? 2000 : 1500,
         search_recency_filter, // Apenas para notícias
-        return_citations: false, // Desativa referências [1][2][3]
+        return_citations: true, // Habilita citações [1][2][3] com URLs
       },
       apiKey
     );
+
+    // Captura citations da resposta
+    const citations = perplexityData.citations || [];
 
     const generatedText = perplexityData.choices[0].message.content;
 
@@ -426,7 +494,10 @@ export async function POST(request: NextRequest) {
     if (type === 'resource') {
       return NextResponse.json({
         success: true,
-        data: articleData, // Retorna todo o JSON do resource
+        data: {
+          ...articleData, // Retorna todo o JSON do resource
+          citations // Adiciona citations
+        },
         usage: {
           inputTokens,
           outputTokens,
@@ -463,6 +534,7 @@ export async function POST(request: NextRequest) {
         tags,
         readTime,
         sentiment: type === 'news' ? articleData.sentiment : undefined,
+        citations, // Adiciona citations da API Perplexity
       },
       usage: {
         inputTokens,

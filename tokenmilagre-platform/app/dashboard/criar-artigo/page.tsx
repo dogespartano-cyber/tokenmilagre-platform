@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,11 +12,14 @@ import {
   faArrowLeft,
   faCheck,
   faSpinner,
-  faCopy
+  faCopy,
+  faPen
 } from '@fortawesome/free-solid-svg-icons';
 import AdminRoute from '@/components/AdminRoute';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
+import { processArticleLocally, validateProcessedArticle } from '@/lib/article-processor-client';
+import ArticlePreview from '@/components/admin/ArticlePreview';
 
 type ArticleType = 'news' | 'educational' | 'resource';
 
@@ -24,6 +27,30 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
+
+interface ProcessedArticle {
+  title: string;
+  slug: string;
+  excerpt?: string;
+  description?: string; // Usado em alguns contextos (alias para excerpt)
+  content?: string;
+  category: string;
+  tags?: string | string[];
+  sentiment?: 'positive' | 'neutral' | 'negative';
+  level?: string;
+  readTime?: string;
+  coverImage?: string;
+  coverImageAlt?: string;
+  type?: ArticleType;
+  citations?: string[]; // Array de URLs das fontes do Perplexity
+  // Resource fields
+  name?: string;
+  shortDescription?: string;
+  officialUrl?: string;
+  platforms?: string[];
+}
+
+const isDev = process.env.NODE_ENV === 'development';
 
 export default function CriarArtigoPage() {
   const router = useRouter();
@@ -35,32 +62,29 @@ export default function CriarArtigoPage() {
   const [selectedType, setSelectedType] = useState<ArticleType | null>(null);
   const [loading, setLoading] = useState(false);
   const [conversation, setConversation] = useState<Message[]>([]);
-  const [rawArticle, setRawArticle] = useState<any>(null); // Artigo bruto do Perplexity
-  const [generatedArticle, setGeneratedArticle] = useState<any>(null); // Artigo processado pelo Gemini
+  const [generatedArticle, setGeneratedArticle] = useState<ProcessedArticle | null>(null);
   const [processing, setProcessing] = useState(false);
   const [refinePrompt, setRefinePrompt] = useState('');
   const [refining, setRefining] = useState(false);
-  const [copiedRaw, setCopiedRaw] = useState(false);
   const [copiedProcessed, setCopiedProcessed] = useState(false);
   const [generatingCover, setGeneratingCover] = useState(false);
+  const refineSectionRef = useRef<HTMLDivElement>(null);
 
   // Garantir que a página sempre inicie no topo
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // 🐛 DEBUG: Monitorar mudanças na coverImage
+  // DEBUG: Monitorar mudanças na coverImage (apenas em desenvolvimento)
   useEffect(() => {
-    if (generatedArticle?.coverImage) {
-      console.log('🖼️ [DEBUG RENDER] generatedArticle.coverImage mudou:');
-      console.log('- Valor:', generatedArticle.coverImage);
-      console.log('- Tipo:', typeof generatedArticle.coverImage);
-      console.log('- É array:', Array.isArray(generatedArticle.coverImage));
-      if (typeof generatedArticle.coverImage === 'string') {
-        console.log('- Comprimento:', generatedArticle.coverImage.length);
-        console.log('- É URL (/images/):', generatedArticle.coverImage.startsWith('/images/'));
-        console.log('- É base64 (data:):', generatedArticle.coverImage.startsWith('data:'));
-      }
+    if (isDev && generatedArticle?.coverImage) {
+      console.log('🖼️ [DEBUG RENDER] generatedArticle.coverImage mudou:', {
+        valor: generatedArticle.coverImage.substring(0, 100),
+        tipo: typeof generatedArticle.coverImage,
+        isArray: Array.isArray(generatedArticle.coverImage),
+        isUrl: generatedArticle.coverImage.startsWith('/images/'),
+        isBase64: generatedArticle.coverImage.startsWith('data:')
+      });
     }
   }, [generatedArticle?.coverImage]);
 
@@ -73,11 +97,10 @@ export default function CriarArtigoPage() {
     }
   }, [conversation]);
 
-  // Auto-scroll durante streaming (quando o conteúdo está crescendo)
+  // Auto-scroll durante streaming (otimizado para prevenir vazamento de memória)
   useEffect(() => {
-    if (!chatContainerRef.current || conversation.length === 0) return;
-
     const container = chatContainerRef.current;
+    if (!container) return;
 
     // Função que verifica se deve fazer auto-scroll
     const shouldAutoScroll = () => {
@@ -94,34 +117,179 @@ export default function CriarArtigoPage() {
       }
     };
 
-    // Usar MutationObserver para detectar mudanças no conteúdo
-    const observer = new MutationObserver(() => {
-      scrollToBottom();
-    });
+    // Usar MutationObserver apenas durante loading
+    let observer: MutationObserver | null = null;
 
-    // Observar mudanças no conteúdo do container
-    observer.observe(container, {
-      childList: true,
-      subtree: true,
-      characterData: true
-    });
+    if (loading && conversation.length > 0) {
+      observer = new MutationObserver(scrollToBottom);
+      observer.observe(container, {
+        childList: true,
+        subtree: true,
+        characterData: true
+      });
+    }
 
-    // Cleanup
+    // Cleanup - garantir desconexão do observer
     return () => {
-      observer.disconnect();
+      if (observer) {
+        observer.disconnect();
+      }
     };
-  }, [conversation.length, loading]);
+  }, [loading]); // Dependência otimizada: apenas loading
+
+  // Componentes do ReactMarkdown otimizados com useMemo
+  const markdownComponents = useMemo(() => ({
+    // Parágrafos
+    p: ({ children }: any) => (
+      <p className="mb-3 last:mb-0 break-words" style={{ color: 'inherit' }}>
+        {children}
+      </p>
+    ),
+    // Títulos
+    h1: ({ children }: any) => (
+      <h1 className="text-2xl font-bold mb-3 mt-4" style={{ color: 'inherit' }}>
+        {children}
+      </h1>
+    ),
+    h2: ({ children }: any) => (
+      <h2 className="text-xl font-bold mb-2 mt-4" style={{ color: 'inherit' }}>
+        {children}
+      </h2>
+    ),
+    h3: ({ children }: any) => (
+      <h3 className="text-lg font-bold mb-2 mt-3" style={{ color: 'inherit' }}>
+        {children}
+      </h3>
+    ),
+    // Texto em negrito
+    strong: ({ children }: any) => (
+      <strong className="font-bold" style={{ color: 'inherit' }}>
+        {children}
+      </strong>
+    ),
+    // Texto em itálico
+    em: ({ children }: any) => (
+      <em className="italic" style={{ color: 'inherit' }}>
+        {children}
+      </em>
+    ),
+    // Listas não ordenadas
+    ul: ({ children }: any) => (
+      <ul className="list-disc list-inside mb-3 space-y-1" style={{ color: 'inherit' }}>
+        {children}
+      </ul>
+    ),
+    // Listas ordenadas
+    ol: ({ children }: any) => (
+      <ol className="list-decimal list-inside mb-3 space-y-1" style={{ color: 'inherit' }}>
+        {children}
+      </ol>
+    ),
+    // Itens de lista
+    li: ({ children }: any) => (
+      <li className="mb-1" style={{ color: 'inherit' }}>
+        {children}
+      </li>
+    ),
+    // Links
+    a: ({ children, href }: any) => (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline hover:opacity-80"
+        style={{ color: 'var(--brand-primary)' }}
+      >
+        {children}
+      </a>
+    ),
+    // Código inline
+    code: ({ inline, children }: any) => {
+      if (inline) {
+        return (
+          <code
+            className="px-1.5 py-0.5 rounded text-sm font-mono"
+            style={{
+              backgroundColor: 'var(--bg-secondary)',
+              color: 'var(--text-primary)'
+            }}
+          >
+            {children}
+          </code>
+        );
+      }
+      return (
+        <code className="block break-all whitespace-pre-wrap overflow-x-auto max-w-full text-sm font-mono">
+          {children}
+        </code>
+      );
+    },
+    // Blocos de código
+    pre: ({ children }: any) => (
+      <pre
+        className="break-all whitespace-pre-wrap overflow-x-auto max-w-full p-3 rounded mb-3 text-sm font-mono"
+        style={{
+          backgroundColor: 'var(--bg-secondary)',
+          color: 'var(--text-primary)'
+        }}
+      >
+        {children}
+      </pre>
+    ),
+    // Citações
+    blockquote: ({ children }: any) => (
+      <blockquote
+        className="border-l-4 pl-4 py-2 mb-3 italic"
+        style={{
+          borderColor: 'var(--border-medium)',
+          color: 'var(--text-secondary)'
+        }}
+      >
+        {children}
+      </blockquote>
+    ),
+    // Linha horizontal
+    hr: () => (
+      <hr className="my-4" style={{ borderColor: 'var(--border-light)' }} />
+    ),
+  }), []); // Sem dependências: criado uma vez apenas
 
   const detectJSON = (text: string): any | null => {
-    // Detectar se há JSON na mensagem (com ou sem markdown code blocks)
-    const jsonMatch = text.match(/```json\n?([\s\S]*?)```/) || text.match(/(\{[\s\S]*\})/);
+    if (isDev) {
+      console.log('🔍 [detectJSON] Tentando detectar JSON no texto...');
+      console.log('📄 Primeiros 200 chars:', text.substring(0, 200));
+    }
+
+    // Estratégia 1: Markdown code blocks
+    let jsonMatch = text.match(/```json\n?([\s\S]*?)```/);
     if (jsonMatch) {
+      if (isDev) console.log('✅ JSON encontrado em markdown block');
       try {
-        return JSON.parse(jsonMatch[1]);
+        const parsed = JSON.parse(jsonMatch[1]);
+        if (isDev) console.log('✅ JSON parseado com sucesso:', Object.keys(parsed));
+        return parsed;
       } catch (e) {
-        return null;
+        if (isDev) console.error('❌ Erro ao parsear JSON do markdown:', e);
       }
     }
+
+    // Estratégia 2: Extrair do primeiro { ao último }
+    const firstBrace = text.indexOf('{');
+    const lastBrace = text.lastIndexOf('}');
+
+    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+      const extracted = text.substring(firstBrace, lastBrace + 1);
+      if (isDev) console.log('🔍 Tentando extrair JSON bruto (chars ' + firstBrace + ' a ' + lastBrace + ')');
+      try {
+        const parsed = JSON.parse(extracted);
+        if (isDev) console.log('✅ JSON parseado com sucesso:', Object.keys(parsed));
+        return parsed;
+      } catch (e) {
+        if (isDev) console.error('❌ Erro ao parsear JSON extraído:', e);
+      }
+    }
+
+    if (isDev) console.log('❌ Nenhum JSON válido encontrado');
     return null;
   };
 
@@ -134,7 +302,7 @@ export default function CriarArtigoPage() {
     setLoading(true);
 
     try {
-      // 1. Chamar Perplexity com streaming
+      // 1. Chamar Perplexity
       const response = await fetch('/api/chat-perplexity', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -149,7 +317,78 @@ export default function CriarArtigoPage() {
         throw new Error(errorData.error || 'Erro ao chamar Perplexity');
       }
 
-      // 2. Processar streaming
+      // 2. Se está gerando artigo, resposta é JSON (não streaming)
+      if (selectedType) {
+        const jsonResponse = await response.json();
+        const content = jsonResponse.content;
+        const citations = jsonResponse.citations || [];
+
+        if (isDev) {
+          console.log('📥 Resposta não-streaming recebida');
+          console.log('📝 Content length:', content.length);
+          console.log('📚 Citations:', citations.length);
+        }
+
+        // Adicionar resposta completa à conversa
+        setConversation(prev => [...prev, { role: 'assistant', content }]);
+
+        // Detectar e processar JSON
+        const detectedArticle = detectJSON(content);
+
+        if (detectedArticle) {
+          try {
+            if (isDev) {
+              console.log('📝 Artigo detectado, processando localmente...');
+              console.log('📊 Artigo bruto:', detectedArticle);
+              console.log('📚 Citations a serem adicionadas:', citations);
+            }
+
+            const processedArticle = processArticleLocally(detectedArticle, selectedType!);
+            if (isDev) console.log('🔧 Artigo processado:', processedArticle);
+
+            const validation = validateProcessedArticle(processedArticle, selectedType!);
+            if (isDev) console.log('✅ Validação:', validation);
+
+            if (!validation.valid) {
+              console.warn('⚠️ Artigo com erros de validação:', validation.errors);
+            }
+
+            // Substituir JSON por mensagem de sucesso
+            setConversation(prev => {
+              const newConv = [...prev];
+              newConv[newConv.length - 1] = {
+                role: 'assistant',
+                content: `✨ **Artigo gerado e processado!**\n\n✅ Título: ${processedArticle.title || 'Sem título'}\n✅ Slug: ${processedArticle.slug || 'sem-slug'}\n✅ Tempo de leitura: ${processedArticle.readTime || '1 min'}\n${citations.length > 0 ? `✅ Fontes: ${citations.length} citações` : ''}\n\nO artigo está pronto para publicação! Você pode:\n- **Publicar agora** (recomendado)\n- **Refinar com Gemini** (opcional)\n- **Criar capa com IA** (experimental)`
+              };
+              return newConv;
+            });
+
+            // Adicionar citations ao artigo processado
+            if (isDev) console.log('🎯 Definindo generatedArticle com citations...');
+            setGeneratedArticle({
+              ...processedArticle,
+              type: selectedType,
+              citations // ← ADICIONA CITATIONS AQUI!
+            });
+            if (isDev) console.log('✅ generatedArticle definido com citations!', citations);
+
+          } catch (error: any) {
+            console.error('❌ Erro ao processar artigo localmente:', error);
+            setConversation(prev => [...prev, {
+              role: 'assistant',
+              content: `❌ Erro ao processar artigo: ${error.message}\n\nPor favor, tente novamente.`
+            }]);
+          }
+        } else {
+          if (isDev) console.log('ℹ️ Resposta não contém JSON de artigo');
+        }
+
+        setLoading(false);
+        setProcessing(false);
+        return;
+      }
+
+      // 3. Modo conversa: processar streaming
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
       let accumulatedText = '';
@@ -177,21 +416,50 @@ export default function CriarArtigoPage() {
         const detectedArticle = detectJSON(accumulatedText);
 
         if (detectedArticle) {
-          // Substituir o JSON bruto por uma mensagem bonita
-          setConversation(prev => {
-            const newConv = [...prev];
-            newConv[newConv.length - 1] = {
-              role: 'assistant',
-              content: '✨ **Artigo gerado pelo Perplexity!**\n\nConfira o conteúdo abaixo e clique em "Processar com Gemini" para finalizar.'
-            };
-            return newConv;
-          });
+          try {
+            // Processar artigo localmente (instantâneo, sem Gemini)
+            if (isDev) {
+              console.log('📝 Artigo detectado, processando localmente...');
+              console.log('📊 Artigo bruto:', detectedArticle);
+            }
 
-          // Armazenar artigo bruto do Perplexity
-          setRawArticle({
-            ...detectedArticle,
-            type: selectedType
-          });
+            const processedArticle = processArticleLocally(detectedArticle, selectedType!);
+            if (isDev) console.log('🔧 Artigo processado:', processedArticle);
+
+            const validation = validateProcessedArticle(processedArticle, selectedType!);
+            if (isDev) console.log('✅ Validação:', validation);
+
+            if (!validation.valid) {
+              console.warn('⚠️ Artigo com erros de validação:', validation.errors);
+            }
+
+            // Substituir JSON por mensagem de sucesso
+            setConversation(prev => {
+              const newConv = [...prev];
+              newConv[newConv.length - 1] = {
+                role: 'assistant',
+                content: `✨ **Artigo gerado e processado!**\n\n✅ Título: ${processedArticle.title || 'Sem título'}\n✅ Slug: ${processedArticle.slug || 'sem-slug'}\n✅ Tempo de leitura: ${processedArticle.readTime || '1 min'}\n\nO artigo está pronto para publicação! Você pode:\n- **Publicar agora** (recomendado)\n- **Refinar com Gemini** (opcional)\n- **Criar capa com IA** (experimental)`
+              };
+              return newConv;
+            });
+
+            // Ir direto para artigo processado (sem rawArticle)
+            if (isDev) console.log('🎯 Definindo generatedArticle...');
+            setGeneratedArticle({
+              ...processedArticle,
+              type: selectedType
+            });
+            if (isDev) console.log('✅ generatedArticle definido!');
+
+          } catch (error: any) {
+            console.error('❌ Erro ao processar artigo localmente:', error);
+            setConversation(prev => [...prev, {
+              role: 'assistant',
+              content: `❌ Erro ao processar artigo: ${error.message}\n\nPor favor, tente novamente.`
+            }]);
+          }
+        } else {
+          if (isDev) console.log('ℹ️ Resposta não contém JSON de artigo - é uma conversa normal');
         }
       }
 
@@ -208,23 +476,22 @@ export default function CriarArtigoPage() {
   };
 
   const handleProcessWithGemini = async () => {
-    if (!rawArticle) return;
+    if (!generatedArticle) return;
 
     setProcessing(true);
-    setGeneratingCover(true);
 
     try {
       // Feedback no chat
       setConversation(prev => [...prev, {
         role: 'assistant',
-        content: '⚙️ **Processando artigo com Gemini...**\n\n1. Refinando conteúdo\n2. 🎨 Gerando imagem de capa personalizada\n3. Validando qualidade\n\nAguarde alguns segundos...'
+        content: '✨ **Refinando artigo com Gemini...**\n\n1. Melhorando estrutura e fluidez\n2. Otimizando títulos e formatação\n3. Validando qualidade\n\nAguarde alguns segundos...'
       }]);
 
       const geminiResponse = await fetch('/api/process-gemini', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          article: rawArticle,
+          article: generatedArticle,
           articleType: selectedType
         })
       });
@@ -234,71 +501,30 @@ export default function CriarArtigoPage() {
         throw new Error(errorData.error || 'Erro ao processar com Gemini');
       }
 
-      const { article: processedArticle } = await geminiResponse.json();
+      const { article: refinedArticle } = await geminiResponse.json();
 
-      // Salvar artigo processado
-      // 🐛 DEBUG: Ver dados da imagem
-      console.log('🖼️ [DEBUG] Artigo processado recebido:');
-      console.log('- coverImage:', processedArticle.coverImage);
-      console.log('- coverImageAlt:', processedArticle.coverImageAlt);
-      console.log('- Tipo da coverImage:', typeof processedArticle.coverImage);
-
-      // 🔧 FIX: Se coverImage for array, pegar apenas primeiro elemento
-      if (Array.isArray(processedArticle.coverImage)) {
-        console.warn('⚠️ coverImage veio como array! Pegando primeiro elemento.');
-        processedArticle.coverImage = processedArticle.coverImage[0];
-      }
-
-      console.log('- Após normalização:', processedArticle.coverImage);
-      console.log('- Começa com /images/:', processedArticle.coverImage?.startsWith('/images/'));
-      console.log('- Começa com data:image:', processedArticle.coverImage?.startsWith('data:image'));
-      console.log('- Primeiros 100 chars:', processedArticle.coverImage?.substring(0, 100));
-
+      // Atualizar artigo com versão refinada (preservando capa se existir)
       setGeneratedArticle({
-        ...processedArticle,
+        ...refinedArticle,
+        coverImage: generatedArticle.coverImage || refinedArticle.coverImage,
+        coverImageAlt: generatedArticle.coverImageAlt || refinedArticle.coverImageAlt,
         type: selectedType
       });
 
-      // Limpar artigo bruto
-      setRawArticle(null);
-
-      // Adicionar confirmação no chat com info sobre capa
-      const coverMessage = processedArticle.coverImage
-        ? '\n\n🎨 **Imagem de capa gerada com sucesso!** A capa aparecerá no artigo publicado.'
-        : '\n\n⚠️ Não foi possível gerar a imagem de capa (não crítico).';
-
+      // Confirmação no chat
       setConversation(prev => [...prev.slice(0, -1), {
         role: 'assistant',
-        content: `✅ **Artigo processado com Gemini!**${coverMessage}\n\nConfira o preview completo abaixo. Você pode refiná-lo usando a caixa de edição no card de preview.`
+        content: `✅ **Artigo refinado com Gemini!**\n\nO conteúdo foi otimizado e está pronto para publicação.`
       }]);
 
     } catch (error: any) {
       console.error('Erro ao processar com Gemini:', error);
       setConversation(prev => [...prev, {
         role: 'assistant',
-        content: `❌ Erro ao processar: ${error.message}`
+        content: `❌ Erro ao refinar: ${error.message}`
       }]);
     } finally {
       setProcessing(false);
-      setGeneratingCover(false);
-    }
-  };
-
-  const handleCopyRawArticle = async () => {
-    if (!rawArticle) return;
-
-    try {
-      let textToCopy;
-      if (selectedType === 'resource') {
-        textToCopy = JSON.stringify(rawArticle, null, 2);
-      } else {
-        textToCopy = `# ${rawArticle.title || rawArticle.name}\n\n${rawArticle.excerpt || rawArticle.description || rawArticle.shortDescription || ''}\n\n${rawArticle.content || ''}`;
-      }
-      await navigator.clipboard.writeText(textToCopy);
-      setCopiedRaw(true);
-      setTimeout(() => setCopiedRaw(false), 2000);
-    } catch (error) {
-      console.error('Erro ao copiar:', error);
     }
   };
 
@@ -381,6 +607,11 @@ export default function CriarArtigoPage() {
         ? generatedArticle.tags
         : JSON.stringify(generatedArticle.tags || []);
 
+      // Preparar citations: armazenar em factCheckSources
+      const citationsToSend = generatedArticle.citations && generatedArticle.citations.length > 0
+        ? JSON.stringify(generatedArticle.citations)
+        : undefined;
+
       const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -388,7 +619,8 @@ export default function CriarArtigoPage() {
           ...generatedArticle,
           published: selectedType !== 'resource' ? true : undefined, // published só existe em articles
           authorId: selectedType !== 'resource' ? session.user.id : undefined, // authorId só existe em articles
-          tags: tagsToSend
+          tags: tagsToSend,
+          factCheckSources: selectedType !== 'resource' ? citationsToSend : undefined // citations armazenadas em factCheckSources
         })
       });
 
@@ -455,19 +687,185 @@ export default function CriarArtigoPage() {
                   className="p-6 space-y-4 max-h-[500px] overflow-y-auto overflow-x-hidden"
                 >
                   {conversation.length === 0 && (
-                    <div className="text-center py-20">
+                    <div className="py-12">
                       <div className="text-6xl mb-4">🤖</div>
                       <h3
-                        className="text-xl font-bold mb-2"
+                        className="text-xl font-bold mb-2 text-left"
                         style={{ color: 'var(--text-primary)' }}
                       >
                         {selectedType ? 'Pronto para criar conteúdo!' : 'Olá! Como posso ajudar?'}
                       </h3>
-                      <p style={{ color: 'var(--text-secondary)' }}>
+                      <p className="text-left mb-6" style={{ color: 'var(--text-secondary)' }}>
                         {selectedType
                           ? 'Descreva o que você quer criar e eu vou gerar o artigo completo.'
                           : 'Pergunte sobre análises, notícias recentes ou qualquer tema sobre criptomoedas.'}
                       </p>
+
+                      {/* Sugestões de Prompts */}
+                      {!selectedType && (
+                        <div className="space-y-3">
+                          <p className="text-sm font-semibold text-left mb-3" style={{ color: 'var(--text-tertiary)' }}>
+                            💡 Sugestões rápidas de pesquisa:
+                          </p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                            <button
+                              onClick={() => setPrompt('Liste as 10 notícias mais pesquisadas hoje sobre o mercado cripto')}
+                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
+                              style={{
+                                backgroundColor: 'var(--bg-secondary)',
+                                borderColor: 'var(--border-medium)',
+                                color: 'var(--text-primary)'
+                              }}
+                            >
+                              <div className="text-2xl mb-1">📰</div>
+                              <span className="font-medium text-sm">Top 10 notícias cripto hoje</span>
+                            </button>
+
+                            <button
+                              onClick={() => setPrompt('Faça uma análise do sentimento sobre o mercado cripto no dia de hoje')}
+                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
+                              style={{
+                                backgroundColor: 'var(--bg-secondary)',
+                                borderColor: 'var(--border-medium)',
+                                color: 'var(--text-primary)'
+                              }}
+                            >
+                              <div className="text-2xl mb-1">📊</div>
+                              <span className="font-medium text-sm">Análise de sentimento do mercado</span>
+                            </button>
+
+                            <button
+                              onClick={() => setPrompt('Quais são as principais tendências em DeFi esta semana?')}
+                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
+                              style={{
+                                backgroundColor: 'var(--bg-secondary)',
+                                borderColor: 'var(--border-medium)',
+                                color: 'var(--text-primary)'
+                              }}
+                            >
+                              <div className="text-2xl mb-1">🔥</div>
+                              <span className="font-medium text-sm">Tendências DeFi esta semana</span>
+                            </button>
+
+                            <button
+                              onClick={() => setPrompt('Comparar Bitcoin vs Ethereum: fundamentos e diferenças técnicas')}
+                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
+                              style={{
+                                backgroundColor: 'var(--bg-secondary)',
+                                borderColor: 'var(--border-medium)',
+                                color: 'var(--text-primary)'
+                              }}
+                            >
+                              <div className="text-2xl mb-1">💰</div>
+                              <span className="font-medium text-sm">Bitcoin vs Ethereum</span>
+                            </button>
+
+                            <button
+                              onClick={() => setPrompt('Explicar o que é staking para iniciantes')}
+                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
+                              style={{
+                                backgroundColor: 'var(--bg-secondary)',
+                                borderColor: 'var(--border-medium)',
+                                color: 'var(--text-primary)'
+                              }}
+                            >
+                              <div className="text-2xl mb-1">🚀</div>
+                              <span className="font-medium text-sm">Explicar staking para iniciantes</span>
+                            </button>
+
+                            <button
+                              onClick={() => setPrompt('Quais são as melhores altcoins para investir em 2025?')}
+                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
+                              style={{
+                                backgroundColor: 'var(--bg-secondary)',
+                                borderColor: 'var(--border-medium)',
+                                color: 'var(--text-primary)'
+                              }}
+                            >
+                              <div className="text-2xl mb-1">💎</div>
+                              <span className="font-medium text-sm">Melhores altcoins 2025</span>
+                            </button>
+
+                            <button
+                              onClick={() => setPrompt('Análise técnica do Bitcoin: níveis de suporte e resistência')}
+                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
+                              style={{
+                                backgroundColor: 'var(--bg-secondary)',
+                                borderColor: 'var(--border-medium)',
+                                color: 'var(--text-primary)'
+                              }}
+                            >
+                              <div className="text-2xl mb-1">📈</div>
+                              <span className="font-medium text-sm">Análise técnica Bitcoin</span>
+                            </button>
+
+                            <button
+                              onClick={() => setPrompt('O que são ETFs de Bitcoin e como funcionam?')}
+                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
+                              style={{
+                                backgroundColor: 'var(--bg-secondary)',
+                                borderColor: 'var(--border-medium)',
+                                color: 'var(--text-primary)'
+                              }}
+                            >
+                              <div className="text-2xl mb-1">🏦</div>
+                              <span className="font-medium text-sm">ETFs de Bitcoin explicado</span>
+                            </button>
+
+                            <button
+                              onClick={() => setPrompt('Principais projetos de Layer 2 no Ethereum')}
+                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
+                              style={{
+                                backgroundColor: 'var(--bg-secondary)',
+                                borderColor: 'var(--border-medium)',
+                                color: 'var(--text-primary)'
+                              }}
+                            >
+                              <div className="text-2xl mb-1">⚡</div>
+                              <span className="font-medium text-sm">Layer 2 no Ethereum</span>
+                            </button>
+
+                            <button
+                              onClick={() => setPrompt('Como identificar golpes e scams no mercado cripto')}
+                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
+                              style={{
+                                backgroundColor: 'var(--bg-secondary)',
+                                borderColor: 'var(--border-medium)',
+                                color: 'var(--text-primary)'
+                              }}
+                            >
+                              <div className="text-2xl mb-1">🛡️</div>
+                              <span className="font-medium text-sm">Identificar golpes cripto</span>
+                            </button>
+
+                            <button
+                              onClick={() => setPrompt('Impacto da regulação cripto nos Estados Unidos')}
+                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
+                              style={{
+                                backgroundColor: 'var(--bg-secondary)',
+                                borderColor: 'var(--border-medium)',
+                                color: 'var(--text-primary)'
+                              }}
+                            >
+                              <div className="text-2xl mb-1">⚖️</div>
+                              <span className="font-medium text-sm">Regulação cripto nos EUA</span>
+                            </button>
+
+                            <button
+                              onClick={() => setPrompt('Explicar o que são NFTs e seus casos de uso')}
+                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
+                              style={{
+                                backgroundColor: 'var(--bg-secondary)',
+                                borderColor: 'var(--border-medium)',
+                                color: 'var(--text-primary)'
+                              }}
+                            >
+                              <div className="text-2xl mb-1">🎨</div>
+                              <span className="font-medium text-sm">NFTs e casos de uso</span>
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -488,123 +886,7 @@ export default function CriarArtigoPage() {
                         }}
                       >
                         <div className="prose prose-sm max-w-none">
-                          <ReactMarkdown
-                            components={{
-                              // Parágrafos
-                              p: ({ children }) => (
-                                <p className="mb-3 last:mb-0 break-words" style={{ color: msg.role === 'user' ? 'inherit' : 'var(--text-primary)' }}>
-                                  {children}
-                                </p>
-                              ),
-                              // Títulos
-                              h1: ({ children }) => (
-                                <h1 className="text-2xl font-bold mb-3 mt-4" style={{ color: msg.role === 'user' ? 'inherit' : 'var(--text-primary)' }}>
-                                  {children}
-                                </h1>
-                              ),
-                              h2: ({ children }) => (
-                                <h2 className="text-xl font-bold mb-2 mt-4" style={{ color: msg.role === 'user' ? 'inherit' : 'var(--text-primary)' }}>
-                                  {children}
-                                </h2>
-                              ),
-                              h3: ({ children }) => (
-                                <h3 className="text-lg font-bold mb-2 mt-3" style={{ color: msg.role === 'user' ? 'inherit' : 'var(--text-primary)' }}>
-                                  {children}
-                                </h3>
-                              ),
-                              // Texto em negrito
-                              strong: ({ children }) => (
-                                <strong className="font-bold" style={{ color: msg.role === 'user' ? 'inherit' : 'var(--text-primary)' }}>
-                                  {children}
-                                </strong>
-                              ),
-                              // Texto em itálico
-                              em: ({ children }) => (
-                                <em className="italic" style={{ color: msg.role === 'user' ? 'inherit' : 'var(--text-primary)' }}>
-                                  {children}
-                                </em>
-                              ),
-                              // Listas não ordenadas
-                              ul: ({ children }) => (
-                                <ul className="list-disc list-inside mb-3 space-y-1" style={{ color: msg.role === 'user' ? 'inherit' : 'var(--text-primary)' }}>
-                                  {children}
-                                </ul>
-                              ),
-                              // Listas ordenadas
-                              ol: ({ children }) => (
-                                <ol className="list-decimal list-inside mb-3 space-y-1" style={{ color: msg.role === 'user' ? 'inherit' : 'var(--text-primary)' }}>
-                                  {children}
-                                </ol>
-                              ),
-                              // Itens de lista
-                              li: ({ children }) => (
-                                <li className="mb-1" style={{ color: msg.role === 'user' ? 'inherit' : 'var(--text-primary)' }}>
-                                  {children}
-                                </li>
-                              ),
-                              // Links
-                              a: ({ children, href }) => (
-                                <a
-                                  href={href}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="underline hover:opacity-80"
-                                  style={{ color: msg.role === 'user' ? 'inherit' : 'var(--brand-primary)' }}
-                                >
-                                  {children}
-                                </a>
-                              ),
-                              // Código inline
-                              code: ({ inline, children }: any) => {
-                                if (inline) {
-                                  return (
-                                    <code
-                                      className="px-1.5 py-0.5 rounded text-sm font-mono"
-                                      style={{
-                                        backgroundColor: msg.role === 'user' ? 'rgba(0,0,0,0.2)' : 'var(--bg-secondary)',
-                                        color: msg.role === 'user' ? 'inherit' : 'var(--text-primary)'
-                                      }}
-                                    >
-                                      {children}
-                                    </code>
-                                  );
-                                }
-                                return (
-                                  <code className="block break-all whitespace-pre-wrap overflow-x-auto max-w-full text-sm font-mono">
-                                    {children}
-                                  </code>
-                                );
-                              },
-                              // Blocos de código
-                              pre: ({ children }) => (
-                                <pre
-                                  className="break-all whitespace-pre-wrap overflow-x-auto max-w-full p-3 rounded mb-3 text-sm font-mono"
-                                  style={{
-                                    backgroundColor: msg.role === 'user' ? 'rgba(0,0,0,0.3)' : 'var(--bg-secondary)',
-                                    color: msg.role === 'user' ? 'inherit' : 'var(--text-primary)'
-                                  }}
-                                >
-                                  {children}
-                                </pre>
-                              ),
-                              // Citações
-                              blockquote: ({ children }) => (
-                                <blockquote
-                                  className="border-l-4 pl-4 py-2 mb-3 italic"
-                                  style={{
-                                    borderColor: msg.role === 'user' ? 'rgba(255,255,255,0.3)' : 'var(--border-medium)',
-                                    color: msg.role === 'user' ? 'inherit' : 'var(--text-secondary)'
-                                  }}
-                                >
-                                  {children}
-                                </blockquote>
-                              ),
-                              // Linha horizontal
-                              hr: () => (
-                                <hr className="my-4" style={{ borderColor: msg.role === 'user' ? 'rgba(255,255,255,0.2)' : 'var(--border-light)' }} />
-                              ),
-                            }}
-                          >
+                          <ReactMarkdown components={markdownComponents}>
                             {msg.content}
                           </ReactMarkdown>
                         </div>
@@ -661,6 +943,8 @@ export default function CriarArtigoPage() {
                         borderColor: 'var(--border-medium)',
                         color: 'var(--text-primary)'
                       }}
+                      aria-label="Campo de entrada para conversar com a IA"
+                      aria-describedby="chat-description"
                     />
                     <button
                       onClick={handleSendMessage}
@@ -670,17 +954,24 @@ export default function CriarArtigoPage() {
                         backgroundColor: 'var(--brand-primary)',
                         color: 'var(--text-inverse)'
                       }}
+                      aria-label={loading ? 'Aguardando resposta da IA' : 'Enviar mensagem'}
                     >
                       <FontAwesomeIcon icon={faPaperPlane} />
                     </button>
                   </div>
+                  <span id="chat-description" className="sr-only">
+                    {selectedType
+                      ? `Modo de criação de ${selectedType === 'news' ? 'notícias' : selectedType === 'educational' ? 'artigos educacionais' : 'recursos'} ativado`
+                      : 'Modo de conversa livre ativado'
+                    }
+                  </span>
 
                   {/* Seletor de Tipo - Movido para baixo do input */}
                   <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--border-light)' }}>
                     <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
                       Selecione o tipo de artigo:
                     </h3>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2" role="group" aria-label="Selecione o tipo de artigo">
                       {/* Botão Notícia */}
                       <button
                         onClick={() => setSelectedType(selectedType === 'news' ? null : 'news')}
@@ -691,6 +982,8 @@ export default function CriarArtigoPage() {
                           backgroundColor: selectedType === 'news' ? 'var(--brand-primary)' : 'var(--bg-secondary)',
                           color: selectedType === 'news' ? 'var(--text-inverse)' : 'var(--text-primary)'
                         }}
+                        aria-pressed={selectedType === 'news'}
+                        aria-label={`Criar notícia ${selectedType === 'news' ? '(selecionado)' : ''}`}
                       >
                         <FontAwesomeIcon icon={faNewspaper} />
                         Notícia
@@ -706,6 +999,8 @@ export default function CriarArtigoPage() {
                           backgroundColor: selectedType === 'educational' ? 'var(--brand-primary)' : 'var(--bg-secondary)',
                           color: selectedType === 'educational' ? 'var(--text-inverse)' : 'var(--text-primary)'
                         }}
+                        aria-pressed={selectedType === 'educational'}
+                        aria-label={`Criar artigo educacional ${selectedType === 'educational' ? '(selecionado)' : ''}`}
                       >
                         <FontAwesomeIcon icon={faGraduationCap} />
                         Educação
@@ -721,6 +1016,8 @@ export default function CriarArtigoPage() {
                           backgroundColor: selectedType === 'resource' ? 'var(--brand-primary)' : 'var(--bg-secondary)',
                           color: selectedType === 'resource' ? 'var(--text-inverse)' : 'var(--text-primary)'
                         }}
+                        aria-pressed={selectedType === 'resource'}
+                        aria-label={`Criar recurso ${selectedType === 'resource' ? '(selecionado)' : ''}`}
                       >
                         <FontAwesomeIcon icon={faBox} />
                         Recurso
@@ -757,166 +1054,6 @@ export default function CriarArtigoPage() {
                 </div>
               </div>
 
-              {/* Preview do Artigo Bruto (Perplexity) */}
-              {rawArticle && !generatedArticle && (
-                <div
-                  className="rounded-2xl p-6 border"
-                  style={{
-                    backgroundColor: 'var(--bg-elevated)',
-                    borderColor: 'var(--border-medium)',
-                  }}
-                >
-                  <div className="flex items-center justify-between mb-6">
-                    <h2
-                      className="text-2xl font-bold font-[family-name:var(--font-poppins)]"
-                      style={{ color: 'var(--text-primary)' }}
-                    >
-                      📝 Preview do Perplexity
-                    </h2>
-                    <div className="flex gap-3">
-                      <button
-                        onClick={handleCopyRawArticle}
-                        className="px-4 py-3 rounded-xl font-semibold transition-all hover:opacity-90 flex items-center gap-2"
-                        style={{
-                          backgroundColor: copiedRaw ? '#10B981' : 'var(--bg-secondary)',
-                          color: copiedRaw ? 'white' : 'var(--text-primary)'
-                        }}
-                      >
-                        <FontAwesomeIcon icon={copiedRaw ? faCheck : faCopy} />
-                        {copiedRaw ? 'Copiado!' : 'Copiar'}
-                      </button>
-                      <button
-                        onClick={handleProcessWithGemini}
-                        disabled={processing}
-                        className="px-6 py-3 rounded-xl font-semibold transition-all hover:opacity-90 disabled:opacity-50 flex items-center gap-2"
-                        style={{
-                          backgroundColor: 'var(--brand-primary)',
-                          color: 'var(--text-inverse)'
-                        }}
-                      >
-                        {processing ? (
-                          <>
-                            <FontAwesomeIcon icon={faSpinner} spin />
-                            {generatingCover ? 'Gerando capa...' : 'Processando...'}
-                          </>
-                        ) : (
-                          <>
-                            <FontAwesomeIcon icon={faCheck} />
-                            Processar com Gemini + Gerar Capa 🎨
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Metadata */}
-                  <div className="mb-6 pb-4 border-b" style={{ borderColor: 'var(--border-light)' }}>
-                    <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
-                      {rawArticle.title || rawArticle.name}
-                    </h3>
-                    <p className="mb-3" style={{ color: 'var(--text-secondary)' }}>
-                      {rawArticle.excerpt || rawArticle.description || rawArticle.shortDescription}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-3 py-1 rounded-lg text-sm font-semibold" style={{
-                        backgroundColor: 'var(--brand-primary)',
-                        color: 'var(--text-inverse)'
-                      }}>
-                        {rawArticle.category}
-                      </span>
-                      {rawArticle.sentiment && (
-                        <span className="px-3 py-1 rounded-lg text-sm font-semibold" style={{
-                          backgroundColor: 'var(--bg-secondary)',
-                          color: 'var(--text-primary)'
-                        }}>
-                          {rawArticle.sentiment}
-                        </span>
-                      )}
-                      {rawArticle.level && (
-                        <span className="px-3 py-1 rounded-lg text-sm font-semibold" style={{
-                          backgroundColor: 'var(--bg-secondary)',
-                          color: 'var(--text-primary)'
-                        }}>
-                          {rawArticle.level}
-                        </span>
-                      )}
-                      {rawArticle.readTime && (
-                        <span className="px-3 py-1 rounded-lg text-sm" style={{
-                          backgroundColor: 'var(--bg-secondary)',
-                          color: 'var(--text-tertiary)'
-                        }}>
-                          {rawArticle.readTime}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Content Preview */}
-                  <article className="prose prose-lg max-w-none" style={{ color: 'var(--text-primary)' }}>
-                    {selectedType === 'resource' ? (
-                      // Preview simplificado para Recursos (JSON bruto)
-                      <div className="space-y-4">
-                        <div className="p-4 rounded-lg" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                          <pre className="text-sm overflow-auto" style={{ color: 'var(--text-primary)' }}>
-                            {JSON.stringify(rawArticle, null, 2)}
-                          </pre>
-                        </div>
-                      </div>
-                    ) : (
-                      // Preview para Artigos
-                      <ReactMarkdown
-                        components={{
-                          h2: ({ children }) => (
-                            <h2 className="text-xl font-bold mt-6 mb-3" style={{ color: 'var(--text-primary)' }}>
-                              {children}
-                            </h2>
-                          ),
-                          h3: ({ children }) => (
-                            <h3 className="text-lg font-bold mt-4 mb-2" style={{ color: 'var(--text-primary)' }}>
-                              {children}
-                            </h3>
-                          ),
-                          p: ({ children }) => (
-                            <p className="mb-3" style={{ color: 'var(--text-primary)' }}>
-                              {children}
-                            </p>
-                          ),
-                          ul: ({ children }) => (
-                            <ul className="list-disc list-inside mb-3" style={{ color: 'var(--text-primary)' }}>
-                              {children}
-                            </ul>
-                          ),
-                          ol: ({ children }) => (
-                            <ol className="list-decimal list-inside mb-3" style={{ color: 'var(--text-primary)' }}>
-                              {children}
-                            </ol>
-                          ),
-                        }}
-                      >
-                        {rawArticle.content}
-                      </ReactMarkdown>
-                    )}
-                  </article>
-
-                  {/* Aviso */}
-                  <div
-                    className="mt-6 p-4 rounded-xl"
-                    style={{
-                      backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                      borderLeft: '4px solid var(--brand-primary)'
-                    }}
-                  >
-                    <p className="text-sm mb-2" style={{ color: 'var(--text-primary)' }}>
-                      ℹ️ Este é o conteúdo gerado pelo Perplexity. Revise e clique em <strong>"Processar com Gemini + Gerar Capa 🎨"</strong> para:
-                    </p>
-                    <ul className="text-sm space-y-1 ml-4" style={{ color: 'var(--text-primary)' }}>
-                      <li>✅ Aplicar melhorias de formatação e qualidade</li>
-                      <li>🎨 Gerar imagem de capa personalizada com IA</li>
-                      <li>🔍 Validar estrutura do conteúdo</li>
-                    </ul>
-                  </div>
-                </div>
-              )}
 
               {/* Preview do Artigo (quando gerado) */}
               {generatedArticle && (
@@ -927,8 +1064,8 @@ export default function CriarArtigoPage() {
                     borderColor: 'var(--border-medium)',
                   }}
                 >
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-3">
+                  <div className="mb-6">
+                    <div className="flex items-center gap-3 mb-4">
                       <h2
                         className="text-2xl font-bold font-[family-name:var(--font-poppins)]"
                         style={{ color: 'var(--text-primary)' }}
@@ -944,222 +1081,201 @@ export default function CriarArtigoPage() {
                         </span>
                       )}
                     </div>
-                    <div className="flex gap-3">
+
+                    {/* Ferramentas */}
+                    <div className="flex flex-wrap gap-2 mb-4">
                       <button
-                        onClick={handleCopyProcessedArticle}
-                        className="px-4 py-3 rounded-xl font-semibold transition-all hover:opacity-90 flex items-center gap-2"
-                        style={{
-                          backgroundColor: copiedProcessed ? '#10B981' : 'var(--bg-secondary)',
-                          color: copiedProcessed ? 'white' : 'var(--text-primary)'
+                        onClick={() => {
+                          // Scroll até a caixa de refinamento usando ref
+                          refineSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }}
+                        className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2"
+                        style={{
+                          backgroundColor: 'var(--bg-secondary)',
+                          borderColor: 'var(--border-medium)',
+                          border: '1px solid',
+                          color: 'var(--text-primary)'
+                        }}
+                        aria-label="Scroll até a seção de edição manual do artigo"
                       >
-                        <FontAwesomeIcon icon={copiedProcessed ? faCheck : faCopy} />
-                        {copiedProcessed ? 'Copiado!' : 'Copiar'}
+                        <FontAwesomeIcon icon={faPen} />
+                        Editar Manualmente
                       </button>
+
+                      {selectedType !== 'resource' && (
+                        <button
+                          onClick={async () => {
+                            if (!generatedArticle || !selectedType) return;
+                            setGeneratingCover(true);
+                            try {
+                              const response = await fetch('/api/regenerate-cover', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                  article: generatedArticle,
+                                  articleType: selectedType
+                                })
+                              });
+
+                              if (!response.ok) {
+                                const errorData = await response.json();
+                                throw new Error(errorData.error || 'Erro ao gerar capa');
+                              }
+
+                              const { article } = await response.json();
+                              setGeneratedArticle({ ...article, type: selectedType });
+                              setConversation(prev => [...prev, {
+                                role: 'assistant',
+                                content: '🎨 Capa gerada com sucesso!'
+                              }]);
+                            } catch (error: any) {
+                              console.error('Erro ao gerar capa:', error);
+                              setConversation(prev => [...prev, {
+                                role: 'assistant',
+                                content: `❌ Erro ao gerar capa: ${error.message}`
+                              }]);
+                            } finally {
+                              setGeneratingCover(false);
+                            }
+                          }}
+                          disabled={generatingCover || !selectedType}
+                          className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2 disabled:opacity-50"
+                          style={{
+                            backgroundColor: 'var(--bg-secondary)',
+                            borderColor: 'var(--border-medium)',
+                            border: '1px solid',
+                            color: 'var(--text-primary)'
+                          }}
+                        >
+                          {generatingCover ? (
+                            <>
+                              <FontAwesomeIcon icon={faSpinner} spin />
+                              Gerando...
+                            </>
+                          ) : (
+                            <>
+                              🎨 {generatedArticle.coverImage ? 'Nova Capa' : 'Gerar Capa'}
+                            </>
+                          )}
+                        </button>
+                      )}
+
                       <button
-                        onClick={handlePublish}
+                        onClick={handleProcessWithGemini}
                         disabled={processing}
-                        className="px-6 py-3 rounded-xl font-semibold transition-all hover:opacity-90 disabled:opacity-50 flex items-center gap-2"
+                        className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2 disabled:opacity-50"
                         style={{
-                          backgroundColor: '#10B981',
-                          color: 'white'
+                          backgroundColor: 'var(--bg-secondary)',
+                          borderColor: 'var(--border-medium)',
+                          border: '1px solid',
+                          color: 'var(--text-primary)'
                         }}
+                        aria-label={processing ? 'Refinando artigo com Gemini' : 'Refinar conteúdo do artigo usando Gemini AI'}
                       >
                         {processing ? (
                           <>
                             <FontAwesomeIcon icon={faSpinner} spin />
-                            Publicando...
+                            Refinando...
                           </>
                         ) : (
                           <>
-                            <FontAwesomeIcon icon={faCheck} />
-                            Publicar Artigo
+                            ✨ Refinar com Gemini
                           </>
                         )}
                       </button>
+
+                      <button
+                        onClick={handleCopyProcessedArticle}
+                        className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2"
+                        style={{
+                          backgroundColor: copiedProcessed ? '#10B981' : 'var(--bg-secondary)',
+                          borderColor: 'var(--border-medium)',
+                          border: '1px solid',
+                          color: copiedProcessed ? 'white' : 'var(--text-primary)'
+                        }}
+                        aria-label={copiedProcessed ? 'Conteúdo copiado para área de transferência' : 'Copiar conteúdo do artigo'}
+                      >
+                        <FontAwesomeIcon icon={copiedProcessed ? faCheck : faCopy} />
+                        {copiedProcessed ? 'Copiado!' : 'Copiar'}
+                      </button>
                     </div>
+
+                    {/* Botão Publicar (destaque) */}
+                    <button
+                      onClick={handlePublish}
+                      disabled={processing}
+                      className="px-8 py-3 rounded-xl font-bold text-base transition-all hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg"
+                      style={{
+                        backgroundColor: '#10B981',
+                        color: 'white'
+                      }}
+                      aria-label={processing ? 'Publicando artigo no sistema' : 'Publicar artigo gerado'}
+                    >
+                      {processing ? (
+                        <>
+                          <FontAwesomeIcon icon={faSpinner} spin />
+                          Publicando...
+                        </>
+                      ) : (
+                        <>
+                          <FontAwesomeIcon icon={faCheck} />
+                          Publicar Artigo
+                        </>
+                      )}
+                    </button>
                   </div>
 
-                  {/* Imagem de Capa Preview */}
-                  {generatedArticle.coverImage && (
-                    <div className="mb-6 rounded-xl overflow-hidden shadow-lg">
-                      {/* 🐛 DEBUG: Log antes de renderizar */}
-                      {console.log('🖼️ [DEBUG IMG TAG] Renderizando <img> com src:', generatedArticle.coverImage)}
-                      <img
-                        src={generatedArticle.coverImage}
-                        alt={generatedArticle.coverImageAlt || generatedArticle.title || 'Capa do artigo'}
-                        className="w-full h-[300px] object-cover"
-                        onError={(e) => {
-                          console.error('❌ [DEBUG IMG TAG] Erro ao carregar imagem!');
-                          console.error('- src tentado:', generatedArticle.coverImage);
-                          console.error('- Evento de erro:', e);
-                        }}
-                        onLoad={() => {
-                          console.log('✅ [DEBUG IMG TAG] Imagem carregada com sucesso!');
-                        }}
-                      />
+                  {/* Divisor */}
+                  <div className="border-t my-6" style={{ borderColor: 'var(--border-light)' }}></div>
+
+                  {/* Preview do Artigo (idêntico ao publicado) */}
+                  {selectedType !== 'resource' ? (
+                    <ArticlePreview
+                      article={{
+                        ...generatedArticle,
+                        content: generatedArticle.content || ''
+                      }}
+                      articleType={selectedType!}
+                    />
+                  ) : (
+                    // Preview simplificado para Resources
+                    <div className="space-y-6">
+                      <div className="p-6 rounded-xl border" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-light)' }}>
+                        <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+                          {generatedArticle.name}
+                        </h3>
+                        <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>
+                          {generatedArticle.shortDescription}
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          <span className="px-3 py-1 rounded-lg text-sm font-semibold" style={{
+                            backgroundColor: 'var(--brand-primary)',
+                            color: 'white'
+                          }}>
+                            {generatedArticle.category}
+                          </span>
+                          {generatedArticle.platforms?.map((platform: string, idx: number) => (
+                            <span key={idx} className="px-3 py-1 rounded-lg text-sm" style={{
+                              backgroundColor: 'var(--bg-secondary)',
+                              borderColor: 'var(--border-medium)',
+                              border: '1px solid',
+                              color: 'var(--text-primary)'
+                            }}>
+                              {platform}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                        <p>✅ Resource criado e pronto para publicação</p>
+                        <p className="mt-2">O preview completo estará disponível após a publicação na página de recursos.</p>
+                      </div>
                     </div>
                   )}
 
-                  {/* Metadata */}
-                  <div className="mb-6 pb-4 border-b" style={{ borderColor: 'var(--border-light)' }}>
-                    <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
-                      {generatedArticle.title || generatedArticle.name}
-                    </h3>
-                    <p className="mb-3" style={{ color: 'var(--text-secondary)' }}>
-                      {generatedArticle.excerpt || generatedArticle.description || generatedArticle.shortDescription}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-3 py-1 rounded-lg text-sm font-semibold" style={{
-                        backgroundColor: 'var(--brand-primary)',
-                        color: 'var(--text-inverse)'
-                      }}>
-                        {generatedArticle.category}
-                      </span>
-                      {generatedArticle.sentiment && (
-                        <span className="px-3 py-1 rounded-lg text-sm font-semibold" style={{
-                          backgroundColor: 'var(--bg-secondary)',
-                          color: 'var(--text-primary)'
-                        }}>
-                          {generatedArticle.sentiment}
-                        </span>
-                      )}
-                      {generatedArticle.level && (
-                        <span className="px-3 py-1 rounded-lg text-sm font-semibold" style={{
-                          backgroundColor: 'var(--bg-secondary)',
-                          color: 'var(--text-primary)'
-                        }}>
-                          {generatedArticle.level}
-                        </span>
-                      )}
-                      <span className="px-3 py-1 rounded-lg text-sm" style={{
-                        backgroundColor: 'var(--bg-secondary)',
-                        color: 'var(--text-tertiary)'
-                      }}>
-                        {generatedArticle.readTime}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Content Preview */}
-                  <article className="prose prose-lg max-w-none mb-6" style={{ color: 'var(--text-primary)' }}>
-                    {selectedType === 'resource' ? (
-                      // Preview para Recursos
-                      <div className="space-y-6">
-                        {/* Hero */}
-                        {generatedArticle.heroDescription && (
-                          <div>
-                            <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
-                              Sobre
-                            </h2>
-                            <p style={{ color: 'var(--text-secondary)' }}>{generatedArticle.heroDescription}</p>
-                          </div>
-                        )}
-
-                        {/* Features */}
-                        {generatedArticle.features && generatedArticle.features.length > 0 && (
-                          <div>
-                            <h2 className="text-xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
-                              Principais Funcionalidades
-                            </h2>
-                            <div className="grid gap-3">
-                              {generatedArticle.features.map((feature: any, idx: number) => (
-                                <div key={idx} className="p-3 rounded-lg" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                                  <h3 className="font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
-                                    {feature.title}
-                                  </h3>
-                                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                                    {feature.description}
-                                  </p>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Prós e Contras */}
-                        {(generatedArticle.pros || generatedArticle.cons) && (
-                          <div className="grid md:grid-cols-2 gap-4">
-                            {generatedArticle.pros && (
-                              <div>
-                                <h3 className="font-bold mb-2 text-green-600">Vantagens</h3>
-                                <ul className="list-disc list-inside space-y-1">
-                                  {generatedArticle.pros.map((pro: string, idx: number) => (
-                                    <li key={idx} style={{ color: 'var(--text-secondary)' }}>{pro}</li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                            {generatedArticle.cons && (
-                              <div>
-                                <h3 className="font-bold mb-2 text-orange-600">Desvantagens</h3>
-                                <ul className="list-disc list-inside space-y-1">
-                                  {generatedArticle.cons.map((con: string, idx: number) => (
-                                    <li key={idx} style={{ color: 'var(--text-secondary)' }}>{con}</li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                          </div>
-                        )}
-
-                        {/* Platforms */}
-                        {generatedArticle.platforms && generatedArticle.platforms.length > 0 && (
-                          <div>
-                            <h3 className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
-                              Plataformas
-                            </h3>
-                            <div className="flex flex-wrap gap-2">
-                              {generatedArticle.platforms.map((platform: string, idx: number) => (
-                                <span key={idx} className="px-3 py-1 rounded-lg text-sm" style={{
-                                  backgroundColor: 'var(--bg-secondary)',
-                                  color: 'var(--text-primary)'
-                                }}>
-                                  {platform}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      // Preview para Artigos (News/Educational)
-                      <ReactMarkdown
-                        components={{
-                          h2: ({ children }) => (
-                            <h2 className="text-xl font-bold mt-6 mb-3" style={{ color: 'var(--text-primary)' }}>
-                              {children}
-                            </h2>
-                          ),
-                          h3: ({ children }) => (
-                            <h3 className="text-lg font-bold mt-4 mb-2" style={{ color: 'var(--text-primary)' }}>
-                              {children}
-                            </h3>
-                          ),
-                          p: ({ children }) => (
-                            <p className="mb-3" style={{ color: 'var(--text-primary)' }}>
-                              {children}
-                            </p>
-                          ),
-                          ul: ({ children }) => (
-                            <ul className="list-disc list-inside mb-3" style={{ color: 'var(--text-primary)' }}>
-                              {children}
-                            </ul>
-                          ),
-                          ol: ({ children }) => (
-                            <ol className="list-decimal list-inside mb-3" style={{ color: 'var(--text-primary)' }}>
-                              {children}
-                            </ol>
-                          ),
-                        }}
-                      >
-                        {generatedArticle.content}
-                      </ReactMarkdown>
-                    )}
-                  </article>
-
                   {/* Caixa de Refinamento */}
                   <div
+                    ref={refineSectionRef}
                     className="mt-6 pt-6 border-t"
                     style={{ borderColor: 'var(--border-light)' }}
                   >
@@ -1182,6 +1298,7 @@ export default function CriarArtigoPage() {
                           borderColor: 'var(--border-medium)',
                           color: 'var(--text-primary)'
                         }}
+                        aria-label="Campo para descrever alterações desejadas no artigo"
                       />
                       <button
                         onClick={handleRefine}
@@ -1191,6 +1308,7 @@ export default function CriarArtigoPage() {
                           backgroundColor: 'var(--brand-primary)',
                           color: 'var(--text-inverse)'
                         }}
+                        aria-label={refining ? 'Processando refinamento' : 'Enviar solicitação de refinamento'}
                       >
                         {refining ? (
                           <>

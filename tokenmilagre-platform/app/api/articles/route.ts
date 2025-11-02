@@ -82,6 +82,16 @@ export async function GET(request: NextRequest) {
 
     // Transformar para formato compatível com NewsItem ou EducationItem
     const formattedArticles = articles.map((article) => {
+      // Parse citations from factCheckSources
+      let citations: string[] | undefined;
+      if (article.factCheckSources) {
+        try {
+          citations = JSON.parse(article.factCheckSources);
+        } catch {
+          citations = undefined;
+        }
+      }
+
       const baseData = {
         id: article.id,
         slug: article.slug,
@@ -89,7 +99,10 @@ export async function GET(request: NextRequest) {
         summary: article.excerpt || '',
         content: article.content,
         publishedAt: article.createdAt.toISOString(),
-        author: article.author.name || article.author.email
+        author: article.author.name || article.author.email,
+        citations, // Add citations to base data
+        coverImage: article.coverImage || undefined,
+        coverImageAlt: article.coverImageAlt || undefined
       };
 
       // Se for artigo educacional, incluir campos específicos
@@ -177,7 +190,10 @@ export async function POST(request: NextRequest) {
       level,
       sentiment,
       readTime,
-      authorId // Permite passar authorId explicitamente (para geração por IA)
+      authorId, // Permite passar authorId explicitamente (para geração por IA)
+      factCheckSources, // Citations do Perplexity (JSON array de URLs)
+      coverImage,
+      coverImageAlt
     } = body;
 
     // Validação
@@ -214,7 +230,10 @@ export async function POST(request: NextRequest) {
         level: level || null,
         sentiment: sentiment || 'neutral',
         readTime: readTime || null,
-        authorId: authorId || session.user.id // Usa authorId passado ou do session
+        authorId: authorId || session.user.id, // Usa authorId passado ou do session
+        factCheckSources: factCheckSources || null, // Citations do Perplexity
+        coverImage: coverImage || null,
+        coverImageAlt: coverImageAlt || null
       },
       include: {
         author: {

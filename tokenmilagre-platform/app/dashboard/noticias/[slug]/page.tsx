@@ -63,6 +63,17 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
       return null;
     }
 
+    // Parse citations do factCheckSources
+    let citations: string[] | undefined;
+    if (article.factCheckSources) {
+      try {
+        citations = JSON.parse(article.factCheckSources);
+      } catch (e) {
+        console.error('Erro ao parsear factCheckSources:', e);
+        citations = undefined;
+      }
+    }
+
     // Formatar para NewsItem
     return {
       id: article.id,
@@ -79,6 +90,9 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
       keywords: JSON.parse(article.tags || '[]'),
       factChecked: true,
       lastVerified: article.updatedAt.toISOString(),
+      citations, // ← ADICIONA CITATIONS!
+      coverImage: article.coverImage || undefined,
+      coverImageAlt: article.coverImageAlt || undefined,
     };
   } catch (error) {
     console.error('Erro ao buscar artigo:', error);
@@ -152,22 +166,37 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
       });
 
       // Formatar para NewsItem
-      const allNews: NewsItem[] = articles.map(a => ({
-        id: a.id,
-        slug: a.slug,
-        title: a.title,
-        summary: a.excerpt || '',
-        content: a.content,
-        url: `/dashboard/noticias/${a.slug}`,
-        source: '$MILAGRE Research',
-        sources: ['$MILAGRE Research'],
-        publishedAt: a.createdAt.toISOString(),
-        category: [a.category.charAt(0).toUpperCase() + a.category.slice(1)],
-        sentiment: a.sentiment as 'positive' | 'neutral' | 'negative',
-        keywords: JSON.parse(a.tags || '[]'),
-        factChecked: true,
-        lastVerified: a.updatedAt.toISOString(),
-      }));
+      const allNews: NewsItem[] = articles.map(a => {
+        // Parse citations
+        let citations: string[] | undefined;
+        if (a.factCheckSources) {
+          try {
+            citations = JSON.parse(a.factCheckSources);
+          } catch (e) {
+            citations = undefined;
+          }
+        }
+
+        return {
+          id: a.id,
+          slug: a.slug,
+          title: a.title,
+          summary: a.excerpt || '',
+          content: a.content,
+          url: `/dashboard/noticias/${a.slug}`,
+          source: '$MILAGRE Research',
+          sources: ['$MILAGRE Research'],
+          publishedAt: a.createdAt.toISOString(),
+          category: [a.category.charAt(0).toUpperCase() + a.category.slice(1)],
+          sentiment: a.sentiment as 'positive' | 'neutral' | 'negative',
+          keywords: JSON.parse(a.tags || '[]'),
+          factChecked: true,
+          lastVerified: a.updatedAt.toISOString(),
+          citations,
+          coverImage: a.coverImage || undefined,
+          coverImageAlt: a.coverImageAlt || undefined,
+        };
+      });
 
       // Encontrar índice do artigo atual
       const currentIndex = allNews.findIndex(item =>

@@ -26,6 +26,12 @@ export interface PerplexityUsage {
   total_tokens: number;
 }
 
+export interface Citation {
+  url: string;
+  title?: string;
+  snippet?: string;
+}
+
 export interface PerplexityResponse {
   id: string;
   model: string;
@@ -39,14 +45,8 @@ export interface PerplexityResponse {
       content: string;
     };
   }[];
+  citations?: string[]; // Array de URLs
   related_questions?: string[];
-}
-
-/**
- * Remove referências numéricas do texto (ex: [1], [2], [1][2][3])
- */
-function removeReferences(text: string): string {
-  return text.replace(/\[\d+\]/g, '');
 }
 
 /**
@@ -133,11 +133,7 @@ export async function callPerplexity(
 
   const data = await response.json();
 
-  // Remove referências do conteúdo da resposta
-  if (data.choices?.[0]?.message?.content) {
-    data.choices[0].message.content = removeReferences(data.choices[0].message.content);
-  }
-
+  // Retorna dados com citations intactas
   return data;
 }
 
@@ -245,11 +241,8 @@ export function parsePerplexityStream(stream: ReadableStream): ReadableStream {
               const parsed = JSON.parse(data);
               const content = parsed.choices?.[0]?.delta?.content;
               if (content) {
-                // Remove referências antes de enviar ao frontend
-                const cleanContent = removeReferences(content);
-                if (cleanContent) { // Só envia se sobrou conteúdo
-                  controller.enqueue(new TextEncoder().encode(cleanContent));
-                }
+                // Mantém referências [1][2] no conteúdo
+                controller.enqueue(new TextEncoder().encode(content));
               }
             } catch (err) {
               // Ignorar erros de parsing silenciosamente

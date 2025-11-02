@@ -378,7 +378,7 @@ Converse livremente com o usuário sobre qualquer assunto relacionado ao mundo c
       content: systemPrompt
     };
 
-    // 5. Chamar Perplexity com streaming
+    // 5. Chamar Perplexity
     const perplexityMessages: PerplexityMessage[] = [
       systemMessage,
       ...messages.map((msg: any) => ({
@@ -387,14 +387,41 @@ Converse livremente com o usuário sobre qualquer assunto relacionado ao mundo c
       }))
     ];
 
+    // Se está gerando artigo, usar não-streaming para capturar citations
+    if (articleType) {
+      const { callPerplexity } = require('@/lib/perplexity-client');
+
+      const response = await callPerplexity(
+        {
+          model: 'sonar',
+          messages: perplexityMessages,
+          temperature: 0.7,
+          max_tokens: 4000,
+          search_recency_filter: articleType === 'news' ? 'day' : 'week',
+          return_citations: true, // Habilita citações com URLs
+        },
+        PERPLEXITY_API_KEY
+      );
+
+      const content = response.choices[0].message.content;
+      const citations = response.citations || [];
+
+      // Retornar JSON com content e citations
+      return NextResponse.json({
+        content,
+        citations
+      });
+    }
+
+    // Modo conversa: usar streaming
     const stream = await callPerplexityStreaming(
       {
         model: 'sonar',
         messages: perplexityMessages,
         temperature: 0.7,
         max_tokens: 4000,
-        search_recency_filter: articleType === 'news' ? 'day' : 'week',
-        return_citations: false, // Desativa referências [1][2][3]
+        search_recency_filter: 'week',
+        return_citations: false, // Em streaming, citations não funcionam
       },
       PERPLEXITY_API_KEY
     );

@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowUp, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { getCitationAwareMarkdownComponents, SourcesSection } from '@/lib/citations-processor';
 
 interface NewsItem {
   id: string;
@@ -25,6 +26,7 @@ interface NewsItem {
   factChecked?: boolean;
   factCheckIssues?: string[];
   lastVerified?: string;
+  citations?: string[]; // Array de URLs das fontes
 }
 
 interface ArtigoClientProps {
@@ -256,6 +258,10 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
   const cleanContent = removeSourcesSection(contentWithoutH1);
   const readingTime = calculateReadingTime(cleanContent);
 
+  // Citations do Perplexity
+  const citations = article.citations || [];
+  const citationComponents = getCitationAwareMarkdownComponents(citations);
+
   return (
     <>
       {/* Barra de progresso de leitura */}
@@ -279,6 +285,18 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
               <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
               Voltar para Notícias
             </button>
+
+            {/* Imagem de Capa (se existir) */}
+            {(article as any).coverImage && (
+              <div className="rounded-2xl overflow-hidden shadow-lg">
+                <img
+                  src={(article as any).coverImage}
+                  alt={(article as any).coverImageAlt || article.title}
+                  className="w-full h-[400px] object-cover"
+                  loading="eager"
+                />
+              </div>
+            )}
 
             {/* Header do Artigo */}
             <div className="space-y-6">
@@ -389,11 +407,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                       </h3>
                     );
                   },
-                  p: ({ children }) => (
-                    <p className="mb-4 leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                      {children}
-                    </p>
-                  ),
+                  // Componentes de citação (p, li, strong) processam [1][2]
+                  ...citationComponents,
                   ul: ({ children }) => (
                     <ul className="mb-4 space-y-2 list-disc list-inside" style={{ color: 'var(--text-primary)' }}>
                       {children}
@@ -403,16 +418,6 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                     <ol className="mb-4 space-y-2 list-decimal list-inside" style={{ color: 'var(--text-primary)' }}>
                       {children}
                     </ol>
-                  ),
-                  li: ({ children }) => (
-                    <li className="ml-4" style={{ color: 'var(--text-primary)' }}>
-                      {children}
-                    </li>
-                  ),
-                  strong: ({ children }) => (
-                    <strong className="font-bold" style={{ color: 'var(--text-primary)' }}>
-                      {children}
-                    </strong>
                   ),
                   em: ({ children }) => (
                     <em className="italic" style={{ color: 'var(--text-secondary)' }}>
@@ -457,6 +462,9 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 {cleanContent || 'Conteúdo não disponível.'}
               </ReactMarkdown>
             </article>
+
+            {/* Seção de Fontes */}
+            <SourcesSection citations={citations} />
 
             {/* Divider */}
             <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
@@ -580,11 +588,14 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                       <button
                         key={idx}
                         onClick={() => scrollToSection(item.id)}
-                        className={`block text-sm text-left transition-all hover:pl-2 py-1 ${
+                        className={`block text-sm text-left transition-all hover:pl-2 py-1 w-full ${
                           activeSection === item.id ? 'pl-2 font-semibold' : ''
                         }`}
                         style={{
-                          color: activeSection === item.id ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                          color: activeSection === item.id ? 'var(--brand-primary)' : 'var(--text-secondary)',
+                          wordBreak: 'break-word',
+                          overflowWrap: 'break-word',
+                          hyphens: 'auto'
                         }}
                       >
                         {item.text}
