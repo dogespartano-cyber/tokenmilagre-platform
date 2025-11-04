@@ -22,13 +22,17 @@ import remarkGfm from 'remark-gfm';
 interface AdminChatSidebarProps {
   pageData?: Record<string, any>;
   model?: 'sonar' | 'sonar-pro';
+  provider?: 'perplexity' | 'gemini'; // Novo: escolher provider
   onApplyContent?: (content: string) => void;
+  selectedText?: string; // Novo: texto selecionado
 }
 
 export default function AdminChatSidebar({
   pageData,
   model = 'sonar',
-  onApplyContent
+  provider = 'gemini', // Padrão: Gemini para editor
+  onApplyContent,
+  selectedText
 }: AdminChatSidebarProps) {
   const [isOpen, setIsOpen] = useState(false); // Inicia oculto
   const [inputValue, setInputValue] = useState('');
@@ -39,6 +43,8 @@ export default function AdminChatSidebar({
   const { messages, loading, error, sendMessage, clearHistory, exportHistory } = useAdminChat({
     pageData,
     model,
+    provider,
+    selectedText,
     onApply: onApplyContent
   });
 
@@ -133,7 +139,7 @@ export default function AdminChatSidebar({
                   AI Assistant
                 </h3>
                 <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-                  Perplexity {model === 'sonar-pro' ? 'Pro' : 'Sonar'}
+                  {provider === 'gemini' ? 'Gemini 2.5 Pro' : `Perplexity ${model === 'sonar-pro' ? 'Pro' : 'Sonar'}`}
                 </p>
               </div>
             </div>
@@ -377,7 +383,76 @@ export default function AdminChatSidebar({
                             // Extrair código markdown
                             const codeMatch = message.content.match(/```(?:markdown)?\n([\s\S]*?)\n```/);
                             if (codeMatch) {
-                              onApplyContent(codeMatch[1]);
+                              const extractedContent = codeMatch[1];
+
+                              // 🐛 DEBUG: Logar quando clica em Aplicar
+                              const applyDebugData = {
+                                extractedLength: extractedContent.length,
+                                extractedPreview: extractedContent.substring(0, 300) + '...',
+                                fullExtracted: extractedContent,
+                                originalMessage: message.content
+                              };
+                              console.log('🐛 [DEBUG] Aplicar clicado:', applyDebugData);
+                              window.dispatchEvent(new CustomEvent('admin-chat-debug', {
+                                detail: {
+                                  type: 'apply-clicked',
+                                  data: applyDebugData
+                                }
+                              }));
+
+                              // Detectar se é edição de trecho (mensagem contém "Mudanças:" no final)
+                              const isTrechoEdit = message.content.includes('**Mudanças**:') && extractedContent.length < 1000;
+
+                              if (isTrechoEdit) {
+                                // Modo trecho: Perguntar ao usuário se quer aplicar só o trecho ou artigo completo
+                                const applySelection = confirm(
+                                  `🎯 MODO DE EDIÇÃO DETECTADO\n\n` +
+                                  `A IA retornou apenas o trecho editado (${extractedContent.length} caracteres).\n\n` +
+                                  `Escolha como deseja aplicar:\n\n` +
+                                  `• OK = Aplicar ARTIGO COMPLETO (recomendado se IA retornou tudo)\n` +
+                                  `• Cancelar = Ver trecho editado no chat (não aplicar agora)`
+                                );
+
+                                if (!applySelection) {
+                                  return;
+                                }
+
+                                // Se chegou aqui, aplicar como artigo completo
+                                onApplyContent(extractedContent);
+                              } else {
+                                // Modo normal: validação de tamanho
+                                const minExpectedSize = 500;
+
+                                if (extractedContent.length < minExpectedSize) {
+                                  const warningData = {
+                                    reason: 'Conteúdo muito pequeno',
+                                    size: extractedContent.length,
+                                    minExpected: minExpectedSize,
+                                    message: 'Possível trecho ao invés de artigo completo'
+                                  };
+                                  console.warn('🐛 [DEBUG] ⚠️ Aviso de validação:', warningData);
+                                  window.dispatchEvent(new CustomEvent('admin-chat-debug', {
+                                    detail: {
+                                      type: 'validation-warning',
+                                      data: warningData
+                                    }
+                                  }));
+
+                                  const confirmed = confirm(
+                                    `⚠️ ATENÇÃO\n\n` +
+                                    `O conteúdo tem apenas ${extractedContent.length} caracteres.\n\n` +
+                                    `Isso pode ser apenas um TRECHO.\n\n` +
+                                    `Deseja continuar?\n\n` +
+                                    `💡 Dica: Peça "retorne o artigo completo com a correção"`
+                                  );
+
+                                  if (!confirmed) {
+                                    return;
+                                  }
+                                }
+
+                                onApplyContent(extractedContent);
+                              }
                             }
                           }}
                           className="text-xs px-2 py-1 rounded font-semibold transition-all hover:brightness-110"

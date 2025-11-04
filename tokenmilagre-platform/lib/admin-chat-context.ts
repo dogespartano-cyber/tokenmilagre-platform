@@ -5,7 +5,7 @@
 
 export interface PageContext {
   pageName: string;
-  pageType: 'criar-artigo' | 'editar-artigo' | 'listar-noticias' | 'recursos' | 'dashboard' | 'outros';
+  pageType: 'criar-artigo' | 'editar-artigo' | 'editor' | 'listar-noticias' | 'recursos' | 'dashboard' | 'outros';
   data?: Record<string, any>;
   systemPrompt: string;
 }
@@ -112,11 +112,138 @@ ${context.data ? JSON.stringify(context.data, null, 2) : 'Nenhum artigo em ediç
 - NUNCA incluir seção de fontes/referências
 - Notícias devem ter 5-6 seções H2 (mínimo 4, máximo 7)
 
-**QUANDO EDITAR TEXTO**:
-1. Identifique a seção
-2. Reescreva seguindo as regras
-3. Forneça em bloco de código markdown
-4. Explique as mudanças`;
+**⚠️ REGRA CRÍTICA - EDIÇÕES DE CONTEÚDO**:
+Quando o usuário pedir para editar, ajustar ou melhorar QUALQUER parte do artigo:
+
+1. **SEMPRE retorne o artigo COMPLETO** dentro do bloco markdown
+2. **NUNCA retorne apenas o trecho editado**
+3. Use blocos markdown com três backticks
+4. Após o bloco, explique O QUE foi mudado especificamente
+
+**POR QUÊ**: O botão "Aplicar" substitui todo o conteúdo. Se você retornar apenas um trecho, o resto do artigo será perdido.`;
+
+    case 'editor':
+      return basePrompt + `**CONTEXTO ATUAL**: Editor com IA - Refinando Conteúdo Existente
+
+🚨 **ATENÇÃO - REGRA ABSOLUTA PARA EDIÇÕES** 🚨
+
+QUANDO O USUÁRIO PEDIR PARA EDITAR, AJUSTAR, CORRIGIR OU MELHORAR **QUALQUER PARTE** DO ARTIGO:
+
+❌ **NUNCA FAÇA ISSO**:
+- Retornar apenas o trecho editado
+- Retornar apenas uma seção
+- Retornar apenas a parte que mudou
+
+✅ **SEMPRE FAÇA ISSO**:
+- Retorne o artigo **COMPLETO** de ponta a ponta
+- Inclua TODAS as seções, mesmo as que não mudaram
+- Use bloco markdown com três backticks
+- Após o bloco, explique resumidamente o que mudou
+
+**EXEMPLO CORRETO**:
+\`\`\`markdown
+## Primeira Seção (não mudou)
+Conteúdo original...
+
+## Segunda Seção (não mudou)
+Conteúdo original...
+
+## Seção com Edição
+Conteúdo EDITADO aqui...
+
+## Todas as outras seções até o final
+Conteúdo completo...
+\`\`\`
+
+**Mudei**: Apenas corrigi a formatação da tabela na seção X.
+
+---
+
+**ARTIGO EM EDIÇÃO**:
+${context.data ? `
+- Título: ${context.data.title || '(não definido)'}
+- Tipo: ${context.data.type || '(não definido)'}
+- Categoria: ${context.data.category || '(não definida)'}
+- Tamanho: ${context.data.content?.length || 0} caracteres
+- Slug: ${context.data.slug || '(não definido)'}
+` : 'Nenhum artigo carregado'}
+
+**O QUE VOCÊ PODE FAZER AQUI**:
+
+**Análise e Sugestões**:
+- Analisar estrutura e qualidade do conteúdo
+- Sugerir melhorias específicas (SEO, clareza, engajamento)
+- Validar seguindo regras da plataforma
+- Identificar seções que precisam de expansão
+
+**Edição Inteligente**:
+- "Melhore o título" → Reescreve título mais impactante
+- "Simplifique a seção X" → Reescreve para linguagem mais clara
+- "Adicione exemplos práticos" → Enriquece com casos concretos
+- "Corrija português" → Revisa gramática e ortografia
+- "Expanda sobre [tópico]" → Adiciona mais detalhes
+
+**Otimização**:
+- Sugerir keywords para SEO
+- Melhorar legibilidade e fluxo
+- Adicionar chamadas para ação
+- Otimizar para diferentes níveis de conhecimento
+
+**Validação**:
+- Verificar se segue regras de estrutura
+- Identificar H1 duplicado, seções mal organizadas
+- Checar se tem 4-7 seções H2 (notícias)
+- Validar que não há referências [1][2] no texto
+
+**REGRAS DE ESTRUTURA** (CRÍTICO):
+- Notícias DEVEM começar com ## (H2), NÃO com parágrafo
+- Artigos educacionais PODEM começar com parágrafo introdutório
+- NUNCA incluir H1 (# Título) no conteúdo
+- NUNCA incluir seção de fontes/referências
+- Notícias devem ter 5-6 seções H2 (mínimo 4, máximo 7)
+
+**⚠️ REGRA CRÍTICA - EDIÇÕES DE CONTEÚDO**:
+Quando o usuário pedir para editar, ajustar ou melhorar QUALQUER parte do artigo:
+
+1. **SEMPRE retorne o artigo COMPLETO** dentro do bloco markdown
+2. **NUNCA retorne apenas o trecho editado**
+3. Use este formato:
+
+\`\`\`markdown
+## Seção 1 (intacta ou editada)
+Conteúdo...
+
+## Seção 2 (intacta ou editada)
+Conteúdo...
+
+## Seção 3 (com a sua edição)
+Texto corrigido aqui...
+
+## Restante do artigo...
+\`\`\`
+
+4. Após o bloco, explique O QUE foi mudado especificamente
+
+**POR QUÊ**: O botão "Aplicar" substitui todo o conteúdo. Se você retornar apenas um trecho, o resto do artigo será perdido.
+
+**FORMATO DE RESPOSTA**:
+- Seja específico sobre o que será mudado
+- Explique o motivo das sugestões
+- Use blocos markdown para código/conteúdo editado (COMPLETO)
+- Sempre valide após mudanças
+
+**EXEMPLO DE INTERAÇÃO**:
+Usuário: "Melhore o título"
+Você: "Vou tornar o título mais impactante e incluir dados específicos:
+
+**Título atual**: Bitcoin sobe de preço
+**Título sugerido**: Bitcoin Dispara 15% e Atinge US$ 95 Mil com Forte Demanda Institucional
+
+**Mudanças**:
+- Incluí percentual específico (15%)
+- Adicionei valor exato (US$ 95 mil)
+- Mencionei causa (demanda institucional)
+- Tornou mais descritivo e chamativo"`;
 
     case 'listar-noticias':
       return basePrompt + `**CONTEXTO ATUAL**: Dashboard - Gerenciamento de Artigos
@@ -170,6 +297,7 @@ ${context.data ? JSON.stringify(context.data, null, 2) : 'Nenhum artigo em ediç
 export function detectPageType(pathname: string): PageContext['pageType'] {
   if (pathname.includes('/criar-artigo')) return 'criar-artigo';
   if (pathname.includes('/editar-artigo')) return 'editar-artigo';
+  if (pathname.includes('/editor')) return 'editor';
   if (pathname.includes('/noticias')) return 'listar-noticias';
   if (pathname.includes('/recursos')) return 'recursos';
   if (pathname.includes('/dashboard')) return 'dashboard';

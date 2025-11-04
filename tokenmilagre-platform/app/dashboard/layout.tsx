@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import DashboardLayoutClient from './DashboardLayoutClient';
 
 export const metadata: Metadata = {
   robots: {
@@ -18,5 +19,5 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <DashboardLayoutClient>{children}</DashboardLayoutClient>;
 }

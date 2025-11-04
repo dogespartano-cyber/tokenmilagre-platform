@@ -22,8 +22,10 @@ export interface ChatMessage {
 export interface UseAdminChatOptions {
   pageData?: Record<string, any>;
   model?: 'sonar' | 'sonar-pro';
+  provider?: 'perplexity' | 'gemini'; // Novo: escolher provider
   onApply?: (suggestion: string) => void;
   maxMessages?: number;
+  selectedText?: string; // Novo: texto selecionado pelo usuário
 }
 
 export interface UseAdminChatReturn {
@@ -45,8 +47,10 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
   const {
     pageData,
     model = 'sonar',
+    provider = 'perplexity', // Padrão: Perplexity
     onApply,
-    maxMessages = MAX_MESSAGES
+    maxMessages = MAX_MESSAGES,
+    selectedText
   } = options;
 
   const pathname = usePathname();
@@ -128,15 +132,53 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
       // Limitar número de mensagens enviadas (economizar tokens)
       const limitedMessages = apiMessages.slice(-10);
 
-      const response = await fetch('/api/admin-chat', {
+      // 🐛 DEBUG: Logar contexto sendo enviado
+      const debugData = {
+        userMessage: content,
+        pathname,
+        pageData: {
+          title: pageData?.title,
+          type: pageData?.type,
+          contentLength: pageData?.content?.length || 0,
+          contentPreview: pageData?.content?.substring(0, 200) + '...',
+          fullContent: pageData?.content // Conteúdo completo
+        },
+        model
+      };
+      console.log('🐛 [DEBUG] Contexto enviado ao Gemini:', debugData);
+      window.dispatchEvent(new CustomEvent('admin-chat-debug', {
+        detail: {
+          type: 'context-sent',
+          data: debugData
+        }
+      }));
+
+      // Escolher endpoint baseado no provider
+      const apiEndpoint = provider === 'gemini' ? '/api/editor-chat' : '/api/admin-chat';
+
+      // Determinar modo de edição
+      const editMode = selectedText ? 'selection' : 'full';
+
+      const requestBody = provider === 'gemini'
+        ? {
+            messages: limitedMessages,
+            selectedText,
+            fullContent: pageData?.content,
+            editMode
+          }
+        : {
+            messages: limitedMessages,
+            pathname,
+            pageData,
+            model
+          };
+
+      console.log(`🎯 [useAdminChat] Usando ${provider === 'gemini' ? 'Gemini 2.5 Pro (latest)' : 'Perplexity Sonar'} | Modo: ${editMode}`);
+
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: limitedMessages,
-          pathname,
-          pageData,
-          model
-        }),
+        body: JSON.stringify(requestBody),
         signal: abortControllerRef.current.signal
       });
 
@@ -147,10 +189,41 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
 
       // Verificar se é resposta direta (JSON)
       const contentType = response.headers.get('content-type');
-      if (contentType?.includes('application/json')) {
+
+      // Gemini sempre retorna JSON (não usa streaming)
+      if (provider === 'gemini' || contentType?.includes('application/json')) {
         const data = await response.json();
 
-        // Resposta direta (validação, etc)
+        // Resposta do Gemini
+        if (provider === 'gemini' && data.success && data.message) {
+          const assistantMessage: ChatMessage = {
+            id: `assistant-${Date.now()}`,
+            role: 'assistant',
+            content: data.message,
+            timestamp: new Date()
+          };
+          setMessages(prev => [...prev, assistantMessage]);
+
+          // Debug log
+          window.dispatchEvent(new CustomEvent('admin-chat-debug', {
+            detail: {
+              type: 'response-received',
+              data: {
+                provider: 'gemini',
+                model: data.usage?.model || 'gemini-2.5-pro',
+                responseLength: data.message.length,
+                responsePreview: data.message.substring(0, 300) + '...',
+                fullResponse: data.message,
+                usage: data.usage
+              }
+            }
+          }));
+
+          setLoading(false);
+          return;
+        }
+
+        // Resposta direta (validação, etc) - Para Perplexity
         if (data.isDirectResponse) {
           const assistantMessage: ChatMessage = {
             id: `assistant-${Date.now()}`,
@@ -896,6 +969,20 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
           )
         );
       }
+
+      // 🐛 DEBUG: Logar resposta recebida
+      const responseDebugData = {
+        responseLength: accumulatedContent.length,
+        responsePreview: accumulatedContent.substring(0, 300) + '...',
+        fullResponse: accumulatedContent
+      };
+      console.log('🐛 [DEBUG] Resposta recebida do Gemini:', responseDebugData);
+      window.dispatchEvent(new CustomEvent('admin-chat-debug', {
+        detail: {
+          type: 'response-received',
+          data: responseDebugData
+        }
+      }));
 
       setLoading(false);
 

@@ -1,24 +1,19 @@
 'use client';
 
-import { useEffect, useState, useRef, Suspense } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowLeft,
   faSpinner,
-  faPaperPlane,
   faSave,
-  faRobot,
   faExclamationTriangle
 } from '@fortawesome/free-solid-svg-icons';
 import AdminRoute from '@/components/AdminRoute';
 import ReactMarkdown from 'react-markdown';
 import ResourceDetailClient from '@/app/recursos/[slug]/ResourceDetailClient';
-
-interface Message {
-  role: 'user' | 'assistant';
-  content: string;
-}
+import AdminChatSidebar from '@/components/admin/AdminChatSidebar';
+import { AdminChatProvider, useAdminChatContext } from '@/contexts/AdminChatContext';
 
 function EditorContent() {
   const router = useRouter();
@@ -26,17 +21,13 @@ function EditorContent() {
   const type = searchParams.get('type'); // 'resource', 'news', 'educational'
   const slug = searchParams.get('slug');
 
+  const { pageData, setPageData } = useAdminChatContext();
+
   const [item, setItem] = useState<any>(null);
   const [editedItem, setEditedItem] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Chat states
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
-  const [chatLoading, setChatLoading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!type || !slug) {
@@ -48,11 +39,53 @@ function EditorContent() {
     fetchItem();
   }, [type, slug]);
 
+  // Atualizar pageData quando editedItem mudar
   useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    if (editedItem) {
+      setPageData({
+        title: type === 'resource' ? editedItem.name : editedItem.title,
+        content: editedItem.content || '',
+        type: type,
+        category: editedItem.category,
+        tags: editedItem.tags,
+        excerpt: editedItem.excerpt || editedItem.shortDescription || '',
+        slug: slug,
+        fullArticle: editedItem
+      });
     }
-  }, [messages]);
+  }, [editedItem, type, slug, setPageData]);
+
+  // Listener para eventos de edição do chat
+  useEffect(() => {
+    const handleApplyEdit = (event: any) => {
+      const { content } = event.detail;
+      if (content && editedItem) {
+        setEditedItem({
+          ...editedItem,
+          content: content
+        });
+      }
+    };
+
+    const handleArticleGenerated = (event: any) => {
+      const article = event.detail;
+      if (article) {
+        // Atualizar com artigo gerado/refinado
+        setEditedItem({
+          ...editedItem,
+          ...article
+        });
+      }
+    };
+
+    window.addEventListener('apply-canvas-edit', handleApplyEdit);
+    window.addEventListener('article-generated', handleArticleGenerated);
+
+    return () => {
+      window.removeEventListener('apply-canvas-edit', handleApplyEdit);
+      window.removeEventListener('article-generated', handleArticleGenerated);
+    };
+  }, [editedItem]);
 
   const fetchItem = async () => {
     try {
@@ -111,162 +144,6 @@ function EditorContent() {
       setError(err instanceof Error ? err.message : 'Erro desconhecido');
     } finally {
       setLoading(false);
-    }
-  };
-
-  // Templates de prompts rápidos
-  const promptTemplates = [
-    { icon: '✨', label: 'Melhorar SEO', prompt: 'Otimize o título e tags para SEO sem alterar o conteúdo' },
-    { icon: '📝', label: 'Simplificar', prompt: 'Simplifique a linguagem para iniciantes mantendo as informações' },
-    { icon: '📚', label: 'Expandir', prompt: 'Adicione mais exemplos práticos e detalhes técnicos' },
-    { icon: '🎯', label: 'Título Impactante', prompt: 'Reescreva o título para ser mais chamativo e incluir dados específicos' },
-    { icon: '🔍', label: 'Corrigir Português', prompt: 'Corrija erros de gramática, ortografia e pontuação' },
-  ];
-
-  // Sugestões inteligentes da IA
-  const handleSuggestImprovements = async () => {
-    setMessages(prev => [...prev, {
-      role: 'user',
-      content: '🤖 Analisar e sugerir melhorias'
-    }]);
-
-    setChatLoading(true);
-    try {
-      const response = await fetch('/api/suggest-improvements', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ article: editedItem, articleType: type })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Erro ao gerar sugestões');
-      }
-
-      const data = await response.json();
-
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: data.suggestions
-      }]);
-    } catch (error: any) {
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: `❌ **Erro:** ${error.message}`
-      }]);
-    } finally {
-      setChatLoading(false);
-    }
-  };
-
-  const handleSendMessage = async () => {
-    if (!input.trim() || chatLoading) return;
-
-    const userMessage = input.trim();
-    setInput('');
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
-    setChatLoading(true);
-
-    try {
-      const response = await fetch('/api/refine-article', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          article: editedItem,
-          refinementPrompt: userMessage,
-          articleType: type
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Erro ao processar');
-      }
-
-      const data = await response.json();
-
-      // Parse JSON fields for resources before updating
-      let updatedArticle = data.article;
-      if (type === 'resource' && updatedArticle) {
-        updatedArticle = {
-          ...updatedArticle,
-          platforms: typeof updatedArticle.platforms === 'string' ? JSON.parse(updatedArticle.platforms) : updatedArticle.platforms,
-          tags: typeof updatedArticle.tags === 'string' ? JSON.parse(updatedArticle.tags) : updatedArticle.tags,
-          features: typeof updatedArticle.features === 'string' ? JSON.parse(updatedArticle.features) : updatedArticle.features,
-          howToStartSteps: typeof updatedArticle.howToStartSteps === 'string' ? JSON.parse(updatedArticle.howToStartSteps) : updatedArticle.howToStartSteps,
-          pros: typeof updatedArticle.pros === 'string' ? JSON.parse(updatedArticle.pros) : updatedArticle.pros,
-          cons: typeof updatedArticle.cons === 'string' ? JSON.parse(updatedArticle.cons) : updatedArticle.cons,
-          faq: typeof updatedArticle.faq === 'string' ? JSON.parse(updatedArticle.faq) : updatedArticle.faq,
-          securityTips: typeof updatedArticle.securityTips === 'string' ? JSON.parse(updatedArticle.securityTips) : updatedArticle.securityTips,
-          whyGoodContent: typeof updatedArticle.whyGoodContent === 'string' ? JSON.parse(updatedArticle.whyGoodContent) : updatedArticle.whyGoodContent,
-          relatedResources: updatedArticle.relatedResources ? (typeof updatedArticle.relatedResources === 'string' ? JSON.parse(updatedArticle.relatedResources) : updatedArticle.relatedResources) : [],
-          hero: {
-            title: updatedArticle.heroTitle || updatedArticle.name,
-            description: updatedArticle.heroDescription || updatedArticle.shortDescription,
-            gradient: updatedArticle.heroGradient || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-          },
-          whyGood: {
-            title: updatedArticle.whyGoodTitle || `Por que ${updatedArticle.name}?`,
-            content: typeof updatedArticle.whyGoodContent === 'string' ? JSON.parse(updatedArticle.whyGoodContent) : updatedArticle.whyGoodContent
-          },
-          howToStart: {
-            title: updatedArticle.howToStartTitle || 'Como Começar',
-            steps: typeof updatedArticle.howToStartSteps === 'string' ? JSON.parse(updatedArticle.howToStartSteps) : updatedArticle.howToStartSteps
-          },
-          prosAndCons: {
-            pros: typeof updatedArticle.pros === 'string' ? JSON.parse(updatedArticle.pros) : updatedArticle.pros,
-            cons: typeof updatedArticle.cons === 'string' ? JSON.parse(updatedArticle.cons) : updatedArticle.cons
-          }
-        };
-      }
-
-      // Atualizar item editado - dispara re-render do preview
-      setEditedItem(updatedArticle);
-
-      // Construir mensagem de sucesso com validação
-      let successMessage = '✅ **Alterações aplicadas!**\n\n';
-
-      // Adicionar informação de validação se disponível
-      if (data.validation) {
-        const { score, valid, errors, warnings } = data.validation;
-
-        // Badge de qualidade
-        const qualityEmoji = score >= 90 ? '🌟' : score >= 80 ? '✨' : score >= 70 ? '👍' : '⚠️';
-        successMessage += `${qualityEmoji} **Qualidade**: ${score}/100 ${valid ? '(Válido)' : '(Precisa de ajustes)'}\n\n`;
-
-        // Erros
-        if (errors.length > 0) {
-          successMessage += `❌ **Erros encontrados** (${errors.length}):\n`;
-          errors.forEach((error: string) => {
-            successMessage += `  • ${error}\n`;
-          });
-          successMessage += '\n';
-        }
-
-        // Avisos
-        if (warnings.length > 0) {
-          successMessage += `⚠️ **Avisos** (${warnings.length}):\n`;
-          warnings.forEach((warning: string) => {
-            successMessage += `  • ${warning}\n`;
-          });
-          successMessage += '\n';
-        }
-      }
-
-      successMessage += 'Confira o preview atualizado à esquerda. Você pode continuar editando ou salvar as mudanças.';
-
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: successMessage
-      }]);
-
-    } catch (error: any) {
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: `❌ **Erro:** ${error.message}`
-      }]);
-    } finally {
-      setChatLoading(false);
     }
   };
 
@@ -391,7 +268,7 @@ function EditorContent() {
         </div>
         <button
           onClick={handleSave}
-          disabled={saving || messages.length === 0}
+          disabled={saving}
           className="px-6 py-3 rounded-lg font-bold transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
           style={{ backgroundColor: '#10B981', color: 'white' }}
         >
@@ -409,182 +286,182 @@ function EditorContent() {
         </button>
       </div>
 
-      {/* Split Screen */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* Left: Preview Real */}
-        <div className="flex-1 overflow-y-auto border-r" style={{ borderColor: 'var(--border-light)' }}>
-          {type === 'resource' && editedItem ? (
-            <ResourceDetailClient resource={editedItem} relatedResources={[]} />
-          ) : (
-            /* Article Preview */
-            <div className="container mx-auto px-4 py-8">
-              <article className="max-w-4xl mx-auto">
-                <h1 className="text-5xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
-                  {editedItem.title}
-                </h1>
-                <p className="text-xl mb-8" style={{ color: 'var(--text-secondary)' }}>
-                  {editedItem.excerpt || editedItem.description}
-                </p>
-                <div className="flex items-center gap-4 mb-8 text-sm" style={{ color: 'var(--text-tertiary)' }}>
-                  <span>📁 {editedItem.category}</span>
-                  {editedItem.readTime && <span>⏱️ {editedItem.readTime}</span>}
-                  {editedItem.level && <span>📊 {editedItem.level}</span>}
-                </div>
-                <div className="prose prose-lg max-w-none" style={{ color: 'var(--text-primary)' }}>
-                  <ReactMarkdown>{editedItem.content || ''}</ReactMarkdown>
-                </div>
-              </article>
-            </div>
-          )}
-        </div>
-
-        {/* Right: Chat Gemini */}
-        <div className="w-[400px] flex flex-col" style={{ backgroundColor: 'var(--bg-elevated)' }}>
-          {/* Chat Header */}
-          <div className="px-6 py-4 border-b" style={{ borderColor: 'var(--border-light)' }}>
-            <div className="flex items-center gap-3">
-              <FontAwesomeIcon icon={faRobot} className="text-2xl" style={{ color: 'var(--brand-primary)' }} />
-              <div>
-                <h2 className="font-bold" style={{ color: 'var(--text-primary)' }}>
-                  Assistente IA
-                </h2>
-                <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-                  Powered by Gemini 2.5 Flash
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Chat Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4" ref={chatContainerRef}>
-            {/* Initial Message */}
-            {messages.length === 0 && (
-              <div
-                className="p-4 rounded-xl border"
-                style={{
-                  backgroundColor: 'var(--bg-secondary)',
-                  borderColor: 'var(--border-medium)'
-                }}
-              >
-                <p className="font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
-                  💬 Como posso ajudar?
-                </p>
-                <p className="text-sm mb-3" style={{ color: 'var(--text-secondary)' }}>
-                  Use linguagem natural para editar:
-                </p>
-                <ul className="text-sm space-y-1" style={{ color: 'var(--text-tertiary)' }}>
-                  <li>• "Melhore o título"</li>
-                  <li>• "Adicione mais detalhes sobre segurança"</li>
-                  <li>• "Corrija erros de português"</li>
-                  <li>• "Simplifique a linguagem"</li>
-                  <li>• "Expanda a seção X"</li>
-                </ul>
-              </div>
-            )}
-
-            {/* Messages */}
-            {messages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-[85%] p-4 rounded-xl ${msg.role === 'user' ? 'rounded-br-none' : 'rounded-bl-none'}`}
-                  style={{
-                    backgroundColor: msg.role === 'user' ? 'var(--brand-primary)' : 'var(--bg-primary)',
-                    color: msg.role === 'user' ? 'white' : 'var(--text-primary)'
-                  }}
-                >
-                  <ReactMarkdown>{msg.content}</ReactMarkdown>
-                </div>
-              </div>
-            ))}
-
-            {/* Loading */}
-            {chatLoading && (
-              <div className="flex justify-start">
-                <div className="p-4 rounded-xl rounded-bl-none" style={{ backgroundColor: 'var(--bg-primary)' }}>
-                  <div className="flex gap-2">
-                    <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: '0ms' }}></div>
-                    <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: '150ms' }}></div>
-                    <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: '300ms' }}></div>
+      {/* Preview Full Screen */}
+      <div className="flex-1 overflow-y-auto">
+        {type === 'resource' && editedItem ? (
+          <ResourceDetailClient resource={editedItem} relatedResources={[]} />
+        ) : (
+          /* Article Preview - Mesmos estilos da página publicada */
+          <div className="py-8">
+            <div className="flex gap-8" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
+              <div className="flex-1 max-w-4xl space-y-8">
+                {/* Header do Artigo */}
+                <div className="space-y-6">
+                  {/* Meta info */}
+                  <div className="flex flex-wrap items-center gap-3">
+                    {editedItem.level && (
+                      <span
+                        className="px-3 py-1 rounded-lg text-sm font-semibold"
+                        style={{
+                          backgroundColor: editedItem.level === 'iniciante' ? '#22c55e' : editedItem.level === 'intermediario' ? '#3b82f6' : '#a855f7',
+                          color: 'white'
+                        }}
+                      >
+                        {editedItem.level === 'iniciante' ? 'Iniciante' : editedItem.level === 'intermediario' ? 'Intermediário' : 'Avançado'}
+                      </span>
+                    )}
+                    {editedItem.type && (
+                      <span
+                        className="px-3 py-1 rounded-lg text-sm font-semibold"
+                        style={{
+                          backgroundColor: 'var(--bg-secondary)',
+                          color: 'var(--text-primary)'
+                        }}
+                      >
+                        {editedItem.type}
+                      </span>
+                    )}
+                    {editedItem.readTime && (
+                      <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                        📖 {editedItem.readTime}
+                      </span>
+                    )}
                   </div>
+
+                  {/* Título */}
+                  <h1 className="text-4xl md:text-5xl font-bold leading-tight font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                    {editedItem.title}
+                  </h1>
+
+                  {/* Descrição */}
+                  <p className="text-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    {editedItem.excerpt || editedItem.description}
+                  </p>
+
+                  {/* Tags */}
+                  {editedItem.tags && Array.isArray(editedItem.tags) && editedItem.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {editedItem.tags.map((tag: string, index: number) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 rounded-lg text-sm"
+                          style={{
+                            backgroundColor: 'var(--bg-secondary)',
+                            color: 'var(--text-tertiary)'
+                          }}
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              </div>
-            )}
-          </div>
 
-          {/* Chat Input */}
-          <div className="p-4 border-t" style={{ borderColor: 'var(--border-light)' }}>
-            {/* Quick Actions */}
-            <div className="mb-3 space-y-2">
-              {/* Suggest Button */}
-              <button
-                onClick={handleSuggestImprovements}
-                disabled={chatLoading || saving}
-                className="w-full px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2"
-                style={{
-                  backgroundColor: '#8B5CF6',
-                  color: 'white'
-                }}
-              >
-                🤖 Analisar e Sugerir Melhorias
-              </button>
+                {/* Divider */}
+                <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
-              {/* Template Buttons */}
-              <div className="flex flex-wrap gap-2">
-                {promptTemplates.map((template, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setInput(template.prompt)}
-                    disabled={chatLoading || saving}
-                    className="px-3 py-1 rounded-lg text-xs font-semibold transition-all hover:opacity-80 disabled:opacity-50"
-                    style={{
-                      backgroundColor: 'var(--bg-secondary)',
-                      color: 'var(--text-primary)',
-                      border: '1px solid var(--border-medium)'
+                {/* Conteúdo do Artigo */}
+                <article
+                  className="prose prose-lg max-w-none"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  <ReactMarkdown
+                    components={{
+                      h1: ({ children }) => (
+                        <h1 className="text-3xl font-bold mt-8 mb-4 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                          {children}
+                        </h1>
+                      ),
+                      h2: ({ children }) => (
+                        <h2 className="text-2xl font-bold mt-8 mb-4 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                          {children}
+                        </h2>
+                      ),
+                      h3: ({ children }) => (
+                        <h3 className="text-xl font-bold mt-6 mb-3 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                          {children}
+                        </h3>
+                      ),
+                      p: ({ children }) => (
+                        <p className="mb-4 leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                          {children}
+                        </p>
+                      ),
+                      ul: ({ children }) => (
+                        <ul className="mb-4 space-y-2 list-disc list-inside" style={{ color: 'var(--text-primary)' }}>
+                          {children}
+                        </ul>
+                      ),
+                      ol: ({ children }) => (
+                        <ol className="mb-4 space-y-2 list-decimal list-inside" style={{ color: 'var(--text-primary)' }}>
+                          {children}
+                        </ol>
+                      ),
+                      li: ({ children }) => (
+                        <li className="ml-4" style={{ color: 'var(--text-primary)' }}>
+                          {children}
+                        </li>
+                      ),
+                      strong: ({ children }) => (
+                        <strong className="font-bold" style={{ color: 'var(--text-primary)' }}>
+                          {children}
+                        </strong>
+                      ),
+                      code: ({ children }) => (
+                        <code
+                          className="px-2 py-1 rounded text-sm font-mono"
+                          style={{
+                            backgroundColor: 'var(--bg-secondary)',
+                            color: 'var(--brand-primary)'
+                          }}
+                        >
+                          {children}
+                        </code>
+                      ),
+                      blockquote: ({ children }) => (
+                        <blockquote
+                          className="pl-4 border-l-4 italic my-4"
+                          style={{
+                            borderColor: 'var(--brand-primary)',
+                            color: 'var(--text-secondary)'
+                          }}
+                        >
+                          {children}
+                        </blockquote>
+                      ),
                     }}
-                    title={template.prompt}
                   >
-                    {template.icon} {template.label}
-                  </button>
-                ))}
+                    {editedItem.content || ''}
+                  </ReactMarkdown>
+                </article>
               </div>
             </div>
-
-            {/* Input */}
-            <div className="flex gap-3">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && handleSendMessage()}
-                placeholder="Digite suas instruções..."
-                disabled={chatLoading || saving}
-                className="flex-1 px-4 py-3 rounded-xl border focus:outline-none transition-colors"
-                style={{
-                  backgroundColor: 'var(--bg-secondary)',
-                  borderColor: 'var(--border-medium)',
-                  color: 'var(--text-primary)'
-                }}
-              />
-              <button
-                onClick={handleSendMessage}
-                disabled={!input.trim() || chatLoading || saving}
-                className="px-6 py-3 rounded-xl font-semibold transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ backgroundColor: 'var(--brand-primary)', color: 'white' }}
-              >
-                {chatLoading ? (
-                  <FontAwesomeIcon icon={faSpinner} spin />
-                ) : (
-                  <FontAwesomeIcon icon={faPaperPlane} />
-                )}
-              </button>
-            </div>
           </div>
-        </div>
+        )}
       </div>
+
+      {/* AdminChatSidebar - Substituindo chat built-in */}
+      <AdminChatSidebar
+        pageData={pageData}
+        provider="gemini"
+        onApplyContent={(content) => {
+          if (editedItem) {
+            setEditedItem({
+              ...editedItem,
+              content: content
+            });
+          }
+        }}
+      />
     </div>
+  );
+}
+
+function EditorWithContext() {
+  return (
+    <AdminChatProvider>
+      <EditorContent />
+    </AdminChatProvider>
   );
 }
 
@@ -596,7 +473,7 @@ export default function EditorPage() {
           <FontAwesomeIcon icon={faSpinner} spin className="text-5xl" style={{ color: 'var(--brand-primary)' }} />
         </div>
       }>
-        <EditorContent />
+        <EditorWithContext />
       </Suspense>
     </AdminRoute>
   );
