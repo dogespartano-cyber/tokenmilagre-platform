@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { parseJSONRobust } from '@/lib/json-sanitizer';
+import { validateProcessedArticle } from '@/lib/article-processor-client';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
@@ -63,18 +65,19 @@ RETORNAR: JSON válido com o artigo refinado (SEM markdown code blocks, APENAS o
     const result = await model.generateContent(systemPrompt);
     const responseText = result.response.text();
 
-    // Extrair JSON
-    let jsonMatch = responseText.match(/```json\n?([\s\S]*?)```/);
-    let refinedArticle;
+    // Parsear JSON de forma robusta
+    const refinedArticle = parseJSONRobust(responseText, 'refine-article');
 
-    if (jsonMatch) {
-      refinedArticle = JSON.parse(jsonMatch[1]);
-    } else {
-      // Tentar parsear direto
-      refinedArticle = JSON.parse(responseText);
+    // Validar artigo refinado (apenas para news e educational)
+    let validation = null;
+    if (articleType === 'news' || articleType === 'educational') {
+      validation = validateProcessedArticle(refinedArticle, articleType);
     }
 
-    return NextResponse.json({ article: refinedArticle });
+    return NextResponse.json({
+      article: refinedArticle,
+      validation
+    });
 
   } catch (error: any) {
     console.error('Erro ao refinar artigo:', error);

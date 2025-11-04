@@ -114,6 +114,51 @@ function EditorContent() {
     }
   };
 
+  // Templates de prompts rápidos
+  const promptTemplates = [
+    { icon: '✨', label: 'Melhorar SEO', prompt: 'Otimize o título e tags para SEO sem alterar o conteúdo' },
+    { icon: '📝', label: 'Simplificar', prompt: 'Simplifique a linguagem para iniciantes mantendo as informações' },
+    { icon: '📚', label: 'Expandir', prompt: 'Adicione mais exemplos práticos e detalhes técnicos' },
+    { icon: '🎯', label: 'Título Impactante', prompt: 'Reescreva o título para ser mais chamativo e incluir dados específicos' },
+    { icon: '🔍', label: 'Corrigir Português', prompt: 'Corrija erros de gramática, ortografia e pontuação' },
+  ];
+
+  // Sugestões inteligentes da IA
+  const handleSuggestImprovements = async () => {
+    setMessages(prev => [...prev, {
+      role: 'user',
+      content: '🤖 Analisar e sugerir melhorias'
+    }]);
+
+    setChatLoading(true);
+    try {
+      const response = await fetch('/api/suggest-improvements', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ article: editedItem, articleType: type })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Erro ao gerar sugestões');
+      }
+
+      const data = await response.json();
+
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: data.suggestions
+      }]);
+    } catch (error: any) {
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: `❌ **Erro:** ${error.message}`
+      }]);
+    } finally {
+      setChatLoading(false);
+    }
+  };
+
   const handleSendMessage = async () => {
     if (!input.trim() || chatLoading) return;
 
@@ -178,9 +223,41 @@ function EditorContent() {
       // Atualizar item editado - dispara re-render do preview
       setEditedItem(updatedArticle);
 
+      // Construir mensagem de sucesso com validação
+      let successMessage = '✅ **Alterações aplicadas!**\n\n';
+
+      // Adicionar informação de validação se disponível
+      if (data.validation) {
+        const { score, valid, errors, warnings } = data.validation;
+
+        // Badge de qualidade
+        const qualityEmoji = score >= 90 ? '🌟' : score >= 80 ? '✨' : score >= 70 ? '👍' : '⚠️';
+        successMessage += `${qualityEmoji} **Qualidade**: ${score}/100 ${valid ? '(Válido)' : '(Precisa de ajustes)'}\n\n`;
+
+        // Erros
+        if (errors.length > 0) {
+          successMessage += `❌ **Erros encontrados** (${errors.length}):\n`;
+          errors.forEach((error: string) => {
+            successMessage += `  • ${error}\n`;
+          });
+          successMessage += '\n';
+        }
+
+        // Avisos
+        if (warnings.length > 0) {
+          successMessage += `⚠️ **Avisos** (${warnings.length}):\n`;
+          warnings.forEach((warning: string) => {
+            successMessage += `  • ${warning}\n`;
+          });
+          successMessage += '\n';
+        }
+      }
+
+      successMessage += 'Confira o preview atualizado à esquerda. Você pode continuar editando ou salvar as mudanças.';
+
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: '✅ **Alterações aplicadas!**\n\nConfira o preview atualizado à esquerda. Você pode continuar editando ou salvar as mudanças.'
+        content: successMessage
       }]);
 
     } catch (error: any) {
@@ -439,6 +516,43 @@ function EditorContent() {
 
           {/* Chat Input */}
           <div className="p-4 border-t" style={{ borderColor: 'var(--border-light)' }}>
+            {/* Quick Actions */}
+            <div className="mb-3 space-y-2">
+              {/* Suggest Button */}
+              <button
+                onClick={handleSuggestImprovements}
+                disabled={chatLoading || saving}
+                className="w-full px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2"
+                style={{
+                  backgroundColor: '#8B5CF6',
+                  color: 'white'
+                }}
+              >
+                🤖 Analisar e Sugerir Melhorias
+              </button>
+
+              {/* Template Buttons */}
+              <div className="flex flex-wrap gap-2">
+                {promptTemplates.map((template, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setInput(template.prompt)}
+                    disabled={chatLoading || saving}
+                    className="px-3 py-1 rounded-lg text-xs font-semibold transition-all hover:opacity-80 disabled:opacity-50"
+                    style={{
+                      backgroundColor: 'var(--bg-secondary)',
+                      color: 'var(--text-primary)',
+                      border: '1px solid var(--border-medium)'
+                    }}
+                    title={template.prompt}
+                  >
+                    {template.icon} {template.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Input */}
             <div className="flex gap-3">
               <input
                 type="text"
