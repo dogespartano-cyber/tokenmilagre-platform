@@ -55,6 +55,7 @@ CLAUDE-MEMORY.md
 MANIFESTO.md
 MIGRACAO-POSTGRES.md
 *.backup.md
+/docs-local/
 
 # Example scripts (create new ones as needed)
 scripts/publish-*.js
