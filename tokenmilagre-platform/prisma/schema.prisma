@@ -115,6 +115,10 @@ model Article {
   contentType        String?   // 'Artigo' | 'Tutorial'
   readTime           String?   // Ex: '8 min', '15 min'
 
+  // Imagem de Capa (gerada por IA)
+  coverImage         String?   // URL da imagem de capa
+  coverImageAlt      String?   // Texto alternativo para acessibilidade
+
   createdAt          DateTime  @default(now()) // API: publishedAt
   updatedAt          DateTime  @updatedAt      // API: lastVerified
 
