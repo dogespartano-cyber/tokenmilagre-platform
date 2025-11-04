@@ -37,7 +37,7 @@ Once you've read CLAUDE-MEMORY.md, you'll know:
 3. **Project values** - Minimalism, accessibility, open source, education, security
 4. **Critical Git rules** - Only commit files inside tokenmilagre-platform/
 5. **What to avoid** - Design and code anti-patterns
-6. **AI Assistant system** - Chat in `/dashboard/chat` with natural language detection
+6. **AI Assistant system** - Chat IA em `/dashboard/criar-artigo` com detecção de intenção natural
 
 ---
 
@@ -46,10 +46,11 @@ Once you've read CLAUDE-MEMORY.md, you'll know:
 After loading project context, use these specialized skills when needed:
 
 - **`article-creation`** - When creating/editing articles or news
+- **`chat-workflow`** - When working with AI chat system (creation, intent detection, architecture)
 - **`design-system`** - When working with design, CSS, or components
 - **`database-setup`** - When working with Prisma, database, or deployment
 - **`pages-reference`** - When modifying or understanding page-specific features
-- **`troubleshooting`** - When encountering bugs or performance issues (scroll, cache, flash visual)
+- **`troubleshooting`** - When encountering bugs or performance issues (regex removing line breaks, scroll, cache, flash visual)
 
 ---
 
@@ -73,8 +74,10 @@ When this skill is invoked:
 ## 🔍 Quick References
 
 **AI Assistant System**:
-- Location: `/dashboard/chat` (full screen, natural language)
-- Full details in CLAUDE-MEMORY.md → Section "🤖 Admin AI Assistant"
+- Location: `/dashboard/criar-artigo` (criação de artigos com chat IA integrado)
+- Sidebar global: `AdminChatSidebar` (disponível em todo dashboard)
+- Full workflow: Use skill `chat-workflow` para arquitetura completa
+- Legacy: `/dashboard/chat` foi removido (04/11/2025) - funcionalidade duplicada
 
 **Update ETF Data**:
 - Guide: `docs/ATUALIZAR-ETFS.md`
@@ -88,4 +91,4 @@ When this skill is invoked:
 ---
 
 **Skill criada por**: Claude Code
-**Última atualização**: 2025-11-01 (otimização - removida duplicação de conteúdo)
+**Última atualização**: 2025-11-04 (atualizado sistema de chat IA - removido /dashboard/chat)
