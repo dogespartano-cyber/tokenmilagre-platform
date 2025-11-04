@@ -76,6 +76,7 @@ model User {
   accounts Account[]
   sessions Session[]
   articles Article[]
+  copilotActivities CopilotActivity[]
 }
 
 model Article {
@@ -228,4 +229,88 @@ model Cryptocurrency {
 
   @@index([symbol])
   @@index([marketCapRank])
+}
+
+model CopilotActivity {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  action      String   // Nome da ferramenta executada
+  parameters  String   // JSON com parâmetros da ação
+  result      String?  // JSON com resultado da execução
+  status      String   // 'pending', 'approved', 'rejected', 'executing', 'executed', 'failed'
+
+  requiresConfirmation Boolean @default(false)
+  confirmed            Boolean @default(false)
+  confirmedAt          DateTime?
+
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model AutomationTask {
+  id          String   @id @default(cuid())
+
+  // Task info
+  name        String   // Nome da tarefa (ex: "daily_report", "trending_topics_update")
+  description String?  // Descrição da tarefa
+  type        String   // 'scheduled', 'triggered', 'manual'
+  schedule    String?  // Cron expression (ex: "0 21 * * *" para diário às 21h)
+
+  // Execution
+  enabled     Boolean  @default(true)
+  lastRun     DateTime?
+  nextRun     DateTime?
+  runCount    Int      @default(0)
+
+  // Configuration
+  config      String?  // JSON com configuração específica da tarefa
+
+  // Results
+  lastResult  String?  // JSON com resultado da última execução
+  lastStatus  String?  // 'success', 'failed', 'skipped'
+  lastError   String?  // Mensagem de erro (se houver)
+
+  // Metadata
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([name])
+  @@index([enabled])
+  @@index([nextRun])
+}
+
+model CopilotReport {
+  id          String   @id @default(cuid())
+
+  // Report info
+  type        String   // 'daily', 'weekly', 'monthly', 'custom'
+  title       String   // Título do relatório
+
+  // Period
+  startDate   DateTime
+  endDate     DateTime
+
+  // Content
+  summary     String   // Resumo executivo (texto)
+  data        String   // JSON com todos os dados do relatório
+  sections    String   // JSON array com seções incluídas
+
+  // Metadata
+  generatedBy String   // 'automated' | 'manual' | userId
+  taskId      String?  // ID da AutomationTask (se foi agendado)
+
+  // Stats
+  articlesAnalyzed Int @default(0)
+  alertsFound      Int @default(0)
+
+  createdAt   DateTime @default(now())
+
+  @@index([type])
+  @@index([createdAt])
+  @@index([taskId])
 }
