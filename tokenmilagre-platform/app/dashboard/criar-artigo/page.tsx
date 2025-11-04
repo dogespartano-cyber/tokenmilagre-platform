@@ -254,6 +254,19 @@ export default function CriarArtigoPage() {
     ),
   }), []); // Sem dependências: criado uma vez apenas
 
+  // Função para sanitizar JSON removendo quebras de linha literais
+  const sanitizeJSON = (jsonString: string): string => {
+    // Substitui quebras de linha literais por espaço
+    // Isso preserva o JSON mas remove problemas de parsing
+    return jsonString
+      .replace(/\r\n/g, ' ')  // Windows line breaks
+      .replace(/\n/g, ' ')    // Unix line breaks
+      .replace(/\r/g, ' ')    // Old Mac line breaks
+      .replace(/\t/g, ' ')    // Tabs por espaços
+      .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')  // Remove caracteres de controle ASCII
+      .trim();
+  };
+
   const detectJSON = (text: string): any | null => {
     if (isDev) {
       console.log('🔍 [detectJSON] Tentando detectar JSON no texto...');
@@ -265,7 +278,9 @@ export default function CriarArtigoPage() {
     if (jsonMatch) {
       if (isDev) console.log('✅ JSON encontrado em markdown block');
       try {
-        const parsed = JSON.parse(jsonMatch[1]);
+        const sanitized = sanitizeJSON(jsonMatch[1]);
+        if (isDev) console.log('🧹 JSON sanitizado (primeiros 200 chars):', sanitized.substring(0, 200));
+        const parsed = JSON.parse(sanitized);
         if (isDev) console.log('✅ JSON parseado com sucesso:', Object.keys(parsed));
         return parsed;
       } catch (e) {
@@ -281,7 +296,9 @@ export default function CriarArtigoPage() {
       const extracted = text.substring(firstBrace, lastBrace + 1);
       if (isDev) console.log('🔍 Tentando extrair JSON bruto (chars ' + firstBrace + ' a ' + lastBrace + ')');
       try {
-        const parsed = JSON.parse(extracted);
+        const sanitized = sanitizeJSON(extracted);
+        if (isDev) console.log('🧹 JSON sanitizado (primeiros 200 chars):', sanitized.substring(0, 200));
+        const parsed = JSON.parse(sanitized);
         if (isDev) console.log('✅ JSON parseado com sucesso:', Object.keys(parsed));
         return parsed;
       } catch (e) {
@@ -358,7 +375,7 @@ export default function CriarArtigoPage() {
               const newConv = [...prev];
               newConv[newConv.length - 1] = {
                 role: 'assistant',
-                content: `✨ **Artigo gerado e processado!**\n\n✅ Título: ${processedArticle.title || 'Sem título'}\n✅ Slug: ${processedArticle.slug || 'sem-slug'}\n✅ Tempo de leitura: ${processedArticle.readTime || '1 min'}\n${citations.length > 0 ? `✅ Fontes: ${citations.length} citações` : ''}\n\nO artigo está pronto para publicação! Você pode:\n- **Publicar agora** (recomendado)\n- **Refinar com Gemini** (opcional)\n- **Criar capa com IA** (experimental)`
+                content: `✨ **Artigo gerado e processado!**\n\n✅ Título: ${processedArticle.title || 'Sem título'}\n✅ Slug: ${processedArticle.slug || 'sem-slug'}\n✅ Tempo de leitura: ${processedArticle.readTime || '1 min'}\n${citations.length > 0 ? `✅ Fontes: ${citations.length} citações encontradas` : `⚠️ Fontes: Nenhuma citação retornada pela API`}\n\nO artigo está pronto para publicação! Você pode:\n- **Publicar agora** (recomendado)\n- **Refinar com Gemini** (opcional)\n- **Criar capa com IA** (experimental)`
               };
               return newConv;
             });
@@ -1078,6 +1095,22 @@ export default function CriarArtigoPage() {
                           color: 'white'
                         }}>
                           🎨 Com capa
+                        </span>
+                      )}
+                      {/* Badge de Citations */}
+                      {generatedArticle.citations && generatedArticle.citations.length > 0 ? (
+                        <span className="px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1" style={{
+                          backgroundColor: '#3B82F6',
+                          color: 'white'
+                        }}>
+                          📚 {generatedArticle.citations.length} fontes
+                        </span>
+                      ) : (
+                        <span className="px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1" style={{
+                          backgroundColor: '#EF4444',
+                          color: 'white'
+                        }}>
+                          ⚠️ Sem fontes
                         </span>
                       )}
                     </div>

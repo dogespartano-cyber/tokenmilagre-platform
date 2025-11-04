@@ -406,6 +406,12 @@ Converse livremente com o usuário sobre qualquer assunto relacionado ao mundo c
       const content = response.choices[0].message.content;
       const citations = response.citations || [];
 
+      // DEBUG: Logs detalhados sobre citations
+      console.log('🔍 [DEBUG] Resposta Perplexity completa:', JSON.stringify(response, null, 2));
+      console.log('📚 [DEBUG] Citations extraídas:', citations);
+      console.log('📊 [DEBUG] Tipo de citations:', typeof citations, 'Array?', Array.isArray(citations));
+      console.log('📏 [DEBUG] Quantidade de citations:', citations.length);
+
       // Retornar JSON com content e citations
       return NextResponse.json({
         content,
