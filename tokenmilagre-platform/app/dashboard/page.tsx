@@ -146,25 +146,35 @@ export default function AdminDashboardPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {/* Total Articles */}
             <div
-              className="rounded-2xl p-6 border shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              className="group relative rounded-2xl p-6 border shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
               style={{
-                backgroundColor: 'var(--bg-elevated)',
+                background: 'linear-gradient(135deg, #3b82f615, var(--bg-elevated))',
                 borderColor: 'var(--border-light)'
               }}
             >
+              {/* Glow no topo no hover */}
               <div
-                className="w-12 h-12 rounded-full flex items-center justify-center mb-4"
-                style={{ background: 'linear-gradient(135deg, #3b82f6, #2563eb)' }}
-              >
-                <FontAwesomeIcon icon={faBook} className="w-6 h-6 text-white" />
+                className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                  background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                  boxShadow: '0 0 20px #3b82f640'
+                }}
+              />
+              <div className="flex items-start justify-between mb-4">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                  style={{ background: 'linear-gradient(135deg, #3b82f6, #2563eb)' }}
+                >
+                  <FontAwesomeIcon icon={faBook} className="w-6 h-6 text-white" />
+                </div>
               </div>
-              <p className="text-3xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
+              <p className="text-3xl font-bold mb-1 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                 {stats.totalArticles}
               </p>
-              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-sm mb-3" style={{ color: 'var(--text-secondary)' }}>
                 Total de Artigos
               </p>
-              <div className="mt-3 flex gap-2 text-xs" style={{ color: 'var(--text-tertiary)' }}>
+              <div className="pt-3 border-t flex gap-2 text-xs" style={{ borderColor: 'var(--border-light)', color: 'var(--text-tertiary)' }}>
                 <span>{stats.totalNews} notícias</span>
                 <span>•</span>
                 <span>{stats.totalEducational} educacionais</span>
@@ -173,19 +183,28 @@ export default function AdminDashboardPage() {
 
             {/* Published This Week */}
             <div
-              className="rounded-2xl p-6 border shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              className="group relative rounded-2xl p-6 border shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
               style={{
-                backgroundColor: 'var(--bg-elevated)',
+                background: 'linear-gradient(135deg, #10b98115, var(--bg-elevated))',
                 borderColor: 'var(--border-light)'
               }}
             >
               <div
-                className="w-12 h-12 rounded-full flex items-center justify-center mb-4"
-                style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}
-              >
-                <FontAwesomeIcon icon={faCalendarWeek} className="w-6 h-6 text-white" />
+                className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                  background: 'linear-gradient(135deg, #10b981, #059669)',
+                  boxShadow: '0 0 20px #10b98140'
+                }}
+              />
+              <div className="flex items-start justify-between mb-4">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                  style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}
+                >
+                  <FontAwesomeIcon icon={faCalendarWeek} className="w-6 h-6 text-white" />
+                </div>
               </div>
-              <p className="text-3xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
+              <p className="text-3xl font-bold mb-1 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                 {stats.publishedThisWeek}
               </p>
               <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
@@ -195,19 +214,28 @@ export default function AdminDashboardPage() {
 
             {/* Total Users */}
             <div
-              className="rounded-2xl p-6 border shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              className="group relative rounded-2xl p-6 border shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
               style={{
-                backgroundColor: 'var(--bg-elevated)',
+                background: 'linear-gradient(135deg, #8b5cf615, var(--bg-elevated))',
                 borderColor: 'var(--border-light)'
               }}
             >
               <div
-                className="w-12 h-12 rounded-full flex items-center justify-center mb-4"
-                style={{ background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)' }}
-              >
-                <FontAwesomeIcon icon={faUsers} className="w-6 h-6 text-white" />
+                className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                  background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                  boxShadow: '0 0 20px #8b5cf640'
+                }}
+              />
+              <div className="flex items-start justify-between mb-4">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                  style={{ background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)' }}
+                >
+                  <FontAwesomeIcon icon={faUsers} className="w-6 h-6 text-white" />
+                </div>
               </div>
-              <p className="text-3xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
+              <p className="text-3xl font-bold mb-1 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                 {stats.totalUsers}
               </p>
               <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
@@ -217,25 +245,34 @@ export default function AdminDashboardPage() {
 
             {/* Educational by Level */}
             <div
-              className="rounded-2xl p-6 border shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              className="group relative rounded-2xl p-6 border shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
               style={{
-                backgroundColor: 'var(--bg-elevated)',
+                background: 'linear-gradient(135deg, #f59e0b15, var(--bg-elevated))',
                 borderColor: 'var(--border-light)'
               }}
             >
               <div
-                className="w-12 h-12 rounded-full flex items-center justify-center mb-4"
-                style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)' }}
-              >
-                <FontAwesomeIcon icon={faGraduationCap} className="w-6 h-6 text-white" />
+                className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                  boxShadow: '0 0 20px #f59e0b40'
+                }}
+              />
+              <div className="flex items-start justify-between mb-4">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                  style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)' }}
+                >
+                  <FontAwesomeIcon icon={faGraduationCap} className="w-6 h-6 text-white" />
+                </div>
               </div>
-              <p className="text-3xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
+              <p className="text-3xl font-bold mb-1 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                 {stats.totalEducational}
               </p>
               <p className="text-sm mb-3" style={{ color: 'var(--text-secondary)' }}>
                 Artigos Educacionais
               </p>
-              <div className="space-y-1 text-xs" style={{ color: 'var(--text-tertiary)' }}>
+              <div className="pt-3 border-t space-y-1 text-xs" style={{ borderColor: 'var(--border-light)', color: 'var(--text-tertiary)' }}>
                 <div className="flex justify-between">
                   <span>Iniciante:</span>
                   <span className="font-semibold">{stats.educationalByLevel.iniciante}</span>
@@ -253,9 +290,9 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* Feature Cards */}
+        {/* Feature Cards - NOVO DESIGN BASEADO EM EDUCAÇÃO */}
         <div>
-          <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
+          <h2 className="text-2xl font-bold mb-6 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
             Ferramentas Administrativas
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
@@ -263,46 +300,70 @@ export default function AdminDashboardPage() {
               <Link
                 key={feature.href}
                 href={feature.href}
-                className="group relative rounded-2xl p-6 border overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+                className="group relative rounded-2xl p-6 overflow-hidden border shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer block"
                 style={{
-                  backgroundColor: 'var(--bg-elevated)',
+                  background: `linear-gradient(135deg, ${feature.gradient}08, var(--bg-elevated))`,
                   borderColor: 'var(--border-light)'
                 }}
               >
-                {/* Background Gradient Effect */}
+                {/* Glow sutil no topo no hover */}
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300"
-                  style={{ background: feature.gradient }}
+                  className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{
+                    background: feature.gradient,
+                    boxShadow: `0 0 20px ${feature.gradient}40`
+                  }}
                 />
 
-                <div className="relative z-10">
-                  {/* Icon */}
-                  <div
-                    className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"
-                    style={{ background: feature.gradient }}
-                  >
-                    <FontAwesomeIcon icon={feature.icon} className="w-7 h-7 text-white" />
+                {/* Content wrapper */}
+                <div className="relative flex flex-col h-full">
+                  {/* Header do Card */}
+                  <div className="flex items-start justify-between mb-4">
+                    {/* Ícone com gradiente */}
+                    <div
+                      className="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+                      style={{ background: feature.gradient }}
+                    >
+                      <FontAwesomeIcon icon={feature.icon} className="w-7 h-7 text-white" />
+                    </div>
+
+                    {/* Stats badge (se houver) */}
+                    {feature.stats && (
+                      <span
+                        className="text-xs font-bold px-3 py-1.5 rounded-lg backdrop-blur-sm"
+                        style={{
+                          backgroundColor: `${feature.gradient}15`,
+                          border: `1px solid ${feature.gradient}30`,
+                          color: 'var(--brand-primary)'
+                        }}
+                      >
+                        {feature.stats}
+                      </span>
+                    )}
                   </div>
 
-                  {/* Content */}
-                  <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
+                  {/* Título */}
+                  <h3 className="font-bold text-xl mb-3 group-hover:text-brand-primary transition-colors min-h-[3rem]" style={{ color: 'var(--text-primary)' }}>
                     {feature.title}
                   </h3>
-                  <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
+
+                  {/* Descrição */}
+                  <p className="text-sm mb-4 leading-relaxed opacity-90 min-h-[2.5rem]" style={{ color: 'var(--text-secondary)' }}>
                     {feature.description}
                   </p>
 
-                  {/* Stats */}
-                  {feature.stats && (
-                    <p className="text-sm font-semibold mb-3" style={{ color: 'var(--brand-primary)' }}>
-                      {feature.stats}
-                    </p>
-                  )}
+                  {/* Spacer to push footer to bottom */}
+                  <div className="flex-grow"></div>
 
-                  {/* Arrow */}
-                  <div className="flex items-center gap-2 text-sm font-semibold transition-all duration-300 group-hover:gap-4" style={{ color: 'var(--brand-primary)' }}>
-                    <span>Acessar</span>
-                    <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
+                  {/* Footer */}
+                  <div className="pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                    <div className="flex items-center justify-end">
+                      {/* CTA com seta animada */}
+                      <div className="flex items-center gap-2 text-sm font-bold group-hover:gap-3 transition-all" style={{ color: 'var(--text-primary)' }}>
+                        Acessar
+                        <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Link>
