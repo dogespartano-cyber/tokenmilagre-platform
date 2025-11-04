@@ -42,6 +42,9 @@ interface NewsItem {
   factChecked?: boolean;
   factCheckIssues?: string[];
   lastVerified?: string;
+  citations?: string[]; // URLs das fontes (Perplexity)
+  coverImage?: string; // URL da imagem de capa
+  coverImageAlt?: string; // Texto alternativo
 }
 
 async function getArticle(slug: string): Promise<NewsItem | null> {
