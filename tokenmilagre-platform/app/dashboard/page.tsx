@@ -67,11 +67,11 @@ export default function AdminDashboardPage() {
 
   const features: FeatureCard[] = [
     {
-      title: 'Chat AI',
-      description: 'Converse com a IA para criar e gerenciar conteúdo',
-      icon: faComments,
-      href: '/dashboard/chat',
-      gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)'
+      title: 'Chat IA Colaborativa',
+      description: 'Gemini e Perplexity conversando entre si - use @menções',
+      icon: faRobot,
+      href: '/dashboard/chat-ia',
+      gradient: 'linear-gradient(135deg, #ec4899, #8b5cf6)'
     },
     {
       title: 'Gerenciar Artigos',
