@@ -63,7 +63,25 @@ export async function GET(request: NextRequest) {
     // Buscar artigos com paginação
     const articles = await prisma.article.findMany({
       where,
-      include: {
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        content: true,
+        excerpt: true,
+        type: true,
+        category: true,
+        tags: true,
+        sentiment: true,
+        level: true,
+        contentType: true,
+        readTime: true,
+        published: true,
+        factCheckSources: true,
+        coverImage: true,
+        coverImageAlt: true,
+        createdAt: true,
+        updatedAt: true,
         author: {
           select: {
             id: true,
