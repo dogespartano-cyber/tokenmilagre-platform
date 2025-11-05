@@ -227,18 +227,21 @@ export const getStatisticsTool: CopilotTool = {
         totalUsers,
         adminUsers,
         editorUsers,
-        viewerUsers,
-        activeToday
+        viewerUsers
       ] = await Promise.all([
         prisma.user.count(),
         prisma.user.count({ where: { role: 'ADMIN' } }),
         prisma.user.count({ where: { role: 'EDITOR' } }),
-        prisma.user.count({ where: { role: 'VIEWER' } }),
-        prisma.article.count({
-          where: { createdAt: { gte: today } },
-          distinct: ['authorId']
-        })
+        prisma.user.count({ where: { role: 'VIEWER' } })
       ]);
+
+      // Active authors today (distinct count)
+      const activeAuthors = await prisma.article.findMany({
+        where: { createdAt: { gte: today } },
+        distinct: ['authorId'],
+        select: { authorId: true }
+      });
+      const activeToday = activeAuthors.length;
 
       // Resources stats
       const totalResources = await prisma.resource.count();
