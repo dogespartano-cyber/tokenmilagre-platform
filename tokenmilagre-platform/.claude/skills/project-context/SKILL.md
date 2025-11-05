@@ -14,7 +14,9 @@ allowed-tools: Read
 
 When this skill is invoked, read the following file to load all essential project context:
 
-**File**: `/home/destakar/Trabalho/CLAUDE-MEMORY.md`
+**File**: `/home/destakar/Trabalho/tokenmilagre-platform/docs-local/CLAUDE-MEMORY.md`
+
+**Location**: Inside project directory, but excluded from Git (`.gitignore`)
 
 This file contains:
 - ⚠️ Critical interaction rules (ALWAYS ask before executing)
@@ -58,7 +60,7 @@ After loading project context, use these specialized skills when needed:
 
 When this skill is invoked:
 
-1. Read `/home/destakar/Trabalho/CLAUDE-MEMORY.md` completely
+1. Read `/home/destakar/Trabalho/tokenmilagre-platform/docs-local/CLAUDE-MEMORY.md` completely
 2. Acknowledge that you've loaded the project context
 3. Be ready to follow all critical rules, especially:
    - ALWAYS ask before executing code
@@ -66,8 +68,10 @@ When this skill is invoked:
    - NEVER run build or dev server commands
    - Use Prisma directly in Server Components (no HTTP fetch)
    - **BE CONCISE** - Respostas curtas e diretas (usuário prefere economia de tokens)
-4. Consult LOG.md when historical context is needed
-5. Consult sugestões.md before suggesting improvements
+4. Consult `docs-local/LOG.md` when historical context is needed
+5. Consult `docs-local/sugestões.md` before suggesting improvements
+
+**Note**: Documentation files are inside the project (`docs-local/`) but not versioned (in `.gitignore`).
 
 ---
 
@@ -91,4 +95,4 @@ When this skill is invoked:
 ---
 
 **Skill criada por**: Claude Code
-**Última atualização**: 2025-11-04 (atualizado sistema de chat IA - removido /dashboard/chat)
+**Última atualização**: 2025-11-04 (documentação movida para docs-local/ dentro do projeto)

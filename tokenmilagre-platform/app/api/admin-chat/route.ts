@@ -362,10 +362,26 @@ export async function POST(request: NextRequest) {
 
     // Preparar mensagens com contexto
     // Garantir que todos os contents são strings válidas
-    const validatedMessages = messages.map(msg => ({
+    let validatedMessages = messages.map(msg => ({
       role: msg.role,
       content: String(msg.content || '') // Garantir que é string
     }));
+
+    // 🎯 SOLUÇÃO DEFINITIVA: Se estiver no editor e tiver conteúdo, enriquecer a última mensagem
+    if (context.pageType === 'editor' && pageData?.content && validatedMessages.length > 0) {
+      const lastIndex = validatedMessages.length - 1;
+      const lastUserMessage = validatedMessages[lastIndex];
+
+      // Enriquecer a mensagem do usuário com o artigo completo
+      const enrichedContent = `${lastUserMessage.content}\n\n---\n\n**ARTIGO COMPLETO ATUAL** (você DEVE retornar este artigo completo com suas edições):\n\n\`\`\`markdown\n${pageData.content}\n\`\`\`\n\n**LEMBRE-SE**: Retorne o artigo COMPLETO dentro de um bloco markdown, com TODAS as seções, incluindo as que não mudaram. Apenas a parte mencionada deve ter a edição, o resto fica igual.`;
+
+      validatedMessages[lastIndex] = {
+        ...lastUserMessage,
+        content: enrichedContent
+      };
+
+      console.log('🎯 [API] Mensagem enriquecida com artigo completo. Tamanho:', enrichedContent.length);
+    }
 
     const contextualizedMessages: PerplexityMessage[] = [
       { role: 'system', content: String(contextualizedSystemPrompt || '') },

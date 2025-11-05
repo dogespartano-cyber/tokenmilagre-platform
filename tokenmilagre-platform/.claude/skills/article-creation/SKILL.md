@@ -44,23 +44,26 @@ This skill provides all necessary information for creating news articles and edu
 
 ### ⚠️ REGRAS IMPORTANTES - Conteúdo
 
+**Aplicam-se a TODOS os tipos de conteúdo (artigos educacionais E notícias):**
+
 1. **NUNCA incluir título H1 no conteúdo**
    - ❌ ERRADO: `# Título do Artigo\n\nTexto...`
    - ✅ CORRETO: `Texto introdutório direto...\n\n## Primeira Seção`
    - O título já aparece automaticamente no header da página
 
 2. **NUNCA incluir seção de fontes/referências**
-   - ❌ ERRADO: Incluir `[1](url)`, `[2](url)` no final do artigo
+   - ❌ ERRADO: Incluir `[1](url)`, `**Fontes:**\n- [Nome](url)` no final
    - ✅ CORRETO: Conteúdo termina com o último parágrafo útil
-   - Fontes devem ser removidas do texto fornecido
+   - Template processa fontes automaticamente
 
 3. **Estrutura do conteúdo**
-   - Começar direto com parágrafo introdutório
+   - **Artigos educacionais**: Começar com parágrafo introdutório
+   - **Notícias**: Começar direto com ## (H2)
    - Usar ## (H2) para seções principais
    - Usar ### (H3) para subseções
-   - H2 aparece no índice lateral, H3 não (design compacto)
+   - H2 aparece no índice lateral, H3 não
 
-### Exemplo Correto
+### Exemplo Correto (Artigo Educacional)
 
 ```markdown
 As finanças descentralizadas (DeFi) representam uma revolução...
@@ -105,47 +108,23 @@ A principal vantagem é...
 }
 ```
 
-### ⚠️ REGRAS IMPORTANTES - Conteúdo de Notícias
+### ⚠️ REGRAS ESPECÍFICAS - Notícias
 
-**O template processa automaticamente o conteúdo. NUNCA incluir manualmente:**
+**O template processa automaticamente. NUNCA incluir manualmente:**
 
-1. **NUNCA incluir título H1 no início do conteúdo**
-   - ❌ ERRADO: `# Família Trump Lucra...\n\nTexto...`
-   - ✅ CORRETO: `## Primeira Seção\n\nTexto...`
-   - Template remove automaticamente H1 duplicado
-   - Título já aparece no header da página
-
-2. **NUNCA incluir nota de transparência no conteúdo**
+1. **NUNCA incluir nota de transparência no conteúdo**
    - ❌ ERRADO: Adicionar "📊 Nota de Transparência" no markdown
-   - ✅ CORRETO: Conteúdo termina com último parágrafo útil
-   - Template adiciona automaticamente após o conteúdo
-   - Data de atualização é calculada dinamicamente
+   - ✅ CORRETO: Template adiciona automaticamente após o conteúdo
 
-3. **NUNCA incluir seção de fontes no final**
-   - ❌ ERRADO: `**Fontes:**\n- [Nome](url)\n- [Nome](url)`
-   - ✅ CORRETO: Fontes são removidas automaticamente
-   - Template extrai e processa fontes separadamente
-
-4. **NUNCA repetir o excerpt no início do content**
+2. **NUNCA repetir o excerpt no início do content**
    - ❌ ERRADO: `excerpt: "Texto X..." + content: "Texto X...\n\n## Seção"`
    - ✅ CORRETO: `excerpt: "Texto X..." + content: "## Seção\n\nTexto Y..."`
    - Template já mostra o excerpt/resumo antes do conteúdo
    - Começar content direto nas seções (##) evita duplicação visual
-   - O excerpt serve como resumo destacado, não como primeiro parágrafo
-
-### Processamento Automático do Template
-
-O template `ArtigoClient.tsx` automaticamente:
-- Remove H1 do início do conteúdo (`removeH1FromContent`)
-- Remove seção de fontes (`removeSourcesSection`)
-- Adiciona nota de transparência com data formatada
-- Gera índice navegável (H2 apenas)
-- Calcula tempo de leitura
-- Formata data de publicação em português
 
 ### Estrutura do Conteúdo (Notícias)
 
-**IMPORTANTE**: O content deve começar direto nas seções (##), pois o excerpt já aparece como resumo destacado no template.
+**IMPORTANTE**: O content deve começar direto nas seções (##), pois o excerpt já aparece como resumo destacado.
 
 ```markdown
 ## Primeira Seção Principal
@@ -165,152 +144,45 @@ Conteúdo continua...
 Parágrafo final sem nota de transparência ou fontes.
 ```
 
-**Por que não incluir parágrafo introdutório?**
-- O template já renderiza o `excerpt` como resumo antes do `content`
-- Se o `content` começar com texto = duplicação visual
-- Começar direto com ## evita repetição e melhora a estrutura
+### Processamento Automático do Template
 
-### 📐 Padrão de Estruturação Jornalística (Template Oficial)
+O template `ArtigoClient.tsx` automaticamente:
+- Remove H1 do início do conteúdo (`removeH1FromContent`)
+- Remove seção de fontes (`removeSourcesSection`)
+- Adiciona nota de transparência com data formatada
+- Gera índice navegável (H2 apenas)
+- Calcula tempo de leitura
+- Formata data de publicação em português
 
-**Descoberto e validado em**: 2025-10-26 (artigo Strategy/Bitcoin)
+### 📐 Padrão de Estruturação Jornalística
 
-**Fluxo narrativo ideal para notícias digitais:**
+**Fluxo narrativo ideal para notícias:**
 
 ```
 Fato → Contexto → Impacto → Visão → Reflexão → Desafios
 ```
 
-Este padrão funciona porque:
-- **Captura atenção** (fato impactante abre a notícia)
-- **Contextualiza** (números, comparações, dados)
-- **Analisa** (impacto no mercado/setor)
-- **Humaniza** (visão do protagonista/especialista)
-- **Reflete** (significado maior, análise profunda)
-- **Equilibra** (desafios, riscos, realismo)
+**Por que funciona:**
+- Captura atenção (fato impactante)
+- Contextualiza (números, dados)
+- Analisa (impacto no mercado)
+- Humaniza (visão de especialista)
+- Reflete (significado maior)
+- Equilibra (riscos, realismo)
 
-#### Técnicas de Estruturação
+**Técnicas:**
+1. Agrupar parágrafos por tema (não por tamanho)
+2. Títulos descritivos (não genéricos como "Introdução")
+3. H2 para navegação (5-6 seções ideais), H3 para profundidade
+4. Conclusão integrada como ### da última seção (não separada)
 
-1. **Agrupar parágrafos por tema** (não por tamanho)
-   - ✅ CORRETO: Seção agrupa todos parágrafos sobre "Impacto no Mercado"
-   - ❌ ERRADO: Seção mistura temas diferentes só para balancear tamanho
+**Número ideal de seções**: 4 mínimo, 5-6 ideal, 7 máximo
 
-2. **Títulos de seção descritivos** (não genéricos)
-   - ✅ CORRETO: "Disparada na Liderança", "Visão de Michael Saylor"
-   - ❌ ERRADO: "Introdução", "Desenvolvimento", "Informações"
+---
 
-3. **H2 para navegação, H3 para profundidade**
-   - H2 (##) aparece no índice lateral → máximo 5-7 seções
-   - H3 (###) adiciona profundidade sem poluir índice
+## 🔧 Como Criar Notícias via Script
 
-4. **Conclusão integrada** (não separada)
-   - ✅ CORRETO: Converter "Conclusão" em subseção (###) da última seção
-   - ❌ ERRADO: "## Conclusão" como seção isolada no final
-
-5. **Número ideal de seções**
-   - Mínimo: 4 seções H2
-   - Ideal: 5-6 seções H2
-   - Máximo: 7 seções H2
-   - Evita índice muito longo e mantém foco
-
-#### Exemplo Prático: Artigo Strategy/Bitcoin
-
-**Texto original recebido:**
-```markdown
-**Strategy se torna a maior tesouraria...**
-
-Em outubro de 2025, um marco histórico...
-A empresa alcançou recentemente...
-Enquanto outras companhias...
-O movimento estratégico...
-A razão por trás...
-Essa virada reforça...
-
-### Conclusão
-A trajetória da Strategy...
-```
-
-**Texto estruturado (padrão aplicado):**
-```markdown
-## Marco Histórico no Mercado Cripto
-[Fato: October 2025, 640.000 BTC]
-
-## Disparada na Liderança
-[Contexto: Comparação com MARA, XXI, outras empresas]
-
-## Impacto no Mercado Institucional
-[Impacto: Fortalecimento institucional, influência]
-
-## Visão de Michael Saylor
-[Visão: Convicção em Bitcoin como reserva de valor]
-
-## Novo Paradigma Corporativo
-[Reflexão: Protagonismo, debates, ponto de inflexão]
-
-### Legado e Desafios
-[Desafios: Diluição, volatilidade, concentração]
-```
-
-**Benefícios confirmados:**
-- ✅ Hierarquia visual clara
-- ✅ Leitura dinâmica facilitada
-- ✅ SEO otimizado (subtítulos semânticos)
-- ✅ Navegação funcional (índice lateral)
-- ✅ Mobile-friendly (seções curtas)
-- ✅ Profissionalismo editorial
-
-#### Quando Aplicar Este Padrão
-
-**✅ SEMPRE usar para:**
-- Notícias longas (3+ parágrafos originais)
-- Análises de mercado
-- Anúncios corporativos
-- Notícias regulatórias
-- Tutoriais de notícias
-
-**❌ NÃO usar para:**
-- Notícias flash (1-2 parágrafos curtos)
-- Alertas urgentes
-- Atualizações rápidas de preço
-
-#### Checklist de Estruturação
-
-Ao transformar texto bruto em notícia estruturada:
-
-- [ ] Identificar o **fato central** (primeira seção)
-- [ ] Extrair **dados/números** para contextualizar
-- [ ] Analisar **impacto** no mercado/setor
-- [ ] Incluir **visão humana** (CEO, especialista, protagonista)
-- [ ] Adicionar **reflexão** sobre significado maior
-- [ ] Integrar **conclusão como subseção** (###) da última seção
-- [ ] Garantir 5-6 seções H2 (não menos de 4, não mais de 7)
-- [ ] Verificar títulos descritivos (não genéricos)
-- [ ] Remover fontes/referências (template processa)
-
-### Template de Notícias - Características
-
-**Design**: Minimalista, idêntico aos artigos educacionais
-**Layout**: Conteúdo principal (`max-w-4xl`) + Sidebar lateral (w-64, apenas XL+)
-**Espaçamento**: `paddingLeft: '55px'` (mesmo dos artigos)
-
-**Elementos automáticos:**
-- Breadcrumbs
-- Botão "Voltar para Notícias"
-- Meta info: Sentimento, Fonte, Tempo de leitura, "Há Xh/Xd"
-- Título principal (H1)
-- Data de publicação formatada (PT-BR com hora/minuto BRT)
-- Resumo
-- Keywords/Tags clicáveis
-- Conteúdo processado (sem H1/fontes)
-- 📊 Nota de Transparência
-- Compartilhar: X (Twitter), Telegram, WhatsApp
-- Notícias Relacionadas
-- Índice lateral com seção ativa destacada
-- Navegação anterior/próxima
-- Scroll to top button
-
-### 🔧 Como Criar Notícias via Script
-
-**Configuração correta do Prisma neste projeto:**
+### Configuração do Prisma
 
 ```javascript
 // ✅ CORRETO - Usar caminho customizado
@@ -321,9 +193,7 @@ const prisma = new PrismaClient();
 const { PrismaClient } = require('@prisma/client');
 ```
 
-**Por quê?** Este projeto configura o Prisma para gerar em pasta customizada (`lib/generated/prisma`).
-
-**Usuários disponíveis no banco:**
+### Usuários Disponíveis
 
 ```javascript
 // ID dos usuários existentes:
@@ -334,7 +204,7 @@ const { PrismaClient } = require('@prisma/client');
 authorId: 'cmggcrcr40001ijinifhwp0zq'
 ```
 
-**Template de script para criar notícias (COM SLUG ÚNICO AUTOMÁTICO):**
+### Template de Script (COM SLUG ÚNICO AUTOMÁTICO)
 
 ```javascript
 const { PrismaClient } = require('../lib/generated/prisma');
@@ -352,10 +222,10 @@ async function main() {
     data: {
       slug, // Slug único garantido!
       title: 'Título da Notícia',
-      excerpt: 'Resumo breve (1-2 frases) - Este texto aparece como destaque',
+      excerpt: 'Resumo breve (1-2 frases)',
       content: `## Primeira Seção
 
-Conteúdo começa direto nas seções. NÃO repetir o excerpt aqui!
+Conteúdo começa direto nas seções.
 
 ## Segunda Seção
 
@@ -365,7 +235,7 @@ Mais conteúdo...`,
       sentiment: 'neutral', // positive | neutral | negative
       published: true,
       authorId: 'cmggcrcr40001ijinifhwp0zq', // Editor
-      createdAt: new Date(), // Hora atual do sistema
+      createdAt: new Date(), // Hora atual
       updatedAt: new Date()
     }
   });
@@ -385,114 +255,57 @@ main()
   });
 ```
 
-**✨ Sistema de Slug Único Automático:**
+### Sistema de Slug Único Automático
 
-O projeto possui um helper em `scripts/helpers/generate-unique-slug.js` que:
+**Helper**: `scripts/helpers/generate-unique-slug.js`
 
-1. **Gera slugs a partir de títulos:** `titleToSlug('Bitcoin Recua')` → `bitcoin-recua`
-2. **Adiciona data automática:** `slugWithDate('Bitcoin Recua')` → `bitcoin-recua-20251022`
-3. **Garante unicidade:** Se slug existir, adiciona sufixo incremental (`-2`, `-3`, etc)
-4. **Previne duplicatas:** Mesmo título em dias diferentes = slugs diferentes
-
-**Exemplo de uso:**
-```javascript
-const { generateUniqueSlug, slugWithDate } = require('./helpers/generate-unique-slug');
-
-// Título igual em dias diferentes
-const slug1 = await generateUniqueSlug('bitcoin-recua-107-mil-20251022');
-// Resultado: 'bitcoin-recua-107-mil-20251022'
-
-const slug2 = await generateUniqueSlug('bitcoin-recua-107-mil-20251022');
-// Resultado: 'bitcoin-recua-107-mil-20251022-2' (adiciona -2 automaticamente)
-
-const slug3 = await generateUniqueSlug('bitcoin-recua-107-mil-20251022');
-// Resultado: 'bitcoin-recua-107-mil-20251022-3' (adiciona -3 automaticamente)
-```
+**Funções:**
+1. `titleToSlug('Bitcoin Recua')` → `bitcoin-recua`
+2. `slugWithDate('Bitcoin Recua')` → `bitcoin-recua-20251022`
+3. `generateUniqueSlug(baseSlug)` → Garante unicidade (adiciona -2, -3, etc)
 
 **Benefícios:**
 - ✅ Nunca mais erro de slug duplicado
-- ✅ Títulos similares em contextos diferentes = OK
-- ✅ Sistema automático, não precisa pensar em sufixos
-- ✅ Template pronto em `scripts/publish-news-template.js`
+- ✅ Títulos similares = slugs diferentes
+- ✅ Sistema automático
+- ✅ Template pronto: `scripts/publish-news-template.js`
 
-**Comandos úteis:**
+### Comandos Úteis
 
 ```bash
-# Gerar Prisma Client (se necessário)
+# Gerar Prisma Client
 npx prisma generate
 
 # Executar script
 node scripts/nome-do-script.js
 
-# Listar usuários (para obter IDs)
+# Listar usuários
 node scripts/list-users.js
 ```
 
-**Erros comuns e soluções:**
+### Erros Comuns e Soluções
 
 | Erro | Causa | Solução |
 |------|-------|---------|
 | `@prisma/client did not initialize` | Cliente não gerado | `npx prisma generate` |
 | `Foreign key constraint violated` | authorId inválido | Usar ID válido de usuário existente |
 | `Cannot find module '@prisma/client'` | Caminho errado | Usar `../lib/generated/prisma` |
-| `Cannot find module '/path/scripts/...'` | Script criado fora do projeto | **SEMPRE** criar em `/tokenmilagre-platform/scripts/` |
-| Notícia aparece "há X horas" | Data com timezone UTC errado | Usar `new Date()` sem parâmetros para hora atual |
+| `Cannot find module '/path/scripts/...'` | Script fora do projeto | **SEMPRE** criar em `/tokenmilagre-platform/scripts/` |
+| Notícia aparece "há X horas" | Data com timezone UTC errado | Usar `new Date()` sem parâmetros |
 
 ### 🔴 ERRO CRÍTICO: Module not found
 
-**Sintoma mais comum**:
+**Sintoma**:
 ```
 Error: Cannot find module '../lib/generated/prisma'
 Require stack: /tmp/check.js
 ```
 
-**Causa raiz**: Script criado **fora da estrutura do projeto**
+**Causa**: Script criado **fora da estrutura do projeto** (ex: `/tmp/`, diretório pai)
 
-**Por que acontece?**
+**Solução**: **SEMPRE criar scripts em** `tokenmilagre-platform/scripts/`
 
-Quando você cria um script em `/tmp/` ou fora do projeto:
-
-```javascript
-// ❌ Script em /tmp/verify.js
-const { PrismaClient } = require('../lib/generated/prisma');
-//                                   ^^^ caminho relativo
-
-// Node.js procura em: /tmp/../lib/generated/prisma
-// Resultado: /lib/generated/prisma ← NÃO EXISTE!
-```
-
-**Solução**:
-
-```javascript
-// ✅ Script em tokenmilagre-platform/scripts/verify.js
-const { PrismaClient } = require('../lib/generated/prisma');
-//                                   ^^^ caminho relativo
-
-// Node.js procura em: scripts/../lib/generated/prisma
-// Resultado: /home/destakar/Trabalho/tokenmilagre-platform/lib/generated/prisma ✅
-```
-
-**Regra de ouro**:
-- ✅ **SEMPRE criar scripts em** `tokenmilagre-platform/scripts/`
-- ❌ **NUNCA criar em** `/tmp/`, `/home/destakar/Trabalho/`, ou diretórios pai
-
-**Motivo técnico**: O caminho relativo `../lib/generated/prisma` é calculado a partir do **diretório do script**, não do diretório de execução.
-
----
-
-**⚠️ REGRAS CRÍTICAS ao Criar Scripts:**
-
-1. **Caminho correto do script:**
-   - ✅ CORRETO: `/home/destakar/Trabalho/tokenmilagre-platform/scripts/nome-do-script.js`
-   - ❌ ERRADO: `/home/destakar/Trabalho/scripts/nome-do-script.js` (diretório pai)
-
-2. **Data/Hora de publicação:**
-   - ✅ CORRETO: `createdAt: new Date()` (hora atual do sistema)
-   - ❌ ERRADO: `new Date('2025-10-22T00:00:00.000Z')` (meia-noite UTC, aparecerá como horas atrás)
-
-3. **Antes de executar script:**
-   - Verificar se Prisma Client está gerado: `npx prisma generate`
-   - Estar no diretório correto: `pwd` deve mostrar `.../tokenmilagre-platform`
+**Por quê?**: O caminho relativo `../lib/generated/prisma` é calculado a partir do **diretório do script**.
 
 ---
 
@@ -517,45 +330,40 @@ const { PrismaClient } = require('../lib/generated/prisma');
 
 ## ✅ Checklist para Novos Artigos Educacionais
 
-Ao criar um novo artigo educacional:
-
-- [ ] Remover título H1 do conteúdo (título já aparece no header)
-- [ ] Remover todas as fontes/referências do final
-- [ ] Verificar se as seções usam ## (H2) e ### (H3) corretamente
+- [ ] Remover título H1 do conteúdo
+- [ ] Remover fontes/referências do final
+- [ ] Verificar seções usam ## (H2) e ### (H3)
 - [ ] Definir categoria apropriada
 - [ ] Definir nível (iniciante/intermediario/avancado)
 - [ ] Definir tipo (Artigo/Tutorial)
-- [ ] Estimar tempo de leitura realista
+- [ ] Estimar tempo de leitura
 - [ ] Adicionar 3-5 tags relevantes
 - [ ] Usar data de publicação atual
 - [ ] Incrementar ID do artigo (próximo: 7)
 - [ ] Criar slug em kebab-case
-- [ ] Testar o artigo em modo claro e escuro
+- [ ] Testar em modo claro e escuro
 
 ## ✅ Checklist para Novas Notícias
 
-Ao criar uma nova notícia:
-
-- [ ] Remover título H1 do início do conteúdo markdown
-- [ ] Remover nota de transparência (template adiciona automaticamente)
-- [ ] Remover seção de fontes do final (template processa)
-- [ ] **NÃO repetir excerpt no início do content (começar direto com ##)**
-- [ ] Verificar se content começa com ## (H2), não com parágrafo
-- [ ] Verificar se as seções usam ## (H2) e ### (H3) corretamente
-- [ ] **Aplicar Padrão de Estruturação Jornalística** (Fato → Contexto → Impacto → Visão → Reflexão → Desafios)
-- [ ] Garantir 5-6 seções H2 temáticas (mínimo 4, máximo 7)
-- [ ] Usar títulos descritivos nas seções (não genéricos)
-- [ ] Integrar conclusão como subseção (###) da última seção
-- [ ] Definir categoria apropriada (bitcoin, ethereum, defi, politica, etc)
+- [ ] Remover título H1 do início do content
+- [ ] Remover nota de transparência (template adiciona)
+- [ ] Remover seção de fontes (template processa)
+- [ ] **NÃO repetir excerpt no início do content**
+- [ ] Content começa com ## (H2), não com parágrafo
+- [ ] Aplicar Padrão de Estruturação Jornalística
+- [ ] 5-6 seções H2 temáticas (mín 4, máx 7)
+- [ ] Títulos descritivos nas seções
+- [ ] Integrar conclusão como ### da última seção
+- [ ] Definir categoria apropriada
 - [ ] Definir sentiment (positive, neutral, negative)
 - [ ] Adicionar excerpt/resumo (1-2 frases)
 - [ ] Adicionar 5-7 keywords relevantes como tags
 - [ ] Criar slug único em kebab-case
-- [ ] Garantir que published = true para publicação
-- [ ] Usar Prisma/API para inserir no banco de dados
-- [ ] Testar visualização da notícia
+- [ ] Garantir published = true
+- [ ] Usar Prisma/API para inserir
+- [ ] Testar visualização
 
 ---
 
 **Skill criada por**: Claude Code
-**Última atualização**: 2025-10-26 (adicionado Padrão de Estruturação Jornalística oficial)
+**Última atualização**: 2025-11-04 (otimizado e consolidado)

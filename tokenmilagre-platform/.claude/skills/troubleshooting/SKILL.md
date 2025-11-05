@@ -12,6 +12,8 @@
 2. [Flash Visual ao Navegar - Cache](#problema-2-flash-visual-ao-navegar)
 3. [Ticker Tape Recarregando](#problema-3-ticker-tape-recarregando)
 4. [Fear & Greed Cache Inteligente](#problema-4-fear--greed-cache-inteligente)
+5. [Regex Removendo Quebras de Linha - Markdown](#problema-5-regex-removendo-quebras-de-linha)
+6. [API Gemini - Nomes Corretos dos Modelos](#problema-6-api-gemini---nomes-corretos-dos-modelos)
 
 ---
 
@@ -24,17 +26,15 @@ Ao navegar de qualquer página (com scroll para baixo) para páginas da hierarqu
 - `/criptomoedas` (página principal)
 - `/criptomoedas/[slug]` (páginas individuais das moedas)
 
-**Não afetava:** Outras rotas funcionavam normalmente.
-
 ### 🔍 Causa Raiz
-As páginas de criptomoedas **não tinham** código para forçar scroll para o topo ao montar. O Next.js App Router tem comportamento de scroll restoration que tentava manter a posição, mas estava falhando especificamente nesta hierarquia.
+As páginas de criptomoedas **não tinham** código para forçar scroll para o topo ao montar. O Next.js App Router scroll restoration estava falhando especificamente nesta hierarquia.
 
 ### ✅ Solução Aplicada
 
 **Arquivo**: `app/criptomoedas/page.tsx`
 ```typescript
 export default function CriptomoedasPage() {
-  // Forçar scroll para o topo ao montar (fix para bug de scroll)
+  // Forçar scroll para o topo ao montar
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
@@ -55,28 +55,25 @@ export default function CryptoPage() {
 }
 ```
 
-### 📝 Detalhes da Implementação
+### 📝 Detalhes
 - **`behavior: 'instant'`**: Scroll sem animação (imperceptível)
 - **`top: 0, left: 0`**: Posição exata do topo
-- **Dependências**:
-  - Página principal: `[]` (executa ao montar)
-  - Página da moeda: `[slug]` (executa ao mudar de moeda)
+- **Dependências**: `[]` (página principal) | `[slug]` (página da moeda)
 
 ### ⚠️ Tentativas que NÃO Funcionaram
 1. ❌ `useLayoutEffect` global no layout root → quebrou todas as páginas
 2. ❌ `scroll={false}` nos Links → não resolveu
-3. ❌ `window.history.scrollRestoration = 'manual'` → piorou o problema
-4. ❌ Múltiplos métodos de scroll (`document.documentElement.scrollTop`) → não ajudou
+3. ❌ `window.history.scrollRestoration = 'manual'` → piorou
 
 ### 💡 Lição Aprendida
-**Controle local > Controle global**: Quando o problema afeta apenas uma hierarquia específica de rotas, aplique a solução **localmente** naquelas páginas ao invés de tentar controlar globalmente no layout.
+**Controle local > Controle global**: Quando o problema afeta apenas uma hierarquia específica de rotas, aplique a solução **localmente** naquelas páginas.
 
 ---
 
 ## Problema 2: Flash Visual ao Navegar
 
 ### 🐛 Descrição do Bug
-Ao navegar entre páginas, elementos que dependiam de fetch (Market Data, Notícias, Educação, Fear & Greed) **"piscavam"** ou apareciam vazios antes de carregar, causando uma experiência visual ruim.
+Ao navegar entre páginas, elementos que dependiam de fetch (Market Data, Notícias, Educação, Fear & Greed) **"piscavam"** ou apareciam vazios antes de carregar.
 
 **Manifestação:**
 - Velocímetro sumia e reaparecia
@@ -86,9 +83,7 @@ Ao navegar entre páginas, elementos que dependiam de fetch (Market Data, Notíc
 ### 🔍 Causa Raiz
 Componentes começavam com estado vazio (`null` ou `[]`) e só populavam **após** o fetch completar. Isso criava um "flash" visual onde o conteúdo sumia e reaparecia.
 
-### ✅ Solução Aplicada: Cache Client-Side em Duas Camadas
-
-#### **1. Cache no Componente (sessionStorage)**
+### ✅ Solução: Cache Client-Side em Duas Camadas
 
 **Padrão aplicado em todos os componentes afetados:**
 
@@ -124,25 +119,14 @@ const fetchData = async () => {
 };
 ```
 
-#### **2. Arquivos Modificados**
+### Arquivos Modificados
 
-**`app/components/DashboardHeader.tsx`**
-- Cache key: `fear_greed_index`
-- Velocímetro aparece instantaneamente
-
-**`app/page.tsx`**
-- Cache keys: `home_market_data`, `home_news_list`, `home_education_list`
-- Market Data, Últimas Notícias, Aprenda sobre Cripto
-
-**`app/criptomoedas/[slug]/page.tsx`**
-- Cache key: `crypto_${slug}`
-- Dados da moeda carregam instantaneamente
-- Cache de 1 hora
-
-**`components/TopCryptosList.tsx`**
-- Cache key: `crypto_top_list`
-- Lista de top 10 moedas
-- Cache de 30 minutos
+| Componente | Cache Key | Duração |
+|------------|-----------|---------|
+| `DashboardHeader.tsx` | `fear_greed_index` | Sessão |
+| `app/page.tsx` | `home_market_data`, `home_news_list`, `home_education_list` | Sessão |
+| `criptomoedas/[slug]/page.tsx` | `crypto_${slug}` | 1 hora |
+| `TopCryptosList.tsx` | `crypto_top_list` | 30 minutos |
 
 ### 📊 Resultados
 - ✅ **Zero flash visual** ao navegar
@@ -166,32 +150,23 @@ O Ticker Tape (widget TradingView) **recarregava completamente** ao voltar para 
 ### 🔍 Causa Raiz
 O Ticker estava dentro do `DashboardHeader`, que era **desmontado** ao navegar para páginas sem header, destruindo o widget e seu iframe/script.
 
-### ✅ Solução Aplicada: Elevação do Componente
+### ✅ Solução: Elevação do Componente
 
 **Estratégia**: Mover o Ticker para o **layout root** (sempre montado) e controlar visibilidade via CSS.
 
-#### **Mudanças Realizadas**
+**Mudanças:**
 
-**1. Remover do DashboardHeader**
+1. **Remover do DashboardHeader** (`app/components/DashboardHeader.tsx`)
+2. **Adicionar ao Layout Root** (`app/layout-root.tsx`):
+
 ```typescript
-// app/components/DashboardHeader.tsx
-// ❌ REMOVIDO:
-import TickerTapeWidget from '@/components/TickerTapeWidget';
-
-// ❌ REMOVIDO:
-<TickerTapeWidget />
-```
-
-**2. Adicionar ao Layout Root**
-```typescript
-// app/layout-root.tsx
 import dynamic from 'next/dynamic';
 
 const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
   ssr: false,
 });
 
-// Ticker Tape - Sempre montado para evitar recarregamento
+// Ticker Tape - Sempre montado
 <div
   className="container mx-auto px-4"
   style={{
@@ -231,11 +206,11 @@ Widgets externos (TradingView, iframes) devem ser **elevados para um nível que 
 ## Problema 4: Fear & Greed Cache Inteligente
 
 ### 🐛 Descrição do Problema
-O Fear & Greed Index estava configurado para **NUNCA usar cache** (`revalidate = 0`), fazendo uma requisição à API externa toda vez que o header era renderizado, mesmo sabendo que o índice atualiza apenas **1x por dia**.
+O Fear & Greed Index estava configurado para **NUNCA usar cache** (`revalidate = 0`), fazendo uma requisição à API externa toda vez, mesmo sabendo que o índice atualiza apenas **1x por dia**.
 
 **Problemas:**
-- Requisições desnecessárias à API externa
-- Risco de atingir rate limits
+- Requisições desnecessárias
+- Risco de rate limits
 - Latência desnecessária
 
 ### 🔍 Análise
@@ -253,7 +228,7 @@ A API do alternative.me retorna um campo `time_until_update` (em segundos) que i
 }
 ```
 
-### ✅ Solução Aplicada: Cache Dinâmico
+### ✅ Solução: Cache Dinâmico
 
 **Arquivo**: `app/api/fear-greed/route.ts`
 
@@ -264,7 +239,7 @@ let cacheExpiry = 0;
 
 export async function GET() {
   try {
-    // Verificar se temos cache válido
+    // Verificar cache válido
     const now = Date.now();
     if (cachedData && now < cacheExpiry) {
       return NextResponse.json({
@@ -279,10 +254,10 @@ export async function GET() {
     const data = await response.json();
     const fearGreedData = data.data[0];
 
-    // Calcular quando o cache expira baseado no time_until_update
+    // Calcular expiração baseado no time_until_update
     const timeUntilUpdate = parseInt(fearGreedData.time_until_update);
     cachedData = fearGreedData;
-    cacheExpiry = now + (timeUntilUpdate * 1000); // Converter para ms
+    cacheExpiry = now + (timeUntilUpdate * 1000);
 
     return NextResponse.json({
       success: true,
@@ -290,7 +265,7 @@ export async function GET() {
       cached: false,
     });
   } catch (error) {
-    // Se temos cache antigo, retornar mesmo que expirado
+    // Fallback: retornar cache antigo se houver erro
     if (cachedData) {
       return NextResponse.json({
         success: true,
@@ -313,29 +288,315 @@ export async function GET() {
 4. **Fallback Resiliente**: Retorna cache antigo se API falhar
 
 ### 💡 Lição Aprendida
-Quando uma API fornece informação sobre seu próprio ciclo de atualização (`time_until_update`), use isso para criar um **cache dinâmico inteligente**.
+Quando uma API fornece informação sobre seu próprio ciclo de atualização, use isso para criar um **cache dinâmico inteligente**.
+
+---
+
+## Problema 5: Regex Removendo Quebras de Linha
+
+### 🐛 Descrição do Bug
+Artigos markdown tinham **todas as quebras de linha removidas**, causando formatação completamente quebrada:
+- Títulos grudados no texto
+- Parágrafos sem separação
+- Leitura impossível
+
+**Severidade**: 🔴 CRÍTICA
+
+### 📋 Sintomas
+
+1. **Conteúdo markdown sem separação:**
+   ```
+   ## Título A exchange anunciou...## Outro Título Mais texto...
+   ```
+
+2. **Logs mostravam quebras antes, mas sumiam depois:**
+   ```javascript
+   // ANTES (OK): Content original: ## Título\n\nTexto...
+   // DEPOIS (QUEBRADO): Content processado: ## Título Texto...
+   ```
+
+### 🔍 Causa Raiz
+
+**Arquivo**: `lib/article-processor-client.ts:23`
+**Função**: `cleanReferences()`
+
+```typescript
+// ❌ CÓDIGO PROBLEMÁTICO
+export function cleanReferences(text: string): string {
+  return text
+    .replace(/\[\d+\]/g, '')
+    .replace(/(?:\[\d+\])+/g, '')
+    .replace(/\[\s*\d+\s*\]/g, '')
+    .replace(/\s{2,}/g, ' ')  // 🔴 Remove quebras de linha!
+    .trim();
+}
+```
+
+**Explicação técnica:**
+
+| Regex | Significado | Problema |
+|-------|-------------|----------|
+| `\s{2,}` | Qualquer espaço em branco (2+) | Remove `\n`, `\r`, `\t`, espaços |
+| `[ \t]{2,}` | Apenas espaços e tabs (2+) | **NÃO** remove `\n` ✅ |
+
+- `\s` inclui `\n` (line feed), `\r` (carriage return), `\t` (tab), espaços
+- `\s{2,}` substituía `\n\n` (separador de parágrafos markdown) por espaço simples
+- Resultado: markdown perdia toda estrutura
+
+### ✅ Solução Aplicada
+
+```typescript
+// ✅ CÓDIGO CORRIGIDO
+export function cleanReferences(text: string): string {
+  return text
+    .replace(/\[\d+\]/g, '')
+    .replace(/(?:\[\d+\])+/g, '')
+    .replace(/\[\s*\d+\s*\]/g, '')
+    .replace(/[ \t]{2,}/g, ' ')  // ✅ Preserva \n
+    .trim();
+}
+```
+
+**Mudança**: `\s{2,}` → `[ \t]{2,}`
+
+**Efeito**: Preserva quebras de linha enquanto normaliza espaços/tabs
+
+### 🧪 Teste de Validação
+
+**Arquivo**: `scripts/test-line-breaks.js`
+
+```javascript
+const test = `## Título\n\nParágrafo[1].\n\n## Outro`;
+const result = cleanReferences(test);
+
+// ✅ Resultado esperado:
+// "## Título\n\nParágrafo.\n\n## Outro"
+```
+
+**Resultados:**
+- ✅ Teste 1: Quebras preservadas + Referências removidas
+- ✅ Teste 2: `[1][2][3]` removidas corretamente
+- ✅ Teste 3: 3 quebras duplas entrada = 3 quebras duplas saída
+
+### 🚨 Como Diagnosticar
+
+**Sinais de alerta:**
+1. Logs mostram `\n` sumindo entre ANTES/DEPOIS
+2. Preview/renderização grudada
+3. Função usa `\s` em regex de limpeza
+
+**Como investigar:**
+```typescript
+// Adicionar logs comparativos
+console.log('ANTES:', text.substring(0, 200));
+const result = cleanReferences(text);
+console.log('DEPOIS:', result.substring(0, 200));
+```
+
+```bash
+# Procurar regex suspeitas
+grep -r "replace.*\\s" lib/
+```
+
+### 💡 Lições Aprendidas
+
+1. **`\s` é perigosa para markdown** - sempre avaliar se precisa preservar `\n`
+2. **Logs comparativos são essenciais** - ANTES/DEPOIS mostram onde quebras somem
+3. **Testes isolados economizam tempo** - testar função fora do fluxo completo
+4. **Comentários explicativos previnem regressões**
+
+### 📊 Classes de Caracteres Úteis
+
+| Classe | Inclui | Quando usar |
+|--------|--------|-------------|
+| `\s` | `\n`, `\r`, `\t`, espaços | Quando QUER remover quebras |
+| `[ \t]` | Apenas espaços e tabs | Quando QUER preservar `\n` |
+
+---
+
+## Problema 6: API Gemini - Nomes Corretos dos Modelos
+
+### 🐛 Descrição do Problema
+Ao tentar usar a API Gemini com nomes de modelos incorretos ou desatualizados, a API retorna erro:
+
+```
+Gemini API error: models/gemini-2.5-pro-latest is not found for API version v1beta,
+or is not supported for generateContent.
+```
+
+**Causa comum**: Usar nomes de modelos que não existem ou sufixos incorretos como `-latest`.
+
+### 🔍 Nomes Corretos dos Modelos (2025)
+
+**⚠️ IMPORTANTE**: A API Gemini **NÃO** usa sufixo `-latest` nos nomes de modelos.
+
+#### ✅ Modelos Gemini 2.5 (Mais Recentes)
+
+| Nome do Modelo | Tipo | Uso Recomendado |
+|----------------|------|-----------------|
+| `gemini-2.5-pro` | Pro (Estável) | ⭐ **Tarefas complexas, raciocínio avançado** |
+| `gemini-2.5-pro-preview-tts` | Pro Preview | Text-to-Speech experimental |
+| `gemini-2.5-flash` | Flash (Estável) | Respostas rápidas, custo-benefício |
+| `gemini-2.5-flash-lite` | Flash Lite | Tarefas simples, ultra rápido |
+
+#### ✅ Modelos Gemini 2.0
+
+| Nome do Modelo | Tipo | Uso Recomendado |
+|----------------|------|-----------------|
+| `gemini-2.0-flash` | Latest | Versão mais recente do 2.0 |
+| `gemini-2.0-flash-001` | Estável | Versão estável específica |
+| `gemini-2.0-flash-exp` | Experimental | Testes, features experimentais |
+| `gemini-2.0-flash-lite` | Lite | Tarefas simples |
+
+### 📝 Uso na API
+
+**Formato da URL:**
+```typescript
+const url = `https://generativelanguage.googleapis.com/v1beta/models/{MODEL_NAME}:generateContent?key=${API_KEY}`;
+```
+
+**Exemplos corretos:**
+```typescript
+// ✅ CORRETO - Gemini 2.5 Pro (mais poderoso)
+`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${API_KEY}`
+
+// ✅ CORRETO - Gemini 2.5 Flash (mais rápido)
+`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`
+
+// ❌ ERRADO - Sufixo -latest não existe
+`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-latest:generateContent?key=${API_KEY}`
+
+// ❌ ERRADO - Nome de modelo inválido
+`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`
+```
+
+### 🎯 Qual Modelo Usar?
+
+**Para o Editor de Artigos (`/api/editor-chat`):**
+- ✅ **`gemini-2.5-pro`** - Máxima qualidade, raciocínio complexo
+- Ideal para edições de texto, análises, sugestões avançadas
+
+**Para Chat Geral (`/api/chat/gemini`):**
+- ✅ **`gemini-2.5-flash`** - Bom equilíbrio velocidade/qualidade
+- Ideal para conversas rápidas, respostas diretas
+
+**Para Tarefas Simples:**
+- ✅ **`gemini-2.5-flash-lite`** - Máxima velocidade
+- Ideal para validações simples, formatações
+
+### 🔍 Como Verificar Modelos Disponíveis
+
+**Endpoint para listar modelos:**
+```
+GET https://generativelanguage.googleapis.com/v1beta/models?key={API_KEY}
+```
+
+**Ou use o endpoint local:**
+```
+GET http://localhost:3000/api/list-gemini-models
+```
+
+Este endpoint retorna apenas modelos que suportam `generateContent`.
+
+### ⚠️ Erros Comuns
+
+| Erro | Causa | Solução |
+|------|-------|---------|
+| `models/gemini-2.5-pro-latest is not found` | Sufixo `-latest` incorreto | Remover `-latest`, usar `gemini-2.5-pro` |
+| `models/gemini-pro is not found` | Nome antigo/incompleto | Usar `gemini-2.5-pro` ou `gemini-1.5-pro` |
+| `not supported for generateContent` | Modelo não suporta geração | Usar modelos da lista acima |
+
+### 📊 Comparação de Modelos
+
+| Feature | 2.5 Pro | 2.5 Flash | 2.0 Flash Exp |
+|---------|---------|-----------|---------------|
+| **Poder** | 🏆 Máximo | ⚡ Alto | 🧪 Médio |
+| **Velocidade** | Moderada | Rápida | Muito rápida |
+| **Contexto** | 1M tokens | 1M tokens | 32k tokens |
+| **Custo** | Mais alto | Moderado | Baixo |
+| **Estabilidade** | ✅ Estável | ✅ Estável | ⚠️ Experimental |
+| **Uso Recomendado** | Produção crítica | Produção geral | Testes/dev |
+
+### 💡 Lições Aprendidas
+
+1. **Nunca use `-latest` no nome do modelo** - A API Gemini não usa este sufixo
+2. **Consulte a documentação oficial** regularmente - Modelos novos são lançados frequentemente
+3. **Use o endpoint de listagem** para verificar modelos disponíveis na sua API key
+4. **Gemini 2.5 > Gemini 2.0** - Sempre prefira a versão mais recente quando disponível
+5. **Pro vs Flash** - Pro para qualidade, Flash para velocidade
+
+### 📚 Referências
+
+- [Documentação oficial dos modelos Gemini](https://ai.google.dev/gemini-api/docs/models)
+- [Lista completa de modelos disponíveis](https://ai.google.dev/api/models)
+- [Changelog da API Gemini](https://ai.google.dev/gemini-api/docs/changelog)
+
+### 🔧 Implementação no Projeto
+
+**Arquivo**: `app/api/editor-chat/route.ts`
+
+```typescript
+// ✅ Implementação correta
+const geminiResponse = await fetch(
+  `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${GEMINI_API_KEY}`,
+  {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: geminiMessages,
+      systemInstruction: { parts: [{ text: systemInstruction }] },
+      generationConfig: {
+        temperature: 0.7,
+        topK: 40,
+        topP: 0.95,
+        maxOutputTokens: 8192,
+      },
+    })
+  }
+);
+```
+
+**Configuração de ambiente** (`.env`):
+```bash
+GEMINI_API_KEY=your-api-key-from-google-ai-studio
+```
 
 ---
 
 ## 📋 Checklist de Debug para Problemas Similares
 
 ### Scroll Issues
-- [ ] Verificar se há `useEffect` com scroll nas páginas afetadas
-- [ ] Testar com `behavior: 'instant'` vs `behavior: 'smooth'`
-- [ ] Identificar se é problema global (todas as páginas) ou local (hierarquia específica)
-- [ ] Evitar controle global se o problema é local
+- [ ] Verificar `useEffect` com scroll nas páginas afetadas
+- [ ] Testar `behavior: 'instant'` vs `'smooth'`
+- [ ] Identificar se é global ou local (hierarquia específica)
+- [ ] Evitar controle global se problema é local
 
 ### Flash Visual / Recarregamento
 - [ ] Identificar se componente está sendo desmontado/remontado
 - [ ] Implementar cache client-side (sessionStorage/localStorage)
 - [ ] Padrão: carregar cache imediato + fetch background
-- [ ] Para widgets externos: considerar elevação para layout que não desmonta
+- [ ] Para widgets externos: elevar para layout que não desmonta
 
 ### Cache / Performance
 - [ ] Verificar se API fornece informação sobre ciclo de atualização
 - [ ] Implementar cache em dois níveis (server + client)
 - [ ] Adicionar fallback para dados em cache quando API falhar
-- [ ] Usar `sessionStorage` para dados que mudam raramente na sessão
+- [ ] Usar `sessionStorage` para dados que mudam raramente
+
+### Markdown / Regex Issues
+- [ ] Verificar se regex usa `\s` que pode remover quebras de linha
+- [ ] Adicionar logs ANTES/DEPOIS de funções de limpeza de texto
+- [ ] Testar com conteúdo markdown real (`## Título\n\nTexto`)
+- [ ] Usar `[ \t]` em vez de `\s` quando precisar preservar `\n`
+- [ ] Validar que `\n\n` (separador de parágrafos) está preservado
+
+### API Gemini Issues
+- [ ] Verificar nome do modelo (não usar `-latest`)
+- [ ] Confirmar que modelo está na lista de 2025
+- [ ] Usar `gemini-2.5-pro` para tarefas complexas
+- [ ] Usar `gemini-2.5-flash` para respostas rápidas
+- [ ] Testar com endpoint `/api/list-gemini-models` se houver dúvidas
+- [ ] Verificar que API key tem acesso ao modelo escolhido
 
 ---
 
@@ -348,9 +609,7 @@ const fetchData = async () => {
 
   // Imediato: carregar cache
   const cached = sessionStorage.getItem(CACHE_KEY);
-  if (cached) {
-    setData(JSON.parse(cached));
-  }
+  if (cached) setData(JSON.parse(cached));
 
   // Background: atualizar
   const response = await fetch('/api/endpoint');
@@ -382,5 +641,5 @@ export default function ProblematicPage() {
 
 ---
 
-**Última atualização**: 2025-10-28
-**Versão**: 1.0
+**Última atualização**: 2025-11-04
+**Versão**: 2.1 (adicionado contexto API Gemini 2.5)
