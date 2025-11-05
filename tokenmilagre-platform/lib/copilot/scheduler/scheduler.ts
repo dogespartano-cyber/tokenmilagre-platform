@@ -4,7 +4,7 @@
  */
 
 import cron from 'node-cron';
-import prisma from '@/lib/generated/prisma';
+import { prisma } from '@/lib/prisma';
 import { notifyTaskCompletion } from '../monitoring/notifier';
 
 export interface ScheduledTask {

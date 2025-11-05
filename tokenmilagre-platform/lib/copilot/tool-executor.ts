@@ -5,7 +5,7 @@
 
 import { CopilotTool, ToolPermissionLevel, ToolExecutionContext, ToolExecutionResult } from './types';
 import { getToolByName } from './tools';
-import prisma from '@/lib/generated/prisma';
+import { prisma } from '@/lib/prisma';
 
 /**
  * Execute a tool with permission checks

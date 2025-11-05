@@ -4,7 +4,7 @@
  */
 
 import { CopilotTool, ToolPermissionLevel } from './types';
-import prisma from '@/lib/generated/prisma';
+import { prisma } from '@/lib/prisma';
 
 /**
  * Tool 10: Manage Users

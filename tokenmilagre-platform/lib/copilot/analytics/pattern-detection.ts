@@ -3,7 +3,7 @@
  * Detects patterns in content creation and user behavior
  */
 
-import prisma from '@/lib/generated/prisma';
+import { prisma } from '@/lib/prisma';
 
 export interface DetectedPattern {
   type: 'category' | 'timing' | 'quality' | 'author';

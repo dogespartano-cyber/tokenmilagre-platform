@@ -3,7 +3,7 @@
  * Performs automatic health checks and detects issues
  */
 
-import prisma from '@/lib/generated/prisma';
+import { prisma } from '@/lib/prisma';
 
 export interface HealthCheckResult {
   timestamp: Date;

@@ -4,7 +4,7 @@
  */
 
 import { CopilotTool, ToolPermissionLevel, SystemStatistics } from './types';
-import prisma from '@/lib/generated/prisma';
+import { prisma } from '@/lib/prisma';
 
 /**
  * Tool 1: Read Articles

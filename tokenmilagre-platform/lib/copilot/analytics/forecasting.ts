@@ -4,7 +4,7 @@
  */
 
 import { linearRegression, linearRegressionLine } from 'simple-statistics';
-import prisma from '@/lib/generated/prisma';
+import { prisma } from '@/lib/prisma';
 
 export interface ForecastResult {
   metric: string;

@@ -8,7 +8,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { executeConfirmedTool, rejectPendingActivity } from '@/lib/copilot/tool-executor';
 import { ToolExecutionContext } from '@/lib/copilot/types';
-import prisma from '@/lib/generated/prisma';
+import { prisma } from '@/lib/prisma';
 
 export async function POST(request: NextRequest) {
   try {

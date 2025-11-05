@@ -10,7 +10,7 @@ import { notifyAlerts, notifyHealthCheck } from '../monitoring/notifier';
 import { generateReportTool } from '../admin-tools';
 import { suggestTrendingTopicsTool } from '../advanced-tools';
 import { updateTrendingCache } from '../cache/trending-cache';
-import prisma from '@/lib/generated/prisma';
+import { prisma } from '@/lib/prisma';
 
 /**
  * Daily Health Check and Report (21h BRT)
