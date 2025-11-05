@@ -63,7 +63,6 @@ export function scheduleTask(task: ScheduledTask): void {
       await executeTask(task);
     },
     {
-      scheduled: true,
       timezone: 'America/Sao_Paulo' // Timezone do Brasil
     }
   );
