@@ -3,7 +3,7 @@
  * Manages scheduled tasks using node-cron
  */
 
-import cron from 'node-cron';
+import cron, { ScheduledTask as CronTask } from 'node-cron';
 import { prisma } from '@/lib/prisma';
 import { notifyTaskCompletion } from '../monitoring/notifier';
 
@@ -18,7 +18,7 @@ export interface ScheduledTask {
 
 interface ActiveTask {
   task: ScheduledTask;
-  cronJob: cron.ScheduledTask;
+  cronJob: CronTask;
   lastRun?: Date;
   nextRun?: Date;
   runCount: number;
