@@ -26,6 +26,25 @@ enum Sentiment {
   negative
 }
 
+enum WarningLevel {
+  info
+  warning
+  critical
+}
+
+enum StoryCategory {
+  transformation
+  social_project
+  achievement
+}
+
+enum ProjectCategory {
+  donations
+  microcredit
+  education
+  infrastructure
+}
+
 // NextAuth Models
 model Account {
   id                String  @id @default(cuid())
@@ -74,10 +93,16 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
+  // Gamificação (FASE 3)
+  points        Int       @default(0)
+  badges        String?   // JSON array de badges conquistados
+
   accounts Account[]
   sessions Session[]
   articles Article[]
   copilotActivities CopilotActivity[]
+  communityStories CommunityStory[]
+  userProgress UserProgress[]
 }
 
 model Article {
@@ -114,12 +139,24 @@ model Article {
 
   // Campos específicos de ARTIGOS EDUCACIONAIS
   level              String?   // 'iniciante' | 'intermediario' | 'avancado'
-  contentType        String?   // 'Artigo' | 'Tutorial'
+  contentType        String?   // 'Artigo' | 'Tutorial' | 'Curso' (FASE 2)
   readTime           String?   // Ex: '8 min', '15 min'
+
+  // FASE 1 - Segurança
+  warningLevel       WarningLevel? // Nível de alerta do conteúdo
+  securityTips       String?       // JSON array com dicas de segurança contextualizadas
+
+  // FASE 2 - Cursos e Relacionamentos
+  courseSequence     Int?          // Ordem no curso (se contentType = 'Curso')
+  relatedArticles    String?       // JSON array de slugs relacionados
+  projectHighlight   Boolean       @default(false) // Destacar como caso de uso real
 
   // Imagem de Capa (gerada por IA)
   coverImage         String?   // URL da imagem de capa
   coverImageAlt      String?   // Texto alternativo para acessibilidade
+
+  // FASE 5 - Cursos Interativos
+  quizData           String?   // JSON com quiz interativo
 
   createdAt          DateTime  @default(now()) // API: publishedAt
   updatedAt          DateTime  @updatedAt      // API: lastVerified
@@ -129,6 +166,7 @@ model Article {
   @@index([slug])
   @@index([category])
   @@index([type])
+  @@index([projectHighlight])
 }
 
 model Resource {
@@ -170,6 +208,15 @@ model Resource {
   // Security tips
   securityTips String  // JSON array: [{ icon, title, description }]
 
+  // FASE 1 - Auditoria de Segurança
+  securityAudit       String?   // Link para relatório de auditoria
+  securityAuditDate   DateTime? // Data da última auditoria
+  auditedByCommunity  Boolean   @default(false) // Badge de "Auditado pela Comunidade"
+
+  // FASE 4 - Ferramentas Interativas
+  toolConfig         String?   // JSON config para ferramentas interativas (calculadoras)
+  interactiveType    String?   // 'calculator' | 'simulator' | 'map' | null
+
   // Opcionais
   showCompatibleWallets Boolean @default(false)
   relatedResources      String? // JSON array de slugs
@@ -183,6 +230,7 @@ model Resource {
   @@index([slug])
   @@index([category])
   @@index([verified])
+  @@index([interactiveType])
 }
 
 model Cryptocurrency {
@@ -314,4 +362,138 @@ model CopilotReport {
   @@index([type])
   @@index([createdAt])
   @@index([taskId])
+}
+
+// FASE 3 - Histórias da Comunidade
+model CommunityStory {
+  id           String        @id @default(cuid())
+  slug         String        @unique
+  authorName   String
+  authorAvatar String?
+  userId       String?       // Opcional: link com usuário registrado
+  user         User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  title        String
+  content      String        @db.Text
+  category     StoryCategory // transformation | social_project | achievement
+
+  likes        Int           @default(0)
+  verified     Boolean       @default(false) // Verificada pela comunidade
+  featured     Boolean       @default(false) // Destacada na home
+  published    Boolean       @default(false)
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([published])
+  @@index([featured])
+  @@index([userId])
+}
+
+// FASE 3 - Projetos Sociais
+model SocialProject {
+  id              String          @id @default(cuid())
+  slug            String          @unique
+  name            String
+  description     String          @db.Text
+  longDescription String?         @db.Text
+
+  // Financiamento
+  fundingGoal     Float
+  currentFunding  Float           @default(0)
+  currency        String          @default("BRL") // BRL, USD, MILAGRE
+  walletAddress   String?
+
+  // Categorização
+  category        ProjectCategory // donations | microcredit | education | infrastructure
+  location        String?         // Cidade, Estado
+  tags            String?         // JSON array
+
+  // Status
+  verified        Boolean         @default(false)
+  active          Boolean         @default(true)
+  featured        Boolean         @default(false)
+
+  // Datas
+  startDate       DateTime
+  endDate         DateTime?
+
+  // Métricas
+  supporters      Int             @default(0)
+  views           Int             @default(0)
+
+  // Mídia
+  coverImage      String?
+  gallery         String?         // JSON array de URLs
+
+  // Responsável
+  organizer       String          // Nome do organizador
+  organizerEmail  String?
+  organizerPhone  String?
+
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([verified])
+  @@index([active])
+  @@index([featured])
+}
+
+// FASE 4 - Mapa de Projetos
+model ProjectMap {
+  id              String   @id @default(cuid())
+  projectId       String   @unique // Referência ao SocialProject
+
+  // Geolocalização
+  latitude        Float
+  longitude       Float
+  address         String?
+  city            String
+  state           String
+  country         String   @default("Brasil")
+
+  // Display
+  markerColor     String   @default("#8B5CF6") // Cor do marcador no mapa
+  markerIcon      String?  // Ícone customizado
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([city])
+  @@index([state])
+}
+
+// FASE 5 - Progresso do Usuário (Cursos)
+model UserProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  articleSlug String   // Slug do artigo/curso
+
+  // Progresso
+  completed   Boolean  @default(false)
+  progress    Int      @default(0) // 0-100%
+
+  // Quiz (se houver)
+  quizScore   Float?   // 0-100
+  quizAttempts Int     @default(0)
+
+  // Certificado
+  certificateIssued Boolean @default(false)
+  certificateUrl    String?
+
+  // Timestamps
+  startedAt   DateTime @default(now())
+  completedAt DateTime?
+  lastAccessed DateTime @default(now())
+
+  @@unique([userId, articleSlug])
+  @@index([userId])
+  @@index([articleSlug])
+  @@index([completed])
 }
