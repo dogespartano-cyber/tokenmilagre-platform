@@ -208,6 +208,11 @@ export async function PATCH(
     // Parse do body
     const body = await request.json();
 
+    // Converter category de array para string (Prisma espera string)
+    const category = body.category !== undefined
+      ? (Array.isArray(body.category) ? body.category[0] : body.category)
+      : undefined;
+
     // Atualizar artigo (apenas campos permitidos)
     const updatedArticle = await prisma.article.update({
       where: { slug },
@@ -215,7 +220,7 @@ export async function PATCH(
         ...(body.title !== undefined && { title: body.title }),
         ...(body.excerpt !== undefined && { excerpt: body.excerpt }),
         ...(body.content !== undefined && { content: body.content }),
-        ...(body.category !== undefined && { category: body.category }),
+        ...(category !== undefined && { category: category }),
         ...(body.tags !== undefined && { tags: typeof body.tags === 'string' ? body.tags : JSON.stringify(body.tags) }),
         ...(body.published !== undefined && { published: body.published }),
         ...(body.level !== undefined && { level: body.level }),

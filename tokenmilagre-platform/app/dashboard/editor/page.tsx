@@ -454,16 +454,47 @@ function EditorContent() {
 
               const currentContent = editedItem.content || '';
 
-              // Verificar se o texto original existe no conteúdo
-              if (currentContent.includes(originalText)) {
-                const updatedContent = currentContent.replace(originalText, content);
-                setEditedItem({
-                  ...editedItem,
-                  content: updatedContent
-                });
-                console.log('✅ [Editor] Merge aplicado com sucesso!');
+              // Função para normalizar strings (ignorar espaços extras e quebras de linha)
+              const normalize = (str: string) => str.replace(/\s+/g, ' ').trim();
+
+              const normalizedContent = normalize(currentContent);
+              const normalizedOriginal = normalize(originalText);
+
+              // Verificar se o texto original existe no conteúdo (normalizado)
+              if (normalizedContent.includes(normalizedOriginal)) {
+                // Encontrar posição no texto original (não normalizado)
+                const originalIndex = currentContent.indexOf(originalText);
+
+                if (originalIndex !== -1) {
+                  // Substituir usando índice exato
+                  const updatedContent =
+                    currentContent.substring(0, originalIndex) +
+                    content +
+                    currentContent.substring(originalIndex + originalText.length);
+
+                  setEditedItem({
+                    ...editedItem,
+                    content: updatedContent
+                  });
+                  console.log('✅ [Editor] Merge aplicado com sucesso (match exato)!');
+                } else {
+                  // Se não encontrou exato, tentar busca flexível
+                  const updatedContent = currentContent.replace(
+                    new RegExp(originalText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
+                    content
+                  );
+                  setEditedItem({
+                    ...editedItem,
+                    content: updatedContent
+                  });
+                  console.log('✅ [Editor] Merge aplicado com sucesso (busca flexível)!');
+                }
               } else {
                 // Texto original não encontrado - avisar e perguntar
+                console.warn('⚠️ [Editor] Texto normalizado não encontrado');
+                console.log('🔍 [Debug] Normalizado original:', normalizedOriginal.substring(0, 100));
+                console.log('🔍 [Debug] Normalizado content:', normalizedContent.substring(0, 200));
+
                 const confirmed = confirm(
                   `⚠️ TEXTO ORIGINAL NÃO ENCONTRADO\n\n` +
                   `O texto original não foi localizado no artigo.\n\n` +
@@ -476,7 +507,6 @@ function EditorContent() {
                     content: content
                   });
                 }
-                console.warn('⚠️ [Editor] Texto original não encontrado no conteúdo atual');
               }
             } else {
               // 🔄 Modo completo: substituir todo o conteúdo
