@@ -23,7 +23,7 @@ interface AdminChatSidebarProps {
   pageData?: Record<string, any>;
   model?: 'sonar' | 'sonar-pro';
   provider?: 'perplexity' | 'gemini'; // Novo: escolher provider
-  onApplyContent?: (content: string) => void;
+  onApplyContent?: (content: string, originalText?: string, editMode?: 'selection' | 'full') => void;
   selectedText?: string; // Novo: texto selecionado
 }
 
@@ -385,59 +385,47 @@ export default function AdminChatSidebar({
                             if (codeMatch) {
                               const extractedContent = codeMatch[1];
 
-                              // 🐛 DEBUG: Logar quando clica em Aplicar
-                              const applyDebugData = {
-                                extractedLength: extractedContent.length,
-                                extractedPreview: extractedContent.substring(0, 300) + '...',
-                                fullExtracted: extractedContent,
-                                originalMessage: message.content
-                              };
-                              console.log('🐛 [DEBUG] Aplicar clicado:', applyDebugData);
-                              window.dispatchEvent(new CustomEvent('admin-chat-debug', {
-                                detail: {
-                                  type: 'apply-clicked',
-                                  data: applyDebugData
-                                }
-                              }));
-
-                              // Detectar se é edição de trecho (mensagem contém "Mudanças:" no final)
+                              // 🔍 Detectar modo de edição baseado no conteúdo da mensagem
                               const isTrechoEdit = message.content.includes('**Mudanças**:') && extractedContent.length < 1000;
+                              const detectedMode: 'selection' | 'full' = isTrechoEdit ? 'selection' : 'full';
 
-                              if (isTrechoEdit) {
-                                // Modo trecho: Perguntar ao usuário se quer aplicar só o trecho ou artigo completo
-                                const applySelection = confirm(
-                                  `🎯 MODO DE EDIÇÃO DETECTADO\n\n` +
+                              // 🔍 Tentar extrair texto original da mensagem anterior do usuário
+                              const messageIndex = messages.findIndex(m => m.id === message.id);
+                              let originalText: string | undefined;
+
+                              if (messageIndex > 0 && detectedMode === 'selection') {
+                                const userMessage = messages[messageIndex - 1];
+                                if (userMessage.role === 'user') {
+                                  // Tentar extrair texto entre aspas
+                                  const quotedMatch = userMessage.content.match(/"([^"]+)"/);
+                                  if (quotedMatch) {
+                                    originalText = quotedMatch[1];
+                                  }
+                                }
+                              }
+
+                              console.log('✅ [Aplicar] Modo:', detectedMode, '| Original text:', originalText?.substring(0, 100));
+
+                              if (detectedMode === 'selection' && originalText) {
+                                // Modo trecho: aplicar merge inteligente
+                                onApplyContent(extractedContent, originalText, 'selection');
+                              } else if (detectedMode === 'selection' && !originalText) {
+                                // Trecho detectado mas sem texto original - avisar
+                                const confirmed = confirm(
+                                  `🎯 EDIÇÃO DE TRECHO DETECTADA\n\n` +
                                   `A IA retornou apenas o trecho editado (${extractedContent.length} caracteres).\n\n` +
-                                  `Escolha como deseja aplicar:\n\n` +
-                                  `• OK = Aplicar ARTIGO COMPLETO (recomendado se IA retornou tudo)\n` +
-                                  `• Cancelar = Ver trecho editado no chat (não aplicar agora)`
+                                  `Não foi possível detectar o texto original automaticamente.\n\n` +
+                                  `Deseja aplicar como artigo completo?`
                                 );
 
-                                if (!applySelection) {
-                                  return;
+                                if (confirmed) {
+                                  onApplyContent(extractedContent, undefined, 'full');
                                 }
-
-                                // Se chegou aqui, aplicar como artigo completo
-                                onApplyContent(extractedContent);
                               } else {
-                                // Modo normal: validação de tamanho
+                                // Modo completo: substituir tudo
                                 const minExpectedSize = 500;
 
                                 if (extractedContent.length < minExpectedSize) {
-                                  const warningData = {
-                                    reason: 'Conteúdo muito pequeno',
-                                    size: extractedContent.length,
-                                    minExpected: minExpectedSize,
-                                    message: 'Possível trecho ao invés de artigo completo'
-                                  };
-                                  console.warn('🐛 [DEBUG] ⚠️ Aviso de validação:', warningData);
-                                  window.dispatchEvent(new CustomEvent('admin-chat-debug', {
-                                    detail: {
-                                      type: 'validation-warning',
-                                      data: warningData
-                                    }
-                                  }));
-
                                   const confirmed = confirm(
                                     `⚠️ ATENÇÃO\n\n` +
                                     `O conteúdo tem apenas ${extractedContent.length} caracteres.\n\n` +
@@ -451,7 +439,7 @@ export default function AdminChatSidebar({
                                   }
                                 }
 
-                                onApplyContent(extractedContent);
+                                onApplyContent(extractedContent, undefined, 'full');
                               }
                             }
                           }}

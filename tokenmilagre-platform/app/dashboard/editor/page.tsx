@@ -444,12 +444,49 @@ function EditorContent() {
       <AdminChatSidebar
         pageData={pageData}
         provider="gemini"
-        onApplyContent={(content) => {
+        onApplyContent={(content, originalText, editMode) => {
           if (editedItem) {
-            setEditedItem({
-              ...editedItem,
-              content: content
-            });
+            if (editMode === 'selection' && originalText) {
+              // 🎯 Modo edição de trecho: substituir apenas o trecho original pelo editado
+              console.log('🔧 [Editor] Aplicando merge inteligente');
+              console.log('📝 [Editor] Original:', originalText.substring(0, 100) + '...');
+              console.log('✨ [Editor] Novo:', content.substring(0, 100) + '...');
+
+              const currentContent = editedItem.content || '';
+
+              // Verificar se o texto original existe no conteúdo
+              if (currentContent.includes(originalText)) {
+                const updatedContent = currentContent.replace(originalText, content);
+                setEditedItem({
+                  ...editedItem,
+                  content: updatedContent
+                });
+                console.log('✅ [Editor] Merge aplicado com sucesso!');
+              } else {
+                // Texto original não encontrado - avisar e perguntar
+                const confirmed = confirm(
+                  `⚠️ TEXTO ORIGINAL NÃO ENCONTRADO\n\n` +
+                  `O texto original não foi localizado no artigo.\n\n` +
+                  `Deseja substituir o artigo completo pelo novo conteúdo?`
+                );
+
+                if (confirmed) {
+                  setEditedItem({
+                    ...editedItem,
+                    content: content
+                  });
+                }
+                console.warn('⚠️ [Editor] Texto original não encontrado no conteúdo atual');
+              }
+            } else {
+              // 🔄 Modo completo: substituir todo o conteúdo
+              console.log('🔄 [Editor] Aplicando substituição completa');
+              setEditedItem({
+                ...editedItem,
+                content: content
+              });
+              console.log('✅ [Editor] Conteúdo substituído completamente');
+            }
           }
         }}
       />
