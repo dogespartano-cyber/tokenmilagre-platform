@@ -133,12 +133,14 @@ export async function GET(request: NextRequest) {
       where.category = category;
     }
 
-    if (verified !== null) {
+    // ✅ REFATORAÇÃO: Suportar verified=all para mostrar todos
+    if (verified !== null && verified !== 'all') {
       where.verified = verified === 'true';
-    } else {
+    } else if (verified === null) {
       // Por padrão, mostrar apenas verificados
       where.verified = true;
     }
+    // Se verified === 'all', não adiciona filtro (mostra todos)
 
     const resources = await prisma.resource.findMany({
       where,
