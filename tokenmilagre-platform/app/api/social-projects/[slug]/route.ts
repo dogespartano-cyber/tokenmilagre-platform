@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 // GET /api/social-projects/[slug] - Buscar projeto específico
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params;
     const project = await prisma.socialProject.findUnique({
-      where: { slug: params.slug },
+      where: { slug: slug },
     });
 
     if (!project) {
@@ -22,7 +23,7 @@ export async function GET(
 
     // Incrementar views
     await prisma.socialProject.update({
-      where: { slug: params.slug },
+      where: { slug: slug },
       data: { views: { increment: 1 } },
     });
 
@@ -50,9 +51,10 @@ export async function GET(
 // PATCH /api/social-projects/[slug] - Atualizar projeto
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params;
     const session = await getServerSession(authOptions);
 
     if (!session?.user) {
@@ -121,7 +123,7 @@ export async function PATCH(
     }
 
     const updated = await prisma.socialProject.update({
-      where: { slug: params.slug },
+      where: { slug: slug },
       data: updateData,
     });
 
@@ -141,9 +143,10 @@ export async function PATCH(
 // DELETE /api/social-projects/[slug] - Deletar projeto
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params;
     const session = await getServerSession(authOptions);
 
     if (!session?.user) {
@@ -162,7 +165,7 @@ export async function DELETE(
     }
 
     await prisma.socialProject.delete({
-      where: { slug: params.slug },
+      where: { slug: slug },
     });
 
     return NextResponse.json({

@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 // GET /api/community-stories/[slug] - Buscar história específica
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params;
     const story = await prisma.communityStory.findUnique({
-      where: { slug: params.slug },
+      where: { slug },
       include: {
         user: {
           select: {
@@ -47,9 +48,10 @@ export async function GET(
 // PATCH /api/community-stories/[slug] - Atualizar história
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params;
     const session = await getServerSession(authOptions);
 
     if (!session?.user) {
@@ -64,7 +66,7 @@ export async function PATCH(
 
     // Verificar permissões
     const story = await prisma.communityStory.findUnique({
-      where: { slug: params.slug },
+      where: { slug },
     });
 
     if (!story) {
@@ -101,7 +103,7 @@ export async function PATCH(
     }
 
     const updated = await prisma.communityStory.update({
-      where: { slug: params.slug },
+      where: { slug },
       data: updateData,
     });
 
@@ -121,9 +123,10 @@ export async function PATCH(
 // DELETE /api/community-stories/[slug] - Deletar história
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params;
     const session = await getServerSession(authOptions);
 
     if (!session?.user) {
@@ -134,7 +137,7 @@ export async function DELETE(
     }
 
     const story = await prisma.communityStory.findUnique({
-      where: { slug: params.slug },
+      where: { slug },
     });
 
     if (!story) {
@@ -157,7 +160,7 @@ export async function DELETE(
     }
 
     await prisma.communityStory.delete({
-      where: { slug: params.slug },
+      where: { slug },
     });
 
     return NextResponse.json({
