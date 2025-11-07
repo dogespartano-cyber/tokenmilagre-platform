@@ -96,280 +96,114 @@ export default function CopilotDashboard() {
 
   if (status === 'loading' || loading) {
     return (
-      <div className="copilot-dashboard loading">
-        <FontAwesomeIcon icon={faSpinner} spin size="3x" />
-        <p>Carregando métricas do copiloto...</p>
-        <style jsx>{`
-          .copilot-dashboard.loading { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; gap: var(--spacing-md); color: var(--text-tertiary); }
-          .copilot-dashboard.loading p { color: var(--text-secondary); }
-        `}</style>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+        <FontAwesomeIcon icon={faSpinner} spin size="3x" className="text-purple-500" />
+        <p className="text-gray-500">Carregando métricas do copiloto...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="copilot-dashboard error">
-        <div className="error-card">
-          <h2>Erro ao Carregar</h2>
-          <p>{error}</p>
-          <button onClick={handleRefresh} className="retry-button">
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center max-w-md">
+          <h2 className="text-2xl font-bold text-red-600 dark:text-red-400 mb-4">Erro ao Carregar</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">{error}</p>
+          <button
+            onClick={handleRefresh}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+          >
             <FontAwesomeIcon icon={faRefresh} />
             Tentar Novamente
           </button>
         </div>
-        <style jsx>{`
-          .copilot-dashboard.error { display: flex; align-items: center; justify-content: center; min-height: 60vh; }
-          .error-card { background: var(--card-background); padding: var(--spacing-xl); border-radius: var(--border-radius-lg); box-shadow: var(--card-shadow); text-align: center; max-width: 400px; }
-          .error-card h2 { color: var(--color-error); margin-bottom: var(--spacing-md); }
-          .error-card p { color: var(--text-secondary); margin-bottom: var(--spacing-lg); }
-          .retry-button { padding: var(--spacing-sm) var(--spacing-lg); background: var(--gradient-primary); color: white; border: none; border-radius: var(--border-radius-md); font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: var(--spacing-sm); transition: var(--transition-normal); }
-          .retry-button:hover { transform: translateY(-2px); box-shadow: var(--card-shadow-hover); }
-        `}</style>
       </div>
     );
   }
 
   return (
-    <div className="copilot-dashboard">
+    <div className="p-4 lg:p-6 max-w-[2000px] mx-auto h-[calc(100vh-120px)] flex flex-col">
       {/* Header */}
-      <div className="dashboard-header">
-        <div className="header-content">
-          <div className="header-title">
-            <FontAwesomeIcon icon={faRobot} className="header-icon" />
+      <div className="mb-6 bg-white dark:bg-gray-800 p-4 lg:p-6 rounded-xl shadow-md flex-shrink-0">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+          <div className="flex items-center gap-4">
+            <FontAwesomeIcon
+              icon={faRobot}
+              className="text-4xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+            />
             <div>
-              <h1>Copiloto Gemini 2.5 Pro</h1>
-              <p className="header-subtitle">Sistema de Automação Inteligente</p>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                Copiloto Gemini 2.5 Pro
+              </h1>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Sistema de Automação Inteligente
+              </p>
             </div>
           </div>
-          <div className="header-actions">
-            <label className="auto-refresh-toggle">
-              <input type="checkbox" checked={autoRefresh} onChange={(e) => setAutoRefresh(e.target.checked)} />
+          <div className="flex items-center gap-4 w-full lg:w-auto">
+            <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-600 dark:text-gray-400 select-none">
+              <input
+                type="checkbox"
+                checked={autoRefresh}
+                onChange={(e) => setAutoRefresh(e.target.checked)}
+                className="rounded cursor-pointer"
+              />
               <span>Auto-atualizar (30s)</span>
             </label>
-            <button onClick={handleRefresh} className="refresh-button" disabled={loading}>
+            <button
+              onClick={handleRefresh}
+              disabled={loading}
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:transform-none"
+            >
               <FontAwesomeIcon icon={faRefresh} spin={loading} />
               Atualizar
             </button>
           </div>
         </div>
-        {lastUpdate && <div className="last-update">Última atualização: {lastUpdate.toLocaleTimeString('pt-BR')}</div>}
+        {lastUpdate && (
+          <div className="mt-2 text-xs text-gray-500 dark:text-gray-400 text-right">
+            Última atualização: {lastUpdate.toLocaleTimeString('pt-BR')}
+          </div>
+        )}
       </div>
 
       {/* Two Column Layout */}
-      <div className="two-column-layout">
+      <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-6 flex-1 overflow-hidden">
         {/* Left: Chat (40%) */}
-        <div className="chat-column">
+        <div className="flex flex-col min-h-0">
           <CopilotChat />
         </div>
 
         {/* Right: Dashboard (60%) */}
-        <div className="dashboard-column">
-          <div className="dashboard-content">
-            <div className="section full-width"><MetricsOverview data={metrics || {}} /></div>
-            <div className="section half"><AlertsPanel alerts={metrics?.alerts?.active || []} /></div>
-            <div className="section half"><ForecastsChart forecasts={metrics?.forecasts?.forecasts || []} /></div>
-            <div className="section full-width"><RecommendationsList recommendations={metrics?.recommendations || []} /></div>
-            <div className="section half"><SchedulerStatus tasks={metrics?.scheduler?.tasks || []} stats={metrics?.scheduler?.stats || { totalTasks: 0, enabledTasks: 0, totalRuns: 0 }} /></div>
-            <div className="section half"><TrendingTopics topics={metrics?.trending?.top || []} cache={metrics?.trending?.cache || { categories: [], totalTopics: 0, lastUpdated: {} }} /></div>
+        <div className="flex flex-col min-h-0 overflow-y-auto">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <div className="xl:col-span-2">
+              <MetricsOverview data={metrics || {}} />
+            </div>
+            <div>
+              <AlertsPanel alerts={metrics?.alerts?.active || []} />
+            </div>
+            <div>
+              <ForecastsChart forecasts={metrics?.forecasts?.forecasts || []} />
+            </div>
+            <div className="xl:col-span-2">
+              <RecommendationsList recommendations={metrics?.recommendations || []} />
+            </div>
+            <div>
+              <SchedulerStatus
+                tasks={metrics?.scheduler?.tasks || []}
+                stats={metrics?.scheduler?.stats || { totalTasks: 0, enabledTasks: 0, totalRuns: 0 }}
+              />
+            </div>
+            <div>
+              <TrendingTopics
+                topics={metrics?.trending?.top || []}
+                cache={metrics?.trending?.cache || { categories: [], totalTopics: 0, lastUpdated: {} }}
+              />
+            </div>
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .copilot-dashboard {
-          padding: var(--spacing-lg);
-          max-width: 100%;
-          margin: 0 auto;
-          height: calc(100vh - 120px);
-          display: flex;
-          flex-direction: column;
-        }
-
-        .dashboard-header {
-          margin-bottom: var(--spacing-lg);
-          background: var(--card-background);
-          padding: var(--spacing-lg);
-          border-radius: var(--border-radius-lg);
-          box-shadow: var(--card-shadow);
-          flex-shrink: 0;
-        }
-
-        .header-content {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: var(--spacing-lg);
-          flex-wrap: wrap;
-        }
-
-        .header-title {
-          display: flex;
-          align-items: center;
-          gap: var(--spacing-md);
-        }
-
-        .header-title :global(.header-icon) {
-          font-size: 2.5rem;
-          background: var(--gradient-primary);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .header-title h1 {
-          margin: 0;
-          font-size: 1.75rem;
-          color: var(--text-primary);
-        }
-
-        .header-subtitle {
-          margin: 0;
-          font-size: 0.875rem;
-          color: var(--text-tertiary);
-        }
-
-        .header-actions {
-          display: flex;
-          align-items: center;
-          gap: var(--spacing-md);
-        }
-
-        .auto-refresh-toggle {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          cursor: pointer;
-          font-size: 0.875rem;
-          color: var(--text-secondary);
-          user-select: none;
-        }
-
-        .auto-refresh-toggle input {
-          cursor: pointer;
-        }
-
-        .refresh-button {
-          padding: var(--spacing-sm) var(--spacing-md);
-          background: var(--gradient-primary);
-          color: white;
-          border: none;
-          border-radius: var(--border-radius-md);
-          font-weight: 600;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          gap: var(--spacing-xs);
-          transition: var(--transition-normal);
-        }
-
-        .refresh-button:hover:not(:disabled) {
-          transform: translateY(-2px);
-          box-shadow: var(--card-shadow-hover);
-        }
-
-        .refresh-button:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-
-        .last-update {
-          margin-top: var(--spacing-sm);
-          font-size: 0.8rem;
-          color: var(--text-tertiary);
-          text-align: right;
-        }
-
-        /* Two Column Layout */
-        .two-column-layout {
-          display: grid;
-          grid-template-columns: 40% 60%;
-          gap: var(--spacing-lg);
-          flex: 1;
-          overflow: hidden;
-        }
-
-        .chat-column {
-          display: flex;
-          flex-direction: column;
-          min-height: 0;
-        }
-
-        .dashboard-column {
-          display: flex;
-          flex-direction: column;
-          min-height: 0;
-          overflow-y: auto;
-        }
-
-        .dashboard-content {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: var(--spacing-lg);
-        }
-
-        .section.full-width {
-          grid-column: 1 / -1;
-        }
-
-        .section.half {
-          grid-column: span 1;
-        }
-
-        /* Responsive */
-        @media (max-width: 1400px) {
-          .two-column-layout {
-            grid-template-columns: 45% 55%;
-          }
-        }
-
-        @media (max-width: 1024px) {
-          .two-column-layout {
-            grid-template-columns: 1fr;
-            grid-template-rows: 500px 1fr;
-          }
-
-          .dashboard-content {
-            grid-template-columns: 1fr;
-          }
-
-          .section.half {
-            grid-column: 1 / -1;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .copilot-dashboard {
-            padding: var(--spacing-md);
-          }
-
-          .header-content {
-            flex-direction: column;
-            align-items: flex-start;
-          }
-
-          .header-title {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: var(--spacing-sm);
-          }
-
-          .header-actions {
-            width: 100%;
-            flex-direction: column;
-            align-items: stretch;
-          }
-
-          .refresh-button {
-            width: 100%;
-            justify-content: center;
-          }
-
-          .two-column-layout {
-            grid-template-rows: 400px 1fr;
-          }
-        }
-      `}</style>
     </div>
   );
 }
