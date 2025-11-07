@@ -3,8 +3,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChartLine,
-  faExternalLinkAlt,
-  faInfoCircle
+  faExternalLinkAlt
 } from '@fortawesome/free-solid-svg-icons';
 import { TokenBTC, TokenETH } from '@token-icons/react';
 
@@ -59,55 +58,6 @@ export default function ETFMetricsSection() {
         <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
           Acompanhe os fluxos de investimento institucional em criptomoedas através dos ETFs aprovados nos EUA
         </p>
-      </div>
-
-      {/* Aviso de Tempo Real */}
-      <div
-        className="rounded-xl p-4 border flex items-start gap-3"
-        style={{
-          backgroundColor: 'var(--bg-elevated)',
-          borderColor: 'var(--border-light)',
-        }}
-      >
-        <FontAwesomeIcon
-          icon={faInfoCircle}
-          className="w-5 h-5 mt-0.5"
-          style={{ color: 'var(--brand-primary)' }}
-        />
-        <div>
-          <p className="text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
-            Dados em Tempo Real
-          </p>
-          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-            Acesse as fontes oficiais abaixo para visualizar métricas atualizadas diariamente sobre fluxos de ETFs de criptomoedas.
-          </p>
-        </div>
-      </div>
-
-      {/* Seção Educacional */}
-      <div
-        className="rounded-2xl p-6 border shadow-md"
-        style={{
-          backgroundColor: 'var(--bg-elevated)',
-          borderColor: 'var(--border-light)',
-        }}
-      >
-        <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-          O que são ETFs de Criptomoedas?
-        </h3>
-        <div className="space-y-3" style={{ color: 'var(--text-secondary)' }}>
-          <p>
-            <strong>ETF (Exchange-Traded Fund)</strong> é um fundo de investimento negociado em bolsa que permite investir em Bitcoin ou Ethereum sem precisar comprar e armazenar as moedas diretamente.
-          </p>
-          <p>
-            <strong>Por que importam?</strong> Os ETFs facilitam o acesso institucional e de investidores tradicionais ao mercado cripto, trazendo bilhões em capital novo.
-          </p>
-          <ul className="list-disc list-inside space-y-2 ml-4">
-            <li><strong>Inflows (entradas):</strong> Dinheiro novo entrando nos ETFs - sinal de demanda crescente</li>
-            <li><strong>Outflows (saídas):</strong> Dinheiro saindo dos ETFs - pode indicar realização de lucros ou aversão ao risco</li>
-            <li><strong>AUM (Assets Under Management):</strong> Total de ativos sob gestão dos ETFs</li>
-          </ul>
-        </div>
       </div>
 
       {/* Widget Farside Investors - Bitcoin */}
@@ -242,6 +192,32 @@ export default function ETFMetricsSection() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Seção Educacional */}
+      <div
+        className="rounded-2xl p-6 border shadow-md"
+        style={{
+          backgroundColor: 'var(--bg-elevated)',
+          borderColor: 'var(--border-light)',
+        }}
+      >
+        <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+          O que são ETFs de Criptomoedas?
+        </h3>
+        <div className="space-y-3" style={{ color: 'var(--text-secondary)' }}>
+          <p>
+            <strong>ETF (Exchange-Traded Fund)</strong> é um fundo de investimento negociado em bolsa que permite investir em Bitcoin ou Ethereum sem precisar comprar e armazenar as moedas diretamente.
+          </p>
+          <p>
+            <strong>Por que importam?</strong> Os ETFs facilitam o acesso institucional e de investidores tradicionais ao mercado cripto, trazendo bilhões em capital novo.
+          </p>
+          <ul className="list-disc list-inside space-y-2 ml-4">
+            <li><strong>Inflows (entradas):</strong> Dinheiro novo entrando nos ETFs - sinal de demanda crescente</li>
+            <li><strong>Outflows (saídas):</strong> Dinheiro saindo dos ETFs - pode indicar realização de lucros ou aversão ao risco</li>
+            <li><strong>AUM (Assets Under Management):</strong> Total de ativos sob gestão dos ETFs</li>
+          </ul>
         </div>
       </div>
     </div>
