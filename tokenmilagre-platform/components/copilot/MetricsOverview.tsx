@@ -48,17 +48,23 @@ interface MetricsOverviewProps {
 export default function MetricsOverview({ data }: MetricsOverviewProps) {
   const statusConfig = {
     healthy: {
-      color: 'var(--color-success)',
+      color: 'border-green-500',
+      bgColor: 'bg-green-500',
+      textColor: 'text-green-600',
       icon: faCheckCircle,
       label: 'Saudável'
     },
     warning: {
-      color: 'var(--color-warning)',
+      color: 'border-yellow-500',
+      bgColor: 'bg-yellow-500',
+      textColor: 'text-yellow-600',
       icon: faExclamationTriangle,
       label: 'Atenção'
     },
     critical: {
-      color: 'var(--color-error)',
+      color: 'border-red-500',
+      bgColor: 'bg-red-500',
+      textColor: 'text-red-600',
       icon: faTimesCircle,
       label: 'Crítico'
     }
@@ -68,20 +74,20 @@ export default function MetricsOverview({ data }: MetricsOverviewProps) {
   const config = statusConfig[status];
 
   return (
-    <div className="metrics-overview">
+    <div className="flex flex-col gap-6">
       {/* Main Status Card */}
-      <div className="status-card" style={{ borderLeftColor: config.color }}>
-        <div className="status-header">
-          <FontAwesomeIcon icon={config.icon} style={{ color: config.color }} />
-          <h3>Status do Sistema</h3>
+      <div className={`bg-white dark:bg-gray-800 rounded-xl p-6 border-l-4 ${config.color} shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200`}>
+        <div className="flex items-center gap-2 mb-4">
+          <FontAwesomeIcon icon={config.icon} className={config.textColor} />
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white">Status do Sistema</h3>
         </div>
-        <div className="status-content">
-          <div className="status-badge" style={{ backgroundColor: config.color }}>
+        <div className="flex flex-col gap-2">
+          <div className={`inline-block px-3 py-1 rounded ${config.bgColor} text-white text-xs font-semibold w-fit`}>
             {config.label.toUpperCase()}
           </div>
-          <p className="status-summary">{data.monitoring?.summary || 'Carregando...'}</p>
+          <p className="text-gray-600 dark:text-gray-400">{data.monitoring?.summary || 'Carregando...'}</p>
           {data.monitoring?.lastCheck && (
-            <p className="status-time">
+            <p className="text-sm text-gray-500 dark:text-gray-500">
               Última verificação: {new Date(data.monitoring.lastCheck).toLocaleString('pt-BR')}
             </p>
           )}
@@ -89,24 +95,26 @@ export default function MetricsOverview({ data }: MetricsOverviewProps) {
       </div>
 
       {/* Metrics Grid */}
-      <div className="metrics-grid">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {/* Alerts Metric */}
-        <div className="metric-card">
-          <div className="metric-icon" style={{ background: 'var(--gradient-warning)' }}>
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 flex gap-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+          <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center justify-center text-2xl text-white flex-shrink-0">
             <FontAwesomeIcon icon={faExclamationTriangle} />
           </div>
-          <div className="metric-content">
-            <div className="metric-value">{data.alerts?.stats.active || 0}</div>
-            <div className="metric-label">Alertas Ativos</div>
+          <div className="flex-1 flex flex-col gap-1">
+            <div className="text-3xl font-bold text-gray-900 dark:text-white leading-none">
+              {data.alerts?.stats.active || 0}
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Alertas Ativos</div>
             {data.alerts && data.alerts.stats.active > 0 && (
-              <div className="metric-breakdown">
+              <div className="flex flex-wrap gap-1 mt-1">
                 {data.alerts.stats.byPriority.critical > 0 && (
-                  <span className="priority-badge critical">
+                  <span className="text-xs px-2 py-0.5 rounded bg-red-500 text-white font-semibold">
                     {data.alerts.stats.byPriority.critical} crítico(s)
                   </span>
                 )}
                 {data.alerts.stats.byPriority.high > 0 && (
-                  <span className="priority-badge high">
+                  <span className="text-xs px-2 py-0.5 rounded bg-yellow-500 text-white font-semibold">
                     {data.alerts.stats.byPriority.high} alto(s)
                   </span>
                 )}
@@ -116,15 +124,17 @@ export default function MetricsOverview({ data }: MetricsOverviewProps) {
         </div>
 
         {/* Scheduler Metric */}
-        <div className="metric-card">
-          <div className="metric-icon" style={{ background: 'var(--gradient-primary)' }}>
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 flex gap-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+          <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center text-2xl text-white flex-shrink-0">
             <FontAwesomeIcon icon={faHeartbeat} />
           </div>
-          <div className="metric-content">
-            <div className="metric-value">{data.scheduler?.stats.enabledTasks || 0}</div>
-            <div className="metric-label">Tarefas Ativas</div>
+          <div className="flex-1 flex flex-col gap-1">
+            <div className="text-3xl font-bold text-gray-900 dark:text-white leading-none">
+              {data.scheduler?.stats.enabledTasks || 0}
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Tarefas Ativas</div>
             {data.scheduler && (
-              <div className="metric-detail">
+              <div className="text-xs text-gray-500 dark:text-gray-500">
                 {data.scheduler.stats.totalRuns} execuções totais
               </div>
             )}
@@ -132,15 +142,17 @@ export default function MetricsOverview({ data }: MetricsOverviewProps) {
         </div>
 
         {/* Tools Metric */}
-        <div className="metric-card">
-          <div className="metric-icon" style={{ background: 'var(--gradient-secondary)' }}>
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 flex gap-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+          <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center text-2xl text-white flex-shrink-0">
             <FontAwesomeIcon icon={faTools} />
           </div>
-          <div className="metric-content">
-            <div className="metric-value">{data.tools?.total || 0}</div>
-            <div className="metric-label">Ferramentas</div>
+          <div className="flex-1 flex flex-col gap-1">
+            <div className="text-3xl font-bold text-gray-900 dark:text-white leading-none">
+              {data.tools?.total || 0}
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Ferramentas</div>
             {data.tools && (
-              <div className="metric-detail">
+              <div className="text-xs text-gray-500 dark:text-gray-500">
                 {data.tools.basic} básicas, {data.tools.advanced} avançadas
               </div>
             )}
@@ -148,160 +160,17 @@ export default function MetricsOverview({ data }: MetricsOverviewProps) {
         </div>
 
         {/* Forecasts Metric */}
-        <div className="metric-card">
-          <div className="metric-icon" style={{ background: 'var(--gradient-success)' }}>
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 flex gap-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+          <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center text-2xl text-white flex-shrink-0">
             <FontAwesomeIcon icon={faChartLine} />
           </div>
-          <div className="metric-content">
-            <div className="metric-value">2</div>
-            <div className="metric-label">Previsões</div>
-            <div className="metric-detail">Artigos & Qualidade</div>
+          <div className="flex-1 flex flex-col gap-1">
+            <div className="text-3xl font-bold text-gray-900 dark:text-white leading-none">2</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Previsões</div>
+            <div className="text-xs text-gray-500 dark:text-gray-500">Artigos & Qualidade</div>
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .metrics-overview {
-          display: flex;
-          flex-direction: column;
-          gap: var(--spacing-lg);
-        }
-
-        .status-card {
-          background: var(--card-background);
-          border-radius: var(--border-radius-lg);
-          padding: var(--spacing-lg);
-          border-left: 4px solid;
-          box-shadow: var(--card-shadow);
-          transition: var(--transition-normal);
-        }
-
-        .status-card:hover {
-          box-shadow: var(--card-shadow-hover);
-          transform: translateY(-2px);
-        }
-
-        .status-header {
-          display: flex;
-          align-items: center;
-          gap: var(--spacing-sm);
-          margin-bottom: var(--spacing-md);
-        }
-
-        .status-header h3 {
-          margin: 0;
-          font-size: 1.25rem;
-          color: var(--text-primary);
-        }
-
-        .status-content {
-          display: flex;
-          flex-direction: column;
-          gap: var(--spacing-sm);
-        }
-
-        .status-badge {
-          display: inline-block;
-          padding: 4px 12px;
-          border-radius: var(--border-radius-sm);
-          color: white;
-          font-size: 0.75rem;
-          font-weight: 600;
-          width: fit-content;
-        }
-
-        .status-summary {
-          color: var(--text-secondary);
-          margin: 0;
-        }
-
-        .status-time {
-          color: var(--text-tertiary);
-          font-size: 0.875rem;
-          margin: 0;
-        }
-
-        .metrics-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-          gap: var(--spacing-md);
-        }
-
-        .metric-card {
-          background: var(--card-background);
-          border-radius: var(--border-radius-md);
-          padding: var(--spacing-md);
-          display: flex;
-          gap: var(--spacing-md);
-          box-shadow: var(--card-shadow);
-          transition: var(--transition-normal);
-        }
-
-        .metric-card:hover {
-          box-shadow: var(--card-shadow-hover);
-          transform: translateY(-2px);
-        }
-
-        .metric-icon {
-          width: 48px;
-          height: 48px;
-          border-radius: var(--border-radius-md);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.5rem;
-          color: white;
-          flex-shrink: 0;
-        }
-
-        .metric-content {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-        }
-
-        .metric-value {
-          font-size: 1.75rem;
-          font-weight: 700;
-          color: var(--text-primary);
-          line-height: 1;
-        }
-
-        .metric-label {
-          font-size: 0.875rem;
-          color: var(--text-secondary);
-          font-weight: 500;
-        }
-
-        .metric-detail {
-          font-size: 0.75rem;
-          color: var(--text-tertiary);
-        }
-
-        .metric-breakdown {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 4px;
-          margin-top: 4px;
-        }
-
-        .priority-badge {
-          font-size: 0.7rem;
-          padding: 2px 6px;
-          border-radius: 4px;
-          font-weight: 600;
-          color: white;
-        }
-
-        .priority-badge.critical {
-          background: var(--color-error);
-        }
-
-        .priority-badge.high {
-          background: var(--color-warning);
-        }
-      `}</style>
     </div>
   );
 }
