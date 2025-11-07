@@ -80,7 +80,7 @@ export default function CommunityStoryCard({ story }: CommunityStoryCardProps) {
               <div className="flex items-center gap-2">
                 <p className="font-semibold text-gray-900">{story.authorName}</p>
                 {story.verified && (
-                  <CheckCircle2 className="w-4 h-4 text-blue-500" title="Verificado" />
+                  <CheckCircle2 className="w-4 h-4 text-blue-500" aria-label="Verificado" />
                 )}
               </div>
               {story.user?.points !== undefined && (
