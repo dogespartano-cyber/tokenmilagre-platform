@@ -2,22 +2,20 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faArrowUp,
-  faArrowDown,
-  faMinus,
   faChartLine,
-  faCheckCircle,
-  faExclamationTriangle
+  faTrendingUp,
+  faTrendingDown,
+  faMinus,
+  faCalendar
 } from '@fortawesome/free-solid-svg-icons';
 
 interface Forecast {
-  metric: string;
-  current: number;
-  predicted: number;
-  change: number;
-  changePercent: number;
-  confidence: 'high' | 'medium' | 'low';
+  type: string;
+  prediction: string;
+  confidence: number;
   trend: 'up' | 'down' | 'stable';
+  timestamp: string;
+  impact?: string;
 }
 
 interface ForecastsChartProps {
@@ -27,323 +25,121 @@ interface ForecastsChartProps {
 export default function ForecastsChart({ forecasts }: ForecastsChartProps) {
   const trendConfig = {
     up: {
-      icon: faArrowUp,
-      color: 'var(--color-success)',
-      label: 'Crescimento'
+      icon: faTrendingUp,
+      color: 'text-green-600 dark:text-green-400',
+      bg: 'bg-green-100 dark:bg-green-900/30',
+      label: 'Em Alta'
     },
     down: {
-      icon: faArrowDown,
-      color: 'var(--color-error)',
-      label: 'Declínio'
+      icon: faTrendingDown,
+      color: 'text-red-600 dark:text-red-400',
+      bg: 'bg-red-100 dark:bg-red-900/30',
+      label: 'Em Baixa'
     },
     stable: {
       icon: faMinus,
-      color: 'var(--text-tertiary)',
+      color: 'text-blue-600 dark:text-blue-400',
+      bg: 'bg-blue-100 dark:bg-blue-900/30',
       label: 'Estável'
     }
   };
 
-  const confidenceConfig = {
-    high: {
-      color: 'var(--color-success)',
-      icon: faCheckCircle,
-      label: 'Alta'
-    },
-    medium: {
-      color: '#f59e0b',
-      icon: faExclamationTriangle,
-      label: 'Média'
-    },
-    low: {
-      color: 'var(--color-error)',
-      icon: faExclamationTriangle,
-      label: 'Baixa'
-    }
+  const typeLabels: Record<string, string> = {
+    articles_count: 'Contagem de Artigos',
+    average_quality: 'Qualidade Média',
+    user_engagement: 'Engajamento de Usuários',
+    content_freshness: 'Atualização de Conteúdo'
   };
 
   if (!forecasts || forecasts.length === 0) {
     return (
-      <div className="forecasts-chart">
-        <div className="panel-header">
-          <h3>Previsões</h3>
+      <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md">
+        <div className="flex items-center gap-2 mb-4">
+          <FontAwesomeIcon icon={faChartLine} className="text-purple-500" />
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white">Previsões</h3>
         </div>
-        <div className="empty-state">
-          <FontAwesomeIcon icon={faChartLine} size="3x" style={{ color: 'var(--text-tertiary)' }} />
-          <p>Dados insuficientes</p>
-          <span>Aguardando dados históricos para gerar previsões</span>
+        <div className="flex flex-col items-center gap-2 py-12 text-gray-400 dark:text-gray-500">
+          <FontAwesomeIcon icon={faChartLine} size="3x" />
+          <p className="font-medium text-gray-600 dark:text-gray-400">Nenhuma previsão disponível</p>
         </div>
-
-        <style jsx>{`
-          .forecasts-chart {
-            background: var(--card-background);
-            border-radius: var(--border-radius-lg);
-            padding: var(--spacing-lg);
-            box-shadow: var(--card-shadow);
-          }
-
-          .panel-header {
-            margin-bottom: var(--spacing-md);
-          }
-
-          .panel-header h3 {
-            margin: 0;
-            font-size: 1.25rem;
-            color: var(--text-primary);
-          }
-
-          .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-xl) 0;
-            color: var(--text-tertiary);
-          }
-
-          .empty-state p {
-            margin: 0;
-            font-weight: 500;
-            color: var(--text-secondary);
-          }
-
-          .empty-state span {
-            font-size: 0.875rem;
-            text-align: center;
-          }
-        `}</style>
       </div>
     );
   }
 
   return (
-    <div className="forecasts-chart">
-      <div className="panel-header">
-        <h3>Previsões</h3>
-        <span className="subtitle">Projeções baseadas em dados históricos</span>
+    <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md">
+      <div className="flex items-center gap-2 mb-4">
+        <FontAwesomeIcon icon={faChartLine} className="text-purple-500" />
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white">Previsões</h3>
+        <span className="ml-auto px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 rounded-full text-sm font-semibold">
+          {forecasts.length} previsões
+        </span>
       </div>
 
-      <div className="forecasts-grid">
+      <div className="flex flex-col gap-4">
         {forecasts.map((forecast, index) => {
-          const trendConf = trendConfig[forecast.trend];
-          const confConf = confidenceConfig[forecast.confidence];
-          const percentage = Math.abs(forecast.changePercent);
+          const trend = trendConfig[forecast.trend];
+          const confidenceColor =
+            forecast.confidence >= 80
+              ? 'text-green-600 dark:text-green-400'
+              : forecast.confidence >= 60
+              ? 'text-amber-600 dark:text-amber-400'
+              : 'text-red-600 dark:text-red-400';
 
           return (
-            <div key={index} className="forecast-card">
-              <div className="forecast-header">
-                <h4>{forecast.metric}</h4>
-                <div className="confidence-badge" style={{ borderColor: confConf.color, color: confConf.color }}>
-                  <FontAwesomeIcon icon={confConf.icon} />
-                  <span>{confConf.label}</span>
+            <div
+              key={index}
+              className="bg-gray-50 dark:bg-gray-750 rounded-lg p-4 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            >
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex-1">
+                  <div className="font-semibold text-gray-900 dark:text-white mb-1">
+                    {typeLabels[forecast.type] || forecast.type}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">{forecast.prediction}</div>
                 </div>
-              </div>
-
-              <div className="forecast-values">
-                <div className="value-item">
-                  <span className="value-label">Atual</span>
-                  <span className="value-number">{forecast.current}</span>
-                </div>
-
-                <div className="arrow">
-                  <FontAwesomeIcon icon={faArrowUp} style={{ color: trendConf.color }} />
-                </div>
-
-                <div className="value-item">
-                  <span className="value-label">Previsto</span>
-                  <span className="value-number predicted">{forecast.predicted}</span>
-                </div>
-              </div>
-
-              <div className="forecast-change" style={{ backgroundColor: `${trendConf.color}15` }}>
-                <FontAwesomeIcon icon={trendConf.icon} style={{ color: trendConf.color }} />
-                <span style={{ color: trendConf.color }}>
-                  {forecast.change > 0 ? '+' : ''}{forecast.change} ({percentage}%)
-                </span>
-                <span className="trend-label" style={{ color: trendConf.color }}>
-                  {trendConf.label}
+                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${trend.bg} ${trend.color}`}>
+                  <FontAwesomeIcon icon={trend.icon} />
+                  {trend.label}
                 </span>
               </div>
 
-              {/* Visual Bar */}
-              <div className="visual-bar">
-                <div className="bar-container">
-                  <div
-                    className="bar current"
-                    style={{
-                      width: `${Math.min((forecast.current / Math.max(forecast.current, forecast.predicted)) * 100, 100)}%`,
-                      background: 'var(--gradient-secondary)'
-                    }}
-                  >
-                    <span className="bar-label">Atual</span>
+              <div className="flex items-center gap-4 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-600 dark:text-gray-400">Confiança:</span>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-24 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full ${
+                          forecast.confidence >= 80
+                            ? 'bg-green-500'
+                            : forecast.confidence >= 60
+                            ? 'bg-amber-500'
+                            : 'bg-red-500'
+                        }`}
+                        style={{ width: `${forecast.confidence}%` }}
+                      />
+                    </div>
+                    <span className={`font-semibold ${confidenceColor}`}>{forecast.confidence}%</span>
                   </div>
                 </div>
-                <div className="bar-container">
-                  <div
-                    className="bar predicted"
-                    style={{
-                      width: `${Math.min((forecast.predicted / Math.max(forecast.current, forecast.predicted)) * 100, 100)}%`,
-                      background: trendConf.color === 'var(--color-success)' ? 'var(--gradient-success)' : 'var(--gradient-warning)'
-                    }}
-                  >
-                    <span className="bar-label">Previsto</span>
-                  </div>
+
+                <div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-500">
+                  <FontAwesomeIcon icon={faCalendar} />
+                  <span>{new Date(forecast.timestamp).toLocaleString('pt-BR')}</span>
                 </div>
               </div>
+
+              {forecast.impact && (
+                <div className="mt-3 px-3 py-2 bg-white dark:bg-gray-800 rounded text-sm">
+                  <strong className="text-gray-900 dark:text-white">Impacto:</strong>{' '}
+                  <span className="text-gray-600 dark:text-gray-400">{forecast.impact}</span>
+                </div>
+              )}
             </div>
           );
         })}
       </div>
-
-      <style jsx>{`
-        .forecasts-chart {
-          background: var(--card-background);
-          border-radius: var(--border-radius-lg);
-          padding: var(--spacing-lg);
-          box-shadow: var(--card-shadow);
-        }
-
-        .panel-header {
-          margin-bottom: var(--spacing-md);
-        }
-
-        .panel-header h3 {
-          margin: 0 0 4px 0;
-          font-size: 1.25rem;
-          color: var(--text-primary);
-        }
-
-        .subtitle {
-          font-size: 0.875rem;
-          color: var(--text-tertiary);
-        }
-
-        .forecasts-grid {
-          display: grid;
-          gap: var(--spacing-md);
-        }
-
-        .forecast-card {
-          background: var(--background-secondary);
-          border-radius: var(--border-radius-md);
-          padding: var(--spacing-md);
-          display: flex;
-          flex-direction: column;
-          gap: var(--spacing-md);
-          transition: var(--transition-normal);
-        }
-
-        .forecast-card:hover {
-          background: var(--background-tertiary);
-          transform: translateY(-2px);
-          box-shadow: var(--card-shadow);
-        }
-
-        .forecast-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .forecast-header h4 {
-          margin: 0;
-          font-size: 1rem;
-          color: var(--text-primary);
-        }
-
-        .confidence-badge {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          padding: 4px 10px;
-          border: 1.5px solid;
-          border-radius: var(--border-radius-full);
-          font-size: 0.75rem;
-          font-weight: 600;
-        }
-
-        .forecast-values {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: var(--spacing-md);
-        }
-
-        .value-item {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          flex: 1;
-        }
-
-        .value-label {
-          font-size: 0.75rem;
-          color: var(--text-tertiary);
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-        }
-
-        .value-number {
-          font-size: 1.75rem;
-          font-weight: 700;
-          color: var(--text-primary);
-        }
-
-        .value-number.predicted {
-          color: var(--color-primary);
-        }
-
-        .arrow {
-          font-size: 1.5rem;
-          opacity: 0.3;
-        }
-
-        .forecast-change {
-          display: flex;
-          align-items: center;
-          gap: var(--spacing-sm);
-          padding: var(--spacing-sm) var(--spacing-md);
-          border-radius: var(--border-radius-md);
-          font-size: 0.875rem;
-          font-weight: 600;
-        }
-
-        .trend-label {
-          margin-left: auto;
-          text-transform: uppercase;
-          font-size: 0.75rem;
-          letter-spacing: 0.5px;
-        }
-
-        .visual-bar {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-
-        .bar-container {
-          position: relative;
-          height: 32px;
-          background: var(--background-primary);
-          border-radius: var(--border-radius-sm);
-          overflow: hidden;
-        }
-
-        .bar {
-          height: 100%;
-          display: flex;
-          align-items: center;
-          padding: 0 var(--spacing-sm);
-          border-radius: var(--border-radius-sm);
-          transition: width 0.5s ease;
-        }
-
-        .bar-label {
-          font-size: 0.75rem;
-          font-weight: 600;
-          color: white;
-          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-      `}</style>
     </div>
   );
 }

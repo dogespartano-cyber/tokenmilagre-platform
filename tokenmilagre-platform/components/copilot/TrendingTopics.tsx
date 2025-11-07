@@ -7,7 +7,8 @@ import {
   faGraduationCap,
   faExclamationCircle,
   faBolt,
-  faInfoCircle
+  faInfoCircle,
+  faClock
 } from '@fortawesome/free-solid-svg-icons';
 
 interface TrendingTopic {
@@ -30,17 +31,20 @@ export default function TrendingTopics({ topics, cache }: TrendingTopicsProps) {
   const urgencyConfig = {
     high: {
       icon: faExclamationCircle,
-      color: 'var(--color-error)',
+      color: 'text-red-600 dark:text-red-400',
+      bg: 'bg-red-100 dark:bg-red-900/30',
       label: 'Alta'
     },
     medium: {
       icon: faBolt,
-      color: '#f59e0b',
+      color: 'text-amber-600 dark:text-amber-400',
+      bg: 'bg-amber-100 dark:bg-amber-900/30',
       label: 'Média'
     },
     low: {
       icon: faInfoCircle,
-      color: 'var(--color-info)',
+      color: 'text-blue-600 dark:text-blue-400',
+      bg: 'bg-blue-100 dark:bg-blue-900/30',
       label: 'Baixa'
     }
   };
@@ -48,261 +52,64 @@ export default function TrendingTopics({ topics, cache }: TrendingTopicsProps) {
   const typeConfig = {
     news: {
       icon: faNewspaper,
-      label: 'Notícia'
+      label: 'Notícia',
+      color: 'text-purple-600 dark:text-purple-400'
     },
     educational: {
       icon: faGraduationCap,
-      label: 'Educacional'
+      label: 'Educacional',
+      color: 'text-green-600 dark:text-green-400'
     }
   };
 
-  if (!topics || topics.length === 0) {
-    return (
-      <div className="trending-topics">
-        <div className="panel-header">
-          <h3>Tópicos em Alta</h3>
-        </div>
-        <div className="empty-state">
-          <FontAwesomeIcon icon={faFire} size="3x" style={{ color: 'var(--text-tertiary)' }} />
-          <p>Nenhum tópico trending</p>
-          <span>Cache será atualizado em breve</span>
-        </div>
-
-        <style jsx>{`
-          .trending-topics {
-            background: var(--card-background);
-            border-radius: var(--border-radius-lg);
-            padding: var(--spacing-lg);
-            box-shadow: var(--card-shadow);
-          }
-
-          .panel-header h3 {
-            margin: 0;
-            font-size: 1.25rem;
-            color: var(--text-primary);
-          }
-
-          .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-xl) 0;
-            color: var(--text-tertiary);
-          }
-
-          .empty-state p {
-            margin: 0;
-            font-weight: 500;
-            color: var(--text-secondary);
-          }
-
-          .empty-state span {
-            font-size: 0.875rem;
-          }
-        `}</style>
-      </div>
-    );
-  }
-
   return (
-    <div className="trending-topics">
-      <div className="panel-header">
-        <h3>Tópicos em Alta</h3>
-        <div className="cache-info">
-          <FontAwesomeIcon icon={faFire} style={{ color: 'var(--color-error)' }} />
-          <span>{cache.totalTopics} tópicos</span>
-        </div>
+    <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md">
+      <div className="flex items-center gap-2 mb-4">
+        <FontAwesomeIcon icon={faFire} className="text-orange-500" />
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white">Trending Topics</h3>
+        <span className="ml-auto px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm font-semibold">
+          {topics.length} tópicos
+        </span>
       </div>
 
-      {cache.categories.length > 0 && (
-        <div className="cache-status">
-          <span className="status-label">Categorias:</span>
-          <div className="categories-list">
-            {cache.categories.map(cat => (
-              <span key={cat} className="category-badge">{cat}</span>
-            ))}
-          </div>
-        </div>
-      )}
-
-      <div className="topics-list">
+      <div className="flex flex-col gap-3 max-h-[400px] overflow-y-auto">
         {topics.map((topic, index) => {
-          const urgConf = urgencyConfig[topic.urgency];
-          const typeConf = typeConfig[topic.type];
+          const urgency = urgencyConfig[topic.urgency];
+          const type = typeConfig[topic.type];
 
           return (
-            <div key={index} className="topic-card">
-              <div className="topic-header">
-                <div className="urgency-indicator" style={{ backgroundColor: urgConf.color }}>
-                  <FontAwesomeIcon icon={urgConf.icon} />
+            <div
+              key={index}
+              className="bg-gray-50 dark:bg-gray-750 rounded-lg p-4 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            >
+              <div className="flex items-start justify-between mb-2">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <FontAwesomeIcon icon={type.icon} className={type.color} />
+                    <span className="font-semibold text-gray-900 dark:text-white">{topic.title}</span>
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    {topic.category}
+                  </div>
                 </div>
-                <div className="topic-title">{topic.title}</div>
-              </div>
-
-              <div className="topic-footer">
-                <span className="category-tag">{topic.category}</span>
-                <div className="topic-meta">
-                  <span className="urgency-badge" style={{ color: urgConf.color }}>
-                    <FontAwesomeIcon icon={urgConf.icon} />
-                    {urgConf.label}
-                  </span>
-                  <span className="type-badge">
-                    <FontAwesomeIcon icon={typeConf.icon} />
-                    {typeConf.label}
-                  </span>
-                </div>
+                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${urgency.bg} ${urgency.color}`}>
+                  <FontAwesomeIcon icon={urgency.icon} />
+                  {urgency.label}
+                </span>
               </div>
             </div>
           );
         })}
       </div>
 
-      <style jsx>{`
-        .trending-topics {
-          background: var(--card-background);
-          border-radius: var(--border-radius-lg);
-          padding: var(--spacing-lg);
-          box-shadow: var(--card-shadow);
-        }
-
-        .panel-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: var(--spacing-md);
-        }
-
-        .panel-header h3 {
-          margin: 0;
-          font-size: 1.25rem;
-          color: var(--text-primary);
-        }
-
-        .cache-info {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          font-size: 0.875rem;
-          color: var(--text-secondary);
-          font-weight: 600;
-        }
-
-        .cache-status {
-          display: flex;
-          align-items: center;
-          gap: var(--spacing-sm);
-          margin-bottom: var(--spacing-md);
-          padding: var(--spacing-sm) var(--spacing-md);
-          background: var(--background-secondary);
-          border-radius: var(--border-radius-md);
-          flex-wrap: wrap;
-        }
-
-        .status-label {
-          font-size: 0.8rem;
-          color: var(--text-secondary);
-          font-weight: 600;
-        }
-
-        .categories-list {
-          display: flex;
-          gap: 6px;
-          flex-wrap: wrap;
-        }
-
-        .category-badge {
-          padding: 2px 8px;
-          background: var(--gradient-primary);
-          color: white;
-          border-radius: var(--border-radius-full);
-          font-size: 0.7rem;
-          font-weight: 600;
-        }
-
-        .topics-list {
-          display: flex;
-          flex-direction: column;
-          gap: var(--spacing-sm);
-          max-height: 500px;
-          overflow-y: auto;
-        }
-
-        .topic-card {
-          background: var(--background-secondary);
-          border-radius: var(--border-radius-md);
-          padding: var(--spacing-md);
-          transition: var(--transition-normal);
-          border: 1px solid transparent;
-        }
-
-        .topic-card:hover {
-          background: var(--background-tertiary);
-          border-color: var(--color-primary);
-          transform: translateX(4px);
-        }
-
-        .topic-header {
-          display: flex;
-          gap: var(--spacing-sm);
-          margin-bottom: var(--spacing-sm);
-        }
-
-        .urgency-indicator {
-          width: 32px;
-          height: 32px;
-          border-radius: var(--border-radius-md);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          flex-shrink: 0;
-        }
-
-        .topic-title {
-          flex: 1;
-          font-size: 0.95rem;
-          font-weight: 600;
-          color: var(--text-primary);
-          line-height: 1.4;
-        }
-
-        .topic-footer {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: var(--spacing-sm);
-          flex-wrap: wrap;
-        }
-
-        .category-tag {
-          padding: 4px 10px;
-          background: var(--background-primary);
-          border-radius: var(--border-radius-full);
-          font-size: 0.7rem;
-          font-weight: 600;
-          color: var(--text-secondary);
-          text-transform: capitalize;
-        }
-
-        .topic-meta {
-          display: flex;
-          gap: var(--spacing-sm);
-          align-items: center;
-        }
-
-        .urgency-badge, .type-badge {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-          font-size: 0.7rem;
-          font-weight: 600;
-        }
-
-        .type-badge {
-          color: var(--text-tertiary);
-        }
-      `}</style>
+      {cache.lastUpdated && Object.keys(cache.lastUpdated).length > 0 && (
+        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+          <FontAwesomeIcon icon={faClock} />
+          <span>
+            Atualizado: {new Date(Object.values(cache.lastUpdated)[0]).toLocaleString('pt-BR')}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
