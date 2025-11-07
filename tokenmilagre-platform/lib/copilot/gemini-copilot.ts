@@ -16,7 +16,7 @@ import { toolsToFunctionDeclarations } from './tools';
 import { buildSystemPrompt, buildContextualInfo } from './context-builder';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_MODEL = 'gemini-2.5-pro-preview'; // Gemini 2.5 Pro Preview com function calling
+const GEMINI_MODEL = 'gemini-2.5-pro'; // Gemini 2.5 Pro com function calling
 
 /**
  * Send message to Gemini with function calling support
