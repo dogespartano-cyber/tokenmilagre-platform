@@ -132,27 +132,6 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
       // Limitar número de mensagens enviadas (economizar tokens)
       const limitedMessages = apiMessages.slice(-10);
 
-      // 🐛 DEBUG: Logar contexto sendo enviado
-      const debugData = {
-        userMessage: content,
-        pathname,
-        pageData: {
-          title: pageData?.title,
-          type: pageData?.type,
-          contentLength: pageData?.content?.length || 0,
-          contentPreview: pageData?.content?.substring(0, 200) + '...',
-          fullContent: pageData?.content // Conteúdo completo
-        },
-        model
-      };
-      console.log('🐛 [DEBUG] Contexto enviado ao Gemini:', debugData);
-      window.dispatchEvent(new CustomEvent('admin-chat-debug', {
-        detail: {
-          type: 'context-sent',
-          data: debugData
-        }
-      }));
-
       // Escolher endpoint baseado no provider
       const apiEndpoint = provider === 'gemini' ? '/api/editor-chat' : '/api/admin-chat';
 
@@ -203,21 +182,6 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
             timestamp: new Date()
           };
           setMessages(prev => [...prev, assistantMessage]);
-
-          // Debug log
-          window.dispatchEvent(new CustomEvent('admin-chat-debug', {
-            detail: {
-              type: 'response-received',
-              data: {
-                provider: 'gemini',
-                model: data.usage?.model || 'gemini-2.5-pro',
-                responseLength: data.message.length,
-                responsePreview: data.message.substring(0, 300) + '...',
-                fullResponse: data.message,
-                usage: data.usage
-              }
-            }
-          }));
 
           setLoading(false);
           return;
@@ -969,20 +933,6 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
           )
         );
       }
-
-      // 🐛 DEBUG: Logar resposta recebida
-      const responseDebugData = {
-        responseLength: accumulatedContent.length,
-        responsePreview: accumulatedContent.substring(0, 300) + '...',
-        fullResponse: accumulatedContent
-      };
-      console.log('🐛 [DEBUG] Resposta recebida do Gemini:', responseDebugData);
-      window.dispatchEvent(new CustomEvent('admin-chat-debug', {
-        detail: {
-          type: 'response-received',
-          data: responseDebugData
-        }
-      }));
 
       setLoading(false);
 

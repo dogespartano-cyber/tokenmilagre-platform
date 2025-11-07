@@ -71,11 +71,6 @@ export default function RootLayoutNav({
     { href: '/doacoes', label: 'Doações', icon: faHeart },
   ];
 
-  // Adicionar link para dashboard se usuário for ADMIN
-  if (session?.user?.role === 'ADMIN') {
-    menuItems.push({ href: '/dashboard', label: 'Admin', icon: faShieldAlt });
-  }
-
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-secondary)' }}>
       {/* Sidebar Overlay */}
@@ -125,13 +120,13 @@ export default function RootLayoutNav({
 
           {/* Sidebar Navigation */}
           <nav className="flex-1 p-4 overflow-y-auto">
-            <div className="space-y-1">
+            <div className="space-y-2">
               {menuItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setSidebarOpen(false)}
-                  className={`group flex items-center gap-3 px-4 py-2 rounded-xl font-semibold transition-all duration-300 ${
+                  className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base transition-all duration-300 ${
                     (item.href === '/' ? pathname === '/' : pathname.startsWith(item.href))
                       ? 'shadow-theme-md'
                       : 'hover:bg-opacity-50 hover:scale-105 hover:translate-x-2'
@@ -149,21 +144,6 @@ export default function RootLayoutNav({
                   <span>{item.label}</span>
                 </Link>
               ))}
-            </div>
-
-            {/* Theme Toggle in Sidebar */}
-            <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--border-medium)' }}>
-              <button
-                onClick={toggleTheme}
-                className="group w-full flex items-center gap-3 px-4 py-2 rounded-xl font-semibold transition-all duration-300 hover:shadow-theme-md hover:scale-105 hover:translate-x-2"
-                style={{
-                  backgroundColor: 'var(--bg-secondary)',
-                  color: 'var(--text-primary)'
-                }}
-              >
-                <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-5 h-5 transition-transform duration-300 group-hover:rotate-180" />
-                <span>{theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}</span>
-              </button>
             </div>
           </nav>
 
@@ -204,26 +184,40 @@ export default function RootLayoutNav({
                 <FontAwesomeIcon icon={faBars} className="w-6 h-6 transition-transform duration-300 group-hover:rotate-90" />
               </button>
 
-              <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-all duration-300 group lg:hidden">
-                <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 group-hover:scale-110 transition-all duration-300 group-hover:rotate-12" style={{
-                  borderColor: 'var(--brand-primary)'
-                }}>
-                  <div className="absolute inset-0 blur-sm" style={{
-                    background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-                    opacity: 0.2
-                  }}></div>
-                  <Image
-                    src="/images/TOKEN-MILAGRE-Hero.webp"
-                    alt="$MILAGRE"
-                    width={40}
-                    height={40}
-                    className="w-full h-full object-cover relative z-10"
-                  />
-                </div>
-                <div className="text-xl sm:text-2xl font-bold drop-shadow-lg transition-all duration-300 font-[family-name:var(--font-poppins)] text-theme-primary group-hover:text-brand-primary group-hover:scale-105">
-                  $MILAGRE
-                </div>
-              </Link>
+              <div className="flex items-center gap-4 lg:hidden">
+                <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-all duration-300 group">
+                  <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 group-hover:scale-110 transition-all duration-300 group-hover:rotate-12" style={{
+                    borderColor: 'var(--brand-primary)'
+                  }}>
+                    <div className="absolute inset-0 blur-sm" style={{
+                      background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+                      opacity: 0.2
+                    }}></div>
+                    <Image
+                      src="/images/TOKEN-MILAGRE-Hero.webp"
+                      alt="$MILAGRE"
+                      width={40}
+                      height={40}
+                      className="w-full h-full object-cover relative z-10"
+                    />
+                  </div>
+                  <div className="text-xl sm:text-2xl font-bold drop-shadow-lg transition-all duration-300 font-[family-name:var(--font-poppins)] text-theme-primary group-hover:text-brand-primary group-hover:scale-105">
+                    $MILAGRE
+                  </div>
+                </Link>
+
+                <button
+                  onClick={toggleTheme}
+                  className="group flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105"
+                  style={{
+                    backgroundColor: 'var(--bg-secondary)',
+                    color: 'var(--text-primary)'
+                  }}
+                >
+                  <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
+                  <span className="text-xs font-semibold whitespace-nowrap">{theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}</span>
+                </button>
+              </div>
 
             {/* Breadcrumbs - Desktop */}
             <div className="hidden lg:flex items-center">
@@ -232,6 +226,18 @@ export default function RootLayoutNav({
 
             {/* Desktop Actions */}
             <nav className="hidden lg:flex items-center gap-4">
+              <button
+                onClick={toggleTheme}
+                className="group flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
+                style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  color: 'var(--text-primary)'
+                }}
+              >
+                <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
+                <span className="text-sm font-semibold">{theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}</span>
+              </button>
+
               <UserDropdown />
 
               <a

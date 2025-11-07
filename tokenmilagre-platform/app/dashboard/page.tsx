@@ -13,7 +13,8 @@ import {
   faCalendarWeek,
   faBook,
   faComments,
-  faRobot
+  faRobot,
+  faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 import AdminRoute from '@/components/AdminRoute';
 
@@ -72,13 +73,6 @@ export default function AdminDashboardPage() {
       icon: faRobot,
       href: '/dashboard/copilot',
       gradient: 'linear-gradient(135deg, #7C3AED, #F59E0B)'
-    },
-    {
-      title: 'Chat IA Colaborativa',
-      description: 'Gemini e Perplexity conversando entre si - use @menções',
-      icon: faRobot,
-      href: '/dashboard/chat-ia',
-      gradient: 'linear-gradient(135deg, #ec4899, #8b5cf6)'
     },
     {
       title: 'Gerenciar Artigos',
@@ -375,6 +369,30 @@ export default function AdminDashboardPage() {
                 </div>
               </Link>
             ))}
+          </div>
+
+          {/* Logout Section */}
+          <div className="mt-12 pt-8 border-t" style={{ borderColor: 'var(--border-medium)' }}>
+            <div className="flex flex-col items-center gap-4">
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                Precisa sair do painel administrativo?
+              </p>
+              <button
+                onClick={async () => {
+                  const { signOut } = await import('next-auth/react');
+                  await signOut({ redirect: true, callbackUrl: '/' });
+                }}
+                className="group flex items-center gap-3 px-6 py-3 rounded-lg border-2 transition-all duration-300 hover:scale-105 font-semibold"
+                style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  borderColor: '#ef4444',
+                  color: '#ef4444'
+                }}
+              >
+                <FontAwesomeIcon icon={faSignOutAlt} className="w-5 h-5" />
+                <span>Sair do Sistema</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
