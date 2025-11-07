@@ -69,44 +69,62 @@ export default function UserDropdown() {
     );
   }
 
-  // Authenticated - Show user dropdown
+  // Authenticated
   const user = session.user;
   const initials = user.name
     ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
     : user.email?.charAt(0).toUpperCase() || '?';
 
   return (
-    <div className="relative" ref={dropdownRef}>
-      {/* Dropdown Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center gap-3 px-4 py-2 rounded-lg border-2 transition-all duration-300 shadow-theme-sm hover:shadow-theme-md hover:scale-105"
-        style={{
-          backgroundColor: 'var(--bg-secondary)',
-          borderColor: 'var(--border-medium)',
-          color: 'var(--text-primary)'
-        }}
-      >
-        {/* Avatar */}
-        <div
-          className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm"
+    <div className="flex items-center gap-4">
+      {/* Admin Button (only for ADMIN) */}
+      {user.role === 'ADMIN' && (
+        <Link
+          href="/dashboard"
+          className="group flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all duration-300 shadow-theme-sm hover:shadow-theme-md hover:scale-105 font-semibold"
           style={{
-            background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-            color: 'white'
+            backgroundColor: 'var(--bg-secondary)',
+            borderColor: 'var(--border-medium)',
+            color: 'var(--text-primary)'
           }}
         >
-          {initials}
-        </div>
+          <FontAwesomeIcon icon={faShieldAlt} className="w-4 h-4" />
+          <span className="hidden sm:block">Admin</span>
+        </Link>
+      )}
 
-        {/* Name (hidden on mobile) */}
-        <span className="hidden sm:block font-semibold">{user.name || user.email}</span>
+      {/* User Dropdown */}
+      <div className="relative" ref={dropdownRef}>
+        {/* Dropdown Button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="group flex items-center gap-3 px-4 py-2 rounded-lg border-2 transition-all duration-300 shadow-theme-sm hover:shadow-theme-md hover:scale-105"
+          style={{
+            backgroundColor: 'var(--bg-secondary)',
+            borderColor: 'var(--border-medium)',
+            color: 'var(--text-primary)'
+          }}
+        >
+          {/* Avatar */}
+          <div
+            className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm"
+            style={{
+              background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+              color: 'white'
+            }}
+          >
+            {initials}
+          </div>
 
-        {/* Chevron */}
-        <FontAwesomeIcon
-          icon={faChevronDown}
-          className={`w-3 h-3 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-        />
-      </button>
+          {/* Name (hidden on mobile) */}
+          <span className="hidden sm:block font-semibold">{user.name || user.email}</span>
+
+          {/* Chevron */}
+          <FontAwesomeIcon
+            icon={faChevronDown}
+            className={`w-3 h-3 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+          />
+        </button>
 
       {/* Dropdown Menu */}
       {isOpen && (
@@ -143,25 +161,6 @@ export default function UserDropdown() {
 
           {/* Menu Items */}
           <div className="py-2">
-            {/* Admin Link (only for ADMIN) */}
-            {user.role === 'ADMIN' && (
-              <Link
-                href="/dashboard"
-                onClick={() => setIsOpen(false)}
-                className="group flex items-center gap-3 px-4 py-2 transition-all duration-200 hover:translate-x-1"
-                style={{ color: 'var(--text-primary)' }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--bg-secondary)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                }}
-              >
-                <FontAwesomeIcon icon={faShieldAlt} className="w-4 h-4" />
-                <span className="font-semibold">Painel Admin</span>
-              </Link>
-            )}
-
             {/* Profile Link */}
             <Link
               href="/dashboard/perfil"
@@ -219,6 +218,7 @@ export default function UserDropdown() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

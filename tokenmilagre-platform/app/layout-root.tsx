@@ -71,11 +71,6 @@ export default function RootLayoutNav({
     { href: '/doacoes', label: 'Doações', icon: faHeart },
   ];
 
-  // Adicionar link para dashboard se usuário for ADMIN
-  if (session?.user?.role === 'ADMIN') {
-    menuItems.push({ href: '/dashboard', label: 'Admin', icon: faShieldAlt });
-  }
-
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-secondary)' }}>
       {/* Sidebar Overlay */}
