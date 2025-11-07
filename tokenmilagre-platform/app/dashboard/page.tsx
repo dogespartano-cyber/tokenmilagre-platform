@@ -74,13 +74,6 @@ export default function AdminDashboardPage() {
       gradient: 'linear-gradient(135deg, #7C3AED, #F59E0B)'
     },
     {
-      title: 'Chat IA Colaborativa',
-      description: 'Gemini e Perplexity conversando entre si - use @menções',
-      icon: faRobot,
-      href: '/dashboard/chat-ia',
-      gradient: 'linear-gradient(135deg, #ec4899, #8b5cf6)'
-    },
-    {
       title: 'Gerenciar Artigos',
       description: 'Visualize, edite e delete artigos publicados',
       icon: faNewspaper,
