@@ -14,9 +14,8 @@ const nextConfig: NextConfig = {
     ],
   },
   eslint: {
-    // Desabilitar ESLint durante builds (arquivos gerados do Prisma causam erros)
-    // Linting deve ser feito localmente antes do commit
-    ignoreDuringBuilds: true,
+    // ESLint habilitado durante builds para garantir qualidade do código
+    ignoreDuringBuilds: false,
   },
   typescript: {
     // Manter validação de TypeScript - importante para type safety

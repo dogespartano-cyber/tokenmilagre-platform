@@ -10,26 +10,7 @@ import { sendMessageToGemini, sendFunctionResultsToGemini } from '@/lib/copilot/
 import { executeTool, createPendingActivity } from '@/lib/copilot/tool-executor';
 import { CopilotMessage, ToolExecutionContext } from '@/lib/copilot/types';
 import { getToolByName } from '@/lib/copilot/tools';
-
-// Rate limiting (in-memory)
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-
-function checkRateLimit(userId: string): boolean {
-  const now = Date.now();
-  const limit = rateLimitMap.get(userId);
-
-  if (!limit || now > limit.resetAt) {
-    rateLimitMap.set(userId, { count: 1, resetAt: now + 60000 }); // 1 minute
-    return true;
-  }
-
-  if (limit.count >= 30) { // 30 requests per minute
-    return false;
-  }
-
-  limit.count++;
-  return true;
-}
+import { rateLimit, RateLimitPresets } from '@/lib/rate-limit';
 
 export async function POST(request: NextRequest) {
   try {
@@ -44,13 +25,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Apenas ADMIN pode usar o Copilot' }, { status: 403 });
     }
 
-    // 3. Rate limiting
-    if (!checkRateLimit(session.user.id)) {
-      return NextResponse.json(
-        { error: 'Limite de requisições excedido. Aguarde 1 minuto.' },
-        { status: 429 }
-      );
-    }
+    // 3. Rate limiting - AI preset (10 req/hour)
+    const rateLimitResult = await rateLimit(request, RateLimitPresets.AI, session.user.id);
+    if (rateLimitResult) return rateLimitResult;
 
     // 4. Parse body
     const body = await request.json();
