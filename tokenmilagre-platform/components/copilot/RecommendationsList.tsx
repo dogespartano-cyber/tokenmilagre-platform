@@ -3,26 +3,20 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faLightbulb,
-  faCheckSquare,
-  faChartLine,
-  faCog,
-  faFire,
-  faExclamationCircle,
+  faCheckCircle,
   faExclamationTriangle,
-  faBolt,
-  faInfoCircle
+  faInfoCircle,
+  faStar
 } from '@fortawesome/free-solid-svg-icons';
 
 interface Recommendation {
   id: string;
-  category: 'content' | 'quality' | 'growth' | 'automation' | 'trending';
-  priority: 'critical' | 'high' | 'medium' | 'low';
+  type: string;
+  priority: 'high' | 'medium' | 'low';
   title: string;
   description: string;
-  action: string;
-  impact: string;
-  effort: 'low' | 'medium' | 'high';
-  basedOn: string;
+  impact?: string;
+  category?: string;
 }
 
 interface RecommendationsListProps {
@@ -30,336 +24,98 @@ interface RecommendationsListProps {
 }
 
 export default function RecommendationsList({ recommendations }: RecommendationsListProps) {
-  const categoryConfig = {
-    content: {
-      icon: faCheckSquare,
-      color: 'var(--color-primary)',
-      label: 'Conteúdo'
-    },
-    quality: {
-      icon: faLightbulb,
-      color: '#f59e0b',
-      label: 'Qualidade'
-    },
-    growth: {
-      icon: faChartLine,
-      color: 'var(--color-success)',
-      label: 'Crescimento'
-    },
-    automation: {
-      icon: faCog,
-      color: 'var(--color-secondary)',
-      label: 'Automação'
-    },
-    trending: {
-      icon: faFire,
-      color: 'var(--color-error)',
-      label: 'Trending'
-    }
-  };
-
   const priorityConfig = {
-    critical: {
-      icon: faExclamationCircle,
-      color: 'var(--color-error)',
-      label: 'Crítico'
-    },
     high: {
       icon: faExclamationTriangle,
-      color: 'var(--color-warning)',
-      label: 'Alto'
+      color: 'text-red-600 dark:text-red-400',
+      bg: 'bg-red-100 dark:bg-red-900/30',
+      border: 'border-red-500',
+      label: 'Alta Prioridade'
     },
     medium: {
-      icon: faBolt,
-      color: '#f59e0b',
-      label: 'Médio'
+      icon: faInfoCircle,
+      color: 'text-amber-600 dark:text-amber-400',
+      bg: 'bg-amber-100 dark:bg-amber-900/30',
+      border: 'border-amber-500',
+      label: 'Média Prioridade'
     },
     low: {
-      icon: faInfoCircle,
-      color: 'var(--color-info)',
-      label: 'Baixo'
+      icon: faCheckCircle,
+      color: 'text-blue-600 dark:text-blue-400',
+      bg: 'bg-blue-100 dark:bg-blue-900/30',
+      border: 'border-blue-500',
+      label: 'Baixa Prioridade'
     }
-  };
-
-  const effortConfig = {
-    low: { label: 'Fácil', color: 'var(--color-success)' },
-    medium: { label: 'Médio', color: '#f59e0b' },
-    high: { label: 'Difícil', color: 'var(--color-error)' }
   };
 
   if (!recommendations || recommendations.length === 0) {
     return (
-      <div className="recommendations-list">
-        <div className="panel-header">
-          <h3>Recomendações</h3>
-          <span className="count-badge">0</span>
+      <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md">
+        <div className="flex items-center gap-2 mb-4">
+          <FontAwesomeIcon icon={faLightbulb} className="text-yellow-500" />
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white">Recomendações</h3>
         </div>
-        <div className="empty-state">
-          <FontAwesomeIcon icon={faLightbulb} size="3x" style={{ color: 'var(--text-tertiary)' }} />
-          <p>Nenhuma recomendação</p>
-          <span>Sistema analisando dados...</span>
+        <div className="flex flex-col items-center gap-2 py-12 text-gray-400 dark:text-gray-500">
+          <FontAwesomeIcon icon={faStar} size="3x" />
+          <p className="font-medium text-gray-600 dark:text-gray-400">Nenhuma recomendação no momento</p>
+          <span className="text-sm">Sistema otimizado</span>
         </div>
-
-        <style jsx>{`
-          .recommendations-list {
-            background: var(--card-background);
-            border-radius: var(--border-radius-lg);
-            padding: var(--spacing-lg);
-            box-shadow: var(--card-shadow);
-          }
-
-          .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-md);
-          }
-
-          .panel-header h3 {
-            margin: 0;
-            font-size: 1.25rem;
-            color: var(--text-primary);
-          }
-
-          .count-badge {
-            background: var(--background-tertiary);
-            padding: 4px 12px;
-            border-radius: var(--border-radius-full);
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-          }
-
-          .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-xl) 0;
-            color: var(--text-tertiary);
-          }
-
-          .empty-state p {
-            margin: 0;
-            font-weight: 500;
-            color: var(--text-secondary);
-          }
-
-          .empty-state span {
-            font-size: 0.875rem;
-          }
-        `}</style>
       </div>
     );
   }
 
   return (
-    <div className="recommendations-list">
-      <div className="panel-header">
-        <h3>Recomendações Inteligentes</h3>
-        <span className="count-badge">{recommendations.length}</span>
+    <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md">
+      <div className="flex items-center gap-2 mb-4">
+        <FontAwesomeIcon icon={faLightbulb} className="text-yellow-500" />
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white">Recomendações</h3>
+        <span className="ml-auto px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 rounded-full text-sm font-semibold">
+          {recommendations.length}
+        </span>
       </div>
 
-      <div className="recommendations-grid">
+      <div className="flex flex-col gap-4 max-h-[600px] overflow-y-auto">
         {recommendations.map((rec) => {
-          const catConf = categoryConfig[rec.category];
-          const priConf = priorityConfig[rec.priority];
-          const effConf = effortConfig[rec.effort];
+          const config = priorityConfig[rec.priority];
 
           return (
-            <div key={rec.id} className="recommendation-card">
-              {/* Header */}
-              <div className="rec-header">
-                <div className="category-badge" style={{ backgroundColor: `${catConf.color}15`, color: catConf.color }}>
-                  <FontAwesomeIcon icon={catConf.icon} />
-                  <span>{catConf.label}</span>
+            <div
+              key={rec.id}
+              className={`bg-gray-50 dark:bg-gray-750 rounded-lg border-l-4 ${config.border} p-4 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors`}
+            >
+              <div className="flex items-start gap-3">
+                <div className={`w-10 h-10 rounded-lg ${config.bg} ${config.color} flex items-center justify-center flex-shrink-0`}>
+                  <FontAwesomeIcon icon={config.icon} />
                 </div>
-                <div className="priority-badge" style={{ backgroundColor: priConf.color }}>
-                  <FontAwesomeIcon icon={priConf.icon} />
-                  <span>{priConf.label}</span>
+
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h4 className="font-semibold text-gray-900 dark:text-white">{rec.title}</h4>
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${config.bg} ${config.color}`}>
+                      {config.label}
+                    </span>
+                  </div>
+
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{rec.description}</p>
+
+                  {rec.impact && (
+                    <div className="px-3 py-2 bg-white dark:bg-gray-800 rounded text-sm">
+                      <strong className="text-gray-900 dark:text-white">Impacto:</strong>{' '}
+                      <span className="text-gray-600 dark:text-gray-400">{rec.impact}</span>
+                    </div>
+                  )}
+
+                  {rec.category && (
+                    <div className="mt-2 text-xs text-gray-500 dark:text-gray-500">
+                      Categoria: {rec.category}
+                    </div>
+                  )}
                 </div>
-              </div>
-
-              {/* Title */}
-              <h4 className="rec-title">{rec.title}</h4>
-
-              {/* Description */}
-              <p className="rec-description">{rec.description}</p>
-
-              {/* Action */}
-              <div className="rec-action">
-                <strong>Ação sugerida:</strong>
-                <p>{rec.action}</p>
-              </div>
-
-              {/* Footer */}
-              <div className="rec-footer">
-                <div className="rec-meta">
-                  <span className="meta-item">
-                    <strong>Impacto:</strong> {rec.impact}
-                  </span>
-                  <span className="meta-item" style={{ color: effConf.color }}>
-                    <strong>Esforço:</strong> {effConf.label}
-                  </span>
-                </div>
-                <span className="rec-source">{rec.basedOn}</span>
               </div>
             </div>
           );
         })}
       </div>
-
-      <style jsx>{`
-        .recommendations-list {
-          background: var(--card-background);
-          border-radius: var(--border-radius-lg);
-          padding: var(--spacing-lg);
-          box-shadow: var(--card-shadow);
-        }
-
-        .panel-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: var(--spacing-md);
-        }
-
-        .panel-header h3 {
-          margin: 0;
-          font-size: 1.25rem;
-          color: var(--text-primary);
-        }
-
-        .count-badge {
-          background: var(--gradient-primary);
-          color: white;
-          padding: 4px 12px;
-          border-radius: var(--border-radius-full);
-          font-size: 0.875rem;
-          font-weight: 600;
-        }
-
-        .recommendations-grid {
-          display: flex;
-          flex-direction: column;
-          gap: var(--spacing-md);
-          max-height: 800px;
-          overflow-y: auto;
-        }
-
-        .recommendation-card {
-          background: var(--background-secondary);
-          border-radius: var(--border-radius-md);
-          padding: var(--spacing-md);
-          display: flex;
-          flex-direction: column;
-          gap: var(--spacing-sm);
-          transition: var(--transition-normal);
-          border: 1px solid transparent;
-        }
-
-        .recommendation-card:hover {
-          background: var(--background-tertiary);
-          border-color: var(--color-primary);
-          transform: translateY(-2px);
-          box-shadow: var(--card-shadow);
-        }
-
-        .rec-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: var(--spacing-sm);
-          flex-wrap: wrap;
-        }
-
-        .category-badge {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          padding: 4px 10px;
-          border-radius: var(--border-radius-full);
-          font-size: 0.75rem;
-          font-weight: 600;
-        }
-
-        .priority-badge {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          padding: 4px 10px;
-          border-radius: var(--border-radius-full);
-          font-size: 0.7rem;
-          font-weight: 600;
-          color: white;
-        }
-
-        .rec-title {
-          margin: 0;
-          font-size: 1rem;
-          font-weight: 600;
-          color: var(--text-primary);
-          line-height: 1.4;
-        }
-
-        .rec-description {
-          margin: 0;
-          font-size: 0.875rem;
-          color: var(--text-secondary);
-          line-height: 1.5;
-        }
-
-        .rec-action {
-          padding: var(--spacing-sm);
-          background: var(--background-primary);
-          border-left: 3px solid var(--color-primary);
-          border-radius: var(--border-radius-sm);
-          font-size: 0.875rem;
-        }
-
-        .rec-action strong {
-          display: block;
-          color: var(--text-primary);
-          margin-bottom: 4px;
-          font-size: 0.75rem;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-        }
-
-        .rec-action p {
-          margin: 0;
-          color: var(--text-secondary);
-        }
-
-        .rec-footer {
-          display: flex;
-          flex-direction: column;
-          gap: var(--spacing-xs);
-          padding-top: var(--spacing-xs);
-          border-top: 1px solid var(--border-color);
-        }
-
-        .rec-meta {
-          display: flex;
-          gap: var(--spacing-md);
-          flex-wrap: wrap;
-        }
-
-        .meta-item {
-          font-size: 0.75rem;
-          color: var(--text-tertiary);
-        }
-
-        .meta-item strong {
-          color: var(--text-secondary);
-        }
-
-        .rec-source {
-          font-size: 0.7rem;
-          color: var(--text-tertiary);
-          font-style: italic;
-        }
-      `}</style>
     </div>
   );
 }
