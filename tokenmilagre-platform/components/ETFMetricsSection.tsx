@@ -60,7 +60,7 @@ export default function ETFMetricsSection() {
         </p>
       </div>
 
-      {/* Widget Farside Investors - Bitcoin */}
+      {/* Widget CoinGlass - Bitcoin */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
           <TokenBTC size={32} variant="branded" />
@@ -69,7 +69,7 @@ export default function ETFMetricsSection() {
               Bitcoin ETF - Fluxos Diários
             </h3>
             <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-              Dados atualizados em tempo real via Farside Investors
+              Dados atualizados em tempo real via CoinGlass
             </p>
           </div>
         </div>
@@ -82,17 +82,17 @@ export default function ETFMetricsSection() {
             maxHeight: '70vh'
           }}>
             <iframe
-              src="https://farside.co.uk/btc/"
+              src="https://www.coinglass.com/bitcoin-etf"
               className="w-full h-full"
               style={{ border: 'none' }}
               loading="lazy"
-              title="Bitcoin ETF Flows - Farside Investors"
+              title="Bitcoin ETF Flows - CoinGlass"
             />
           </div>
         </div>
       </div>
 
-      {/* Widget Farside Investors - Ethereum */}
+      {/* Widget CoinGlass - Ethereum */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
           <TokenETH size={32} variant="branded" />
@@ -101,7 +101,7 @@ export default function ETFMetricsSection() {
               Ethereum ETF - Fluxos Diários
             </h3>
             <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-              Dados atualizados em tempo real via Farside Investors
+              Dados atualizados em tempo real via CoinGlass
             </p>
           </div>
         </div>
@@ -114,11 +114,11 @@ export default function ETFMetricsSection() {
             maxHeight: '70vh'
           }}>
             <iframe
-              src="https://farside.co.uk/eth/"
+              src="https://www.coinglass.com/eth-etf"
               className="w-full h-full"
               style={{ border: 'none' }}
               loading="lazy"
-              title="Ethereum ETF Flows - Farside Investors"
+              title="Ethereum ETF Flows - CoinGlass"
             />
           </div>
         </div>
