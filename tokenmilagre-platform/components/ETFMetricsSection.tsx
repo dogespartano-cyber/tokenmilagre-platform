@@ -2,64 +2,21 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faArrowTrendUp,
-  faArrowTrendDown,
   faChartLine,
   faExternalLinkAlt,
-  faInfoCircle,
-  faCalendarDays,
-  faDollarSign,
-  faBuilding
+  faInfoCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { TokenBTC, TokenETH } from '@token-icons/react';
 
 // ==========================================
-// 📊 DADOS DE ETFs - ATUALIZAR SEMANALMENTE
+// 📊 ETFs de Criptomoedas - Dados em Tempo Real
 // ==========================================
 //
-// Como atualizar em nova sessão do Claude:
-// 1. Peça: "Atualize os dados dos ETFs em components/ETFMetricsSection.tsx"
-// 2. Forneça dados atualizados de Farside Investors:
-//    - Bitcoin: https://farside.co.uk/btc/
-//    - Ethereum: https://farside.co.uk/eth/
-// 3. Ou peça ao Claude para buscar os dados mais recentes dessas fontes
+// Este componente exibe informações educacionais sobre ETFs
+// e fornece links diretos para fontes de dados em tempo real.
+// Não há dados estáticos que precisam ser atualizados manualmente.
 //
-// Última atualização: 2025-10-28
-// Próxima atualização recomendada: Toda segunda-feira
 // ==========================================
-
-const ETF_DATA = {
-  bitcoin: {
-    name: 'Bitcoin ETFs (EUA)',
-    symbol: 'BTC',
-    lastUpdate: '2025-10-28',              // ← ATUALIZAR
-    totalAUM: '$60.8B',                    // ← ATUALIZAR (Total Assets Under Management)
-    inflows7d: '$5.2B',                    // ← ATUALIZAR (Soma últimos 7 dias)
-    inflows30d: '$12.4B',                  // ← ATUALIZAR (Soma últimos 30 dias)
-    topETFs: [
-      { name: 'BlackRock IBIT', share: '48%', aum: '$29.2B' },  // ← ATUALIZAR
-      { name: 'Fidelity FBTC', share: '21%', aum: '$12.8B' },   // ← ATUALIZAR
-      { name: 'Grayscale GBTC', share: '15%', aum: '$9.1B' }    // ← ATUALIZAR
-    ],
-    trend: 'positive' as const,            // ← ATUALIZAR se necessário ('positive' | 'negative')
-    description: 'ETFs de Bitcoin Spot aprovados pela SEC em janeiro de 2024, permitindo exposição regulada ao BTC.'
-  },
-  ethereum: {
-    name: 'Ethereum ETFs (EUA)',
-    symbol: 'ETH',
-    lastUpdate: '2025-10-28',              // ← ATUALIZAR
-    totalAUM: '$8.9B',                     // ← ATUALIZAR (Total Assets Under Management)
-    inflows7d: '$1.89B',                   // ← ATUALIZAR (Soma últimos 7 dias)
-    inflows30d: '$3.2B',                   // ← ATUALIZAR (Soma últimos 30 dias)
-    topETFs: [
-      { name: 'BlackRock ETHA', share: '42%', aum: '$3.7B' },   // ← ATUALIZAR
-      { name: 'Fidelity FETH', share: '24%', aum: '$2.1B' },    // ← ATUALIZAR
-      { name: 'Grayscale ETHE', share: '18%', aum: '$1.6B' }    // ← ATUALIZAR
-    ],
-    trend: 'positive' as const,            // ← ATUALIZAR se necessário ('positive' | 'negative')
-    description: 'ETFs de Ethereum Spot lançados em julho de 2024, oferecendo acesso institucional ao ETH.'
-  }
-};
 
 const EXTERNAL_SOURCES = [
   {
@@ -92,14 +49,6 @@ const EXTERNAL_SOURCES = [
 ];
 
 export default function ETFMetricsSection() {
-  const getTrendIcon = (trend: 'positive' | 'negative') => {
-    return trend === 'positive' ? faArrowTrendUp : faArrowTrendDown;
-  };
-
-  const getTrendColor = (trend: 'positive' | 'negative') => {
-    return trend === 'positive' ? '#22c55e' : '#ef4444';
-  };
-
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -112,7 +61,7 @@ export default function ETFMetricsSection() {
         </p>
       </div>
 
-      {/* Aviso de Atualização */}
+      {/* Aviso de Tempo Real */}
       <div
         className="rounded-xl p-4 border flex items-start gap-3"
         style={{
@@ -127,233 +76,10 @@ export default function ETFMetricsSection() {
         />
         <div>
           <p className="text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
-            Dados de Referência
+            Dados em Tempo Real
           </p>
           <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-            Métricas atualizadas semanalmente. Para dados em tempo real, acesse as fontes oficiais abaixo.
-          </p>
-        </div>
-      </div>
-
-      {/* ETF Cards Grid */}
-      <div className="grid lg:grid-cols-2 gap-6">
-        {/* Bitcoin ETF Card */}
-        <div
-          className="rounded-2xl p-6 border shadow-lg"
-          style={{
-            background: 'linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-secondary) 100%)',
-            borderColor: 'var(--border-light)',
-          }}
-        >
-          {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <TokenBTC size={32} variant="branded" />
-              <div>
-                <h3 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
-                  {ETF_DATA.bitcoin.name}
-                </h3>
-                <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
-                  Atualizado: {new Date(ETF_DATA.bitcoin.lastUpdate).toLocaleDateString('pt-BR')}
-                </p>
-              </div>
-            </div>
-            <FontAwesomeIcon
-              icon={getTrendIcon(ETF_DATA.bitcoin.trend)}
-              className="w-8 h-8"
-              style={{ color: getTrendColor(ETF_DATA.bitcoin.trend) }}
-            />
-          </div>
-
-          {/* Métricas Principais */}
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            <div
-              className="rounded-xl p-4 border"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)',
-              }}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <FontAwesomeIcon icon={faDollarSign} className="w-4 h-4" style={{ color: 'var(--brand-primary)' }} />
-                <p className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>
-                  AUM Total
-                </p>
-              </div>
-              <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
-                {ETF_DATA.bitcoin.totalAUM}
-              </p>
-            </div>
-
-            <div
-              className="rounded-xl p-4 border"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)',
-              }}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <FontAwesomeIcon icon={faCalendarDays} className="w-4 h-4" style={{ color: 'var(--brand-primary)' }} />
-                <p className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>
-                  Inflows 7d
-                </p>
-              </div>
-              <p className="text-2xl font-bold" style={{ color: getTrendColor(ETF_DATA.bitcoin.trend) }}>
-                {ETF_DATA.bitcoin.inflows7d}
-              </p>
-            </div>
-          </div>
-
-          {/* Top ETFs */}
-          <div className="mb-4">
-            <div className="flex items-center gap-2 mb-3">
-              <FontAwesomeIcon icon={faBuilding} className="w-4 h-4" style={{ color: 'var(--brand-primary)' }} />
-              <h4 className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
-                Principais ETFs
-              </h4>
-            </div>
-            <div className="space-y-2">
-              {ETF_DATA.bitcoin.topETFs.map((etf, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-3 rounded-lg"
-                  style={{ backgroundColor: 'var(--bg-secondary)' }}
-                >
-                  <div>
-                    <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
-                      {etf.name}
-                    </p>
-                    <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-                      {etf.aum}
-                    </p>
-                  </div>
-                  <span
-                    className="text-sm font-bold px-2 py-1 rounded"
-                    style={{
-                      backgroundColor: 'var(--brand-primary)',
-                      color: 'var(--text-inverse)'
-                    }}
-                  >
-                    {etf.share}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Description */}
-          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-            {ETF_DATA.bitcoin.description}
-          </p>
-        </div>
-
-        {/* Ethereum ETF Card */}
-        <div
-          className="rounded-2xl p-6 border shadow-lg"
-          style={{
-            background: 'linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-secondary) 100%)',
-            borderColor: 'var(--border-light)',
-          }}
-        >
-          {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <TokenETH size={32} variant="branded" />
-              <div>
-                <h3 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
-                  {ETF_DATA.ethereum.name}
-                </h3>
-                <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
-                  Atualizado: {new Date(ETF_DATA.ethereum.lastUpdate).toLocaleDateString('pt-BR')}
-                </p>
-              </div>
-            </div>
-            <FontAwesomeIcon
-              icon={getTrendIcon(ETF_DATA.ethereum.trend)}
-              className="w-8 h-8"
-              style={{ color: getTrendColor(ETF_DATA.ethereum.trend) }}
-            />
-          </div>
-
-          {/* Métricas Principais */}
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            <div
-              className="rounded-xl p-4 border"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)',
-              }}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <FontAwesomeIcon icon={faDollarSign} className="w-4 h-4" style={{ color: 'var(--brand-primary)' }} />
-                <p className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>
-                  AUM Total
-                </p>
-              </div>
-              <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
-                {ETF_DATA.ethereum.totalAUM}
-              </p>
-            </div>
-
-            <div
-              className="rounded-xl p-4 border"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)',
-              }}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <FontAwesomeIcon icon={faCalendarDays} className="w-4 h-4" style={{ color: 'var(--brand-primary)' }} />
-                <p className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>
-                  Inflows 7d
-                </p>
-              </div>
-              <p className="text-2xl font-bold" style={{ color: getTrendColor(ETF_DATA.ethereum.trend) }}>
-                {ETF_DATA.ethereum.inflows7d}
-              </p>
-            </div>
-          </div>
-
-          {/* Top ETFs */}
-          <div className="mb-4">
-            <div className="flex items-center gap-2 mb-3">
-              <FontAwesomeIcon icon={faBuilding} className="w-4 h-4" style={{ color: 'var(--brand-primary)' }} />
-              <h4 className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
-                Principais ETFs
-              </h4>
-            </div>
-            <div className="space-y-2">
-              {ETF_DATA.ethereum.topETFs.map((etf, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-3 rounded-lg"
-                  style={{ backgroundColor: 'var(--bg-secondary)' }}
-                >
-                  <div>
-                    <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
-                      {etf.name}
-                    </p>
-                    <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-                      {etf.aum}
-                    </p>
-                  </div>
-                  <span
-                    className="text-sm font-bold px-2 py-1 rounded"
-                    style={{
-                      backgroundColor: 'var(--brand-primary)',
-                      color: 'var(--text-inverse)'
-                    }}
-                  >
-                    {etf.share}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Description */}
-          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-            {ETF_DATA.ethereum.description}
+            Acesse as fontes oficiais abaixo para visualizar métricas atualizadas diariamente sobre fluxos de ETFs de criptomoedas.
           </p>
         </div>
       </div>
@@ -384,6 +110,70 @@ export default function ETFMetricsSection() {
         </div>
       </div>
 
+      {/* Widget Farside Investors - Bitcoin */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <TokenBTC size={32} variant="branded" />
+          <div>
+            <h3 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+              Bitcoin ETF - Fluxos Diários
+            </h3>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+              Dados atualizados em tempo real via Farside Investors
+            </p>
+          </div>
+        </div>
+        <div className="backdrop-blur-xl rounded-2xl p-2 border-2 shadow-2xl overflow-hidden" style={{
+          backgroundColor: 'var(--bg-elevated)',
+          borderColor: 'var(--border-medium)'
+        }}>
+          <div className="rounded-xl overflow-hidden" style={{
+            height: '600px',
+            maxHeight: '70vh'
+          }}>
+            <iframe
+              src="https://farside.co.uk/btc/"
+              className="w-full h-full"
+              style={{ border: 'none' }}
+              loading="lazy"
+              title="Bitcoin ETF Flows - Farside Investors"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Widget Farside Investors - Ethereum */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <TokenETH size={32} variant="branded" />
+          <div>
+            <h3 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+              Ethereum ETF - Fluxos Diários
+            </h3>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+              Dados atualizados em tempo real via Farside Investors
+            </p>
+          </div>
+        </div>
+        <div className="backdrop-blur-xl rounded-2xl p-2 border-2 shadow-2xl overflow-hidden" style={{
+          backgroundColor: 'var(--bg-elevated)',
+          borderColor: 'var(--border-medium)'
+        }}>
+          <div className="rounded-xl overflow-hidden" style={{
+            height: '600px',
+            maxHeight: '70vh'
+          }}>
+            <iframe
+              src="https://farside.co.uk/eth/"
+              className="w-full h-full"
+              style={{ border: 'none' }}
+              loading="lazy"
+              title="Ethereum ETF Flows - Farside Investors"
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Fontes de Dados Completos */}
       <div
         className="rounded-2xl p-6 border shadow-md"
@@ -393,10 +183,10 @@ export default function ETFMetricsSection() {
         }}
       >
         <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-          Ver Dados Completos em Tempo Real
+          Outras Fontes de Dados em Tempo Real
         </h3>
         <p className="mb-6" style={{ color: 'var(--text-secondary)' }}>
-          Acesse as principais fontes de dados de ETFs para informações atualizadas diariamente:
+          Explore análises detalhadas e dashboards completos sobre ETFs de criptomoedas:
         </p>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
