@@ -179,6 +179,12 @@ export default function GraficosPage() {
           {/* Divider */}
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
+          {/* ETFs de Bitcoin e Ethereum */}
+          <ETFMetricsSection />
+
+          {/* Divider */}
+          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
           {/* Token $MILAGRE CTA */}
           <div className="space-y-6">
             <div>
@@ -220,12 +226,6 @@ export default function GraficosPage() {
               </a>
             </div>
           </div>
-
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* ETFs de Bitcoin e Ethereum */}
-          <ETFMetricsSection />
 
           </div>
         </div>
