@@ -3,8 +3,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChartLine,
-  faTrendingUp,
-  faTrendingDown,
+  faArrowUp,
+  faArrowDown,
   faMinus,
   faCalendar
 } from '@fortawesome/free-solid-svg-icons';
@@ -25,13 +25,13 @@ interface ForecastsChartProps {
 export default function ForecastsChart({ forecasts }: ForecastsChartProps) {
   const trendConfig = {
     up: {
-      icon: faTrendingUp,
+      icon: faArrowUp,
       color: 'text-green-600 dark:text-green-400',
       bg: 'bg-green-100 dark:bg-green-900/30',
       label: 'Em Alta'
     },
     down: {
-      icon: faTrendingDown,
+      icon: faArrowDown,
       color: 'text-red-600 dark:text-red-400',
       bg: 'bg-red-100 dark:bg-red-900/30',
       label: 'Em Baixa'
