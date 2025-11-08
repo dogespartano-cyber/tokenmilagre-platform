@@ -6,6 +6,137 @@
 
 ---
 
+## 🧠 INSTRUÇÕES PARA CLAUDE - APRENDIZADO CONTÍNUO
+
+### ⚠️ REGRA CRÍTICA: SEMPRE Consultar Antes de Agir
+
+**ANTES de fazer qualquer mudança significativa no código, SEMPRE:**
+
+1. **Ler esta skill** para verificar se o problema já foi resolvido antes
+2. **Procurar por padrões similares** nos problemas documentados
+3. **Evitar repetir erros** já conhecidos e catalogados
+
+### 📝 QUANDO Documentar um Novo Problema
+
+**SEMPRE documentar quando:**
+
+- ✅ Resolver um bug que causou erro em build/runtime
+- ✅ Corrigir problema de performance significativo
+- ✅ Solucionar erro que não era óbvio (debugou >15 minutos)
+- ✅ Encontrar configuração incorreta que quebrou funcionalidade
+- ✅ Implementar workaround para limitação de biblioteca/framework
+- ✅ Resolver erro que pode acontecer novamente (padrão anti-pattern)
+
+**NÃO precisa documentar quando:**
+
+- ❌ Typo simples em código
+- ❌ Ajuste de estilo/CSS menor
+- ❌ Mudança trivial que não causou erro
+
+### 📋 TEMPLATE para Novo Problema
+
+Ao adicionar novo problema, seguir este template:
+
+```markdown
+## Problema X: [Título Descritivo e Específico]
+
+### 🐛 Descrição do Problema
+[Explicar o que acontecia, sintomas visíveis, mensagens de erro]
+
+**Severidade**: 🔴 CRÍTICA / 🟡 ALTA / 🟢 MÉDIA / 🔵 BAIXA
+
+### 🔍 Causa Raiz
+
+**Arquivo**: `caminho/do/arquivo.ts` (linha X)
+
+[Explicar a causa técnica do problema]
+
+**Por que aconteceu**:
+1. [Razão 1]
+2. [Razão 2]
+3. [Razão 3]
+
+### ✅ Solução Aplicada
+
+**Mudança feita**:
+```[linguagem]
+// ❌ ANTES (código com problema)
+código antigo
+
+// ✅ DEPOIS (código corrigido)
+código novo
+```
+
+**Por que funciona**:
+[Explicar tecnicamente por que a solução resolve]
+
+### 💡 Lições Aprendidas
+
+1. **[Lição principal]**: [Explicação]
+2. **[Lição secundária]**: [Explicação]
+
+### 🔧 Como Evitar no Futuro
+
+- [ ] Checklist item 1
+- [ ] Checklist item 2
+- [ ] Verificação a fazer antes de mudanças similares
+
+### 📚 Referências
+
+- [Link para documentação]
+- [Link para issue/PR]
+
+**Commit da correção**: `hash-do-commit`
+```
+
+### 🔄 PROCESSO de Documentação
+
+**Passo a passo:**
+
+1. **Resolver o problema** completamente
+2. **Fazer commit** da correção
+3. **Adicionar ao índice** (topo do arquivo)
+4. **Escrever documentação** seguindo template
+5. **Adicionar ao final** do arquivo (antes de "Última atualização")
+6. **Atualizar versão** e data no rodapé
+7. **Fazer commit separado** da documentação
+
+**Exemplo de commit de documentação:**
+```bash
+git commit -m "docs: Adicionar Problema X à skill troubleshooting
+
+- Documentar erro [descrição curta]
+- Explicar causa raiz: [motivo]
+- Detalhar solução aplicada
+- Commit de correção: [hash]"
+```
+
+### 🎯 BENEFÍCIOS de Manter Esta Skill Atualizada
+
+1. **Evita regressões** - Não repetir erros já resolvidos
+2. **Acelera debugging** - Problemas similares resolvem-se mais rápido
+3. **Transferência de conhecimento** - Novos desenvolvedores aprendem com erros passados
+4. **Base de conhecimento** - Cresce organicamente com o projeto
+5. **Qualidade do código** - Padrões anti-pattern ficam documentados
+
+### 🔍 COMO Consultar Esta Skill
+
+**Antes de implementar mudanças em:**
+
+| Área do Código | Problemas Relevantes |
+|----------------|---------------------|
+| **Build scripts** | Problema 7 (Prisma DB Push) |
+| **Navegação/Scroll** | Problema 1 (Scroll Position) |
+| **Cache/Performance** | Problema 2, 4 (Flash Visual, Fear & Greed) |
+| **Componentes externos** | Problema 3 (Ticker Tape) |
+| **Markdown/Regex** | Problema 5 (Quebras de Linha) |
+| **APIs externas** | Problema 6 (Gemini) |
+
+**Comando mental antes de codar:**
+> "Já resolvemos algo parecido antes? Deixa eu checar a skill troubleshooting..."
+
+---
+
 ## 📋 Índice de Problemas
 
 1. [Scroll Position Bug - Páginas /criptomoedas](#problema-1-scroll-position-bug)
