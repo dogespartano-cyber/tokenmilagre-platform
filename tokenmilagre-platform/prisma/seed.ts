@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Sentiment } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { additionalResources } from './additional-resources';
 
@@ -86,7 +86,7 @@ Especialistas permanecem otimistas, com previsões variando de $150.000 a $200.0
       category: 'mercado',
       tags: JSON.stringify(['Bitcoin', 'BTC', 'Recorde', 'Mercado', 'Análise']),
       published: true,
-      sentiment: 'positive',
+      sentiment: Sentiment.positive,
       authorId
     },
     {
@@ -111,7 +111,7 @@ Esta atualização pode ser um divisor de águas para a adoção em massa de apl
       category: 'tecnologia',
       tags: JSON.stringify(['Ethereum', 'ETH', 'Ethereum 2.0', 'DeFi', 'Escalabilidade']),
       published: true,
-      sentiment: 'positive',
+      sentiment: Sentiment.positive,
       authorId
     },
     {
@@ -133,7 +133,7 @@ A regulamentação pode trazer mais segurança jurídica, mas também novas obri
       category: 'regulacao',
       tags: JSON.stringify(['Regulação', 'Brasil', 'Legislação', 'Compliance']),
       published: true,
-      sentiment: 'neutral',
+      sentiment: Sentiment.neutral,
       authorId
     },
     {
@@ -158,7 +158,7 @@ Analistas veem potencial para Solana consolidar-se como alternativa viável ao E
       category: 'mercado',
       tags: JSON.stringify(['Solana', 'SOL', 'Ethereum', 'Blockchain', 'DeFi']),
       published: true,
-      sentiment: 'positive',
+      sentiment: Sentiment.positive,
       authorId
     }
   ];
@@ -197,7 +197,7 @@ Use carteiras (wallets) para guardar seus bitcoins com segurança. Nunca deixe g
       readTime: '8 min',
       tags: JSON.stringify(['Bitcoin', 'Iniciante', 'Blockchain', 'Criptomoedas']),
       published: true,
-      sentiment: 'neutral',
+      sentiment: Sentiment.neutral,
       authorId
     },
     {
@@ -234,7 +234,7 @@ A seed phrase (frase de recuperação) é a chave mestra da sua carteira. NUNCA 
       readTime: '6 min',
       tags: JSON.stringify(['Wallet', 'Segurança', 'Iniciante', 'Tutorial']),
       published: true,
-      sentiment: 'neutral',
+      sentiment: Sentiment.neutral,
       authorId
     },
     {
@@ -273,7 +273,7 @@ Comece com pequenas quantias, aprenda sobre cada protocolo e sempre faça sua pr
       readTime: '10 min',
       tags: JSON.stringify(['DeFi', 'Intermediário', 'Protocolos', 'Finanças']),
       published: true,
-      sentiment: 'neutral',
+      sentiment: Sentiment.neutral,
       authorId
     },
     {
@@ -315,7 +315,7 @@ Combine múltiplos indicadores para confirmar sinais e sempre use stop loss.`,
       readTime: '15 min',
       tags: JSON.stringify(['Trading', 'Análise Técnica', 'Avançado', 'Indicadores']),
       published: true,
-      sentiment: 'neutral',
+      sentiment: Sentiment.neutral,
       authorId
     }
   ];
