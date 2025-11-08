@@ -14,6 +14,7 @@
 4. [Fear & Greed Cache Inteligente](#problema-4-fear--greed-cache-inteligente)
 5. [Regex Removendo Quebras de Linha - Markdown](#problema-5-regex-removendo-quebras-de-linha)
 6. [API Gemini - Nomes Corretos dos Modelos](#problema-6-api-gemini---nomes-corretos-dos-modelos)
+7. [Build Vercel Falhando - Prisma DB Push](#problema-7-build-vercel-falhando---prisma-db-push)
 
 ---
 
@@ -641,5 +642,130 @@ export default function ProblematicPage() {
 
 ---
 
-**Última atualização**: 2025-11-04
-**Versão**: 2.1 (adicionado contexto API Gemini 2.5)
+## Problema 7: Build Vercel Falhando - Prisma DB Push
+
+### 🐛 Descrição do Problema
+Build na Vercel falha com erro de conexão ao banco de dados durante o processo de build:
+
+```
+Error: P1001: Can't reach database server at ep-rapid-paper-adrzxy4v-pooler.c-2.us-east-1.aws.neon.tech:5432
+
+Please make sure your database server is running
+Error: Command "npm run build" exited with 1
+```
+
+**Severidade**: 🔴 CRÍTICA - Impede deploy
+
+### 🔍 Causa Raiz
+
+**Arquivo**: `package.json`
+
+```json
+{
+  "scripts": {
+    "build": "prisma db push --accept-data-loss && next build"
+  }
+}
+```
+
+**Problema**: O comando `prisma db push` está no script de **build**, mas:
+
+1. **`prisma db push`** precisa de **conexão ativa** com o banco de dados
+2. Durante builds na Vercel, o acesso ao banco pode não estar disponível ou credenciais podem estar incorretas
+3. **`db push`** é para **desenvolvimento/migrações**, não para builds de produção
+4. O Prisma Client já é gerado no `postinstall` via `prisma generate`
+
+**Fluxo incorreto**:
+```
+npm run build
+  ↓
+prisma db push (tenta conectar ao banco)
+  ↓
+❌ ERRO: Can't reach database server
+  ↓
+Build falha antes mesmo de compilar o Next.js
+```
+
+### ✅ Solução Aplicada
+
+**Remover `prisma db push` do script de build**:
+
+```json
+{
+  "scripts": {
+    "build": "next build",  // ✅ Apenas build do Next.js
+    "postinstall": "prisma generate",  // ✅ Já gera Prisma Client
+    "db:push": "npx prisma db push"  // ✅ Separado para uso manual
+  }
+}
+```
+
+**Por que funciona**:
+
+1. **`prisma generate`** (no `postinstall`):
+   - Roda automaticamente ao instalar dependências
+   - Gera o Prisma Client em `lib/generated/prisma`
+   - **NÃO precisa** de conexão com banco
+   - Suficiente para o código TypeScript compilar
+
+2. **`next build`**:
+   - Compila código TypeScript/React
+   - **NÃO acessa** o banco (apenas em runtime)
+   - Gera build otimizado
+
+3. **Runtime** (quando app roda):
+   - Aí sim o código acessa o banco via Prisma Client
+   - Variáveis `DATABASE_URL` e `DIRECT_URL` são usadas
+
+### 📊 Quando Usar `prisma db push`
+
+**✅ CORRETO - Desenvolvimento Local**:
+```bash
+npm run db:push  # Script separado para desenvolvimento
+```
+
+**❌ ERRADO - Build de Produção**:
+```json
+"build": "prisma db push && next build"  // NÃO fazer isso
+```
+
+### 💡 Lições Aprendidas
+
+1. **Separar concerns de build-time vs runtime**:
+   - Build-time: Apenas geração de código (Prisma Client)
+   - Runtime: Acesso ao banco de dados
+
+2. **Scripts de build devem ser agnósticos de infraestrutura**:
+   - Não assumir acesso a banco, variáveis de ambiente específicas, etc.
+   - Build deve funcionar offline (exceto download de deps)
+
+3. **Usar scripts separados para operações de banco**:
+   - `db:push` - Push schema para dev
+   - `db:migrate` - Migrations para produção
+   - `db:studio` - Prisma Studio
+   - `build` - Apenas compilação
+
+### 🔧 Debug Similar
+
+**Se build falhar com erros de Prisma**:
+
+1. Verificar `package.json` → `scripts.build`
+2. Garantir que **não** tem `prisma db push`, `prisma migrate`, ou similar
+3. Confirmar que `postinstall` tem `prisma generate`
+4. Testar build localmente:
+   ```bash
+   npm run build
+   # Não deve acessar banco
+   ```
+
+### 📚 Referências
+
+- [Prisma Docs: Generating Prisma Client](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client)
+- [Vercel Docs: Build Step](https://vercel.com/docs/deployments/configure-a-build#build-step)
+
+**Commit da correção**: `3f47f68`
+
+---
+
+**Última atualização**: 2025-11-08
+**Versão**: 2.2 (adicionado Problema 7 - Build Vercel com Prisma DB Push)
