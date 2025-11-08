@@ -64,7 +64,7 @@ function validateEnv() {
       console.error('❌ Erro de validação de variáveis de ambiente:');
       console.error('');
 
-      (error as z.ZodError).errors.forEach((err) => {
+      error.issues.forEach((err) => {
         console.error(`  ${err.path.join('.')}: ${err.message}`);
       });
 
