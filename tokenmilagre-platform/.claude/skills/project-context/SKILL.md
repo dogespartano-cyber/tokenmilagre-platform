@@ -43,6 +43,133 @@ Once you've read CLAUDE-MEMORY.md, you'll know:
 
 ---
 
+## 💫 Propósito do Projeto - Semente do Bem
+
+### 🌟 A Essência do Token Milagre
+
+**"$MILAGRE é um projeto comunitário criado para conectar pessoas através de apoio mútuo e esperança."**
+
+Este não é apenas um projeto de criptomoedas. É um **movimento de educação, transparência e empoderamento financeiro**.
+
+### 🎯 Por Que Este Projeto Importa
+
+**Problema que resolvemos**:
+- Mercado cripto cheio de golpes e desinformação
+- Pessoas perdendo dinheiro por falta de conhecimento
+- Barreiras técnicas impedem acesso à tecnologia blockchain
+- Falta de recursos educacionais acessíveis em português
+
+**Nossa solução**:
+- ✅ **Educação gratuita e acessível** - Artigos, guias, tutoriais
+- ✅ **Transparência total** - Open source, sem segredos
+- ✅ **Comunidade inclusiva** - Todos são bem-vindos
+- ✅ **Segurança em primeiro lugar** - Alertas, proteção, orientação
+
+### 🤝 Como Incentivar Contribuições
+
+**Toda decisão de design e código deve responder: "Isso ajuda mais pessoas?"**
+
+**Estratégias para atrair contribuidores**:
+
+1. **Acessibilidade em Primeiro Lugar**
+   - Código limpo e bem documentado
+   - README completo com setup fácil
+   - Issues marcadas como "good first issue"
+   - Responder rapidamente a PRs e dúvidas
+
+2. **Transparência Total**
+   - Decisões de design documentadas (CLAUDE-MEMORY.md, LOG.md)
+   - Roadmap público (sugestões.md)
+   - Comunicação aberta sobre desafios e sucessos
+
+3. **Reconhecimento da Comunidade**
+   - Creditar contribuidores em commits
+   - Destacar colaboradores no README
+   - Celebrar cada contribuição, grande ou pequena
+
+4. **Experiência do Desenvolvedor**
+   - Setup rápido (< 5 minutos)
+   - Stack moderna e popular (Next.js, React, Prisma)
+   - Testes automatizados
+   - Deploy simples (Vercel)
+
+5. **Propósito Claro e Inspirador**
+   - Sempre comunicar o "por quê" antes do "o quê"
+   - Mostrar impacto real (usuários ajudados, golpes evitados)
+   - Contar histórias da comunidade
+
+### 📣 Mensagens-Chave para Compartilhar
+
+**Quando falar sobre o projeto, sempre incluir**:
+
+1. **Missão**: "Democratizar acesso à educação sobre criptomoedas"
+2. **Valores**: Transparência, comunidade, educação, segurança
+3. **Open Source**: "Código aberto = confiança"
+4. **Impacto**: "X pessoas educadas, Y golpes evitados"
+5. **Convite**: "Junte-se a nós, sua contribuição importa"
+
+### 🌱 Princípios de Design que Atraem Pessoas
+
+**Todo código e design deve ser**:
+
+- **Simples**: Se não é essencial, não adicione
+- **Acessível**: Funciona para todos, inclusive iniciantes
+- **Rápido**: Performance = respeito pelo tempo das pessoas
+- **Bonito**: Design minimalista mas agradável
+- **Confiável**: Funciona sempre, sem surpresas
+
+### 🚀 Como o Claude Deve Contribuir para Isso
+
+**Em cada interação, considere**:
+
+1. **O código facilita contribuições futuras?**
+   - Comentários claros quando necessário
+   - Estrutura lógica e previsível
+   - Sem "magic" - tudo deve ser compreensível
+
+2. **O design é inclusivo?**
+   - Cores com contraste adequado (acessibilidade)
+   - Texto em português claro
+   - Mobile-first (muitos acessam só pelo celular)
+
+3. **A solução educa?**
+   - Código é exemplo de boas práticas
+   - Documentação ensina, não apenas instrui
+   - Erros têm mensagens úteis
+
+4. **Fortalece a comunidade?**
+   - Features que conectam pessoas
+   - Conteúdo que gera conversas
+   - Ferramentas que empoderam
+
+### 💪 Mantras para Decisões
+
+Quando em dúvida, pergunte:
+
+- ✅ **"Isso ajuda alguém?"** - Senão, não faça
+- ✅ **"Um iniciante entenderia?"** - Simplicidade é poder
+- ✅ **"Isso convida contribuição?"** - Open source vive disso
+- ✅ **"Estamos sendo transparentes?"** - Confiança é tudo
+- ✅ **"Isso fortalece a comunidade?"** - Juntos somos mais
+
+### 🎁 O Que Oferecemos aos Contribuidores
+
+**Ao contribuir, você ganha**:
+
+- 🌟 Experiência com stack moderna (Next.js 15, React 19, Prisma)
+- 📚 Aprendizado sobre cripto, blockchain e Web3
+- 🤝 Conexão com comunidade apaixonada
+- 💼 Portfólio com projeto real e impacto social
+- 🎯 Propósito - saber que está ajudando pessoas
+
+**E acima de tudo**: A satisfação de fazer parte de algo maior que você mesmo.
+
+---
+
+**Lembre-se**: Cada linha de código, cada artigo, cada feature é uma oportunidade de plantar esperança e conhecimento. Faça valer.
+
+---
+
 ## 🔗 Related Skills
 
 After loading project context, use these specialized skills when needed:
@@ -94,5 +221,137 @@ When this skill is invoked:
 
 ---
 
+## 🌐 Development Workflow - Claude Code Web + CLI
+
+### 🎯 Divisão de Responsabilidades
+
+**Claude Code Web (80% do trabalho)**:
+- Desenvolvimento de features
+- Refactoring de código
+- Correção de bugs complexos
+- Criação de componentes
+- Atualização de APIs
+- **Lança automaticamente em PREVIEW** (branches claude/*)
+
+**Claude Code CLI (20% do trabalho)**:
+- Validação de build local
+- Pequenos ajustes rápidos
+- Debugging local
+- Commit final e push para produção
+
+---
+
+### 🔄 Fluxo Completo de Desenvolvimento
+
+#### Fase 1: Desenvolvimento (Claude Code Web)
+1. Desenvolver feature no Claude Code Web
+2. Preview deployado automaticamente (branches `claude/*`)
+3. Revisar preview online
+4. Iterar até feature pronta
+
+#### Fase 2: Teste Local (server-manager.sh)
+```bash
+# Puxar última preview e rodar localmente
+./server-manager.sh start-preview
+
+# Ver logs em tempo real
+./server-manager.sh logs
+
+# Status do servidor
+./server-manager.sh status
+```
+
+#### Fase 3: Ajustes (Claude Code CLI se necessário)
+- Se tudo OK → pular para Fase 4
+- Se houver problemas → usar CLI para ajustes rápidos
+- Revalidar localmente
+
+#### Fase 4: Produção
+```bash
+# Promover preview para main (interativo)
+./server-manager.sh promote-preview
+
+# Ou manualmente
+git checkout main
+git merge origin/claude/preview-branch
+git push origin main
+```
+
+---
+
+### 🛠️ Server Manager - Comandos Úteis
+
+**Localização**: `/home/destakar/Trabalho/server-manager.sh`
+
+**Comandos principais**:
+```bash
+# Preview workflow
+./server-manager.sh start-preview    # Sincroniza preview + inicia local
+./server-manager.sh sync-preview     # Apenas sincroniza (não inicia)
+./server-manager.sh promote-preview  # Promove para produção
+
+# Gerenciamento básico
+./server-manager.sh start            # Inicia servidor (branch atual)
+./server-manager.sh stop             # Para servidor
+./server-manager.sh restart          # Reinicia servidor
+./server-manager.sh status           # Status detalhado
+
+# Debugging
+./server-manager.sh logs             # Logs em tempo real
+./server-manager.sh cover-logs       # Logs de geração de capas
+./server-manager.sh clean            # Limpa processos Node.js
+
+# Menu interativo
+./server-manager.sh                  # Sem argumentos = menu
+```
+
+---
+
+### ✅ Checklist de Validação
+
+**Antes de Promover Preview para Produção**:
+- [ ] Preview funciona corretamente online
+- [ ] Build local passa sem erros (`start-preview` OK)
+- [ ] Funcionalidade testada localmente
+- [ ] Sem erros no console
+- [ ] Schema Prisma commitado (se modificado)
+- [ ] CSS/design responsivo OK
+- [ ] Performance aceitável
+
+---
+
+### 🎯 Quando Usar Cada Ambiente
+
+| Tarefa | Claude Web | Claude CLI |
+|--------|-----------|-----------|
+| Desenvolver features | ✅ PRIMARY | ❌ |
+| Refactoring | ✅ PRIMARY | ❌ |
+| Correção de bugs | ✅ PRIMARY | ⚠️ Se rápido |
+| Teste de build | ❌ | ✅ PRIMARY |
+| Debugging local | ❌ | ✅ PRIMARY |
+| Ajustes rápidos | ⚠️ Se complexo | ✅ PRIMARY |
+| Commit final | ❌ | ✅ PRIMARY |
+| Push produção | ❌ | ✅ PRIMARY |
+
+---
+
+### 📌 Importante para Claude Code Web
+
+**Ao trabalhar no Claude Code Web**:
+1. Sempre mencionar que o código será lançado em PREVIEW
+2. Instruir usuário a usar `start-preview` para testar localmente
+3. Lembrar que a versão estável atual é `f33d1ba`
+4. NÃO tentar rodar servidor ou fazer testes locais
+5. Focar em desenvolvimento rápido e iterativo
+6. Deixar validação final para Claude Code CLI
+
+**Ao trabalhar no Claude Code CLI**:
+1. Usar para validação final de previews
+2. Pequenos ajustes que não justificam preview
+3. Promover para produção após validação
+4. Manter comunicação curta e objetiva
+
+---
+
 **Skill criada por**: Claude Code
-**Última atualização**: 2025-11-04 (documentação movida para docs-local/ dentro do projeto)
+**Última atualização**: 2025-11-08 (workflow Web + CLI documentado)

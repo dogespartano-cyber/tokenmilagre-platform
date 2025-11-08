@@ -240,6 +240,41 @@ Copyright: "© 2025 $MILAGRE Community"
 
 ---
 
+## 🌐 Ambientes de Desenvolvimento
+
+### Claude Code Web vs CLI
+
+**Claude Code Web (80% do trabalho)**:
+- Ambiente principal para desenvolvimento
+- Lança automaticamente em PREVIEW (branches claude/*)
+- Ideal para features complexas e iterações rápidas
+- NÃO tem acesso ao servidor local
+- NÃO pode rodar comandos locais
+
+**Claude Code CLI (20% do trabalho)**:
+- Ambiente local para validação final
+- Teste de builds antes de produção
+- Pequenos ajustes e debugging
+- Commit final e push para produção
+- Acesso completo ao filesystem local
+
+### Workflow Recomendado
+
+1. **Desenvolver no Web** → Preview automático (branches claude/*)
+2. **Testar preview localmente** → `./server-manager.sh start-preview`
+3. **Ajustar no CLI** (se necessário) → Pequenos fixes
+4. **Promover para produção** → `./server-manager.sh promote-preview`
+
+**Server Manager**: `/home/destakar/Trabalho/server-manager.sh`
+- Ponte entre preview (Web) e local (CLI)
+- Comandos: `start-preview`, `sync-preview`, `promote-preview`
+
+**Versão Estável Atual**: `f33d1ba` (commit de referência para produção)
+
+**Detalhes Completos**: Consultar skill `project-context` para workflow detalhado
+
+---
+
 ## 🚫 O Que Evitar
 
 ### Design e UI
@@ -635,7 +670,7 @@ Para mudanças técnicas específicas, atualizar as **Skills** correspondentes.
 **2025-10-21 (noite)**: 🧹 Limpeza Completa do Projeto + Ajustes de UI
 **2025-10-21**: 🎨 Redesign Completo da UI - Minimalismo e Gradientes
 
-**Última atualização**: 2025-11-04 - Remoção de /dashboard/chat e unificação do sistema de chat IA
+**Última atualização**: 2025-11-08 - Documentação completa do workflow Claude Code Web + CLI
 
 **2025-11-04**: 🗑️ **Remoção de /dashboard/chat e Sistema de Citations**
   - ✅ **Removido `/dashboard/chat`** (funcionalidade duplicada)
