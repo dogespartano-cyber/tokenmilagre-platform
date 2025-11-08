@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import Script from 'next/script';
 import Link from 'next/link';
-import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { useInfiniteScrollData } from '@/hooks/useInfiniteScrollData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faArrowRight, faSearch, faTimes, faArrowUp, faSeedling, faBook, faRocket, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 
@@ -71,12 +71,6 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
-  // Estados para infinite scroll
-  const [allResources, setAllResources] = useState<Resource[]>(resources);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(resources.length === 12);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-
   const categories = [
     { id: 'all', label: 'Todos' },
     { id: 'blockchain', label: 'Blockchain' },
@@ -94,72 +88,32 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
     { id: 'avancado', label: 'Avançado' },
   ];
 
-  // Função para buscar mais recursos da API
-  const fetchMoreResources = useCallback(async (pageNum: number = 1, append: boolean = false) => {
-    if (append) {
-      setIsLoadingMore(true);
-    }
-
-    try {
-      const categoryParam = selectedCategory !== 'all' ? `&category=${selectedCategory}` : '';
-      const levelParam = selectedLevel !== 'all' ? `&level=${selectedLevel}` : '';
-      const url = `/api/articles?type=educational&page=${pageNum}&limit=12${categoryParam}${levelParam}`;
-
-      const res = await fetch(url);
-      const data = await res.json();
-
-      if (data.success) {
-        const newItems: Resource[] = data.data.map((article: any) => ({
-          id: article.id,
-          slug: article.slug,
-          title: article.title,
-          category: article.category,
-          level: article.level || 'iniciante',
-          type: article.contentType || 'Artigo',
-          description: article.summary || '',
-          readTime: article.readTime || '5 min',
-          tags: article.keywords || []
-        }));
-
-        if (append) {
-          setAllResources(prev => [...prev, ...newItems]);
-        } else {
-          setAllResources(newItems);
-        }
-
-        setHasMore(data.pagination.hasMore);
-        setPage(pageNum);
-      }
-    } catch (error) {
-      console.error('Erro ao buscar recursos:', error);
-    } finally {
-      setIsLoadingMore(false);
-    }
-  }, [selectedCategory, selectedLevel]);
-
-  // Carregar mais recursos (infinite scroll)
-  const loadMore = useCallback(() => {
-    if (!isLoadingMore && hasMore) {
-      fetchMoreResources(page + 1, true);
-    }
-  }, [page, hasMore, isLoadingMore, fetchMoreResources]);
-
-  // Hook de infinite scroll
-  const { sentinelRef } = useInfiniteScroll({
-    hasMore,
-    isLoading: isLoadingMore,
-    onLoadMore: loadMore,
-    threshold: 300
+  // Hook de infinite scroll com data fetching
+  const {
+    data: allResources,
+    isLoadingMore,
+    sentinelRef
+  } = useInfiniteScrollData<Resource>({
+    endpoint: '/api/articles',
+    filters: {
+      type: 'educational',
+      category: selectedCategory,
+      level: selectedLevel
+    },
+    initialData: resources,
+    pageSize: 12,
+    transform: (article: any) => ({
+      id: article.id,
+      slug: article.slug,
+      title: article.title,
+      category: article.category,
+      level: article.level || 'iniciante',
+      type: article.contentType || 'Artigo',
+      description: article.summary || '',
+      readTime: article.readTime || '5 min',
+      tags: article.keywords || []
+    })
   });
-
-  // Resetar paginação quando filtros mudarem (categoria ou nível)
-  useEffect(() => {
-    setPage(1);
-    setHasMore(true);
-    setAllResources([]);
-    fetchMoreResources(1, false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCategory, selectedLevel]);
 
   // Filtrar recursos localmente (apenas por termo de busca)
   const filteredResources = allResources.filter(resource => {
