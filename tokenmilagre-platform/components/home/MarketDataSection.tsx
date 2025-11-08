@@ -77,7 +77,7 @@ export default function MarketDataSection({ data, loading }: Props) {
           {/* BTC Dominance */}
           <div className="bg-[var(--bg-secondary)] rounded-xl p-6 border border-[var(--border-light)] hover:shadow-lg transition-all duration-300">
             <div className="flex items-center gap-2 mb-2">
-              <TokenBTC size={20} />
+              <TokenBTC size={20} variant="branded" />
               <h3 className="text-[var(--text-tertiary)] text-sm font-medium">
                 Dominância BTC
               </h3>
@@ -90,7 +90,7 @@ export default function MarketDataSection({ data, loading }: Props) {
           {/* ETH Dominance */}
           <div className="bg-[var(--bg-secondary)] rounded-xl p-6 border border-[var(--border-light)] hover:shadow-lg transition-all duration-300">
             <div className="flex items-center gap-2 mb-2">
-              <TokenETH size={20} />
+              <TokenETH size={20} variant="branded" />
               <h3 className="text-[var(--text-tertiary)] text-sm font-medium">
                 Dominância ETH
               </h3>
