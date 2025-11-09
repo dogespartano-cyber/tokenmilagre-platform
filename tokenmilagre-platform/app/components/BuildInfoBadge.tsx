@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCodeBranch, faCircleCheck, faTriangleExclamation, faClock } from '@fortawesome/free-solid-svg-icons';
+import { faCodeBranch, faCircleCheck, faTriangleExclamation, faClock, faCopy, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 interface BuildInfo {
   branch: string;
@@ -19,6 +19,7 @@ export default function BuildInfoBadge() {
   const [buildInfo, setBuildInfo] = useState<BuildInfo | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const fetchBuildInfo = async () => {
@@ -38,6 +39,27 @@ export default function BuildInfoBadge() {
 
     fetchBuildInfo();
   }, []);
+
+  const copyToClipboard = async () => {
+    if (!buildInfo) return;
+
+    const text = `Build Info - Token Milagre Platform
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Type: ${buildInfo.type}
+Branch: ${buildInfo.branch}
+Commit: ${buildInfo.commitHash} - ${buildInfo.commitMessage}
+Status: ${buildInfo.gitStatus}${buildInfo.changedFiles ? ` (${buildInfo.changedFiles} files)` : ''}
+Updated: ${formatDate(buildInfo.lastUpdate)}${buildInfo.compareMain ? `\nvs Main: ${buildInfo.compareMain}` : ''}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error('Error copying to clipboard:', error);
+    }
+  };
 
   if (isLoading || !buildInfo) {
     return null;
@@ -117,9 +139,27 @@ export default function BuildInfoBadge() {
               <FontAwesomeIcon icon={faCodeBranch} className="text-gray-500" />
               Build Info
             </h3>
-            <span className={`text-xs px-2 py-1 rounded ${typeColor} border`}>
-              {typeIcon} {buildInfo.type}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className={`text-xs px-2 py-1 rounded ${typeColor} border`}>
+                {typeIcon} {buildInfo.type}
+              </span>
+              <button
+                onClick={copyToClipboard}
+                className={`
+                  p-1.5 rounded transition-all duration-200
+                  ${copied
+                    ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  }
+                `}
+                title={copied ? 'Copiado!' : 'Copiar informações'}
+              >
+                <FontAwesomeIcon
+                  icon={copied ? faCheck : faCopy}
+                  className="text-xs"
+                />
+              </button>
+            </div>
           </div>
 
           {/* Branch */}
