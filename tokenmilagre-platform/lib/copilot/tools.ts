@@ -341,7 +341,7 @@ export const getStatisticsTool: CopilotTool = {
               });
               return {
                 name: user?.name || 'Unknown',
-                email: user?.email,
+                email: user?.email ?? null,
                 articles: a._count.authorId
               };
             })

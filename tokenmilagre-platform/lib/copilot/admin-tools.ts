@@ -602,8 +602,8 @@ export const generateReportTool: CopilotTool = {
             });
             return {
               name: user?.name || 'Unknown',
-              email: user?.email,
-              role: user?.role,
+              email: user?.email ?? null,
+              role: user?.role ?? null,
               articlesInPeriod: a._count.authorId
             };
           })
