@@ -60,6 +60,40 @@ export default function GraficosPage() {
         <div className="space-y-8">
           {/* Main Content */}
           <div className="space-y-12">
+
+          {/* Crypto Bubbles - Visualização Interativa */}
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
+                Crypto Bubbles - Visualização Interativa
+              </h2>
+              <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                Explore o mercado cripto em tempo real com visualização interativa de bolhas
+              </p>
+            </div>
+
+            <div className="backdrop-blur-xl rounded-2xl p-2 border-2 shadow-2xl overflow-hidden" style={{
+              backgroundColor: 'var(--bg-elevated)',
+              borderColor: 'var(--border-medium)'
+            }}>
+              <div className="rounded-xl overflow-hidden" style={{
+                height: '800px',
+                maxHeight: '80vh'
+              }}>
+                <iframe
+                  src="https://cryptobubbles.net"
+                  className="w-full h-full"
+                  style={{ border: 'none' }}
+                  loading="lazy"
+                  title="CryptoBubbles - Visualização do Mercado Cripto"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
           {/* Análise de Mercado Cripto */}
           <div className="space-y-8">
             {/* Bitcoin - Análise Completa */}
@@ -133,47 +167,18 @@ export default function GraficosPage() {
           {/* Divider */}
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
-          {/* Mapa de Calor & Rastreador */}
+          {/* Mapa de Calor Cripto */}
           <div className="space-y-6">
             <div>
               <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
-                Mapa de Mercado de Criptomoedas
+                Mapa de Calor de Criptomoedas
               </h2>
               <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                Visualize o mercado completo e filtre oportunidades
+                Visualize o desempenho do mercado cripto em tempo real
               </p>
             </div>
 
-            <div className="space-y-8">
-              {/* Mapa de Calor Cripto */}
-              <div>
-                <CryptoHeatmapWidget />
-              </div>
-
-              {/* CryptoBubbles */}
-              <div>
-                <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)] mb-3" style={{ color: "var(--text-primary)" }}>
-                  Crypto Bubbles - Visualização Interativa
-                </h3>
-                <div className="backdrop-blur-xl rounded-2xl p-2 border-2 shadow-2xl overflow-hidden" style={{
-                  backgroundColor: 'var(--bg-elevated)',
-                  borderColor: 'var(--border-medium)'
-                }}>
-                  <div className="rounded-xl overflow-hidden" style={{
-                    height: '800px',
-                    maxHeight: '80vh'
-                  }}>
-                    <iframe
-                      src="https://cryptobubbles.net"
-                      className="w-full h-full"
-                      style={{ border: 'none' }}
-                      loading="lazy"
-                      title="CryptoBubbles - Visualização do Mercado Cripto"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <CryptoHeatmapWidget />
           </div>
 
           {/* Divider */}
