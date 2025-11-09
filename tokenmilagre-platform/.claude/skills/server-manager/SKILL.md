@@ -409,11 +409,140 @@ INÍCIO/FIM              → Amarelo
 
 ---
 
+## 📋 Build Info - Informações de Deploy
+
+### Funcionalidade Adicionada (v2.1)
+
+Ao visualizar o **status do servidor** (opção 4), agora é exibida uma seção completa de **BUILD INFO** com detalhes sobre qual versão do código está rodando.
+
+### Informações Exibidas
+
+```
+---------------------------------------------------------
+                   BUILD INFO
+---------------------------------------------------------
+
+Type: [PROD] Production       # ou [PREV] Preview, [DEV] Development
+Branch: main                  # Branch atual do Git
+Commit: 28acef2 - feat: Add   # Hash (7 chars) + mensagem do commit
+Status: Clean ✓               # ou Dirty (X files) ⚠
+Updated: 2025-11-09 00:06:47  # Data/hora do último commit
+vs Main: 5 ahead              # Comparação com origin/main (só em preview/dev)
+```
+
+### Tipos de Build
+
+| Tipo | Ícone | Cor | Quando |
+|------|-------|-----|--------|
+| **Production** | `[PROD]` | Verde | Branch `main` |
+| **Preview** | `[PREV]` | Amarelo | Branches `claude/*` |
+| **Development** | `[DEV]` | Cinza | Outras branches |
+
+### Estado Git
+
+| Status | Significado | Ícone |
+|--------|-------------|-------|
+| **Clean** | Sem mudanças não commitadas | ✓ (verde) |
+| **Dirty** | X arquivos modificados | ⚠ (amarelo) |
+
+### Comparação com Main
+
+Quando **não** está na branch `main`, exibe comparação:
+
+- **`5 ahead`** - 5 commits à frente da main
+- **`3 behind`** - 3 commits atrás da main
+- **`2 ahead, 1 behind`** - Divergente (precisa rebase/merge)
+- **`up to date`** - Sincronizado com main
+
+### Implementação
+
+**Bash** (`get_build_info()`):
+```bash
+get_build_info() {
+    cd "$PROJECT_DIR" 2>/dev/null || return 1
+
+    # Coleta informações do Git
+    local branch=$(git branch --show-current)
+    local commit_hash=$(git rev-parse --short=7 HEAD)
+    local commit_msg=$(git log -1 --pretty=format:"%s")
+    local git_changes=$(git status --porcelain | wc -l)
+    # ... outros campos
+
+    # Retorna via echo (parsing no show_status)
+    echo "BRANCH:$branch"
+    echo "TYPE:$type"
+    # ...
+}
+```
+
+**PowerShell** (`Get-BuildInfo`):
+```powershell
+function Get-BuildInfo {
+    Push-Location $Global:ProjectDir
+
+    try {
+        $buildInfo = @{
+            Branch = git branch --show-current
+            CommitHash = git rev-parse --short=7 HEAD
+            CommitMessage = git log -1 --pretty=format:"%s"
+            GitStatus = "Clean" # ou "Dirty (X files)"
+            # ... outros campos
+        }
+
+        return $buildInfo
+    } finally {
+        Pop-Location
+    }
+}
+```
+
+### Exemplos de Uso
+
+**Verificar versão rodando em produção**:
+```bash
+# Bash
+./server-manager.sh status
+
+# PowerShell
+.\server-manager.ps1 status
+```
+
+**Exemplo de output Preview**:
+```
+Type: [PREV] Preview
+Branch: claude/review-project-skills-011CUwD4VMTszjRZBNv4rtFs
+Commit: 0f841d9 - docs: Adicionar instruções de aprendizado...
+Status: Clean ✓
+Updated: 2025-11-08 23:28:18 +0000
+vs Main: 4 ahead
+```
+
+**Exemplo de output Development (dirty)**:
+```
+Type: [DEV] Development
+Branch: feature/new-ui
+Commit: abc1234 - WIP: Redesign dashboard layout
+Status: Dirty (5 files) ⚠
+Updated: 2025-11-09 14:30:00 -0300
+vs Main: 2 ahead, 3 behind
+```
+
+### 💡 Por Que é Útil
+
+1. **Identificar rapidamente qual versão está rodando** (produção vs preview vs dev)
+2. **Verificar se há mudanças não commitadas** que podem afetar o comportamento
+3. **Saber se a branch está sincronizada** com produção (main)
+4. **Debugar discrepâncias** entre ambiente local e produção
+5. **Confirmar que preview foi aplicado** após sync
+
+---
+
 ## 📊 Comparação Bash vs PowerShell
 
 | Funcionalidade | Bash (Linux/Mac) | PowerShell (Windows) |
 |----------------|------------------|----------------------|
 | **ASCII Art Completo** | ✅ Box drawing chars | ✅ ASCII simples |
+| **Build Info Display** | ✅ | ✅ |
 | **View Cover Logs** | ✅ | ✅ |
 | **Health Check (CPU > 70%)** | ✅ | ✅ |
 | **Zombie Detection** | ✅ Defunct processes | ✅ Unresponsive processes |
@@ -582,6 +711,7 @@ Compare os dois scripts (Bash e PowerShell) usando a skill server-manager e sinc
 
 ---
 
-**Última sincronização**: 2025-01-08
-**Scripts versionados**: Bash v2.0 | PowerShell v2.0
+**Última sincronização**: 2025-11-09
+**Scripts versionados**: Bash v2.1 | PowerShell v2.1
 **Status**: ✅ Ambos funcionais e sincronizados
+**Última feature**: Build Info Display (detalhes de produção/preview/dev no status)
