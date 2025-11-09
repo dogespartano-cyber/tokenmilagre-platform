@@ -1,6 +1,37 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 
+// Extensões de Window para dados temporários do chat
+declare global {
+  interface Window {
+    __pendingEdit?: { instruction?: string; articles: ApiArticle[] };
+    __pendingDelete?: string;
+  }
+}
+
+// Tipos para artigos da API
+interface ApiArticle {
+  id: string;
+  slug: string;
+  title: string;
+  summary?: string;
+  content?: string;
+  category?: string;
+  publishedAt: string;
+  sentiment?: 'positive' | 'neutral' | 'negative';
+  level?: string;
+  keywords?: string[];
+}
+
+interface CanvasArticle {
+  slug: string;
+  title: string;
+  content: string;
+  summary?: string;
+  category?: string;
+  tags?: string[];
+}
+
 export interface ChatMessage {
   id: string;
   role: 'user' | 'assistant';
@@ -20,7 +51,7 @@ export interface ChatMessage {
 }
 
 export interface UseAdminChatOptions {
-  pageData?: Record<string, any>;
+  pageData?: Record<string, unknown>;
   model?: 'sonar' | 'sonar-pro';
   provider?: 'perplexity' | 'gemini'; // Novo: escolher provider
   onApply?: (suggestion: string) => void;
@@ -40,6 +71,12 @@ export interface UseAdminChatReturn {
 const STORAGE_KEY = 'admin-chat-history';
 const MAX_MESSAGES = 50;
 
+// Helper para extrair mensagem de erro de forma type-safe
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return getErrorMessage(error);
+  return String(error);
+}
+
 /**
  * Hook customizado para gerenciar Admin Chat
  */
@@ -58,8 +95,8 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
-  const lastListedArticlesRef = useRef<any[]>([]);
-  const currentCanvasArticleRef = useRef<any | null>(null);
+  const lastListedArticlesRef = useRef<ApiArticle[]>([]);
+  const currentCanvasArticleRef = useRef<CanvasArticle | null>(null);
 
   // Escutar mudanças no artigo do canvas
   useEffect(() => {
@@ -77,9 +114,9 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        const parsed = JSON.parse(saved);
+        const parsed = JSON.parse(saved) as Array<Omit<ChatMessage, 'timestamp'> & { timestamp: string }>;
         // Converter timestamps de string para Date
-        const messagesWithDates = parsed.map((msg: any) => ({
+        const messagesWithDates = parsed.map(msg => ({
           ...msg,
           timestamp: new Date(msg.timestamp)
         }));
@@ -252,11 +289,11 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
               };
               setMessages(prev => [...prev, errorMessage]);
             }
-          } catch (error: any) {
+          } catch (error: unknown) {
             const errorMessage: ChatMessage = {
               id: `assistant-${Date.now()}`,
               role: 'assistant',
-              content: `❌ **Erro ao gerar artigo**: ${error.message}`,
+              content: `❌ **Erro ao gerar artigo**: ${getErrorMessage(error)}`,
               timestamp: new Date()
             };
             setMessages(prev => [...prev, errorMessage]);
@@ -326,12 +363,12 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
               lastListedArticlesRef.current = articles;
 
               // Calcular estatísticas
-              const newsCount = articles.filter((a: any) => a.sentiment).length;
-              const educationalCount = articles.filter((a: any) => a.level).length;
+              const newsCount = articles.filter((a: ApiArticle) => a.sentiment).length;
+              const educationalCount = articles.filter((a: ApiArticle) => a.level).length;
 
               let content = `📄 **Artigos Publicados** (${articles.length} de ${pagination.total})\n\n`;
 
-              articles.forEach((article: any, index: number) => {
+              articles.forEach((article: ApiArticle, index: number) => {
                 const date = new Date(article.publishedAt).toLocaleDateString('pt-BR');
                 const type = article.sentiment ? '📰' : '📚';
                 content += `${index + 1}. ${type} **${article.title}**\n`;
@@ -355,11 +392,11 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
             } else {
               throw new Error(listData.error || 'Erro ao listar artigos');
             }
-          } catch (error: any) {
+          } catch (error: unknown) {
             const errorMessage: ChatMessage = {
               id: `assistant-${Date.now()}`,
               role: 'assistant',
-              content: `❌ **Erro ao listar artigos**: ${error.message}`,
+              content: `❌ **Erro ao listar artigos**: ${getErrorMessage(error)}`,
               timestamp: new Date()
             };
             setMessages(prev => [...prev, errorMessage]);
@@ -385,7 +422,7 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
               } else {
                 content += `Encontrei **${articles.length}** artigo(s):\n\n`;
 
-                articles.forEach((article: any, index: number) => {
+                articles.forEach((article: ApiArticle, index: number) => {
                   const date = new Date(article.publishedAt).toLocaleDateString('pt-BR');
                   const type = article.sentiment ? '📰' : '📚';
                   content += `${index + 1}. ${type} **${article.title}**\n`;
@@ -405,11 +442,11 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
             } else {
               throw new Error(searchData.error || 'Erro ao buscar artigos');
             }
-          } catch (error: any) {
+          } catch (error: unknown) {
             const errorMessage: ChatMessage = {
               id: `assistant-${Date.now()}`,
               role: 'assistant',
-              content: `❌ **Erro ao buscar artigos**: ${error.message}`,
+              content: `❌ **Erro ao buscar artigos**: ${getErrorMessage(error)}`,
               timestamp: new Date()
             };
             setMessages(prev => [...prev, errorMessage]);
@@ -431,7 +468,7 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
               // Se encontrou artigos, perguntar qual deletar
               let content = `🗑️ **Artigos encontrados** com "${data.data.query}":\n\n`;
 
-              articles.forEach((article: any, index: number) => {
+              articles.forEach((article: ApiArticle, index: number) => {
                 const date = new Date(article.publishedAt).toLocaleDateString('pt-BR');
                 content += `${index + 1}. **${article.title}**\n`;
                 content += `   • Slug: \`${article.slug}\`\n`;
@@ -458,11 +495,11 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
               };
               setMessages(prev => [...prev, errorMessage]);
             }
-          } catch (error: any) {
+          } catch (error: unknown) {
             const errorMessage: ChatMessage = {
               id: `assistant-${Date.now()}`,
               role: 'assistant',
-              content: `❌ **Erro ao buscar artigos**: ${error.message}`,
+              content: `❌ **Erro ao buscar artigos**: ${getErrorMessage(error)}`,
               timestamp: new Date()
             };
             setMessages(prev => [...prev, errorMessage]);
@@ -483,8 +520,8 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
               const total = statsData.pagination.total;
 
               // Calcular estatísticas
-              const newsCount = articles.filter((a: any) => a.sentiment).length;
-              const educationalCount = articles.filter((a: any) => a.level).length;
+              const newsCount = articles.filter((a: ApiArticle) => a.sentiment).length;
+              const educationalCount = articles.filter((a: ApiArticle) => a.level).length;
 
               const content = `📊 **Estatísticas do Blog**\n\n` +
                 `• **Total de artigos**: ${total}\n` +
@@ -502,11 +539,11 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
             } else {
               throw new Error(statsData.error || 'Erro ao buscar estatísticas');
             }
-          } catch (error: any) {
+          } catch (error: unknown) {
             const errorMessage: ChatMessage = {
               id: `assistant-${Date.now()}`,
               role: 'assistant',
-              content: `❌ **Erro ao buscar estatísticas**: ${error.message}`,
+              content: `❌ **Erro ao buscar estatísticas**: ${getErrorMessage(error)}`,
               timestamp: new Date()
             };
             setMessages(prev => [...prev, errorMessage]);
@@ -521,7 +558,7 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
           try {
             const { query, instruction, articleNumber } = data.data;
 
-            let articles: any[] = [];
+            let articles: ApiArticle[] = [];
 
             // Se mencionou número de artigo e temos lista recente, usar da lista
             if (articleNumber && lastListedArticlesRef.current.length > 0) {
@@ -547,7 +584,7 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
             if (articles.length > 1) {
               let content = `📝 **Artigos encontrados** com "${query}":\n\n`;
 
-              articles.forEach((article: any, index: number) => {
+              articles.forEach((article: ApiArticle, index: number) => {
                 const date = new Date(article.publishedAt).toLocaleDateString('pt-BR');
                 content += `${index + 1}. **${article.title}**\n`;
                 content += `   • Slug: \`${article.slug}\`\n`;
@@ -566,7 +603,7 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
               setMessages(prev => [...prev, assistantMessage]);
 
               // Salvar instrução para próxima mensagem
-              (window as any).__pendingEdit = { instruction, articles };
+              window.__pendingEdit = { instruction, articles };
             } else {
               // Apenas um artigo encontrado, abrir canvas
               const article = articles[0];
@@ -615,11 +652,11 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
               };
               setMessages(prev => [...prev, successMessage]);
             }
-          } catch (error: any) {
+          } catch (error: unknown) {
             const errorMessage: ChatMessage = {
               id: `assistant-${Date.now()}`,
               role: 'assistant',
-              content: `❌ **Erro ao abrir artigo**: ${error.message}`,
+              content: `❌ **Erro ao abrir artigo**: ${getErrorMessage(error)}`,
               timestamp: new Date()
             };
             setMessages(prev => [...prev, errorMessage]);
@@ -660,13 +697,13 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
             setMessages(prev => [...prev, confirmMessage]);
 
             // Salvar slug para próxima mensagem
-            (window as any).__pendingDelete = slug;
+            window.__pendingDelete = slug;
 
-          } catch (error: any) {
+          } catch (error: unknown) {
             const errorMessage: ChatMessage = {
               id: `assistant-${Date.now()}`,
               role: 'assistant',
-              content: `❌ **Erro**: ${error.message}`,
+              content: `❌ **Erro**: ${getErrorMessage(error)}`,
               timestamp: new Date()
             };
             setMessages(prev => [...prev, errorMessage]);
@@ -678,8 +715,8 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
       }
 
       // 🆕 Processar seleção de artigo para editar (abre canvas)
-      if ((window as any).__pendingEdit) {
-        const { instruction, articles } = (window as any).__pendingEdit;
+      if (window.__pendingEdit) {
+        const { instruction, articles } = window.__pendingEdit;
         const userInput = content.trim();
 
         // Verificar se é um número (índice)
@@ -693,11 +730,11 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
           }
         } else {
           // Verificar se é um slug válido
-          selectedArticle = articles.find((a: any) => a.slug === userInput);
+          selectedArticle = articles.find((a: ApiArticle) => a.slug === userInput);
         }
 
         if (selectedArticle) {
-          delete (window as any).__pendingEdit;
+          delete window.__pendingEdit;
 
           try {
             // Buscar conteúdo completo do artigo
@@ -743,11 +780,11 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
               }
             };
             setMessages(prev => [...prev, successMessage]);
-          } catch (error: any) {
+          } catch (error: unknown) {
             const errorMessage: ChatMessage = {
               id: `assistant-${Date.now()}`,
               role: 'assistant',
-              content: `❌ **Erro ao abrir artigo**: ${error.message}`,
+              content: `❌ **Erro ao abrir artigo**: ${getErrorMessage(error)}`,
               timestamp: new Date()
             };
             setMessages(prev => [...prev, errorMessage]);
@@ -759,9 +796,9 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
       }
 
       // 🆕 Processar confirmação de delete
-      if ((window as any).__pendingDelete && content.toUpperCase().trim() === 'SIM') {
-        const slug = (window as any).__pendingDelete;
-        delete (window as any).__pendingDelete;
+      if (window.__pendingDelete && content.toUpperCase().trim() === 'SIM') {
+        const slug = window.__pendingDelete;
+        delete window.__pendingDelete;
 
         try {
           const deleteResponse = await fetch(`/api/articles/${slug}`, {
@@ -782,11 +819,11 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
           } else {
             throw new Error(deleteData.error || 'Erro ao deletar artigo');
           }
-        } catch (error: any) {
+        } catch (error: unknown) {
           const errorMessage: ChatMessage = {
             id: `assistant-${Date.now()}`,
             role: 'assistant',
-            content: `❌ **Erro ao deletar**: ${error.message}`,
+            content: `❌ **Erro ao deletar**: ${getErrorMessage(error)}`,
             timestamp: new Date()
           };
           setMessages(prev => [...prev, errorMessage]);
@@ -797,8 +834,8 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
       }
 
       // 🆕 Cancelar delete
-      if ((window as any).__pendingDelete && (content.toUpperCase().trim() === 'NÃO' || content.toUpperCase().trim() === 'NAO')) {
-        delete (window as any).__pendingDelete;
+      if (window.__pendingDelete && (content.toUpperCase().trim() === 'NÃO' || content.toUpperCase().trim() === 'NAO')) {
+        delete window.__pendingDelete;
 
         const cancelMessage: ChatMessage = {
           id: `assistant-${Date.now()}`,
@@ -881,11 +918,11 @@ export function useAdminChat(options: UseAdminChatOptions = {}): UseAdminChatRet
           setMessages(prev => [...prev, successMessage]);
           setLoading(false);
           return;
-        } catch (error: any) {
+        } catch (error: unknown) {
           const errorMessage: ChatMessage = {
             id: `assistant-${Date.now()}`,
             role: 'assistant',
-            content: `❌ **Erro ao aplicar edição**: ${error.message}\n\nTente novamente ou edite manualmente no canvas.`,
+            content: `❌ **Erro ao aplicar edição**: ${getErrorMessage(error)}\n\nTente novamente ou edite manualmente no canvas.`,
             timestamp: new Date()
           };
           setMessages(prev => [...prev, errorMessage]);

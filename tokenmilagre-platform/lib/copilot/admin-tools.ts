@@ -5,6 +5,13 @@
 
 import { CopilotTool, ToolPermissionLevel } from './types';
 import { prisma } from '@/lib/prisma';
+import { Prisma } from '@prisma/client';
+
+// Helper para extrair mensagem de erro
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  return String(error);
+}
 
 /**
  * Tool 10: Manage Users
@@ -53,7 +60,7 @@ export const manageUsersTool: CopilotTool = {
 
       // List users
       if (action === 'list') {
-        const where: any = {};
+        const where: Prisma.UserWhereInput = {};
         if (args.role) {
           where.role = args.role;
         }
@@ -205,10 +212,10 @@ export const manageUsersTool: CopilotTool = {
 
       throw new Error(`Ação não suportada: ${action}`);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         success: false,
-        error: error.message || 'Erro ao gerenciar usuários'
+        error: getErrorMessage(error) || 'Erro ao gerenciar usuários'
       };
     }
   }
@@ -272,19 +279,17 @@ export const bulkUpdateArticlesTool: CopilotTool = {
 
       // If filter is provided, get article IDs from filter
       if (args.filter && articleIds.length === 0) {
-        const where: any = {};
+        const where: Prisma.ArticleWhereInput = {};
         if (args.filter.type) where.type = args.filter.type;
         if (args.filter.category) where.category = args.filter.category;
         if (typeof args.filter.published === 'boolean') where.published = args.filter.published;
-        if (args.filter.minScore !== undefined) {
+        // Filter by fact check score (build complete object to avoid spread issues)
+        if (args.filter.minScore !== undefined && args.filter.maxScore !== undefined) {
+          where.factCheckScore = { gte: args.filter.minScore, lte: args.filter.maxScore };
+        } else if (args.filter.minScore !== undefined) {
           where.factCheckScore = { gte: args.filter.minScore };
-        }
-        if (args.filter.maxScore !== undefined) {
-          if (where.factCheckScore) {
-            where.factCheckScore = { ...where.factCheckScore, lte: args.filter.maxScore };
-          } else {
-            where.factCheckScore = { lte: args.filter.maxScore };
-          }
+        } else if (args.filter.maxScore !== undefined) {
+          where.factCheckScore = { lte: args.filter.maxScore };
         }
 
         const filtered = await prisma.article.findMany({
@@ -342,7 +347,7 @@ export const bulkUpdateArticlesTool: CopilotTool = {
       }
 
       // Build update data
-      const updateData: any = {};
+      const updateData: Prisma.ArticleUpdateInput = {};
 
       if (typeof args.updates.published === 'boolean') {
         updateData.published = args.updates.published;
@@ -405,10 +410,10 @@ export const bulkUpdateArticlesTool: CopilotTool = {
         message: `${result.count} artigos atualizados com sucesso`
       };
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         success: false,
-        error: error.message || 'Erro ao atualizar artigos em massa'
+        error: getErrorMessage(error) || 'Erro ao atualizar artigos em massa'
       };
     }
   }
@@ -475,7 +480,15 @@ export const generateReportTool: CopilotTool = {
       }
 
       const sections = args.sections || ['overview', 'articles', 'quality', 'recommendations'];
-      const report: any = {
+
+      interface Report {
+        type: string;
+        period: { start: string; end: string; days: number };
+        generatedAt: string;
+        sections: Record<string, unknown>;
+      }
+
+      const report: Report = {
         type: args.type,
         period: {
           start: startDate.toISOString(),
@@ -522,13 +535,13 @@ export const generateReportTool: CopilotTool = {
           educational: articlesInPeriod.filter(a => a.type === 'educational').length
         };
 
-        const categories = articlesInPeriod.reduce((acc: any, a) => {
+        const categories = articlesInPeriod.reduce((acc: Record<string, number>, a) => {
           acc[a.category] = (acc[a.category] || 0) + 1;
           return acc;
         }, {});
 
         const topCategories = Object.entries(categories)
-          .sort(([, a]: any, [, b]: any) => b - a)
+          .sort(([, a], [, b]) => (b as number) - (a as number))
           .slice(0, 5)
           .map(([category, count]) => ({ category, count }));
 
@@ -589,8 +602,8 @@ export const generateReportTool: CopilotTool = {
             });
             return {
               name: user?.name || 'Unknown',
-              email: user?.email,
-              role: user?.role,
+              email: user?.email ?? null,
+              role: user?.role ?? null,
               articlesInPeriod: a._count.authorId
             };
           })
@@ -681,10 +694,10 @@ export const generateReportTool: CopilotTool = {
         message: `Relatório ${args.type} gerado com sucesso (${report.period.days} dias)`
       };
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         success: false,
-        error: error.message || 'Erro ao gerar relatório'
+        error: getErrorMessage(error) || 'Erro ao gerar relatório'
       };
     }
   }
