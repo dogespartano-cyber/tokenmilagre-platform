@@ -3,10 +3,10 @@ import { useInfiniteScroll } from './useInfiniteScroll';
 
 interface InfiniteScrollOptions<T> {
   endpoint: string;
-  filters?: Record<string, any>;
+  filters?: Record<string, string | number | boolean | undefined>;
   initialData?: T[];
   pageSize?: number;
-  transform?: (rawData: any) => T;
+  transform?: (rawData: unknown) => T;
 }
 
 interface InfiniteScrollReturn<T> {

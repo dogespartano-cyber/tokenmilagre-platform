@@ -28,6 +28,7 @@ interface NewsItem {
   publishedAt: string;
   category: string[];
   sentiment: 'positive' | 'neutral' | 'negative';
+  keywords?: string[];
 }
 
 interface EducationItem {
@@ -277,7 +278,7 @@ export default function HomePage() {
         // Encontrar artigo com tag 'analise-diaria' publicado hoje
         const today = new Date().toDateString();
 
-        const analysis = data.data.find((article: any) => {
+        const analysis = data.data.find((article: NewsItem) => {
           const articleDate = new Date(article.publishedAt).toDateString();
 
           // keywords contém as tags (parse do campo tags do banco)

@@ -25,6 +25,19 @@ interface EducacaoClientProps {
   resources: Resource[];
 }
 
+// Tipo para dados brutos da API (antes da transformação)
+interface RawArticleData {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  level?: string;
+  contentType?: string;
+  summary?: string;
+  readTime?: string;
+  keywords?: string[];
+}
+
 export default function EducacaoClient({ resources }: EducacaoClientProps) {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -63,17 +76,20 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
     },
     initialData: resources,
     pageSize: 12,
-    transform: (article: any) => ({
-      id: article.id,
-      slug: article.slug,
-      title: article.title,
-      category: article.category,
-      level: article.level || 'iniciante',
-      type: article.contentType || 'Artigo',
-      description: article.summary || '',
-      readTime: article.readTime || '5 min',
-      tags: article.keywords || []
-    })
+    transform: (rawData: unknown) => {
+      const article = rawData as RawArticleData;
+      return {
+        id: article.id,
+        slug: article.slug,
+        title: article.title,
+        category: article.category,
+        level: article.level || 'iniciante',
+        type: article.contentType || 'Artigo',
+        description: article.summary || '',
+        readTime: article.readTime || '5 min',
+        tags: article.keywords || []
+      };
+    }
   });
 
   // Filtrar recursos localmente (apenas por termo de busca)

@@ -23,6 +23,19 @@ import ArticlePreview from '@/components/admin/ArticlePreview';
 
 type ArticleType = 'news' | 'educational' | 'resource';
 
+// Tipos para componentes ReactMarkdown
+interface MarkdownComponentProps {
+  children?: React.ReactNode;
+}
+
+interface MarkdownLinkProps extends MarkdownComponentProps {
+  href?: string;
+}
+
+interface MarkdownCodeProps extends MarkdownComponentProps {
+  inline?: boolean;
+}
+
 interface Message {
   role: 'user' | 'assistant';
   content: string;
@@ -51,6 +64,12 @@ interface ProcessedArticle {
 }
 
 const isDev = process.env.NODE_ENV === 'development';
+
+// Helper para extrair mensagem de erro de forma type-safe
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return getErrorMessage(error);
+  return String(error);
+}
 
 export default function CriarArtigoPage() {
   const router = useRouter();
@@ -140,59 +159,59 @@ export default function CriarArtigoPage() {
   // Componentes do ReactMarkdown otimizados com useMemo
   const markdownComponents = useMemo(() => ({
     // Parágrafos
-    p: ({ children }: any) => (
+    p: ({ children }: MarkdownComponentProps) => (
       <p className="mb-3 last:mb-0 break-words" style={{ color: 'inherit' }}>
         {children}
       </p>
     ),
     // Títulos
-    h1: ({ children }: any) => (
+    h1: ({ children }: MarkdownComponentProps) => (
       <h1 className="text-2xl font-bold mb-3 mt-4" style={{ color: 'inherit' }}>
         {children}
       </h1>
     ),
-    h2: ({ children }: any) => (
+    h2: ({ children }: MarkdownComponentProps) => (
       <h2 className="text-xl font-bold mb-2 mt-4" style={{ color: 'inherit' }}>
         {children}
       </h2>
     ),
-    h3: ({ children }: any) => (
+    h3: ({ children }: MarkdownComponentProps) => (
       <h3 className="text-lg font-bold mb-2 mt-3" style={{ color: 'inherit' }}>
         {children}
       </h3>
     ),
     // Texto em negrito
-    strong: ({ children }: any) => (
+    strong: ({ children }: MarkdownComponentProps) => (
       <strong className="font-bold" style={{ color: 'inherit' }}>
         {children}
       </strong>
     ),
     // Texto em itálico
-    em: ({ children }: any) => (
+    em: ({ children }: MarkdownComponentProps) => (
       <em className="italic" style={{ color: 'inherit' }}>
         {children}
       </em>
     ),
     // Listas não ordenadas
-    ul: ({ children }: any) => (
+    ul: ({ children }: MarkdownComponentProps) => (
       <ul className="list-disc list-inside mb-3 space-y-1" style={{ color: 'inherit' }}>
         {children}
       </ul>
     ),
     // Listas ordenadas
-    ol: ({ children }: any) => (
+    ol: ({ children }: MarkdownComponentProps) => (
       <ol className="list-decimal list-inside mb-3 space-y-1" style={{ color: 'inherit' }}>
         {children}
       </ol>
     ),
     // Itens de lista
-    li: ({ children }: any) => (
+    li: ({ children }: MarkdownComponentProps) => (
       <li className="mb-1" style={{ color: 'inherit' }}>
         {children}
       </li>
     ),
     // Links
-    a: ({ children, href }: any) => (
+    a: ({ children, href }: MarkdownLinkProps) => (
       <a
         href={href}
         target="_blank"
@@ -204,7 +223,7 @@ export default function CriarArtigoPage() {
       </a>
     ),
     // Código inline
-    code: ({ inline, children }: any) => {
+    code: ({ inline, children }: MarkdownCodeProps) => {
       if (inline) {
         return (
           <code
@@ -225,7 +244,7 @@ export default function CriarArtigoPage() {
       );
     },
     // Blocos de código
-    pre: ({ children }: any) => (
+    pre: ({ children }: MarkdownComponentProps) => (
       <pre
         className="break-all whitespace-pre-wrap overflow-x-auto max-w-full p-3 rounded mb-3 text-sm font-mono"
         style={{
@@ -237,7 +256,7 @@ export default function CriarArtigoPage() {
       </pre>
     ),
     // Citações
-    blockquote: ({ children }: any) => (
+    blockquote: ({ children }: MarkdownComponentProps) => (
       <blockquote
         className="border-l-4 pl-4 py-2 mb-3 italic"
         style={{
@@ -267,7 +286,7 @@ export default function CriarArtigoPage() {
       .trim();
   };
 
-  const detectJSON = (text: string): any | null => {
+  const detectJSON = (text: string): ProcessedArticle | null => {
     if (isDev) {
       console.log('🔍 [detectJSON] Tentando detectar JSON no texto...');
       console.log('📄 Primeiros 200 chars:', text.substring(0, 200));
@@ -389,11 +408,11 @@ export default function CriarArtigoPage() {
             });
             if (isDev) console.log('✅ generatedArticle definido com citations!', citations);
 
-          } catch (error: any) {
+          } catch (error: unknown) {
             console.error('❌ Erro ao processar artigo localmente:', error);
             setConversation(prev => [...prev, {
               role: 'assistant',
-              content: `❌ Erro ao processar artigo: ${error.message}\n\nPor favor, tente novamente.`
+              content: `❌ Erro ao processar artigo: ${getErrorMessage(error)}\n\nPor favor, tente novamente.`
             }]);
           }
         } else {
@@ -468,11 +487,11 @@ export default function CriarArtigoPage() {
             });
             if (isDev) console.log('✅ generatedArticle definido!');
 
-          } catch (error: any) {
+          } catch (error: unknown) {
             console.error('❌ Erro ao processar artigo localmente:', error);
             setConversation(prev => [...prev, {
               role: 'assistant',
-              content: `❌ Erro ao processar artigo: ${error.message}\n\nPor favor, tente novamente.`
+              content: `❌ Erro ao processar artigo: ${getErrorMessage(error)}\n\nPor favor, tente novamente.`
             }]);
           }
         } else {
@@ -480,11 +499,11 @@ export default function CriarArtigoPage() {
         }
       }
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Erro:', error);
       setConversation(prev => [...prev, {
         role: 'assistant',
-        content: `❌ Erro: ${error.message}`
+        content: `❌ Erro: ${getErrorMessage(error)}`
       }]);
     } finally {
       setLoading(false);
@@ -534,11 +553,11 @@ export default function CriarArtigoPage() {
         content: `✅ **Artigo refinado com Gemini!**\n\nO conteúdo foi otimizado e está pronto para publicação.`
       }]);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Erro ao processar com Gemini:', error);
       setConversation(prev => [...prev, {
         role: 'assistant',
-        content: `❌ Erro ao refinar: ${error.message}`
+        content: `❌ Erro ao refinar: ${getErrorMessage(error)}`
       }]);
     } finally {
       setProcessing(false);
@@ -599,11 +618,11 @@ export default function CriarArtigoPage() {
         { role: 'assistant', content: '✅ Artigo refinado com sucesso!' }
       ]);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Erro ao refinar:', error);
       setConversation(prev => [...prev, {
         role: 'assistant',
-        content: `❌ Erro ao refinar: ${error.message}`
+        content: `❌ Erro ao refinar: ${getErrorMessage(error)}`
       }]);
     } finally {
       setRefining(false);
@@ -656,8 +675,8 @@ export default function CriarArtigoPage() {
 
       router.push(url);
 
-    } catch (error: any) {
-      alert(`Erro ao publicar: ${error.message}`);
+    } catch (error: unknown) {
+      alert(`Erro ao publicar: ${getErrorMessage(error)}`);
     } finally {
       setProcessing(false);
     }
@@ -1161,11 +1180,11 @@ export default function CriarArtigoPage() {
                                 role: 'assistant',
                                 content: '🎨 Capa gerada com sucesso!'
                               }]);
-                            } catch (error: any) {
+                            } catch (error: unknown) {
                               console.error('Erro ao gerar capa:', error);
                               setConversation(prev => [...prev, {
                                 role: 'assistant',
-                                content: `❌ Erro ao gerar capa: ${error.message}`
+                                content: `❌ Erro ao gerar capa: ${getErrorMessage(error)}`
                               }]);
                             } finally {
                               setGeneratingCover(false);
