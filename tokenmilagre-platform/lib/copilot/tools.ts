@@ -106,16 +106,13 @@ export const readArticlesTool: CopilotTool = {
         ];
       }
 
-      if (args.minScore !== undefined) {
+      // Filter by fact check score (build complete object to avoid spread issues)
+      if (args.minScore !== undefined && args.maxScore !== undefined) {
+        where.factCheckScore = { gte: args.minScore, lte: args.maxScore };
+      } else if (args.minScore !== undefined) {
         where.factCheckScore = { gte: args.minScore };
-      }
-
-      if (args.maxScore !== undefined) {
-        if (where.factCheckScore) {
-          where.factCheckScore = { ...where.factCheckScore, lte: args.maxScore };
-        } else {
-          where.factCheckScore = { lte: args.maxScore };
-        }
+      } else if (args.maxScore !== undefined) {
+        where.factCheckScore = { lte: args.maxScore };
       }
 
       if (args.daysOld) {

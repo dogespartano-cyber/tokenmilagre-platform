@@ -283,15 +283,13 @@ export const bulkUpdateArticlesTool: CopilotTool = {
         if (args.filter.type) where.type = args.filter.type;
         if (args.filter.category) where.category = args.filter.category;
         if (typeof args.filter.published === 'boolean') where.published = args.filter.published;
-        if (args.filter.minScore !== undefined) {
+        // Filter by fact check score (build complete object to avoid spread issues)
+        if (args.filter.minScore !== undefined && args.filter.maxScore !== undefined) {
+          where.factCheckScore = { gte: args.filter.minScore, lte: args.filter.maxScore };
+        } else if (args.filter.minScore !== undefined) {
           where.factCheckScore = { gte: args.filter.minScore };
-        }
-        if (args.filter.maxScore !== undefined) {
-          if (where.factCheckScore) {
-            where.factCheckScore = { ...where.factCheckScore, lte: args.filter.maxScore };
-          } else {
-            where.factCheckScore = { lte: args.filter.maxScore };
-          }
+        } else if (args.filter.maxScore !== undefined) {
+          where.factCheckScore = { lte: args.filter.maxScore };
         }
 
         const filtered = await prisma.article.findMany({
