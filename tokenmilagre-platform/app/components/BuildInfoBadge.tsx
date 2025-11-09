@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCodeBranch, faCircleCheck, faTriangleExclamation, faClock, faCopy, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { formatDateTime } from '@/lib/utils/date-helpers';
 
 interface BuildInfo {
   branch: string;
@@ -49,7 +50,7 @@ Type: ${buildInfo.type}
 Branch: ${buildInfo.branch}
 Commit: ${buildInfo.commitHash} - ${buildInfo.commitMessage}
 Status: ${buildInfo.gitStatus}${buildInfo.changedFiles ? ` (${buildInfo.changedFiles} files)` : ''}
-Updated: ${formatDate(buildInfo.lastUpdate)}${buildInfo.compareMain ? `\nvs Main: ${buildInfo.compareMain}` : ''}
+Updated: ${formatDateTime(buildInfo.lastUpdate)}${buildInfo.compareMain ? `\nvs Main: ${buildInfo.compareMain}` : ''}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
 
     try {
@@ -80,22 +81,6 @@ Updated: ${formatDate(buildInfo.lastUpdate)}${buildInfo.compareMain ? `\nvs Main
 
   const typeColor = typeColors[buildInfo.type];
   const typeIcon = typeIcons[buildInfo.type];
-
-  // Formatação da data
-  const formatDate = (dateString: string) => {
-    try {
-      const date = new Date(dateString);
-      return new Intl.DateTimeFormat('pt-BR', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      }).format(date);
-    } catch {
-      return dateString;
-    }
-  };
 
   return (
     <div
@@ -206,7 +191,7 @@ Updated: ${formatDate(buildInfo.lastUpdate)}${buildInfo.compareMain ? `\nvs Main
               Updated
             </div>
             <div className="text-xs text-gray-700 dark:text-gray-300">
-              {formatDate(buildInfo.lastUpdate)}
+              {formatDateTime(buildInfo.lastUpdate)}
             </div>
           </div>
 
