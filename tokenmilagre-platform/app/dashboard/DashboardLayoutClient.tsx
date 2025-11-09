@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
+import BuildInfoBadge from '@/app/components/BuildInfoBadge';
 
 interface DashboardLayoutClientProps {
   children: ReactNode;
@@ -10,6 +11,7 @@ export default function DashboardLayoutClient({ children }: DashboardLayoutClien
   return (
     <>
       {children}
+      <BuildInfoBadge />
     </>
   );
 }
