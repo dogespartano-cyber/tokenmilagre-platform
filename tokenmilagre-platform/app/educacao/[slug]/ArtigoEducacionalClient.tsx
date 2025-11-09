@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { getLevelLabel } from '@/lib/utils/level-helpers';
+import { slugify } from '@/lib/utils/content-helpers';
 
 interface EducationalArticle {
   id: string;
@@ -42,15 +44,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
   const [activeSection, setActiveSection] = useState<string>('');
   const [currentUrl, setCurrentUrl] = useState<string>('');
 
-  const getLevelLabel = (level: string) => {
-    switch (level) {
-      case 'iniciante': return 'Iniciante';
-      case 'intermediario': return 'Intermediário';
-      case 'avancado': return 'Avançado';
-      default: return level;
-    }
-  };
-
+  // Custom color scheme for article detail page (different from education listing)
   const getLevelColor = (level: string) => {
     switch (level) {
       case 'iniciante': return '#22c55e';
@@ -62,17 +56,6 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const createSlug = (text: string) => {
-    return text
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .trim();
   };
 
   const scrollToSection = (id: string) => {
@@ -102,7 +85,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
       if (h2Match) {
         const text = h2Match[1].trim();
         headings.push({
-          id: createSlug(text),
+          id: slugify(text),
           text,
           level: 2
         });
@@ -275,7 +258,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                 ),
                 h2: ({ children }) => {
                   const text = String(children);
-                  const id = createSlug(text);
+                  const id = slugify(text);
                   return (
                     <h2 id={id} className="text-2xl font-bold mt-8 mb-4 font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
                       {children}
@@ -284,7 +267,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                 },
                 h3: ({ children }) => {
                   const text = String(children);
-                  const id = createSlug(text);
+                  const id = slugify(text);
                   return (
                     <h3 id={id} className="text-xl font-bold mt-6 mb-3 font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
                       {children}

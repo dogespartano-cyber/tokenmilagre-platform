@@ -5,7 +5,9 @@ import Script from 'next/script';
 import Link from 'next/link';
 import { useInfiniteScrollData } from '@/hooks/useInfiniteScrollData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faArrowRight, faSearch, faTimes, faArrowUp, faSeedling, faBook, faRocket, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faArrowRight, faSearch, faTimes, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/utils/level-helpers';
+import { getCategoryIcon } from '@/lib/utils/category-helpers';
 
 interface Resource {
   id: string;
@@ -22,47 +24,6 @@ interface Resource {
 interface EducacaoClientProps {
   resources: Resource[];
 }
-
-// Helper functions for card styling
-const getLevelGradient = (level: string | null) => {
-  switch(level) {
-    case 'iniciante': return 'rgba(34, 197, 94, 0.08)';     // Verde 8%
-    case 'intermediario': return 'rgba(234, 179, 8, 0.08)'; // Amarelo 8%
-    case 'avancado': return 'rgba(239, 68, 68, 0.08)';      // Vermelho 8%
-    default: return 'rgba(100, 116, 139, 0.05)';            // Cinza neutro
-  }
-};
-
-const getLevelColor = (level: string | null) => {
-  switch(level) {
-    case 'iniciante': return '#22c55e';
-    case 'intermediario': return '#eab308';
-    case 'avancado': return '#ef4444';
-    default: return '#64748b';
-  }
-};
-
-const getLevelIcon = (level: string | null) => {
-  switch(level) {
-    case 'iniciante': return faSeedling;
-    case 'intermediario': return faGraduationCap;
-    case 'avancado': return faRocket;
-    default: return faBook;
-  }
-};
-
-const getCategoryIcon = (category: string) => {
-  const icons: Record<string, string> = {
-    'blockchain': '⛓️',
-    'defi': '🏦',
-    'nfts': '🎨',
-    'trading': '📈',
-    'wallets': '💼',
-    'seguranca': '🔐',
-    'desenvolvimento': '💻'
-  };
-  return icons[category] || '📚';
-};
 
 export default function EducacaoClient({ resources }: EducacaoClientProps) {
   const [showScrollTop, setShowScrollTop] = useState(false);
