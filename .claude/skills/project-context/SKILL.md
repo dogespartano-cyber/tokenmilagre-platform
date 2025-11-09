@@ -174,12 +174,33 @@ Quando em dúvida, pergunte:
 
 After loading project context, use these specialized skills when needed:
 
+### 📚 Legacy Skills (Old Structure)
 - **`article-creation`** - When creating/editing articles or news
 - **`chat-workflow`** - When working with AI chat system (creation, intent detection, architecture)
 - **`design-system`** - When working with design, CSS, or components
 - **`database-setup`** - When working with Prisma, database, or deployment
 - **`pages-reference`** - When modifying or understanding page-specific features
 - **`troubleshooting`** - When encountering bugs or performance issues (regex removing line breaks, scroll, cache, flash visual)
+
+### 💎 Token Milagre Skills (New - Comprehensive Platform Skills)
+
+**TIER 1 - Fundamentos**:
+- **`tokenmilagre-article-workflow`** - Complete article creation workflow (Perplexity AI → Gemini refinement → Publication). Use when creating/editing articles with AI integration, managing citations, or setting up content pipelines.
+- **`tokenmilagre-citations`** - Citation management and fact-checking system. Use when extracting citations from Perplexity, validating sources, storing in factCheckSources, or implementing citation display patterns.
+- **`tokenmilagre-component-patterns`** - Component refactoring strategies for large React components (>500 lines). Use when breaking down components, extracting custom hooks, or applying architectural patterns.
+
+**TIER 2 - Integrações**:
+- **`tokenmilagre-api-integrations`** - External API integration patterns (Perplexity AI, Gemini, Binance, CoinGecko). Use when integrating APIs, handling rate limits, implementing caching, or troubleshooting API errors.
+- **`tokenmilagre-copilot-tools`** - Copilot AI tool development with type-safe patterns. Use when creating new tools, implementing tool parameters, managing permissions, or setting up activity logging.
+- **`tokenmilagre-content-quality`** - Content quality standards, SEO optimization, readability metrics, and fact-check scoring. Use when creating/reviewing articles, implementing SEO, or setting up quality validation.
+
+**TIER 3 - Infraestrutura**:
+- **`tokenmilagre-database`** - Prisma schema design, migrations, query optimization, and database maintenance. Use when modifying schema, creating migrations, optimizing queries, or troubleshooting database issues.
+- **`tokenmilagre-scripts`** - Utility scripts and automation patterns (migrations, bulk processing, analytics). Use when building scripts for data processing, content migration, or platform automation.
+- **`tokenmilagre-testing`** - Testing strategies (unit, integration, E2E, component testing). Use when setting up tests, writing test cases, or debugging test failures.
+
+**Metodologia**:
+- **`tokenmilagre-refactoring`** - Complete refactoring methodology with type safety patterns, Prisma types guide, and analysis scripts. Use when reducing 'any' usage, improving code quality, or analyzing codebase complexity.
 
 ---
 
@@ -199,6 +220,161 @@ When this skill is invoked:
 5. Consult `docs-local/sugestões.md` before suggesting improvements
 
 **Note**: Documentation files are inside the project (`docs-local/`) but not versioned (in `.gitignore`).
+
+---
+
+## 🧠 Proactive Skill Creation Recommendations
+
+**IMPORTANT**: Claude deve **sugerir proativamente** a criação de novas skills quando identificar oportunidades durante o desenvolvimento.
+
+### 🎯 Quando Sugerir Criação de Nova Skill
+
+**Analise constantemente se o trabalho atual poderia se beneficiar de uma skill dedicada**. Sugira criar nova skill quando:
+
+1. **Padrão Repetitivo Identificado**
+   - Mesmo tipo de código/solução usado 3+ vezes
+   - Pattern que será reutilizado em múltiplos contextos
+   - Exemplo: "Vejo que criamos componentes de filtro em 3 páginas diferentes - sugiro skill `tokenmilagre-filter-patterns`"
+
+2. **Nova Funcionalidade Complexa**
+   - Feature com múltiplos passos e decisões
+   - Workflow que precisa ser documentado
+   - Exemplo: "Sistema de notificações envolve WebSockets + push + email - sugiro skill `tokenmilagre-notifications`"
+
+3. **Integração com Serviço Externo**
+   - Nova API ou serviço sendo integrado
+   - Padrões de autenticação, rate limiting, error handling
+   - Exemplo: "Integrando Stripe - sugiro skill `tokenmilagre-payments`"
+
+4. **Área de Conhecimento Especializado**
+   - Domain-specific patterns (SEO, analytics, performance)
+   - Best practices de uma área técnica
+   - Exemplo: "Otimizações de performance aplicadas - sugiro skill `tokenmilagre-performance`"
+
+5. **Troubleshooting de Problema Recorrente**
+   - Bug ou problema que aparece frequentemente
+   - Solução documentada evita repetição
+   - Exemplo: "3ª vez resolvendo problemas com Prisma relations - sugiro skill `tokenmilagre-prisma-troubleshooting`"
+
+### 🔍 Processo de Avaliação (Execute Automaticamente)
+
+Antes de sugerir, **sempre execute esta análise**:
+
+1. **Verificar Skills Existentes**
+   ```
+   - Ler lista de skills em .claude/skills/
+   - Verificar se já existe skill que cobre o tópico
+   - Se existe: sugerir expandir skill existente
+   - Se não existe: prosseguir para step 2
+   ```
+
+2. **Avaliar Necessidade**
+   ```
+   - O padrão/conhecimento será reutilizado? (sim/não)
+   - Há complexidade suficiente para documentar? (>100 linhas de docs)
+   - Beneficia desenvolvimento futuro? (sim/não)
+   - Se 3x SIM: skill justificada
+   ```
+
+3. **Calcular Impacto**
+   ```
+   - Economia de tempo estimada: X horas
+   - Redução de bugs esperada: Y%
+   - Melhoria de consistência: alta/média/baixa
+   - Se impacto >= médio: propor skill
+   ```
+
+### 📋 Formato da Sugestão ao Usuário
+
+Quando sugerir criação de skill, use este formato:
+
+```markdown
+## 💡 Sugestão: Nova Skill Identificada
+
+**Skill Proposta**: `[nome-da-skill]`
+
+**Motivo**: [1-2 frases explicando POR QUÊ essa skill é necessária]
+
+**O Que Documentaria**:
+- [Tópico 1]
+- [Tópico 2]
+- [Tópico 3]
+
+**Benefícios**:
+- ⏱️ Economia de tempo: [estimativa]
+- 🎯 Consistência: [como melhora]
+- 📚 Conhecimento: [o que preserva]
+
+**Verificação Realizada**:
+- ✅ Não existe skill similar em .claude/skills/
+- ✅ Padrão reutilizável confirmado
+- ✅ Impacto justifica criação
+
+**Quer que eu crie esta skill agora?** [sim/não]
+```
+
+### 🎯 Exemplo Prático
+
+**Cenário**: Trabalhando em feature de notificações push
+
+```markdown
+## 💡 Sugestão: Nova Skill Identificada
+
+**Skill Proposta**: `tokenmilagre-notifications`
+
+**Motivo**: Estamos implementando sistema de notificações que envolve múltiplos canais (push, email, in-app) e padrões complexos de delivery, retry, e preferências de usuário.
+
+**O Que Documentaria**:
+- Integração com Firebase Cloud Messaging (push notifications)
+- Sistema de templates de email (Resend/SendGrid)
+- Notificações in-app com WebSockets
+- Gerenciamento de preferências de usuário
+- Rate limiting e batching
+- Retry logic e error handling
+
+**Benefícios**:
+- ⏱️ Economia de tempo: ~4h em futuras implementações de notificações
+- 🎯 Consistência: Padrões unificados para todos os tipos de notificação
+- 📚 Conhecimento: Documenta integrações complexas com serviços externos
+
+**Verificação Realizada**:
+- ✅ Verificado .claude/skills/ - não existe skill de notificações
+- ✅ Padrão será usado em: artigos novos, comentários, updates do sistema
+- ✅ Complexidade alta justifica documentação dedicada
+
+**Quer que eu crie esta skill agora?**
+```
+
+### 🚫 Quando NÃO Sugerir
+
+**Evite sugerir skill quando**:
+- ❌ Padrão usado apenas 1-2 vezes
+- ❌ Código muito simples (<50 linhas docs)
+- ❌ Já existe skill que cobre 80%+ do tópico
+- ❌ Conhecimento trivial/básico
+- ❌ Situação muito específica (não reutilizável)
+
+### ⚡ Modo Proativo
+
+**Durante CADA sessão de desenvolvimento**:
+1. **Monitore padrões** - Observe código repetitivo ou workflows complexos
+2. **Avalie constantemente** - "Isso merece uma skill?"
+3. **Sugira no momento certo** - Após completar implementação, antes de finalizar
+4. **Não seja excessivo** - Máximo 1-2 sugestões por sessão (qualidade > quantidade)
+
+### 📊 Métricas de Sucesso de Skills
+
+**Uma boa skill deve**:
+- 📚 Ter 200+ linhas de documentação útil
+- 💻 Incluir 5+ exemplos de código real
+- 🎯 Cobrir casos de uso comuns (80% coverage)
+- 🐛 Ter seção de troubleshooting
+- 🔗 Referenciar skills relacionadas
+- ✅ Incluir best practices e anti-patterns
+
+---
+
+**Resumo**: Claude deve ser um **consultor proativo** que não apenas executa tarefas, mas **identifica oportunidades de otimização** através da criação de skills. Cada skill criada é **conhecimento institucional preservado** e **tempo economizado no futuro**.
 
 ---
 
@@ -454,4 +630,8 @@ git push origin main
 ---
 
 **Skill criada por**: Claude Code
-**Última atualização**: 2025-11-08 (workflow Web + CLI documentado)
+**Última atualização**: 2025-11-09
+**Mudanças recentes**:
+- ✅ Adicionadas 10 skills Token Milagre (article-workflow, citations, components, api-integrations, copilot-tools, content-quality, database, scripts, testing, refactoring)
+- ✅ Implementado sistema de sugestão proativa de novas skills
+- ✅ Processo de avaliação automático antes de sugerir skills
