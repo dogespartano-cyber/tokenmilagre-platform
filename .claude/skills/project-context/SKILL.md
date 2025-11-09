@@ -202,6 +202,9 @@ After loading project context, use these specialized skills when needed:
 **Metodologia**:
 - **`tokenmilagre-refactoring`** - Complete refactoring methodology with type safety patterns, Prisma types guide, and analysis scripts. Use when reducing 'any' usage, improving code quality, or analyzing codebase complexity.
 
+**TIER 4 - Estratégia & Análise**:
+- **`due-diligence-report`** - Complete due diligence analysis of Token Milagre Platform from a Chief Strategy Officer & Blockchain Economics Expert perspective. Brutally realistic assessment without hype - covering business model viability, tokenomics, competitive analysis, financial sustainability, and strategic recommendations. Use when performing strategic analysis, evaluating business model, or assessing project viability.
+
 ---
 
 ## 📖 Instructions for Claude
