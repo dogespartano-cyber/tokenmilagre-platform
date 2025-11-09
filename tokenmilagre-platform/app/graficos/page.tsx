@@ -63,7 +63,8 @@ export default function GraficosPage() {
 
           {/* Crypto Bubbles - Visualização Interativa */}
           <div className="space-y-6">
-            <div>
+            {/* SEO only - hidden visually */}
+            <div className="sr-only">
               <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
                 Crypto Bubbles - Visualização Interativa
               </h2>
