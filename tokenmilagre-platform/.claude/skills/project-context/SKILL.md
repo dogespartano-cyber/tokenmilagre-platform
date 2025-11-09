@@ -202,6 +202,106 @@ When this skill is invoked:
 
 ---
 
+## 📢 Comunicando Mudanças ao Usuário
+
+**IMPORTANTE**: Após completar qualquer implementação ou refatoração, SEMPRE forneça um resumo conciso para o usuário saber exatamente onde testar.
+
+### ✅ Formato de Resposta Obrigatório
+
+**Para cada mudança implementada, informe**:
+
+1. **O que mudou** - Descrição curta e direta (1 linha)
+2. **Onde testar** - URL exata, página, componente ou elemento afetado
+3. **Como testar** - Ação específica para validar a mudança
+
+### 📝 Template de Resposta
+
+```markdown
+## ✅ Mudanças Implementadas
+
+### [Nome da Feature/Fix]
+
+**O que mudou**: [Descrição curta em 1 linha]
+
+**Onde testar**:
+- 📍 Página: `/caminho/da/pagina`
+- 🎯 Elemento: [Nome do componente/botão/card]
+- 🔗 Link direto: [Se aplicável]
+
+**Como validar**:
+1. Acesse a página X
+2. Clique no elemento Y
+3. Verifique que Z acontece
+```
+
+### 🎯 Exemplos Práticos
+
+**Exemplo 1 - Infinite Scroll**:
+```markdown
+## ✅ Implementado: Rolagem Infinita na Educação
+
+**O que mudou**: Página de educação agora carrega artigos automaticamente ao rolar
+
+**Onde testar**:
+- 📍 Página: `/educacao`
+- 🎯 Elemento: Lista de artigos educacionais (cards)
+
+**Como validar**:
+1. Acesse `/educacao`
+2. Role até o final da página
+3. Novos artigos devem carregar automaticamente
+```
+
+**Exemplo 2 - Refatoração**:
+```markdown
+## ✅ Refatoração: Biblioteca de Helpers
+
+**O que mudou**: Funções duplicadas substituídas por biblioteca centralizada
+
+**Onde testar**:
+- 📍 Páginas afetadas: `/educacao`, `/`, `/educacao/[slug]`, dashboard BuildInfoBadge
+- 🎯 Elementos: Badges de nível (iniciante/intermediário/avançado), formatação de datas
+
+**Como validar**:
+1. Visite `/educacao` → Verifique cores dos badges de nível
+2. Visite `/` → Verifique cards de educação na home
+3. Abra qualquer artigo educacional → Verifique label do nível
+4. Passe mouse no badge inferior direito → Verifique formato da data
+```
+
+**Exemplo 3 - Fix de Bug**:
+```markdown
+## ✅ Corrigido: Build Vercel Falhando
+
+**O que mudou**: Script de build removeu comando Prisma que causava erro
+
+**Onde testar**:
+- 📍 Ambiente: Vercel Preview (deploy automático)
+- 🎯 Resultado esperado: Build passa sem erros
+
+**Como validar**:
+1. Aguarde deploy automático em Vercel
+2. Verifique logs de build (deve passar)
+3. Acesse URL do preview (deve funcionar)
+```
+
+### 🚫 O Que NÃO Fazer
+
+❌ **Resposta Vaga**:
+> "Refatorei alguns componentes para usar helpers centralizados"
+
+✅ **Resposta Clara**:
+> "4 componentes refatorados usam biblioteca de helpers. Teste em `/educacao` (badges de nível), `/` (cards educacionais), BuildInfoBadge (formatação de data)"
+
+### 🎯 Benefícios
+
+- ⚡ Usuário testa apenas o necessário
+- 🎯 Testes direcionados economizam tempo
+- 📊 Rastreabilidade de mudanças
+- ✅ Validação eficiente de features
+
+---
+
 ## 🔍 Quick References
 
 **AI Assistant System**:
