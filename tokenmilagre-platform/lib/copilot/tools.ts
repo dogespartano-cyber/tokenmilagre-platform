@@ -5,6 +5,13 @@
 
 import { CopilotTool, ToolPermissionLevel, SystemStatistics } from './types';
 import { prisma } from '@/lib/prisma';
+import { Prisma } from '@prisma/client';
+
+// Helper para extrair mensagem de erro
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  return String(error);
+}
 
 /**
  * Tool 1: Read Articles
@@ -73,7 +80,7 @@ export const readArticlesTool: CopilotTool = {
       const order = args.order || 'desc';
 
       // Build where clause
-      const where: any = {};
+      const where: Prisma.ArticleWhereInput = {};
 
       if (args.type && args.type !== 'all') {
         where.type = args.type;
@@ -163,10 +170,10 @@ export const readArticlesTool: CopilotTool = {
         message: `Encontrados ${articles.length} artigos`
       };
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         success: false,
-        error: error.message || 'Erro ao buscar artigos'
+        error: getErrorMessage(error) || 'Erro ao buscar artigos'
       };
     }
   }
@@ -299,7 +306,11 @@ export const getStatisticsTool: CopilotTool = {
       };
 
       // Include details if requested
-      let details: any = {};
+      interface StatisticsDetails {
+        topCategories?: Array<{ category: string | null; count: number }>;
+        topAuthors?: Array<{ name: string; email: string | null; articles: number }>;
+      }
+      let details: StatisticsDetails = {};
       if (args.includeDetails) {
         const [topCategories, topAuthors] = await Promise.all([
           // Top categories
@@ -350,10 +361,10 @@ export const getStatisticsTool: CopilotTool = {
         message: 'Estatísticas obtidas com sucesso'
       };
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         success: false,
-        error: error.message || 'Erro ao obter estatísticas'
+        error: getErrorMessage(error) || 'Erro ao obter estatísticas'
       };
     }
   }
@@ -445,7 +456,7 @@ export const createArticleTool: CopilotTool = {
       }
 
       // Prepare article data
-      const articleData: any = {
+      const articleData: Prisma.ArticleCreateInput = {
         title: args.title,
         slug: args.slug,
         content: args.content,
@@ -454,7 +465,7 @@ export const createArticleTool: CopilotTool = {
         category: args.category,
         tags: args.tags ? JSON.stringify(args.tags) : JSON.stringify([]),
         published: args.published || false,
-        authorId: context.userId
+        author: { connect: { id: context.userId } }
       };
 
       if (args.type === 'news' && args.sentiment) {
@@ -495,10 +506,10 @@ export const createArticleTool: CopilotTool = {
         }
       };
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         success: false,
-        error: error.message || 'Erro ao criar artigo'
+        error: getErrorMessage(error) || 'Erro ao criar artigo'
       };
     }
   }
@@ -582,7 +593,7 @@ export const updateArticleTool: CopilotTool = {
       }
 
       // Prepare update data
-      const updateData: any = {};
+      const updateData: Prisma.ArticleUpdateInput = {};
       if (args.title) updateData.title = args.title;
       if (args.content) updateData.content = args.content;
       if (args.excerpt) updateData.excerpt = args.excerpt;
@@ -619,10 +630,10 @@ export const updateArticleTool: CopilotTool = {
         }
       };
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         success: false,
-        error: error.message || 'Erro ao atualizar artigo'
+        error: getErrorMessage(error) || 'Erro ao atualizar artigo'
       };
     }
   }
@@ -702,10 +713,10 @@ export const deleteArticleTool: CopilotTool = {
         }
       };
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         success: false,
-        error: error.message || 'Erro ao deletar artigo'
+        error: getErrorMessage(error) || 'Erro ao deletar artigo'
       };
     }
   }
