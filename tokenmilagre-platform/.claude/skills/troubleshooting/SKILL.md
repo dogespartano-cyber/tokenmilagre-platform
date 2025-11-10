@@ -139,13 +139,361 @@ git commit -m "docs: Adicionar Problema X à skill troubleshooting
 
 ## 📋 Índice de Problemas
 
-1. [Scroll Position Bug - Páginas /criptomoedas](#problema-1-scroll-position-bug)
-2. [Flash Visual ao Navegar - Cache](#problema-2-flash-visual-ao-navegar)
-3. [Ticker Tape Recarregando](#problema-3-ticker-tape-recarregando)
-4. [Fear & Greed Cache Inteligente](#problema-4-fear--greed-cache-inteligente)
-5. [Regex Removendo Quebras de Linha - Markdown](#problema-5-regex-removendo-quebras-de-linha)
-6. [API Gemini - Nomes Corretos dos Modelos](#problema-6-api-gemini---nomes-corretos-dos-modelos)
-7. [Build Vercel Falhando - Prisma DB Push](#problema-7-build-vercel-falhando---prisma-db-push)
+### Erros de Deploy (Vercel/Build)
+1. [6 Erros Sequenciais de Deploy - Novembro 2025](#erros-de-deploy-no-vercel-novembro-2025)
+2. [Build Vercel Falhando - Prisma DB Push](#problema-8-build-vercel-falhando---prisma-db-push)
+
+### Problemas de UX/Performance
+3. [Scroll Position Bug - Páginas /criptomoedas](#problema-1-scroll-position-bug)
+4. [Flash Visual ao Navegar - Cache](#problema-2-flash-visual-ao-navegar)
+5. [Ticker Tape Recarregando](#problema-3-ticker-tape-recarregando)
+6. [Fear & Greed Cache Inteligente](#problema-4-fear--greed-cache-inteligente)
+
+### Problemas de Código
+7. [Regex Removendo Quebras de Linha - Markdown](#problema-5-regex-removendo-quebras-de-linha)
+8. [API Gemini - Nomes Corretos dos Modelos](#problema-6-api-gemini---nomes-corretos-dos-modelos)
+
+---
+
+## Erros de Deploy no Vercel (Novembro 2025)
+
+### 📋 Contexto
+
+Durante a implementação das **Fases 1-4 de expansão de conteúdo** (novembro 2025), encontramos **6 erros sequenciais** de deploy no Vercel. Cada erro só aparecia depois que o anterior era corrigido, criando um processo de debugging em cascata.
+
+**Por que aconteceu em cascata?**
+```
+1. npm install
+   ↓
+2. prisma generate (postinstall)
+   ↓
+3. prisma db push (build script) ← Erro 5
+   ↓
+4. next build (compila TypeScript) ← Erros 1, 2, 3, 4
+   ↓
+5. Geração de páginas estáticas ← Erro 6
+```
+
+Cada etapa só executa se a anterior funcionar. Por isso descobrimos um erro de cada vez.
+
+---
+
+### 🔴 Erro 1: Importação Incorreta do Prisma
+
+**Severidade**: 🔴 CRÍTICA
+
+**Sintomas**:
+```
+Error: Attempted import error: '@/lib/prisma' does not contain a default export
+```
+
+**Causa Raiz**: O arquivo `/lib/prisma.ts` exporta o Prisma Client como **named export** (`export const prisma`), mas os novos arquivos de API estavam tentando importá-lo como **default export**.
+
+**Código Incorreto**:
+```typescript
+// ❌ ERRADO
+import prisma from '@/lib/prisma';
+```
+
+**Solução**:
+```typescript
+// ✅ CORRETO
+import { prisma } from '@/lib/prisma';
+```
+
+**Arquivos Afetados**:
+- `app/api/community-stories/route.ts`
+- `app/api/community-stories/[slug]/route.ts`
+- `app/api/social-projects/route.ts`
+- `app/api/social-projects/[slug]/route.ts`
+- `app/api/project-map/route.ts`
+- `app/api/gamification/award-points/route.ts`
+- `app/api/user-progress/route.ts`
+
+**Lição Aprendida**:
+- ✅ Sempre verificar se a exportação é default ou named antes de importar
+- ✅ Manter consistência no padrão de exportação em toda a codebase
+- ✅ Usar ESLint rule `import/no-default-export` em arquivos de utilitários
+
+---
+
+### 🔴 Erro 2: Parâmetros de Rota do Next.js 15
+
+**Severidade**: 🔴 CRÍTICA
+
+**Sintomas**:
+```
+Type error: Type "{ params: { slug: string; }; }" is not a valid type
+for the function's second argument
+```
+
+**Causa Raiz**: O Next.js 15 mudou a API de rotas dinâmicas. Os parâmetros agora são uma **Promise** que precisa ser aguardada com `await`.
+
+**Código Incorreto** (Next.js 14):
+```typescript
+// ❌ ERRADO (padrão antigo)
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { slug: string } }
+) {
+  const { slug } = params; // Acesso direto
+}
+```
+
+**Solução** (Next.js 15):
+```typescript
+// ✅ CORRETO (padrão novo)
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const { slug } = await params; // Precisa de await
+}
+```
+
+**Arquivos Afetados**:
+- `app/api/community-stories/[slug]/route.ts`
+- `app/api/social-projects/[slug]/route.ts`
+
+**Lição Aprendida**:
+- ✅ No Next.js 15+, sempre usar `await params` em rotas dinâmicas
+- ✅ Consultar a documentação oficial quando atualizar major versions
+- ✅ SearchParams também são Promise no Next.js 15
+
+**Referência**:
+- [Next.js 15 Release Notes](https://nextjs.org/blog/next-15)
+- [Dynamic Routes Migration](https://nextjs.org/docs/app/api-reference/file-conventions/route)
+
+---
+
+### 🔴 Erro 3: Dependência Faltando (lucide-react)
+
+**Severidade**: 🔴 CRÍTICA
+
+**Sintomas**:
+```
+Error: Cannot find module 'lucide-react' or its corresponding type declarations
+```
+
+**Causa Raiz**: Componentes usavam ícones do pacote `lucide-react`, mas o pacote não estava listado em `package.json`.
+
+**Código com Erro**:
+```typescript
+import { Heart, CheckCircle2, TrendingUp } from 'lucide-react';
+// ❌ Erro: módulo não encontrado
+```
+
+**Solução**:
+```bash
+npm install lucide-react@^0.468.0
+```
+
+Ou adicionar manualmente ao `package.json`:
+```json
+{
+  "dependencies": {
+    "lucide-react": "^0.468.0"
+  }
+}
+```
+
+**Arquivos Afetados**:
+- `components/CommunityStoryCard.tsx`
+- `components/SocialProjectCard.tsx`
+- `components/InteractiveTool.tsx`
+
+**Lição Aprendida**:
+- ✅ Sempre adicionar pacotes ao package.json imediatamente após usá-los
+- ✅ Verificar imports antes de fazer commit
+- ✅ Usar `npm install <pacote>` em vez de só importar
+- ✅ Rodar `npm run build` localmente antes de push
+
+---
+
+### 🔴 Erro 4: Prop Inválido em Componentes lucide-react
+
+**Severidade**: 🟡 ALTA
+
+**Sintomas**:
+```
+Type error: Type '{ className: string; title: string; }' is not assignable to type...
+Property 'title' does not exist
+```
+
+**Causa Raiz**: Os componentes SVG do `lucide-react` não aceitam o atributo HTML `title`. Eles têm um conjunto restrito de props permitidas.
+
+**Código Incorreto**:
+```typescript
+// ❌ ERRADO
+<CheckCircle2 className="w-4 h-4 text-blue-500" title="Verificado" />
+```
+
+**Solução**:
+```typescript
+// ✅ CORRETO - usar aria-label para acessibilidade
+<CheckCircle2 className="w-4 h-4 text-blue-500" aria-label="Verificado" />
+
+// OU envolver em um elemento com title
+<span title="Verificado">
+  <CheckCircle2 className="w-4 h-4 text-blue-500" />
+</span>
+```
+
+**Arquivo Afetado**:
+- `components/CommunityStoryCard.tsx:83`
+
+**Lição Aprendida**:
+- ✅ Componentes de bibliotecas têm suas próprias restrições de props
+- ✅ Usar `aria-label` em vez de `title` para acessibilidade em SVGs
+- ✅ Consultar a documentação da biblioteca antes de usar atributos HTML padrão
+- ✅ TypeScript strict mode ajuda a pegar esses erros localmente
+
+**Referência**:
+- [Lucide React Documentation](https://lucide.dev/guide/packages/lucide-react)
+- [ARIA Labels Best Practices](https://www.w3.org/WAI/WCAG21/Understanding/label-in-name.html)
+
+---
+
+### 🔴 Erro 5: Variável de Ambiente DIRECT_URL Não Configurada
+
+**Severidade**: 🔴 CRÍTICA
+
+**Sintomas**:
+```
+Error: Environment variable not found: DIRECT_URL.
+  -->  prisma/schema.prisma:13
+   |
+12 |   url      = env("DATABASE_URL")
+13 |   directUrl = env("DIRECT_URL")
+   |
+Error code: P1012
+```
+
+**Causa Raiz**: O Prisma schema exigia a variável de ambiente `DIRECT_URL` que não estava configurada no Vercel. O `directUrl` é opcional e usado apenas para connection pooling avançado.
+
+**Código Incorreto**:
+```prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")  // ❌ Variável não configurada
+}
+```
+
+**Solução**:
+```prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")  // ✅ Apenas DATABASE_URL
+}
+```
+
+**Quando Usar directUrl**:
+O `directUrl` só é necessário quando você usa **connection pooling** como PgBouncer:
+- `url`: Aponta para a conexão pooled (para queries)
+- `directUrl`: Aponta para a conexão direta (para migrações)
+
+**Lição Aprendida**:
+- ✅ Não adicionar configurações opcionais sem necessidade
+- ✅ Documentar quando `directUrl` é realmente necessário
+- ✅ Verificar variáveis de ambiente antes de fazer deploy
+- ✅ Manter `.env.example` atualizado com todas as variáveis necessárias
+
+**Referência**:
+- [Prisma Connection Pooling](https://www.prisma.io/docs/guides/performance-and-optimization/connection-management)
+
+---
+
+### 🔴 Erro 6: Database Schema Não Sincronizado
+
+**Severidade**: 🔴 CRÍTICA
+
+**Sintomas (6a: Coluna Inexistente)**:
+```
+Error [PrismaClientKnownRequestError]:
+Invalid `prisma.article.findFirst()` invocation:
+
+The column `Article.warningLevel` does not exist in the current database.
+Code: P2022
+```
+
+**Sintomas (6b: Baseline Migration)**:
+```
+Error: P3005
+The database schema is not empty. Read more about how to baseline
+an existing production database: https://pris.ly/d/migrate-baseline
+```
+
+**Causa Raiz**: O código esperava colunas novas (como `Article.warningLevel`) que foram adicionadas ao Prisma schema, mas nunca foram criadas no banco de dados de produção. O banco foi criado com `prisma db push` em vez de migrations, então não tinha histórico de migração rastreado.
+
+**Tentativa de Solução (Falhou)**:
+```json
+// ❌ Tentativa 1: usar prisma migrate deploy
+{
+  "scripts": {
+    "build": "prisma migrate deploy && next build"
+  }
+}
+```
+**Resultado:** Erro P3005 (schema não vazio, precisa de baseline)
+
+**Solução Final**:
+```json
+// ✅ Solução: usar prisma db push
+{
+  "scripts": {
+    "build": "prisma db push --accept-data-loss && next build"
+  }
+}
+```
+
+**Por Que Funciona**:
+
+**prisma migrate deploy:**
+- Executa migrações rastreadas em `prisma/migrations`
+- Exige que o banco esteja "limpo" ou tenha baseline configurado
+- Mantém histórico completo de mudanças
+- Ideal para projetos que usaram Prisma Migrate desde o início
+
+**prisma db push:**
+- Sincroniza o schema diretamente com o banco
+- Não requer histórico de migrações
+- Idempotente (pode executar múltiplas vezes)
+- Adiciona novas colunas/tabelas sem perder dados existentes
+- Ideal para bancos sem histórico de migração rastreado
+
+**Lição Aprendida**:
+- ✅ Usar `prisma db push` quando o banco não tem histórico de migrações
+- ✅ Usar `prisma migrate deploy` apenas em projetos com migrations desde o início
+- ✅ O flag `--accept-data-loss` permite execução não-interativa
+- ✅ Documentar qual estratégia de migração o projeto usa
+- ✅ Considerar baseline se projeto cresceu sem migrations
+
+**Referência**:
+- [Prisma Migrate vs DB Push](https://www.prisma.io/docs/concepts/components/prisma-migrate/db-push)
+- [Baseline Existing Database](https://www.prisma.io/docs/guides/migrate/production-troubleshooting)
+
+---
+
+### 📊 Resumo dos 6 Erros
+
+| # | Erro | Severidade | Tempo para Resolver |
+|---|------|------------|---------------------|
+| 1 | Importação Prisma | 🔴 Crítica | ~15 min |
+| 2 | Params Next.js 15 | 🔴 Crítica | ~20 min |
+| 3 | lucide-react missing | 🔴 Crítica | ~5 min |
+| 4 | lucide props | 🟡 Alta | ~10 min |
+| 5 | DIRECT_URL | 🔴 Crítica | ~15 min |
+| 6 | Schema sync | 🔴 Crítica | ~45 min |
+| **Total** | | | **~2 horas** |
+
+### 🎯 Top 5 Ações Preventivas
+
+1. **✅ Verificar Importações**: Named vs default exports
+2. **✅ Consultar Docs da Versão**: Next.js 15 mudou APIs importantes
+3. **✅ Adicionar Dependências**: Sempre usar npm install, não só importar
+4. **✅ Testar Localmente**: Executar `npm run build` antes de deploy
+5. **✅ Sincronizar Schema**: Usar `prisma db push` em bancos sem histórico
 
 ---
 
@@ -773,7 +1121,7 @@ export default function ProblematicPage() {
 
 ---
 
-## Problema 7: Build Vercel Falhando - Prisma DB Push
+## Problema 8: Build Vercel Falhando - Prisma DB Push
 
 ### 🐛 Descrição do Problema
 Build na Vercel falha com erro de conexão ao banco de dados durante o processo de build:
@@ -898,5 +1246,41 @@ npm run db:push  # Script separado para desenvolvimento
 
 ---
 
-**Última atualização**: 2025-11-08
-**Versão**: 2.2 (adicionado Problema 7 - Build Vercel com Prisma DB Push)
+## 🔍 Tarefas Futuras de Manutenção
+
+### 📊 Auditoria Completa do Projeto (Pendente)
+
+**Status**: ⚠️ Necessária
+
+**Contexto**: Uma auditoria completa foi realizada em novembro/2025 (`AUDITORIA_COMPLETA_2025.md`), mas o trabalho foi perdido quando a build falhou e acabou sendo mesclada incorretamente com a build anterior.
+
+**Ações Recomendadas**:
+
+1. **Realizar nova auditoria completa incluindo**:
+   - [ ] Análise de segurança (dependencies vulneráveis, secrets exposure)
+   - [ ] Performance audit (Core Web Vitals, bundle size)
+   - [ ] Acessibilidade (WCAG compliance)
+   - [ ] SEO (meta tags, structured data, sitemap)
+   - [ ] Code quality (type safety, dead code, duplicação)
+   - [ ] Database schema review (índices, relacionamentos, constraints)
+   - [ ] API routes audit (error handling, validation, rate limiting)
+
+2. **Documentar resultados**:
+   - Criar nova skill `platform-audit` com checklist permanente
+   - Ou adicionar seção dedicada nesta skill
+   - Manter registro de auditorias periódicas (trimestral recomendado)
+
+3. **Automatizar onde possível**:
+   - CI/CD checks para segurança (npm audit, Snyk)
+   - Lighthouse CI para performance
+   - ESLint + TypeScript strict mode
+   - Testes automatizados
+
+**Frequência Recomendada**: Trimestral ou antes de releases importantes
+
+**Responsável**: Próximo Claude Code session ou desenvolvedor
+
+---
+
+**Última atualização**: 2025-11-10
+**Versão**: 2.3 (adicionada seção de Auditoria Futura)

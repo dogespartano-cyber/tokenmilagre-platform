@@ -1,35 +1,24 @@
-# Arquivos de ambiente Python
+# Python
 .venv/
-
-# Arquivos de cache do Python
 __pycache__/
 *.pyc
 
-# Banco de dados local
+# Database local
 *.db
 *.sqlite3
 
-# Arquivos de sistema
+# System files
 .DS_Store
 .directory
 
 # Claude Code - arquivos com credenciais
 .claude/settings.local.json
 
-# Diretórios e arquivos fora do projeto principal
-/Log importante/
-/gemini/
-/imagens/
-/sombras .txt
-/*.tar.gz
-/CHANGELOG-*.md
-/CORRECTIONS-*.md
-/SYSTEM-*.md
-/guia-*.md
-/template-*.md
-/sugestões.txt
-CLAUDE-MEMORY.md
+# Ignorar tudo na raiz EXCETO tokenmilagre-platform/
+/*
+!/tokenmilagre-platform/
+!.gitignore
+!README.md
 
-# Backups
-backup-tokenmilagre*/
-*.zip
+# Dentro de tokenmilagre-platform/, seguir regras padrão
+# (node_modules, .next, etc já ignorados pelo .gitignore interno)

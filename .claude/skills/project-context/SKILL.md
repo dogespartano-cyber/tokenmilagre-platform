@@ -32,16 +32,59 @@ This file contains:
 
 ---
 
-## 🎯 After Loading
+## ⚠️ Regras Críticas de Interação
 
-Once you've read CLAUDE-MEMORY.md, you'll know:
+### 🚨 Regra #1: SEMPRE Perguntar Antes de Executar
 
-1. **How to interact with the user** - The absolute rule: ALWAYS ask before executing code
-2. **Documentation structure** - When to consult LOG.md and sugestões.md
-3. **Project values** - Minimalism, accessibility, open source, education, security
-4. **Critical Git rules** - Only commit files inside tokenmilagre-platform/
-5. **What to avoid** - Design and code anti-patterns
-6. **AI Assistant system** - Chat IA em `/dashboard/criar-artigo` com detecção de intenção natural
+**NUNCA execute código ou comandos sem confirmar com o usuário primeiro**, exceto:
+- ✅ Leitura de arquivos (Read, Grep, Glob)
+- ✅ Análise de código
+- ✅ Pesquisas (WebSearch, WebFetch)
+
+**SEMPRE pergunte antes de**:
+- ❌ Criar/modificar/deletar arquivos
+- ❌ Executar comandos bash
+- ❌ Fazer commits Git
+- ❌ Instalar dependências
+- ❌ Modificar configurações
+
+### 🚨 Regra #2: Git - Apenas tokenmilagre-platform/
+
+**NUNCA commitar arquivos fora do diretório `tokenmilagre-platform/`**
+
+✅ Permitido commitar:
+```
+tokenmilagre-platform/
+  ├── app/
+  ├── components/
+  ├── lib/
+  ├── .claude/
+  └── docs/
+```
+
+❌ PROIBIDO commitar:
+- Qualquer arquivo fora do diretório `tokenmilagre-platform/`
+- Arquivos pessoais em diretórios paralelos
+- Configurações do sistema
+
+### 🚨 Regra #3: Nunca Rodar Build ou Dev Server
+
+**NUNCA execute estes comandos**:
+- ❌ `npm run dev`
+- ❌ `npm run build`
+- ❌ `npm start`
+- ❌ Qualquer comando que inicie servidor
+
+**Motivo**: Servidor é gerenciado pelo `server-manager.sh` no ambiente de produção.
+
+### 🚨 Regra #4: Economia de Tokens
+
+**Seja CONCISO**. O usuário prefere:
+- ✅ Respostas curtas e diretas
+- ✅ Código sem explicações óbvias
+- ✅ Foco em ação, não teoria
+- ❌ Parágrafos longos
+- ❌ Explicações excessivas
 
 ---
 
@@ -169,6 +212,50 @@ Quando em dúvida, pergunte:
 ---
 
 **Lembre-se**: Cada linha de código, cada artigo, cada feature é uma oportunidade de plantar esperança e conhecimento. Faça valer.
+
+---
+
+## 🚫 O Que Evitar
+
+### ❌ Design Anti-Patterns
+- Animações excessivas ou distrativas
+- Cores muito vibrantes (exceto accent estratégico)
+- Elementos decorativos sem propósito
+- Interfaces confusas ou complexas
+- Over-engineering de componentes simples
+
+### ❌ Code Anti-Patterns
+- Código duplicado (DRY principle)
+- Componentes gigantes (>500 linhas)
+- Fetching HTTP quando Prisma direto é possível (Server Components)
+- Variáveis `any` no TypeScript
+- Magic numbers sem constantes nomeadas
+- Funções com mais de 3-4 parâmetros
+
+### ❌ Conteúdo Anti-Patterns
+- Hype ou promessas exageradas
+- Linguagem técnica desnecessária
+- Conteúdo sem citações/fontes
+- Informações desatualizadas
+- Foco em ganhos rápidos em vez de educação
+
+---
+
+## 🔧 Stack Tecnológica
+
+**Framework**: Next.js 15 (App Router)
+**UI**: React 19 + Tailwind CSS + shadcn/ui
+**Database**: PostgreSQL + Prisma ORM
+**Deploy**: Vercel
+**AI**: Perplexity AI + Google Gemini
+**Icons**: Lucide React
+**Language**: TypeScript 5.x
+
+**Patterns**:
+- Server Components por padrão
+- Client Components apenas quando necessário (`useState`, `useEffect`, interatividade)
+- Prisma Client direto em Server Components (sem API routes desnecessárias)
+- Cache estratégico (sessionStorage client-side + Next.js cache server-side)
 
 ---
 
