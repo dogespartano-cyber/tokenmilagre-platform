@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import DOMPurify from 'dompurify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowLeft,
@@ -107,6 +108,12 @@ export default function CryptoPage() {
   const [fadeIn, setFadeIn] = useState(false);
   const [relatedNews, setRelatedNews] = useState<NewsItem[]>([]);
   const [loadingNews, setLoadingNews] = useState(false);
+
+  // Sanitizar HTML da descrição para prevenir XSS
+  const sanitizedDescription = useMemo(() => {
+    if (!crypto?.description) return '';
+    return DOMPurify.sanitize(crypto.description);
+  }, [crypto?.description]);
 
   // Forçar scroll para o topo ao montar ou mudar de moeda (fix para bug de scroll)
   useEffect(() => {
@@ -674,7 +681,7 @@ export default function CryptoPage() {
             <div
               className="prose prose-lg max-w-none"
               style={{ color: 'var(--text-secondary)' }}
-              dangerouslySetInnerHTML={{ __html: crypto.description }}
+              dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
             />
           </div>
         )}
