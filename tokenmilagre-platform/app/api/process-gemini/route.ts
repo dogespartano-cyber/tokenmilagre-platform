@@ -284,14 +284,9 @@ export async function POST(request: NextRequest) {
 
     if (ENABLE_COVER_GENERATION && articleType !== 'resource' && processedArticle.title && processedArticle.slug) {
       try {
-        console.log('========================================');
-        console.log('🎨 INÍCIO - Geração de Imagem de Capa');
-        console.log('========================================');
-        console.log('Título:', processedArticle.title);
-        console.log('Slug:', processedArticle.slug);
-        console.log('Categoria:', processedArticle.category || 'default');
-        console.log('Sentiment:', processedArticle.sentiment);
-        console.log('Tipo:', articleType);
+        if (process.env.NODE_ENV === 'development') {
+          console.log('🎨 [DEV] Gerando capa:', processedArticle.title);
+        }
         coverGenerationLog.push('Iniciando geração de capa');
 
         const imageResult = await generateCoverImage(
@@ -304,28 +299,21 @@ export async function POST(request: NextRequest) {
           GEMINI_API_KEY
         );
 
-        console.log('📊 Resultado da API Gemini Image:');
-        console.log('- Success:', imageResult.success);
-        console.log('- Tem imageBase64:', !!imageResult.imageBase64);
-        console.log('- MimeType:', imageResult.mimeType);
-        console.log('- Erro:', imageResult.error);
         coverGenerationLog.push(`API chamada: ${imageResult.success ? 'sucesso' : 'falha'}`);
 
         if (imageResult.success && imageResult.imageBase64) {
-          console.log('✅ Imagem gerada pela API com sucesso');
-
           const imageSize = estimateImageSize(imageResult.imageBase64);
           const imageSizeMB = (imageSize / (1024 * 1024)).toFixed(2);
-          console.log(`📦 Tamanho da imagem: ${imageSizeMB} MB (${imageSize} bytes)`);
           coverGenerationLog.push(`Tamanho: ${imageSizeMB} MB`);
 
           // Validar tamanho da imagem (máx 2MB)
           if (validateImageSize(imageResult.imageBase64, 2)) {
-            console.log('✅ Tamanho validado (< 2MB)');
             coverGenerationLog.push('Tamanho validado');
 
             // Salvar imagem no filesystem
-            console.log('💾 Salvando imagem no filesystem...');
+            if (process.env.NODE_ENV === 'development') {
+              console.log('💾 [DEV] Salvando capa...');
+            }
             const saveResult = await saveCoverImage({
               imageBase64: imageResult.imageBase64,
               mimeType: imageResult.mimeType || 'image/jpeg',
@@ -333,10 +321,6 @@ export async function POST(request: NextRequest) {
               articleType
             });
 
-            console.log('📊 Resultado do salvamento:');
-            console.log('- Success:', saveResult.success);
-            console.log('- URL:', saveResult.url);
-            console.log('- Erro:', saveResult.error);
             coverGenerationLog.push(`Salvamento: ${saveResult.success ? 'sucesso' : 'falha'}`);
 
             if (saveResult.success && saveResult.url) {
