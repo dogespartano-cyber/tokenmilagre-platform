@@ -1,6 +1,6 @@
 ---
 name: tokenmilagre-citations
-description: This skill should be used when managing citations and fact-check sources from Perplexity AI in Token Milagre Platform. Use this skill for extracting citations, validating sources, storing in factCheckSources field, and displaying references to users.
+description: "Citation management and fact-check sources. TRIGGERS: 'citações', 'citations', 'fact-check', 'factCheckSources', 'referências', 'fontes'. Use when extracting citations from Perplexity, validating sources, storing in factCheckSources field, displaying references to users."
 license: MIT
 ---
 

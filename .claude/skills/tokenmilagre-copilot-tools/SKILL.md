@@ -1,6 +1,6 @@
 ---
 name: tokenmilagre-copilot-tools
-description: This skill guides the development of Copilot AI tools for the Token Milagre platform. Use when creating new tools, implementing tool parameters, handling tool execution, and managing activity logging. Includes patterns for type-safe tool development and best practices.
+description: "Copilot AI tools development (type-safe patterns). TRIGGERS: 'copilot', 'AI tool', 'tool development', 'criar ferramenta', 'activity logging', 'tool parameters'. Use when creating new AI tools, implementing tool parameters, handling tool execution, managing activity logging, type-safe tool development."
 license: MIT
 ---
 

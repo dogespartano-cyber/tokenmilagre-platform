@@ -1,6 +1,6 @@
 ---
 name: tokenmilagre-article-workflow
-description: This skill should be used when working with article creation, editing, and publishing workflows in Token Milagre Platform. Use this skill for Perplexity AI integration, Gemini refinement, citation management, content processing, and the criar-artigo component.
+description: "Article creation workflow (Perplexity → Gemini → Publication). TRIGGERS: 'criar artigo', 'editar artigo', 'article workflow', 'criar-artigo', 'publicar artigo', 'refinar artigo'. Use when creating/editing articles, Perplexity AI integration, Gemini refinement, citation management, content processing."
 license: MIT
 ---
 

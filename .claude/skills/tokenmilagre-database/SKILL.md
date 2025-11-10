@@ -1,6 +1,6 @@
 ---
 name: tokenmilagre-database
-description: This skill guides database management including Prisma schema design, migrations, data modeling, query optimization, and database maintenance. Use when modifying the database schema, creating migrations, optimizing queries, or troubleshooting database issues.
+description: "Database management with Prisma (schema, migrations, optimization). TRIGGERS: 'Prisma', 'schema', 'migration', 'database', 'query optimization', 'modelo de dados'. Use when modifying database schema, creating migrations, optimizing queries, troubleshooting database issues, data modeling."
 license: MIT
 ---
 
@@ -26,11 +26,110 @@ Use this skill when:
 
 ## Database Stack
 
-- **Database:** PostgreSQL (Neon serverless)
+- **Database:** PostgreSQL (Neon serverless via Vercel Marketplace)
 - **ORM:** Prisma 6.3.0
 - **Connection:** Prisma Client with connection pooling
 - **Migrations:** Prisma Migrate
 - **Location:** `prisma/schema.prisma`
+- **Prisma Client Location:** `lib/generated/prisma` (custom path)
+- **Total Users:** 2 (Admin + Editor)
+
+## ⚠️ Critical Rules - Token Milagre Specific
+
+### 1. ALWAYS Use Prisma Directly in Server Components
+
+```typescript
+// ❌ WRONG: Fetching HTTP in Server Components
+async function getArticles() {
+  const res = await fetch('http://localhost:3000/api/articles');
+  return await res.json();
+}
+
+// ✅ CORRECT: Direct Prisma access
+import { prisma } from '@/lib/prisma';
+
+async function getArticles() {
+  return await prisma.article.findMany();
+}
+```
+
+**Why?**
+- Requires environment variables (`NEXT_PUBLIC_API_URL`, `VERCEL_URL`)
+- Adds HTTP overhead (serialization, network, deserialization)
+- Prone to errors in different environments
+- Slower than direct database access
+
+### 2. Correct Prisma Client Path
+
+```typescript
+// ✅ CORRECT - This project uses custom path
+import { prisma } from '@/lib/prisma';
+
+// OR in Node.js scripts:
+const { PrismaClient } = require('../lib/generated/prisma');
+
+// ❌ WRONG - Don't use default path
+import { PrismaClient } from '@prisma/client';
+```
+
+### 3. When to Use API Routes
+
+- ✅ Public endpoints (webhooks, external integrations)
+- ✅ Client Components making mutations
+- ✅ External scripts (CLI, watchers)
+- ❌ Server Components fetching database data
+
+### 4. Build Configuration
+
+**Required in `package.json`:**
+```json
+{
+  "scripts": {
+    "postinstall": "prisma generate"
+  }
+}
+```
+
+**Required in `next.config.ts`:**
+```typescript
+{
+  eslint: {
+    ignoreDuringBuilds: true // Don't lint Prisma generated files
+  }
+}
+```
+
+**Vercel Build Checklist:**
+- [ ] `postinstall` script present
+- [ ] `next.config.ts` with `eslint.ignoreDuringBuilds: true`
+- [ ] `prisma/schema.prisma` pointing to PostgreSQL
+- [ ] `DATABASE_URL` and `DIRECT_URL` set in Vercel
+- [ ] Neon integration connected
+
+### 5. Environment Variables
+
+**Production (Vercel)** - Auto-configured by Neon integration:
+```env
+DATABASE_URL=postgresql://... (with pooling)
+DIRECT_URL=postgresql://... (without pooling, for migrations)
+```
+
+**Development** - Copy from Vercel Settings → Environment Variables:
+```env
+DATABASE_URL="postgresql://..."
+DIRECT_URL="postgresql://..."
+```
+
+### 6. Migration History - SQLite → PostgreSQL
+
+**Completed:** 2025-10-19
+
+- **Previous:** SQLite (`prisma/dev.db`)
+- **Current:** Neon PostgreSQL
+- **Backup:** `prisma/backup-sqlite.json` (gitignored)
+- **Documentation:** `MIGRACAO-POSTGRES.md`
+
+**Important:** NEVER use SQLite in production on Vercel - serverless environment doesn't persist files.
 
 ## Current Schema Overview
 

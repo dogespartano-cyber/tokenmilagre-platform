@@ -1,6 +1,6 @@
 ---
 name: tokenmilagre-testing
-description: This skill provides testing strategies and patterns for the Token Milagre platform including unit tests, integration tests, E2E tests, and API testing. Use when setting up tests, writing test cases, or debugging test failures.
+description: "Testing strategies and patterns (unit, integration, E2E, API tests). TRIGGERS: 'test', 'teste', 'testing', 'E2E', 'integration test', 'unit test', 'test failure'. Use when setting up tests, writing test cases, debugging test failures, implementing test patterns."
 license: MIT
 ---
 

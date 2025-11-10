@@ -1,6 +1,6 @@
 ---
 name: tokenmilagre-api-integrations
-description: This skill guides integration with external APIs including Perplexity AI (sonar models), Gemini (text + image generation), Binance, and CoinGecko. Use when implementing API connections, handling rate limits, error recovery, and data transformation patterns.
+description: "External API integrations (Perplexity AI, Gemini, Binance, CoinGecko). TRIGGERS: 'API', 'Perplexity', 'Gemini', 'Binance', 'CoinGecko', 'rate limit', 'API error'. Use when implementing API connections, handling rate limits, error recovery, and data transformation patterns."
 license: MIT
 ---
 

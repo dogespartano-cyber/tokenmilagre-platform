@@ -1,6 +1,6 @@
 ---
 name: project-context
-description: ALWAYS use this skill at the start of EVERY conversation to load essential project guidelines, critical rules, interaction protocols, documentation structure, and philosophy. This is the foundation skill that must be loaded first.
+description: "Foundation skill - Project guidelines, critical rules, philosophy, stack. TRIGGERS: 'início de conversa', 'project context', 'contexto do projeto', 'regras do projeto', 'guidelines'. ALWAYS use at the start of EVERY conversation to load essential project guidelines, critical rules, interaction protocols, documentation structure, and philosophy."
 allowed-tools: Read
 ---
 
@@ -250,15 +250,16 @@ Quando em dúvida, pergunte:
 
 After loading project context, use these specialized skills when needed:
 
-### 📚 Legacy Skills (Old Structure)
-- **`article-creation`** - When creating/editing articles or news
-- **`chat-workflow`** - When working with AI chat system (creation, intent detection, architecture)
-- **`design-system`** - When working with design, CSS, or components
-- **`database-setup`** - When working with Prisma, database, or deployment
-- **`pages-reference`** - When modifying or understanding page-specific features
-- **`troubleshooting`** - When encountering bugs or performance issues (regex removing line breaks, scroll, cache, flash visual)
+### 📚 Legacy Skills (Project-Specific)
+- **`article-creation`** - Templates, checklists, scripts práticos para criação de artigos/notícias. Use quando precisar de exemplos de estrutura, scripts Node.js, ou sistema de slug único.
+- **`chat-workflow`** - Sistema chat IA completo (/dashboard/criar-artigo). Use quando trabalhar com detecção de intenção, comandos naturais, ou arquitetura do chat.
+- **`design-system`** - CSS variables, spacing, cores, padrões visuais específicos do projeto. Use quando estilizar páginas, trabalhar com tema claro/escuro, ou aplicar identidade visual.
+- **`pages-reference`** - Informações detalhadas sobre páginas específicas (/educacao, /recursos, /noticias, etc). Use quando modificar ou entender features de páginas.
+- **`troubleshooting`** - Histórico completo de problemas técnicos resolvidos (1286 linhas de conhecimento institucional). Use quando encontrar bugs similares a problemas passados.
 
-### 💎 Token Milagre Skills (New - Comprehensive Platform Skills)
+**Note:** `database-setup` skill was consolidated into `tokenmilagre-database` (TIER 3 below) for better organization.
+
+### 💎 Token Milagre Skills
 
 **TIER 1 - Fundamentos**:
 - **`tokenmilagre-article-workflow`** - Complete article creation workflow (Perplexity AI → Gemini refinement → Publication). Use when creating/editing articles with AI integration, managing citations, or setting up content pipelines.
@@ -269,10 +270,9 @@ After loading project context, use these specialized skills when needed:
 - **`tokenmilagre-api-integrations`** - External API integration patterns (Perplexity AI, Gemini, Binance, CoinGecko). Use when integrating APIs, handling rate limits, implementing caching, or troubleshooting API errors.
 - **`tokenmilagre-copilot-tools`** - Copilot AI tool development with type-safe patterns. Use when creating new tools, implementing tool parameters, managing permissions, or setting up activity logging.
 - **`tokenmilagre-content-quality`** - Content quality standards, SEO optimization, readability metrics, and fact-check scoring. Use when creating/reviewing articles, implementing SEO, or setting up quality validation.
-- **`tokenmilagre-url-security`** - URL security and phishing protection system. Hybrid verification (local patterns + API), typosquatting detection, homograph attacks, LinkInterceptor component, and educational modals. Use when implementing link verification, protecting against scams, or adding security features to content areas.
 
 **TIER 3 - Infraestrutura**:
-- **`tokenmilagre-database`** - Prisma schema design, migrations, query optimization, and database maintenance. Use when modifying schema, creating migrations, optimizing queries, or troubleshooting database issues.
+- **`tokenmilagre-database`** - Complete database management guide: Prisma schema design, migrations, query optimization, Server Components patterns, build configuration, and Vercel deployment. Consolidated with database-setup skill. Use when modifying schema, creating migrations, optimizing queries, troubleshooting database issues, or configuring Prisma in Server Components.
 - **`tokenmilagre-scripts`** - Utility scripts and automation patterns (migrations, bulk processing, analytics). Use when building scripts for data processing, content migration, or platform automation.
 - **`tokenmilagre-testing`** - Testing strategies (unit, integration, E2E, component testing). Use when setting up tests, writing test cases, or debugging test failures.
 
@@ -281,7 +281,6 @@ After loading project context, use these specialized skills when needed:
 
 **TIER 4 - Estratégia & Análise**:
 - **`due-diligence-report`** - Complete due diligence analysis of Token Milagre Platform from a Chief Strategy Officer & Blockchain Economics Expert perspective. Brutally realistic assessment without hype - covering business model viability, tokenomics, competitive analysis, financial sustainability, and strategic recommendations. Use when performing strategic analysis, evaluating business model, or assessing project viability.
-- **`project-manager-brutal-honesty`** - **[META SKILL]** Ativa modo "Gerente de Projeto Ultra Realista": estimativas conservadoras (x2.5), comunicação leiga/direta, questionamento brutal de valor, anti-over-engineering, foco em MVP/ROI, explicações "que sua avó entende". Use quando precisar de realismo, priorização clara, crítica construtiva brutal, ou comunicar de forma acessível. **Comando de ativação: "/brutal"**
 
 ---
 
@@ -297,10 +296,9 @@ When this skill is invoked:
    - NEVER run build or dev server commands
    - Use Prisma directly in Server Components (no HTTP fetch)
    - **BE CONCISE** - Respostas curtas e diretas (usuário prefere economia de tokens)
-4. Use specialized skills when needed (troubleshooting, article-workflow, etc)
+4. Use specialized skills when needed (article-workflow, database, refactoring, etc)
 5. Suggest new skills proactively when patterns emerge
 6. **🎯 MODO PADRÃO: BRUTAL HONESTY SEMPRE ATIVO**
-   - Apply `project-manager-brutal-honesty` principles BY DEFAULT in ALL interactions
    - Estimativas conservadoras (x2.5 do otimista)
    - Comunicação leiga obrigatória ("Pra que serve?" em toda resposta)
    - Questionar valor: "Qual o benefício real mensurável?"

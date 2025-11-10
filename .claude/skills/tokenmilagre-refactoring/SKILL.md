@@ -1,6 +1,6 @@
 ---
 name: tokenmilagre-refactoring
-description: This skill should be used when refactoring Token Milagre Platform codebase, analyzing code quality, reducing TypeScript 'any' usage, eliminating dead code, and applying established patterns. Use this skill for code cleanup, component modularization, and technical debt reduction.
+description: "Code refactoring methodology (type safety, dead code elimination, patterns). TRIGGERS: 'refatorar', 'refactoring', 'any typescript', 'código duplicado', 'technical debt', 'code quality', 'dead code'. Use when refactoring codebase, analyzing code quality, reducing 'any' usage, eliminating dead code, applying established patterns, technical debt reduction."
 license: MIT
 ---
 
