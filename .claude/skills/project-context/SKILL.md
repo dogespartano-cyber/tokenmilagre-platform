@@ -14,9 +14,11 @@ allowed-tools: Read
 
 When this skill is invoked, read the following file to load all essential project context:
 
-**File**: `/home/destakar/Trabalho/tokenmilagre-platform/docs-local/CLAUDE-MEMORY.md`
+**File**: `docs-local/CLAUDE-MEMORY.md` (relative to project root)
 
 **Location**: Inside project directory, but excluded from Git (`.gitignore`)
+
+> **Note**: If the file doesn't exist, use `docs-local/CLAUDE-MEMORY.example.md` as reference. The developer should copy `.example.md` to `CLAUDE-MEMORY.md` and customize with their specific information.
 
 This file contains:
 - ⚠️ Critical interaction rules (ALWAYS ask before executing)
@@ -211,7 +213,7 @@ After loading project context, use these specialized skills when needed:
 
 When this skill is invoked:
 
-1. Read `/home/destakar/Trabalho/tokenmilagre-platform/docs-local/CLAUDE-MEMORY.md` completely
+1. Read `docs-local/CLAUDE-MEMORY.md` completely (if it doesn't exist, read `docs-local/CLAUDE-MEMORY.example.md`)
 2. Acknowledge that you've loaded the project context
 3. Be ready to follow all critical rules, especially:
    - ALWAYS ask before executing code
