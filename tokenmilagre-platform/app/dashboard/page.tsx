@@ -17,6 +17,7 @@ import {
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 import AdminRoute from '@/components/AdminRoute';
+import BuildInfoBadge from '@/app/components/BuildInfoBadge';
 
 interface AdminStats {
   totalArticles: number;
@@ -396,6 +397,7 @@ export default function AdminDashboardPage() {
           </div>
         </div>
       </div>
+      <BuildInfoBadge />
     </AdminRoute>
   );
 }
