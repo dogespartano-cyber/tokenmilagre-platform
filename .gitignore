@@ -14,9 +14,10 @@ __pycache__/
 # Claude Code - arquivos com credenciais
 .claude/settings.local.json
 
-# Ignorar tudo na raiz EXCETO tokenmilagre-platform/
+# Ignorar tudo na raiz EXCETO tokenmilagre-platform/ e server/
 /*
 !/tokenmilagre-platform/
+!/server/
 !.gitignore
 !README.md
 
