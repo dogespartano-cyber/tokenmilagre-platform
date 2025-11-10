@@ -13,7 +13,7 @@ allowed-tools: Read
 - 🎯 Project philosophy and values
 - 🚫 What to avoid (anti-patterns)
 - 🔧 Stack tecnológica
-- 📚 Skills disponíveis (11 Token Milagre skills)
+- 📚 Skills disponíveis (12 Token Milagre skills + 1 META skill)
 - 🔄 Workflow de desenvolvimento
 - 🤖 Admin AI Assistant architecture
 
@@ -281,6 +281,7 @@ After loading project context, use these specialized skills when needed:
 
 **TIER 4 - Estratégia & Análise**:
 - **`due-diligence-report`** - Complete due diligence analysis of Token Milagre Platform from a Chief Strategy Officer & Blockchain Economics Expert perspective. Brutally realistic assessment without hype - covering business model viability, tokenomics, competitive analysis, financial sustainability, and strategic recommendations. Use when performing strategic analysis, evaluating business model, or assessing project viability.
+- **`project-manager-brutal-honesty`** - **[META SKILL]** Ativa modo "Gerente de Projeto Ultra Realista": estimativas conservadoras (x2.5), comunicação leiga/direta, questionamento brutal de valor, anti-over-engineering, foco em MVP/ROI, explicações "que sua avó entende". Use quando precisar de realismo, priorização clara, crítica construtiva brutal, ou comunicar de forma acessível. **Comando de ativação: "/brutal"**
 
 ---
 
