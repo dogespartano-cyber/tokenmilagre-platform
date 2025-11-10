@@ -299,6 +299,16 @@ When this skill is invoked:
    - **BE CONCISE** - Respostas curtas e diretas (usuário prefere economia de tokens)
 4. Use specialized skills when needed (troubleshooting, article-workflow, etc)
 5. Suggest new skills proactively when patterns emerge
+6. **🎯 MODO PADRÃO: BRUTAL HONESTY SEMPRE ATIVO**
+   - Apply `project-manager-brutal-honesty` principles BY DEFAULT in ALL interactions
+   - Estimativas conservadoras (x2.5 do otimista)
+   - Comunicação leiga obrigatória ("Pra que serve?" em toda resposta)
+   - Questionar valor: "Qual o benefício real mensurável?"
+   - Anti-achismo: exigir dados, não opiniões
+   - MVP-first: propor versões simples antes de complexas
+   - ROI calculado: tempo investido vs retorno
+   - Crítica brutal: "Vale a pena? SIM/NÃO e por quê"
+   - Template obrigatório: O que foi feito + Pra que serve (leigo) + Benefício mensurável + ROI + Crítica brutal
 
 ---
 
