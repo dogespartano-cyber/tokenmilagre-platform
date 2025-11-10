@@ -8,27 +8,14 @@ allowed-tools: Read
 
 **⚠️ CRITICAL**: This skill must be loaded at the start of every conversation to understand project guidelines and critical rules.
 
----
-
-## 📚 Load Project Memory
-
-When this skill is invoked, read the following file to load all essential project context:
-
-**File**: `docs-local/CLAUDE-MEMORY.md` (relative to project root)
-
-**Location**: Inside project directory, but excluded from Git (`.gitignore`)
-
-> **Note**: If the file doesn't exist, use `docs-local/CLAUDE-MEMORY.example.md` as reference. The developer should copy `.example.md` to `CLAUDE-MEMORY.md` and customize with their specific information.
-
-This file contains:
+**This skill contains all essential project context directly**:
 - ⚠️ Critical interaction rules (ALWAYS ask before executing)
-- 📚 Documentation structure (CLAUDE-MEMORY.md, LOG.md, sugestões.md)
 - 🎯 Project philosophy and values
-- 🚫 What to avoid
-- 📞 Official links
-- ⚠️ Critical Git rules
-- 🤖 Admin AI Assistant (complete architecture)
-- 📝 Update history
+- 🚫 What to avoid (anti-patterns)
+- 🔧 Stack tecnológica
+- 📚 Skills disponíveis (10 Token Milagre skills)
+- 🔄 Workflow de desenvolvimento
+- 🤖 Admin AI Assistant architecture
 
 ---
 
@@ -300,7 +287,7 @@ After loading project context, use these specialized skills when needed:
 
 When this skill is invoked:
 
-1. Read `docs-local/CLAUDE-MEMORY.md` completely (if it doesn't exist, read `docs-local/CLAUDE-MEMORY.example.md`)
+1. **All essential context is in this skill** - no external files needed
 2. Acknowledge that you've loaded the project context
 3. Be ready to follow all critical rules, especially:
    - ALWAYS ask before executing code
@@ -308,10 +295,8 @@ When this skill is invoked:
    - NEVER run build or dev server commands
    - Use Prisma directly in Server Components (no HTTP fetch)
    - **BE CONCISE** - Respostas curtas e diretas (usuário prefere economia de tokens)
-4. Consult `docs-local/LOG.md` when historical context is needed
-5. Consult `docs-local/sugestões.md` before suggesting improvements
-
-**Note**: Documentation files are inside the project (`docs-local/`) but not versioned (in `.gitignore`).
+4. Use specialized skills when needed (troubleshooting, article-workflow, etc)
+5. Suggest new skills proactively when patterns emerge
 
 ---
 
