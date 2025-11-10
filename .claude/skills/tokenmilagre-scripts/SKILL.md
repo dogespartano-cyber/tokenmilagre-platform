@@ -1,6 +1,6 @@
 ---
 name: tokenmilagre-scripts
-description: This skill provides patterns for creating utility scripts, automation tools, data migration scripts, and maintenance tasks. Use when building scripts for data processing, database operations, content migration, or platform automation.
+description: "Utility scripts and automation patterns (data migration, bulk processing). TRIGGERS: 'script', 'automação', 'migration script', 'bulk processing', 'data processing', 'utility'. Use when building scripts for data processing, database operations, content migration, platform automation, maintenance tasks."
 license: MIT
 ---
 

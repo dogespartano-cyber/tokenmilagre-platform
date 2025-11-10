@@ -1,6 +1,6 @@
 ---
 name: tokenmilagre-database
-description: This skill guides database management including Prisma schema design, migrations, data modeling, query optimization, and database maintenance. Use when modifying the database schema, creating migrations, optimizing queries, or troubleshooting database issues.
+description: "Database management with Prisma (schema, migrations, optimization). TRIGGERS: 'Prisma', 'schema', 'migration', 'database', 'query optimization', 'modelo de dados'. Use when modifying database schema, creating migrations, optimizing queries, troubleshooting database issues, data modeling."
 license: MIT
 ---
 

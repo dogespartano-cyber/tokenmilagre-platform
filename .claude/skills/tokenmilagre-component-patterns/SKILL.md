@@ -1,6 +1,6 @@
 ---
 name: tokenmilagre-component-patterns
-description: This skill should be used when refactoring large React components, extracting custom hooks, organizing component structure, and applying best practices for maintainability. Use this skill to break down components >500 lines into modular, testable pieces.
+description: "Component refactoring and architectural patterns. TRIGGERS: 'refatorar componente', 'component refactor', 'custom hooks', '>500 lines', 'componentização', 'quebrar componente'. Use when refactoring large React components, extracting custom hooks, organizing component structure, breaking down components >500 lines into modular pieces."
 license: MIT
 ---
 

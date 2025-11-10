@@ -1,6 +1,6 @@
 ---
 name: due-diligence-report
-description: Complete due diligence analysis of Token Milagre Platform from a Chief Strategy Officer & Blockchain Economics Expert perspective. Brutally realistic assessment without hype - covering business model viability, tokenomics, competitive analysis, financial sustainability, and strategic recommendations.
+description: "Strategic due diligence analysis (business model, tokenomics, viability). TRIGGERS: 'due diligence', 'análise estratégica', 'business model', 'tokenomics', 'competitive analysis', 'viabilidade financeira', 'strategic recommendations'. Use when performing strategic analysis, evaluating business model, assessing project viability, competitive analysis, financial sustainability assessment."
 license: MIT
 ---
 

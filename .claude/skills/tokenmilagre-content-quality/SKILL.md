@@ -1,6 +1,6 @@
 ---
 name: tokenmilagre-content-quality
-description: This skill provides guidelines for maintaining high-quality content standards including SEO optimization, editorial quality checks, fact-checking workflows, readability metrics, and content validation. Use when creating or reviewing articles to ensure professional quality.
+description: "Content quality standards and SEO optimization. TRIGGERS: 'SEO', 'qualidade de conteúdo', 'content quality', 'readability', 'legibilidade', 'editorial quality', 'validação de conteúdo'. Use when creating or reviewing articles, implementing SEO, ensuring professional quality, checking readability metrics."
 license: MIT
 ---
 
