@@ -13,7 +13,7 @@ allowed-tools: Read
 - 🎯 Project philosophy and values
 - 🚫 What to avoid (anti-patterns)
 - 🔧 Stack tecnológica
-- 📚 Skills disponíveis (10 Token Milagre skills)
+- 📚 Skills disponíveis (11 Token Milagre skills)
 - 🔄 Workflow de desenvolvimento
 - 🤖 Admin AI Assistant architecture
 
@@ -269,6 +269,7 @@ After loading project context, use these specialized skills when needed:
 - **`tokenmilagre-api-integrations`** - External API integration patterns (Perplexity AI, Gemini, Binance, CoinGecko). Use when integrating APIs, handling rate limits, implementing caching, or troubleshooting API errors.
 - **`tokenmilagre-copilot-tools`** - Copilot AI tool development with type-safe patterns. Use when creating new tools, implementing tool parameters, managing permissions, or setting up activity logging.
 - **`tokenmilagre-content-quality`** - Content quality standards, SEO optimization, readability metrics, and fact-check scoring. Use when creating/reviewing articles, implementing SEO, or setting up quality validation.
+- **`tokenmilagre-url-security`** - URL security and phishing protection system. Hybrid verification (local patterns + API), typosquatting detection, homograph attacks, LinkInterceptor component, and educational modals. Use when implementing link verification, protecting against scams, or adding security features to content areas.
 
 **TIER 3 - Infraestrutura**:
 - **`tokenmilagre-database`** - Prisma schema design, migrations, query optimization, and database maintenance. Use when modifying schema, creating migrations, optimizing queries, or troubleshooting database issues.
