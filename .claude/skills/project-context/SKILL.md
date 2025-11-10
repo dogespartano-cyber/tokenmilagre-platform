@@ -250,6 +250,15 @@ Quando em dúvida, pergunte:
 
 After loading project context, use these specialized skills when needed:
 
+### 📚 Legacy Skills (Project-Specific)
+- **`article-creation`** - Templates, checklists, scripts práticos para criação de artigos/notícias. Use quando precisar de exemplos de estrutura, scripts Node.js, ou sistema de slug único.
+- **`chat-workflow`** - Sistema chat IA completo (/dashboard/criar-artigo). Use quando trabalhar com detecção de intenção, comandos naturais, ou arquitetura do chat.
+- **`design-system`** - CSS variables, spacing, cores, padrões visuais específicos do projeto. Use quando estilizar páginas, trabalhar com tema claro/escuro, ou aplicar identidade visual.
+- **`pages-reference`** - Informações detalhadas sobre páginas específicas (/educacao, /recursos, /noticias, etc). Use quando modificar ou entender features de páginas.
+- **`troubleshooting`** - Histórico completo de problemas técnicos resolvidos (1286 linhas de conhecimento institucional). Use quando encontrar bugs similares a problemas passados.
+
+**Note:** `database-setup` skill was consolidated into `tokenmilagre-database` (TIER 3 below) for better organization.
+
 ### 💎 Token Milagre Skills
 
 **TIER 1 - Fundamentos**:
@@ -263,7 +272,7 @@ After loading project context, use these specialized skills when needed:
 - **`tokenmilagre-content-quality`** - Content quality standards, SEO optimization, readability metrics, and fact-check scoring. Use when creating/reviewing articles, implementing SEO, or setting up quality validation.
 
 **TIER 3 - Infraestrutura**:
-- **`tokenmilagre-database`** - Prisma schema design, migrations, query optimization, and database maintenance. Use when modifying schema, creating migrations, optimizing queries, or troubleshooting database issues.
+- **`tokenmilagre-database`** - Complete database management guide: Prisma schema design, migrations, query optimization, Server Components patterns, build configuration, and Vercel deployment. Consolidated with database-setup skill. Use when modifying schema, creating migrations, optimizing queries, troubleshooting database issues, or configuring Prisma in Server Components.
 - **`tokenmilagre-scripts`** - Utility scripts and automation patterns (migrations, bulk processing, analytics). Use when building scripts for data processing, content migration, or platform automation.
 - **`tokenmilagre-testing`** - Testing strategies (unit, integration, E2E, component testing). Use when setting up tests, writing test cases, or debugging test failures.
 
