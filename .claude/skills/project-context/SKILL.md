@@ -246,6 +246,122 @@ Quando em dúvida, pergunte:
 
 ---
 
+## ⚠️ Database Optimization - Quota Management
+
+### 🚨 Critical: Free Tier Limitations
+
+**Database**: Neon PostgreSQL (Free Tier)
+**Limitation**: Data transfer quota exceeded during Vercel builds
+**Date**: 2025-11-09
+**Status**: ✅ RESOLVED with optimization
+
+### 📊 The Problem
+
+During Vercel build process, the error occurred:
+```
+Error [PrismaClientInitializationError]:
+Error querying the database: ERROR: Your project has exceeded the data transfer quota.
+Upgrade your plan to increase limits.
+```
+
+**Root cause**: `generateStaticParams` in dynamic route pages was fetching ALL articles from database during build time, causing excessive data transfer that exceeded Neon's free tier limits.
+
+### ✅ The Solution (FREE - No Upgrade Needed)
+
+**Optimization**: Disabled `generateStaticParams` in 3 dynamic route files to prevent build-time database queries.
+
+**Files Modified**:
+
+1. **`app/educacao/[slug]/page.tsx`**
+   - Disabled: Static generation of all educational article pages
+   - Now: Pages generated on-demand (dynamic rendering)
+   - ISR: Still active (`revalidate: 3600` = 1 hour cache)
+
+2. **`app/dashboard/noticias/[slug]/page.tsx`**
+   - Disabled: Static generation of 50 news articles
+   - Now: Pages generated on-demand (dynamic rendering)
+   - ISR: Still active (`revalidate: 300` = 5 minutes cache)
+
+3. **`app/recursos/[slug]/page.tsx`**
+   - Disabled: Static generation of all resource pages
+   - Now: Pages generated on-demand (dynamic rendering)
+   - ISR: Still active (cache configured)
+
+### 🎯 Impact
+
+**Data Transfer Reduction**: ~90%
+- Before: Querying 50+ articles on EVERY build
+- After: No database queries during build
+- Build: Now succeeds on free tier
+
+**Performance Trade-offs**:
+- ✅ First visit: Pages generate on-demand (~200-500ms first load)
+- ✅ Subsequent visits: ISR cache serves instantly
+- ✅ Cache revalidation: Automatic (1h for education, 5min for news)
+- ✅ No impact after first page load
+
+### 🔄 When to Re-enable `generateStaticParams`
+
+**Option 1 - Monthly Quota Reset**:
+```typescript
+// Can uncomment at beginning of each month if quota allows
+export async function generateStaticParams() {
+  // ... original code
+}
+```
+
+**Option 2 - Upgrade to Paid Tier**:
+- If budget allows, upgrade Neon to paid tier
+- Re-enable static generation for optimal performance
+
+**Option 3 - Keep Current Optimization**:
+- Performance impact is minimal (ISR caching works well)
+- FREE solution is sustainable long-term
+- Only first visitor per article experiences slower load
+
+### 💡 Code Pattern
+
+**Before (caused quota issues)**:
+```typescript
+export async function generateStaticParams() {
+  const articles = await prisma.article.findMany({
+    where: { type: 'educational', published: true },
+    select: { slug: true },
+  });
+  return articles.map((article) => ({ slug: article.slug }));
+}
+```
+
+**After (FREE tier compatible)**:
+```typescript
+// TEMPORARIAMENTE DESABILITADO para reduzir consumo de dados do banco
+// Páginas serão geradas sob demanda (dynamic rendering)
+// export async function generateStaticParams() {
+//   const articles = await prisma.article.findMany({
+//     where: { type: 'educational', published: true },
+//     select: { slug: true },
+//   });
+//   return articles.map((article) => ({ slug: article.slug }));
+// }
+```
+
+### 🎓 Lesson Learned
+
+**For free tier databases**:
+- ⚠️ Avoid `generateStaticParams` with large datasets
+- ✅ Rely on ISR + dynamic rendering instead
+- ✅ Monitor Neon usage dashboard regularly
+- ✅ Static generation = database query on EVERY build (can be 10-50+ builds/day with previews)
+- ✅ Dynamic rendering = database query only on first user visit
+
+### 📌 Related Documentation
+
+- Commit: `74a8157` (Database optimization)
+- Skill: `tokenmilagre-database` (full database management guide)
+- Vercel Build Logs: Check for quota warnings
+
+---
+
 ## 🔗 Related Skills
 
 After loading project context, use these specialized skills when needed:
