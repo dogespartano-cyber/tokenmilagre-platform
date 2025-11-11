@@ -1,11 +1,61 @@
-# Scripts de Publicação - Token Milagre Platform
+# Scripts - Token Milagre Platform
 
 ## 📋 Índice
 
+- [Migração de Banco de Dados](#migração-de-banco-de-dados) 🆕
 - [Criar Notícias](#criar-notícias)
 - [Sistema de Slug Único](#sistema-de-slug-único)
 - [Helpers Disponíveis](#helpers-disponíveis)
 - [Exemplos Práticos](#exemplos-práticos)
+
+## 🚀 Migração de Banco de Dados
+
+### test-database-connections.js
+
+Testa conexões com Neon e Supabase antes de executar a migração.
+
+**Uso:**
+```bash
+# Configure as variáveis de ambiente
+export POSTGRES_PRISMA_URL="postgresql://..."
+export SUPABASE_POSTGRES_PRISMA_URL="postgresql://..."
+
+# Execute o teste
+node scripts/test-database-connections.js
+```
+
+**O que ele testa:**
+- ✅ Conectividade com ambos os bancos
+- ✅ Execução de queries básicas
+- ✅ Contagem de registros em tabelas principais
+- ✅ Validação de credenciais
+
+**Saída esperada:**
+```
+🚀 Testador de Conexões - Migração Neon → Supabase
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Neon (Origem): OK
+✅ Supabase (Destino): OK
+🎉 PRONTO PARA MIGRAÇÃO!
+```
+
+### cleanup-migration.sh
+
+Remove todas as rotas temporárias após migração bem-sucedida.
+
+**Uso:**
+```bash
+./scripts/cleanup-migration.sh
+```
+
+**O que ele remove:**
+- `app/api/setup-supabase-schema/`
+- `app/api/migrate-database/`
+- `app/api/validate-migration/`
+- `MIGRATION.md`
+- `scripts/cleanup-migration.sh` (ele mesmo)
+
+**📖 Documentação completa:** Veja `MIGRATION.md` e `VERCEL_SETUP.md`
 
 ## 🆕 Criar Notícias
 
