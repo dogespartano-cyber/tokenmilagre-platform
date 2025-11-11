@@ -5,26 +5,27 @@ import ArtigoClient from './ArtigoClient';
 // Cache ISR: Revalida a cada 5 minutos (notícias mudam com mais frequência)
 export const revalidate = 300;
 
-// Gera páginas estáticas em build time para notícias recentes
-export async function generateStaticParams() {
-  const articles = await prisma.article.findMany({
-    where: {
-      type: 'news',
-      published: true,
-    },
-    select: {
-      slug: true,
-    },
-    take: 50, // Últimas 50 notícias
-    orderBy: {
-      createdAt: 'desc',
-    },
-  });
+// TEMPORARIAMENTE DESABILITADO para reduzir consumo de dados do banco
+// Páginas serão geradas sob demanda (dynamic rendering)
+// export async function generateStaticParams() {
+//   const articles = await prisma.article.findMany({
+//     where: {
+//       type: 'news',
+//       published: true,
+//     },
+//     select: {
+//       slug: true,
+//     },
+//     take: 50, // Últimas 50 notícias
+//     orderBy: {
+//       createdAt: 'desc',
+//     },
+//   });
 
-  return articles.map((article) => ({
-    slug: article.slug,
-  }));
-}
+//   return articles.map((article) => ({
+//     slug: article.slug,
+//   }));
+// }
 
 interface NewsItem {
   id: string;

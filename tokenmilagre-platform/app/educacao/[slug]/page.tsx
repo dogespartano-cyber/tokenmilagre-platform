@@ -9,22 +9,23 @@ export const revalidate = 3600;
 // Permite gerar páginas dinamicamente para slugs não pré-gerados
 export const dynamicParams = true;
 
-// Gera páginas estáticas em build time para todos os artigos educacionais
-export async function generateStaticParams() {
-  const articles = await prisma.article.findMany({
-    where: {
-      type: 'educational',
-      published: true,
-    },
-    select: {
-      slug: true,
-    },
-  });
+// TEMPORARIAMENTE DESABILITADO para reduzir consumo de dados do banco
+// Páginas serão geradas sob demanda (dynamic rendering)
+// export async function generateStaticParams() {
+//   const articles = await prisma.article.findMany({
+//     where: {
+//       type: 'educational',
+//       published: true,
+//     },
+//     select: {
+//       slug: true,
+//     },
+//   });
 
-  return articles.map((article) => ({
-    slug: article.slug,
-  }));
-}
+//   return articles.map((article) => ({
+//     slug: article.slug,
+//   }));
+// }
 
 interface EducationalArticle {
   id: string;

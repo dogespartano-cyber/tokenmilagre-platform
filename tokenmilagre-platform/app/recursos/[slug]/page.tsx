@@ -9,12 +9,14 @@ export const revalidate = 3600;
 // Permite gerar páginas dinamicamente para slugs não pré-gerados
 export const dynamicParams = true;
 
-export async function generateStaticParams() {
-  const slugs = await getAllResourceSlugs();
-  return slugs.map((slug) => ({
-    slug,
-  }));
-}
+// TEMPORARIAMENTE DESABILITADO para reduzir consumo de dados do banco
+// Páginas serão geradas sob demanda (dynamic rendering)
+// export async function generateStaticParams() {
+//   const slugs = await getAllResourceSlugs();
+//   return slugs.map((slug) => ({
+//     slug,
+//   }));
+// }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
