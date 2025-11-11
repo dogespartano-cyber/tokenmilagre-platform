@@ -328,6 +328,41 @@ export default function SobrePage() {
           {/* Divider */}
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
+          {/* Link para Equipe */}
+          <div className="space-y-6">
+            <div className="backdrop-blur-xl rounded-2xl p-8 border-2 hover:scale-102 transition-all" style={{
+              backgroundColor: 'var(--bg-secondary)',
+              borderColor: 'var(--brand-primary)'
+            }}>
+              <div className="flex items-center justify-between gap-6">
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
+                    Conheça Nossa Comunidade
+                  </h3>
+                  <p className="text-lg mb-4" style={{ color: 'var(--text-secondary)' }}>
+                    Descubra como nos organizamos, por que somos descentralizados e como você pode se tornar um contribuidor ativo.
+                  </p>
+                  <a
+                    href="/sobre/equipe"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all hover:scale-105"
+                    style={{
+                      backgroundColor: 'var(--brand-primary)',
+                      color: 'var(--text-inverse)'
+                    }}
+                  >
+                    Ver Equipe e Estrutura →
+                  </a>
+                </div>
+                <div className="hidden lg:block text-6xl">
+                  👥
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
           {/* CTA Final */}
           <div className="space-y-6 py-8">
             <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
