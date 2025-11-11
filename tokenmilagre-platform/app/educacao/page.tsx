@@ -6,6 +6,9 @@ export const metadata = {
   description: 'Artigos e tutoriais gratuitos criados e curados pela comunidade $MILAGRE. Conhecimento livre, acessível a todos.',
 };
 
+// OTIMIZAÇÃO: Force dynamic rendering para evitar queries no build (Neon free tier quota)
+export const dynamic = 'force-dynamic';
+
 // Cache ISR: Revalida a cada 1 hora (artigos educacionais mudam raramente)
 export const revalidate = 3600;
 
