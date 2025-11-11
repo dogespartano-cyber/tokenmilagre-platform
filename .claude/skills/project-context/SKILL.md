@@ -266,6 +266,61 @@ Upgrade your plan to increase limits.
 
 **Root cause**: `generateStaticParams` in dynamic route pages was fetching ALL articles from database during build time, causing excessive data transfer that exceeded Neon's free tier limits.
 
+### 💣 Por Que Isso Era CRÍTICO
+
+**Cenário Real - ANTES das otimizações**:
+
+Cada commit/push dispara um build Vercel. Durante o build:
+```
+Build 1 (fix: corrigir link Discord):
+├─ generateStaticParams em /educacao/[slug] → 30 artigos
+├─ generateStaticParams em /noticias/[slug] → 50 notícias
+├─ generateStaticParams em /recursos/[slug] → 25 recursos
+├─ Query em /educacao/page.tsx → 12 artigos
+└─ Query em /recursos/page.tsx → 25 recursos
+   = ~142 queries ao banco ❌
+
+Build 2 (fix: corrigir erro no link):
+└─ Mesmas 142 queries DE NOVO ❌
+
+Build 3 (fix: ajustar texto):
+└─ Mais 142 queries ❌
+
+Build 4, 5, 6... (iteração de desenvolvimento):
+└─ Idem, idem, idem...
+
+Resultado: 10 builds = 1.420 queries = QUOTA EXCEDIDA 🔴
+```
+
+**Comportamento ATUAL - DEPOIS das otimizações**:
+```
+Build 1, 2, 3, 4, 5... 100, 200 (quantos forem):
+├─ Compila TypeScript ✅
+├─ Gera bundles JavaScript ✅
+├─ Otimiza assets (CSS, imagens) ✅
+└─ Query ao banco? ❌ ZERO
+
+= Builds infinitos, ZERO impacto no banco ✅
+```
+
+**Quando o banco É acessado agora?**
+```
+Usuário real visita /educacao pela 1ª vez:
+└─ Servidor faz query → busca 12 artigos (1 query)
+└─ Cacheia resultado por 1 hora (ISR)
+└─ Próximos 1000 visitantes = cache (0 queries)
+
+Após 1 hora, próximo visitante:
+└─ Revalida cache → 1 query
+└─ Mais 1000 visitantes = cache (0 queries)
+```
+
+**Impacto prático**:
+- ✅ **100 commits/dia** = 0 impacto no banco
+- ✅ **Previews infinitos** = 0 preocupação com quota
+- ✅ **Builds "à toa"** (fixes de texto, links) = não custam nada
+- ✅ **FREE tier** = sustentável indefinidamente
+
 ### ✅ The Solution (FREE - No Upgrade Needed)
 
 **Optimization**: Disabled `generateStaticParams` in 3 dynamic route files to prevent build-time database queries.
