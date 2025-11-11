@@ -290,7 +290,7 @@ Modo claro e escuro via CSS Variables:
 ## 🔗 Links Importantes
 
 - **Token Contract**: [3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump](https://solscan.io/token/3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump)
-- **Discord**: [discord.gg/skaX8bFY](https://discord.gg/skaX8bFY)
+- **Discord**: [discord.gg/xk4zrz8j](https://discord.gg/xk4zrz8j)
 - **Telegram**: [t.me/+Bop_TVFc_mg3Njlh](https://t.me/+Bop_TVFc_mg3Njlh)
 - **Pump.fun**: [pump.fun/coin/3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump](https://pump.fun/coin/3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump)
 

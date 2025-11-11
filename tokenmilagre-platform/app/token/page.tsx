@@ -299,7 +299,7 @@ export default function SobrePage() {
             {/* Community Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 max-w-2xl">
               <a
-                href="https://discord.gg/skaX8bFY"
+                href="https://discord.gg/xk4zrz8j"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center justify-center gap-3 px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-theme-xl hover:shadow-2xl hover:scale-105"

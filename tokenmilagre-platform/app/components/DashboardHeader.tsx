@@ -346,7 +346,7 @@ export default function DashboardHeader({ title, description }: DashboardHeaderP
           }}
         >
           <a
-            href="https://discord.gg/skaX8bFY"
+            href="https://discord.gg/xk4zrz8j"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg hover:shadow-xl hover:scale-105 whitespace-nowrap"
