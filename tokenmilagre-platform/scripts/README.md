@@ -10,33 +10,69 @@
 
 ## 🚀 Migração de Banco de Dados
 
+### ⚡ EXECUÇÃO RÁPIDA
+
+**Veja `QUICK_START.md` para instruções rápidas de migração!**
+
+```bash
+# Migrar AGORA (1 comando)
+POSTGRES_PRISMA_URL="postgresql://..." \
+SUPABASE_POSTGRES_PRISMA_URL="postgresql://..." \
+node scripts/migrate-now.js
+```
+
+---
+
+### migrate-now.js 🆕
+
+**Script standalone** para executar migração direta via Node.js (não depende de rotas de API).
+
+**Uso:**
+```bash
+# Opção 1: Inline
+POSTGRES_PRISMA_URL="postgresql://..." \
+SUPABASE_POSTGRES_PRISMA_URL="postgresql://..." \
+node scripts/migrate-now.js
+
+# Opção 2: Exportar primeiro
+export POSTGRES_PRISMA_URL="postgresql://..."
+export SUPABASE_POSTGRES_PRISMA_URL="postgresql://..."
+node scripts/migrate-now.js
+```
+
+**O que ele faz:**
+- ✅ Migra TODAS as 14 tabelas do schema
+- ✅ Mostra progresso em tempo real
+- ✅ Ignora duplicatas automaticamente
+- ✅ Gera relatório completo ao final
+- ✅ Não requer deploy ou API routes
+
+### validate-migration.js 🆕
+
+**Script standalone** para validar migração comparando counts entre Neon e Supabase.
+
+**Uso:**
+```bash
+POSTGRES_PRISMA_URL="postgresql://..." \
+SUPABASE_POSTGRES_PRISMA_URL="postgresql://..." \
+node scripts/validate-migration.js
+```
+
+**O que ele faz:**
+- ✅ Compara counts de todas as 14 tabelas
+- ✅ Mostra diferenças em tempo real
+- ✅ Exit code 0 se OK, 1 se houver problemas
+- ✅ Relatório detalhado de validação
+
 ### test-database-connections.js
 
 Testa conexões com Neon e Supabase antes de executar a migração.
 
 **Uso:**
 ```bash
-# Configure as variáveis de ambiente
 export POSTGRES_PRISMA_URL="postgresql://..."
 export SUPABASE_POSTGRES_PRISMA_URL="postgresql://..."
-
-# Execute o teste
 node scripts/test-database-connections.js
-```
-
-**O que ele testa:**
-- ✅ Conectividade com ambos os bancos
-- ✅ Execução de queries básicas
-- ✅ Contagem de registros em tabelas principais
-- ✅ Validação de credenciais
-
-**Saída esperada:**
-```
-🚀 Testador de Conexões - Migração Neon → Supabase
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅ Neon (Origem): OK
-✅ Supabase (Destino): OK
-🎉 PRONTO PARA MIGRAÇÃO!
 ```
 
 ### cleanup-migration.sh
@@ -48,14 +84,13 @@ Remove todas as rotas temporárias após migração bem-sucedida.
 ./scripts/cleanup-migration.sh
 ```
 
-**O que ele remove:**
-- `app/api/setup-supabase-schema/`
-- `app/api/migrate-database/`
-- `app/api/validate-migration/`
-- `MIGRATION.md`
-- `scripts/cleanup-migration.sh` (ele mesmo)
+---
 
-**📖 Documentação completa:** Veja `MIGRATION.md` e `VERCEL_SETUP.md`
+### 📖 Documentação Completa
+
+- **`QUICK_START.md`** - Guia rápido (15-20 min) 🆕
+- **`MIGRATION.md`** - Documentação detalhada
+- **`VERCEL_SETUP.md`** - Deploy no Vercel
 
 ## 🆕 Criar Notícias
 
