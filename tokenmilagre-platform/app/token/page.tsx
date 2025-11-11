@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Script from 'next/script';
 import { HolderCounter } from '@/components/HolderCounter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faCoins, faBrain, faHeart, faStar, faShield, faHandHoldingHeart, faRocket, faWandSparkles, faCopy, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp, faCoins, faBrain, faHeart, faStar, faShield, faShieldHalved, faHandHoldingHeart, faRocket, faWandSparkles, faCopy, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
 export default function SobrePage() {
@@ -413,9 +413,24 @@ export default function SobrePage() {
               <h2 className="text-5xl lg:text-6xl font-bold mb-6 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                 Informações do Token
               </h2>
-              <p className="text-xl max-w-3xl" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-xl max-w-3xl mb-6" style={{ color: 'var(--text-secondary)' }}>
                 Transparência total. Tecnologia de ponta. Segurança garantida pela blockchain Solana.
               </p>
+
+              {/* CTA Segurança */}
+              <a
+                href="/token/seguranca"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-theme-xl hover:shadow-2xl hover:scale-105 border-2"
+                style={{
+                  background: 'linear-gradient(135deg, #10B981, #059669)',
+                  borderColor: '#10B981',
+                  color: 'white'
+                }}
+              >
+                <FontAwesomeIcon icon={faShieldHalved} className="text-xl" />
+                <span>Ver Segurança e Transparência</span>
+                <span className="text-sm opacity-80">→</span>
+              </a>
             </div>
 
             {/* Main Token Card */}
@@ -491,7 +506,7 @@ export default function SobrePage() {
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                   {[
                     { label: 'Blockchain', value: 'Solana' },
                     { label: 'Tipo', value: 'SPL Token' },
@@ -506,6 +521,39 @@ export default function SobrePage() {
                       <p className="font-bold" style={{ color: 'var(--text-primary)' }}>{stat.value}</p>
                     </div>
                   ))}
+                </div>
+
+                {/* Security Notice */}
+                <div className="p-5 rounded-2xl border-2" style={{
+                  backgroundColor: '#10B98110',
+                  borderColor: '#10B981'
+                }}>
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{
+                      backgroundColor: '#10B981',
+                      color: 'white'
+                    }}>
+                      <FontAwesomeIcon icon={faShieldHalved} className="text-xl" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-bold text-lg mb-1" style={{ color: 'var(--text-primary)' }}>
+                        Transparência Total
+                      </h4>
+                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                        Veja informações detalhadas sobre segurança, autoridades do token e como verificar você mesmo.
+                      </p>
+                    </div>
+                    <a
+                      href="/token/seguranca"
+                      className="px-6 py-3 rounded-xl font-bold transition-all hover:scale-105 whitespace-nowrap"
+                      style={{
+                        backgroundColor: '#10B981',
+                        color: 'white'
+                      }}
+                    >
+                      Ver Detalhes →
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
