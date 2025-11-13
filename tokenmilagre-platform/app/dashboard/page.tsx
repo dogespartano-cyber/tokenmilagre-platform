@@ -76,6 +76,13 @@ export default function AdminDashboardPage() {
       gradient: 'linear-gradient(135deg, #7C3AED, #F59E0B)'
     },
     {
+      title: '⚡ Geração em Massa',
+      description: 'Popule o banco automaticamente com múltiplos artigos de qualidade',
+      icon: faRobot,
+      href: '/dashboard/gerar-em-massa',
+      gradient: 'linear-gradient(135deg, #7C3AED, #F59E0B)'
+    },
+    {
       title: 'Gerenciar Artigos',
       description: 'Visualize, edite e delete artigos publicados',
       icon: faNewspaper,
@@ -297,7 +304,7 @@ export default function AdminDashboardPage() {
           <h2 className="text-2xl font-bold mb-6 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
             Ferramentas Administrativas
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature) => (
               <Link
                 key={feature.href}
