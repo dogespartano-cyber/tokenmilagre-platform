@@ -28,11 +28,8 @@ const tagsSchema = z.array(z.string())
   .min(VALIDATION_RULES.tags.min, `Mínimo de ${VALIDATION_RULES.tags.min} tags`)
   .max(VALIDATION_RULES.tags.max, `Máximo de ${VALIDATION_RULES.tags.max} tags`);
 
-const citationSchema = z.object({
-  url: z.string().url('URL inválida'),
-  title: z.string().optional(),
-  snippet: z.string().optional()
-});
+// Citations são sempre strings (URLs) vindas do Perplexity
+const citationsSchema = z.array(z.string().url('URL de citação inválida'));
 
 // ============================================================================
 // News Article Schema
@@ -62,7 +59,7 @@ export const newsArticleSchema = z.object({
 
   tags: tagsSchema,
 
-  citations: z.array(citationSchema).optional(),
+  citations: citationsSchema.optional(),
 
   coverImage: z.string().optional(),
 
@@ -99,7 +96,7 @@ export const educationalArticleSchema = z.object({
 
   tags: tagsSchema,
 
-  citations: z.array(citationSchema).optional(),
+  citations: citationsSchema.optional(),
 
   coverImage: z.string().optional(),
 
