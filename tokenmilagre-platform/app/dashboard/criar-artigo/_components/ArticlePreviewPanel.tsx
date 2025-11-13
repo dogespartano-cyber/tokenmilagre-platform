@@ -15,7 +15,7 @@ interface ArticlePreviewPanelProps {
   copiedProcessed: boolean;
   generatingCover: boolean;
   processing: boolean;
-  refineSectionRef: React.RefObject<HTMLDivElement>;
+  refineSectionRef: React.RefObject<HTMLDivElement | null>;
   onProcessWithGemini: () => void;
   onCopyArticle: () => void;
   onGenerateCover: () => Promise<void>;

@@ -11,7 +11,7 @@ interface RefinementInputProps {
   onChange: (value: string) => void;
   onRefine: () => void;
   refining: boolean;
-  refineSectionRef: React.RefObject<HTMLDivElement>;
+  refineSectionRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export default function RefinementInput({
