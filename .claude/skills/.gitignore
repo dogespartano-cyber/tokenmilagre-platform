@@ -1,0 +1,4 @@
+# Backups de otimizações
+BACKUP-*/
+# Templates gerados (podem ser regenerados)
+templates/
