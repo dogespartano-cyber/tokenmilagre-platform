@@ -53,11 +53,11 @@ export const newsArticleSchema = z.object({
     .min(VALIDATION_RULES.content.minLength, `Conteúdo deve ter pelo menos ${VALIDATION_RULES.content.minLength} caracteres`),
 
   category: z.enum(NEWS_CATEGORIES as unknown as [string, ...string[]], {
-    errorMap: () => ({ message: 'Categoria inválida para notícia' })
+    message: 'Categoria inválida para notícia'
   }),
 
   sentiment: z.enum(SENTIMENTS as unknown as [Sentiment, ...Sentiment[]], {
-    errorMap: () => ({ message: 'Sentimento deve ser positive, neutral ou negative' })
+    message: 'Sentimento deve ser positive, neutral ou negative'
   }).optional(),
 
   tags: tagsSchema,
@@ -90,11 +90,11 @@ export const educationalArticleSchema = z.object({
     .min(VALIDATION_RULES.content.minLength, `Conteúdo deve ter pelo menos ${VALIDATION_RULES.content.minLength} caracteres`),
 
   category: z.enum(EDUCATIONAL_CATEGORIES as unknown as [string, ...string[]], {
-    errorMap: () => ({ message: 'Categoria inválida para artigo educacional' })
+    message: 'Categoria inválida para artigo educacional'
   }),
 
   level: z.enum(LEVELS as unknown as [Level, ...Level[]], {
-    errorMap: () => ({ message: 'Nível deve ser iniciante, intermediario ou avancado' })
+    message: 'Nível deve ser iniciante, intermediario ou avancado'
   }),
 
   tags: tagsSchema,
@@ -127,7 +127,7 @@ export const resourceSchema = z.object({
     .min(VALIDATION_RULES.content.minLength, `Descrição deve ter pelo menos ${VALIDATION_RULES.content.minLength} caracteres`),
 
   category: z.enum(RESOURCE_CATEGORIES as unknown as [string, ...string[]], {
-    errorMap: () => ({ message: 'Categoria inválida para recurso' })
+    message: 'Categoria inválida para recurso'
   }),
 
   website: z.string().url('URL do website inválida').optional(),
