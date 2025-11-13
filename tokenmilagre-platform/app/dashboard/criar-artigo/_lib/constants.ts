@@ -311,13 +311,13 @@ export function getApiEndpoint(type: ArticleType): string {
 
 export function isValidCategory(type: ArticleType, category: string): boolean {
   const categories = CATEGORIES_BY_TYPE[type];
-  return categories.includes(category as any);
+  return (categories as unknown as string[]).indexOf(category) !== -1;
 }
 
 export function isValidSentiment(sentiment: string): sentiment is Sentiment {
-  return SENTIMENTS.includes(sentiment as Sentiment);
+  return (SENTIMENTS as unknown as string[]).indexOf(sentiment) !== -1;
 }
 
 export function isValidLevel(level: string): level is Level {
-  return LEVELS.includes(level as Level);
+  return (LEVELS as unknown as string[]).indexOf(level) !== -1;
 }
