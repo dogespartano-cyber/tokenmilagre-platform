@@ -232,7 +232,7 @@ Quando em dúvida, pergunte:
 
 **Framework**: Next.js 15 (App Router)
 **UI**: React 19 + Tailwind CSS + shadcn/ui
-**Database**: PostgreSQL + Prisma ORM
+**Database**: Supabase PostgreSQL + Prisma ORM (migrado de Neon em 2025-11-12)
 **Deploy**: Vercel
 **AI**: Perplexity AI + Google Gemini
 **Icons**: Lucide React
@@ -250,10 +250,10 @@ Quando em dúvida, pergunte:
 
 ### 🚨 Critical: Free Tier Limitations
 
-**Database**: Neon PostgreSQL (Free Tier)
-**Limitation**: Data transfer quota exceeded during Vercel builds
+**Database**: Supabase PostgreSQL (Free Tier) - Migrado de Neon em 2025-11-12
+**Previous Issue**: Data transfer quota exceeded during Vercel builds (Neon)
 **Date**: 2025-11-09
-**Status**: ✅ RESOLVED with optimization
+**Status**: ✅ RESOLVED with optimization + migrated to Supabase
 
 ### 📊 The Problem
 
@@ -405,14 +405,16 @@ export async function generateStaticParams() {
 **For free tier databases**:
 - ⚠️ Avoid `generateStaticParams` with large datasets
 - ✅ Rely on ISR + dynamic rendering instead
-- ✅ Monitor Neon usage dashboard regularly
+- ✅ Monitor database usage dashboard regularly (Supabase Dashboard)
 - ✅ Static generation = database query on EVERY build (can be 10-50+ builds/day with previews)
 - ✅ Dynamic rendering = database query only on first user visit
 
 ### 📌 Related Documentation
 
 - Commit: `74a8157` (Database optimization)
+- Commit: `7e402e6` (Migration Neon → Supabase)
 - Skill: `tokenmilagre-database` (full database management guide)
+- Doc: `docs/MIGRACAO-SUPABASE.md` (complete migration guide)
 - Vercel Build Logs: Check for quota warnings
 
 ---
@@ -888,8 +890,9 @@ git push origin main
 ---
 
 **Skill criada por**: Claude Code
-**Última atualização**: 2025-11-09
+**Última atualização**: 2025-11-13
 **Mudanças recentes**:
+- ✅ Atualizado para Supabase PostgreSQL (migrado de Neon em 2025-11-12)
 - ✅ Adicionadas 10 skills Token Milagre (article-workflow, citations, components, api-integrations, copilot-tools, content-quality, database, scripts, testing, refactoring)
 - ✅ Implementado sistema de sugestão proativa de novas skills
 - ✅ Processo de avaliação automático antes de sugerir skills
