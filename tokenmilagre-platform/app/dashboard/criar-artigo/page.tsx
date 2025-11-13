@@ -18,10 +18,19 @@ import {
 import AdminRoute from '@/components/AdminRoute';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
-import { processArticleLocally, validateProcessedArticle } from '@/lib/article-processor-client';
 import ArticlePreview from '@/components/admin/ArticlePreview';
-
-type ArticleType = 'news' | 'educational' | 'resource';
+import { usePerplexityChat, type ProcessedArticle } from './_hooks/usePerplexityChat';
+import {
+  type ArticleType,
+  ARTICLE_TYPE_CONFIG,
+  PROMPT_SUGGESTIONS,
+  MESSAGES,
+  API_ENDPOINTS,
+  CHAT_CONFIG,
+  ANIMATION_DELAYS,
+  getArticleRoute,
+  getApiEndpoint
+} from './_lib/constants';
 
 // Tipos para componentes ReactMarkdown
 interface MarkdownComponentProps {
@@ -36,38 +45,11 @@ interface MarkdownCodeProps extends MarkdownComponentProps {
   inline?: boolean;
 }
 
-interface Message {
-  role: 'user' | 'assistant';
-  content: string;
-}
-
-interface ProcessedArticle {
-  title: string;
-  slug: string;
-  excerpt?: string;
-  description?: string; // Usado em alguns contextos (alias para excerpt)
-  content?: string;
-  category: string;
-  tags?: string | string[];
-  sentiment?: 'positive' | 'neutral' | 'negative';
-  level?: string;
-  readTime?: string;
-  coverImage?: string;
-  coverImageAlt?: string;
-  type?: ArticleType;
-  citations?: string[]; // Array de URLs das fontes do Perplexity
-  // Resource fields
-  name?: string;
-  shortDescription?: string;
-  officialUrl?: string;
-  platforms?: string[];
-}
-
 const isDev = process.env.NODE_ENV === 'development';
 
 // Helper para extrair mensagem de erro de forma type-safe
 function getErrorMessage(error: unknown): string {
-  if (error instanceof Error) return getErrorMessage(error);
+  if (error instanceof Error) return error.message;
   return String(error);
 }
 
@@ -76,18 +58,26 @@ export default function CriarArtigoPage() {
   const { data: session } = useSession();
   const chatEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const refineSectionRef = useRef<HTMLDivElement>(null);
 
   const [prompt, setPrompt] = useState('');
   const [selectedType, setSelectedType] = useState<ArticleType | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [conversation, setConversation] = useState<Message[]>([]);
   const [generatedArticle, setGeneratedArticle] = useState<ProcessedArticle | null>(null);
-  const [processing, setProcessing] = useState(false);
   const [refinePrompt, setRefinePrompt] = useState('');
   const [refining, setRefining] = useState(false);
   const [copiedProcessed, setCopiedProcessed] = useState(false);
   const [generatingCover, setGeneratingCover] = useState(false);
-  const refineSectionRef = useRef<HTMLDivElement>(null);
+
+  // Usar hook do Perplexity Chat
+  const { conversation, loading, processing, sendMessage, addMessage } = usePerplexityChat({
+    selectedType,
+    onArticleGenerated: (article) => {
+      setGeneratedArticle(article);
+    },
+    onError: (error) => {
+      console.error('Erro no chat:', error);
+    }
+  });
 
   // Garantir que a página sempre inicie no topo
   useEffect(() => {
@@ -273,257 +263,24 @@ export default function CriarArtigoPage() {
     ),
   }), []); // Sem dependências: criado uma vez apenas
 
-  // Função para sanitizar JSON removendo quebras de linha literais
-  const sanitizeJSON = (jsonString: string): string => {
-    // Substitui quebras de linha literais por espaço
-    // Isso preserva o JSON mas remove problemas de parsing
-    return jsonString
-      .replace(/\r\n/g, ' ')  // Windows line breaks
-      .replace(/\n/g, ' ')    // Unix line breaks
-      .replace(/\r/g, ' ')    // Old Mac line breaks
-      .replace(/\t/g, ' ')    // Tabs por espaços
-      .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')  // Remove caracteres de controle ASCII
-      .trim();
-  };
-
-  const detectJSON = (text: string): ProcessedArticle | null => {
-    if (isDev) {
-      console.log('🔍 [detectJSON] Tentando detectar JSON no texto...');
-      console.log('📄 Primeiros 200 chars:', text.substring(0, 200));
-    }
-
-    // Estratégia 1: Markdown code blocks
-    let jsonMatch = text.match(/```json\n?([\s\S]*?)```/);
-    if (jsonMatch) {
-      if (isDev) console.log('✅ JSON encontrado em markdown block');
-      try {
-        const sanitized = sanitizeJSON(jsonMatch[1]);
-        if (isDev) console.log('🧹 JSON sanitizado (primeiros 200 chars):', sanitized.substring(0, 200));
-        const parsed = JSON.parse(sanitized);
-        if (isDev) console.log('✅ JSON parseado com sucesso:', Object.keys(parsed));
-        return parsed;
-      } catch (e) {
-        if (isDev) console.error('❌ Erro ao parsear JSON do markdown:', e);
-      }
-    }
-
-    // Estratégia 2: Extrair do primeiro { ao último }
-    const firstBrace = text.indexOf('{');
-    const lastBrace = text.lastIndexOf('}');
-
-    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-      const extracted = text.substring(firstBrace, lastBrace + 1);
-      if (isDev) console.log('🔍 Tentando extrair JSON bruto (chars ' + firstBrace + ' a ' + lastBrace + ')');
-      try {
-        const sanitized = sanitizeJSON(extracted);
-        if (isDev) console.log('🧹 JSON sanitizado (primeiros 200 chars):', sanitized.substring(0, 200));
-        const parsed = JSON.parse(sanitized);
-        if (isDev) console.log('✅ JSON parseado com sucesso:', Object.keys(parsed));
-        return parsed;
-      } catch (e) {
-        if (isDev) console.error('❌ Erro ao parsear JSON extraído:', e);
-      }
-    }
-
-    if (isDev) console.log('❌ Nenhum JSON válido encontrado');
-    return null;
-  };
-
   const handleSendMessage = async () => {
     if (!prompt.trim()) return;
-
     const userMessage = prompt.trim();
     setPrompt('');
-    setConversation(prev => [...prev, { role: 'user', content: userMessage }]);
-    setLoading(true);
-
-    try {
-      // 1. Chamar Perplexity
-      const response = await fetch('/api/chat-perplexity', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: [...conversation, { role: 'user', content: userMessage }],
-          articleType: selectedType
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Erro ao chamar Perplexity');
-      }
-
-      // 2. Se está gerando artigo, resposta é JSON (não streaming)
-      if (selectedType) {
-        const jsonResponse = await response.json();
-        const content = jsonResponse.content;
-        const citations = jsonResponse.citations || [];
-
-        if (isDev) {
-          console.log('📥 Resposta não-streaming recebida');
-          console.log('📝 Content length:', content.length);
-          console.log('📚 Citations:', citations.length);
-        }
-
-        // Adicionar resposta completa à conversa
-        setConversation(prev => [...prev, { role: 'assistant', content }]);
-
-        // Detectar e processar JSON
-        const detectedArticle = detectJSON(content);
-
-        if (detectedArticle) {
-          try {
-            if (isDev) {
-              console.log('📝 Artigo detectado, processando localmente...');
-              console.log('📊 Artigo bruto:', detectedArticle);
-              console.log('📚 Citations a serem adicionadas:', citations);
-            }
-
-            const processedArticle = processArticleLocally(detectedArticle, selectedType!);
-            if (isDev) console.log('🔧 Artigo processado:', processedArticle);
-
-            const validation = validateProcessedArticle(processedArticle, selectedType!);
-            if (isDev) console.log('✅ Validação:', validation);
-
-            if (!validation.valid) {
-              console.warn('⚠️ Artigo com erros de validação:', validation.errors);
-            }
-
-            // Substituir JSON por mensagem de sucesso
-            setConversation(prev => {
-              const newConv = [...prev];
-              newConv[newConv.length - 1] = {
-                role: 'assistant',
-                content: `✨ **Artigo gerado e processado!**\n\n✅ Título: ${processedArticle.title || 'Sem título'}\n✅ Slug: ${processedArticle.slug || 'sem-slug'}\n✅ Tempo de leitura: ${processedArticle.readTime || '1 min'}\n${citations.length > 0 ? `✅ Fontes: ${citations.length} citações encontradas` : `⚠️ Fontes: Nenhuma citação retornada pela API`}\n\nO artigo está pronto para publicação! Você pode:\n- **Publicar agora** (recomendado)\n- **Refinar com Gemini** (opcional)\n- **Criar capa com IA** (experimental)`
-              };
-              return newConv;
-            });
-
-            // Adicionar citations ao artigo processado
-            if (isDev) console.log('🎯 Definindo generatedArticle com citations...');
-            setGeneratedArticle({
-              ...processedArticle,
-              type: selectedType,
-              citations // ← ADICIONA CITATIONS AQUI!
-            });
-            if (isDev) console.log('✅ generatedArticle definido com citations!', citations);
-
-          } catch (error: unknown) {
-            console.error('❌ Erro ao processar artigo localmente:', error);
-            setConversation(prev => [...prev, {
-              role: 'assistant',
-              content: `❌ Erro ao processar artigo: ${getErrorMessage(error)}\n\nPor favor, tente novamente.`
-            }]);
-          }
-        } else {
-          if (isDev) console.log('ℹ️ Resposta não contém JSON de artigo');
-        }
-
-        setLoading(false);
-        setProcessing(false);
-        return;
-      }
-
-      // 3. Modo conversa: processar streaming
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-      let accumulatedText = '';
-
-      if (reader) {
-        // Adicionar mensagem vazia que será preenchida pelo streaming
-        setConversation(prev => [...prev, { role: 'assistant', content: '' }]);
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          const chunk = decoder.decode(value, { stream: true });
-          accumulatedText += chunk;
-
-          // Atualizar última mensagem com texto acumulado
-          setConversation(prev => {
-            const newConv = [...prev];
-            newConv[newConv.length - 1] = { role: 'assistant', content: accumulatedText };
-            return newConv;
-          });
-        }
-
-        // 3. Detectar se é JSON (artigo gerado)
-        const detectedArticle = detectJSON(accumulatedText);
-
-        if (detectedArticle) {
-          try {
-            // Processar artigo localmente (instantâneo, sem Gemini)
-            if (isDev) {
-              console.log('📝 Artigo detectado, processando localmente...');
-              console.log('📊 Artigo bruto:', detectedArticle);
-            }
-
-            const processedArticle = processArticleLocally(detectedArticle, selectedType!);
-            if (isDev) console.log('🔧 Artigo processado:', processedArticle);
-
-            const validation = validateProcessedArticle(processedArticle, selectedType!);
-            if (isDev) console.log('✅ Validação:', validation);
-
-            if (!validation.valid) {
-              console.warn('⚠️ Artigo com erros de validação:', validation.errors);
-            }
-
-            // Substituir JSON por mensagem de sucesso
-            setConversation(prev => {
-              const newConv = [...prev];
-              newConv[newConv.length - 1] = {
-                role: 'assistant',
-                content: `✨ **Artigo gerado e processado!**\n\n✅ Título: ${processedArticle.title || 'Sem título'}\n✅ Slug: ${processedArticle.slug || 'sem-slug'}\n✅ Tempo de leitura: ${processedArticle.readTime || '1 min'}\n\nO artigo está pronto para publicação! Você pode:\n- **Publicar agora** (recomendado)\n- **Refinar com Gemini** (opcional)\n- **Criar capa com IA** (experimental)`
-              };
-              return newConv;
-            });
-
-            // Ir direto para artigo processado (sem rawArticle)
-            if (isDev) console.log('🎯 Definindo generatedArticle...');
-            setGeneratedArticle({
-              ...processedArticle,
-              type: selectedType
-            });
-            if (isDev) console.log('✅ generatedArticle definido!');
-
-          } catch (error: unknown) {
-            console.error('❌ Erro ao processar artigo localmente:', error);
-            setConversation(prev => [...prev, {
-              role: 'assistant',
-              content: `❌ Erro ao processar artigo: ${getErrorMessage(error)}\n\nPor favor, tente novamente.`
-            }]);
-          }
-        } else {
-          if (isDev) console.log('ℹ️ Resposta não contém JSON de artigo - é uma conversa normal');
-        }
-      }
-
-    } catch (error: unknown) {
-      console.error('Erro:', error);
-      setConversation(prev => [...prev, {
-        role: 'assistant',
-        content: `❌ Erro: ${getErrorMessage(error)}`
-      }]);
-    } finally {
-      setLoading(false);
-      setProcessing(false);
-    }
+    await sendMessage(userMessage);
   };
 
   const handleProcessWithGemini = async () => {
     if (!generatedArticle) return;
 
-    setProcessing(true);
-
     try {
       // Feedback no chat
-      setConversation(prev => [...prev, {
+      addMessage({
         role: 'assistant',
-        content: '✨ **Refinando artigo com Gemini...**\n\n1. Melhorando estrutura e fluidez\n2. Otimizando títulos e formatação\n3. Validando qualidade\n\nAguarde alguns segundos...'
-      }]);
+        content: MESSAGES.article.processing
+      });
 
-      const geminiResponse = await fetch('/api/process-gemini', {
+      const geminiResponse = await fetch(API_ENDPOINTS.processGemini, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -534,7 +291,7 @@ export default function CriarArtigoPage() {
 
       if (!geminiResponse.ok) {
         const errorData = await geminiResponse.json();
-        throw new Error(errorData.error || 'Erro ao processar com Gemini');
+        throw new Error(errorData.error || MESSAGES.errors.gemini);
       }
 
       const { article: refinedArticle } = await geminiResponse.json();
@@ -548,19 +305,17 @@ export default function CriarArtigoPage() {
       });
 
       // Confirmação no chat
-      setConversation(prev => [...prev.slice(0, -1), {
+      addMessage({
         role: 'assistant',
-        content: `✅ **Artigo refinado com Gemini!**\n\nO conteúdo foi otimizado e está pronto para publicação.`
-      }]);
+        content: MESSAGES.article.refined
+      });
 
     } catch (error: unknown) {
       console.error('Erro ao processar com Gemini:', error);
-      setConversation(prev => [...prev, {
+      addMessage({
         role: 'assistant',
-        content: `❌ Erro ao refinar: ${getErrorMessage(error)}`
-      }]);
-    } finally {
-      setProcessing(false);
+        content: MESSAGES.errors.refine(getErrorMessage(error))
+      });
     }
   };
 
@@ -576,7 +331,7 @@ export default function CriarArtigoPage() {
       }
       await navigator.clipboard.writeText(textToCopy);
       setCopiedProcessed(true);
-      setTimeout(() => setCopiedProcessed(false), 2000);
+      setTimeout(() => setCopiedProcessed(false), ANIMATION_DELAYS.copiedFeedback);
     } catch (error) {
       console.error('Erro ao copiar:', error);
     }
@@ -590,7 +345,7 @@ export default function CriarArtigoPage() {
     setRefining(true);
 
     try {
-      const response = await fetch('/api/refine-article', {
+      const response = await fetch(API_ENDPOINTS.refineArticle, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -613,30 +368,26 @@ export default function CriarArtigoPage() {
       });
 
       // Adicionar feedback no chat
-      setConversation(prev => [...prev,
-        { role: 'user', content: `🎨 Refinar: ${refinementRequest}` },
-        { role: 'assistant', content: '✅ Artigo refinado com sucesso!' }
-      ]);
+      addMessage({ role: 'user', content: `🎨 Refinar: ${refinementRequest}` });
+      addMessage({ role: 'assistant', content: MESSAGES.article.refinedManual });
 
     } catch (error: unknown) {
       console.error('Erro ao refinar:', error);
-      setConversation(prev => [...prev, {
+      addMessage({
         role: 'assistant',
-        content: `❌ Erro ao refinar: ${getErrorMessage(error)}`
-      }]);
+        content: MESSAGES.errors.refine(getErrorMessage(error))
+      });
     } finally {
       setRefining(false);
     }
   };
 
   const handlePublish = async () => {
-    if (!generatedArticle || !session?.user?.id) return;
+    if (!generatedArticle || !session?.user?.id || !selectedType) return;
 
     try {
-      setProcessing(true);
-
       // Usar API correta baseado no tipo
-      const apiEndpoint = selectedType === 'resource' ? '/api/resources' : '/api/articles';
+      const apiEndpoint = getApiEndpoint(selectedType);
 
       // Preparar tags: se já é string JSON, manter; se é array, stringificar
       const tagsToSend = typeof generatedArticle.tags === 'string'
@@ -667,18 +418,11 @@ export default function CriarArtigoPage() {
       }
 
       // Redirecionar baseado no tipo
-      const url = selectedType === 'news'
-        ? `/dashboard/noticias/${generatedArticle.slug}`
-        : selectedType === 'educational'
-        ? `/educacao/${generatedArticle.slug}`
-        : `/recursos/${generatedArticle.slug}`;
-
+      const url = getArticleRoute(selectedType, generatedArticle.slug);
       router.push(url);
 
     } catch (error: unknown) {
-      alert(`Erro ao publicar: ${getErrorMessage(error)}`);
-    } finally {
-      setProcessing(false);
+      alert(MESSAGES.errors.publish(getErrorMessage(error)));
     }
   };
 
@@ -720,7 +464,8 @@ export default function CriarArtigoPage() {
                 {/* Mensagens */}
                 <div
                   ref={chatContainerRef}
-                  className="p-6 space-y-4 max-h-[500px] overflow-y-auto overflow-x-hidden"
+                  className="p-6 space-y-4 overflow-y-auto overflow-x-hidden"
+                  style={{ maxHeight: CHAT_CONFIG.maxHeight }}
                 >
                   {conversation.length === 0 && (
                     <div className="py-12">
@@ -729,176 +474,34 @@ export default function CriarArtigoPage() {
                         className="text-xl font-bold mb-2 text-left"
                         style={{ color: 'var(--text-primary)' }}
                       >
-                        {selectedType ? 'Pronto para criar conteúdo!' : 'Olá! Como posso ajudar?'}
+                        {selectedType ? MESSAGES.chat.welcome.withType : MESSAGES.chat.welcome.withoutType}
                       </h3>
                       <p className="text-left mb-6" style={{ color: 'var(--text-secondary)' }}>
-                        {selectedType
-                          ? 'Descreva o que você quer criar e eu vou gerar o artigo completo.'
-                          : 'Pergunte sobre análises, notícias recentes ou qualquer tema sobre criptomoedas.'}
+                        {selectedType ? MESSAGES.chat.description.withType : MESSAGES.chat.description.withoutType}
                       </p>
 
                       {/* Sugestões de Prompts */}
                       {!selectedType && (
                         <div className="space-y-3">
                           <p className="text-sm font-semibold text-left mb-3" style={{ color: 'var(--text-tertiary)' }}>
-                            💡 Sugestões rápidas de pesquisa:
+                            {MESSAGES.chat.suggestions}
                           </p>
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                            <button
-                              onClick={() => setPrompt('Liste as 10 notícias mais pesquisadas hoje sobre o mercado cripto')}
-                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
-                              style={{
-                                backgroundColor: 'var(--bg-secondary)',
-                                borderColor: 'var(--border-medium)',
-                                color: 'var(--text-primary)'
-                              }}
-                            >
-                              <div className="text-2xl mb-1">📰</div>
-                              <span className="font-medium text-sm">Top 10 notícias cripto hoje</span>
-                            </button>
-
-                            <button
-                              onClick={() => setPrompt('Faça uma análise do sentimento sobre o mercado cripto no dia de hoje')}
-                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
-                              style={{
-                                backgroundColor: 'var(--bg-secondary)',
-                                borderColor: 'var(--border-medium)',
-                                color: 'var(--text-primary)'
-                              }}
-                            >
-                              <div className="text-2xl mb-1">📊</div>
-                              <span className="font-medium text-sm">Análise de sentimento do mercado</span>
-                            </button>
-
-                            <button
-                              onClick={() => setPrompt('Quais são as principais tendências em DeFi esta semana?')}
-                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
-                              style={{
-                                backgroundColor: 'var(--bg-secondary)',
-                                borderColor: 'var(--border-medium)',
-                                color: 'var(--text-primary)'
-                              }}
-                            >
-                              <div className="text-2xl mb-1">🔥</div>
-                              <span className="font-medium text-sm">Tendências DeFi esta semana</span>
-                            </button>
-
-                            <button
-                              onClick={() => setPrompt('Comparar Bitcoin vs Ethereum: fundamentos e diferenças técnicas')}
-                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
-                              style={{
-                                backgroundColor: 'var(--bg-secondary)',
-                                borderColor: 'var(--border-medium)',
-                                color: 'var(--text-primary)'
-                              }}
-                            >
-                              <div className="text-2xl mb-1">💰</div>
-                              <span className="font-medium text-sm">Bitcoin vs Ethereum</span>
-                            </button>
-
-                            <button
-                              onClick={() => setPrompt('Explicar o que é staking para iniciantes')}
-                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
-                              style={{
-                                backgroundColor: 'var(--bg-secondary)',
-                                borderColor: 'var(--border-medium)',
-                                color: 'var(--text-primary)'
-                              }}
-                            >
-                              <div className="text-2xl mb-1">🚀</div>
-                              <span className="font-medium text-sm">Explicar staking para iniciantes</span>
-                            </button>
-
-                            <button
-                              onClick={() => setPrompt('Quais são as melhores altcoins para investir em 2025?')}
-                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
-                              style={{
-                                backgroundColor: 'var(--bg-secondary)',
-                                borderColor: 'var(--border-medium)',
-                                color: 'var(--text-primary)'
-                              }}
-                            >
-                              <div className="text-2xl mb-1">💎</div>
-                              <span className="font-medium text-sm">Melhores altcoins 2025</span>
-                            </button>
-
-                            <button
-                              onClick={() => setPrompt('Análise técnica do Bitcoin: níveis de suporte e resistência')}
-                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
-                              style={{
-                                backgroundColor: 'var(--bg-secondary)',
-                                borderColor: 'var(--border-medium)',
-                                color: 'var(--text-primary)'
-                              }}
-                            >
-                              <div className="text-2xl mb-1">📈</div>
-                              <span className="font-medium text-sm">Análise técnica Bitcoin</span>
-                            </button>
-
-                            <button
-                              onClick={() => setPrompt('O que são ETFs de Bitcoin e como funcionam?')}
-                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
-                              style={{
-                                backgroundColor: 'var(--bg-secondary)',
-                                borderColor: 'var(--border-medium)',
-                                color: 'var(--text-primary)'
-                              }}
-                            >
-                              <div className="text-2xl mb-1">🏦</div>
-                              <span className="font-medium text-sm">ETFs de Bitcoin explicado</span>
-                            </button>
-
-                            <button
-                              onClick={() => setPrompt('Principais projetos de Layer 2 no Ethereum')}
-                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
-                              style={{
-                                backgroundColor: 'var(--bg-secondary)',
-                                borderColor: 'var(--border-medium)',
-                                color: 'var(--text-primary)'
-                              }}
-                            >
-                              <div className="text-2xl mb-1">⚡</div>
-                              <span className="font-medium text-sm">Layer 2 no Ethereum</span>
-                            </button>
-
-                            <button
-                              onClick={() => setPrompt('Como identificar golpes e scams no mercado cripto')}
-                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
-                              style={{
-                                backgroundColor: 'var(--bg-secondary)',
-                                borderColor: 'var(--border-medium)',
-                                color: 'var(--text-primary)'
-                              }}
-                            >
-                              <div className="text-2xl mb-1">🛡️</div>
-                              <span className="font-medium text-sm">Identificar golpes cripto</span>
-                            </button>
-
-                            <button
-                              onClick={() => setPrompt('Impacto da regulação cripto nos Estados Unidos')}
-                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
-                              style={{
-                                backgroundColor: 'var(--bg-secondary)',
-                                borderColor: 'var(--border-medium)',
-                                color: 'var(--text-primary)'
-                              }}
-                            >
-                              <div className="text-2xl mb-1">⚖️</div>
-                              <span className="font-medium text-sm">Regulação cripto nos EUA</span>
-                            </button>
-
-                            <button
-                              onClick={() => setPrompt('Explicar o que são NFTs e seus casos de uso')}
-                              className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
-                              style={{
-                                backgroundColor: 'var(--bg-secondary)',
-                                borderColor: 'var(--border-medium)',
-                                color: 'var(--text-primary)'
-                              }}
-                            >
-                              <div className="text-2xl mb-1">🎨</div>
-                              <span className="font-medium text-sm">NFTs e casos de uso</span>
-                            </button>
+                            {PROMPT_SUGGESTIONS.map((suggestion, idx) => (
+                              <button
+                                key={idx}
+                                onClick={() => setPrompt(suggestion.prompt)}
+                                className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
+                                style={{
+                                  backgroundColor: 'var(--bg-secondary)',
+                                  borderColor: 'var(--border-medium)',
+                                  color: 'var(--text-primary)'
+                                }}
+                              >
+                                <div className="text-2xl mb-1">{suggestion.emoji}</div>
+                                <span className="font-medium text-sm">{suggestion.label}</span>
+                              </button>
+                            ))}
                           </div>
                         </div>
                       )}
@@ -937,9 +540,9 @@ export default function CriarArtigoPage() {
                         style={{ backgroundColor: 'var(--bg-secondary)' }}
                       >
                         <div className="flex gap-2">
-                          <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: '0ms' }}></div>
-                          <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: '150ms' }}></div>
-                          <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: '300ms' }}></div>
+                          <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: ANIMATION_DELAYS.bounce1 }}></div>
+                          <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: ANIMATION_DELAYS.bounce2 }}></div>
+                          <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: ANIMATION_DELAYS.bounce3 }}></div>
                         </div>
                       </div>
                     </div>
@@ -1019,10 +622,10 @@ export default function CriarArtigoPage() {
                           color: selectedType === 'news' ? 'var(--text-inverse)' : 'var(--text-primary)'
                         }}
                         aria-pressed={selectedType === 'news'}
-                        aria-label={`Criar notícia ${selectedType === 'news' ? '(selecionado)' : ''}`}
+                        aria-label={`${ARTICLE_TYPE_CONFIG.news.ariaLabel} ${selectedType === 'news' ? '(selecionado)' : ''}`}
                       >
                         <FontAwesomeIcon icon={faNewspaper} />
-                        Notícia
+                        {ARTICLE_TYPE_CONFIG.news.label}
                       </button>
 
                       {/* Botão Educação */}
@@ -1036,10 +639,10 @@ export default function CriarArtigoPage() {
                           color: selectedType === 'educational' ? 'var(--text-inverse)' : 'var(--text-primary)'
                         }}
                         aria-pressed={selectedType === 'educational'}
-                        aria-label={`Criar artigo educacional ${selectedType === 'educational' ? '(selecionado)' : ''}`}
+                        aria-label={`${ARTICLE_TYPE_CONFIG.educational.ariaLabel} ${selectedType === 'educational' ? '(selecionado)' : ''}`}
                       >
                         <FontAwesomeIcon icon={faGraduationCap} />
-                        Educação
+                        {ARTICLE_TYPE_CONFIG.educational.label}
                       </button>
 
                       {/* Botão Recurso */}
@@ -1053,10 +656,10 @@ export default function CriarArtigoPage() {
                           color: selectedType === 'resource' ? 'var(--text-inverse)' : 'var(--text-primary)'
                         }}
                         aria-pressed={selectedType === 'resource'}
-                        aria-label={`Criar recurso ${selectedType === 'resource' ? '(selecionado)' : ''}`}
+                        aria-label={`${ARTICLE_TYPE_CONFIG.resource.ariaLabel} ${selectedType === 'resource' ? '(selecionado)' : ''}`}
                       >
                         <FontAwesomeIcon icon={faBox} />
-                        Recurso
+                        {ARTICLE_TYPE_CONFIG.resource.label}
                       </button>
                     </div>
 
@@ -1069,9 +672,7 @@ export default function CriarArtigoPage() {
                           color: 'var(--text-primary)'
                         }}
                       >
-                        ✅ <strong>Modo Criação Ativado:</strong> {selectedType === 'news' && 'Agora você pode pedir para criar uma notícia estruturada com padrão jornalístico completo.'}
-                        {selectedType === 'educational' && 'Agora você pode pedir para criar artigos educacionais (iniciante, intermediário ou avançado).'}
-                        {selectedType === 'resource' && 'Agora você pode pedir para criar guias completos de ferramentas e serviços.'}
+                        ✅ <strong>Modo Criação Ativado:</strong> {ARTICLE_TYPE_CONFIG[selectedType].description}
                       </div>
                     )}
 
@@ -1082,9 +683,8 @@ export default function CriarArtigoPage() {
                           backgroundColor: 'rgba(59, 130, 246, 0.1)',
                           color: 'var(--text-primary)'
                         }}
-                      >
-                        💬 <strong>Modo Conversa Livre:</strong> Pergunte sobre análises, notícias recentes, conceitos técnicos ou qualquer coisa sobre cripto. Selecione um tipo acima para ativar o modo de criação de artigos.
-                      </div>
+                        dangerouslySetInnerHTML={{ __html: MESSAGES.chat.modeInfo.free }}
+                      />
                     )}
                   </div>
                 </div>
@@ -1160,7 +760,7 @@ export default function CriarArtigoPage() {
                             if (!generatedArticle || !selectedType) return;
                             setGeneratingCover(true);
                             try {
-                              const response = await fetch('/api/regenerate-cover', {
+                              const response = await fetch(API_ENDPOINTS.regenerateCover, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
@@ -1176,16 +776,16 @@ export default function CriarArtigoPage() {
 
                               const { article } = await response.json();
                               setGeneratedArticle({ ...article, type: selectedType });
-                              setConversation(prev => [...prev, {
+                              addMessage({
                                 role: 'assistant',
-                                content: '🎨 Capa gerada com sucesso!'
-                              }]);
+                                content: MESSAGES.article.coverGenerated
+                              });
                             } catch (error: unknown) {
                               console.error('Erro ao gerar capa:', error);
-                              setConversation(prev => [...prev, {
+                              addMessage({
                                 role: 'assistant',
-                                content: `❌ Erro ao gerar capa: ${getErrorMessage(error)}`
-                              }]);
+                                content: MESSAGES.errors.cover(getErrorMessage(error))
+                              });
                             } finally {
                               setGeneratingCover(false);
                             }
