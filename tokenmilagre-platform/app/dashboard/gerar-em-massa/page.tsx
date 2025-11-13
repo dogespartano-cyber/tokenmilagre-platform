@@ -181,37 +181,61 @@ export default function GerarEmMassaPage() {
       const endpoint = contentType === 'resource' ? '/api/resources' : '/api/articles';
 
       for (const article of selected) {
-        const payload = contentType === 'resource'
-          ? {
-              name: article.title,
-              slug: generateSlug(article.title),
-              category: article.category,
-              shortDescription: article.excerpt,
-              officialUrl: (article as any).officialUrl || '',
-              platforms: (article as any).platforms || [],
-              tags: article.tags || [],
-              verified: true,
-              sources: JSON.stringify(article.citations || []),
-              ...(article as any) // Incluir todos os outros campos do recurso
-            }
-          : {
-              type: article.type,
-              title: article.title,
-              slug: generateSlug(article.title, article.type === 'news'),
-              content: article.content,
-              excerpt: article.excerpt,
-              category: article.category,
-              tags: article.tags,
-              published: true,
-              factCheckSources: JSON.stringify(article.citations || []),
-              ...(article.type === 'educational' ? {
-                level: (article as any).level,
-                contentType: (article as any).type
-              } : {}),
-              ...(article.type === 'news' ? {
-                sentiment: (article as any).sentiment
-              } : {})
-            };
+        let payload: any;
+
+        if (contentType === 'resource') {
+          // Para recursos, precisamos de TODOS os campos obrigatórios
+          const resourceData = article as any;
+          payload = {
+            name: resourceData.name || article.title,
+            slug: resourceData.slug || generateSlug(article.title),
+            category: resourceData.category || 'tools',
+            shortDescription: resourceData.shortDescription || article.excerpt || '',
+            officialUrl: resourceData.officialUrl || '',
+            platforms: resourceData.platforms || [],
+            tags: resourceData.tags || [],
+            heroTitle: resourceData.heroTitle || article.title,
+            heroDescription: resourceData.heroDescription || article.excerpt || '',
+            heroGradient: resourceData.heroGradient || 'linear-gradient(135deg, #7C3AED, #F59E0B)',
+            whyGoodTitle: resourceData.whyGoodTitle || `Por que ${article.title} é uma boa escolha?`,
+            whyGoodContent: resourceData.whyGoodContent || [],
+            features: resourceData.features || [],
+            howToStartTitle: resourceData.howToStartTitle || `Como Começar a Usar ${article.title}`,
+            howToStartSteps: resourceData.howToStartSteps || [],
+            pros: resourceData.pros || [],
+            cons: resourceData.cons || [],
+            faq: resourceData.faq || [],
+            securityTips: resourceData.securityTips || [],
+            verified: true,
+            sources: JSON.stringify(article.citations || []),
+            showCompatibleWallets: resourceData.showCompatibleWallets || false,
+            relatedResources: resourceData.relatedResources || null
+          };
+        } else {
+          // Para artigos (news/educational)
+          payload = {
+            type: article.type,
+            title: article.title,
+            slug: generateSlug(article.title, article.type === 'news'),
+            content: article.content,
+            excerpt: article.excerpt,
+            category: article.category,
+            tags: article.tags,
+            published: true,
+            factCheckSources: JSON.stringify(article.citations || [])
+          };
+
+          // Campos específicos para educational
+          if (article.type === 'educational') {
+            payload.level = (article as any).level || 'iniciante';
+            payload.contentType = (article as any).contentType || 'Artigo';
+          }
+
+          // Campos específicos para news
+          if (article.type === 'news') {
+            payload.sentiment = (article as any).sentiment || 'neutral';
+          }
+        }
 
         const response = await fetch(endpoint, {
           method: 'POST',
@@ -220,7 +244,9 @@ export default function GerarEmMassaPage() {
         });
 
         if (!response.ok) {
-          throw new Error(`Erro ao salvar: ${response.statusText}`);
+          const errorData = await response.json().catch(() => ({}));
+          const errorMessage = errorData.error || response.statusText;
+          throw new Error(`Erro ao salvar "${article.title}": ${errorMessage}`);
         }
       }
 
@@ -232,6 +258,7 @@ export default function GerarEmMassaPage() {
       setTotalSteps(0);
 
     } catch (error: any) {
+      console.error('Erro detalhado:', error);
       alert(`❌ Erro ao salvar artigos: ${error.message}`);
     } finally {
       setIsGenerating(false);
