@@ -192,7 +192,7 @@ export function validateArticle(
   }
 
   // Extrair mensagens de erro
-  const errors = result.error.errors.map((err) => {
+  const errors = result.error.issues.map((err) => {
     const field = err.path.join('.');
     return `${field}: ${err.message}`;
   });
@@ -238,7 +238,7 @@ export function validateAndParse<T>(
     };
   }
 
-  const errors = result.error.errors.map((err) => {
+  const errors = result.error.issues.map((err) => {
     const field = err.path.join('.');
     return `${field}: ${err.message}`;
   });
