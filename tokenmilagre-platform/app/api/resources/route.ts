@@ -70,34 +70,52 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Preparar dados com validação
+    const resourceData: any = {
+      name,
+      slug,
+      category,
+      verified: true,
+      shortDescription,
+      officialUrl,
+      platforms: typeof platforms === 'string' ? platforms : JSON.stringify(platforms || []),
+      tags: typeof tags === 'string' ? tags : JSON.stringify(tags || []),
+      heroTitle: heroTitle || name,
+      heroDescription: heroDescription || shortDescription,
+      heroGradient: heroGradient || 'linear-gradient(135deg, #7C3AED, #F59E0B)',
+      whyGoodTitle: whyGoodTitle || `Por que ${name} é uma boa escolha?`,
+      whyGoodContent: typeof whyGoodContent === 'string' ? whyGoodContent : JSON.stringify(whyGoodContent || []),
+      features: typeof features === 'string' ? features : JSON.stringify(features || []),
+      howToStartTitle: howToStartTitle || `Como Começar a Usar ${name}`,
+      howToStartSteps: typeof howToStartSteps === 'string' ? howToStartSteps : JSON.stringify(howToStartSteps || []),
+      pros: typeof pros === 'string' ? pros : JSON.stringify(pros || []),
+      cons: typeof cons === 'string' ? cons : JSON.stringify(cons || []),
+      faq: typeof faq === 'string' ? faq : JSON.stringify(faq || []),
+      securityTips: typeof securityTips === 'string' ? securityTips : JSON.stringify(securityTips || []),
+      showCompatibleWallets: showCompatibleWallets || false,
+      relatedResources: relatedResources
+        ? (typeof relatedResources === 'string' ? relatedResources : JSON.stringify(relatedResources))
+        : null
+    };
+
+    // Adicionar sources se fornecido
+    if (body.sources) {
+      resourceData.sources = typeof body.sources === 'string' ? body.sources : JSON.stringify(body.sources);
+    }
+
+    // Log para debug (apenas em desenvolvimento)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('📦 Criando recurso:', {
+        name: resourceData.name,
+        slug: resourceData.slug,
+        category: resourceData.category,
+        fieldsCount: Object.keys(resourceData).length
+      });
+    }
+
     // Criar recurso
     const resource = await prisma.resource.create({
-      data: {
-        name,
-        slug,
-        category,
-        verified: true, // Recursos criados por ADMIN/EDITOR são automaticamente verificados
-        shortDescription,
-        officialUrl,
-        platforms: typeof platforms === 'string' ? platforms : JSON.stringify(platforms || []),
-        tags: typeof tags === 'string' ? tags : JSON.stringify(tags || []),
-        heroTitle,
-        heroDescription,
-        heroGradient,
-        whyGoodTitle,
-        whyGoodContent: typeof whyGoodContent === 'string' ? whyGoodContent : JSON.stringify(whyGoodContent || []),
-        features: typeof features === 'string' ? features : JSON.stringify(features || []),
-        howToStartTitle,
-        howToStartSteps: typeof howToStartSteps === 'string' ? howToStartSteps : JSON.stringify(howToStartSteps || []),
-        pros: typeof pros === 'string' ? pros : JSON.stringify(pros || []),
-        cons: typeof cons === 'string' ? cons : JSON.stringify(cons || []),
-        faq: typeof faq === 'string' ? faq : JSON.stringify(faq || []),
-        securityTips: typeof securityTips === 'string' ? securityTips : JSON.stringify(securityTips || []),
-        showCompatibleWallets,
-        relatedResources: relatedResources
-          ? (typeof relatedResources === 'string' ? relatedResources : JSON.stringify(relatedResources))
-          : null
-      }
+      data: resourceData
     });
 
     return NextResponse.json({
@@ -109,10 +127,26 @@ export async function POST(request: NextRequest) {
         message: 'Recurso criado com sucesso!'
       }
     });
-  } catch (error) {
-    console.error('Erro ao criar recurso:', error);
+  } catch (error: any) {
+    console.error('❌ Erro ao criar recurso:', error);
+
+    // Log detalhado do erro
+    const errorDetails = {
+      message: error.message,
+      code: error.code,
+      meta: error.meta,
+      name: error.name
+    };
+    console.error('Detalhes do erro:', JSON.stringify(errorDetails, null, 2));
+
+    // Retornar mensagem mais específica
+    const errorMessage = error.message || 'Erro ao criar recurso';
     return NextResponse.json(
-      { success: false, error: 'Erro ao criar recurso' },
+      {
+        success: false,
+        error: errorMessage,
+        details: process.env.NODE_ENV === 'development' ? errorDetails : undefined
+      },
       { status: 500 }
     );
   }
@@ -153,10 +187,26 @@ export async function GET(request: NextRequest) {
       success: true,
       data: resources
     });
-  } catch (error) {
-    console.error('Erro ao buscar recursos:', error);
+  } catch (error: any) {
+    console.error('❌ Erro ao buscar recursos:', error);
+
+    // Log detalhado do erro
+    const errorDetails = {
+      message: error.message,
+      code: error.code,
+      meta: error.meta,
+      name: error.name
+    };
+    console.error('Detalhes do erro:', JSON.stringify(errorDetails, null, 2));
+
+    // Retornar mensagem mais específica
+    const errorMessage = error.message || 'Erro ao buscar recursos';
     return NextResponse.json(
-      { success: false, error: 'Erro ao buscar recursos' },
+      {
+        success: false,
+        error: errorMessage,
+        details: process.env.NODE_ENV === 'development' ? errorDetails : undefined
+      },
       { status: 500 }
     );
   }
