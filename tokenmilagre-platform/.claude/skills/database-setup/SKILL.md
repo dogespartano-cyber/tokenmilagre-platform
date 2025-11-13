@@ -12,12 +12,13 @@ This skill provides all information about database configuration, Prisma usage, 
 
 ## 🗄️ Banco de Dados e Infraestrutura
 
-### Configuração Atual
+### Configuração Atual (ATUALIZADA 2025-11-12)
 
-**Banco de Dados**: Neon PostgreSQL (Vercel Marketplace)
+**Banco de Dados**: ✅ **Supabase PostgreSQL** (migrado do Neon em 2025-11-12)
 **ORM**: Prisma
-**Localização do Client**: `lib/generated/prisma`
+**Localização do Client**: `lib/generated/prisma` (caminho customizado)
 **Total de Usuários**: 2 (Admin + Editor)
+**Domínio**: https://tokenmilagre.xyz (domínio customizado)
 
 ### ⚠️ REGRAS CRÍTICAS - Banco de Dados
 
@@ -46,7 +47,7 @@ This skill provides all information about database configuration, Prisma usage, 
 
 ### Variáveis de Ambiente
 
-**Produção (Vercel)** - Configuradas automaticamente pela integração Neon:
+**Produção (Vercel)** - Configuradas via Vercel CLI ou integração Supabase:
 ```env
 DATABASE_URL=postgresql://... (com pooling)
 DIRECT_URL=postgresql://... (sem pooling, para migrations)
@@ -157,3 +158,227 @@ npm run db:import
 
 **Skill criada por**: Claude Code
 **Última atualização**: 2025-10-24
+
+---
+
+## 🔄 Migração Neon → Supabase (2025-11-12)
+
+### Contexto da Migração
+
+**Problema**: Neon atingiu cota de transferência do plano gratuito
+**Erro**: `Your project has exceeded the data transfer quota`
+**Solução**: Migração completa para Supabase PostgreSQL
+
+### Estado Pós-Migração
+
+- ✅ 14 tabelas criadas no Supabase
+- ✅ 2 usuários criados (Admin + Editor)
+- ✅ Schema aplicado com sucesso
+- ✅ Conexão validada
+- ⚠️ Dados do Neon NÃO foram migrados (cota bloqueou acesso)
+
+### Configuração de Variáveis via Vercel CLI (MÉTODO RECOMENDADO)
+
+**Por que usar CLI:**
+- ✅ Muito mais rápido que dashboard manual
+- ✅ Menos propenso a erros (copy-paste exato)
+- ✅ Pode ser automatizado
+- ✅ Útil quando usuário está cansado
+
+**Passo a passo:**
+
+```bash
+# 1. Login (apenas primeira vez)
+vercel login
+
+# 2. Linkar projeto
+vercel link --yes
+
+# 3. Adicionar variáveis (exemplo Supabase)
+echo "postgres://postgres.PROJECT:PASSWORD@...supabase.com:6543/postgres?sslmode=require&pgbouncer=true" | vercel env add DATABASE_URL production
+echo "postgres://postgres.PROJECT:PASSWORD@...supabase.com:6543/postgres?sslmode=require&pgbouncer=true" | vercel env add DATABASE_URL preview
+echo "postgres://postgres.PROJECT:PASSWORD@...supabase.com:6543/postgres?sslmode=require&pgbouncer=true" | vercel env add DATABASE_URL development
+
+echo "postgres://postgres.PROJECT:PASSWORD@...supabase.com:5432/postgres?sslmode=require" | vercel env add DIRECT_URL production
+echo "postgres://postgres.PROJECT:PASSWORD@...supabase.com:5432/postgres?sslmode=require" | vercel env add DIRECT_URL preview
+echo "postgres://postgres.PROJECT:PASSWORD@...supabase.com:5432/postgres?sslmode=require" | vercel env add DIRECT_URL development
+
+# 4. Forçar redeploy
+git commit --allow-empty -m "chore: Trigger redeploy"
+git push origin main
+```
+
+### ⚠️ IMPORTANTE: Integrações vs Variáveis Manuais
+
+**Problema comum:**
+- Integrações Vercel (Neon, Supabase) criam variáveis com prefixos: `SUPABASE_POSTGRES_*`, `POSTGRES_*`
+- Prisma usa: `DATABASE_URL` e `DIRECT_URL`
+- **Você DEVE criar manualmente** `DATABASE_URL` e `DIRECT_URL` mesmo tendo a integração
+
+**Solução:**
+1. Manter integração Supabase (cria variáveis auxiliares)
+2. ADICIONAR manualmente `DATABASE_URL` e `DIRECT_URL` copiando valores da integração
+3. Remover integração antiga (Neon) se existir
+
+---
+
+## 🔐 NextAuth com Domínio Customizado
+
+### Problema: Login falha com 401 no domínio customizado
+
+**Sintoma:**
+- Login funciona em `*.vercel.app`
+- Login falha (401) em domínio customizado (ex: `tokenmilagre.xyz`)
+- Erro: `api/auth/callback/credentials:1 Failed to load resource: 401`
+
+**Causa:**
+NextAuth precisa de `NEXTAUTH_URL` explícito quando há domínio customizado.
+
+**Solução:**
+```bash
+# Via Vercel CLI
+echo "https://tokenmilagre.xyz" | vercel env add NEXTAUTH_URL production
+
+# Não adicionar para preview/development (Vercel auto-detect)
+```
+
+**Configuração correta:**
+```
+NEXTAUTH_URL (Production apenas): https://tokenmilagre.xyz
+NEXTAUTH_SECRET (Todos): [gerado com openssl rand -base64 32]
+```
+
+---
+
+## 🐛 Troubleshooting: Problemas Comuns de Build
+
+### Erro: "Namespace 'Prisma' has no exported member 'ArticleWhereInput'"
+
+**Causa:** Imports usando `@prisma/client` em vez do caminho customizado
+
+**Arquivos que devem usar caminho customizado:**
+- `app/api/articles/route.ts`
+- `lib/copilot/admin-tools.ts`
+- `lib/copilot/tools.ts`
+
+**Correção:**
+```typescript
+// ❌ ERRADO
+import { Prisma } from '@prisma/client';
+
+// ✅ CORRETO
+import { Prisma } from '@/lib/generated/prisma';
+```
+
+**Buscar outros casos:**
+```bash
+grep -r "from '@prisma/client'" app/ lib/ --include="*.ts" --include="*.tsx"
+```
+
+---
+
+## 🧪 Scripts de Debug Criados
+
+Durante a migração, foram criados scripts úteis para diagnóstico:
+
+### 1. `scripts/check-users.ts`
+Verifica usuários no banco (produção ou local)
+
+```bash
+npx tsx scripts/check-users.ts
+```
+
+**Output:**
+- Lista todos usuários
+- Mostra email, role, ID
+- Prefixo do hash da senha
+
+### 2. `scripts/test-login.ts`
+Testa autenticação localmente
+
+```bash
+npx tsx scripts/test-login.ts
+```
+
+**Valida:**
+- Usuário existe
+- Senha bcrypt funciona
+- Recria usuário se hash estiver errado
+
+### 3. `scripts/debug-production-login.ts`
+Testa login EXATAMENTE como produção
+
+```bash
+npx tsx scripts/debug-production-login.ts
+```
+
+**Conecta em:**
+- Supabase de produção (mesma URL que Vercel)
+- Testa fluxo completo de autenticação
+- Mostra tempo de bcrypt.compare()
+
+### 4. `scripts/seed-production.ts`
+Cria usuários admin/editor direto na produção
+
+```bash
+npx tsx scripts/seed-production.ts
+```
+
+**Cria:**
+- admin@tokenmilagre.com / admin123 (ADMIN)
+- editor@tokenmilagre.com / editor123 (EDITOR)
+
+### 5. `app/api/debug-auth/route.ts`
+Endpoint HTTP para debug remoto
+
+**GET:** Status geral
+```
+https://tokenmilagre.xyz/api/debug-auth
+```
+
+**POST:** Testar login
+```bash
+curl -X POST https://tokenmilagre.xyz/api/debug-auth \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@tokenmilagre.com","password":"admin123"}'
+```
+
+**⚠️ REMOVER antes de produção final** (expõe informações sensíveis)
+
+---
+
+## 📝 Documentação Criada
+
+- `docs/MIGRACAO-SUPABASE.md` - Documentação completa da migração
+- `docs/URGENTE-TROCAR-BANCO-VERCEL.md` - Guia de troubleshooting
+- `docs/CONFIGURAR-VERCEL-NEXTAUTH.md` - Configuração NextAuth
+- `CREDENCIAIS-SUPABASE-VERCEL.md` - Variáveis prontas para copy-paste
+
+---
+
+## 🎓 Lições Aprendidas
+
+### 1. Sempre oferecer automação primeiro
+Quando usuário diz "estou cansado" ou similar:
+- ✅ Oferecer Vercel CLI imediatamente
+- ✅ Perguntar se quer fazer manual ou automático
+- ❌ Não assumir que usuário quer fazer manual
+
+### 2. Vercel CLI é mais confiável
+- Menos erros de digitação
+- Mais rápido (5 minutos vs 20+ minutos)
+- Pode ser scriptado
+
+### 3. Domínios customizados precisam configuração extra
+- `NEXTAUTH_URL` obrigatório
+- Sempre testar em produção após configurar
+
+### 4. Integrações != Variáveis prontas
+- Integrações criam variáveis com prefixos
+- Sempre verificar se Prisma usa os nomes corretos
+- Criar manualmente se necessário
+
+---
+
+**Última atualização**: 2025-11-12 (Migração Neon → Supabase)
+**Criado por**: Claude Code
