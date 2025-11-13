@@ -5,7 +5,7 @@
 
 import { CopilotTool, ToolPermissionLevel, SystemStatistics } from './types';
 import { prisma } from '@/lib/prisma';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@/lib/generated/prisma';
 
 // Helper para extrair mensagem de erro
 function getErrorMessage(error: unknown): string {
