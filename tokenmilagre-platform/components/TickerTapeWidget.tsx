@@ -29,6 +29,13 @@ function TickerTapeWidget() {
     const container = containerRef.current;
     if (!container) return;
 
+    // Limpar conteúdo anterior antes de adicionar novo script
+    container.innerHTML = '';
+
+    // Criar div interna que o TradingView espera
+    const widgetDiv = document.createElement('div');
+    widgetDiv.className = 'tradingview-widget-container__widget';
+
     const script = document.createElement('script');
     script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
     script.type = 'text/javascript';
@@ -123,7 +130,9 @@ function TickerTapeWidget() {
       locale: 'br'
     });
 
-    container.appendChild(script);
+    // Adicionar elementos na ordem correta
+    widgetDiv.appendChild(script);
+    container.appendChild(widgetDiv);
 
     return () => {
       if (container) {
@@ -133,9 +142,7 @@ function TickerTapeWidget() {
   }, [theme]);
 
   return (
-    <div className="tradingview-widget-container">
-      <div className="tradingview-widget-container__widget" ref={containerRef}></div>
-    </div>
+    <div className="tradingview-widget-container" ref={containerRef}></div>
   );
 }
 

@@ -247,8 +247,11 @@ export default function CriarArtigoPage() {
           category: generatedArticle.category
             .toLowerCase()
             .trim()
-            .replace(/\s+/g, '-') // Espaços → hífens
-            .replace(/_/g, '-')   // Underscores → hífens
+            .replace(/\s+/g, '-')     // Espaços → hífens
+            .replace(/_/g, '-')       // Underscores → hífens
+            .replace(/s$/, '')        // Remove plural (wallets → wallet, exchanges → exchange)
+            .replace(/^defi$/, 'defi-protocol') // DeFi específico
+            .replace(/^tools?$/, 'analytics') // Normaliza "tools" ou "tool"
         }
       : generatedArticle;
 

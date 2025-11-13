@@ -181,7 +181,7 @@ ${timezoneContext}
 **CAMPOS OBRIGATÓRIOS:**
 - name: Nome oficial da ferramenta
 - slug: Nome em kebab-case (ex: "metamask-wallet")
-- category: wallets | exchanges | defi | explorers | tools | browsers
+- category: **ATENÇÃO - Use EXATAMENTE um destes valores em kebab-case**: exchange | wallet | defi-protocol | analytics | portfolio-tracker | news | education | development-tools
 - shortDescription: Descrição curta (1 linha)
 - officialUrl: URL oficial do site/app
 - platforms: Array de plataformas (Web, iOS, Android, Desktop, Extension, Hardware)
@@ -205,7 +205,7 @@ ${timezoneContext}
 {
   "name": "Nome da Ferramenta",
   "slug": "nome-da-ferramenta",
-  "category": "wallets",
+  "category": "wallet",
   "shortDescription": "Descrição curta e objetiva (1 linha)",
   "officialUrl": "https://exemplo.com",
   "platforms": ["Web", "iOS", "Android", "Extension"],
@@ -378,13 +378,30 @@ Converse livremente com o usuário sobre qualquer assunto relacionado ao mundo c
       content: systemPrompt
     };
 
-    // 5. Chamar Perplexity
+    // 5. Validar e normalizar mensagens para garantir alternância user/assistant
+    const normalizedMessages: PerplexityMessage[] = [];
+    let lastRole: 'user' | 'assistant' | null = null;
+
+    for (const msg of messages) {
+      const currentRole = msg.role;
+
+      // Se a mensagem atual tem o mesmo role que a anterior, mesclar conteúdos
+      if (lastRole === currentRole && normalizedMessages.length > 0) {
+        const lastMessage = normalizedMessages[normalizedMessages.length - 1];
+        lastMessage.content += '\n\n' + msg.content;
+      } else {
+        normalizedMessages.push({
+          role: currentRole,
+          content: msg.content
+        });
+        lastRole = currentRole;
+      }
+    }
+
+    // Construir array final com system message
     const perplexityMessages: PerplexityMessage[] = [
       systemMessage,
-      ...messages.map((msg: any) => ({
-        role: msg.role,
-        content: msg.content
-      }))
+      ...normalizedMessages
     ];
 
     // Se está gerando artigo, usar não-streaming para capturar citations
