@@ -240,9 +240,32 @@ export default function CriarArtigoPage() {
   const handlePublish = async () => {
     if (!generatedArticle || !session?.user?.id || !selectedType) return;
 
+    // Normalizar categoria para recursos (lowercase com hífens)
+    const articleToValidate = selectedType === 'resource' && generatedArticle.category
+      ? {
+          ...generatedArticle,
+          category: generatedArticle.category
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, '-') // Espaços → hífens
+            .replace(/_/g, '-')   // Underscores → hífens
+        }
+      : generatedArticle;
+
+    // DEBUG: Log do artigo antes da validação
+    if (isDev) {
+      console.log('🔍 [DEBUG] Validando artigo:', {
+        type: selectedType,
+        category: articleToValidate.category,
+        name: articleToValidate.name || articleToValidate.title,
+        fields: Object.keys(articleToValidate)
+      });
+    }
+
     // Validar antes de publicar
-    const validation = validateArticle(generatedArticle, selectedType);
+    const validation = validateArticle(articleToValidate, selectedType);
     if (!validation.success) {
+      console.error('❌ Erros de validação:', validation.errors);
       alert(`❌ Erros de validação:\n\n${validation.errors.join('\n')}`);
       addMessage({
         role: 'assistant',
@@ -251,22 +274,27 @@ export default function CriarArtigoPage() {
       return;
     }
 
+    // Atualizar o artigo com a versão normalizada
+    if (selectedType === 'resource' && articleToValidate.category !== generatedArticle.category) {
+      setGeneratedArticle(articleToValidate);
+    }
+
     try {
       const apiEndpoint = getApiEndpoint(selectedType);
 
-      const tagsToSend = typeof generatedArticle.tags === 'string'
-        ? generatedArticle.tags
-        : JSON.stringify(generatedArticle.tags || []);
+      const tagsToSend = typeof articleToValidate.tags === 'string'
+        ? articleToValidate.tags
+        : JSON.stringify(articleToValidate.tags || []);
 
-      const citationsToSend = generatedArticle.citations && generatedArticle.citations.length > 0
-        ? JSON.stringify(generatedArticle.citations)
+      const citationsToSend = articleToValidate.citations && articleToValidate.citations.length > 0
+        ? JSON.stringify(articleToValidate.citations)
         : undefined;
 
       const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...generatedArticle,
+          ...articleToValidate,
           published: selectedType !== 'resource' ? true : undefined,
           authorId: selectedType !== 'resource' ? session.user.id : undefined,
           tags: tagsToSend,

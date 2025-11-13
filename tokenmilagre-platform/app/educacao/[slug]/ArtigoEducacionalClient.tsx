@@ -23,6 +23,7 @@ interface EducationalArticle {
   tags: string[];
   author?: string;
   publishedAt: string;
+  factCheckSources?: string; // JSON array de URLs
 }
 
 interface ArtigoEducacionalClientProps {
@@ -326,6 +327,68 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
               {article.content}
             </ReactMarkdown>
           </article>
+
+          {/* Fontes e Referências */}
+          {article.factCheckSources && (() => {
+            try {
+              const sources: string[] = JSON.parse(article.factCheckSources);
+              if (sources.length > 0) {
+                return (
+                  <>
+                    <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+                    <div className="space-y-4">
+                      <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                        📚 Fontes e Referências
+                      </h3>
+                      <ol className="space-y-2">
+                        {sources.map((url, index) => {
+                          try {
+                            const domain = new URL(url).hostname.replace(/^www\./, '');
+                            return (
+                              <li key={index} className="text-sm flex gap-2">
+                                <span className="font-semibold" style={{ color: 'var(--brand-primary)' }}>
+                                  [{index + 1}]
+                                </span>
+                                <a
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="hover:underline"
+                                  style={{ color: 'var(--text-secondary)' }}
+                                >
+                                  {domain}
+                                </a>
+                              </li>
+                            );
+                          } catch {
+                            return (
+                              <li key={index} className="text-sm flex gap-2">
+                                <span className="font-semibold" style={{ color: 'var(--brand-primary)' }}>
+                                  [{index + 1}]
+                                </span>
+                                <a
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="hover:underline"
+                                  style={{ color: 'var(--text-secondary)' }}
+                                >
+                                  {url}
+                                </a>
+                              </li>
+                            );
+                          }
+                        })}
+                      </ol>
+                    </div>
+                  </>
+                );
+              }
+            } catch (err) {
+              console.error('Error parsing factCheckSources:', err);
+            }
+            return null;
+          })()}
 
           {/* Divider */}
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
