@@ -107,12 +107,46 @@ export default function GerarEmMassaPage() {
     setIsGenerating(false);
   };
 
+  const validateResourceData = (data: any): string[] => {
+    const errors: string[] = [];
+
+    if (!data.name) errors.push('name');
+    if (!data.slug) errors.push('slug');
+    if (!data.category) errors.push('category');
+    if (!data.officialUrl || !data.officialUrl.startsWith('http'))
+      errors.push('officialUrl (deve ser URL válida)');
+    if (!data.shortDescription) errors.push('shortDescription');
+    if (!data.heroTitle) errors.push('heroTitle');
+    if (!data.heroDescription) errors.push('heroDescription');
+    if (!data.heroGradient) errors.push('heroGradient');
+    if (!data.whyGoodTitle) errors.push('whyGoodTitle');
+    if (!data.whyGoodContent || !Array.isArray(data.whyGoodContent) || data.whyGoodContent.length < 5)
+      errors.push('whyGoodContent (mínimo 5 parágrafos)');
+    if (!data.features || !Array.isArray(data.features) || data.features.length < 6)
+      errors.push('features (mínimo 6)');
+    if (!data.howToStartTitle) errors.push('howToStartTitle');
+    if (!data.howToStartSteps || !Array.isArray(data.howToStartSteps) || data.howToStartSteps.length < 5)
+      errors.push('howToStartSteps (mínimo 5)');
+    if (!data.pros || !Array.isArray(data.pros) || data.pros.length < 8)
+      errors.push('pros (mínimo 8)');
+    if (!data.cons || !Array.isArray(data.cons) || data.cons.length < 5)
+      errors.push('cons (exatos 5)');
+    if (!data.faq || !Array.isArray(data.faq) || data.faq.length < 4)
+      errors.push('faq (mínimo 4)');
+    if (!data.securityTips || !Array.isArray(data.securityTips) || data.securityTips.length < 6)
+      errors.push('securityTips (mínimo 6)');
+
+    return errors;
+  };
+
   const generateSingleArticle = async (article: GeneratedArticle, index: number) => {
     try {
       // Atualizar status para "generating"
       setArticles(prev => prev.map(a =>
         a.id === article.id ? { ...a, status: 'generating' } : a
       ));
+
+      console.log(`🚀 [${index + 1}] Gerando: ${article.title}`);
 
       const response = await fetch('/api/chat-perplexity', {
         method: 'POST',
@@ -134,15 +168,44 @@ export default function GerarEmMassaPage() {
 
       const data = await response.json();
 
-      // Extrair JSON do content
+      console.log(`🔍 [${index + 1}] Resposta recebida:`, {
+        hasContent: !!data.content,
+        contentLength: data.content?.length,
+        hasCitations: !!data.citations,
+        citationsCount: data.citations?.length
+      });
+
+      // Extrair JSON do content com parsing robusto
       let parsedContent;
       try {
-        // Tentar extrair JSON de code block se necessário
-        const jsonMatch = data.content.match(/```json\n([\s\S]*?)\n```/);
-        const jsonString = jsonMatch ? jsonMatch[1] : data.content;
+        // Tentar extrair JSON de code block markdown (suporta ```json e ```)
+        const jsonMatch = data.content.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+        const jsonString = jsonMatch ? jsonMatch[1].trim() : data.content.trim();
+
+        console.log(`📄 [${index + 1}] JSON extraído (preview):`, jsonString.substring(0, 200));
+
         parsedContent = JSON.parse(jsonString);
       } catch (e) {
+        console.error(`❌ [${index + 1}] Erro ao parsear JSON:`, e);
+        console.error(`📄 [${index + 1}] Conteúdo recebido:`, data.content.substring(0, 500));
         throw new Error('Resposta da IA não está em formato JSON válido');
+      }
+
+      // Validar estrutura se for recurso
+      if (article.type === 'resource') {
+        const validationErrors = validateResourceData(parsedContent);
+        if (validationErrors.length > 0) {
+          console.error(`❌ [${index + 1}] Validação falhou:`, validationErrors);
+          throw new Error(`Dados incompletos: ${validationErrors.join(', ')}`);
+        }
+
+        console.log(`✅ [${index + 1}] Validação OK:`, {
+          name: parsedContent.name,
+          category: parsedContent.category,
+          featuresCount: parsedContent.features?.length,
+          prosCount: parsedContent.pros?.length,
+          consCount: parsedContent.cons?.length
+        });
       }
 
       // Atualizar artigo com dados gerados
@@ -155,8 +218,10 @@ export default function GerarEmMassaPage() {
         } : a
       ));
 
+      console.log(`✅ [${index + 1}] Gerado com sucesso: ${parsedContent.title || parsedContent.name}`);
+
     } catch (error: any) {
-      console.error(`Erro ao gerar artigo ${index + 1}:`, error);
+      console.error(`❌ [${index + 1}] Erro ao gerar artigo:`, error);
       setArticles(prev => prev.map(a =>
         a.id === article.id ? {
           ...a,
@@ -177,19 +242,33 @@ export default function GerarEmMassaPage() {
 
     setIsGenerating(true);
 
+    const VALID_CATEGORIES = [
+      'exchange', 'wallet', 'defi-protocol', 'analytics',
+      'portfolio-tracker', 'news', 'education', 'development-tools'
+    ];
+
     try {
       const endpoint = contentType === 'resource' ? '/api/resources' : '/api/articles';
 
-      for (const article of selected) {
+      for (let i = 0; i < selected.length; i++) {
+        const article = selected[i];
         let payload: any;
+
+        console.log(`💾 [${i + 1}/${selected.length}] Salvando: ${article.title}`);
 
         if (contentType === 'resource') {
           // Para recursos, precisamos de TODOS os campos obrigatórios
           const resourceData = article as any;
+
+          // Validar categoria
+          const category = VALID_CATEGORIES.includes(resourceData.category)
+            ? resourceData.category
+            : 'wallet'; // Default válido
+
           payload = {
             name: resourceData.name || article.title,
-            slug: resourceData.slug || generateSlug(article.title),
-            category: resourceData.category || 'tools',
+            slug: resourceData.slug || generateSlug(resourceData.name || article.title),
+            category,
             shortDescription: resourceData.shortDescription || article.excerpt || '',
             officialUrl: resourceData.officialUrl || '',
             platforms: resourceData.platforms || [],
@@ -197,10 +276,10 @@ export default function GerarEmMassaPage() {
             heroTitle: resourceData.heroTitle || article.title,
             heroDescription: resourceData.heroDescription || article.excerpt || '',
             heroGradient: resourceData.heroGradient || 'linear-gradient(135deg, #7C3AED, #F59E0B)',
-            whyGoodTitle: resourceData.whyGoodTitle || `Por que ${article.title} é uma boa escolha?`,
+            whyGoodTitle: resourceData.whyGoodTitle || `Por que ${resourceData.name || article.title} é uma boa escolha?`,
             whyGoodContent: resourceData.whyGoodContent || [],
             features: resourceData.features || [],
-            howToStartTitle: resourceData.howToStartTitle || `Como Começar a Usar ${article.title}`,
+            howToStartTitle: resourceData.howToStartTitle || `Como Começar a Usar ${resourceData.name || article.title}`,
             howToStartSteps: resourceData.howToStartSteps || [],
             pros: resourceData.pros || [],
             cons: resourceData.cons || [],
@@ -211,6 +290,15 @@ export default function GerarEmMassaPage() {
             showCompatibleWallets: resourceData.showCompatibleWallets || false,
             relatedResources: resourceData.relatedResources || null
           };
+
+          console.log(`📦 [${i + 1}] Payload do recurso:`, {
+            name: payload.name,
+            slug: payload.slug,
+            category: payload.category,
+            featuresCount: payload.features.length,
+            prosCount: payload.pros.length,
+            consCount: payload.cons.length
+          });
         } else {
           // Para artigos (news/educational)
           payload = {
@@ -235,6 +323,13 @@ export default function GerarEmMassaPage() {
           if (article.type === 'news') {
             payload.sentiment = (article as any).sentiment || 'neutral';
           }
+
+          console.log(`📰 [${i + 1}] Payload do artigo:`, {
+            type: payload.type,
+            title: payload.title,
+            slug: payload.slug,
+            category: payload.category
+          });
         }
 
         const response = await fetch(endpoint, {
@@ -246,8 +341,16 @@ export default function GerarEmMassaPage() {
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
           const errorMessage = errorData.error || response.statusText;
+          console.error(`❌ [${i + 1}] Erro ao salvar:`, {
+            status: response.status,
+            error: errorMessage,
+            details: errorData.details
+          });
           throw new Error(`Erro ao salvar "${article.title}": ${errorMessage}`);
         }
+
+        const result = await response.json();
+        console.log(`✅ [${i + 1}] Salvo com sucesso:`, result);
       }
 
       alert(`✅ ${selected.length} artigo(s) salvos com sucesso!`);
@@ -258,7 +361,7 @@ export default function GerarEmMassaPage() {
       setTotalSteps(0);
 
     } catch (error: any) {
-      console.error('Erro detalhado:', error);
+      console.error('❌ Erro detalhado ao salvar:', error);
       alert(`❌ Erro ao salvar artigos: ${error.message}`);
     } finally {
       setIsGenerating(false);
@@ -287,6 +390,10 @@ export default function GerarEmMassaPage() {
       const date = new Date();
       const dateStr = date.toISOString().split('T')[0].replace(/-/g, '');
       slug = `${slug}-${dateStr}`;
+    } else {
+      // Adicionar timestamp para garantir unicidade
+      const timestamp = Date.now().toString(36);
+      slug = `${slug}-${timestamp}`;
     }
 
     return slug.substring(0, 100);

@@ -50,10 +50,72 @@ export async function POST(request: NextRequest) {
       relatedResources = null
     } = body;
 
-    // Validação básica
-    if (!name || !slug || !category || !shortDescription || !officialUrl) {
+    // Validação completa de campos obrigatórios
+    const requiredFields = {
+      name,
+      slug,
+      category,
+      shortDescription,
+      officialUrl,
+      heroTitle,
+      heroDescription,
+      heroGradient,
+      whyGoodTitle,
+      whyGoodContent,
+      features,
+      howToStartTitle,
+      howToStartSteps,
+      pros,
+      cons,
+      faq,
+      securityTips
+    };
+
+    const missingFields: string[] = [];
+
+    // Validar campos string
+    ['name', 'slug', 'category', 'shortDescription', 'officialUrl', 'heroTitle', 'heroDescription', 'heroGradient', 'whyGoodTitle', 'howToStartTitle'].forEach(field => {
+      if (!requiredFields[field as keyof typeof requiredFields]) {
+        missingFields.push(field);
+      }
+    });
+
+    // Validar arrays obrigatórios
+    if (!Array.isArray(whyGoodContent) || whyGoodContent.length < 5) {
+      missingFields.push('whyGoodContent (mínimo 5 parágrafos)');
+    }
+    if (!Array.isArray(features) || features.length < 6) {
+      missingFields.push('features (mínimo 6)');
+    }
+    if (!Array.isArray(howToStartSteps) || howToStartSteps.length < 5) {
+      missingFields.push('howToStartSteps (mínimo 5)');
+    }
+    if (!Array.isArray(pros) || pros.length < 8) {
+      missingFields.push('pros (mínimo 8)');
+    }
+    if (!Array.isArray(cons) || cons.length < 5) {
+      missingFields.push('cons (mínimo 5)');
+    }
+    if (!Array.isArray(faq) || faq.length < 4) {
+      missingFields.push('faq (mínimo 4)');
+    }
+    if (!Array.isArray(securityTips) || securityTips.length < 6) {
+      missingFields.push('securityTips (mínimo 6)');
+    }
+
+    // Validar URL
+    if (officialUrl && !officialUrl.startsWith('http')) {
+      missingFields.push('officialUrl (deve ser URL válida com http/https)');
+    }
+
+    if (missingFields.length > 0) {
+      console.error('❌ Campos obrigatórios faltando:', missingFields);
       return NextResponse.json(
-        { success: false, error: 'Campos obrigatórios faltando' },
+        {
+          success: false,
+          error: `Campos obrigatórios faltando: ${missingFields.join(', ')}`,
+          details: { missingFields }
+        },
         { status: 400 }
       );
     }
@@ -103,19 +165,33 @@ export async function POST(request: NextRequest) {
       resourceData.sources = typeof body.sources === 'string' ? body.sources : JSON.stringify(body.sources);
     }
 
-    // Log para debug (apenas em desenvolvimento)
-    if (process.env.NODE_ENV === 'development') {
-      console.log('📦 Criando recurso:', {
-        name: resourceData.name,
-        slug: resourceData.slug,
-        category: resourceData.category,
-        fieldsCount: Object.keys(resourceData).length
-      });
-    }
+    // Log para debug
+    console.log('📦 Criando recurso:', {
+      name: resourceData.name,
+      slug: resourceData.slug,
+      category: resourceData.category,
+      officialUrl: resourceData.officialUrl,
+      fieldsCount: Object.keys(resourceData).length,
+      arrays: {
+        whyGoodContent: resourceData.whyGoodContent ? JSON.parse(resourceData.whyGoodContent).length : 0,
+        features: resourceData.features ? JSON.parse(resourceData.features).length : 0,
+        howToStartSteps: resourceData.howToStartSteps ? JSON.parse(resourceData.howToStartSteps).length : 0,
+        pros: resourceData.pros ? JSON.parse(resourceData.pros).length : 0,
+        cons: resourceData.cons ? JSON.parse(resourceData.cons).length : 0,
+        faq: resourceData.faq ? JSON.parse(resourceData.faq).length : 0,
+        securityTips: resourceData.securityTips ? JSON.parse(resourceData.securityTips).length : 0
+      }
+    });
 
     // Criar recurso
     const resource = await prisma.resource.create({
       data: resourceData
+    });
+
+    console.log('✅ Recurso criado com sucesso:', {
+      id: resource.id,
+      slug: resource.slug,
+      name: resource.name
     });
 
     return NextResponse.json({
@@ -135,9 +211,10 @@ export async function POST(request: NextRequest) {
       message: error.message,
       code: error.code,
       meta: error.meta,
-      name: error.name
+      name: error.name,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
     };
-    console.error('Detalhes do erro:', JSON.stringify(errorDetails, null, 2));
+    console.error('Detalhes completos do erro:', JSON.stringify(errorDetails, null, 2));
 
     // Retornar mensagem mais específica
     const errorMessage = error.message || 'Erro ao criar recurso';
