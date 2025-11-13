@@ -110,18 +110,20 @@ export const educationalArticleSchema = z.object({
 // ============================================================================
 
 export const resourceSchema = z.object({
+  // Resources têm regras mais flexíveis que artigos
   name: z.string()
-    .min(VALIDATION_RULES.title.minLength, `Nome deve ter pelo menos ${VALIDATION_RULES.title.minLength} caracteres`)
-    .max(VALIDATION_RULES.title.maxLength, `Nome deve ter no máximo ${VALIDATION_RULES.title.maxLength} caracteres`),
+    .min(3, 'Nome deve ter pelo menos 3 caracteres')
+    .max(100, 'Nome deve ter no máximo 100 caracteres'),
 
   slug: slugSchema,
 
   shortDescription: z.string()
-    .min(VALIDATION_RULES.excerpt.minLength, `Descrição curta deve ter pelo menos ${VALIDATION_RULES.excerpt.minLength} caracteres`)
-    .max(VALIDATION_RULES.excerpt.maxLength, `Descrição curta deve ter no máximo ${VALIDATION_RULES.excerpt.maxLength} caracteres`),
+    .min(20, 'Descrição curta deve ter pelo menos 20 caracteres')
+    .max(200, 'Descrição curta deve ter no máximo 200 caracteres'),
 
   description: z.string()
-    .min(VALIDATION_RULES.content.minLength, `Descrição deve ter pelo menos ${VALIDATION_RULES.content.minLength} caracteres`),
+    .min(50, 'Descrição deve ter pelo menos 50 caracteres')
+    .optional(), // description pode ser opcional para resources
 
   category: z.enum(RESOURCE_CATEGORIES as unknown as [string, ...string[]], {
     message: 'Categoria inválida para recurso'
@@ -131,7 +133,17 @@ export const resourceSchema = z.object({
 
   platforms: z.array(z.string()).optional(),
 
-  features: z.array(z.string()).optional(),
+  // Features pode ser array de strings OU objetos (aceitar ambos)
+  features: z.union([
+    z.array(z.string()),
+    z.array(z.any())
+  ]).optional().transform((val) => {
+    if (!val) return undefined;
+    // Se for array de objetos, converter para strings
+    return val.map((item: any) =>
+      typeof item === 'string' ? item : JSON.stringify(item)
+    );
+  }),
 
   pros: z.array(z.string()).optional(),
 
