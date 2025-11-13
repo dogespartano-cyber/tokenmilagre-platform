@@ -419,41 +419,68 @@ export async function generateStaticParams() {
 
 ---
 
-## 🔗 Related Skills
+## 🔗 Related Skills - Estrutura Organizada
 
-After loading project context, use these specialized skills when needed:
+**Total de Skills**: 22 organizadas em 5 categorias hierárquicas
 
-### 📚 Legacy Skills (Project-Specific)
-- **`article-creation`** - Templates, checklists, scripts práticos para criação de artigos/notícias. Use quando precisar de exemplos de estrutura, scripts Node.js, ou sistema de slug único.
-- **`chat-workflow`** - Sistema chat IA completo (/dashboard/criar-artigo). Use quando trabalhar com detecção de intenção, comandos naturais, ou arquitetura do chat.
-- **`design-system`** - CSS variables, spacing, cores, padrões visuais específicos do projeto. Use quando estilizar páginas, trabalhar com tema claro/escuro, ou aplicar identidade visual.
-- **`pages-reference`** - Informações detalhadas sobre páginas específicas (/educacao, /recursos, /noticias, etc). Use quando modificar ou entender features de páginas.
-- **`troubleshooting`** - Histórico completo de problemas técnicos resolvidos (1286 linhas de conhecimento institucional). Use quando encontrar bugs similares a problemas passados.
+**Localização**: `.claude/skills/` (estrutura consolidada)
 
-**Note:** `database-setup` skill was consolidated into `tokenmilagre-database` (TIER 3 below) for better organization.
+---
 
-### 💎 Token Milagre Skills
+### 🎯 _meta/ - Meta-Skills (2)
 
-**TIER 1 - Fundamentos**:
-- **`tokenmilagre-article-workflow`** - Complete article creation workflow (Perplexity AI → Gemini refinement → Publication). Use when creating/editing articles with AI integration, managing citations, or setting up content pipelines.
-- **`tokenmilagre-citations`** - Citation management and fact-checking system. Use when extracting citations from Perplexity, validating sources, storing in factCheckSources, or implementing citation display patterns.
-- **`tokenmilagre-component-patterns`** - Component refactoring strategies for large React components (>500 lines). Use when breaking down components, extracting custom hooks, or applying architectural patterns.
+Skills que controlam o comportamento e filosofia do projeto:
 
-**TIER 2 - Integrações**:
-- **`tokenmilagre-api-integrations`** - External API integration patterns (Perplexity AI, Gemini, Binance, CoinGecko). Use when integrating APIs, handling rate limits, implementing caching, or troubleshooting API errors.
-- **`tokenmilagre-copilot-tools`** - Copilot AI tool development with type-safe patterns. Use when creating new tools, implementing tool parameters, managing permissions, or setting up activity logging.
-- **`tokenmilagre-content-quality`** - Content quality standards, SEO optimization, readability metrics, and fact-check scoring. Use when creating/reviewing articles, implementing SEO, or setting up quality validation.
+- **`project-context`** ⭐ - **Master skill** com guidelines essenciais, regras críticas, filosofia, stack, e workflow. SEMPRE usar no início de conversas.
+- **`project-manager-brutal-honesty`** - Modo gerente de projeto realista. Estimativas conservadoras, foco em ROI, questiona over-engineering, comunicação direta.
 
-**TIER 3 - Infraestrutura**:
-- **`tokenmilagre-database`** - Complete database management guide: Prisma schema design, migrations, query optimization, Server Components patterns, build configuration, and Vercel deployment. Consolidated with database-setup skill. Use when modifying schema, creating migrations, optimizing queries, troubleshooting database issues, or configuring Prisma in Server Components.
-- **`tokenmilagre-scripts`** - Utility scripts and automation patterns (migrations, bulk processing, analytics). Use when building scripts for data processing, content migration, or platform automation.
-- **`tokenmilagre-testing`** - Testing strategies (unit, integration, E2E, component testing). Use when setting up tests, writing test cases, or debugging test failures.
+---
 
-**Metodologia**:
-- **`tokenmilagre-refactoring`** - Complete refactoring methodology with type safety patterns, Prisma types guide, and analysis scripts. Use when reducing 'any' usage, improving code quality, or analyzing codebase complexity.
+### ⚙️ core/ - Fundamentos (4)
 
-**TIER 4 - Estratégia & Análise**:
-- **`due-diligence-report`** - Complete due diligence analysis of Token Milagre Platform from a Chief Strategy Officer & Blockchain Economics Expert perspective. Brutally realistic assessment without hype - covering business model viability, tokenomics, competitive analysis, financial sustainability, and strategic recommendations. Use when performing strategic analysis, evaluating business model, or assessing project viability.
+Skills de infraestrutura e qualidade de código:
+
+- **`tokenmilagre-database`** - Database management completo: Prisma schema, migrations, query optimization, Server Components patterns, build configuration, Supabase deployment.
+- **`tokenmilagre-refactoring`** - Metodologia de refactoring completa: type safety patterns, Prisma types guide, análise de complexidade, redução de 'any'.
+- **`tokenmilagre-testing`** - Testing strategies: unit, integration, E2E, component testing. Setup, patterns, debugging test failures.
+- **`tokenmilagre-scripts`** - Utility scripts e automation: migrations, bulk processing, data processing, platform automation.
+
+---
+
+### 🎨 features/ - Features & Workflows (8)
+
+Skills de funcionalidades específicas do produto:
+
+- **`tokenmilagre-article-workflow`** - Workflow completo de criação de artigos: Perplexity AI → Gemini refinement → Publication. AI integration, citation management.
+- **`tokenmilagre-citations`** - Citation management e fact-checking: extração de citações do Perplexity, validação de fontes, factCheckSources.
+- **`tokenmilagre-content-quality`** - Content quality standards: SEO optimization, readability metrics, fact-check scoring, editorial quality.
+- **`tokenmilagre-api-integrations`** - External API integration patterns: Perplexity AI, Gemini, Binance, CoinGecko. Rate limits, error recovery, caching.
+- **`tokenmilagre-copilot-tools`** - Copilot AI tools development: type-safe patterns, tool parameters, permissions, activity logging.
+- **`tokenmilagre-component-patterns`** - Component refactoring strategies: large React components (>500 lines), custom hooks extraction, architectural patterns.
+- **`article-creation`** - Templates e checklists para criação de artigos: estruturas, scripts Node.js, sistema de slug único.
+- **`chat-workflow`** - Sistema chat IA (/dashboard/criar-artigo): detecção de intenção, comandos naturais, arquitetura técnica.
+
+---
+
+### 🏗️ project-specific/ - Específico do Projeto (4)
+
+Skills com conhecimento específico da plataforma Token Milagre:
+
+- **`design-system`** - CSS variables, spacing system, cores, padrões visuais, identidade visual, tema claro/escuro.
+- **`pages-reference`** - Informações detalhadas sobre páginas específicas: /educacao, /recursos, /noticias, /doacoes, features e layouts.
+- **`tokenmilagre-url-security`** - Proteção contra links maliciosos: verificação híbrida (local + API), detecção de phishing/scams, modais educativos.
+- **`server-manager`** - Gerenciamento do servidor Next.js: scripts cross-platform (Bash + PowerShell), comandos de start/stop/restart/logs.
+
+---
+
+### 🔍 audit/ - Auditoria & Troubleshooting (4)
+
+Skills de análise, auditoria e histórico de problemas:
+
+- **`due-diligence-report`** - Análise estratégica completa da plataforma: business model viability, tokenomics, competitive analysis, financial sustainability. Perspectiva CSO + Blockchain Economics Expert.
+- **`platform-audit`** - Checklist de auditoria trimestral: segurança, qualidade, performance, débitos técnicos, métricas do projeto.
+- **`troubleshooting`** - Histórico completo de problemas técnicos resolvidos (1286 linhas). Conhecimento institucional crítico. Consultar antes de debugar problemas similares.
+- **`database-setup`** - Referência histórica da configuração de database (predecessor do tokenmilagre-database). Mantido para contexto histórico.
 
 ---
 
@@ -892,7 +919,8 @@ git push origin main
 **Skill criada por**: Claude Code
 **Última atualização**: 2025-11-13
 **Mudanças recentes**:
+- ✅ **REORGANIZAÇÃO COMPLETA**: 22 skills organizadas em 5 categorias hierárquicas (_meta, core, features, project-specific, audit)
+- ✅ Consolidação de skills: legacy skills (tokenmilagre-platform/.claude/) movidas para estrutura principal (.claude/)
 - ✅ Atualizado para Supabase PostgreSQL (migrado de Neon em 2025-11-12)
-- ✅ Adicionadas 10 skills Token Milagre (article-workflow, citations, components, api-integrations, copilot-tools, content-quality, database, scripts, testing, refactoring)
-- ✅ Implementado sistema de sugestão proativa de novas skills
-- ✅ Processo de avaliação automático antes de sugerir skills
+- ✅ Estrutura otimizada para descobribilidade, manutenibilidade e escalabilidade
+- ✅ Documentação de todas as 22 skills com categorização lógica
