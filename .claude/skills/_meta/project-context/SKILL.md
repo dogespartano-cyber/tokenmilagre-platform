@@ -419,6 +419,44 @@ export async function generateStaticParams() {
 
 ---
 
+## 🧭 Quando Usar Cada Skill - Guia Rápido
+
+**⚡ NOVO**: Consulte [`skills-navigator`](../skills-navigator/SKILL.md) para navegação interativa completa!
+
+### Por Tipo de Tarefa
+
+**🎨 Trabalhar com Interface (UI/UX):**
+- Estilização/CSS → [`design-system`](../../project-specific/design-system/SKILL.md)
+- Estrutura de páginas → [`pages-reference`](../../project-specific/pages-reference/SKILL.md)
+- Componentes reutilizáveis → [`tokenmilagre-component-patterns`](../../features/tokenmilagre-component-patterns/SKILL.md)
+- Segurança de links → [`tokenmilagre-url-security`](../../project-specific/tokenmilagre-url-security/SKILL.md)
+
+**📝 Trabalhar com Conteúdo:**
+- Criar artigo → [`article-creation`](../../features/article-creation/SKILL.md) + [`tokenmilagre-article-workflow`](../../features/tokenmilagre-article-workflow/SKILL.md)
+- Fact-checking → [`tokenmilagre-citations`](../../features/tokenmilagre-citations/SKILL.md) + [`tokenmilagre-content-quality`](../../features/tokenmilagre-content-quality/SKILL.md)
+- Chat IA → [`chat-workflow`](../../features/chat-workflow/SKILL.md)
+
+**🗄️ Trabalhar com Banco de Dados:**
+- Modificar schema → [`tokenmilagre-database`](../../core/tokenmilagre-database/SKILL.md) + [`database-setup`](../../audit/database-setup/SKILL.md)
+- Otimizar queries → [`tokenmilagre-database`](../../core/tokenmilagre-database/SKILL.md)
+- Scripts de migração → [`tokenmilagre-scripts`](../../core/tokenmilagre-scripts/SKILL.md)
+
+**🔌 Trabalhar com APIs:**
+- Integrar API externa → [`tokenmilagre-api-integrations`](../../features/tokenmilagre-api-integrations/SKILL.md)
+- Usar Perplexity/Gemini → [`tokenmilagre-article-workflow`](../../features/tokenmilagre-article-workflow/SKILL.md)
+
+**🧪 Testes e Qualidade:**
+- Adicionar testes → [`tokenmilagre-testing`](../../core/tokenmilagre-testing/SKILL.md)
+- Refatorar código → [`tokenmilagre-refactoring`](../../core/tokenmilagre-refactoring/SKILL.md)
+- Auditoria → [`platform-audit`](../../audit/platform-audit/SKILL.md)
+
+**🚀 Deploy e Operações:**
+- Gerenciar servidor → [`server-manager`](../../project-specific/server-manager/SKILL.md)
+- Debugging → [`troubleshooting`](../../audit/troubleshooting/SKILL.md)
+- Análise estratégica → [`due-diligence-report`](../../audit/due-diligence-report/SKILL.md)
+
+---
+
 ## 🔗 Related Skills - Estrutura Organizada
 
 **Total de Skills**: 22 organizadas em 5 categorias hierárquicas

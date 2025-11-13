@@ -1,0 +1,172 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "generated": "2025-11-13",
+    "description": "Mapa completo de relacionamentos entre todas as 22 skills",
+    "total_skills": 23,
+    "total_relationships": 156
+  },
+  "skills": {
+    "project-context": {
+      "category": "meta",
+      "prerequisites": [],
+      "complementary": ["skills-navigator", "project-manager-brutal-honesty"],
+      "next_steps": ["Skill específica da tarefa"],
+      "template": "## 🔗 Skills Relacionadas\n\n### Complementares (usar junto):\n- [`skills-navigator`](../skills-navigator/SKILL.md) - GPS para identificar skills necessárias\n- [`project-manager-brutal-honesty`](../project-manager-brutal-honesty/SKILL.md) - Decisões estratégicas\n\n### Próximos Passos (ler depois):\n- Consulte [`skills-navigator`](../skills-navigator/SKILL.md) para identificar skill da sua tarefa\n- Todas as outras 21 skills dependem desta como contexto base"
+    },
+    "skills-navigator": {
+      "category": "meta",
+      "prerequisites": ["project-context"],
+      "complementary": [],
+      "next_steps": ["Skill específica identificada na navegação"],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../project-context/SKILL.md) - Contexto geral do projeto\n\n### Esta skill referencia:\n- **Todas as 22 skills** - É o índice de navegação\n\n### Documentação complementar:\n- [`SKILLS-ECOSYSTEM.md`](../../SKILLS-ECOSYSTEM.md) - Arquitetura completa"
+    },
+    "project-manager-brutal-honesty": {
+      "category": "meta",
+      "prerequisites": ["project-context"],
+      "complementary": ["due-diligence-report"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../project-context/SKILL.md) - Contexto e filosofia do projeto\n\n### Complementares (usar junto):\n- [`due-diligence-report`](../../audit/due-diligence-report/SKILL.md) - Análise estratégica detalhada\n- [`platform-audit`](../../audit/platform-audit/SKILL.md) - Métricas objetivas"
+    },
+    "tokenmilagre-database": {
+      "category": "core",
+      "prerequisites": ["project-context"],
+      "complementary": ["database-setup", "tokenmilagre-testing"],
+      "next_steps": ["tokenmilagre-refactoring", "troubleshooting"],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Regras de database do projeto\n\n### Complementares (usar junto):\n- [`database-setup`](../../audit/database-setup/SKILL.md) - Configuração e deployment\n- [`tokenmilagre-testing`](../tokenmilagre-testing/SKILL.md) - Testar mudanças no schema\n\n### Próximos Passos (ler depois):\n- [`tokenmilagre-refactoring`](../tokenmilagre-refactoring/SKILL.md) - Se refatorando queries\n- [`troubleshooting`](../../audit/troubleshooting/SKILL.md) - Se encontrar problemas"
+    },
+    "tokenmilagre-refactoring": {
+      "category": "core",
+      "prerequisites": ["project-context"],
+      "complementary": ["tokenmilagre-testing", "tokenmilagre-component-patterns"],
+      "next_steps": ["troubleshooting"],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Guidelines de código\n\n### Complementares (usar junto):\n- [`tokenmilagre-testing`](../tokenmilagre-testing/SKILL.md) - Validar refatoração\n- [`tokenmilagre-component-patterns`](../../features/tokenmilagre-component-patterns/SKILL.md) - Se refatorando componentes React\n\n### Próximos Passos:\n- [`troubleshooting`](../../audit/troubleshooting/SKILL.md) - Se encontrar problemas"
+    },
+    "tokenmilagre-testing": {
+      "category": "core",
+      "prerequisites": ["project-context"],
+      "complementary": ["tokenmilagre-refactoring"],
+      "next_steps": ["troubleshooting"],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Stack e guidelines\n- Skill da feature sendo testada\n\n### Complementares (usar junto):\n- [`tokenmilagre-refactoring`](../tokenmilagre-refactoring/SKILL.md) - Refatoração com testes\n\n### Próximos Passos:\n- [`troubleshooting`](../../audit/troubleshooting/SKILL.md) - Se testes falharem"
+    },
+    "tokenmilagre-scripts": {
+      "category": "core",
+      "prerequisites": ["project-context", "tokenmilagre-database"],
+      "complementary": ["tokenmilagre-testing"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Regras de execução\n- [`tokenmilagre-database`](../tokenmilagre-database/SKILL.md) - Se manipular dados\n\n### Complementares (usar junto):\n- [`tokenmilagre-testing`](../tokenmilagre-testing/SKILL.md) - Testar scripts"
+    },
+    "tokenmilagre-article-workflow": {
+      "category": "features",
+      "prerequisites": ["project-context", "tokenmilagre-api-integrations"],
+      "complementary": ["article-creation", "tokenmilagre-citations", "tokenmilagre-content-quality"],
+      "next_steps": ["design-system"],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Filosofia de conteúdo\n- [`tokenmilagre-api-integrations`](../tokenmilagre-api-integrations/SKILL.md) - Usar Perplexity/Gemini\n\n### Complementares (usar junto):\n- [`article-creation`](../article-creation/SKILL.md) - Templates e estrutura\n- [`tokenmilagre-citations`](../tokenmilagre-citations/SKILL.md) - Gerenciar fontes\n- [`tokenmilagre-content-quality`](../tokenmilagre-content-quality/SKILL.md) - Validar qualidade\n\n### Próximos Passos:\n- [`design-system`](../../project-specific/design-system/SKILL.md) - Formatação visual"
+    },
+    "article-creation": {
+      "category": "features",
+      "prerequisites": ["project-context", "tokenmilagre-article-workflow"],
+      "complementary": ["tokenmilagre-database", "design-system"],
+      "next_steps": ["tokenmilagre-citations", "tokenmilagre-content-quality"],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Guidelines de conteúdo\n- [`tokenmilagre-article-workflow`](../tokenmilagre-article-workflow/SKILL.md) - Entender fluxo completo\n\n### Complementares (usar junto):\n- [`tokenmilagre-database`](../../core/tokenmilagre-database/SKILL.md) - Schema de artigos\n- [`design-system`](../../project-specific/design-system/SKILL.md) - Padrões visuais\n\n### Próximos Passos:\n- [`tokenmilagre-citations`](../tokenmilagre-citations/SKILL.md) - Adicionar referências\n- [`tokenmilagre-content-quality`](../tokenmilagre-content-quality/SKILL.md) - Validar qualidade"
+    },
+    "tokenmilagre-citations": {
+      "category": "features",
+      "prerequisites": ["tokenmilagre-article-workflow"],
+      "complementary": ["tokenmilagre-content-quality", "tokenmilagre-api-integrations"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`tokenmilagre-article-workflow`](../tokenmilagre-article-workflow/SKILL.md) - Contexto de criação\n\n### Complementares (usar junto):\n- [`tokenmilagre-content-quality`](../tokenmilagre-content-quality/SKILL.md) - Validação de qualidade\n- [`tokenmilagre-api-integrations`](../tokenmilagre-api-integrations/SKILL.md) - Extração do Perplexity"
+    },
+    "tokenmilagre-content-quality": {
+      "category": "features",
+      "prerequisites": ["tokenmilagre-article-workflow"],
+      "complementary": ["tokenmilagre-citations", "tokenmilagre-api-integrations"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`tokenmilagre-article-workflow`](../tokenmilagre-article-workflow/SKILL.md) - Workflow completo\n\n### Complementares (usar junto):\n- [`tokenmilagre-citations`](../tokenmilagre-citations/SKILL.md) - Validar fontes\n- [`tokenmilagre-api-integrations`](../tokenmilagre-api-integrations/SKILL.md) - Usar Gemini para refinamento"
+    },
+    "tokenmilagre-api-integrations": {
+      "category": "features",
+      "prerequisites": ["project-context"],
+      "complementary": ["tokenmilagre-testing", "troubleshooting"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Regras de API\n\n### Complementares (usar junto):\n- [`tokenmilagre-testing`](../../core/tokenmilagre-testing/SKILL.md) - Testar integração\n- [`troubleshooting`](../../audit/troubleshooting/SKILL.md) - Erros comuns de API\n\n### Usado por:\n- [`tokenmilagre-article-workflow`](../tokenmilagre-article-workflow/SKILL.md)\n- [`chat-workflow`](../chat-workflow/SKILL.md)\n- [`tokenmilagre-copilot-tools`](../tokenmilagre-copilot-tools/SKILL.md)"
+    },
+    "tokenmilagre-copilot-tools": {
+      "category": "features",
+      "prerequisites": ["project-context", "tokenmilagre-api-integrations"],
+      "complementary": ["tokenmilagre-database", "tokenmilagre-testing"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Guidelines\n- [`tokenmilagre-api-integrations`](../tokenmilagre-api-integrations/SKILL.md) - Integrar Gemini\n\n### Complementares (usar junto):\n- [`tokenmilagre-database`](../../core/tokenmilagre-database/SKILL.md) - Se usar DB\n- [`tokenmilagre-testing`](../../core/tokenmilagre-testing/SKILL.md) - Testes"
+    },
+    "chat-workflow": {
+      "category": "features",
+      "prerequisites": ["project-context", "tokenmilagre-api-integrations"],
+      "complementary": ["tokenmilagre-copilot-tools"],
+      "next_steps": ["design-system"],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Contexto\n- [`tokenmilagre-api-integrations`](../tokenmilagre-api-integrations/SKILL.md) - Integração Gemini\n\n### Complementares (usar junto):\n- [`tokenmilagre-copilot-tools`](../tokenmilagre-copilot-tools/SKILL.md) - Ferramentas do chat\n\n### Próximos Passos:\n- [`design-system`](../../project-specific/design-system/SKILL.md) - UI do chat"
+    },
+    "tokenmilagre-component-patterns": {
+      "category": "features",
+      "prerequisites": ["project-context", "design-system"],
+      "complementary": ["tokenmilagre-refactoring", "tokenmilagre-testing"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Guidelines React\n- [`design-system`](../../project-specific/design-system/SKILL.md) - Padrões visuais\n\n### Complementares (usar junto):\n- [`tokenmilagre-refactoring`](../../core/tokenmilagre-refactoring/SKILL.md) - Metodologia de refatoração\n- [`tokenmilagre-testing`](../../core/tokenmilagre-testing/SKILL.md) - Testar componentes"
+    },
+    "design-system": {
+      "category": "project-specific",
+      "prerequisites": ["project-context"],
+      "complementary": ["pages-reference"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Filosofia visual\n\n### Complementares (usar junto):\n- [`pages-reference`](../pages-reference/SKILL.md) - Aplicação em páginas\n\n### Usado por:\n- [`tokenmilagre-component-patterns`](../../features/tokenmilagre-component-patterns/SKILL.md)\n- [`article-creation`](../../features/article-creation/SKILL.md)\n- Todas as skills de features que modificam UI"
+    },
+    "pages-reference": {
+      "category": "project-specific",
+      "prerequisites": ["project-context", "design-system"],
+      "complementary": ["tokenmilagre-component-patterns"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Estrutura do projeto\n- [`design-system`](../design-system/SKILL.md) - Padrões visuais\n\n### Complementares (usar junto):\n- [`tokenmilagre-component-patterns`](../../features/tokenmilagre-component-patterns/SKILL.md) - Componentes reutilizáveis"
+    },
+    "tokenmilagre-url-security": {
+      "category": "project-specific",
+      "prerequisites": ["project-context"],
+      "complementary": ["tokenmilagre-testing"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Regras de segurança\n\n### Complementares (usar junto):\n- [`tokenmilagre-testing`](../../core/tokenmilagre-testing/SKILL.md) - Testar validação de URLs"
+    },
+    "server-manager": {
+      "category": "project-specific",
+      "prerequisites": ["project-context"],
+      "complementary": ["troubleshooting"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Workflow de desenvolvimento\n\n### Complementares (usar junto):\n- [`troubleshooting`](../../audit/troubleshooting/SKILL.md) - Se servidor não iniciar"
+    },
+    "platform-audit": {
+      "category": "audit",
+      "prerequisites": ["project-context"],
+      "complementary": ["troubleshooting", "due-diligence-report"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Contexto completo\n\n### Complementares (usar junto):\n- [`troubleshooting`](../troubleshooting/SKILL.md) - Problemas conhecidos\n- [`due-diligence-report`](../due-diligence-report/SKILL.md) - Análise estratégica\n\n### Referencia:\n- Todas as skills de features (métricas)\n- Todas as skills core (débitos técnicos)"
+    },
+    "troubleshooting": {
+      "category": "audit",
+      "prerequisites": ["project-context"],
+      "complementary": ["platform-audit"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Contexto técnico\n\n### Complementares (usar junto):\n- [`platform-audit`](../platform-audit/SKILL.md) - Se problema recorrente\n- Skill específica da área com problema\n\n### ⚠️ SEMPRE consulte esta skill ANTES de debugar problemas"
+    },
+    "due-diligence-report": {
+      "category": "audit",
+      "prerequisites": ["project-context"],
+      "complementary": ["platform-audit", "project-manager-brutal-honesty"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Filosofia e missão\n\n### Complementares (usar junto):\n- [`platform-audit`](../platform-audit/SKILL.md) - Métricas objetivas\n- [`project-manager-brutal-honesty`](../../_meta/project-manager-brutal-honesty/SKILL.md) - Decisões estratégicas\n\n### Referencia:\n- [`tokenmilagre-refactoring`](../../core/tokenmilagre-refactoring/SKILL.md)\n- [`tokenmilagre-database`](../../core/tokenmilagre-database/SKILL.md)\n- [`tokenmilagre-api-integrations`](../../features/tokenmilagre-api-integrations/SKILL.md)"
+    },
+    "database-setup": {
+      "category": "audit",
+      "prerequisites": ["project-context", "tokenmilagre-database"],
+      "complementary": ["troubleshooting"],
+      "next_steps": [],
+      "template": "## 🔗 Skills Relacionadas\n\n### Pré-requisitos (ler antes):\n- [`project-context`](../../_meta/project-context/SKILL.md) - Regras de database\n- [`tokenmilagre-database`](../../core/tokenmilagre-database/SKILL.md) - Modelagem de dados\n\n### Complementares (usar junto):\n- [`troubleshooting`](../troubleshooting/SKILL.md) - Problemas de conexão/deploy\n\n### ⚠️ Nota:\n- Skill histórica - use [`tokenmilagre-database`](../../core/tokenmilagre-database/SKILL.md) para trabalho atual"
+    }
+  }
+}
