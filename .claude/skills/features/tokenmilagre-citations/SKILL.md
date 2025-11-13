@@ -12,15 +12,20 @@ Comprehensive guide for managing citations from Perplexity AI and fact-check sou
 
 Ensure accurate, reliable citation management from AI-generated content to published articles, maintaining journalistic integrity and providing transparent source attribution.
 
+**Supported Content Types:**
+- ✅ **Notícias** (News) - `Article.factCheckSources`
+- ✅ **Educação** (Educational) - `Article.factCheckSources`
+- ✅ **Recursos** (Resources) - `Resource.sources`
+
 ## When to Use This Skill
 
 Use this skill when:
 - Processing Perplexity AI responses with citations
 - Extracting and validating source URLs
-- Storing citations in the `factCheckSources` database field
-- Displaying citations in article views
+- Storing citations in the `factCheckSources` (Articles) or `sources` (Resources) database fields
+- Displaying citations in article/resource views (Notícias, Educação, Recursos)
 - Debugging missing or duplicate citations
-- Implementing citation-related features
+- Implementing citation-related features across all content types
 
 ## Citation Flow Overview
 
@@ -147,16 +152,28 @@ function deduplicateCitations(citations: string[]): string[] {
 
 ## Storage in Database
 
-### factCheckSources Field
+### Fields Overview
 
-**Prisma Schema:**
+**For Articles (News & Educational):**
 ```prisma
 model Article {
   id               String   @id @default(uuid())
   title            String
   content          String   @db.Text
+  type             String   @default("news") // 'news' | 'educational'
   // ... other fields ...
   factCheckSources String?  @db.Text // JSON array of citation URLs
+  // ... more fields ...
+}
+```
+
+**For Resources:**
+```prisma
+model Resource {
+  id          String   @id @default(cuid())
+  name        String
+  // ... other fields ...
+  sources     String?  // JSON array: URLs das fontes verificadas
   // ... more fields ...
 }
 ```
@@ -196,9 +213,22 @@ const citations: string[] = article.factCheckSources
 
 ## Display Patterns
 
-### In Article View
+### Universal SourcesSection Component
 
-**Component:** `/app/educacao/[slug]/ArtigoEducacionalClient.tsx`
+**Component:** `/lib/citations-processor.tsx` - **Used by all content types**
+
+```tsx
+import { SourcesSection } from '@/lib/citations-processor';
+
+// In any page (News, Education, Resources):
+<SourcesSection citations={citations} />
+```
+
+### In Article View (News & Educational)
+
+**Components:**
+- `/app/dashboard/noticias/[slug]/ArtigoClient.tsx` (News)
+- `/app/educacao/[slug]/EducacaoClient.tsx` (Educational)
 
 ```tsx
 function CitationsList({ sources }: { sources: string[] }) {
@@ -474,7 +504,21 @@ const citations = JSON.parse(article.factCheckSources || '[]');
 - `tokenmilagre-api-integrations` - Perplexity API details
 - `tokenmilagre-content-quality` - Quality standards
 
+## Implementation Status
+
+| Content Type | Database Field | Display Component | Status |
+|--------------|----------------|-------------------|--------|
+| **Notícias** (News) | `Article.factCheckSources` | `ArtigoClient.tsx` | ✅ Live |
+| **Educação** (Educational) | `Article.factCheckSources` | `EducacaoClient.tsx` | ✅ Live |
+| **Recursos** (Resources) | `Resource.sources` | `RecursoClient.tsx` | ✅ Live |
+
+All three content types use the same **SourcesSection** component for consistent UX:
+- Collapsible "📚 X fontes ▼" button
+- Clickable source links
+- Domain extraction
+- Responsive design
+
 ---
 
-**Last Updated:** 2025-01-09
-**Version:** 1.0.0
+**Last Updated:** 2025-11-13
+**Version:** 1.1.0

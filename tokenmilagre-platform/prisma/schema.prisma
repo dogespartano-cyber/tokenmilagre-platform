@@ -207,6 +207,9 @@ model Resource {
   // Security tips
   securityTips String  // JSON array: [{ icon, title, description }]
 
+  // Sources/Citations (similar to Article.factCheckSources)
+  sources      String?  // JSON array: URLs das fontes verificadas
+
   // FASE 1 - Auditoria de Segurança
   securityAudit       String?   // Link para relatório de auditoria
   securityAuditDate   DateTime? // Data da última auditoria
