@@ -468,6 +468,7 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         // Criar payload com tipo flexível para aceitar conversões
         const payload: any = {
           ...articleToSave,
+          type: contentType, // GARANTIR que o tipo seja enviado
           tags: tagsToSend,
           factCheckSources: citationsToSend,
           published: true
