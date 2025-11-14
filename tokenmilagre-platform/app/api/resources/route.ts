@@ -98,11 +98,6 @@ export async function POST(request: NextRequest) {
         : null
     };
 
-    // Adicionar sources se fornecido
-    if (body.sources) {
-      resourceData.sources = typeof body.sources === 'string' ? body.sources : JSON.stringify(body.sources);
-    }
-
     // Log para debug (apenas em desenvolvimento)
     if (process.env.NODE_ENV === 'development') {
       console.log('📦 Criando recurso:', {
