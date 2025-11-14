@@ -70,11 +70,30 @@ export default function GerarEmMassaPage() {
 
   /**
    * Busca tópicos relevantes e atuais em tempo real via Perplexity
+   * Para RECURSOS: busca itens existentes ANTES para informar à IA
    */
   const searchRelevantTopics = async (type: 'news' | 'educational' | 'resource', count: number): Promise<string[]> => {
     try {
       setSearchingTopics(true);
       console.log(`🔍 Buscando ${count} tópicos relevantes de ${type}...`);
+
+      // Para RECURSOS: buscar existentes ANTES e passar à IA
+      let existingNames: string[] = [];
+      if (type === 'resource') {
+        try {
+          const response = await fetch('/api/resources');
+          if (response.ok) {
+            const result = await response.json();
+            const existing = result.data || result;
+            if (Array.isArray(existing)) {
+              existingNames = existing.map((item: any) => item.name || '').filter(Boolean);
+              console.log(`📋 ${existingNames.length} recursos já existentes:`, existingNames.slice(0, 10));
+            }
+          }
+        } catch (e) {
+          console.warn('⚠️ Não foi possível buscar recursos existentes, continuando...');
+        }
+      }
 
       const prompts: Record<string, string> = {
         news: `Liste ${count} tópicos de notícias RECENTES (últimas 24-48h) sobre criptomoedas que sejam relevantes e de alto impacto.
@@ -105,7 +124,30 @@ Categorias:
 
 IMPORTANTE: Tópicos práticos e úteis para iniciantes/intermediários.`,
 
-        resource: `Liste ${count} ferramentas/recursos populares do ecossistema cripto que sejam essenciais e amplamente usados.
+        resource: existingNames.length > 0
+          ? `Liste ${count * 2} ferramentas/recursos do ecossistema cripto que sejam essenciais e amplamente usados.
+
+🚨 IMPORTANTE: Os seguintes recursos JÁ EXISTEM no banco. NÃO os sugira:
+${existingNames.map(name => `- ${name}`).join('\n')}
+
+Responda APENAS com um JSON array de strings no formato "Nome: Descrição breve":
+["Nome: Descrição", ...]
+
+Categorias de recursos para sugerir (evite os da lista acima):
+- Wallets: Exodus, SafePal, Argent, Rainbow Wallet, Rabby
+- Exchanges CEX: KuCoin, Kraken, OKX, Bybit, Gate.io
+- Exchanges DEX: PancakeSwap, SushiSwap, Curve Finance
+- DeFi: Aave, Compound, Yearn Finance, Lido
+- Browsers: Opera Crypto, Puma Browser
+- Analytics: Nansen, Dune Analytics, Messari, Token Terminal
+- Explorers: BscScan, PolygonScan, Solscan, Arbiscan
+- Portfolio: DeBank, CoinStats, Delta, Zerion
+
+CRÍTICO:
+- NÃO repita nenhum recurso da lista de exclusão
+- Sugira alternativas relevantes mas menos óbvias
+- Apenas ferramentas confiáveis e verificadas`
+          : `Liste ${count} ferramentas/recursos populares do ecossistema cripto que sejam essenciais e amplamente usados.
 
 Responda APENAS com um JSON array de strings no formato "Nome: Descrição breve":
 ["MetaMask: Carteira Ethereum essencial", "Binance: Exchange líder global", ...]
@@ -158,9 +200,11 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
       const topics = JSON.parse(jsonMatch[0]);
       console.log(`✅ ${topics.length} tópicos encontrados (pré-slice):`, topics);
 
-      // CRÍTICO: Limitar ao número solicitado (Perplexity pode retornar mais)
-      const limitedTopics = topics.slice(0, count);
-      console.log(`✅ ${limitedTopics.length} tópicos após limitar a ${count}:`, limitedTopics);
+      // Para recursos com lista de exclusão, não limitar ainda (precisamos de buffer para duplicados)
+      // Para outros tipos, limitar ao número solicitado
+      const shouldLimit = type !== 'resource' || existingNames.length === 0;
+      const limitedTopics = shouldLimit ? topics.slice(0, count) : topics;
+      console.log(`✅ ${limitedTopics.length} tópicos após limitar:`, limitedTopics);
 
       return limitedTopics;
 
@@ -276,10 +320,14 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         return;
       }
 
-      // 3. Mostrar tópicos para confirmação
-      setFoundTopics(uniqueTopics);
+      // 3. Limitar à quantidade solicitada (pode ter vindo mais por causa do buffer)
+      const finalTopics = uniqueTopics.slice(0, quantity);
+      console.log(`✅ Mostrando ${finalTopics.length} tópicos (${uniqueTopics.length} únicos encontrados)`);
+
+      // 4. Mostrar tópicos para confirmação
+      setFoundTopics(finalTopics);
       // Selecionar todos por padrão
-      setSelectedTopics(new Set(uniqueTopics.map((_, i) => i)));
+      setSelectedTopics(new Set(finalTopics.map((_, i) => i)));
 
     } catch (error: any) {
       console.error('❌ Erro ao buscar tópicos:', error);
