@@ -26,6 +26,8 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
     { id: 'analytics', label: 'Analytics' },
     { id: 'portfolio-tracker', label: 'Portfolio' },
     { id: 'development-tools', label: 'Dev Tools' },
+    { id: 'news', label: 'Notícias' },
+    { id: 'education', label: 'Educação' },
   ];
 
   const filteredResources = resources.filter(resource => {
