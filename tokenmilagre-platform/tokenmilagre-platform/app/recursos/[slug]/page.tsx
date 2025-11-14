@@ -15,7 +15,6 @@ interface Resource {
   officialUrl: string;
   platforms: string[];
   tags: string[];
-  citations?: string[]; // URLs das fontes
 }
 
 async function getResource(slug: string): Promise<Resource | null> {
@@ -28,17 +27,6 @@ async function getResource(slug: string): Promise<Resource | null> {
       return null;
     }
 
-    // Parse sources
-    let citations: string[] | undefined;
-    if (resource.sources) {
-      try {
-        citations = JSON.parse(resource.sources);
-      } catch (e) {
-        console.error('Erro ao parsear sources:', e);
-        citations = undefined;
-      }
-    }
-
     return {
       id: resource.id,
       slug: resource.slug,
@@ -49,7 +37,6 @@ async function getResource(slug: string): Promise<Resource | null> {
       officialUrl: resource.officialUrl,
       platforms: JSON.parse(resource.platforms),
       tags: JSON.parse(resource.tags),
-      citations,
     };
   } catch (error) {
     console.error('Erro ao buscar recurso:', error);
@@ -109,15 +96,6 @@ export default async function RecursoPage({ params }: { params: Promise<{ slug: 
       });
 
       relatedResources = resources.map(r => {
-        let citations: string[] | undefined;
-        if (r.sources) {
-          try {
-            citations = JSON.parse(r.sources);
-          } catch (e) {
-            citations = undefined;
-          }
-        }
-
         return {
           id: r.id,
           slug: r.slug,
@@ -128,7 +106,6 @@ export default async function RecursoPage({ params }: { params: Promise<{ slug: 
           officialUrl: r.officialUrl,
           platforms: JSON.parse(r.platforms),
           tags: JSON.parse(r.tags),
-          citations,
         };
       });
     } catch (error) {
