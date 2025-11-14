@@ -194,7 +194,7 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Card 1: O que é Bitcoin */}
               <Link
-                href="/educacao/o-que-e-bitcoin"
+                href="/educacao"
                 className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
                 style={{
                   background: 'linear-gradient(135deg, #F7931A 0%, #E67E22 100%)',
@@ -223,7 +223,7 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
 
               {/* Card 2: Carteiras Digitais */}
               <Link
-                href="/educacao/como-criar-wallet-segura"
+                href="/educacao"
                 className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
                 style={{
                   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -252,7 +252,7 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
 
               {/* Card 3: Como Investir */}
               <Link
-                href="/educacao/trading-basico-criptomoedas"
+                href="/educacao"
                 className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
                 style={{
                   background: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
@@ -281,7 +281,7 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
 
               {/* Card 4: Segurança Cripto */}
               <Link
-                href="/educacao/como-criar-wallet-segura"
+                href="/educacao"
                 className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
                 style={{
                   background: 'linear-gradient(135deg, #ee0979 0%, #ff6a00 100%)',
