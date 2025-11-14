@@ -15,10 +15,14 @@ import {
   faExclamationTriangle,
   faCheckCircle,
   faDatabase,
-  faBolt
+  faBolt,
+  faSearch
 } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import AdminRoute from '@/components/AdminRoute';
+import { processArticleLocally, validateProcessedArticle } from '@/lib/article-processor-client';
+import { validateArticle } from '@/app/dashboard/criar-artigo/_lib/validation';
+import type { ArticleType } from '@/app/dashboard/criar-artigo/_lib/constants';
 
 interface GeneratedArticle {
   id: string;
@@ -32,81 +36,236 @@ interface GeneratedArticle {
   selected: boolean;
   status: 'pending' | 'generating' | 'success' | 'error';
   error?: string;
+  // Resource fields
+  name?: string;
+  slug?: string;
+  shortDescription?: string;
+  officialUrl?: string;
+  platforms?: string[];
+  heroTitle?: string;
+  heroDescription?: string;
+  heroGradient?: string;
+  whyGoodTitle?: string;
+  whyGoodContent?: string[];
+  features?: any[];
+  howToStartTitle?: string;
+  howToStartSteps?: any[];
+  pros?: string[];
+  cons?: string[];
+  faq?: any[];
+  securityTips?: any[];
+  relatedResources?: string[];
 }
-
-const TOPICS = {
-  news: [
-    'Bitcoin ultrapassa marcos históricos no mercado',
-    'Ethereum completa upgrade importante na rede',
-    'Regulamentação cripto: novidades no Brasil',
-    'Grandes empresas adotando Bitcoin como reserva',
-    'DeFi alcança novo recorde de TVL',
-    'Solana: atualizações e desenvolvimentos recentes',
-    'NFTs: novos casos de uso e tendências',
-    'Segurança cripto: últimos ataques e proteções',
-    'Stablecoins: crescimento e regulamentação',
-    'Web3: investimentos e inovações recentes'
-  ],
-  educational: [
-    'Guia completo: Como comprar sua primeira criptomoeda',
-    'Blockchain explicado: A tecnologia por trás do Bitcoin',
-    'Hot Wallets vs Cold Wallets: Qual escolher?',
-    'Smart Contracts: O que são e como funcionam',
-    'DeFi para iniciantes: Finanças descentralizadas explicadas',
-    'Análise técnica em criptomoedas: Guia prático',
-    'Como identificar e evitar golpes cripto',
-    'NFTs: Casos de uso além de arte digital',
-    'Tokenomics: Entendendo a economia dos tokens',
-    'Layer 2: Escalabilidade do Ethereum explicada'
-  ],
-  resource: [
-    'MetaMask: A carteira essencial para Ethereum',
-    'Ledger: Segurança máxima para suas criptos',
-    'Phantom: Carteira oficial do ecossistema Solana',
-    'Binance: A maior exchange de criptomoedas',
-    'Etherscan: Explorando a blockchain Ethereum',
-    'Uniswap: DeFi e swaps descentralizados',
-    'Aave: Empréstimos DeFi sem intermediários',
-    'Brave Browser: Navegue e ganhe criptomoedas',
-    'CoinGecko: Rastreador de preços e dados',
-    'DexScreener: Analytics para DEXs em tempo real'
-  ]
-};
 
 export default function GerarEmMassaPage() {
   const [contentType, setContentType] = useState<'news' | 'educational' | 'resource'>('news');
   const [quantity, setQuantity] = useState(5);
   const [articles, setArticles] = useState<GeneratedArticle[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [searchingTopics, setSearchingTopics] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [totalSteps, setTotalSteps] = useState(0);
 
-  const startGeneration = async () => {
-    const topics = TOPICS[contentType].slice(0, quantity);
-    setTotalSteps(topics.length);
-    setCurrentStep(0);
-    setIsGenerating(true);
+  /**
+   * Busca tópicos relevantes e atuais em tempo real via Perplexity
+   */
+  const searchRelevantTopics = async (type: 'news' | 'educational' | 'resource', count: number): Promise<string[]> => {
+    try {
+      setSearchingTopics(true);
+      console.log(`🔍 Buscando ${count} tópicos relevantes de ${type}...`);
 
-    const newArticles: GeneratedArticle[] = topics.map((topic, index) => ({
-      id: `article-${Date.now()}-${index}`,
-      type: contentType,
-      title: topic,
-      selected: true,
-      status: 'pending'
-    }));
+      const prompts: Record<string, string> = {
+        news: `Liste ${count} tópicos de notícias RECENTES (últimas 24-48h) sobre criptomoedas que sejam relevantes e de alto impacto.
 
-    setArticles(newArticles);
+Responda APENAS com um JSON array de strings, sem markdown:
+["Tópico 1", "Tópico 2", ...]
 
-    // Gerar artigos sequencialmente
-    for (let i = 0; i < newArticles.length; i++) {
-      setCurrentStep(i + 1);
-      await generateSingleArticle(newArticles[i], i);
-      await sleep(2000); // Delay de 2s entre requisições
+Exemplos do que buscar:
+- Movimentos de preço significativos (Bitcoin, Ethereum, etc)
+- Novidades regulatórias importantes
+- Grandes empresas adotando cripto
+- Atualizações técnicas em blockchains populares
+- DeFi, NFTs, eventos de mercado
+
+IMPORTANTE: Apenas tópicos factuais e atuais, nada genérico.`,
+
+        educational: `Liste ${count} tópicos educacionais sobre criptomoedas que ainda não estão bem cobertos ou são muito demandados.
+
+Responda APENAS com um JSON array de strings, sem markdown:
+["Tópico 1", "Tópico 2", ...]
+
+Categorias:
+- Conceitos fundamentais (blockchain, wallets, etc)
+- Trading e análise técnica
+- DeFi e protocolos
+- Segurança e boas práticas
+- Desenvolvimento e tecnologia
+
+IMPORTANTE: Tópicos práticos e úteis para iniciantes/intermediários.`,
+
+        resource: `Liste ${count} ferramentas/recursos populares do ecossistema cripto que sejam essenciais e amplamente usados.
+
+Responda APENAS com um JSON array de strings no formato "Nome: Descrição breve":
+["MetaMask: Carteira Ethereum essencial", "Binance: Exchange líder global", ...]
+
+Categorias:
+- Wallets (hot/cold)
+- Exchanges (CEX/DEX)
+- Ferramentas DeFi
+- Browsers Web3
+- Analytics e rastreamento
+- Exploradores de blockchain
+
+IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
+      };
+
+      const response = await fetch('/api/chat-perplexity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [{ role: 'user', content: prompts[type] }],
+          articleType: null // Modo conversa
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao buscar tópicos');
+      }
+
+      // Ler stream
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let fullText = '';
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          fullText += decoder.decode(value, { stream: true });
+        }
+      }
+
+      console.log('📥 Resposta recebida:', fullText.substring(0, 300));
+
+      // Extrair JSON do texto
+      const jsonMatch = fullText.match(/\[[\s\S]*?\]/);
+      if (!jsonMatch) {
+        throw new Error('Formato de resposta inválido');
+      }
+
+      const topics = JSON.parse(jsonMatch[0]);
+      console.log(`✅ ${topics.length} tópicos encontrados:`, topics);
+
+      return topics;
+
+    } catch (error: any) {
+      console.error('❌ Erro ao buscar tópicos:', error);
+      throw error;
+    } finally {
+      setSearchingTopics(false);
     }
-
-    setIsGenerating(false);
   };
 
+  /**
+   * Verifica se já existem artigos com títulos/slugs similares no banco
+   */
+  const checkDuplicates = async (topics: string[], type: 'news' | 'educational' | 'resource'): Promise<string[]> => {
+    try {
+      console.log('🔍 Verificando duplicados no banco...');
+
+      const endpoint = type === 'resource' ? '/api/resources' : '/api/articles';
+      const response = await fetch(endpoint);
+
+      if (!response.ok) {
+        console.warn('⚠️ Não foi possível verificar duplicados, continuando...');
+        return topics;
+      }
+
+      const existing = await response.json();
+      console.log(`📊 ${existing.length} itens existentes no banco`);
+
+      // Filtrar tópicos que já existem (comparação por similaridade de título)
+      const filtered = topics.filter(topic => {
+        const topicLower = topic.toLowerCase();
+        const isDuplicate = existing.some((item: any) => {
+          const title = (item.title || item.name || '').toLowerCase();
+          // Considera duplicado se 70%+ das palavras são iguais
+          const topicWords = topicLower.split(/\s+/);
+          const titleWords = title.split(/\s+/);
+          const matchCount = topicWords.filter(w => titleWords.includes(w)).length;
+          const similarity = matchCount / Math.max(topicWords.length, titleWords.length);
+          return similarity > 0.7;
+        });
+
+        if (isDuplicate) {
+          console.log(`⚠️ Tópico duplicado ignorado: "${topic}"`);
+        }
+        return !isDuplicate;
+      });
+
+      console.log(`✅ ${filtered.length} tópicos únicos após filtrar duplicados`);
+      return filtered;
+
+    } catch (error) {
+      console.error('❌ Erro ao verificar duplicados:', error);
+      return topics; // Em caso de erro, retorna todos
+    }
+  };
+
+  const startGeneration = async () => {
+    try {
+      setIsGenerating(true);
+      setArticles([]);
+      setCurrentStep(0);
+
+      // 1. Buscar tópicos relevantes em tempo real
+      const topics = await searchRelevantTopics(contentType, quantity);
+
+      if (topics.length === 0) {
+        alert('❌ Nenhum tópico encontrado. Tente novamente.');
+        setIsGenerating(false);
+        return;
+      }
+
+      // 2. Verificar duplicados
+      const uniqueTopics = await checkDuplicates(topics, contentType);
+
+      if (uniqueTopics.length === 0) {
+        alert('⚠️ Todos os tópicos encontrados já existem no banco. Tente gerar novamente para obter tópicos diferentes.');
+        setIsGenerating(false);
+        return;
+      }
+
+      // 3. Criar artigos pendentes
+      setTotalSteps(uniqueTopics.length);
+      const newArticles: GeneratedArticle[] = uniqueTopics.map((topic, index) => ({
+        id: `article-${Date.now()}-${index}`,
+        type: contentType,
+        title: topic,
+        selected: true,
+        status: 'pending'
+      }));
+
+      setArticles(newArticles);
+
+      // 4. Gerar artigos sequencialmente
+      for (let i = 0; i < newArticles.length; i++) {
+        setCurrentStep(i + 1);
+        await generateSingleArticle(newArticles[i], i);
+        await sleep(2000); // Delay de 2s entre requisições
+      }
+
+    } catch (error: any) {
+      console.error('❌ Erro ao iniciar geração:', error);
+      alert(`❌ Erro: ${error.message}`);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  /**
+   * Gera um único artigo com o mesmo processamento de criar-artigo
+   */
   const generateSingleArticle = async (article: GeneratedArticle, index: number) => {
     try {
       // Atualizar status para "generating"
@@ -114,16 +273,14 @@ export default function GerarEmMassaPage() {
         a.id === article.id ? { ...a, status: 'generating' } : a
       ));
 
+      console.log(`🚀 [${index + 1}] Gerando: ${article.title}`);
+
+      // 1. Chamar Perplexity (mesmo endpoint de criar-artigo)
       const response = await fetch('/api/chat-perplexity', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: [
-            {
-              role: 'user',
-              content: article.title
-            }
-          ],
+          messages: [{ role: 'user', content: article.title }],
           articleType: article.type
         })
       });
@@ -134,29 +291,67 @@ export default function GerarEmMassaPage() {
 
       const data = await response.json();
 
-      // Extrair JSON do content
-      let parsedContent;
+      console.log(`🔍 [${index + 1}] Resposta recebida:`, {
+        hasContent: !!data.content,
+        contentLength: data.content?.length,
+        hasCitations: !!data.citations,
+        citationsCount: data.citations?.length
+      });
+
+      // 2. Extrair JSON do content (mesmo método de usePerplexityChat)
+      let rawArticle;
       try {
-        // Tentar extrair JSON de code block se necessário
-        const jsonMatch = data.content.match(/```json\n([\s\S]*?)\n```/);
-        const jsonString = jsonMatch ? jsonMatch[1] : data.content;
-        parsedContent = JSON.parse(jsonString);
+        // Tentar extrair JSON de code block markdown
+        const jsonMatch = data.content.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+        const jsonString = jsonMatch ? jsonMatch[1].trim() : data.content.trim();
+
+        console.log(`📄 [${index + 1}] JSON extraído (preview):`, jsonString.substring(0, 200));
+
+        rawArticle = JSON.parse(jsonString);
       } catch (e) {
+        console.error(`❌ [${index + 1}] Erro ao parsear JSON:`, e);
+        console.error(`📄 [${index + 1}] Conteúdo recebido:`, data.content.substring(0, 500));
         throw new Error('Resposta da IA não está em formato JSON válido');
       }
 
-      // Atualizar artigo com dados gerados
+      // 3. Processar artigo (MESMA LÓGICA de criar-artigo)
+      const processedArticle = processArticleLocally(rawArticle, article.type as ArticleType);
+      console.log(`🔧 [${index + 1}] Artigo processado:`, Object.keys(processedArticle));
+
+      // 4. Validar estrutura (MESMA LÓGICA de criar-artigo)
+      const clientValidation = validateProcessedArticle(processedArticle, article.type as ArticleType);
+      if (!clientValidation.valid) {
+        console.warn(`⚠️ [${index + 1}] Validação client-side falhou:`, clientValidation.errors);
+      }
+
+      // 5. Validação Zod (MESMA LÓGICA de criar-artigo)
+      const zodValidation = validateArticle(processedArticle, article.type as ArticleType);
+      if (!zodValidation.success) {
+        console.error(`❌ [${index + 1}] Validação Zod falhou:`, zodValidation.errors);
+        throw new Error(`Validação falhou:\n${zodValidation.errors.join('\n')}`);
+      }
+
+      console.log(`✅ [${index + 1}] Validação OK:`, {
+        title: processedArticle.title || processedArticle.name,
+        category: processedArticle.category,
+        hasContent: !!processedArticle.content,
+        citations: data.citations?.length || 0
+      });
+
+      // 6. Atualizar artigo com dados validados
       setArticles(prev => prev.map(a =>
         a.id === article.id ? {
           ...a,
-          ...parsedContent,
+          ...processedArticle,
           citations: data.citations || [],
           status: 'success'
         } : a
       ));
 
+      console.log(`✅ [${index + 1}] Gerado com sucesso!`);
+
     } catch (error: any) {
-      console.error(`Erro ao gerar artigo ${index + 1}:`, error);
+      console.error(`❌ [${index + 1}] Erro ao gerar artigo:`, error);
       setArticles(prev => prev.map(a =>
         a.id === article.id ? {
           ...a,
@@ -167,6 +362,9 @@ export default function GerarEmMassaPage() {
     }
   };
 
+  /**
+   * Salva artigos selecionados (MESMA LÓGICA de criar-artigo)
+   */
   const saveSelectedArticles = async () => {
     const selected = articles.filter(a => a.selected && a.status === 'success');
 
@@ -178,66 +376,93 @@ export default function GerarEmMassaPage() {
     setIsGenerating(true);
 
     try {
-      const endpoint = contentType === 'resource' ? '/api/resources' : '/api/articles';
+      for (let i = 0; i < selected.length; i++) {
+        const article = selected[i];
+        console.log(`💾 [${i + 1}/${selected.length}] Salvando: ${article.title || article.name}`);
 
-      for (const article of selected) {
-        let payload: any;
+        // Normalizar categoria para recursos (igual criar-artigo handlePublish)
+        const articleToSave = contentType === 'resource' && article.category
+          ? {
+              ...article,
+              category: article.category
+                .toLowerCase()
+                .trim()
+                .replace(/\s+/g, '-')
+                .replace(/_/g, '-')
+                .replace(/s$/, '')
+                .replace(/^defi$/, 'defi-protocol')
+                .replace(/^tools?$/, 'analytics')
+            }
+          : article;
 
+        const apiEndpoint = contentType === 'resource' ? '/api/resources' : '/api/articles';
+
+        const tagsToSend = typeof articleToSave.tags === 'string'
+          ? articleToSave.tags
+          : JSON.stringify(articleToSave.tags || []);
+
+        const citationsToSend = articleToSave.citations && articleToSave.citations.length > 0
+          ? JSON.stringify(articleToSave.citations)
+          : undefined;
+
+        const payload = {
+          ...articleToSave,
+          tags: tagsToSend,
+          factCheckSources: citationsToSend,
+          published: true
+        };
+
+        // Campos específicos para recursos
         if (contentType === 'resource') {
-          // Para recursos, precisamos de TODOS os campos obrigatórios
-          const resourceData = article as any;
-          payload = {
-            name: resourceData.name || article.title,
-            slug: resourceData.slug || generateSlug(article.title),
-            category: resourceData.category || 'tools',
-            shortDescription: resourceData.shortDescription || article.excerpt || '',
-            officialUrl: resourceData.officialUrl || '',
-            platforms: resourceData.platforms || [],
-            tags: resourceData.tags || [],
-            heroTitle: resourceData.heroTitle || article.title,
-            heroDescription: resourceData.heroDescription || article.excerpt || '',
-            heroGradient: resourceData.heroGradient || 'linear-gradient(135deg, #7C3AED, #F59E0B)',
-            whyGoodTitle: resourceData.whyGoodTitle || `Por que ${article.title} é uma boa escolha?`,
-            whyGoodContent: resourceData.whyGoodContent || [],
-            features: resourceData.features || [],
-            howToStartTitle: resourceData.howToStartTitle || `Como Começar a Usar ${article.title}`,
-            howToStartSteps: resourceData.howToStartSteps || [],
-            pros: resourceData.pros || [],
-            cons: resourceData.cons || [],
-            faq: resourceData.faq || [],
-            securityTips: resourceData.securityTips || [],
-            verified: true,
-            sources: JSON.stringify(article.citations || []),
-            showCompatibleWallets: resourceData.showCompatibleWallets || false,
-            relatedResources: resourceData.relatedResources || null
-          };
-        } else {
-          // Para artigos (news/educational)
-          payload = {
-            type: article.type,
-            title: article.title,
-            slug: generateSlug(article.title, article.type === 'news'),
-            content: article.content,
-            excerpt: article.excerpt,
-            category: article.category,
-            tags: article.tags,
-            published: true,
-            factCheckSources: JSON.stringify(article.citations || [])
-          };
-
-          // Campos específicos para educational
-          if (article.type === 'educational') {
-            payload.level = (article as any).level || 'iniciante';
-            payload.contentType = (article as any).contentType || 'Artigo';
+          // Garantir que campos JSON sejam strings
+          if (payload.platforms && Array.isArray(payload.platforms)) {
+            payload.platforms = JSON.stringify(payload.platforms);
           }
-
-          // Campos específicos para news
-          if (article.type === 'news') {
-            payload.sentiment = (article as any).sentiment || 'neutral';
+          if (payload.whyGoodContent && Array.isArray(payload.whyGoodContent)) {
+            payload.whyGoodContent = JSON.stringify(payload.whyGoodContent);
           }
+          if (payload.features && Array.isArray(payload.features)) {
+            payload.features = JSON.stringify(payload.features);
+          }
+          if (payload.howToStartSteps && Array.isArray(payload.howToStartSteps)) {
+            payload.howToStartSteps = JSON.stringify(payload.howToStartSteps);
+          }
+          if (payload.pros && Array.isArray(payload.pros)) {
+            payload.pros = JSON.stringify(payload.pros);
+          }
+          if (payload.cons && Array.isArray(payload.cons)) {
+            payload.cons = JSON.stringify(payload.cons);
+          }
+          if (payload.faq && Array.isArray(payload.faq)) {
+            payload.faq = JSON.stringify(payload.faq);
+          }
+          if (payload.securityTips && Array.isArray(payload.securityTips)) {
+            payload.securityTips = JSON.stringify(payload.securityTips);
+          }
+          if (payload.relatedResources) {
+            payload.relatedResources = Array.isArray(payload.relatedResources)
+              ? JSON.stringify(payload.relatedResources)
+              : payload.relatedResources;
+          }
+          payload.sources = citationsToSend || '[]';
+          payload.verified = true;
         }
 
-        const response = await fetch(endpoint, {
+        // Remover campos internos
+        delete payload.id;
+        delete payload.selected;
+        delete payload.status;
+        delete payload.error;
+        delete payload.citations;
+
+        console.log(`📦 [${i + 1}] Payload:`, {
+          type: payload.type,
+          title: payload.title || payload.name,
+          category: payload.category,
+          slug: payload.slug
+        });
+
+        const response = await fetch(apiEndpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -246,8 +471,16 @@ export default function GerarEmMassaPage() {
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
           const errorMessage = errorData.error || response.statusText;
-          throw new Error(`Erro ao salvar "${article.title}": ${errorMessage}`);
+          console.error(`❌ [${i + 1}] Erro ao salvar:`, {
+            status: response.status,
+            error: errorMessage,
+            details: errorData.details
+          });
+          throw new Error(`Erro ao salvar "${article.title || article.name}": ${errorMessage}`);
         }
+
+        const result = await response.json();
+        console.log(`✅ [${i + 1}] Salvo com sucesso:`, result);
       }
 
       alert(`✅ ${selected.length} artigo(s) salvos com sucesso!`);
@@ -258,7 +491,7 @@ export default function GerarEmMassaPage() {
       setTotalSteps(0);
 
     } catch (error: any) {
-      console.error('Erro detalhado:', error);
+      console.error('❌ Erro detalhado ao salvar:', error);
       alert(`❌ Erro ao salvar artigos: ${error.message}`);
     } finally {
       setIsGenerating(false);
@@ -287,6 +520,10 @@ export default function GerarEmMassaPage() {
       const date = new Date();
       const dateStr = date.toISOString().split('T')[0].replace(/-/g, '');
       slug = `${slug}-${dateStr}`;
+    } else {
+      // Adicionar timestamp para garantir unicidade
+      const timestamp = Date.now().toString(36);
+      slug = `${slug}-${timestamp}`;
     }
 
     return slug.substring(0, 100);
@@ -439,42 +676,38 @@ export default function GerarEmMassaPage() {
                   </div>
                 </div>
                 <p className="text-sm mt-2" style={{ color: 'var(--text-tertiary)' }}>
-                  Custo estimado: ~${(quantity * 0.008).toFixed(3)} USD (modelo sonar)
+                  Custo estimado: ~${(quantity * 0.008 * 2).toFixed(3)} USD (busca de tópicos + geração)
                 </p>
               </div>
 
-              {/* Topics Preview */}
-              <div className="mb-6">
-                <label className="block text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
-                  Tópicos que Serão Gerados
-                </label>
-                <div
-                  className="rounded-lg p-4 space-y-2"
-                  style={{ backgroundColor: 'var(--bg-secondary)' }}
-                >
-                  {TOPICS[contentType].slice(0, quantity).map((topic, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <span
-                        className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-                        style={{
-                          backgroundColor: 'var(--brand-primary)',
-                          color: 'white'
-                        }}
-                      >
-                        {index + 1}
-                      </span>
-                      <span className="text-sm" style={{ color: 'var(--text-primary)' }}>
-                        {topic}
-                      </span>
-                    </div>
-                  ))}
+              {/* Info Box */}
+              <div
+                className="rounded-lg p-4 mb-6"
+                style={{ backgroundColor: 'var(--bg-secondary)', borderLeft: '4px solid var(--brand-primary)' }}
+              >
+                <div className="flex items-start gap-3">
+                  <FontAwesomeIcon icon={faSearch} className="w-5 h-5 mt-0.5" style={{ color: 'var(--brand-primary)' }} />
+                  <div>
+                    <h3 className="font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
+                      Busca Inteligente de Tópicos
+                    </h3>
+                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                      A IA buscará tópicos <strong>relevantes e atuais</strong> em tempo real, verificando duplicados no banco de dados antes de gerar.
+                    </p>
+                    <ul className="mt-2 space-y-1 text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                      <li>✅ Notícias das últimas 24-48h</li>
+                      <li>✅ Artigos educacionais demandados</li>
+                      <li>✅ Recursos populares e verificados</li>
+                      <li>✅ Validação completa (mesma qualidade de criar-artigo)</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
 
               {/* Generate Button */}
               <button
                 onClick={startGeneration}
-                disabled={isGenerating}
+                disabled={isGenerating || searchingTopics}
                 className="w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 style={{
                   background: 'linear-gradient(135deg, #7C3AED, #F59E0B)',
@@ -482,8 +715,17 @@ export default function GerarEmMassaPage() {
                   boxShadow: '0 10px 30px rgba(124, 58, 237, 0.3)'
                 }}
               >
-                <FontAwesomeIcon icon={faBolt} className="w-6 h-6" />
-                Gerar {quantity} {getTypeConfig(contentType).label} Automaticamente
+                {searchingTopics ? (
+                  <>
+                    <FontAwesomeIcon icon={faSpinner} className="w-6 h-6 animate-spin" />
+                    Buscando Tópicos Relevantes...
+                  </>
+                ) : (
+                  <>
+                    <FontAwesomeIcon icon={faBolt} className="w-6 h-6" />
+                    Buscar Tópicos e Gerar {quantity} {getTypeConfig(contentType).label}
+                  </>
+                )}
               </button>
             </div>
           )}
