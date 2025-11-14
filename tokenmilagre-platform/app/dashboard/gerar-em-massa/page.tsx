@@ -472,7 +472,9 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         const article = selected[i];
         console.log(`💾 [${i + 1}/${selected.length}] Salvando: ${article.title || article.name}`);
 
-        // Normalizar categoria para recursos (igual criar-artigo handlePublish)
+        // Normalizar categoria para recursos
+        // IMPORTANTE: Não remover 's' final porque categorias válidas podem terminar em 's'
+        // (ex: 'analytics', 'explorers', 'browsers')
         const articleToSave = contentType === 'resource' && article.category
           ? {
               ...article,
@@ -481,9 +483,11 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
                 .trim()
                 .replace(/\s+/g, '-')
                 .replace(/_/g, '-')
-                .replace(/s$/, '')
+                // Mapeamentos específicos
                 .replace(/^defi$/, 'defi-protocol')
-                .replace(/^tools?$/, 'analytics')
+                .replace(/^tools?$/, 'development-tools')
+                .replace(/^wallet$/, 'wallet')
+                .replace(/^exchange$/, 'exchange')
             }
           : article;
 
