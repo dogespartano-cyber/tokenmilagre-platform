@@ -184,7 +184,7 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
                   </p>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <Link
-                      href="/recursos/metamask"
+                      href="/recursos?search=wallet"
                       className="p-4 rounded-xl border transition-all hover:shadow-md hover:scale-105 text-center"
                       style={{
                         backgroundColor: 'var(--bg-secondary)',
@@ -192,11 +192,11 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
                       }}
                     >
                       <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>
-                        MetaMask
+                        Ver Wallets
                       </h3>
                     </Link>
                     <Link
-                      href="/recursos/phantom"
+                      href="/recursos?search=hardware"
                       className="p-4 rounded-xl border transition-all hover:shadow-md hover:scale-105 text-center"
                       style={{
                         backgroundColor: 'var(--bg-secondary)',
@@ -204,11 +204,11 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
                       }}
                     >
                       <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>
-                        Phantom
+                        Cold Wallets
                       </h3>
                     </Link>
                     <Link
-                      href="/recursos/ledger"
+                      href="/recursos?search=hot"
                       className="p-4 rounded-xl border transition-all hover:shadow-md hover:scale-105 text-center"
                       style={{
                         backgroundColor: 'var(--bg-secondary)',
@@ -216,11 +216,11 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
                       }}
                     >
                       <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>
-                        Ledger
+                        Hot Wallets
                       </h3>
                     </Link>
                     <Link
-                      href="/recursos/trust-wallet"
+                      href="/recursos"
                       className="p-4 rounded-xl border transition-all hover:shadow-md hover:scale-105 text-center"
                       style={{
                         backgroundColor: 'var(--bg-secondary)',
@@ -228,7 +228,7 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
                       }}
                     >
                       <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>
-                        Trust Wallet
+                        Todos Recursos
                       </h3>
                     </Link>
                   </div>
