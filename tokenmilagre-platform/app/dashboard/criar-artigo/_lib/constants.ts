@@ -71,7 +71,9 @@ export const RESOURCE_CATEGORIES = [
   'portfolio-tracker',
   'news',
   'education',
-  'development-tools'
+  'development-tools',
+  'explorers',
+  'browsers'
 ] as const;
 
 export const CATEGORIES_BY_TYPE = {
