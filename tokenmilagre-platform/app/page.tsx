@@ -204,50 +204,56 @@ export default function HomePage() {
 
   const fetchResources = async () => {
     try {
-      // Recursos em destaque com visual atraente
-      const featuredResources: ResourceItem[] = [
-        {
-          name: 'MetaMask',
-          category: 'Wallet',
-          description: 'A carteira mais popular do mundo cripto',
-          gradient: 'linear-gradient(135deg, #F6851B 0%, #E2761B 100%)',
-          stats: '10M+ usuários',
-          verified: true,
-          url: '/recursos/metamask'
-        },
-        {
-          name: 'Binance',
-          category: 'Exchange',
-          description: 'Maior plataforma de trading do mercado',
-          gradient: 'linear-gradient(135deg, #F3BA2F 0%, #EAA42D 100%)',
-          stats: '120M+ usuários',
-          verified: true,
-          url: '/recursos/binance'
-        },
-        {
-          name: 'Uniswap',
-          category: 'DeFi',
-          description: 'Exchange descentralizada líder em volume',
-          gradient: 'linear-gradient(135deg, #FF007A 0%, #E6006E 100%)',
-          stats: '$1T+ negociado',
-          verified: true,
-          url: '/recursos/uniswap'
-        },
-        {
-          name: 'Phantom',
-          category: 'Wallet',
-          description: 'Carteira principal do ecossistema Solana',
-          gradient: 'linear-gradient(135deg, #AB9FF2 0%, #9388E5 100%)',
-          stats: '7M+ usuários',
-          verified: true,
-          url: '/recursos/phantom'
-        }
-      ];
-      setResources(featuredResources);
+      // Buscar recursos reais da API ao invés de hardcoded
+      const response = await fetch('/api/resources?verified=true');
+      const data = await response.json();
+
+      if (data.success && data.data && data.data.length > 0) {
+        // Pegar os 4 primeiros recursos verificados
+        const topResources = data.data.slice(0, 4).map((r: any) => ({
+          name: r.name,
+          category: r.category.charAt(0).toUpperCase() + r.category.slice(1),
+          description: r.shortDescription,
+          gradient: getResourceGradient(r.category),
+          stats: getResourceStats(r.category),
+          verified: r.verified,
+          url: `/recursos/${r.slug}`
+        }));
+        setResources(topResources);
+      } else {
+        // Fallback para recursos padrão se API falhar
+        setResources([]);
+      }
     } catch (error) {
       console.error('Erro ao buscar recursos:', error);
       setResources([]);
     }
+  };
+
+  // Helper: Gradiente baseado na categoria
+  const getResourceGradient = (category: string) => {
+    const gradients: { [key: string]: string } = {
+      wallet: 'linear-gradient(135deg, #F6851B 0%, #E2761B 100%)',
+      exchange: 'linear-gradient(135deg, #F3BA2F 0%, #EAA42D 100%)',
+      'defi-protocol': 'linear-gradient(135deg, #FF007A 0%, #E6006E 100%)',
+      browsers: 'linear-gradient(135deg, #AB9FF2 0%, #9388E5 100%)',
+      analytics: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      explorers: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+    };
+    return gradients[category] || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+  };
+
+  // Helper: Stats baseado na categoria
+  const getResourceStats = (category: string) => {
+    const stats: { [key: string]: string } = {
+      wallet: 'Verificado',
+      exchange: 'Popular',
+      'defi-protocol': 'DeFi',
+      browsers: 'Web3',
+      analytics: 'Analytics',
+      explorers: 'Explorer',
+    };
+    return stats[category] || 'Verificado';
   };
 
   const fetchDailyAnalysis = async () => {
@@ -728,7 +734,7 @@ export default function HomePage() {
 
                 {/* Card 3: Como Investir */}
                 <Link
-                  href="/educacao/trading-basico-criptomoedas"
+                  href="/educacao"
                   className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
                   style={{
                     background: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
