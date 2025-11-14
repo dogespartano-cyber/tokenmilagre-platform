@@ -187,8 +187,18 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         return topics;
       }
 
-      const existing = await response.json();
+      const result = await response.json();
+
+      // APIs retornam { success: true, data: [...] } ou { data: [...] }
+      const existing = result.data || result;
+
       console.log(`📊 ${existing.length} itens existentes no banco`);
+
+      // Verificar se é array (proteção contra erros)
+      if (!Array.isArray(existing)) {
+        console.warn('⚠️ Resposta da API não é um array, continuando sem filtrar duplicados');
+        return topics;
+      }
 
       // Filtrar tópicos que já existem (comparação por similaridade de título)
       const filtered = topics.filter(topic => {
@@ -506,7 +516,8 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
               ? JSON.stringify(payload.relatedResources)
               : payload.relatedResources;
           }
-          payload.sources = citationsToSend || '[]';
+          // NOTA: Campo 'sources' foi removido porque a coluna não existe no banco Supabase
+          // Citations são armazenadas em factCheckSources (apenas para artigos)
           payload.verified = true;
         }
 
