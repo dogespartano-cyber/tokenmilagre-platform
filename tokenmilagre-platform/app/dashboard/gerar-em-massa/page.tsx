@@ -405,7 +405,8 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
           ? JSON.stringify(articleToSave.citations)
           : undefined;
 
-        const payload = {
+        // Criar payload com tipo flexível para aceitar conversões
+        const payload: any = {
           ...articleToSave,
           tags: tagsToSend,
           factCheckSources: citationsToSend,
