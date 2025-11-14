@@ -200,9 +200,31 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         return topics;
       }
 
-      // Filtrar tópicos que já existem (comparação por similaridade de título)
+      // Armazenar slugs existentes para verificação rápida
+      const existingSlugs = new Set(existing.map((item: any) => item.slug).filter(Boolean));
+
+      // Filtrar tópicos que já existem (comparação por similaridade de título E slug)
       const filtered = topics.filter(topic => {
         const topicLower = topic.toLowerCase();
+
+        // Gerar slug do tópico para verificar duplicação exata
+        const topicSlug = topicLower
+          .split(':')[0] // Pega só o nome antes dos dois pontos (ex: "MetaMask: descrição" -> "MetaMask")
+          .trim()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '') // Remove acentos
+          .replace(/[^\w\s-]/g, '') // Remove caracteres especiais
+          .replace(/\s+/g, '-') // Substitui espaços por hífens
+          .replace(/-+/g, '-') // Remove hífens duplicados
+          .replace(/^-+|-+$/g, ''); // Remove hífens do início/fim
+
+        // Verifica se slug já existe
+        if (existingSlugs.has(topicSlug)) {
+          console.log(`⚠️ Slug duplicado ignorado: "${topic}" (slug: "${topicSlug}")`);
+          return false;
+        }
+
+        // Verifica similaridade de título
         const isDuplicate = existing.some((item: any) => {
           const title = (item.title || item.name || '').toLowerCase();
           // Considera duplicado se 70%+ das palavras são iguais
@@ -214,7 +236,7 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         });
 
         if (isDuplicate) {
-          console.log(`⚠️ Tópico duplicado ignorado: "${topic}"`);
+          console.log(`⚠️ Tópico similar ignorado: "${topic}"`);
         }
         return !isDuplicate;
       });
@@ -450,7 +472,9 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         const article = selected[i];
         console.log(`💾 [${i + 1}/${selected.length}] Salvando: ${article.title || article.name}`);
 
-        // Normalizar categoria para recursos (igual criar-artigo handlePublish)
+        // Normalizar categoria para recursos
+        // IMPORTANTE: Não remover 's' final porque categorias válidas podem terminar em 's'
+        // (ex: 'analytics', 'explorers', 'browsers')
         const articleToSave = contentType === 'resource' && article.category
           ? {
               ...article,
@@ -459,9 +483,11 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
                 .trim()
                 .replace(/\s+/g, '-')
                 .replace(/_/g, '-')
-                .replace(/s$/, '')
+                // Mapeamentos específicos
                 .replace(/^defi$/, 'defi-protocol')
-                .replace(/^tools?$/, 'analytics')
+                .replace(/^tools?$/, 'development-tools')
+                .replace(/^wallet$/, 'wallet')
+                .replace(/^exchange$/, 'exchange')
             }
           : article;
 
