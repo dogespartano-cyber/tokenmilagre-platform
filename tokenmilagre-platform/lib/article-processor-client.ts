@@ -324,17 +324,18 @@ export function processArticleLocally(article: any, articleType: 'news' | 'educa
 export function validateProcessedArticle(article: any, articleType: 'news' | 'educational' | 'resource'): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
 
-  // Campos comuns
-  if (!article.title) errors.push('Título ausente');
+  // Validação de slug (comum a todos)
   if (!article.slug) errors.push('Slug ausente');
 
   // Campos específicos por tipo
   if (articleType === 'news') {
+    if (!article.title) errors.push('Título ausente');
     if (!article.excerpt) errors.push('Excerpt ausente');
     if (!article.content) errors.push('Conteúdo ausente');
     if (!article.category) errors.push('Categoria ausente');
     if (!article.sentiment) errors.push('Sentimento ausente');
   } else if (articleType === 'educational') {
+    if (!article.title) errors.push('Título ausente');
     if (!article.excerpt) errors.push('Excerpt ausente');
     if (!article.content) errors.push('Conteúdo ausente');
     if (!article.category) errors.push('Categoria ausente');
