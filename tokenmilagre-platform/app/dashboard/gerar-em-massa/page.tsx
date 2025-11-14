@@ -447,7 +447,47 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
 
         console.log(`📄 [${index + 1}] JSON extraído (preview):`, jsonString.substring(0, 200));
 
-        rawArticle = JSON.parse(jsonString);
+        // Tentar parsear JSON - se falhar, tentar reparar JSON truncado
+        try {
+          rawArticle = JSON.parse(jsonString);
+        } catch (parseError) {
+          console.warn(`⚠️ [${index + 1}] JSON malformado, tentando reparar...`);
+
+          // Tentar reparar JSON truncado (ex: arrays incompletos, strings abertas)
+          let repairedJson = jsonString;
+
+          // Se termina com vírgula ou string aberta, tentar fechar apropriadamente
+          if (!repairedJson.trim().endsWith('}')) {
+            // Encontrar a última chave aberta para fechar corretamente
+            const openBraces = (repairedJson.match(/{/g) || []).length;
+            const closeBraces = (repairedJson.match(/}/g) || []).length;
+            const openBrackets = (repairedJson.match(/\[/g) || []).length;
+            const closeBrackets = (repairedJson.match(/\]/g) || []).length;
+
+            // Fechar strings abertas
+            const doubleQuotes = (repairedJson.match(/"/g) || []).length;
+            if (doubleQuotes % 2 !== 0) {
+              repairedJson += '"';
+            }
+
+            // Fechar arrays e objetos abertos
+            for (let i = 0; i < (openBrackets - closeBrackets); i++) {
+              repairedJson += ']';
+            }
+            for (let i = 0; i < (openBraces - closeBraces); i++) {
+              repairedJson += '}';
+            }
+          }
+
+          try {
+            rawArticle = JSON.parse(repairedJson);
+            console.log(`✅ [${index + 1}] JSON reparado com sucesso!`);
+          } catch (repairError) {
+            // Se ainda falhar, este item será pulado
+            console.error(`❌ [${index + 1}] Não foi possível reparar o JSON`);
+            throw repairError;
+          }
+        }
       } catch (e) {
         console.error(`❌ [${index + 1}] Erro ao parsear JSON:`, e);
         console.error(`📄 [${index + 1}] Conteúdo recebido:`, data.content.substring(0, 500));
