@@ -65,6 +65,8 @@ export default function GerarEmMassaPage() {
   const [searchingTopics, setSearchingTopics] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [totalSteps, setTotalSteps] = useState(0);
+  const [foundTopics, setFoundTopics] = useState<string[]>([]);
+  const [selectedTopics, setSelectedTopics] = useState<Set<number>>(new Set());
 
   /**
    * Busca tópicos relevantes e atuais em tempo real via Perplexity
@@ -154,9 +156,13 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
       }
 
       const topics = JSON.parse(jsonMatch[0]);
-      console.log(`✅ ${topics.length} tópicos encontrados:`, topics);
+      console.log(`✅ ${topics.length} tópicos encontrados (pré-slice):`, topics);
 
-      return topics;
+      // CRÍTICO: Limitar ao número solicitado (Perplexity pode retornar mais)
+      const limitedTopics = topics.slice(0, count);
+      console.log(`✅ ${limitedTopics.length} tópicos após limitar a ${count}:`, limitedTopics);
+
+      return limitedTopics;
 
     } catch (error: any) {
       console.error('❌ Erro ao buscar tópicos:', error);
@@ -212,18 +218,21 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
     }
   };
 
-  const startGeneration = async () => {
+  /**
+   * PASSO 1: Buscar tópicos e mostrar para confirmação
+   */
+  const searchAndShowTopics = async () => {
     try {
-      setIsGenerating(true);
-      setArticles([]);
-      setCurrentStep(0);
+      setSearchingTopics(true);
+      setFoundTopics([]);
+      setSelectedTopics(new Set());
 
       // 1. Buscar tópicos relevantes em tempo real
+      console.log(`🔍 Buscando exatamente ${quantity} tópicos de ${contentType}...`);
       const topics = await searchRelevantTopics(contentType, quantity);
 
       if (topics.length === 0) {
         alert('❌ Nenhum tópico encontrado. Tente novamente.');
-        setIsGenerating(false);
         return;
       }
 
@@ -232,13 +241,45 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
 
       if (uniqueTopics.length === 0) {
         alert('⚠️ Todos os tópicos encontrados já existem no banco. Tente gerar novamente para obter tópicos diferentes.');
+        return;
+      }
+
+      // 3. Mostrar tópicos para confirmação
+      setFoundTopics(uniqueTopics);
+      // Selecionar todos por padrão
+      setSelectedTopics(new Set(uniqueTopics.map((_, i) => i)));
+
+    } catch (error: any) {
+      console.error('❌ Erro ao buscar tópicos:', error);
+      alert(`❌ Erro: ${error.message}`);
+    } finally {
+      setSearchingTopics(false);
+    }
+  };
+
+  /**
+   * PASSO 2: Gerar artigos confirmados
+   */
+  const confirmAndGenerate = async () => {
+    try {
+      setIsGenerating(true);
+      setArticles([]);
+      setCurrentStep(0);
+
+      // Pegar apenas tópicos selecionados
+      const topicsToGenerate = foundTopics.filter((_, index) => selectedTopics.has(index));
+
+      if (topicsToGenerate.length === 0) {
+        alert('Selecione pelo menos um tópico para gerar!');
         setIsGenerating(false);
         return;
       }
 
-      // 3. Criar artigos pendentes
-      setTotalSteps(uniqueTopics.length);
-      const newArticles: GeneratedArticle[] = uniqueTopics.map((topic, index) => ({
+      console.log(`🚀 Gerando ${topicsToGenerate.length} artigos confirmados...`);
+
+      // 1. Criar artigos pendentes
+      setTotalSteps(topicsToGenerate.length);
+      const newArticles: GeneratedArticle[] = topicsToGenerate.map((topic, index) => ({
         id: `article-${Date.now()}-${index}`,
         type: contentType,
         title: topic,
@@ -248,19 +289,38 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
 
       setArticles(newArticles);
 
-      // 4. Gerar artigos sequencialmente
+      // 2. Gerar artigos sequencialmente
       for (let i = 0; i < newArticles.length; i++) {
         setCurrentStep(i + 1);
         await generateSingleArticle(newArticles[i], i);
         await sleep(2000); // Delay de 2s entre requisições
       }
 
+      // 3. Limpar tópicos encontrados após geração
+      setFoundTopics([]);
+      setSelectedTopics(new Set());
+
     } catch (error: any) {
-      console.error('❌ Erro ao iniciar geração:', error);
+      console.error('❌ Erro ao gerar artigos:', error);
       alert(`❌ Erro: ${error.message}`);
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  /**
+   * Toggle seleção de tópico
+   */
+  const toggleTopicSelection = (index: number) => {
+    setSelectedTopics(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
   };
 
   /**
@@ -705,9 +765,9 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
                 </div>
               </div>
 
-              {/* Generate Button */}
+              {/* Search Topics Button */}
               <button
-                onClick={startGeneration}
+                onClick={searchAndShowTopics}
                 disabled={isGenerating || searchingTopics}
                 className="w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 style={{
@@ -723,10 +783,135 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
                   </>
                 ) : (
                   <>
-                    <FontAwesomeIcon icon={faBolt} className="w-6 h-6" />
-                    Buscar Tópicos e Gerar {quantity} {getTypeConfig(contentType).label}
+                    <FontAwesomeIcon icon={faSearch} className="w-6 h-6" />
+                    Buscar {quantity} Tópicos de {getTypeConfig(contentType).label}
                   </>
                 )}
+              </button>
+            </div>
+          )}
+
+          {/* Topics Confirmation Panel */}
+          {foundTopics.length > 0 && articles.length === 0 && (
+            <div
+              className="rounded-2xl p-8 border shadow-lg mb-8"
+              style={{
+                backgroundColor: 'var(--bg-elevated)',
+                borderColor: 'var(--border-light)'
+              }}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                  Tópicos Encontrados ({foundTopics.length})
+                </h2>
+                <button
+                  onClick={() => {
+                    setFoundTopics([]);
+                    setSelectedTopics(new Set());
+                  }}
+                  className="text-sm px-4 py-2 rounded-lg hover:opacity-80 transition-opacity"
+                  style={{
+                    backgroundColor: 'var(--bg-secondary)',
+                    color: 'var(--text-secondary)'
+                  }}
+                >
+                  <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4 mr-2" />
+                  Buscar Novamente
+                </button>
+              </div>
+
+              <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
+                Selecione os tópicos que deseja gerar. Todos estão selecionados por padrão.
+              </p>
+
+              {/* Topics List */}
+              <div className="space-y-3 mb-6 max-h-96 overflow-y-auto">
+                {foundTopics.map((topic, index) => {
+                  const isSelected = selectedTopics.has(index);
+                  const config = getTypeConfig(contentType);
+
+                  return (
+                    <div
+                      key={index}
+                      onClick={() => toggleTopicSelection(index)}
+                      className="flex items-start gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 hover:scale-[1.02]"
+                      style={{
+                        backgroundColor: isSelected ? `${config.color}10` : 'var(--bg-secondary)',
+                        borderColor: isSelected ? config.color : 'var(--border-light)',
+                        boxShadow: isSelected ? `0 0 15px ${config.color}20` : 'none'
+                      }}
+                    >
+                      <div
+                        className="w-6 h-6 rounded border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all"
+                        style={{
+                          borderColor: isSelected ? config.color : 'var(--border-medium)',
+                          backgroundColor: isSelected ? config.color : 'transparent'
+                        }}
+                      >
+                        {isSelected && (
+                          <FontAwesomeIcon icon={faCheck} className="w-3 h-3 text-white" />
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold" style={{ color: isSelected ? config.color : 'var(--text-primary)' }}>
+                          {topic}
+                        </p>
+                      </div>
+                      <span
+                        className="text-xs px-2 py-1 rounded flex-shrink-0"
+                        style={{
+                          backgroundColor: 'var(--bg-secondary)',
+                          color: 'var(--text-tertiary)'
+                        }}
+                      >
+                        #{index + 1}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Stats */}
+              <div className="flex items-center justify-between mb-4 p-4 rounded-lg" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+                <div>
+                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    <strong>{selectedTopics.size}</strong> de <strong>{foundTopics.length}</strong> tópicos selecionados
+                  </p>
+                  <p className="text-xs mt-1" style={{ color: 'var(--text-tertiary)' }}>
+                    Custo estimado: ~${(selectedTopics.size * 0.008).toFixed(3)} USD
+                  </p>
+                </div>
+                <button
+                  onClick={() => {
+                    if (selectedTopics.size === foundTopics.length) {
+                      setSelectedTopics(new Set());
+                    } else {
+                      setSelectedTopics(new Set(foundTopics.map((_, i) => i)));
+                    }
+                  }}
+                  className="text-sm px-4 py-2 rounded-lg hover:opacity-80 transition-opacity"
+                  style={{
+                    backgroundColor: 'var(--brand-primary)',
+                    color: 'white'
+                  }}
+                >
+                  {selectedTopics.size === foundTopics.length ? 'Desmarcar Todos' : 'Selecionar Todos'}
+                </button>
+              </div>
+
+              {/* Confirm Button */}
+              <button
+                onClick={confirmAndGenerate}
+                disabled={selectedTopics.size === 0}
+                className="w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{
+                  background: 'linear-gradient(135deg, #10b981, #059669)',
+                  color: 'white',
+                  boxShadow: '0 10px 30px rgba(16, 185, 129, 0.3)'
+                }}
+              >
+                <FontAwesomeIcon icon={faBolt} className="w-6 h-6" />
+                Gerar {selectedTopics.size} {selectedTopics.size === 1 ? 'Artigo' : 'Artigos'}
               </button>
             </div>
           )}
