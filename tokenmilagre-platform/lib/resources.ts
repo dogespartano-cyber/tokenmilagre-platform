@@ -141,7 +141,7 @@ function parseResource(dbResource: ResourceFromDB): Resource {
     ),
     showCompatibleWallets: dbResource.showCompatibleWallets,
     relatedResources: dbResource.relatedResources
-      ? safeJSONParse<string[]>(dbResource.relatedResources, undefined, 'relatedResources')
+      ? safeJSONParse<string[]>(dbResource.relatedResources, [], 'relatedResources')
       : undefined,
     views: dbResource.views,
     createdAt: dbResource.createdAt,
