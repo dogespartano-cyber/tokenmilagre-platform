@@ -5,6 +5,9 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faArrowLeft, faArrowRight, faExternalLinkAlt, faCheckCircle, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { Resource } from '@/lib/resources';
+import { getCategoryGradient, getCategoryLabel } from '@/lib/category-helpers';
+import { useThrottle } from '@/hooks/useThrottle';
+import { SCROLL_TOP_THRESHOLD, SCROLL_THROTTLE_MS } from '@/lib/constants';
 import Link from 'next/link';
 
 interface ResourceDetailClientProps {
@@ -21,38 +24,15 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Função para retornar gradiente baseado na categoria
-  const getCategoryGradient = (category: string) => {
-    const gradients: Record<string, string> = {
-      'wallets': 'linear-gradient(135deg, #F6851B 0%, #E2761B 100%)', // Laranja (MetaMask)
-      'exchanges': 'linear-gradient(135deg, #F3BA2F 0%, #EAA42D 100%)', // Dourado (Binance)
-      'defi': 'linear-gradient(135deg, #FF007A 0%, #E6006E 100%)', // Rosa (Uniswap)
-      'explorers': 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)', // Azul
-      'tools': 'linear-gradient(135deg, #10B981 0%, #059669 100%)', // Verde
-      'browsers': 'linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%)', // Roxo-azul
-    };
-    return gradients[category] || 'linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)'; // Roxo padrão
-  };
-
-  const getCategoryLabel = (category: string) => {
-    const labels: Record<string, string> = {
-      'wallets': 'Wallet',
-      'exchanges': 'Exchange',
-      'defi': 'DeFi',
-      'explorers': 'Explorador',
-      'tools': 'Ferramenta',
-      'browsers': 'Navegador',
-    };
-    return labels[category] || category;
-  };
+  // Throttled scroll handler - improves performance
+  const handleScroll = useThrottle(() => {
+    setShowScrollTop(window.scrollY > SCROLL_TOP_THRESHOLD);
+  }, SCROLL_THROTTLE_MS);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [handleScroll]);
 
   return (
     <>

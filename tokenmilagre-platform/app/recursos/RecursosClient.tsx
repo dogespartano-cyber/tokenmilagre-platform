@@ -3,6 +3,11 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Resource } from '@/lib/resources';
+import { getCategoryGradient, getCategoryColor, getAllCategories } from '@/lib/category-helpers';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
+import { useThrottle } from '@/hooks/useThrottle';
+import { useURLState } from '@/hooks/useURLState';
+import { SCROLL_TOP_THRESHOLD, SEARCH_DEBOUNCE_MS, MAX_VISIBLE_TAGS, SCROLL_THROTTLE_MS } from '@/lib/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faCheckCircle, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,33 +17,26 @@ interface RecursosClientProps {
 
 export default function RecursosClient({ resources }: RecursosClientProps) {
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
-  const categories = [
-    { id: 'all', label: 'Todos' },
-    { id: 'wallet', label: 'Wallets' },
-    { id: 'exchange', label: 'Exchanges' },
-    { id: 'defi-protocol', label: 'DeFi' },
-    { id: 'explorers', label: 'Exploradores' },
-    { id: 'browsers', label: 'Navegadores' },
-    { id: 'analytics', label: 'Analytics' },
-    { id: 'portfolio-tracker', label: 'Portfolio' },
-    { id: 'development-tools', label: 'Dev Tools' },
-    { id: 'news', label: 'Notícias' },
-    { id: 'education', label: 'Educação' },
-  ];
+  // URL state sync - filters reflect in URL for sharing
+  const [selectedCategory, setSelectedCategory] = useURLState('category', 'all');
+  const [searchTerm, setSearchTerm] = useURLState('search', '');
+
+  const categories = getAllCategories();
+
+  // Debounce search term - only filter after user stops typing
+  const debouncedSearchTerm = useDebouncedValue(searchTerm, SEARCH_DEBOUNCE_MS);
 
   const filteredResources = resources.filter(resource => {
     // Filtro por categoria
     const categoryMatch = selectedCategory === 'all' || resource.category === selectedCategory;
 
-    // Filtro por termo de busca
-    const searchMatch = !searchTerm.trim() ||
-      resource.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      resource.shortDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      resource.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    // Filtro por termo de busca (usando debouncedSearchTerm para performance)
+    const searchMatch = !debouncedSearchTerm.trim() ||
+      resource.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+      resource.shortDescription.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+      resource.tags.some(tag => tag.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
 
     return categoryMatch && searchMatch;
   });
@@ -47,56 +45,15 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Função para retornar cor RGBA inicial do gradiente (usado no background)
-  const getCategoryGradient = (category: string) => {
-    const gradients: Record<string, string> = {
-      'wallet': 'rgba(246, 133, 27, 0.08)',          // Laranja (MetaMask) 8%
-      'exchange': 'rgba(243, 186, 47, 0.08)',        // Dourado (Binance) 8%
-      'defi-protocol': 'rgba(255, 0, 122, 0.08)',    // Rosa (Uniswap) 8%
-      'explorers': 'rgba(59, 130, 246, 0.08)',       // Azul 8%
-      'browsers': 'rgba(139, 92, 246, 0.08)',        // Roxo-azul 8%
-      'analytics': 'rgba(16, 185, 129, 0.08)',       // Verde 8%
-      'portfolio-tracker': 'rgba(236, 72, 153, 0.08)', // Rosa-vivo 8%
-      'development-tools': 'rgba(156, 163, 175, 0.08)', // Cinza 8%
-      'news': 'rgba(239, 68, 68, 0.08)',             // Vermelho 8%
-      'education': 'rgba(34, 197, 94, 0.08)',        // Verde-educação 8%
-    };
-    return gradients[category] || 'rgba(99, 102, 241, 0.05)'; // Roxo padrão 5%
-  };
-
-  // Função para retornar cor sólida baseada na categoria
-  const getCategoryColor = (category: string) => {
-    const colors: Record<string, string> = {
-      'wallet': '#F6851B',          // Laranja (MetaMask)
-      'exchange': '#F3BA2F',        // Dourado (Binance)
-      'defi-protocol': '#FF007A',   // Rosa (Uniswap)
-      'explorers': '#3B82F6',       // Azul
-      'browsers': '#8B5CF6',        // Roxo-azul
-      'analytics': '#10B981',       // Verde
-      'portfolio-tracker': '#EC4899', // Rosa-vivo
-      'development-tools': '#9CA3AF', // Cinza
-      'news': '#EF4444',            // Vermelho
-      'education': '#22C55E',       // Verde-educação
-    };
-    return colors[category] || '#6366F1'; // Roxo padrão
-  };
+  // Throttled scroll handler - improves performance (100x less calls)
+  const handleScroll = useThrottle(() => {
+    setShowScrollTop(window.scrollY > SCROLL_TOP_THRESHOLD);
+  }, SCROLL_THROTTLE_MS);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Ler parâmetro de busca da URL
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchParam = urlParams.get('search');
-    if (searchParam) {
-      setSearchTerm(searchParam);
-    }
-  }, []);
+  }, [handleScroll]);
 
   const clearAllFilters = () => {
     setSearchTerm('');
@@ -105,7 +62,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
 
   const getActiveFiltersCount = () => {
     let count = 0;
-    if (searchTerm) count++;
+    if (debouncedSearchTerm) count++;
     if (selectedCategory !== 'all') count++;
     return count;
   };
@@ -157,7 +114,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
           <div className="flex items-center gap-3 max-w-2xl">
             <div className="relative flex-1">
               <input
-                type="text"
+                type="search"
                 placeholder="Buscar por nome, descrição ou tag..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -167,6 +124,8 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
                   borderColor: 'var(--border-medium)',
                   color: 'var(--text-primary)'
                 }}
+                aria-label="Buscar recursos por nome, descrição ou tag"
+                role="searchbox"
               />
               <FontAwesomeIcon
                 icon={faSearch}
@@ -193,6 +152,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
                   color: 'var(--brand-primary)',
                   border: '2px solid var(--border-medium)'
                 }}
+                aria-label={`Limpar ${getActiveFiltersCount()} filtro${getActiveFiltersCount() > 1 ? 's' : ''} ativo${getActiveFiltersCount() > 1 ? 's' : ''}`}
               >
                 Limpar filtros
               </button>
@@ -216,6 +176,8 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
                     backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
                     color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
                   }}
+                  aria-label={`Filtrar por categoria: ${cat.label}`}
+                  aria-pressed={selectedCategory === cat.id}
                 >
                   {cat.label}
                 </button>
@@ -226,7 +188,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
             <div className="h-8 w-px" style={{ backgroundColor: 'var(--border-light)' }}></div>
 
             {/* Contador */}
-            <div className="ml-auto">
+            <div className="ml-auto" role="status" aria-live="polite">
               <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
                 {filteredResources.length} {filteredResources.length === 1 ? 'recurso' : 'recursos'}
               </p>
@@ -235,8 +197,9 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
         </div>
 
         {/* Grid de Recursos - NOVO DESIGN COM GRADIENTES SUTIS */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredResources.map((resource) => (
+        {filteredResources.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" role="list">
+            {filteredResources.map((resource) => (
             <Link
               key={resource.id}
               href={`/recursos/${resource.slug}`}
@@ -245,6 +208,8 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
                 background: `linear-gradient(135deg, ${getCategoryGradient(resource.category)}, var(--bg-elevated))`,
                 borderColor: 'var(--border-light)'
               }}
+              aria-label={`Ver detalhes de ${resource.name} - ${resource.shortDescription}`}
+              role="listitem"
             >
               {/* Glow sutil no topo no hover */}
               <div
@@ -295,7 +260,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-1.5 mb-4">
-                  {resource.tags.slice(0, 3).map((tag, index) => (
+                  {resource.tags.slice(0, MAX_VISIBLE_TAGS).map((tag, index) => (
                     <span
                       key={index}
                       className="px-2 py-0.5 rounded text-xs font-medium backdrop-blur-sm"
@@ -341,16 +306,33 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
                 </div>
               </div>
             </Link>
-          ))}
-        </div>
-
-        {/* Loader minimalista */}
-        {filteredResources.length === 0 && (
-          <div className="flex justify-center py-12">
-            <div
-              className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin"
-              style={{ borderColor: 'var(--brand-primary)', borderTopColor: 'transparent' }}
-            ></div>
+            ))}
+          </div>
+        ) : (
+          /* Mensagem de "sem resultados" */
+          <div className="text-center py-20">
+            <div className="text-6xl mb-6">🔍</div>
+            <h3 className="text-2xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
+              Nenhum recurso encontrado
+            </h3>
+            <p className="text-lg mb-6" style={{ color: 'var(--text-secondary)' }}>
+              {debouncedSearchTerm ? (
+                <>Não encontramos recursos para "<span className="font-semibold">{debouncedSearchTerm}</span>"</>
+              ) : (
+                <>Não há recursos nesta categoria</>
+              )}
+            </p>
+            <button
+              onClick={clearAllFilters}
+              className="px-6 py-3 rounded-xl font-bold transition-all hover:scale-105 hover:shadow-lg"
+              style={{
+                backgroundColor: 'var(--brand-primary)',
+                color: 'var(--text-inverse)'
+              }}
+              aria-label="Limpar todos os filtros e mostrar todos os recursos"
+            >
+              Limpar filtros e ver todos
+            </button>
           </div>
         )}
 

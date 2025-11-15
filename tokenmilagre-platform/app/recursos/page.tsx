@@ -1,11 +1,10 @@
 import Script from 'next/script';
+import { Suspense } from 'react';
 import { getAllResources } from '@/lib/resources';
 import RecursosClient from './RecursosClient';
 
-// OTIMIZAÇÃO: Force dynamic rendering para evitar queries no build (Neon free tier quota)
-export const dynamic = 'force-dynamic';
-
-// Cache ISR: Revalida a cada 1 hora (recursos mudam raramente)
+// ISR: Gera estático no primeiro acesso, revalida a cada 1 hora
+// Recursos verificados mudam raramente - ISR otimiza performance E quota do DB
 export const revalidate = 3600;
 
 export default async function RecursosPage() {
@@ -24,7 +23,9 @@ export default async function RecursosPage() {
         })}
       </Script>
 
-      <RecursosClient resources={resources} />
+      <Suspense fallback={<div className="container mx-auto px-4 py-8">Carregando recursos...</div>}>
+        <RecursosClient resources={resources} />
+      </Suspense>
     </>
   );
 }
