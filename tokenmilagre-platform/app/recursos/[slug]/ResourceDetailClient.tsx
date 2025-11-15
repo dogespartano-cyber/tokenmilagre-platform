@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faArrowLeft, faArrowRight, faExternalLinkAlt, faCheckCircle, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { Resource } from '@/lib/resources';
 import { getCategoryGradient, getCategoryLabel } from '@/lib/category-helpers';
+import { useThrottle } from '@/hooks/useThrottle';
+import { SCROLL_TOP_THRESHOLD, SCROLL_THROTTLE_MS } from '@/lib/constants';
 import Link from 'next/link';
 
 interface ResourceDetailClientProps {
@@ -22,13 +24,15 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Throttled scroll handler - improves performance
+  const handleScroll = useThrottle(() => {
+    setShowScrollTop(window.scrollY > SCROLL_TOP_THRESHOLD);
+  }, SCROLL_THROTTLE_MS);
+
   useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [handleScroll]);
 
   return (
     <>

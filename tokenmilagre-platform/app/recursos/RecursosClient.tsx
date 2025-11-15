@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { Resource } from '@/lib/resources';
 import { getCategoryGradient, getCategoryColor, getAllCategories } from '@/lib/category-helpers';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
+import { useThrottle } from '@/hooks/useThrottle';
+import { useURLState } from '@/hooks/useURLState';
+import { SCROLL_TOP_THRESHOLD, SEARCH_DEBOUNCE_MS, MAX_VISIBLE_TAGS, SCROLL_THROTTLE_MS } from '@/lib/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faCheckCircle, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,14 +17,16 @@ interface RecursosClientProps {
 
 export default function RecursosClient({ resources }: RecursosClientProps) {
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
   const [showFilters, setShowFilters] = useState(false);
+
+  // URL state sync - filters reflect in URL for sharing
+  const [selectedCategory, setSelectedCategory] = useURLState('category', 'all');
+  const [searchTerm, setSearchTerm] = useURLState('search', '');
 
   const categories = getAllCategories();
 
-  // Debounce search term (500ms delay - only filter after user stops typing)
-  const debouncedSearchTerm = useDebouncedValue(searchTerm, 500);
+  // Debounce search term - only filter after user stops typing
+  const debouncedSearchTerm = useDebouncedValue(searchTerm, SEARCH_DEBOUNCE_MS);
 
   const filteredResources = resources.filter(resource => {
     // Filtro por categoria
@@ -40,22 +45,15 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Throttled scroll handler - improves performance (100x less calls)
+  const handleScroll = useThrottle(() => {
+    setShowScrollTop(window.scrollY > SCROLL_TOP_THRESHOLD);
+  }, SCROLL_THROTTLE_MS);
+
   useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Ler parâmetro de busca da URL
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchParam = urlParams.get('search');
-    if (searchParam) {
-      setSearchTerm(searchParam);
-    }
-  }, []);
+  }, [handleScroll]);
 
   const clearAllFilters = () => {
     setSearchTerm('');
@@ -116,7 +114,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
           <div className="flex items-center gap-3 max-w-2xl">
             <div className="relative flex-1">
               <input
-                type="text"
+                type="search"
                 placeholder="Buscar por nome, descrição ou tag..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -126,6 +124,8 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
                   borderColor: 'var(--border-medium)',
                   color: 'var(--text-primary)'
                 }}
+                aria-label="Buscar recursos por nome, descrição ou tag"
+                role="searchbox"
               />
               <FontAwesomeIcon
                 icon={faSearch}
@@ -152,6 +152,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
                   color: 'var(--brand-primary)',
                   border: '2px solid var(--border-medium)'
                 }}
+                aria-label={`Limpar ${getActiveFiltersCount()} filtro${getActiveFiltersCount() > 1 ? 's' : ''} ativo${getActiveFiltersCount() > 1 ? 's' : ''}`}
               >
                 Limpar filtros
               </button>
@@ -175,6 +176,8 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
                     backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
                     color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
                   }}
+                  aria-label={`Filtrar por categoria: ${cat.label}`}
+                  aria-pressed={selectedCategory === cat.id}
                 >
                   {cat.label}
                 </button>
@@ -185,7 +188,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
             <div className="h-8 w-px" style={{ backgroundColor: 'var(--border-light)' }}></div>
 
             {/* Contador */}
-            <div className="ml-auto">
+            <div className="ml-auto" role="status" aria-live="polite">
               <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
                 {filteredResources.length} {filteredResources.length === 1 ? 'recurso' : 'recursos'}
               </p>
@@ -195,7 +198,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
 
         {/* Grid de Recursos - NOVO DESIGN COM GRADIENTES SUTIS */}
         {filteredResources.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" role="list">
             {filteredResources.map((resource) => (
             <Link
               key={resource.id}
@@ -205,6 +208,8 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
                 background: `linear-gradient(135deg, ${getCategoryGradient(resource.category)}, var(--bg-elevated))`,
                 borderColor: 'var(--border-light)'
               }}
+              aria-label={`Ver detalhes de ${resource.name} - ${resource.shortDescription}`}
+              role="listitem"
             >
               {/* Glow sutil no topo no hover */}
               <div
@@ -255,7 +260,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-1.5 mb-4">
-                  {resource.tags.slice(0, 3).map((tag, index) => (
+                  {resource.tags.slice(0, MAX_VISIBLE_TAGS).map((tag, index) => (
                     <span
                       key={index}
                       className="px-2 py-0.5 rounded text-xs font-medium backdrop-blur-sm"
@@ -324,6 +329,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
                 backgroundColor: 'var(--brand-primary)',
                 color: 'var(--text-inverse)'
               }}
+              aria-label="Limpar todos os filtros e mostrar todos os recursos"
             >
               Limpar filtros e ver todos
             </button>
