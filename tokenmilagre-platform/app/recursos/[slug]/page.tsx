@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
-import { getResourceBySlug, getAllResourceSlugs } from '@/lib/resources';
+import { getResourceBySlug, getAllResourceSlugs, getResourcesBySlugs } from '@/lib/resources';
 import ResourceDetailClient from './ResourceDetailClient';
 
 // Cache ISR: Revalida a cada 1 hora
@@ -42,18 +42,10 @@ export default async function ResourceDetailPage({ params }: { params: Promise<{
     notFound();
   }
 
-  // Load related resources
-  const relatedResourcesData = resource.relatedResources
-    ? await Promise.all(
-        resource.relatedResources.map(async (relatedSlug) => {
-          const related = await getResourceBySlug(relatedSlug);
-          return related;
-        })
-      )
+  // Load related resources (optimized - single query instead of N queries)
+  const validRelatedResources = resource.relatedResources
+    ? await getResourcesBySlugs(resource.relatedResources)
     : [];
-
-  // Filter out null values
-  const validRelatedResources = relatedResourcesData.filter((r) => r !== null);
 
   return (
     <>

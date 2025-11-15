@@ -249,6 +249,27 @@ export async function getRelatedResources(
 }
 
 /**
+ * Get multiple resources by slugs (optimized - single query)
+ * @param slugs Array of resource slugs
+ * @returns Array of resources (filtered to valid resources only)
+ */
+export async function getResourcesBySlugs(slugs: string[]): Promise<Resource[]> {
+  if (!slugs || slugs.length === 0) {
+    return [];
+  }
+
+  const dbResources = await prisma.resource.findMany({
+    where: {
+      slug: {
+        in: slugs,
+      },
+    },
+  });
+
+  return dbResources.map(parseResource);
+}
+
+/**
  * Increment view count for a resource
  * @param slug The resource slug
  */
