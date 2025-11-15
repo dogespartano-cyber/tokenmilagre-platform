@@ -6,7 +6,6 @@ import { Resource } from '@/lib/resources';
 import { getCategoryGradient, getCategoryColor, getAllCategories } from '@/lib/category-helpers';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { useThrottle } from '@/hooks/useThrottle';
-import { useURLState } from '@/hooks/useURLState';
 import { SCROLL_TOP_THRESHOLD, SEARCH_DEBOUNCE_MS, MAX_VISIBLE_TAGS, SCROLL_THROTTLE_MS } from '@/lib/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faCheckCircle, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
@@ -18,10 +17,8 @@ interface RecursosClientProps {
 export default function RecursosClient({ resources }: RecursosClientProps) {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
-
-  // URL state sync - filters reflect in URL for sharing
-  const [selectedCategory, setSelectedCategory] = useURLState('category', 'all');
-  const [searchTerm, setSearchTerm] = useURLState('search', '');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const categories = getAllCategories();
 
@@ -54,6 +51,16 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
+
+  // Read URL params on mount (one-way sync to avoid SSR issues)
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    const categoryParam = urlParams.get('category');
+
+    if (searchParam) setSearchTerm(searchParam);
+    if (categoryParam) setSelectedCategory(categoryParam);
+  }, []);
 
   const clearAllFilters = () => {
     setSearchTerm('');

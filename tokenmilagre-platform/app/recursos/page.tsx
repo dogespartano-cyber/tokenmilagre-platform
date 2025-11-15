@@ -1,5 +1,4 @@
 import Script from 'next/script';
-import { Suspense } from 'react';
 import { getAllResources } from '@/lib/resources';
 import RecursosClient from './RecursosClient';
 
@@ -23,9 +22,7 @@ export default async function RecursosPage() {
         })}
       </Script>
 
-      <Suspense fallback={<div className="container mx-auto px-4 py-8">Carregando recursos...</div>}>
-        <RecursosClient resources={resources} />
-      </Suspense>
+      <RecursosClient resources={resources} />
     </>
   );
 }
