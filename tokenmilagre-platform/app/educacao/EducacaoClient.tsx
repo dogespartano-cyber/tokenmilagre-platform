@@ -192,10 +192,14 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Card 1: O que é Bitcoin */}
-              <Link
-                href="/educacao"
-                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+              {/* Card 1: Blockchain */}
+              <button
+                onClick={() => {
+                  setSelectedCategory('blockchain');
+                  setSelectedLevel('iniciante');
+                  window.scrollTo({ top: 600, behavior: 'smooth' });
+                }}
+                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left"
                 style={{
                   background: 'linear-gradient(135deg, #F7931A 0%, #E67E22 100%)',
                   minHeight: '180px'
@@ -208,10 +212,10 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
                       Iniciante
                     </div>
                     <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
-                      O que é Bitcoin?
+                      O que é Blockchain?
                     </h4>
                     <p className="text-sm opacity-90 mb-3">
-                      Entenda a primeira criptomoeda do mundo
+                      Entenda a tecnologia por trás das criptomoedas
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
@@ -219,12 +223,16 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
                     <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </Link>
+              </button>
 
-              {/* Card 2: Carteiras Digitais */}
-              <Link
-                href="/educacao"
-                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+              {/* Card 2: Segurança */}
+              <button
+                onClick={() => {
+                  setSelectedCategory('seguranca');
+                  setSelectedLevel('iniciante');
+                  window.scrollTo({ top: 600, behavior: 'smooth' });
+                }}
+                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left"
                 style={{
                   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   minHeight: '180px'
@@ -237,10 +245,10 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
                       Iniciante
                     </div>
                     <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
-                      Carteiras Digitais
+                      Segurança Cripto
                     </h4>
                     <p className="text-sm opacity-90 mb-3">
-                      Aprenda a guardar suas criptomoedas com segurança
+                      Aprenda a proteger suas criptomoedas
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
@@ -248,12 +256,16 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
                     <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </Link>
+              </button>
 
-              {/* Card 3: Como Investir */}
-              <Link
-                href="/educacao"
-                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+              {/* Card 3: Trading */}
+              <button
+                onClick={() => {
+                  setSelectedCategory('trading');
+                  setSelectedLevel('intermediario');
+                  window.scrollTo({ top: 600, behavior: 'smooth' });
+                }}
+                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left"
                 style={{
                   background: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
                   minHeight: '180px'
@@ -266,10 +278,10 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
                       Intermediário
                     </div>
                     <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
-                      Como Investir
+                      Trading de Cripto
                     </h4>
                     <p className="text-sm opacity-90 mb-3">
-                      Primeiros passos para investir em cripto
+                      Estratégias e técnicas de trading
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
@@ -277,12 +289,16 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
                     <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </Link>
+              </button>
 
-              {/* Card 4: Segurança Cripto */}
-              <Link
-                href="/educacao"
-                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+              {/* Card 4: DeFi */}
+              <button
+                onClick={() => {
+                  setSelectedCategory('defi');
+                  setSelectedLevel('intermediario');
+                  window.scrollTo({ top: 600, behavior: 'smooth' });
+                }}
+                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left"
                 style={{
                   background: 'linear-gradient(135deg, #ee0979 0%, #ff6a00 100%)',
                   minHeight: '180px'
@@ -292,21 +308,21 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
                 <div className="relative z-10 h-full flex flex-col justify-between text-white">
                   <div>
                     <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
-                      Essencial
+                      Intermediário
                     </div>
                     <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
-                      Segurança Cripto
+                      DeFi - Finanças Descentralizadas
                     </h4>
                     <p className="text-sm opacity-90 mb-3">
-                      Proteja-se de golpes e fraudes
+                      Explore o mundo das finanças descentralizadas
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold opacity-90">Proteção</span>
+                    <span className="text-xs font-semibold opacity-90">DeFi</span>
                     <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </Link>
+              </button>
             </div>
           </div>
 
