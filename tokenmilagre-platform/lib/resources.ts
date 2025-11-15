@@ -1,5 +1,15 @@
 import { prisma } from '@/lib/prisma';
 
+// Safe JSON parser with fallback
+function safeJSONParse<T>(json: string, fallback: T, fieldName?: string): T {
+  try {
+    return JSON.parse(json);
+  } catch (error) {
+    console.error(`[resources.ts] JSON parse failed for field "${fieldName}":`, json.substring(0, 100));
+    return fallback;
+  }
+}
+
 // Types matching the database schema
 export interface ResourceFromDB {
   id: string;
@@ -86,7 +96,7 @@ export interface Resource {
 }
 
 // Transform DB resource to frontend format
-function parseResource(dbResource: any): Resource {
+function parseResource(dbResource: ResourceFromDB): Resource {
   return {
     id: dbResource.id,
     slug: dbResource.slug,
@@ -95,8 +105,8 @@ function parseResource(dbResource: any): Resource {
     verified: dbResource.verified,
     shortDescription: dbResource.shortDescription,
     officialUrl: dbResource.officialUrl,
-    platforms: JSON.parse(dbResource.platforms),
-    tags: JSON.parse(dbResource.tags),
+    platforms: safeJSONParse<string[]>(dbResource.platforms, [], 'platforms'),
+    tags: safeJSONParse<string[]>(dbResource.tags, [], 'tags'),
     hero: {
       title: dbResource.heroTitle,
       description: dbResource.heroDescription,
@@ -104,21 +114,35 @@ function parseResource(dbResource: any): Resource {
     },
     whyGood: {
       title: dbResource.whyGoodTitle,
-      content: JSON.parse(dbResource.whyGoodContent),
+      content: safeJSONParse<string[]>(dbResource.whyGoodContent, [], 'whyGoodContent'),
     },
-    features: JSON.parse(dbResource.features),
+    features: safeJSONParse<Array<{ icon: string; title: string; description: string }>>(
+      dbResource.features,
+      [],
+      'features'
+    ),
     howToStart: {
       title: dbResource.howToStartTitle,
-      steps: JSON.parse(dbResource.howToStartSteps),
+      steps: safeJSONParse<Array<{ number: number; title: string; description: string }>>(
+        dbResource.howToStartSteps,
+        [],
+        'howToStartSteps'
+      ),
     },
     prosAndCons: {
-      pros: JSON.parse(dbResource.pros),
-      cons: JSON.parse(dbResource.cons),
+      pros: safeJSONParse<string[]>(dbResource.pros, [], 'pros'),
+      cons: safeJSONParse<string[]>(dbResource.cons, [], 'cons'),
     },
-    faq: JSON.parse(dbResource.faq),
-    securityTips: JSON.parse(dbResource.securityTips),
+    faq: safeJSONParse<Array<{ question: string; answer: string }>>(dbResource.faq, [], 'faq'),
+    securityTips: safeJSONParse<Array<{ icon: string; title: string; description: string }>>(
+      dbResource.securityTips,
+      [],
+      'securityTips'
+    ),
     showCompatibleWallets: dbResource.showCompatibleWallets,
-    relatedResources: dbResource.relatedResources ? JSON.parse(dbResource.relatedResources) : undefined,
+    relatedResources: dbResource.relatedResources
+      ? safeJSONParse<string[]>(dbResource.relatedResources, undefined, 'relatedResources')
+      : undefined,
     views: dbResource.views,
     createdAt: dbResource.createdAt,
     updatedAt: dbResource.updatedAt,
