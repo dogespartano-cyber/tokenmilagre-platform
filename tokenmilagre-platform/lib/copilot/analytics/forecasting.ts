@@ -145,9 +145,9 @@ export async function forecastQualityScore(): Promise<ForecastResult> {
     // Current average
     const recentScores = articles
       .slice(-20)
-      .map(a => a.factCheckScore!)
-      .filter(s => s !== null);
-    const currentAvg = recentScores.reduce((a, b) => a + b, 0) / recentScores.length;
+      .map((a: any) => a.factCheckScore!)
+      .filter((s: any) => s !== null);
+    const currentAvg = recentScores.reduce((a: any, b: any) => a + b, 0) / recentScores.length;
 
     // Predict next week
     const nextWeek = Math.max(...weeklyScores.keys()) + 1;

@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
     });
 
     // Buscar informações dos projetos associados
-    const projectIds = mapPoints.map((p) => p.projectId);
+    const projectIds = mapPoints.map((p: any) => p.projectId);
     const projects = await prisma.socialProject.findMany({
       where: {
         slug: { in: projectIds },
@@ -45,10 +45,10 @@ export async function GET(req: NextRequest) {
     });
 
     // Criar mapa de projetos por slug
-    const projectMap = new Map(projects.map((p) => [p.slug, p]));
+    const projectMap = new Map(projects.map((p: any) => [p.slug, p]));
 
     // Combinar dados
-    const enrichedMapPoints = mapPoints.map((point) => ({
+    const enrichedMapPoints = mapPoints.map((point: any) => ({
       ...point,
       project: projectMap.get(point.projectId) || null,
     }));

@@ -38,7 +38,7 @@ async function checkUsers() {
     console.log('║ USUÁRIOS NO BANCO                                      ║')
     console.log('╠════════════════════════════════════════════════════════╣')
 
-    users.forEach((user, idx) => {
+    users.forEach((user: any, idx: number) => {
       console.log(`║ ${idx + 1}. ${user.name} (${user.role})`.padEnd(56) + '║')
       console.log(`║    Email: ${user.email}`.padEnd(56) + '║')
       console.log(`║    ID: ${user.id}`.padEnd(56) + '║')

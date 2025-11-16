@@ -34,7 +34,7 @@ async function seedProduction() {
       })
 
       console.log('\n📋 Usuários existentes:')
-      users.forEach(u => {
+      users.forEach((u: any) => {
         console.log(`   - ${u.name} (${u.email}) - ${u.role}`)
       })
 

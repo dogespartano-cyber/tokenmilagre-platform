@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
       avancado: 0
     };
 
-    educationalByLevel.forEach((item) => {
+    educationalByLevel.forEach((item: any) => {
       if (item.level) {
         levelCounts[item.level as keyof typeof levelCounts] = item._count;
       }

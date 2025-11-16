@@ -51,7 +51,7 @@ export async function GET(request: Request) {
     });
 
     // Mapear para o formato NewsItem
-    const newsItems: NewsItem[] = articles.map(article => ({
+    const newsItems: NewsItem[] = articles.map((article: any) => ({
       id: article.id,
       slug: article.slug,
       title: article.title,

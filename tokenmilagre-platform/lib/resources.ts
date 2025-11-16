@@ -216,7 +216,7 @@ export async function getAllResourceSlugs(): Promise<string[]> {
     },
   });
 
-  return resources.map((r) => r.slug);
+  return resources.map((r: any) => r.slug);
 }
 
 /**

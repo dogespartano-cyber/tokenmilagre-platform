@@ -170,7 +170,7 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
       });
 
       // Formatar para NewsItem
-      const allNews: NewsItem[] = articles.map(a => {
+      const allNews: NewsItem[] = articles.map((a: any) => {
         // Parse citations
         let citations: string[] | undefined;
         if (a.factCheckSources) {

@@ -74,7 +74,7 @@ export const analyzeContentQualityTool: CopilotTool = {
         });
       }
 
-      const analysis = articles.map(article => {
+      const analysis = articles.map((article: any) => {
         const issues = [];
         const warnings = [];
         const recommendations = [];
@@ -156,9 +156,9 @@ export const analyzeContentQualityTool: CopilotTool = {
       });
 
       // Summary statistics
-      const avgQualityScore = analysis.reduce((sum, a) => sum + a.qualityScore, 0) / analysis.length;
-      const criticalIssues = analysis.filter(a => a.issues.length > 0).length;
-      const needsAttention = analysis.filter(a => a.qualityScore < 70).length;
+      const avgQualityScore = analysis.reduce((sum: any, a: any) => sum + a.qualityScore, 0) / analysis.length;
+      const criticalIssues = analysis.filter((a: any) => a.issues.length > 0).length;
+      const needsAttention = analysis.filter((a: any) => a.qualityScore < 70).length;
 
       return {
         success: true,
@@ -266,7 +266,7 @@ export const checkOutdatedArticlesTool: CopilotTool = {
         }
       });
 
-      const outdated = articles.map(article => {
+      const outdated = articles.map((article: any) => {
         const daysSinceCreation = Math.floor(
           (now.getTime() - article.createdAt.getTime()) / (1000 * 60 * 60 * 24)
         );
@@ -301,9 +301,9 @@ export const checkOutdatedArticlesTool: CopilotTool = {
       });
 
       const byUrgency = {
-        high: outdated.filter(a => a.urgency === 'high').length,
-        medium: outdated.filter(a => a.urgency === 'medium').length,
-        low: outdated.filter(a => a.urgency === 'low').length
+        high: outdated.filter((a: any) => a.urgency === 'high').length,
+        medium: outdated.filter((a: any) => a.urgency === 'medium').length,
+        low: outdated.filter((a: any) => a.urgency === 'low').length
       };
 
       return {

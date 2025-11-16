@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Transformar para formato compatível com NewsItem ou EducationItem
-    const formattedArticles = articles.map((article) => {
+    const formattedArticles = articles.map((article: any) => {
       // Parse citations from factCheckSources
       let citations: string[] | undefined;
       if (article.factCheckSources) {

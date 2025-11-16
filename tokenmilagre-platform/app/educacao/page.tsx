@@ -37,7 +37,7 @@ async function getEducationalArticles() {
   });
 
   // Transformar tags de JSON string para array
-  return articles.map(article => ({
+  return articles.map((article: any) => ({
     ...article,
     description: article.excerpt || '',
     type: article.contentType || 'Artigo',

@@ -26,10 +26,10 @@ async function seedCryptocurrencies() {
   const existingCryptos = await prisma.cryptocurrency.findMany({
     select: { slug: true, name: true },
   });
-  const existingSlugs = new Set(existingCryptos.map(c => c.slug));
+  const existingSlugs = new Set(existingCryptos.map((c: any) => c.slug));
 
   console.log(`   ✅ ${existingCryptos.length} moedas já existem no banco:`);
-  existingCryptos.forEach(c => console.log(`      - ${c.name} (${c.slug})`));
+  existingCryptos.forEach((c: any) => console.log(`      - ${c.name} (${c.slug})`));
 
   // Filtrar apenas moedas que ainda não existem
   const missingCryptos = TOP_CRYPTOS.filter(crypto => !existingSlugs.has(crypto.slug));

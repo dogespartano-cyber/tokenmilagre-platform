@@ -179,12 +179,12 @@ async function detectQualityPatterns(): Promise<DetectedPattern[]> {
     }
 
     // Compare quality by type
-    const newsArticles = articles.filter(a => a.type === 'news');
-    const eduArticles = articles.filter(a => a.type === 'educational');
+    const newsArticles = articles.filter((a: any) => a.type === 'news');
+    const eduArticles = articles.filter((a: any) => a.type === 'educational');
 
     if (newsArticles.length > 0 && eduArticles.length > 0) {
-      const newsAvg = newsArticles.reduce((sum, a) => sum + (a.factCheckScore || 0), 0) / newsArticles.length;
-      const eduAvg = eduArticles.reduce((sum, a) => sum + (a.factCheckScore || 0), 0) / eduArticles.length;
+      const newsAvg = newsArticles.reduce((sum: any, a: any) => sum + (a.factCheckScore || 0), 0) / newsArticles.length;
+      const eduAvg = eduArticles.reduce((sum: any, a: any) => sum + (a.factCheckScore || 0), 0) / eduArticles.length;
 
       const diff = Math.abs(newsAvg - eduAvg);
       if (diff > 10) {

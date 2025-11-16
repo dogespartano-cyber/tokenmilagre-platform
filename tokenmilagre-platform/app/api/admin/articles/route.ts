@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Retornar no formato esperado pela página admin
-    const formattedArticles = articles.map((article) => ({
+    const formattedArticles = articles.map((article: any) => ({
       id: article.id,
       slug: article.slug,
       title: article.title,

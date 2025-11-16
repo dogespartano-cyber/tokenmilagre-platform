@@ -268,7 +268,7 @@ export async function getRecentActivity(
       }
     });
 
-    return activities.map(activity => ({
+    return activities.map((activity: any) => ({
       id: activity.id,
       action: activity.action,
       parameters: activity.parameters ? JSON.parse(activity.parameters) : {},

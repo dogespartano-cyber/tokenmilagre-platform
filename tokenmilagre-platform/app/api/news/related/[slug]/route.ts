@@ -78,7 +78,7 @@ export async function GET(
     });
 
     // Filtrar artigos que contenham algum dos termos nas tags
-    const relatedArticles = articles.filter((article) => {
+    const relatedArticles = articles.filter((article: any) => {
       try {
         const tags = JSON.parse(article.tags || '[]');
         const tagsLower = tags.map((tag: string) => tag.toLowerCase());
@@ -96,7 +96,7 @@ export async function GET(
     const limitedArticles = relatedArticles.slice(0, 6);
 
     // Mapear para o formato NewsItem
-    const newsItems: NewsItem[] = limitedArticles.map((article) => ({
+    const newsItems: NewsItem[] = limitedArticles.map((article: any) => ({
       id: article.id,
       slug: article.slug,
       title: article.title,

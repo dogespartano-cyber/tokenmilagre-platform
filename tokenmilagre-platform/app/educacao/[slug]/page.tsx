@@ -88,7 +88,7 @@ async function getRelatedArticles(category: string, currentSlug: string): Promis
     },
   });
 
-  return articles.map(article => ({
+  return articles.map((article: any) => ({
     id: article.id,
     slug: article.slug,
     title: article.title,

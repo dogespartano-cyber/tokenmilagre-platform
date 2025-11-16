@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
     ]);
 
     // Parsear campos JSON
-    const parsedProjects = projects.map((project) => ({
+    const parsedProjects = projects.map((project: any) => ({
       ...project,
       tags: project.tags ? JSON.parse(project.tags) : [],
       gallery: project.gallery ? JSON.parse(project.gallery) : [],

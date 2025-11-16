@@ -158,7 +158,7 @@ export const readArticlesTool: CopilotTool = {
         success: true,
         data: {
           count: articles.length,
-          articles: articles.map(article => ({
+          articles: articles.map((article: any) => ({
             ...article,
             tags: article.tags ? JSON.parse(article.tags) : [],
             contentPreview: undefined // Não retornar conteúdo completo para economizar tokens
@@ -329,12 +329,12 @@ export const getStatisticsTool: CopilotTool = {
         ]);
 
         details = {
-          topCategories: topCategories.map(c => ({
+          topCategories: topCategories.map((c: any) => ({
             category: c.category,
             count: c._count.category
           })),
           topAuthors: await Promise.all(
-            topAuthors.map(async (a) => {
+            topAuthors.map(async (a: any) => {
               const user = await prisma.user.findUnique({
                 where: { id: a.authorId },
                 select: { name: true, email: true }

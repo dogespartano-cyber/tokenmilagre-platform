@@ -82,9 +82,9 @@ export const manageUsersTool: CopilotTool = {
         });
 
         const byRole = {
-          ADMIN: users.filter(u => u.role === 'ADMIN').length,
-          EDITOR: users.filter(u => u.role === 'EDITOR').length,
-          VIEWER: users.filter(u => u.role === 'VIEWER').length
+          ADMIN: users.filter((u: any) => u.role === 'ADMIN').length,
+          EDITOR: users.filter((u: any) => u.role === 'EDITOR').length,
+          VIEWER: users.filter((u: any) => u.role === 'VIEWER').length
         };
 
         return {
@@ -94,7 +94,7 @@ export const manageUsersTool: CopilotTool = {
               total: users.length,
               byRole
             },
-            users: users.map(u => ({
+            users: users.map((u: any) => ({
               id: u.id,
               name: u.name,
               email: u.email,
@@ -297,7 +297,7 @@ export const bulkUpdateArticlesTool: CopilotTool = {
           select: { id: true, title: true, slug: true }
         });
 
-        articleIds = filtered.map(a => a.id);
+        articleIds = filtered.map((a: any) => a.id);
 
         if (articleIds.length === 0) {
           return {
@@ -334,7 +334,7 @@ export const bulkUpdateArticlesTool: CopilotTool = {
             dryRun: true,
             articlesToUpdate: articles.length,
             updates: args.updates,
-            preview: articles.map(a => ({
+            preview: articles.map((a: any) => ({
               id: a.id,
               title: a.title,
               currentPublished: a.published,
@@ -531,11 +531,11 @@ export const generateReportTool: CopilotTool = {
         });
 
         const byType = {
-          news: articlesInPeriod.filter(a => a.type === 'news').length,
-          educational: articlesInPeriod.filter(a => a.type === 'educational').length
+          news: articlesInPeriod.filter((a: any) => a.type === 'news').length,
+          educational: articlesInPeriod.filter((a: any) => a.type === 'educational').length
         };
 
-        const categories = articlesInPeriod.reduce((acc: Record<string, number>, a) => {
+        const categories = articlesInPeriod.reduce((acc: Record<string, number>, a: any) => {
           acc[a.category] = (acc[a.category] || 0) + 1;
           return acc;
         }, {});
@@ -547,7 +547,7 @@ export const generateReportTool: CopilotTool = {
 
         report.sections.articles = {
           total: articlesInPeriod.length,
-          published: articlesInPeriod.filter(a => a.published).length,
+          published: articlesInPeriod.filter((a: any) => a.published).length,
           byType,
           topCategories
         };
@@ -565,17 +565,17 @@ export const generateReportTool: CopilotTool = {
         });
 
         if (articlesWithScore.length > 0) {
-          const avgScore = articlesWithScore.reduce((sum, a) => sum + (a.factCheckScore || 0), 0) / articlesWithScore.length;
-          const lowScore = articlesWithScore.filter(a => (a.factCheckScore || 0) < 60).length;
-          const goodScore = articlesWithScore.filter(a => (a.factCheckScore || 0) >= 80).length;
+          const avgScore = articlesWithScore.reduce((sum: any, a: any) => sum + (a.factCheckScore || 0), 0) / articlesWithScore.length;
+          const lowScore = articlesWithScore.filter((a: any) => (a.factCheckScore || 0) < 60).length;
+          const goodScore = articlesWithScore.filter((a: any) => (a.factCheckScore || 0) >= 80).length;
 
           report.sections.quality = {
             articlesWithScore: articlesWithScore.length,
             avgScore: Math.round(avgScore),
             distribution: {
-              excellent: articlesWithScore.filter(a => (a.factCheckScore || 0) >= 90).length,
+              excellent: articlesWithScore.filter((a: any) => (a.factCheckScore || 0) >= 90).length,
               good: goodScore,
-              fair: articlesWithScore.filter(a => (a.factCheckScore || 0) >= 70 && (a.factCheckScore || 0) < 80).length,
+              fair: articlesWithScore.filter((a: any) => (a.factCheckScore || 0) >= 70 && (a.factCheckScore || 0) < 80).length,
               poor: lowScore
             }
           };
@@ -595,7 +595,7 @@ export const generateReportTool: CopilotTool = {
         });
 
         const authorsWithDetails = await Promise.all(
-          topAuthors.map(async (a) => {
+          topAuthors.map(async (a: any) => {
             const user = await prisma.user.findUnique({
               where: { id: a.authorId },
               select: { name: true, email: true, role: true }
