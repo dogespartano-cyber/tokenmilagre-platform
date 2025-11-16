@@ -12,6 +12,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import DashboardHeader from '@/app/components/DashboardHeader';
 import UserDropdown from '@/components/UserDropdown';
+import BtcPriceWidget from '@/components/BtcPriceWidget';
 
 const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
   ssr: false,
@@ -120,6 +121,11 @@ export default function RootLayoutNav({
 
           {/* Sidebar Navigation */}
           <nav className="flex-1 p-4 overflow-y-auto">
+            {/* Bitcoin Price Widget */}
+            <div className="mb-4">
+              <BtcPriceWidget />
+            </div>
+
             <div className="space-y-2">
               {menuItems.map((item) => (
                 <Link

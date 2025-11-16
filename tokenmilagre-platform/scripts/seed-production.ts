@@ -3,7 +3,7 @@
  * (Conecta na mesma URL que a Vercel usa)
  */
 
-import { PrismaClient, Role } from '../lib/generated/prisma'
+import { PrismaClient } from '../lib/generated/prisma'
 import * as bcrypt from 'bcryptjs'
 
 // Conectar direto no Supabase (mesma URL que Vercel usa)
@@ -51,7 +51,7 @@ async function seedProduction() {
         email: 'admin@tokenmilagre.com',
         name: 'Admin',
         password: hashedPassword,
-        role: Role.ADMIN,
+        role: 'ADMIN',
         emailVerified: new Date()
       }
     })
@@ -66,7 +66,7 @@ async function seedProduction() {
         email: 'editor@tokenmilagre.com',
         name: 'Editor',
         password: hashedPasswordEditor,
-        role: Role.EDITOR,
+        role: 'EDITOR',
         emailVerified: new Date()
       }
     })

@@ -5,7 +5,7 @@
  *   npx tsx scripts/seed-admin-supabase.ts
  */
 
-import { PrismaClient, Role } from '../lib/generated/prisma'
+import { PrismaClient } from '../lib/generated/prisma'
 import * as bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
@@ -19,7 +19,7 @@ async function seedAdmin() {
 
     // Verificar se já existe admin
     const existingAdmin = await prisma.user.findFirst({
-      where: { role: Role.ADMIN }
+      where: { role: 'ADMIN' }
     })
 
     if (existingAdmin) {
@@ -38,7 +38,7 @@ async function seedAdmin() {
         email: 'admin@tokenmilagre.com',
         name: 'Admin',
         password: hashedPassword,
-        role: Role.ADMIN,
+        role: 'ADMIN',
         emailVerified: new Date()
       }
     })
@@ -61,7 +61,7 @@ async function seedAdmin() {
         email: 'editor@tokenmilagre.com',
         name: 'Editor',
         password: hashedPasswordEditor,
-        role: Role.EDITOR,
+        role: 'EDITOR',
         emailVerified: new Date()
       }
     })
