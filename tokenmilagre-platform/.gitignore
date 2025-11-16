@@ -43,7 +43,8 @@ yarn-error.log*
 next-env.d.ts
 .claude/settings.local.json
 
-/lib/generated/prisma
+# Prisma generated files (keep stub for offline builds)
+# /lib/generated/prisma
 
 # Database files
 *.db
