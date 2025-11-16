@@ -12,7 +12,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import DashboardHeader from '@/app/components/DashboardHeader';
 import UserDropdown from '@/components/UserDropdown';
-import BtcPriceWidget from '@/components/BtcPriceWidget';
+import CryptoPriceWidget from '@/components/CryptoPriceWidget';
 
 const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
   ssr: false,
@@ -121,9 +121,16 @@ export default function RootLayoutNav({
 
           {/* Sidebar Navigation */}
           <nav className="flex-1 p-4 overflow-y-auto">
-            {/* Bitcoin Price Widget */}
-            <div className="mb-4">
-              <BtcPriceWidget />
+            {/* Crypto Prices */}
+            <div className="space-y-2 mb-4">
+              <CryptoPriceWidget symbol="BTC" coingeckoId="bitcoin" />
+              <CryptoPriceWidget symbol="ETH" coingeckoId="ethereum" />
+              <CryptoPriceWidget symbol="SOL" coingeckoId="solana" />
+            </div>
+
+            {/* Divider */}
+            <div className="mb-4 px-2">
+              <div className="h-px" style={{ backgroundColor: 'var(--border-light)', opacity: 0.5 }}></div>
             </div>
 
             <div className="space-y-2">
