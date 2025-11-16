@@ -1,5 +1,7 @@
 import 'next-auth';
-import { Role } from '@/lib/generated/prisma';
+
+// Define Role type locally to avoid import from Prisma stub
+type Role = 'ADMIN' | 'EDITOR' | 'VIEWER';
 
 declare module 'next-auth' {
   interface Session {
