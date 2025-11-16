@@ -81,14 +81,23 @@ import { PrismaClient } from '@prisma/client';
 
 ### 4. Build Configuration
 
+**⚠️ IMPORTANT: Offline Build Strategy**
+
+This project uses **Prisma stub files** to enable builds in restricted environments (no internet, firewall blocks, HTTP 403 errors).
+
 **Required in `package.json`:**
 ```json
 {
   "scripts": {
-    "postinstall": "prisma generate"
+    "postinstall-disabled": "prisma generate"  // DISABLED for offline builds
   }
 }
 ```
+
+**Why disabled?**
+- `prisma generate` downloads binaries from GitHub (can fail with 403)
+- Stub files committed to git provide types for TypeScript compilation
+- Real Prisma Client from `@prisma/client` is used at runtime
 
 **Required in `next.config.ts`:**
 ```typescript
@@ -99,11 +108,26 @@ import { PrismaClient } from '@prisma/client';
 }
 ```
 
+**Stub Files Location:**
+- `lib/generated/prisma/index.js` - Re-exports PrismaClient from @prisma/client
+- `lib/generated/prisma/index.d.ts` - TypeScript type definitions
+- `lib/generated/prisma/.gitkeep` - Keeps directory in git
+
+**Schema Configuration:**
+```prisma
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+  engineType = "library"  // Important for stub compatibility
+}
+```
+
 **Vercel Build Checklist:**
-- [ ] `postinstall` script present
+- [ ] `postinstall-disabled` (NOT `postinstall`)
+- [ ] Stub files committed to git in `lib/generated/prisma/`
 - [ ] `next.config.ts` with `eslint.ignoreDuringBuilds: true`
-- [ ] `prisma/schema.prisma` pointing to PostgreSQL
-- [ ] `DATABASE_URL` and `DIRECT_URL` set in Vercel
+- [ ] `prisma/schema.prisma` pointing to PostgreSQL with `engineType = "library"`
+- [ ] `DATABASE_URL` set in Vercel (DIRECT_URL not required)
 - [ ] Neon integration connected
 
 ### 5. Environment Variables
@@ -870,6 +894,35 @@ npx prisma generate
 Cmd/Ctrl + Shift + P → "TypeScript: Restart TS Server"
 ```
 
+### Issue: HTTP 403 when downloading Prisma binaries
+
+**Symptoms:**
+- Build fails with "Failed to fetch" or "HTTP 403 Forbidden"
+- Error during `prisma generate` in postinstall
+- "Can't locate Query Engine" errors
+
+**Cause:** Firewall blocking GitHub downloads, restricted network environment
+
+**Solution:** This project uses **stub files** to bypass binary downloads
+
+**Verify stub files exist:**
+```bash
+ls -la lib/generated/prisma/
+# Should show: index.js, index.d.ts, .gitkeep
+```
+
+**Verify postinstall is disabled:**
+```bash
+grep "postinstall" package.json
+# Should show: "postinstall-disabled": "prisma generate"
+```
+
+**If stub files are missing:**
+1. Restore from git: `git checkout lib/generated/prisma/`
+2. Or recreate following `troubleshooting` skill (Problema 9)
+
+**Reference:** See `troubleshooting` skill → "Problema 9: Prisma 403 Error"
+
 ### Issue: Slow queries
 
 **Solutions:**
@@ -891,13 +944,130 @@ Cmd/Ctrl + Shift + P → "TypeScript: Restart TS Server"
 9. **Use connection pooling** - Configure Neon properly
 10. **Monitor query performance** - Use Prisma logging in dev
 
+## Offline Build Strategy (Prisma Stub Files)
+
+### Overview
+
+This project uses a **stub file approach** to enable builds in environments with network restrictions:
+
+**Problem:**
+- Prisma generates client by downloading platform-specific binaries
+- Firewalls/restricted networks block downloads (HTTP 403)
+- Build fails before TypeScript compilation
+
+**Solution:**
+- Disable `postinstall` hook that runs `prisma generate`
+- Commit stub files to git that re-export `@prisma/client`
+- TypeScript builds successfully using stub types
+- Runtime uses real Prisma Client from `@prisma/client` package
+
+### Stub File Structure
+
+**`lib/generated/prisma/index.js`:**
+```javascript
+const { PrismaClient: BasePrismaClient } = require('@prisma/client');
+
+class PrismaClient extends BasePrismaClient {
+  constructor(options) {
+    super(options);
+  }
+}
+
+module.exports = {
+  PrismaClient,
+  Prisma: {}
+};
+module.exports.PrismaClient = PrismaClient;
+```
+
+**`lib/generated/prisma/index.d.ts`:**
+```typescript
+// Re-export everything from @prisma/client (includes enums, types)
+export * from '@prisma/client';
+
+// Re-export PrismaClient for convenience
+export { PrismaClient } from '@prisma/client';
+
+// Additional namespace types for compatibility
+export declare namespace Prisma {
+  export type ArticleWhereInput = any;
+  export type ArticleSelect = any;
+  export type ArticleInclude = any;
+  export type ArticleOrderByWithRelationInput = any;
+  export type ArticleCreateInput = any;
+  export type ArticleUpdateInput = any;
+  export type UserWhereInput = any;
+  export type ResourceWhereInput = any;
+  export type CryptocurrencyWhereInput = any;
+}
+```
+
+### How It Works
+
+**Build Time:**
+1. npm install runs
+2. `postinstall` is disabled, so no binary download
+3. TypeScript compiler uses stub types from `lib/generated/prisma/index.d.ts`
+4. Build succeeds without network access
+
+**Runtime:**
+1. Code imports: `import { prisma } from '@/lib/prisma'`
+2. Stub re-exports from `@prisma/client` package
+3. Real Prisma Client (from node_modules) is used
+4. Connects to database normally
+
+### When to Regenerate Stub
+
+Regenerate stub files when:
+- Schema changes significantly (new models, major refactoring)
+- New Prisma types are needed in stub namespace
+- Upgrading Prisma version with breaking changes
+
+**Don't need to regenerate for:**
+- Adding/removing columns to existing models
+- Changing indexes
+- Minor schema adjustments
+
+### Manual Prisma Generate (Development)
+
+If you need to generate full Prisma Client locally:
+
+```bash
+# Temporarily enable postinstall
+npm run postinstall-disabled  # This still works as a direct script
+
+# Or run directly
+npx prisma generate
+
+# Or in package.json, rename back to "postinstall" temporarily
+```
+
+**Remember:** Re-disable before committing to avoid build failures.
+
+### Advantages & Limitations
+
+**✅ Advantages:**
+- Builds work without internet/in restricted networks
+- No HTTP 403 errors from binary downloads
+- Faster builds (no download step)
+- TypeScript types available for compilation
+
+**⚠️ Limitations:**
+- Stub types are generic (`any`) instead of specific
+- Need manual update if schema changes drastically
+- No Prisma Studio access without full generation
+- Migrations need `npx prisma db push` in build script
+
+**Note:** This is a workaround for build environments. In production runtime, the full Prisma Client works normally.
+
 ## Related Skills
 
 - `tokenmilagre-refactoring` - Prisma types reference
 - `tokenmilagre-copilot-tools` - Database query patterns
 - `project-context` - Database architecture
+- `troubleshooting` - Problema 9 (Prisma 403 Error detailed guide)
 
 ---
 
-**Last Updated:** 2025-01-09
-**Version:** 1.0.0
+**Last Updated:** 2025-11-16
+**Version:** 1.1.0 (Added offline build strategy documentation)
