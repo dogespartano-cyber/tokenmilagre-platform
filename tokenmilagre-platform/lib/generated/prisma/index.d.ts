@@ -1,18 +1,11 @@
 // Stub types for offline build
-import { PrismaClient as BasePrismaClient } from '@prisma/client';
-
+// Re-exports everything from @prisma/client including enums
 export * from '@prisma/client';
 
-// Re-export PrismaClient properly
-export { BasePrismaClient as PrismaClient };
+// Re-export PrismaClient for convenience
+export { PrismaClient } from '@prisma/client';
 
-// Re-export enums
-export enum Role {
-  ADMIN = 'ADMIN',
-  EDITOR = 'EDITOR',
-  VIEWER = 'VIEWER'
-}
-
+// Additional Prisma namespace types for compatibility
 export declare namespace Prisma {
   export type ArticleWhereInput = any;
   export type ArticleSelect = any;
