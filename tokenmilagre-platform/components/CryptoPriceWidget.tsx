@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { BTC, ETH, SOL } from 'react-crypto-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBitcoin, faEthereum } from '@fortawesome/free-brands-svg-icons';
 
 interface CryptoData {
   currentPrice: number;
@@ -12,10 +13,34 @@ interface CryptoPriceWidgetProps {
   coingeckoId: string;
 }
 
+// Componente SVG para Solana
+const SolanaIcon = () => (
+  <svg viewBox="0 0 397.7 311.7" className="w-full h-full">
+    <defs>
+      <linearGradient id="solana-gradient" x1="360.9" y1="351.9" x2="141.2" y2="132.2" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stopColor="#00ffa3"/>
+        <stop offset="1" stopColor="#dc1fff"/>
+      </linearGradient>
+    </defs>
+    <path d="M64.6 237.9c2.4-2.4 5.7-3.8 9.2-3.8h317.4c5.8 0 8.7 7 4.6 11.1l-62.7 62.7c-2.4 2.4-5.7 3.8-9.2 3.8H6.5c-5.8 0-8.7-7-4.6-11.1l62.7-62.7z" fill="url(#solana-gradient)"/>
+    <path d="M64.6 3.8C67.1 1.4 70.4 0 73.8 0h317.4c5.8 0 8.7 7 4.6 11.1l-62.7 62.7c-2.4 2.4-5.7 3.8-9.2 3.8H6.5c-5.8 0-8.7-7-4.6-11.1L64.6 3.8z" fill="url(#solana-gradient)"/>
+    <path d="M333.1 120.1c-2.4-2.4-5.7-3.8-9.2-3.8H6.5c-5.8 0-8.7 7-4.6 11.1l62.7 62.7c2.4 2.4 5.7 3.8 9.2 3.8h317.4c5.8 0 8.7-7 4.6-11.1l-62.7-62.7z" fill="url(#solana-gradient)"/>
+  </svg>
+);
+
 const cryptoConfig = {
-  BTC: { icon: BTC, color: '#f7931a' },
-  ETH: { icon: ETH, color: '#627eea' },
-  SOL: { icon: SOL, color: '#14f195' },
+  BTC: {
+    icon: () => <FontAwesomeIcon icon={faBitcoin} className="w-full h-full" style={{ color: '#f7931a' }} />,
+    color: '#f7931a'
+  },
+  ETH: {
+    icon: () => <FontAwesomeIcon icon={faEthereum} className="w-full h-full" style={{ color: '#627eea' }} />,
+    color: '#627eea'
+  },
+  SOL: {
+    icon: SolanaIcon,
+    color: '#14f195'
+  },
 };
 
 export default function CryptoPriceWidget({ symbol, coingeckoId }: CryptoPriceWidgetProps) {
@@ -79,7 +104,7 @@ export default function CryptoPriceWidget({ symbol, coingeckoId }: CryptoPriceWi
     return (
       <div className="flex items-center gap-3 px-2">
         <div className="w-7 h-7">
-          <Icon size={28} />
+          <Icon />
         </div>
         <div className="flex-1">
           <div className="h-5 bg-gray-300 rounded animate-pulse" style={{ width: '70%', opacity: 0.3 }}></div>
@@ -96,7 +121,7 @@ export default function CryptoPriceWidget({ symbol, coingeckoId }: CryptoPriceWi
     <div className="flex items-center gap-3 px-2 transition-all duration-300 hover:scale-105">
       {/* Crypto Icon */}
       <div className="w-7 h-7 transition-transform duration-300 hover:rotate-12">
-        <Icon size={28} />
+        <Icon />
       </div>
 
       {/* Price */}
