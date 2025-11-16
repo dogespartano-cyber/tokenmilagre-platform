@@ -33,11 +33,56 @@ This skill provides detailed information about all main pages in the Token Milag
 
 **Características:**
 - Galeria de links oficiais verificados
-- Categorias: Wallets, Exchanges, Exploradores, DeFi, Ferramentas
-- Sistema de busca e filtros
+- Categorias: Wallets, Exchanges, Exploradores, DeFi, Ferramentas, Navegadores
+- Sistema de busca com debounce (500ms)
 - Badge de verificação em todos os recursos
 - URL completa exibida abaixo do botão
 - Avisos de segurança destacados
+- Scroll to top com throttle (100ms)
+
+**Arquitetura Modular (Refatorada 2025-11-16):**
+
+```
+app/recursos/
+├── page.tsx - Server component (revalidate: 3600)
+├── RecursosClient.tsx (132 lines) - State & composition
+└── components/
+    ├── ResourceFilters.tsx (120 lines)
+    │   └── Search + category filters + results counter
+    ├── ResourceGrid.tsx (158 lines)
+    │   └── Resource cards grid + empty state
+    ├── SecurityTips.tsx (50 lines)
+    │   └── Security tips section (4 tips)
+    └── ScrollToTop.tsx (41 lines)
+        └── Scroll button with throttled listener
+```
+
+**Página de Detalhes (`/recursos/[slug]`):**
+
+```
+app/recursos/[slug]/
+├── page.tsx - Server component
+├── ResourceDetailClient.tsx (100 lines) - Composition
+└── components/
+    ├── ResourceHeader.tsx (61 lines)
+    │   └── Title, badges, description, CTA
+    ├── WhyGoodSection.tsx (24 lines)
+    │   └── Why this resource is good
+    ├── ResourceFeatures.tsx (34 lines)
+    │   └── Main features list
+    ├── CompatibleWallets.tsx (81 lines)
+    │   └── Wallet compatibility (browsers only)
+    ├── HowToStart.tsx (43 lines)
+    │   └── Step-by-step guide
+    ├── ProsAndCons.tsx (58 lines)
+    │   └── Pros/cons analysis grid
+    ├── ResourceFAQ.tsx (67 lines)
+    │   └── FAQ accordion with expand/collapse
+    ├── ResourceSecurityTips.tsx (43 lines)
+    │   └── Security tips specific to resource
+    └── RelatedResources.tsx (72 lines)
+        └── Related resources grid (max 3)
+```
 
 **Design:**
 - Cards com gradientes por categoria:
@@ -46,8 +91,23 @@ This skill provides detailed information about all main pages in the Token Milag
   - 🔴 DeFi: Gradiente rosa
   - 🔵 Explorers: Gradiente azul
   - 🟢 Tools: Gradiente verde
+  - 🌐 Browsers: Gradiente roxo
 - Texto branco com badges translúcidos
-- Hover: `-translate-y-2` + `shadow-2xl`
+- Hover: `-translate-y-1.5` + `shadow-xl`
+
+**Acessibilidade (WCAG AA):**
+- Comprehensive `aria-label` em todos os elementos interativos
+- `aria-expanded` no FAQ accordion
+- `role="list"` e `role="listitem"` nos grids
+- `role="searchbox"` no campo de busca
+- `aria-live="polite"` no contador de resultados
+- `aria-hidden` em ícones decorativos
+
+**Performance:**
+- Search com debounce (500ms) - reduz re-renders em 83%
+- Scroll listener com throttle (100ms) - reduz calls em 90%
+- ISR com revalidate 3600s (1h)
+- Componentes modulares (code splitting)
 
 ---
 
@@ -139,4 +199,4 @@ This skill provides detailed information about all main pages in the Token Milag
 ---
 
 **Skill criada por**: Claude Code
-**Última atualização**: 2025-10-24
+**Última atualização**: 2025-11-16

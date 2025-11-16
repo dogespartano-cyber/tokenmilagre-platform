@@ -163,7 +163,63 @@ component-page/
 - Improved reusability
 - Reduced cognitive load
 
-**Applied in:** `app/dashboard/criar-artigo/` (created TypeSelector.tsx + types.ts)
+**Applied in:**
+- `app/dashboard/criar-artigo/` (created TypeSelector.tsx + types.ts)
+- `app/recursos/` (431→132 lines, 4 sub-components)
+- `app/recursos/[slug]/` (477→100 lines, 9 sub-components)
+
+### Pattern 7: Large Page Refactoring (Recursos Case Study)
+
+**Problem:** Multiple giant client components (>400 lines) with mixed responsibilities
+
+**Solution:** Extract focused sub-components with clear single responsibility
+
+**Example: RecursosClient.tsx Refactoring**
+```
+BEFORE: 431 lines (monolith)
+├── State management
+├── Filter UI (inline)
+├── Resource grid (inline)
+├── Security tips (inline)
+└── Scroll button (inline)
+
+AFTER: 132 lines (composition)
+├── RecursosClient.tsx - State & composition only
+├── components/ResourceFilters.tsx (120 lines)
+├── components/ResourceGrid.tsx (158 lines)
+├── components/SecurityTips.tsx (50 lines)
+└── components/ScrollToTop.tsx (41 lines) - Reusable!
+```
+
+**Example: ResourceDetailClient.tsx Refactoring**
+```
+BEFORE: 477 lines (monolith + duplicated code)
+├── All sections inline
+├── Duplicated ScrollToTop code (40 lines)
+└── FAQ state management mixed with UI
+
+AFTER: 100 lines (composition)
+├── ResourceDetailClient.tsx - Composition only
+├── components/ResourceHeader.tsx (61 lines)
+├── components/WhyGoodSection.tsx (24 lines)
+├── components/ResourceFeatures.tsx (34 lines)
+├── components/CompatibleWallets.tsx (81 lines)
+├── components/HowToStart.tsx (43 lines)
+├── components/ProsAndCons.tsx (58 lines)
+├── components/ResourceFAQ.tsx (67 lines)
+├── components/ResourceSecurityTips.tsx (43 lines)
+├── components/RelatedResources.tsx (72 lines)
+└── Reuses ScrollToTop from parent directory
+```
+
+**Benefits:**
+- **74% average size reduction** (908→232 lines)
+- **Eliminated code duplication** (shared ScrollToTop)
+- **Improved accessibility** (comprehensive aria-labels)
+- **Better testability** (isolated components)
+- **Easier maintenance** (focused responsibilities)
+
+**Applied in:** `app/recursos/` and `app/recursos/[slug]/`
 
 ## Systematic Refactoring Workflow
 
@@ -320,6 +376,6 @@ function getErrorMessage(error: unknown): string {
 
 ---
 
-**Last Updated:** 2025-01-09
+**Last Updated:** 2025-11-16
 **Maintained By:** Claude AI Sessions
-**Version:** 1.0.0
+**Version:** 1.1.0
