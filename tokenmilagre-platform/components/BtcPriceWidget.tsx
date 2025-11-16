@@ -6,7 +6,6 @@ import { faBitcoinSign } from '@fortawesome/free-solid-svg-icons';
 
 interface BtcData {
   currentPrice: number;
-  priceChangePercentage24h: number;
 }
 
 export default function BtcPriceWidget() {
@@ -44,7 +43,6 @@ export default function BtcPriceWidget() {
           if (btc) {
             const btcInfo = {
               currentPrice: btc.currentPrice,
-              priceChangePercentage24h: btc.priceChangePercentage24h,
             };
             setBtcData(btcInfo);
             sessionStorage.setItem(CACHE_KEY, JSON.stringify(btcInfo));
@@ -67,19 +65,14 @@ export default function BtcPriceWidget() {
 
   if (loading && !btcData) {
     return (
-      <div className="px-4 py-3 rounded-xl" style={{
-        backgroundColor: 'var(--bg-secondary)',
-      }}>
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{
-            background: 'linear-gradient(135deg, #f7931a, #ffb74d)',
-          }}>
-            <FontAwesomeIcon icon={faBitcoinSign} className="w-5 h-5 text-white" />
-          </div>
-          <div className="flex-1">
-            <div className="h-4 bg-gray-300 rounded animate-pulse mb-1" style={{ width: '60%' }}></div>
-            <div className="h-3 bg-gray-200 rounded animate-pulse" style={{ width: '40%' }}></div>
-          </div>
+      <div className="flex items-center gap-3 px-2">
+        <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{
+          background: 'linear-gradient(135deg, #f7931a, #ffb74d)',
+        }}>
+          <FontAwesomeIcon icon={faBitcoinSign} className="w-4 h-4 text-white" />
+        </div>
+        <div className="flex-1">
+          <div className="h-6 bg-gray-300 rounded animate-pulse" style={{ width: '80%', opacity: 0.3 }}></div>
         </div>
       </div>
     );
@@ -89,49 +82,22 @@ export default function BtcPriceWidget() {
     return null;
   }
 
-  const priceChange = btcData.priceChangePercentage24h || 0;
-  const isPositive = priceChange >= 0;
-
   return (
-    <div className="px-4 py-3 rounded-xl transition-all duration-300 hover:scale-105" style={{
-      backgroundColor: 'var(--bg-secondary)',
-    }}>
-      <div className="flex items-center gap-3">
-        {/* Bitcoin Icon */}
-        <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 hover:rotate-12" style={{
-          background: 'linear-gradient(135deg, #f7931a, #ffb74d)',
-        }}>
-          <FontAwesomeIcon icon={faBitcoinSign} className="w-5 h-5 text-white" />
-        </div>
+    <div className="flex items-center gap-3 px-2 transition-all duration-300 hover:scale-105">
+      {/* Bitcoin Icon */}
+      <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 hover:rotate-12" style={{
+        background: 'linear-gradient(135deg, #f7931a, #ffb74d)',
+      }}>
+        <FontAwesomeIcon icon={faBitcoinSign} className="w-4 h-4 text-white" />
+      </div>
 
-        {/* Price Info */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-baseline gap-2">
-            <span className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>
-              BTC
-            </span>
-            <span className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
-              ${btcData.currentPrice.toLocaleString('en-US', {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-              })}
-            </span>
-          </div>
-
-          {/* 24h Change */}
-          <div className="flex items-center gap-1">
-            <span
-              className="text-xs font-semibold"
-              style={{
-                color: isPositive ? '#10b981' : '#ef4444'
-              }}
-            >
-              {isPositive ? '+' : ''}{priceChange.toFixed(2)}%
-            </span>
-            <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-              24h
-            </span>
-          </div>
+      {/* Price */}
+      <div className="flex-1 min-w-0">
+        <div className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
+          ${btcData.currentPrice.toLocaleString('en-US', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+          })}
         </div>
       </div>
     </div>
