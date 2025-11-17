@@ -69,13 +69,6 @@ export default function AdminDashboardPage() {
 
   const features: FeatureCard[] = [
     {
-      title: '🤖 Copiloto Gemini',
-      description: 'Assistente administrativo com poderes completos - Gemini 2.5 Pro',
-      icon: faRobot,
-      href: '/dashboard/copilot',
-      gradient: 'linear-gradient(135deg, #7C3AED, #F59E0B)'
-    },
-    {
       title: '⚡ Geração em Massa',
       description: 'Popule o banco automaticamente com múltiplos artigos de qualidade',
       icon: faRobot,
