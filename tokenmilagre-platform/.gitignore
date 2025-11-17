@@ -45,6 +45,18 @@ next-env.d.ts
 
 # Prisma generated files (keep stub for offline builds)
 # /lib/generated/prisma
+lib/generated/prisma/client.*
+lib/generated/prisma/default.*
+lib/generated/prisma/edge.*
+lib/generated/prisma/wasm.*
+lib/generated/prisma/index-browser.js
+lib/generated/prisma/package.json
+lib/generated/prisma/schema.prisma
+lib/generated/prisma/runtime/
+lib/generated/prisma/*.node
+lib/generated/prisma/*.wasm
+lib/generated/prisma/query_engine_bg.js
+lib/generated/prisma/*-loader.mjs
 
 # Database files
 *.db
