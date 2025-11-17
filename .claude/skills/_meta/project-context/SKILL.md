@@ -33,12 +33,7 @@ allowed-tools: Read
 ✅ Permitido: `tokenmilagre-platform/` (app/, components/, lib/, .claude/, docs/)
 ❌ PROIBIDO: Qualquer arquivo fora deste diretório
 
-### 🚨 Regra #3: Nunca Rodar Build ou Dev Server
-
-**NUNCA execute**: `npm run dev`, `npm run build`, `npm start`
-**Motivo**: Servidor é gerenciado pelo `server-manager.sh`
-
-### 🚨 Regra #4: Economia de Tokens
+### 🚨 Regra #3: Economia de Tokens
 
 **Seja CONCISO**. O usuário prefere:
 - ✅ Respostas curtas e diretas
@@ -192,7 +187,6 @@ When this skill is invoked:
 3. Be ready to follow all critical rules:
    - ALWAYS ask before executing code
    - NEVER commit files outside tokenmilagre-platform/
-   - NEVER run build or dev server commands
    - Use Prisma directly in Server Components
    - **BE CONCISE** - Respostas curtas e diretas
 4. Use specialized skills when needed (consult skills-navigator first)
@@ -203,8 +197,9 @@ When this skill is invoked:
 
 **Skill criada por**: Claude Code
 **Última atualização**: 2025-11-17
-**Versão**: 3.0.0
+**Versão**: 3.0.1
 **Mudanças recentes**:
+- ✅ Removida restrição sobre não rodar npm run dev/build/start
 - ✅ **OTIMIZAÇÃO AGRESSIVA**: 356 → 185 linhas (-48%, -630 tokens)
 - ✅ Propósito condensado mantendo essência
 - ✅ Stack reduzida ao essencial
