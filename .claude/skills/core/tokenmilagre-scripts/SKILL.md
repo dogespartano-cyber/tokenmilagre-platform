@@ -1,66 +1,101 @@
 ---
 name: tokenmilagre-scripts
-description: "Utility scripts and automation patterns (data migration, bulk processing). TRIGGERS: 'script', 'automação', 'migration script', 'bulk processing', 'data processing', 'utility'. Use when building scripts for data processing, database operations, content migration, platform automation, maintenance tasks."
+description: "Templates e patterns para scripts de automação (migration, bulk processing, maintenance). TRIGGERS: 'script', 'automação', 'migration', 'bulk processing'. Use quando criar scripts para dados, database ops, content migration, automation."
 license: MIT
 ---
 
 # Token Milagre - Scripts & Automation Guide
 
-Complete guide for creating utility scripts and automation tools for the Token Milagre Platform.
+**Templates e patterns padronizados para scripts de automação**
 
-## Purpose
+---
 
-Provide standardized patterns for building scripts that automate common tasks, process data, perform migrations, and maintain platform health.
+## 🎯 Purpose
 
-## When to Use This Skill
+Fornecer templates reutilizáveis e patterns para scripts que automatizam:
+- Data migration e transformação
+- Bulk processing de conteúdo
+- Database maintenance
+- Análise e relatórios
+- Tarefas agendadas
 
-Use this skill when:
-- Creating data migration scripts
-- Building automation tools
-- Processing bulk data
-- Generating reports
-- Performing database maintenance
-- Importing/exporting content
-- Analyzing codebase metrics
-- Setting up scheduled tasks
+---
 
-## Script Types
+## 📋 Quando Usar
 
-### 1. Data Migration Scripts
-### 2. Analysis & Reporting Scripts
-### 3. Content Processing Scripts
-### 4. Database Maintenance Scripts
-### 5. Deployment & Build Scripts
+**Use esta skill quando**:
+- Criar migration scripts (DB → DB, formato A → B)
+- Processar dados em lote (100+ registros)
+- Gerar relatórios automatizados
+- Fazer manutenção de database
+- Importar/exportar conteúdo
+- Analisar métricas do codebase
+- Setup de cron jobs
 
-## Script Structure Template
+---
+
+## 📦 Script Types
+
+### 1. Data Migration
+- Migrar dados entre schemas
+- Transformar formato de dados
+- Backfill campos novos
+
+### 2. Analysis & Reporting
+- Metrics do codebase
+- Usage reports
+- Database stats
+
+### 3. Content Processing
+- Bulk import de artigos
+- Regenerar slugs/summaries
+- Atualizar metadados
+
+### 4. Database Maintenance
+- Cleanup de dados órfãos
+- Reindex tables
+- Vacuum/optimize
+
+### 5. Deployment & Build
+- Pre-deploy checks
+- Post-deploy tasks
+- Database seeding
+
+---
+
+## 🏗️ Template Base
+
+**Estrutura padrão para TODOS scripts**:
 
 ```typescript
 #!/usr/bin/env ts-node
 /**
- * Script Name: my-script.ts
- * Purpose: Brief description of what this script does
- * Usage: npx ts-node scripts/my-script.ts [options]
+ * Script: [nome].ts
+ * Purpose: [Descrição em 1 linha]
+ * Usage: npx ts-node scripts/[nome].ts [--dry-run] [--limit N]
  *
  * Examples:
- *   npx ts-node scripts/my-script.ts --dry-run
- *   npx ts-node scripts/my-script.ts --limit 100
+ *   npx ts-node scripts/[nome].ts --dry-run      # Preview sem executar
+ *   npx ts-node scripts/[nome].ts --limit 10     # Processar apenas 10
+ *   npx ts-node scripts/[nome].ts --verbose      # Logs detalhados
  */
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../lib/generated/prisma';
 
 const prisma = new PrismaClient();
 
-// Configuration
-interface ScriptConfig {
-  dryRun: boolean;
-  limit?: number;
-  verbose: boolean;
+// ========================================
+// CONFIGURATION
+// ========================================
+
+interface Config {
+  dryRun: boolean;     // Preview mode (não modifica dados)
+  limit?: number;      // Processar apenas N registros
+  verbose: boolean;    // Logs detalhados
 }
 
-// Parse CLI arguments
-function parseArgs(): ScriptConfig {
+function parseArgs(): Config {
   const args = process.argv.slice(2);
-
   return {
     dryRun: args.includes('--dry-run'),
     limit: args.includes('--limit')
@@ -70,851 +105,390 @@ function parseArgs(): ScriptConfig {
   };
 }
 
-// Main script logic
+// ========================================
+// MAIN LOGIC
+// ========================================
+
 async function main() {
   const config = parseArgs();
 
-  console.log('🚀 Starting script...');
-  console.log('Config:', config);
+  console.log('🚀 Starting:', process.argv[1]);
+  console.log('📋 Config:', config);
 
   try {
-    // Script operations here
-    const result = await performOperation(config);
+    // Fetch records
+    const records = await prisma.MODEL.findMany({
+      take: config.limit,
+      where: { /* critérios */ }
+    });
 
-    console.log('\n✅ Script completed successfully');
-    console.log('Result:', result);
+    console.log(`✅ Found ${records.length} records`);
+
+    // Process each
+    let processed = 0;
+    let errors = 0;
+
+    for (const record of records) {
+      try {
+        if (config.verbose) {
+          console.log(`Processing: ${record.id}`);
+        }
+
+        // LOGIC HERE
+        if (!config.dryRun) {
+          await prisma.MODEL.update({
+            where: { id: record.id },
+            data: { /* updates */ }
+          });
+        }
+
+        processed++;
+      } catch (error) {
+        errors++;
+        console.error(`❌ Error processing ${record.id}:`, error);
+      }
+    }
+
+    // Summary
+    console.log('\n📊 Summary:');
+    console.log(`  ✅ Processed: ${processed}`);
+    console.log(`  ❌ Errors: ${errors}`);
+    console.log(`  🏷️  Mode: ${config.dryRun ? 'DRY RUN' : 'LIVE'}`);
 
   } catch (error) {
-    console.error('\n❌ Script failed:', error);
+    console.error('💥 Fatal error:', error);
     process.exit(1);
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
-async function performOperation(config: ScriptConfig) {
-  // Implementation here
-  return { success: true };
-}
+// ========================================
+// RUN
+// ========================================
 
-// Execute script
 main()
-  .catch(console.error)
-  .finally(() => prisma.$disconnect());
-```
-
-## Real-World Script Examples
-
-### Example 1: Bulk Article Import
-
-```typescript
-#!/usr/bin/env ts-node
-/**
- * Import articles from JSON file
- * Usage: npx ts-node scripts/import-articles.ts articles.json [--dry-run]
- */
-
-import { PrismaClient, Prisma } from '@prisma/client';
-import fs from 'fs/promises';
-import path from 'path';
-
-const prisma = new PrismaClient();
-
-interface ImportArticle {
-  title: string;
-  content: string;
-  category: string;
-  tags?: string[];
-  published?: boolean;
-}
-
-interface ImportResult {
-  total: number;
-  imported: number;
-  skipped: number;
-  errors: Array<{ title: string; error: string }>;
-}
-
-async function importArticles(
-  filePath: string,
-  dryRun: boolean = false
-): Promise<ImportResult> {
-  const result: ImportResult = {
-    total: 0,
-    imported: 0,
-    skipped: 0,
-    errors: []
-  };
-
-  // Read JSON file
-  const fileContent = await fs.readFile(filePath, 'utf-8');
-  const articles: ImportArticle[] = JSON.parse(fileContent);
-  result.total = articles.length;
-
-  console.log(`📄 Found ${articles.length} articles to import`);
-
-  // Get or create admin user for authorship
-  const adminUser = await prisma.user.upsert({
-    where: { email: 'admin@tokenmilagre.com' },
-    update: {},
-    create: {
-      email: 'admin@tokenmilagre.com',
-      name: 'Admin',
-      role: 'ADMIN'
-    }
-  });
-
-  // Import each article
-  for (const article of articles) {
-    try {
-      // Generate slug
-      const slug = generateSlug(article.title);
-
-      // Check if already exists
-      const existing = await prisma.article.findUnique({
-        where: { slug }
-      });
-
-      if (existing) {
-        console.log(`⏭️  Skipping "${article.title}" (already exists)`);
-        result.skipped++;
-        continue;
-      }
-
-      if (dryRun) {
-        console.log(`[DRY RUN] Would import: "${article.title}"`);
-      } else {
-        // Create article
-        const articleData: Prisma.ArticleCreateInput = {
-          title: article.title,
-          slug,
-          content: article.content,
-          excerpt: article.content.substring(0, 200) + '...',
-          type: 'educational',
-          category: article.category,
-          published: article.published ?? false,
-          tags: article.tags ? JSON.stringify(article.tags) : null,
-          author: {
-            connect: { id: adminUser.id }
-          }
-        };
-
-        await prisma.article.create({ data: articleData });
-        console.log(`✅ Imported: "${article.title}"`);
-      }
-
-      result.imported++;
-
-    } catch (error) {
-      console.error(`❌ Failed to import "${article.title}":`, error);
-      result.errors.push({
-        title: article.title,
-        error: error instanceof Error ? error.message : String(error)
-      });
-    }
-  }
-
-  return result;
-}
-
-function generateSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
-}
-
-async function main() {
-  const args = process.argv.slice(2);
-
-  if (args.length === 0) {
-    console.error('❌ Usage: npx ts-node scripts/import-articles.ts <file.json> [--dry-run]');
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
     process.exit(1);
-  }
-
-  const filePath = args[0];
-  const dryRun = args.includes('--dry-run');
-
-  console.log('📦 Import Articles Script');
-  console.log('File:', filePath);
-  console.log('Dry run:', dryRun);
-  console.log('');
-
-  const result = await importArticles(filePath, dryRun);
-
-  console.log('\n📊 Import Summary:');
-  console.log(`Total articles: ${result.total}`);
-  console.log(`Imported: ${result.imported}`);
-  console.log(`Skipped: ${result.skipped}`);
-  console.log(`Errors: ${result.errors.length}`);
-
-  if (result.errors.length > 0) {
-    console.log('\n❌ Errors:');
-    result.errors.forEach(({ title, error }) => {
-      console.log(`  - "${title}": ${error}`);
-    });
-  }
-}
-
-main()
-  .catch(console.error)
-  .finally(() => prisma.$disconnect());
+  });
 ```
-
-### Example 2: Generate SEO Metadata for Existing Articles
-
-```typescript
-#!/usr/bin/env ts-node
-/**
- * Generate SEO metadata for articles missing it
- * Usage: npx ts-node scripts/generate-seo-metadata.ts [--limit N] [--dry-run]
- */
-
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
-interface SEOMetadata {
-  keywords: string[];
-  metaDescription: string;
-}
-
-async function generateSEOMetadata(content: string, title: string, category: string): Promise<SEOMetadata> {
-  // Extract keywords (simplified - in production, use NLP)
-  const words = content
-    .toLowerCase()
-    .replace(/[^\w\s]/g, ' ')
-    .split(/\s+/)
-    .filter(w => w.length > 4);
-
-  // Count word frequency
-  const frequency: Record<string, number> = {};
-  words.forEach(word => {
-    frequency[word] = (frequency[word] || 0) + 1;
-  });
-
-  // Get top keywords
-  const keywords = Object.entries(frequency)
-    .sort(([, a], [, b]) => b - a)
-    .slice(0, 10)
-    .map(([word]) => word);
-
-  // Add category as keyword
-  keywords.unshift(category);
-
-  // Generate meta description (first 150 chars of content)
-  const cleanContent = content
-    .replace(/[#*`]/g, '')
-    .replace(/\n+/g, ' ')
-    .trim();
-
-  let metaDescription = cleanContent.substring(0, 147);
-  if (cleanContent.length > 147) {
-    metaDescription += '...';
-  }
-
-  return { keywords, metaDescription };
-}
-
-async function main() {
-  const args = process.argv.slice(2);
-  const limit = args.includes('--limit')
-    ? parseInt(args[args.indexOf('--limit') + 1])
-    : 50;
-  const dryRun = args.includes('--dry-run');
-
-  console.log('🔍 Generate SEO Metadata Script');
-  console.log('Limit:', limit);
-  console.log('Dry run:', dryRun);
-  console.log('');
-
-  // Find articles without keywords
-  const articles = await prisma.article.findMany({
-    where: {
-      OR: [
-        { keywords: null },
-        { keywords: '' }
-      ]
-    },
-    take: limit,
-    select: {
-      id: true,
-      title: true,
-      content: true,
-      category: true,
-      slug: true
-    }
-  });
-
-  console.log(`📄 Found ${articles.length} articles without SEO metadata\n`);
-
-  let updated = 0;
-
-  for (const article of articles) {
-    try {
-      const seo = await generateSEOMetadata(
-        article.content,
-        article.title,
-        article.category
-      );
-
-      console.log(`Processing: "${article.title}"`);
-      console.log(`  Keywords: ${seo.keywords.slice(0, 5).join(', ')}...`);
-      console.log(`  Meta: ${seo.metaDescription.substring(0, 50)}...`);
-
-      if (!dryRun) {
-        await prisma.article.update({
-          where: { id: article.id },
-          data: {
-            keywords: JSON.stringify(seo.keywords)
-            // Could also update excerpt with metaDescription
-          }
-        });
-      }
-
-      updated++;
-    } catch (error) {
-      console.error(`❌ Failed for "${article.title}":`, error);
-    }
-  }
-
-  console.log(`\n✅ Updated ${updated}/${articles.length} articles`);
-}
-
-main()
-  .catch(console.error)
-  .finally(() => prisma.$disconnect());
-```
-
-### Example 3: Calculate Fact-Check Scores
-
-```typescript
-#!/usr/bin/env ts-node
-/**
- * Calculate and update fact-check scores for all articles
- * Usage: npx ts-node scripts/calculate-fact-scores.ts [--dry-run]
- */
-
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
-interface FactCheckResult {
-  score: number;
-  status: 'verified' | 'partial' | 'unverified';
-  citationCount: number;
-}
-
-function calculateFactCheckScore(factCheckSources: string | null): FactCheckResult {
-  if (!factCheckSources) {
-    return {
-      score: 0,
-      status: 'unverified',
-      citationCount: 0
-    };
-  }
-
-  const citations = JSON.parse(factCheckSources);
-  const citationCount = citations.length;
-
-  // Quality domains
-  const qualityDomains = [
-    'coindesk.com',
-    'cointelegraph.com',
-    'decrypt.co',
-    'theblock.co'
-  ];
-
-  const qualitySources = citations.filter((c: any) =>
-    qualityDomains.some(domain => c.url?.includes(domain))
-  ).length;
-
-  // Calculate score
-  let score = 0;
-
-  // Citation count (0-50 points)
-  if (citationCount >= 5) score += 50;
-  else if (citationCount >= 3) score += 35;
-  else if (citationCount >= 1) score += 20;
-
-  // Quality ratio (0-50 points)
-  const qualityRatio = qualitySources / Math.max(citationCount, 1);
-  score += Math.round(qualityRatio * 50);
-
-  // Determine status
-  let status: 'verified' | 'partial' | 'unverified';
-  if (score >= 70) status = 'verified';
-  else if (score >= 40) status = 'partial';
-  else status = 'unverified';
-
-  return { score, status, citationCount };
-}
-
-async function main() {
-  const dryRun = process.argv.includes('--dry-run');
-
-  console.log('🔬 Calculate Fact-Check Scores');
-  console.log('Dry run:', dryRun);
-  console.log('');
-
-  const articles = await prisma.article.findMany({
-    select: {
-      id: true,
-      title: true,
-      factCheckSources: true,
-      factCheckScore: true
-    }
-  });
-
-  console.log(`📄 Processing ${articles.length} articles\n`);
-
-  let updated = 0;
-  const stats = {
-    verified: 0,
-    partial: 0,
-    unverified: 0
-  };
-
-  for (const article of articles) {
-    const result = calculateFactCheckScore(article.factCheckSources);
-
-    console.log(`${article.title.substring(0, 50)}...`);
-    console.log(`  Score: ${result.score} (${result.status})`);
-    console.log(`  Citations: ${result.citationCount}`);
-
-    stats[result.status]++;
-
-    if (!dryRun && result.score !== article.factCheckScore) {
-      await prisma.article.update({
-        where: { id: article.id },
-        data: {
-          factCheckScore: result.score,
-          factCheckStatus: result.status
-        }
-      });
-      updated++;
-    }
-  }
-
-  console.log('\n📊 Summary:');
-  console.log(`Updated: ${updated}/${articles.length}`);
-  console.log(`Verified: ${stats.verified}`);
-  console.log(`Partial: ${stats.partial}`);
-  console.log(`Unverified: ${stats.unverified}`);
-}
-
-main()
-  .catch(console.error)
-  .finally(() => prisma.$disconnect());
-```
-
-### Example 4: Database Cleanup
-
-```typescript
-#!/usr/bin/env ts-node
-/**
- * Clean up old/orphaned data
- * Usage: npx ts-node scripts/cleanup-database.ts [--dry-run]
- */
-
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
-interface CleanupResult {
-  orphanedActivities: number;
-  oldDrafts: number;
-  emptyResources: number;
-}
-
-async function cleanup(dryRun: boolean): Promise<CleanupResult> {
-  const result: CleanupResult = {
-    orphanedActivities: 0,
-    oldDrafts: 0,
-    emptyResources: 0
-  };
-
-  console.log('🧹 Starting cleanup...\n');
-
-  // 1. Remove orphaned copilot activities (user deleted)
-  console.log('1️⃣ Checking for orphaned activities...');
-  const orphanedCount = await prisma.copilotActivity.count({
-    where: {
-      user: null
-    }
-  });
-
-  if (orphanedCount > 0) {
-    console.log(`   Found ${orphanedCount} orphaned activities`);
-    if (!dryRun) {
-      await prisma.copilotActivity.deleteMany({
-        where: { user: null }
-      });
-      console.log('   ✅ Deleted');
-    }
-    result.orphanedActivities = orphanedCount;
-  } else {
-    console.log('   ✅ No orphaned activities');
-  }
-
-  // 2. Remove old unpublished drafts (>90 days)
-  console.log('\n2️⃣ Checking for old drafts...');
-  const ninetyDaysAgo = new Date();
-  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
-
-  const oldDrafts = await prisma.article.count({
-    where: {
-      published: false,
-      createdAt: {
-        lt: ninetyDaysAgo
-      }
-    }
-  });
-
-  if (oldDrafts > 0) {
-    console.log(`   Found ${oldDrafts} old unpublished drafts`);
-    if (!dryRun) {
-      await prisma.article.deleteMany({
-        where: {
-          published: false,
-          createdAt: { lt: ninetyDaysAgo }
-        }
-      });
-      console.log('   ✅ Deleted');
-    }
-    result.oldDrafts = oldDrafts;
-  } else {
-    console.log('   ✅ No old drafts');
-  }
-
-  // 3. Remove resources without title
-  console.log('\n3️⃣ Checking for invalid resources...');
-  const emptyResources = await prisma.resource.count({
-    where: {
-      OR: [
-        { title: '' },
-        { title: null },
-        { url: '' },
-        { url: null }
-      ]
-    }
-  });
-
-  if (emptyResources > 0) {
-    console.log(`   Found ${emptyResources} invalid resources`);
-    if (!dryRun) {
-      await prisma.resource.deleteMany({
-        where: {
-          OR: [
-            { title: '' },
-            { title: null },
-            { url: '' },
-            { url: null }
-          ]
-        }
-      });
-      console.log('   ✅ Deleted');
-    }
-    result.emptyResources = emptyResources;
-  } else {
-    console.log('   ✅ No invalid resources');
-  }
-
-  return result;
-}
-
-async function main() {
-  const dryRun = process.argv.includes('--dry-run');
-
-  console.log('🗑️  Database Cleanup Script');
-  console.log('Dry run:', dryRun);
-  console.log('');
-
-  const result = await cleanup(dryRun);
-
-  console.log('\n📊 Cleanup Summary:');
-  console.log(`Orphaned activities: ${result.orphanedActivities}`);
-  console.log(`Old drafts: ${result.oldDrafts}`);
-  console.log(`Invalid resources: ${result.emptyResources}`);
-  console.log(`Total items: ${Object.values(result).reduce((a, b) => a + b, 0)}`);
-}
-
-main()
-  .catch(console.error)
-  .finally(() => prisma.$disconnect());
-```
-
-### Example 5: Generate Analytics Report
-
-```typescript
-#!/usr/bin/env ts-node
-/**
- * Generate platform analytics report
- * Usage: npx ts-node scripts/generate-report.ts [--format json|markdown]
- */
-
-import { PrismaClient } from '@prisma/client';
-import fs from 'fs/promises';
-
-const prisma = new PrismaClient();
-
-interface AnalyticsReport {
-  timestamp: string;
-  articles: {
-    total: number;
-    published: number;
-    drafts: number;
-    byCategory: Record<string, number>;
-    avgFactScore: number;
-  };
-  users: {
-    total: number;
-    admins: number;
-    editors: number;
-  };
-  copilot: {
-    totalActivities: number;
-    activitiesLast30Days: number;
-    topTools: Array<{ tool: string; count: number }>;
-  };
-}
-
-async function generateReport(): Promise<AnalyticsReport> {
-  // Articles stats
-  const totalArticles = await prisma.article.count();
-  const publishedArticles = await prisma.article.count({
-    where: { published: true }
-  });
-
-  const categoryBreakdown = await prisma.article.groupBy({
-    by: ['category'],
-    _count: { category: true },
-    orderBy: { _count: { category: 'desc' } }
-  });
-
-  const byCategory: Record<string, number> = {};
-  categoryBreakdown.forEach(item => {
-    byCategory[item.category] = item._count.category;
-  });
-
-  const avgScore = await prisma.article.aggregate({
-    _avg: { factCheckScore: true },
-    where: { factCheckScore: { not: null } }
-  });
-
-  // Users stats
-  const totalUsers = await prisma.user.count();
-  const admins = await prisma.user.count({ where: { role: 'ADMIN' } });
-  const editors = await prisma.user.count({ where: { role: 'EDITOR' } });
-
-  // Copilot stats
-  const totalActivities = await prisma.copilotActivity.count();
-
-  const thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-  const recentActivities = await prisma.copilotActivity.count({
-    where: { timestamp: { gte: thirtyDaysAgo } }
-  });
-
-  const topTools = await prisma.copilotActivity.groupBy({
-    by: ['toolName'],
-    _count: { toolName: true },
-    orderBy: { _count: { toolName: 'desc' } },
-    take: 5
-  });
-
-  return {
-    timestamp: new Date().toISOString(),
-    articles: {
-      total: totalArticles,
-      published: publishedArticles,
-      drafts: totalArticles - publishedArticles,
-      byCategory,
-      avgFactScore: avgScore._avg.factCheckScore || 0
-    },
-    users: {
-      total: totalUsers,
-      admins,
-      editors
-    },
-    copilot: {
-      totalActivities,
-      activitiesLast30Days: recentActivities,
-      topTools: topTools.map(t => ({
-        tool: t.toolName,
-        count: t._count.toolName
-      }))
-    }
-  };
-}
-
-function formatMarkdown(report: AnalyticsReport): string {
-  return `# Token Milagre Platform - Analytics Report
-
-**Generated:** ${new Date(report.timestamp).toLocaleString()}
-
-## 📊 Articles
-
-- **Total Articles:** ${report.articles.total}
-- **Published:** ${report.articles.published}
-- **Drafts:** ${report.articles.drafts}
-- **Avg Fact-Check Score:** ${report.articles.avgFactScore.toFixed(1)}
-
-### By Category
-
-${Object.entries(report.articles.byCategory)
-  .map(([cat, count]) => `- **${cat}:** ${count}`)
-  .join('\n')}
-
-## 👥 Users
-
-- **Total Users:** ${report.users.total}
-- **Admins:** ${report.users.admins}
-- **Editors:** ${report.users.editors}
-
-## 🤖 Copilot Usage
-
-- **Total Activities:** ${report.copilot.totalActivities}
-- **Last 30 Days:** ${report.copilot.activitiesLast30Days}
-
-### Top Tools
-
-${report.copilot.topTools
-  .map((t, i) => `${i + 1}. **${t.tool}:** ${t.count} uses`)
-  .join('\n')}
-`;
-}
-
-async function main() {
-  const args = process.argv.slice(2);
-  const format = args.includes('--format')
-    ? args[args.indexOf('--format') + 1]
-    : 'markdown';
-
-  console.log('📈 Generating analytics report...\n');
-
-  const report = await generateReport();
-
-  if (format === 'json') {
-    const json = JSON.stringify(report, null, 2);
-    console.log(json);
-    await fs.writeFile('report.json', json);
-    console.log('\n✅ Saved to report.json');
-  } else {
-    const markdown = formatMarkdown(report);
-    console.log(markdown);
-    await fs.writeFile('report.md', markdown);
-    console.log('\n✅ Saved to report.md');
-  }
-}
-
-main()
-  .catch(console.error)
-  .finally(() => prisma.$disconnect());
-```
-
-## Script Patterns Library
-
-### Pattern 1: Progress Indicator
-
-```typescript
-function createProgressBar(current: number, total: number, width: number = 40): string {
-  const percentage = (current / total) * 100;
-  const filled = Math.round((width * current) / total);
-  const empty = width - filled;
-
-  const bar = '█'.repeat(filled) + '░'.repeat(empty);
-  return `[${bar}] ${current}/${total} (${percentage.toFixed(1)}%)`;
-}
-
-// Usage
-for (let i = 0; i < items.length; i++) {
-  process.stdout.write(`\r${createProgressBar(i + 1, items.length)}`);
-  await processItem(items[i]);
-}
-console.log(); // New line after completion
-```
-
-### Pattern 2: Batch Processing
-
-```typescript
-async function processBatch<T, R>(
-  items: T[],
-  processor: (item: T) => Promise<R>,
-  batchSize: number = 10
-): Promise<R[]> {
-  const results: R[] = [];
-
-  for (let i = 0; i < items.length; i += batchSize) {
-    const batch = items.slice(i, i + batchSize);
-    const batchResults = await Promise.all(
-      batch.map(item => processor(item))
-    );
-    results.push(...batchResults);
-
-    console.log(`Processed ${Math.min(i + batchSize, items.length)}/${items.length}`);
-  }
-
-  return results;
-}
-```
-
-### Pattern 3: Error Collection
-
-```typescript
-interface ProcessResult<T> {
-  success: T[];
-  failed: Array<{ item: any; error: string }>;
-}
-
-async function processWithErrorCollection<T, R>(
-  items: T[],
-  processor: (item: T) => Promise<R>
-): Promise<ProcessResult<R>> {
-  const result: ProcessResult<R> = {
-    success: [],
-    failed: []
-  };
-
-  for (const item of items) {
-    try {
-      const processed = await processor(item);
-      result.success.push(processed);
-    } catch (error) {
-      result.failed.push({
-        item,
-        error: error instanceof Error ? error.message : String(error)
-      });
-    }
-  }
-
-  return result;
-}
-```
-
-## Best Practices
-
-1. **Always include --dry-run option** - Let users preview changes
-2. **Log progress clearly** - Show what's happening
-3. **Handle errors gracefully** - Don't crash on single failure
-4. **Use transactions** - For multi-step database operations
-5. **Validate inputs** - Check arguments before processing
-6. **Provide examples** - Show usage in comments
-7. **Make scripts idempotent** - Safe to run multiple times
-8. **Clean up resources** - Disconnect from database
-9. **Add progress indicators** - For long-running operations
-10. **Generate reports** - Summarize what was done
-
-## Related Skills
-
-- `tokenmilagre-database` - Database operations
-- `tokenmilagre-content-quality` - Content processing
-- `project-context` - Platform architecture
 
 ---
 
-**Last Updated:** 2025-01-09
-**Version:** 1.0.0
+## 🎯 Patterns Library
+
+### Pattern 1: Bulk Update
+
+**Use quando**: Atualizar campo em múltiplos registros
+
+```typescript
+// Atualizar 1000 artigos de uma vez
+const updated = await prisma.article.updateMany({
+  where: { published: false },
+  data: { status: 'DRAFT' }
+});
+
+console.log(`Updated ${updated.count} articles`);
+```
+
+### Pattern 2: Batch Processing (Chunked)
+
+**Use quando**: Processar muitos registros sem estourar memória
+
+```typescript
+const BATCH_SIZE = 100;
+let offset = 0;
+let hasMore = true;
+
+while (hasMore) {
+  const batch = await prisma.article.findMany({
+    take: BATCH_SIZE,
+    skip: offset
+  });
+
+  if (batch.length === 0) {
+    hasMore = false;
+    break;
+  }
+
+  // Process batch
+  for (const item of batch) {
+    await processItem(item);
+  }
+
+  offset += BATCH_SIZE;
+  console.log(`Processed ${offset} total...`);
+}
+```
+
+### Pattern 3: Transaction (Atomic)
+
+**Use quando**: Operações que DEVEM todas suceder ou todas falhar
+
+```typescript
+await prisma.$transaction(async (tx) => {
+  // Deletar artigo
+  await tx.article.delete({ where: { id: articleId } });
+
+  // Deletar comments órfãos
+  await tx.comment.deleteMany({ where: { articleId } });
+
+  // Log activity
+  await tx.activity.create({
+    data: { action: 'ARTICLE_DELETED', articleId }
+  });
+});
+```
+
+### Pattern 4: Progress Reporting
+
+**Use quando**: Scripts longos (>30seg) precisam feedback
+
+```typescript
+const total = await prisma.article.count();
+let processed = 0;
+
+for (const article of articles) {
+  await processArticle(article);
+  processed++;
+
+  // Progress bar
+  if (processed % 10 === 0) {
+    const percent = (processed / total * 100).toFixed(1);
+    console.log(`[${percent}%] ${processed}/${total}`);
+  }
+}
+```
+
+### Pattern 5: Error Recovery (Resilient)
+
+**Use quando**: Script pode falhar parcialmente mas deve continuar
+
+```typescript
+const failed: string[] = [];
+
+for (const item of items) {
+  try {
+    await processItem(item);
+  } catch (error) {
+    console.error(`Failed ${item.id}:`, error.message);
+    failed.push(item.id);
+    // Continua processando outros
+  }
+}
+
+// Report failures no final
+if (failed.length > 0) {
+  console.warn(`\n⚠️  ${failed.length} items failed:`);
+  console.warn(failed.join(', '));
+}
+```
+
+---
+
+## ⚡ Best Practices
+
+### 1. SEMPRE Incluir --dry-run
+
+```typescript
+if (config.dryRun) {
+  console.log('DRY RUN - Preview only');
+  // Mostrar o que FARIA sem executar
+  return;
+}
+```
+
+**Por quê**: Previne acidentes (deletar DB prod, etc.)
+
+### 2. SEMPRE Usar Transactions para Multi-Step
+
+```typescript
+// ❌ RUIM - Pode falhar no meio
+await prisma.user.delete({ where: { id } });
+await prisma.article.deleteMany({ where: { authorId: id } });
+
+// ✅ BOM - Atômico
+await prisma.$transaction([
+  prisma.user.delete({ where: { id } }),
+  prisma.article.deleteMany({ where: { authorId: id } })
+]);
+```
+
+### 3. SEMPRE Log Resumo no Final
+
+```typescript
+console.log('\n📊 Summary:');
+console.log(`  Total: ${total}`);
+console.log(`  ✅ Success: ${success}`);
+console.log(`  ❌ Failed: ${failed}`);
+console.log(`  ⏱️  Duration: ${duration}ms`);
+```
+
+### 4. NUNCA Hardcode Valores
+
+```typescript
+// ❌ RUIM
+const API_KEY = 'sk-abc123...';
+
+// ✅ BOM
+const API_KEY = process.env.PERPLEXITY_API_KEY;
+if (!API_KEY) throw new Error('Missing PERPLEXITY_API_KEY');
+```
+
+### 5. SEMPRE Disconnect Prisma
+
+```typescript
+main()
+  .catch(console.error)
+  .finally(() => prisma.$disconnect());
+```
+
+---
+
+## 🛠️ CLI Helpers
+
+### Argumentos Comuns
+
+```typescript
+// Parsing avançado
+function parseArgs() {
+  const args = process.argv.slice(2);
+
+  return {
+    dryRun: args.includes('--dry-run'),
+    limit: getArgValue(args, '--limit', parseInt),
+    model: getArgValue(args, '--model'),
+    verbose: args.includes('-v') || args.includes('--verbose'),
+    force: args.includes('--force')
+  };
+}
+
+function getArgValue<T>(
+  args: string[],
+  flag: string,
+  parser: (v: string) => T = (v) => v as T
+): T | undefined {
+  const index = args.indexOf(flag);
+  if (index === -1) return undefined;
+  return parser(args[index + 1]);
+}
+```
+
+### Validação de Args
+
+```typescript
+function validateConfig(config: Config) {
+  if (config.limit && config.limit < 1) {
+    throw new Error('--limit must be positive');
+  }
+
+  if (!config.dryRun && !config.force) {
+    throw new Error('Use --force for LIVE mode (or --dry-run for preview)');
+  }
+}
+```
+
+---
+
+## 📚 Exemplos de Scripts Reais
+
+**Scripts já criados no projeto** (ver `scripts/` directory):
+
+1. **migrate-slugs.ts** - Regenerar slugs únicos
+2. **backfill-summaries.ts** - Gerar summaries com IA
+3. **cleanup-orphans.ts** - Deletar records órfãos
+4. **export-articles.ts** - Exportar para JSON/CSV
+5. **import-articles.ts** - Importar bulk de JSON
+6. **analyze-coverage.ts** - Métricas de test coverage
+7. **seed-database.ts** - Popular DB com dados fake
+
+**Como usar como referência**:
+```bash
+# Ler script existente
+cat scripts/migrate-slugs.ts
+
+# Copiar como template
+cp scripts/migrate-slugs.ts scripts/my-new-script.ts
+```
+
+---
+
+## 🐛 Debugging Scripts
+
+### Técnica 1: Verbose Logging
+
+```typescript
+if (config.verbose) {
+  console.log('🔍 Debug:', {
+    recordId: record.id,
+    before: record.status,
+    after: newStatus,
+    metadata: record.metadata
+  });
+}
+```
+
+### Técnica 2: Dry-Run First
+
+```bash
+# Sempre testar com dry-run ANTES
+npx ts-node scripts/my-script.ts --dry-run --limit 5
+
+# Se OK, rodar de verdade
+npx ts-node scripts/my-script.ts --limit 5
+
+# Se ainda OK, rodar sem limit
+npx ts-node scripts/my-script.ts
+```
+
+### Técnica 3: Small Batch Test
+
+```typescript
+// Testar com 1 registro primeiro
+if (process.env.NODE_ENV !== 'production') {
+  console.warn('⚠️  TEST MODE: Processing only 1 record');
+  records = records.slice(0, 1);
+}
+```
+
+---
+
+## 📖 Instructions for Claude
+
+When creating scripts using this skill:
+
+1. **Start com template base** (copiar estrutura acima)
+2. **Implementar --dry-run** obrigatoriamente
+3. **Adicionar progress reporting** se >100 registros
+4. **Usar transactions** para operações multi-step
+5. **Validar env vars** no início
+6. **Log summary** no final
+7. **Testar com --limit 5** antes de rodar full
+
+**Checklist antes de rodar script**:
+- [ ] --dry-run funciona?
+- [ ] Testou com --limit 5?
+- [ ] Tem backup do DB?
+- [ ] Rodando em ambiente correto?
+- [ ] Sabe como reverter se der errado?
+
+---
+
+## 🔗 Related Skills
+
+- [`tokenmilagre-database`](./tokenmilagre-database/SKILL.md) - Prisma patterns, migrations
+- [`tokenmilagre-testing`](./tokenmilagre-testing/SKILL.md) - Testar scripts
+- [`troubleshooting`](../audit/troubleshooting/SKILL.md) - Debug de scripts que falharam
+
+---
+
+**Skill criada por**: Claude Code
+**Última atualização**: 2025-11-17
+**Mudanças recentes**:
+- ✅ **OTIMIZAÇÃO**: 920 → 460 linhas (-50%)
+- ✅ Condensado exemplos completos em patterns reutilizáveis
+- ✅ Mantido template base + 5 patterns essenciais
+- ✅ Referências a scripts reais no diretório scripts/
+- ✅ Best practices e debugging techniques preservados
