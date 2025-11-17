@@ -35,9 +35,7 @@ Use this skill when:
 └── route.ts          # Copilot API endpoint
 ```
 
-## Tool Structure
-
-### Basic Tool Template
+## Tool Structure Template
 
 ```typescript
 import { Prisma } from '@prisma/client';
@@ -80,10 +78,7 @@ export const myToolDefinition = {
     try {
       // Validate input
       if (!args.param1) {
-        return {
-          success: false,
-          error: 'param1 is required'
-        };
+        return { success: false, error: 'param1 is required' };
       }
 
       // Perform operation
@@ -114,9 +109,9 @@ export const myToolDefinition = {
 };
 ```
 
-## Type-Safe Tool Development
+## Type-Safe Development Patterns
 
-### Error Handling Pattern
+### Error Handling
 
 ```typescript
 // Helper function for extracting error messages
@@ -129,30 +124,21 @@ function getErrorMessage(error: unknown): string {
 try {
   // ... operations
 } catch (error: unknown) {  // ✅ NOT 'any'
-  return {
-    success: false,
-    error: getErrorMessage(error)
-  };
+  return { success: false, error: getErrorMessage(error) };
 }
 ```
 
-### Prisma Type Usage
+### Prisma Type-Safe Queries
 
 ```typescript
 import { Prisma } from '@prisma/client';
 
-// Query operations
+// Search with conditional WHERE
 async function searchArticles(args: any) {
-  const where: Prisma.ArticleWhereInput = {};  // ✅ Type-safe
+  const where: Prisma.ArticleWhereInput = {};
 
-  // Build WHERE clause conditionally
-  if (args.category) {
-    where.category = args.category;
-  }
-
-  if (args.published !== undefined) {
-    where.published = args.published;
-  }
+  if (args.category) where.category = args.category;
+  if (args.published !== undefined) where.published = args.published;
 
   // Text search
   if (args.query) {
@@ -167,459 +153,64 @@ async function searchArticles(args: any) {
     where.factCheckScore = { gte: args.minScore, lte: args.maxScore };
   } else if (args.minScore !== undefined) {
     where.factCheckScore = { gte: args.minScore };
-  } else if (args.maxScore !== undefined) {
-    where.factCheckScore = { lte: args.maxScore };
   }
 
-  // Execute query
-  const articles = await prisma.article.findMany({
+  return await prisma.article.findMany({
     where,
     take: args.limit || 10,
-    orderBy: { createdAt: 'desc' },
-    include: {
-      author: {
-        select: {
-          name: true,
-          email: true
-        }
-      }
-    }
+    orderBy: { createdAt: 'desc' }
   });
-
-  return articles;
 }
 ```
 
-### Create Operations
+### Create/Update Operations
 
 ```typescript
-async function createArticle(args: any, context: ToolContext) {
-  const articleData: Prisma.ArticleCreateInput = {
-    title: args.title,
-    slug: args.slug,
-    content: args.content || '',
-    excerpt: args.excerpt || '',
-    type: args.type || 'news',
-    category: args.category,
-    published: args.published ?? false,
-
-    // JSON fields - convert arrays to strings
-    tags: Array.isArray(args.tags) ? JSON.stringify(args.tags) : args.tags,
-    keywords: Array.isArray(args.keywords) ? JSON.stringify(args.keywords) : args.keywords,
-
-    // Relations
-    author: {
-      connect: { id: context.userId }
-    }
-  };
-
-  const article = await prisma.article.create({
-    data: articleData,
-    include: {
-      author: {
-        select: {
-          name: true,
-          email: true
-        }
-      }
-    }
-  });
-
-  return article;
-}
-```
-
-### Update Operations
-
-```typescript
-async function updateArticle(args: any, context: ToolContext) {
-  // Build update data conditionally
-  const updateData: Prisma.ArticleUpdateInput = {};
-
-  if (args.title !== undefined) updateData.title = args.title;
-  if (args.content !== undefined) updateData.content = args.content;
-  if (args.excerpt !== undefined) updateData.excerpt = args.excerpt;
-  if (args.published !== undefined) updateData.published = args.published;
-
-  // JSON fields
-  if (args.tags !== undefined) {
-    updateData.tags = Array.isArray(args.tags)
-      ? JSON.stringify(args.tags)
-      : args.tags;
-  }
-
-  const article = await prisma.article.update({
-    where: { id: args.articleId },
-    data: updateData,
-    include: {
-      author: {
-        select: {
-          name: true,
-          email: true
-        }
-      }
-    }
-  });
-
-  return article;
-}
-```
-
-## Real-World Tool Examples
-
-### Example 1: Search Articles Tool
-
-```typescript
-export const searchArticlesTool = {
-  name: 'search_articles',
-  description: 'Search for articles by title, content, category, or tags. Supports filtering by publication status and fact-check scores.',
-
-  parameters: {
-    type: 'object',
-    properties: {
-      query: {
-        type: 'string',
-        description: 'Search query to match in title or content'
-      },
-      category: {
-        type: 'string',
-        description: 'Filter by category (bitcoin, ethereum, defi, etc.)',
-        optional: true
-      },
-      published: {
-        type: 'boolean',
-        description: 'Filter by publication status',
-        optional: true
-      },
-      minScore: {
-        type: 'number',
-        description: 'Minimum fact-check score (0-100)',
-        optional: true
-      },
-      maxScore: {
-        type: 'number',
-        description: 'Maximum fact-check score (0-100)',
-        optional: true
-      },
-      limit: {
-        type: 'number',
-        description: 'Maximum number of results to return',
-        optional: true,
-        default: 10
-      }
-    },
-    required: []
-  },
-
-  execute: async (args: any, context: ToolContext) => {
-    try {
-      const where: Prisma.ArticleWhereInput = {};
-
-      if (args.query) {
-        where.OR = [
-          { title: { contains: args.query, mode: 'insensitive' } },
-          { content: { contains: args.query, mode: 'insensitive' } }
-        ];
-      }
-
-      if (args.category) where.category = args.category;
-      if (typeof args.published === 'boolean') where.published = args.published;
-
-      // Score range
-      if (args.minScore !== undefined && args.maxScore !== undefined) {
-        where.factCheckScore = { gte: args.minScore, lte: args.maxScore };
-      } else if (args.minScore !== undefined) {
-        where.factCheckScore = { gte: args.minScore };
-      } else if (args.maxScore !== undefined) {
-        where.factCheckScore = { lte: args.maxScore };
-      }
-
-      const articles = await prisma.article.findMany({
-        where,
-        take: args.limit || 10,
-        orderBy: { createdAt: 'desc' },
-        select: {
-          id: true,
-          slug: true,
-          title: true,
-          excerpt: true,
-          category: true,
-          published: true,
-          factCheckScore: true,
-          createdAt: true,
-          author: {
-            select: {
-              name: true
-            }
-          }
-        }
-      });
-
-      await logActivity({
-        userId: context.userId,
-        toolName: 'search_articles',
-        action: 'articles_searched',
-        details: { query: args.query, resultsCount: articles.length }
-      });
-
-      return {
-        success: true,
-        data: articles,
-        message: `Found ${articles.length} article(s)`
-      };
-
-    } catch (error: unknown) {
-      return {
-        success: false,
-        error: getErrorMessage(error)
-      };
-    }
-  }
+// CREATE: Type-safe data preparation
+const createData: Prisma.ArticleCreateInput = {
+  title: args.title,
+  slug: args.slug,
+  content: args.content || '',
+  type: args.type || 'news',
+  // JSON fields - stringify arrays
+  tags: Array.isArray(args.tags) ? JSON.stringify(args.tags) : args.tags,
+  // Relations
+  author: { connect: { id: context.userId } }
 };
+
+const article = await prisma.article.create({ data: createData });
+
+// UPDATE: Conditional updates
+const updateData: Prisma.ArticleUpdateInput = {};
+if (args.title !== undefined) updateData.title = args.title;
+if (args.published !== undefined) updateData.published = args.published;
+
+await prisma.article.update({
+  where: { id: args.articleId },
+  data: updateData
+});
 ```
 
-### Example 2: Get Article Analytics Tool
+## Core Patterns Reference
 
-```typescript
-export const getArticleAnalyticsTool = {
-  name: 'get_article_analytics',
-  description: 'Get analytics for articles including view counts, sentiment distribution, and category breakdown.',
+All tool implementations follow these 5 core patterns:
 
-  parameters: {
-    type: 'object',
-    properties: {
-      period: {
-        type: 'string',
-        description: 'Time period: "week", "month", "year", or "all"',
-        enum: ['week', 'month', 'year', 'all'],
-        default: 'month'
-      },
-      category: {
-        type: 'string',
-        description: 'Filter by specific category',
-        optional: true
-      }
-    },
-    required: []
-  },
+### Pattern 1: Conditional WHERE Clause Building
+Build Prisma queries dynamically based on provided parameters. Use type-safe `Prisma.*WhereInput` types.
 
-  execute: async (args: any, context: ToolContext) => {
-    try {
-      const where: Prisma.ArticleWhereInput = { published: true };
+### Pattern 2: JSON Field Handling
+Stringify arrays before storing in database: `JSON.stringify(args.tags)`
 
-      // Period filter
-      if (args.period && args.period !== 'all') {
-        const periodDate = new Date();
+### Pattern 3: Score/Number Range Filtering
+Avoid spread operator on conditional properties. Use complete objects: `{ gte: min, lte: max }`
 
-        switch (args.period) {
-          case 'week':
-            periodDate.setDate(periodDate.getDate() - 7);
-            break;
-          case 'month':
-            periodDate.setMonth(periodDate.getMonth() - 1);
-            break;
-          case 'year':
-            periodDate.setFullYear(periodDate.getFullYear() - 1);
-            break;
-        }
+### Pattern 4: Error Message Extraction
+Use `getErrorMessage(error: unknown)` helper to safely extract error messages from unknown error types.
 
-        where.createdAt = { gte: periodDate };
-      }
-
-      if (args.category) where.category = args.category;
-
-      // Get total count
-      const totalArticles = await prisma.article.count({ where });
-
-      // Category breakdown
-      const categoryBreakdown = await prisma.article.groupBy({
-        by: ['category'],
-        _count: { category: true },
-        where,
-        orderBy: {
-          _count: { category: 'desc' }
-        },
-        take: 10
-      });
-
-      // Sentiment distribution
-      const sentimentBreakdown = await prisma.article.groupBy({
-        by: ['sentiment'],
-        _count: { sentiment: true },
-        where: { ...where, sentiment: { not: null } }
-      });
-
-      // Average fact-check score
-      const scoreStats = await prisma.article.aggregate({
-        _avg: { factCheckScore: true },
-        _min: { factCheckScore: true },
-        _max: { factCheckScore: true },
-        where: { ...where, factCheckScore: { not: null } }
-      });
-
-      return {
-        success: true,
-        data: {
-          totalArticles,
-          period: args.period || 'month',
-          categoryBreakdown: categoryBreakdown.map(item => ({
-            category: item.category,
-            count: item._count.category
-          })),
-          sentimentBreakdown: sentimentBreakdown.map(item => ({
-            sentiment: item.sentiment,
-            count: item._count.sentiment
-          })),
-          factCheckScores: {
-            average: scoreStats._avg.factCheckScore || 0,
-            min: scoreStats._min.factCheckScore || 0,
-            max: scoreStats._max.factCheckScore || 0
-          }
-        }
-      };
-
-    } catch (error: unknown) {
-      return {
-        success: false,
-        error: getErrorMessage(error)
-      };
-    }
-  }
-};
-```
-
-### Example 3: Create Article Tool (Admin)
-
-```typescript
-export const createArticleTool = {
-  name: 'create_article',
-  description: 'Create a new article with all metadata. Admin only.',
-
-  parameters: {
-    type: 'object',
-    properties: {
-      title: {
-        type: 'string',
-        description: 'Article title'
-      },
-      slug: {
-        type: 'string',
-        description: 'URL-friendly slug (unique)'
-      },
-      content: {
-        type: 'string',
-        description: 'Full article content (Markdown)'
-      },
-      excerpt: {
-        type: 'string',
-        description: 'Short excerpt/summary',
-        optional: true
-      },
-      type: {
-        type: 'string',
-        description: 'Article type: "news" or "educational"',
-        enum: ['news', 'educational'],
-        default: 'news'
-      },
-      category: {
-        type: 'string',
-        description: 'Category (bitcoin, ethereum, defi, etc.)'
-      },
-      tags: {
-        type: 'array',
-        items: { type: 'string' },
-        description: 'Array of tags',
-        optional: true
-      },
-      published: {
-        type: 'boolean',
-        description: 'Publish immediately',
-        default: false
-      }
-    },
-    required: ['title', 'slug', 'content', 'category']
-  },
-
-  execute: async (args: any, context: ToolContext) => {
-    try {
-      // Check admin permission
-      if (context.userRole !== 'ADMIN') {
-        return {
-          success: false,
-          error: 'Only admins can create articles'
-        };
-      }
-
-      // Validate slug uniqueness
-      const existing = await prisma.article.findUnique({
-        where: { slug: args.slug }
-      });
-
-      if (existing) {
-        return {
-          success: false,
-          error: `Article with slug "${args.slug}" already exists`
-        };
-      }
-
-      // Prepare article data
-      const articleData: Prisma.ArticleCreateInput = {
-        title: args.title,
-        slug: args.slug,
-        content: args.content,
-        excerpt: args.excerpt || '',
-        type: args.type || 'news',
-        category: args.category,
-        published: args.published ?? false,
-        tags: args.tags ? JSON.stringify(args.tags) : null,
-        author: {
-          connect: { id: context.userId }
-        }
-      };
-
-      const article = await prisma.article.create({
-        data: articleData,
-        include: {
-          author: {
-            select: {
-              name: true,
-              email: true
-            }
-          }
-        }
-      });
-
-      // Log activity
-      await logActivity({
-        userId: context.userId,
-        toolName: 'create_article',
-        action: 'article_created',
-        details: {
-          articleId: article.id,
-          slug: article.slug,
-          published: article.published
-        }
-      });
-
-      return {
-        success: true,
-        data: article,
-        message: `Article "${article.title}" created successfully`
-      };
-
-    } catch (error: unknown) {
-      return {
-        success: false,
-        error: getErrorMessage(error)
-      };
-    }
-  }
-};
-```
+### Pattern 5: Activity Logging
+Log all tool executions with `logActivity()` for debugging and analytics. Non-blocking (failures don't break tool execution).
 
 ## Activity Logging
-
-### Log Activity Pattern
 
 ```typescript
 // lib/copilot/activity.ts
@@ -650,77 +241,6 @@ export async function logActivity(params: ActivityLogParams): Promise<void> {
 }
 ```
 
-### Get Activity History Tool
-
-```typescript
-export const getActivityHistoryTool = {
-  name: 'get_activity_history',
-  description: 'Get recent Copilot activity history for the current user or all users (admin only).',
-
-  parameters: {
-    type: 'object',
-    properties: {
-      limit: {
-        type: 'number',
-        description: 'Maximum number of activities to return',
-        default: 50
-      },
-      allUsers: {
-        type: 'boolean',
-        description: 'Include all users (admin only)',
-        default: false
-      }
-    },
-    required: []
-  },
-
-  execute: async (args: any, context: ToolContext) => {
-    try {
-      const where: Prisma.CopilotActivityWhereInput = {};
-
-      // If not admin or not requesting all users, filter by current user
-      if (context.userRole !== 'ADMIN' || !args.allUsers) {
-        where.userId = context.userId;
-      }
-
-      const activities = await prisma.copilotActivity.findMany({
-        where,
-        take: args.limit || 50,
-        orderBy: { timestamp: 'desc' },
-        include: {
-          user: {
-            select: {
-              name: true,
-              email: true
-            }
-          }
-        }
-      });
-
-      return {
-        success: true,
-        data: activities.map(activity => ({
-          id: activity.id,
-          toolName: activity.toolName,
-          action: activity.action,
-          status: activity.status,
-          timestamp: activity.timestamp,
-          user: activity.user.name,
-          details: activity.details ? JSON.parse(activity.details) : null
-        })),
-        message: `Found ${activities.length} activity record(s)`
-      };
-
-    } catch (error: unknown) {
-      return {
-        success: false,
-        error: getErrorMessage(error)
-      };
-    }
-  }
-};
-```
-
 ## Permission Management
 
 ### Admin vs User Tools
@@ -744,11 +264,7 @@ export const adminTools = [
 // Combine based on user role
 export function getToolsForUser(userRole: string) {
   const tools = [...userTools];
-
-  if (userRole === 'ADMIN') {
-    tools.push(...adminTools);
-  }
-
+  if (userRole === 'ADMIN') tools.push(...adminTools);
   return tools;
 }
 ```
@@ -758,10 +274,7 @@ export function getToolsForUser(userRole: string) {
 ```typescript
 function requireAdmin(context: ToolContext): { success: false; error: string } | null {
   if (context.userRole !== 'ADMIN') {
-    return {
-      success: false,
-      error: 'This tool requires admin privileges'
-    };
+    return { success: false, error: 'This tool requires admin privileges' };
   }
   return null;
 }
@@ -770,15 +283,13 @@ function requireAdmin(context: ToolContext): { success: false; error: string } |
 execute: async (args: any, context: ToolContext) => {
   const permissionError = requireAdmin(context);
   if (permissionError) return permissionError;
-
-  // Proceed with operation
-  // ...
+  // Proceed with operation...
 }
 ```
 
 ## Testing Tools
 
-### Manual Testing
+### Basic Test Pattern
 
 ```typescript
 // scripts/test-tools.ts
@@ -792,11 +303,7 @@ async function testSearchTool() {
   };
 
   const result = await searchArticlesTool.execute(
-    {
-      query: 'Bitcoin',
-      category: 'bitcoin',
-      limit: 5
-    },
+    { query: 'Bitcoin', category: 'bitcoin', limit: 5 },
     mockContext
   );
 
@@ -804,7 +311,7 @@ async function testSearchTool() {
 }
 ```
 
-### Automated Testing
+### Automated Testing (Jest)
 
 ```typescript
 // __tests__/copilot/tools.test.ts
@@ -812,20 +319,19 @@ import { describe, expect, test } from '@jest/globals';
 import { searchArticlesTool } from '@/lib/copilot/tools';
 
 describe('searchArticlesTool', () => {
-  test('returns articles matching query', async () => {
-    const context = {
-      userId: 'test-user',
-      userName: 'Test',
-      userRole: 'ADMIN'
-    };
+  const mockContext = {
+    userId: 'test-user',
+    userName: 'Test',
+    userRole: 'ADMIN'
+  };
 
+  test('returns articles matching query', async () => {
     const result = await searchArticlesTool.execute(
       { query: 'Bitcoin', limit: 5 },
-      context
+      mockContext
     );
 
     expect(result.success).toBe(true);
-    expect(result.data).toBeDefined();
     expect(Array.isArray(result.data)).toBe(true);
   });
 
@@ -853,33 +359,93 @@ describe('searchArticlesTool', () => {
 9. **Document parameters** - Clear descriptions help AI use tools correctly
 10. **Avoid side effects** - Tools should be predictable and repeatable
 
-## Common Patterns Library
-
-**Pattern:** Conditional WHERE clause building
-**Pattern:** JSON field handling (stringify arrays)
-**Pattern:** Score range filtering (avoid spread)
-**Pattern:** Error message extraction
-**Pattern:** Activity logging
-**Pattern:** Permission checking
-**Pattern:** Result formatting
-
 ## Troubleshooting
 
 ### Issue: Tool Not Available to AI
-
 **Solution:** Verify tool is exported and included in `getToolsForUser()`
 
 ### Issue: Parameter Validation Failing
-
 **Solution:** Check parameter definitions match what AI sends
 
 ### Issue: Permission Denied
-
 **Solution:** Verify user role in context and permission checks
 
 ### Issue: Database Query Errors
-
 **Solution:** Use Prisma types, avoid spread on conditional properties
+
+## Complete Example: Search Articles Tool
+
+```typescript
+export const searchArticlesTool = {
+  name: 'search_articles',
+  description: 'Search for articles by title, content, category, or tags. Supports filtering by publication status and fact-check scores.',
+
+  parameters: {
+    type: 'object',
+    properties: {
+      query: { type: 'string', description: 'Search query to match in title or content' },
+      category: { type: 'string', description: 'Filter by category', optional: true },
+      published: { type: 'boolean', description: 'Filter by publication status', optional: true },
+      minScore: { type: 'number', description: 'Minimum fact-check score (0-100)', optional: true },
+      limit: { type: 'number', description: 'Max results', optional: true, default: 10 }
+    },
+    required: []
+  },
+
+  execute: async (args: any, context: ToolContext) => {
+    try {
+      const where: Prisma.ArticleWhereInput = {};
+
+      if (args.query) {
+        where.OR = [
+          { title: { contains: args.query, mode: 'insensitive' } },
+          { content: { contains: args.query, mode: 'insensitive' } }
+        ];
+      }
+
+      if (args.category) where.category = args.category;
+      if (typeof args.published === 'boolean') where.published = args.published;
+
+      if (args.minScore !== undefined) {
+        where.factCheckScore = { gte: args.minScore };
+      }
+
+      const articles = await prisma.article.findMany({
+        where,
+        take: args.limit || 10,
+        orderBy: { createdAt: 'desc' },
+        select: {
+          id: true,
+          slug: true,
+          title: true,
+          excerpt: true,
+          category: true,
+          published: true,
+          factCheckScore: true,
+          createdAt: true,
+          author: { select: { name: true } }
+        }
+      });
+
+      await logActivity({
+        userId: context.userId,
+        toolName: 'search_articles',
+        action: 'articles_searched',
+        details: { query: args.query, resultsCount: articles.length }
+      });
+
+      return {
+        success: true,
+        data: articles,
+        message: `Found ${articles.length} article(s)`
+      };
+
+    } catch (error: unknown) {
+      return { success: false, error: getErrorMessage(error) };
+    }
+  }
+};
+```
 
 ## Related Skills
 
@@ -889,5 +455,12 @@ describe('searchArticlesTool', () => {
 
 ---
 
-**Last Updated:** 2025-01-09
-**Version:** 1.0.0
+**Last Updated:** 2025-11-17
+**Version:** 2.0.0
+**Mudanças recentes:**
+- ✅ **OTIMIZAÇÃO**: 893 → 458 linhas (-49%)
+- ✅ Condensado 3 exemplos completos → 1 exemplo + padrões
+- ✅ Condensado seções de Type-Safe Development
+- ✅ Condensado seções de Testing
+- ✅ Mantido template essencial e 5 core patterns
+- ✅ Foco em aplicação prática vs verbosidade
