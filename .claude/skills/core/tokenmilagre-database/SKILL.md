@@ -26,7 +26,7 @@ Use this skill when:
 
 ## Database Stack
 
-- **Database:** PostgreSQL (Neon serverless via Vercel Marketplace)
+- **Database:** Supabase PostgreSQL (Free Tier) - Migrated from Neon on 2025-11-12
 - **ORM:** Prisma 6.3.0
 - **Connection:** Prisma Client with connection pooling
 - **Migrations:** Prisma Migrate
@@ -127,29 +127,31 @@ generator client {
 - [ ] Stub files committed to git in `lib/generated/prisma/`
 - [ ] `next.config.ts` with `eslint.ignoreDuringBuilds: true`
 - [ ] `prisma/schema.prisma` pointing to PostgreSQL with `engineType = "library"`
-- [ ] `DATABASE_URL` set in Vercel (DIRECT_URL not required)
-- [ ] Neon integration connected
+- [ ] `DATABASE_URL` set in Vercel
+- [ ] `DIRECT_URL` set in Vercel (required for Supabase migrations)
 
 ### 5. Environment Variables
 
-**Production (Vercel)** - Auto-configured by Neon integration:
+**Production (Vercel)** - Supabase connection:
 ```env
-DATABASE_URL=postgresql://... (with pooling)
-DIRECT_URL=postgresql://... (without pooling, for migrations)
+DATABASE_URL=postgresql://... (pooled connection via Supavisor)
+DIRECT_URL=postgresql://... (direct connection for migrations)
 ```
 
-**Development** - Copy from Vercel Settings → Environment Variables:
+**Development** - Copy from Supabase Dashboard → Project Settings → Database:
 ```env
 DATABASE_URL="postgresql://..."
 DIRECT_URL="postgresql://..."
 ```
 
-### 6. Migration History - SQLite → PostgreSQL
+### 6. Migration History
 
-**Completed:** 2025-10-19
+**2025-11-12: Neon → Supabase PostgreSQL**
+- **Reason:** Better free tier limits, improved stability
+- **Documentation:** `docs/MIGRACAO-SUPABASE.md`
 
+**2025-10-19: SQLite → Neon PostgreSQL**
 - **Previous:** SQLite (`prisma/dev.db`)
-- **Current:** Neon PostgreSQL
 - **Backup:** `prisma/backup-sqlite.json` (gitignored)
 - **Documentation:** `MIGRACAO-POSTGRES.md`
 
@@ -706,7 +708,7 @@ if (process.env.NODE_ENV !== 'production') {
 - Reuses connections across hot reloads
 - Better performance
 
-### Connection Pooling (Neon)
+### Connection Pooling (Supabase)
 
 ```env
 # .env.local
@@ -714,7 +716,7 @@ DATABASE_URL="postgresql://user:pass@host/db?pgbouncer=true&connection_limit=10"
 DIRECT_URL="postgresql://user:pass@host/db"
 ```
 
-- `DATABASE_URL`: Pooled connection (for queries)
+- `DATABASE_URL`: Pooled connection via Supavisor (for queries)
 - `DIRECT_URL`: Direct connection (for migrations)
 
 ## Data Integrity
@@ -844,8 +846,8 @@ npx prisma db seed
 # Using pg_dump (requires PostgreSQL client)
 pg_dump $DATABASE_URL > backup_$(date +%Y%m%d_%H%M%S).sql
 
-# Using Neon dashboard (recommended)
-# Go to Neon dashboard → Branches → Create branch
+# Using Supabase dashboard (recommended)
+# Go to Supabase Dashboard → Database → Backups
 ```
 
 ### Reset Database (Development)
@@ -869,7 +871,7 @@ npx prisma migrate reset
 
 **Solutions:**
 1. Check `DATABASE_URL` in `.env.local`
-2. Verify Neon database is running
+2. Verify Supabase database is running (check Supabase Dashboard)
 3. Check connection limits
 4. Use `DIRECT_URL` for migrations
 
@@ -941,7 +943,7 @@ grep "postinstall" package.json
 6. **Validate before insert** - Check data integrity
 7. **Test migrations** - On staging before production
 8. **Backup before migrations** - Always have rollback plan
-9. **Use connection pooling** - Configure Neon properly
+9. **Use connection pooling** - Configure Supabase Supavisor properly
 10. **Monitor query performance** - Use Prisma logging in dev
 
 ## Offline Build Strategy (Prisma Stub Files)
@@ -1060,6 +1062,178 @@ npx prisma generate
 
 **Note:** This is a workaround for build environments. In production runtime, the full Prisma Client works normally.
 
+## ⚠️ Database Optimization - Free Tier Quota Management
+
+### 🚨 Critical: Free Tier Limitations
+
+**Database**: Supabase PostgreSQL (Free Tier) - Migrado de Neon em 2025-11-12
+**Previous Issue**: Data transfer quota exceeded during Vercel builds (Neon)
+**Date**: 2025-11-09
+**Status**: ✅ RESOLVED with optimization + migrated to Supabase
+
+### 📊 The Problem
+
+During Vercel build process, the error occurred:
+```
+Error [PrismaClientInitializationError]:
+Error querying the database: ERROR: Your project has exceeded the data transfer quota.
+Upgrade your plan to increase limits.
+```
+
+**Root cause**: `generateStaticParams` in dynamic route pages was fetching ALL articles from database during build time, causing excessive data transfer that exceeded Neon's free tier limits.
+
+### 💣 Por Que Isso Era CRÍTICO
+
+**Cenário Real - ANTES das otimizações**:
+
+Cada commit/push dispara um build Vercel. Durante o build:
+```
+Build 1 (fix: corrigir link Discord):
+├─ generateStaticParams em /educacao/[slug] → 30 artigos
+├─ generateStaticParams em /noticias/[slug] → 50 notícias
+├─ generateStaticParams em /recursos/[slug] → 25 recursos
+├─ Query em /educacao/page.tsx → 12 artigos
+└─ Query em /recursos/page.tsx → 25 recursos
+   = ~142 queries ao banco ❌
+
+Build 2 (fix: corrigir erro no link):
+└─ Mesmas 142 queries DE NOVO ❌
+
+Build 3 (fix: ajustar texto):
+└─ Mais 142 queries ❌
+
+Build 4, 5, 6... (iteração de desenvolvimento):
+└─ Idem, idem, idem...
+
+Resultado: 10 builds = 1.420 queries = QUOTA EXCEDIDA 🔴
+```
+
+**Comportamento ATUAL - DEPOIS das otimizações**:
+```
+Build 1, 2, 3, 4, 5... 100, 200 (quantos forem):
+├─ Compila TypeScript ✅
+├─ Gera bundles JavaScript ✅
+├─ Otimiza assets (CSS, imagens) ✅
+└─ Query ao banco? ❌ ZERO
+
+= Builds infinitos, ZERO impacto no banco ✅
+```
+
+**Quando o banco É acessado agora?**
+```
+Usuário real visita /educacao pela 1ª vez:
+└─ Servidor faz query → busca 12 artigos (1 query)
+└─ Cacheia resultado por 1 hora (ISR)
+└─ Próximos 1000 visitantes = cache (0 queries)
+
+Após 1 hora, próximo visitante:
+└─ Revalida cache → 1 query
+└─ Mais 1000 visitantes = cache (0 queries)
+```
+
+**Impacto prático**:
+- ✅ **100 commits/dia** = 0 impacto no banco
+- ✅ **Previews infinitos** = 0 preocupação com quota
+- ✅ **Builds "à toa"** (fixes de texto, links) = não custam nada
+- ✅ **FREE tier** = sustentável indefinidamente
+
+### ✅ The Solution (FREE - No Upgrade Needed)
+
+**Optimization**: Disabled `generateStaticParams` in 3 dynamic route files to prevent build-time database queries.
+
+**Files Modified**:
+
+1. **`app/educacao/[slug]/page.tsx`**
+   - Disabled: Static generation of all educational article pages
+   - Now: Pages generated on-demand (dynamic rendering)
+   - ISR: Still active (`revalidate: 3600` = 1 hour cache)
+
+2. **`app/dashboard/noticias/[slug]/page.tsx`**
+   - Disabled: Static generation of 50 news articles
+   - Now: Pages generated on-demand (dynamic rendering)
+   - ISR: Still active (`revalidate: 300` = 5 minutes cache)
+
+3. **`app/recursos/[slug]/page.tsx`**
+   - Disabled: Static generation of all resource pages
+   - Now: Pages generated on-demand (dynamic rendering)
+   - ISR: Still active (cache configured)
+
+### 🎯 Impact
+
+**Data Transfer Reduction**: ~90%
+- Before: Querying 50+ articles on EVERY build
+- After: No database queries during build
+- Build: Now succeeds on free tier
+
+**Performance Trade-offs**:
+- ✅ First visit: Pages generate on-demand (~200-500ms first load)
+- ✅ Subsequent visits: ISR cache serves instantly
+- ✅ Cache revalidation: Automatic (1h for education, 5min for news)
+- ✅ No impact after first page load
+
+### 🔄 When to Re-enable `generateStaticParams`
+
+**Option 1 - Monthly Quota Reset**:
+```typescript
+// Can uncomment at beginning of each month if quota allows
+export async function generateStaticParams() {
+  // ... original code
+}
+```
+
+**Option 2 - Upgrade to Paid Tier**:
+- If budget allows, upgrade Supabase to paid tier
+- Re-enable static generation for optimal performance
+
+**Option 3 - Keep Current Optimization**:
+- Performance impact is minimal (ISR caching works well)
+- FREE solution is sustainable long-term
+- Only first visitor per article experiences slower load
+
+### 💡 Code Pattern
+
+**Before (caused quota issues)**:
+```typescript
+export async function generateStaticParams() {
+  const articles = await prisma.article.findMany({
+    where: { type: 'educational', published: true },
+    select: { slug: true },
+  });
+  return articles.map((article) => ({ slug: article.slug }));
+}
+```
+
+**After (FREE tier compatible)**:
+```typescript
+// TEMPORARIAMENTE DESABILITADO para reduzir consumo de dados do banco
+// Páginas serão geradas sob demanda (dynamic rendering)
+// export async function generateStaticParams() {
+//   const articles = await prisma.article.findMany({
+//     where: { type: 'educational', published: true },
+//     select: { slug: true },
+//   });
+//   return articles.map((article) => ({ slug: article.slug }));
+// }
+```
+
+### 🎓 Lesson Learned
+
+**For free tier databases**:
+- ⚠️ Avoid `generateStaticParams` with large datasets
+- ✅ Rely on ISR + dynamic rendering instead
+- ✅ Monitor database usage dashboard regularly (Supabase Dashboard)
+- ✅ Static generation = database query on EVERY build (can be 10-50+ builds/day with previews)
+- ✅ Dynamic rendering = database query only on first user visit
+
+### 📌 Related Documentation
+
+- Commit: `74a8157` (Database optimization)
+- Commit: `7e402e6` (Migration Neon → Supabase)
+- Doc: `docs/MIGRACAO-SUPABASE.md` (complete migration guide)
+- Vercel Build Logs: Check for quota warnings
+
+---
+
 ## Related Skills
 
 - `tokenmilagre-refactoring` - Prisma types reference
@@ -1069,5 +1243,5 @@ npx prisma generate
 
 ---
 
-**Last Updated:** 2025-11-16
-**Version:** 1.1.0 (Added offline build strategy documentation)
+**Last Updated:** 2025-11-17
+**Version:** 1.2.0 (Added Database Optimization - Quota Management section from project-context)
