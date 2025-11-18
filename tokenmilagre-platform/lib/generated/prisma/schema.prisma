@@ -1,0 +1,499 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Updated: 2025-11-05 - Force regeneration
+
+generator client {
+  provider   = "prisma-client-js"
+  output     = "../lib/generated/prisma"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum Role {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum Sentiment {
+  positive
+  neutral
+  negative
+}
+
+enum WarningLevel {
+  info
+  warning
+  critical
+}
+
+enum StoryCategory {
+  transformation
+  social_project
+  achievement
+}
+
+enum ProjectCategory {
+  donations
+  microcredit
+  education
+  infrastructure
+}
+
+// NextAuth Models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Application Models
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String
+  image         String?
+  role          Role      @default(VIEWER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Gamificação (FASE 3)
+  points Int     @default(0)
+  badges String? // JSON array de badges conquistados
+
+  accounts          Account[]
+  sessions          Session[]
+  articles          Article[]
+  copilotActivities CopilotActivity[]
+  communityStories  CommunityStory[]
+  userProgress      UserProgress[]
+}
+
+model Article {
+  id      String @id @default(cuid())
+  title   String
+  slug    String @unique
+  content String // Markdown content
+
+  // Tipo de artigo: 'news' ou 'educational'
+  type String @default("news") // 'news' | 'educational'
+
+  // Campos compartilhados
+  // Alinhado com API: excerpt usado internamente, exposto como summary
+  excerpt String? // Resumo do artigo (API: summary) - também usado como description em educacionais
+
+  published Boolean @default(false)
+  authorId  String
+  author    User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  // Alinhado com API: category armazenada como string slug, exposta como array
+  category String // Slug único (ex: "bitcoin", "ethereum", "blockchain", "trading", etc)
+
+  // Alinhado com API: tags armazenadas como JSON, expostas como keywords
+  tags String // JSON array (API: keywords)
+
+  // Campos específicos de NOTÍCIAS
+  sentiment Sentiment @default(neutral)
+
+  // Fact-checking fields (apenas notícias)
+  factCheckScore   Float? // Score de 0-100 (threshold padrão: 70%)
+  factCheckSources String? // JSON array com URLs das fontes consultadas
+  factCheckDate    DateTime? // Data da verificação
+  factCheckStatus  String? // verified (>=70%), failed (<70%), skipped (sem APIs)
+
+  // Campos específicos de ARTIGOS EDUCACIONAIS
+  level       String? // 'iniciante' | 'intermediario' | 'avancado'
+  contentType String? // 'Artigo' | 'Tutorial' | 'Curso' (FASE 2)
+  readTime    String? // Ex: '8 min', '15 min'
+
+  // FASE 1 - Segurança
+  warningLevel WarningLevel? // Nível de alerta do conteúdo
+  securityTips String? // JSON array com dicas de segurança contextualizadas
+
+  // FASE 2 - Cursos e Relacionamentos
+  courseSequence   Int? // Ordem no curso (se contentType = 'Curso')
+  relatedArticles  String? // JSON array de slugs relacionados
+  projectHighlight Boolean @default(false) // Destacar como caso de uso real
+
+  // Imagem de Capa (gerada por IA)
+  coverImage    String? // URL da imagem de capa
+  coverImageAlt String? // Texto alternativo para acessibilidade
+
+  // FASE 5 - Cursos Interativos
+  quizData String? // JSON com quiz interativo
+
+  createdAt DateTime @default(now()) // API: publishedAt
+  updatedAt DateTime @updatedAt // API: lastVerified
+
+  @@index([authorId])
+  @@index([published])
+  @@index([slug])
+  @@index([category])
+  @@index([type])
+  @@index([projectHighlight])
+}
+
+model Resource {
+  id       String  @id @default(cuid())
+  slug     String  @unique
+  name     String
+  category String // wallets, exchanges, browsers, defi, explorers, tools
+  verified Boolean @default(true)
+
+  // Básico
+  shortDescription String
+  officialUrl      String
+  platforms        String // JSON array: ["Web", "iOS", "Android"]
+  tags             String // JSON array: ["DeFi", "NFTs"]
+
+  // Hero section
+  heroTitle       String
+  heroDescription String
+  heroGradient    String
+
+  // Why good section
+  whyGoodTitle   String
+  whyGoodContent String // JSON array de paragraphs
+
+  // Features
+  features String // JSON array: [{ icon, title, description }]
+
+  // How to start
+  howToStartTitle String
+  howToStartSteps String // JSON array: [{ number, title, description }]
+
+  // Pros and Cons
+  pros String // JSON array
+  cons String // JSON array
+
+  // FAQ
+  faq String // JSON array: [{ question, answer }]
+
+  // Security tips
+  securityTips String // JSON array: [{ icon, title, description }]
+
+  // FASE 1 - Auditoria de Segurança
+  securityAudit      String? // Link para relatório de auditoria
+  securityAuditDate  DateTime? // Data da última auditoria
+  auditedByCommunity Boolean   @default(false) // Badge de "Auditado pela Comunidade"
+
+  // FASE 4 - Ferramentas Interativas
+  toolConfig      String? // JSON config para ferramentas interativas (calculadoras)
+  interactiveType String? // 'calculator' | 'simulator' | 'map' | null
+
+  // Opcionais
+  showCompatibleWallets Boolean @default(false)
+  relatedResources      String? // JSON array de slugs
+
+  // Metadados
+  views        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  lastVerified DateTime @default(now())
+
+  @@index([slug])
+  @@index([category])
+  @@index([verified])
+  @@index([interactiveType])
+}
+
+model Cryptocurrency {
+  id String @id @default(cuid())
+
+  // Identificadores CoinGecko
+  coingeckoId String @unique // bitcoin, ethereum, solana
+  symbol      String // BTC, ETH, SOL
+  name        String // Bitcoin, Ethereum, Solana
+
+  // Dados de Mercado (atualizados via API)
+  currentPrice             Float?
+  marketCap                Float?
+  marketCapRank            Int?
+  totalVolume              Float?
+  high24h                  Float?
+  low24h                   Float?
+  priceChange24h           Float?
+  priceChangePercentage24h Float?
+  circulatingSupply        Float?
+  totalSupply              Float?
+  maxSupply                Float?
+  ath                      Float? // All-Time High
+  athDate                  DateTime?
+  atl                      Float? // All-Time Low
+  atlDate                  DateTime?
+
+  // Informações Descritivas
+  description String? // Descrição em português
+  homepage    String? // Site oficial
+  whitepaper  String?
+  blockchain  String? // Solana, Ethereum, etc
+
+  // Links sociais (JSON)
+  socialLinks String? // { twitter, telegram, discord, reddit }
+
+  // Imagens
+  imageSmall String? // 32x32
+  imageLarge String? // 256x256
+
+  // Metadados
+  slug        String? // bitcoin, ethereum (para URL - opcional, derivado de coingeckoId)
+  lastUpdated DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  @@index([symbol])
+  @@index([marketCapRank])
+}
+
+model CopilotActivity {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  action     String // Nome da ferramenta executada
+  parameters String // JSON com parâmetros da ação
+  result     String? // JSON com resultado da execução
+  status     String // 'pending', 'approved', 'rejected', 'executing', 'executed', 'failed'
+
+  requiresConfirmation Boolean   @default(false)
+  confirmed            Boolean   @default(false)
+  confirmedAt          DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model AutomationTask {
+  id String @id @default(cuid())
+
+  // Task info
+  name        String // Nome da tarefa (ex: "daily_report", "trending_topics_update")
+  description String? // Descrição da tarefa
+  type        String // 'scheduled', 'triggered', 'manual'
+  schedule    String? // Cron expression (ex: "0 21 * * *" para diário às 21h)
+
+  // Execution
+  enabled  Boolean   @default(true)
+  lastRun  DateTime?
+  nextRun  DateTime?
+  runCount Int       @default(0)
+
+  // Configuration
+  config String? // JSON com configuração específica da tarefa
+
+  // Results
+  lastResult String? // JSON com resultado da última execução
+  lastStatus String? // 'success', 'failed', 'skipped'
+  lastError  String? // Mensagem de erro (se houver)
+
+  // Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
+  @@index([enabled])
+  @@index([nextRun])
+}
+
+model CopilotReport {
+  id String @id @default(cuid())
+
+  // Report info
+  type  String // 'daily', 'weekly', 'monthly', 'custom'
+  title String // Título do relatório
+
+  // Period
+  startDate DateTime
+  endDate   DateTime
+
+  // Content
+  summary  String // Resumo executivo (texto)
+  data     String // JSON com todos os dados do relatório
+  sections String // JSON array com seções incluídas
+
+  // Metadata
+  generatedBy String // 'automated' | 'manual' | userId
+  taskId      String? // ID da AutomationTask (se foi agendado)
+
+  // Stats
+  articlesAnalyzed Int @default(0)
+  alertsFound      Int @default(0)
+
+  createdAt DateTime @default(now())
+
+  @@index([type])
+  @@index([createdAt])
+  @@index([taskId])
+}
+
+// FASE 3 - Histórias da Comunidade
+model CommunityStory {
+  id           String  @id @default(cuid())
+  slug         String  @unique
+  authorName   String
+  authorAvatar String?
+  userId       String? // Opcional: link com usuário registrado
+  user         User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  title    String
+  content  String        @db.Text
+  category StoryCategory // transformation | social_project | achievement
+
+  likes     Int     @default(0)
+  verified  Boolean @default(false) // Verificada pela comunidade
+  featured  Boolean @default(false) // Destacada na home
+  published Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([published])
+  @@index([featured])
+  @@index([userId])
+}
+
+// FASE 3 - Projetos Sociais
+model SocialProject {
+  id              String  @id @default(cuid())
+  slug            String  @unique
+  name            String
+  description     String  @db.Text
+  longDescription String? @db.Text
+
+  // Financiamento
+  fundingGoal    Float
+  currentFunding Float   @default(0)
+  currency       String  @default("BRL") // BRL, USD, MILAGRE
+  walletAddress  String?
+
+  // Categorização
+  category ProjectCategory // donations | microcredit | education | infrastructure
+  location String? // Cidade, Estado
+  tags     String? // JSON array
+
+  // Status
+  verified Boolean @default(false)
+  active   Boolean @default(true)
+  featured Boolean @default(false)
+
+  // Datas
+  startDate DateTime
+  endDate   DateTime?
+
+  // Métricas
+  supporters Int @default(0)
+  views      Int @default(0)
+
+  // Mídia
+  coverImage String?
+  gallery    String? // JSON array de URLs
+
+  // Responsável
+  organizer      String // Nome do organizador
+  organizerEmail String?
+  organizerPhone String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([verified])
+  @@index([active])
+  @@index([featured])
+}
+
+// FASE 4 - Mapa de Projetos
+model ProjectMap {
+  id        String @id @default(cuid())
+  projectId String @unique // Referência ao SocialProject
+
+  // Geolocalização
+  latitude  Float
+  longitude Float
+  address   String?
+  city      String
+  state     String
+  country   String  @default("Brasil")
+
+  // Display
+  markerColor String  @default("#8B5CF6") // Cor do marcador no mapa
+  markerIcon  String? // Ícone customizado
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([city])
+  @@index([state])
+}
+
+// FASE 5 - Progresso do Usuário (Cursos)
+model UserProgress {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  articleSlug String // Slug do artigo/curso
+
+  // Progresso
+  completed Boolean @default(false)
+  progress  Int     @default(0) // 0-100%
+
+  // Quiz (se houver)
+  quizScore    Float? // 0-100
+  quizAttempts Int    @default(0)
+
+  // Certificado
+  certificateIssued Boolean @default(false)
+  certificateUrl    String?
+
+  // Timestamps
+  startedAt    DateTime  @default(now())
+  completedAt  DateTime?
+  lastAccessed DateTime  @default(now())
+
+  @@unique([userId, articleSlug])
+  @@index([userId])
+  @@index([articleSlug])
+  @@index([completed])
+}
