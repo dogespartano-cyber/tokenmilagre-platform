@@ -192,25 +192,25 @@ async function main() {
     console.log(`✅ ${readTimeUpdated} artigos com readTime calculado.\n`);
     results.push({ step: 'initialize_fields', viewCount: viewCountUpdated, readTime: readTimeUpdated });
 
-    // Fase 7: Limpar dados órfãos
-    console.log('FASE 7: Limpando dados órfãos...');
-    console.log('----------------------------------------\n');
+    // Fase 7: Verificar dados órfãos
+    console.log('FASE 7: Verificando dados órfãos...\n');
 
-    const orphanedDeleted = await prisma.article.deleteMany({
-      where: {
-        OR: [
-          { authorId: null },
-          { author: null }
-        ]
-      }
-    });
+    const orphanedCheck = await prisma.$queryRaw<Array<{ count: bigint }>>`
+      SELECT COUNT(*) as count
+      FROM "Article" a
+      WHERE NOT EXISTS (
+        SELECT 1 FROM "User" u WHERE u.id = a."authorId"
+      )
+    `;
 
-    if (orphanedDeleted.count > 0) {
-      console.log(`✅ ${orphanedDeleted.count} artigos órfãos removidos.\n`);
+    const orphanedCount = Number(orphanedCheck[0].count);
+
+    if (orphanedCount > 0) {
+      console.log(`⚠️  ${orphanedCount} artigos órfãos encontrados (não removidos automaticamente).\n`);
     } else {
       console.log(`✅ Nenhum artigo órfão encontrado.\n`);
     }
-    results.push({ step: 'delete_orphaned', deleted: orphanedDeleted.count });
+    results.push({ step: 'check_orphaned', found: orphanedCount });
 
     // Fase 8: Validações pós-migração
     console.log('FASE 8: Validações pós-migração...');
