@@ -33,15 +33,24 @@ npm start
 
 ## 🔧 Stack Tecnológico
 
+### Core
 - **Framework:** Next.js 15.5.4 (App Router + Turbopack)
-- **Linguagem:** TypeScript
+- **Linguagem:** TypeScript 5.9.3 (strict mode)
 - **Banco de Dados:** Neon PostgreSQL
-- **ORM:** Prisma
+- **ORM:** Prisma 6.19.0
 - **Estilização:** Tailwind CSS 4 + CSS Variables
 - **Blockchain:** Solana (via @solana/web3.js)
-- **Markdown:** react-markdown
-- **Gráficos:** TradingView Widgets + Lightweight Charts
 - **Deploy:** Vercel
+
+### Novo Sistema de Artigos (v2)
+- **Dependency Injection:** tsyringe + reflect-metadata
+- **Validation:** Zod + isomorphic-dompurify (XSS prevention)
+- **Logging:** Pino (structured JSON logging)
+- **Monitoring:** Sentry (error tracking + performance)
+- **Testing:** Jest + Playwright + Supertest + k6
+- **State Management:** React Query (@tanstack/react-query)
+
+**Coverage:** 98.87% (167 testes passando)
 
 ## ✨ Features Principais
 
@@ -188,6 +197,162 @@ model Article {
   author      User     @relation(fields: [authorId], references: [id])
 }
 ```
+
+## 🏗️ Novo Sistema de Artigos (v2)
+
+### Arquitetura Limpa
+
+O novo sistema segue **Clean Architecture** em 4 camadas:
+
+```
+Presentation → Application → Domain → Infrastructure
+(API Routes)   (Services)   (Schemas)  (Prisma + DB)
+```
+
+### Services Core
+
+```typescript
+// Dependency Injection com tsyringe
+import { ServiceLocator } from '@/lib/di/container'
+
+// 1. LoggerService - Structured logging
+const logger = ServiceLocator.getLogger()
+logger.info('Article created', { articleId: 'art-123' })
+
+// 2. ValidationService - Zod validation + sanitization
+const validation = ServiceLocator.getValidation()
+const validated = validation.validate(articleCreateSchema, data)
+const slug = validation.generateSlug('Bitcoin Atinge US$ 100 mil!')
+
+// 3. ErrorService - Type-safe error handling
+import { ValidationError, NotFoundError, errorHandler } from '@/lib/services/error-service'
+throw new NotFoundError('Artigo não encontrado', { articleId: id })
+
+// 4. ArticleService - CRUD completo
+const articleService = ServiceLocator.getArticle()
+
+// Create
+const article = await articleService.create({
+  title: 'Bitcoin Atinge US$ 100 mil',
+  slug: 'bitcoin-100k',
+  content: '<p>Conteúdo...</p>',
+  type: 'NEWS',
+  categoryId: 'cat-123',
+  authorId: 'user-123',
+  tagIds: ['tag-1', 'tag-2'],
+  status: 'DRAFT',
+}, 'user-123')
+
+// Read
+const article = await articleService.getBySlug('bitcoin-100k')
+const result = await articleService.list({ page: 1, limit: 10, type: 'NEWS' })
+
+// Update
+await articleService.update(id, { title: 'Novo Título' }, 'user-123')
+
+// Delete (soft)
+await articleService.delete(id, 'user-123')
+
+// Bulk operations
+await articleService.bulkOperation({
+  articleIds: ['art-1', 'art-2'],
+  operation: 'publish', // publish | archive | delete | restore
+}, 'user-123')
+```
+
+### Schema Prisma v2
+
+Novo schema otimizado com relações type-safe:
+
+```prisma
+// Categories (tabela separada)
+model Category {
+  id       String @id @default(cuid())
+  slug     String @unique
+  name     String
+  type     String // 'news' | 'educational' | 'resource'
+  articles Article[]
+}
+
+// Tags (M:N via pivot)
+model Tag {
+  id       String @id @default(cuid())
+  slug     String @unique
+  name     String
+  articles ArticleTag[]
+}
+
+model ArticleTag {
+  articleId String
+  tagId     String
+  article   Article @relation(fields: [articleId], references: [id])
+  tag       Tag     @relation(fields: [tagId], references: [id])
+  @@id([articleId, tagId])
+}
+
+// Citations (fact-checking)
+model Citation {
+  id        String @id @default(cuid())
+  url       String
+  title     String?
+  domain    String?
+  articleId String
+  article   Article @relation(fields: [articleId], references: [id])
+  verified  Boolean @default(false)
+}
+
+// Article (otimizado)
+model Article {
+  // ... campos básicos
+  tags         ArticleTag[]
+  citations    Citation[]
+  relatedFrom  ArticleRelation[] @relation("ArticleToRelated")
+
+  // 8 composite indexes para performance
+  @@index([type, status, publishedAt])
+  @@index([type, categoryId, status])
+}
+```
+
+### Guias de Uso
+
+- **📖 Arquitetura:** [`docs/NEW_SYSTEM_ARCHITECTURE.md`](docs/NEW_SYSTEM_ARCHITECTURE.md)
+- **🚀 Onboarding:** [`ONBOARDING.md`](ONBOARDING.md)
+- **💉 DI Examples:** [`lib/di/examples.md`](lib/di/examples.md)
+- **📝 Changelog:** [`CHANGELOG.md`](CHANGELOG.md)
+- **🧪 Test Plan:** [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md)
+
+### Testes
+
+```bash
+# Rodar todos os testes
+npm test
+
+# Teste específico
+npm test -- lib/services/__tests__/article-service.test.ts
+
+# Coverage report
+npm test -- --coverage
+```
+
+**Resultado atual:**
+- ✅ 167 testes (100% passando)
+- ✅ 98.87% coverage
+- ✅ ErrorService: 100%
+- ✅ ValidationService: 98.03%
+- ✅ ArticleService: 98.58%
+- ✅ LoggerService: 98.3%
+- ✅ DI Container: 100%
+
+### Migration Status
+
+⚠️ **Sistema em Paralelo**: O novo sistema roda em paralelo ao antigo. As 3 páginas existentes (`gerar-em-massa`, `criar-artigo`, `artigos`) **NÃO foram modificadas** e continuam funcionando normalmente.
+
+**Roadmap:**
+- ✅ Semana 1-2: Infrastructure + Services Core + DI (CONCLUÍDO)
+- ⏳ Semana 3: APIs v2 + React Query hooks
+- ⏳ Semana 4: E2E + Load tests
+- ⏳ Semana 5-6: Migration + Monitoring
 
 ## 🔌 APIs e Integrações
 

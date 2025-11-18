@@ -1,24 +1,62 @@
 import * as Sentry from "@sentry/nextjs";
 
+const isProd = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === 'development';
+
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
 
-  // Adjust this value in production, or use tracesSampler for greater control
-  tracesSampleRate: 1.0,
+  // Environment
+  environment: process.env.NODE_ENV || 'development',
 
-  // Setting this option to true will print useful information to the console while you're setting up Sentry.
-  debug: false,
+  // Sample rate: 100% in dev, 10% in prod
+  tracesSampleRate: isDev ? 1.0 : 0.1,
 
+  // Debug only in development
+  debug: isDev,
+
+  // Session Replay: capture all errors
   replaysOnErrorSampleRate: 1.0,
 
-  // This sets the sample rate to be 10%. You may want this to be 100% while
-  // in development and sample at a lower rate in production
-  replaysSessionSampleRate: 0.1,
+  // Session Replay: only 10% of normal sessions in prod
+  replaysSessionSampleRate: isDev ? 1.0 : 0.1,
 
-  // You can remove this option if you're not planning to use the Sentry Session Replay feature:
+  // Error filtering (same as server)
+  beforeSend(event, hint) {
+    if (isDev) {
+      console.error('Sentry Event (client, dev):', event);
+      return null;
+    }
+
+    const error = hint.originalException;
+    if (error instanceof Error) {
+      if (
+        error.message.includes('Network request failed') ||
+        error.message.includes('Failed to fetch') ||
+        error.message.includes('timeout')
+      ) {
+        return null;
+      }
+    }
+
+    return event;
+  },
+
+  beforeBreadcrumb(breadcrumb) {
+    if (breadcrumb.category === 'console') {
+      return null;
+    }
+    return breadcrumb;
+  },
+
   integrations: [
+    // Performance monitoring
+    new Sentry.BrowserTracing({
+      tracingOrigins: ['localhost', /^\//],
+    }),
+
+    // Session Replay with privacy
     Sentry.replayIntegration({
-      // Additional Replay configuration goes in here, for example:
       maskAllText: true,
       blockAllMedia: true,
     }),

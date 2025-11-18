@@ -2,6 +2,12 @@
 import '@testing-library/jest-dom'
 import { TextEncoder, TextDecoder } from 'util'
 
+// Mock Prisma Client for tests
+jest.mock('@/lib/prisma', () => ({
+  __esModule: true,
+  prisma: require('./lib/__mocks__/prisma').prismaMock
+}))
+
 // Polyfills for Next.js Web APIs
 global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder
