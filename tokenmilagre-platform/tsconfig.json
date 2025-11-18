@@ -28,6 +28,10 @@
   "exclude": [
     "node_modules",
     "scripts/migration/**/*.ts",
-    "app/api/articles/import/**/*.ts"
+    "app/api/articles/import/**/*.ts",
+    "_DISABLED_ROUTES/**/*.ts",
+    "_DISABLED_*/**/*.ts",
+    "_BACKUP_*/**/*.ts",
+    "backups/**/*.ts"
   ]
 }

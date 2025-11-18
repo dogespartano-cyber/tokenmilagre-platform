@@ -13,11 +13,12 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 3600;
 
 async function getEducationalArticles() {
-  // Buscar apenas primeira página (12 artigos) para SSR
+  // Buscar apenas primeira página (12 artigos) para SSR (schema v2)
   const articles = await prisma.article.findMany({
     where: {
       type: 'educational',
-      published: true,
+      status: 'published',
+      deletedAt: null,
     },
     orderBy: {
       createdAt: 'desc',
@@ -27,21 +28,34 @@ async function getEducationalArticles() {
       slug: true,
       title: true,
       excerpt: true,
-      category: true,
-      level: true,
-      contentType: true,
       readTime: true,
-      tags: true,
+      category: {
+        select: {
+          name: true
+        }
+      },
+      tags: {
+        include: {
+          tag: {
+            select: {
+              name: true
+            }
+          }
+        }
+      }
     },
     take: 12, // Primeira página
   });
 
-  // Transformar tags de JSON string para array
+  // Adaptar para schema v2
   return articles.map((article: any) => ({
     ...article,
     description: article.excerpt || '',
-    type: article.contentType || 'Artigo',
-    tags: JSON.parse(article.tags || '[]'),
+    category: article.category?.name || 'Educação',
+    level: 'iniciante', // TODO: schema v2 removeu level
+    type: 'Artigo', // TODO: schema v2 removeu contentType
+    readTime: article.readTime ? `${article.readTime} min` : '10 min',
+    tags: article.tags?.map((t: any) => t.tag.name) || [],
   }));
 }
 

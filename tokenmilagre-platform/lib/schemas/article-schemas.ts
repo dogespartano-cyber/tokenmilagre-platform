@@ -18,14 +18,14 @@
 import { z } from 'zod'
 
 /**
- * Article type enum matching Prisma schema
+ * Article type enum matching Prisma schema v2 (lowercase)
  */
-export const articleTypeEnum = z.enum(['NEWS', 'EDUCATIONAL', 'RESOURCE'])
+export const articleTypeEnum = z.enum(['news', 'educational'])
 
 /**
- * Article status enum matching Prisma schema
+ * Article status enum matching Prisma schema v2 (lowercase)
  */
-export const articleStatusEnum = z.enum(['DRAFT', 'PUBLISHED', 'ARCHIVED', 'DELETED'])
+export const articleStatusEnum = z.enum(['draft', 'published', 'archived'])
 
 /**
  * Article SEO metadata schema
@@ -138,16 +138,16 @@ export const articleCreateSchema = z
     slug: slugSchema,
     content: contentSchema,
     type: articleTypeEnum,
-    categoryId: z.string().cuid('ID de categoria inválido'),
     authorId: z.string().cuid('ID de autor inválido'),
 
     // Optional fields
     excerpt: excerptSchema,
     coverImage: coverImageSchema.optional(),
-    status: articleStatusEnum.default('DRAFT'),
+    status: articleStatusEnum.default('draft'), // lowercase!
+    categoryId: z.string().cuid('ID de categoria inválido').optional(),
 
     // Relationships (by IDs)
-    tagIds: tagIdsSchema,
+    tagIds: z.array(z.string().cuid('ID de tag inválido')).optional(), // optional, não required
     relatedArticleIds: relatedArticleIdsSchema,
     citations: z.array(citationCreateSchema).max(20).optional(),
 
@@ -161,8 +161,8 @@ export const articleCreateSchema = z
   })
   .refine(
     (data) => {
-      // If status is PUBLISHED, publishedAt must be set
-      if (data.status === 'PUBLISHED' && !data.publishedAt) {
+      // If status is published, publishedAt must be set
+      if (data.status === 'published' && !data.publishedAt) {
         return false
       }
       return true
@@ -216,8 +216,8 @@ export const articleUpdateSchema = z
   })
   .refine(
     (data) => {
-      // If status is being set to PUBLISHED, must have publishedAt
-      if (data.status === 'PUBLISHED' && data.publishedAt === null) {
+      // If status is being set to published, must have publishedAt
+      if (data.status === 'published' && data.publishedAt === null) {
         return false
       }
       return true

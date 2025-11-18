@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { Prisma, StoryCategory } from '@/lib/generated/prisma';
 
 // GET /api/community-stories - Listar histórias
 export async function GET(req: NextRequest) {
@@ -14,10 +15,10 @@ export async function GET(req: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '12');
     const skip = (page - 1) * limit;
 
-    const where: any = {};
+    const where: Prisma.CommunityStoryWhereInput = {};
 
-    if (category) {
-      where.category = category;
+    if (category && Object.values(StoryCategory).includes(category as StoryCategory)) {
+      where.category = category as StoryCategory;
     }
 
     if (published !== null) {
@@ -97,6 +98,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Validar categoria
+    if (!Object.values(StoryCategory).includes(category as StoryCategory)) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid category. Must be: transformation, social_project, or achievement' },
+        { status: 400 }
+      );
+    }
+
     // Verificar se slug já existe
     const existing = await prisma.communityStory.findUnique({
       where: { slug },
@@ -114,7 +123,7 @@ export async function POST(req: NextRequest) {
         slug,
         title,
         content,
-        category,
+        category: category as StoryCategory,
         authorName,
         authorAvatar,
         userId: session.user.id,

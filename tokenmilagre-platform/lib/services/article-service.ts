@@ -1,5 +1,3 @@
-// @ts-nocheck
-// TODO: Fix types when schema v2 is fully migrated
 /**
  * ArticleService - Article CRUD Operations
  *
@@ -31,7 +29,7 @@
  */
 
 import { prisma } from '@/lib/prisma'
-import { Article, Prisma } from '@/lib/generated/prisma'
+import { Article, Prisma, ArticleStatus, ArticleType } from '@/lib/generated/prisma'
 import { logger } from './logger-service'
 import {
   NotFoundError,
@@ -58,7 +56,7 @@ export type ArticleWithRelations = Article & {
   category?: { id: string; name: string; slug: string }
   tags?: Array<{ tag: { id: string; name: string; slug: string } }>
   citations?: Array<{ id: string; url: string; title: string | null; domain: string | null }>
-  relatedArticles?: Array<{ relatedArticle: Article }>
+  relatedFrom?: Array<{ toArticle: Article }>
 }
 
 /**
@@ -93,6 +91,34 @@ export interface ArticleServiceOptions {
 
   /** Maximum articles per bulk operation */
   maxBulkSize?: number
+}
+
+/**
+ * Converts status from schema format (UPPERCASE) to Prisma format (lowercase)
+ */
+function normalizeStatus(status: string | undefined): ArticleStatus | undefined {
+  if (!status) return undefined
+  const normalized = status.toLowerCase()
+  // Map DELETED to archived since DELETED is not in the enum
+  if (normalized === 'deleted') return 'archived'
+  if (normalized === 'draft' || normalized === 'published' || normalized === 'archived') {
+    return normalized as ArticleStatus
+  }
+  return undefined
+}
+
+/**
+ * Converts type from schema format (UPPERCASE) to Prisma format (lowercase)
+ */
+function normalizeType(type: string | undefined): ArticleType | undefined {
+  if (!type) return undefined
+  const normalized = type.toLowerCase()
+  if (normalized === 'news' || normalized === 'educational') {
+    return normalized as ArticleType
+  }
+  // Map RESOURCE to news as fallback since RESOURCE is not in the enum
+  if (normalized === 'resource') return 'news'
+  return undefined
 }
 
 /**
@@ -150,22 +176,71 @@ export class ArticleService {
         relatedArticleIds: validated.relatedArticleIds,
       })
 
+      // Normalize enums to lowercase
+      const status = normalizeStatus(validated.status) ?? 'draft'
+      const type = normalizeType(validated.type) ?? 'news'
+
       // Create article with relationships
       const article = await prisma.article.create({
         data: {
           title: validated.title,
           slug: validated.slug,
           content: sanitizedContent,
-          excerpt: validated.excerpt,
-          type: validated.type,
+          excerpt: validated.excerpt || '',
+          type,
+          status,
           authorId: validated.authorId,
-          category: '', // TODO: Map categoryId to category string
-          tags: '[]', // TODO: Map tagIds to tags JSON
-          readTime: `${readTime} min`, // Convert number to formatted string
-        } as any,
+          ...(validated.categoryId && { categoryId: validated.categoryId }),
+          readTime: `${readTime} min`,
+          publishedAt: validated.publishedAt,
+          coverImage: validated.coverImage?.url,
+          coverImageAlt: validated.coverImage?.alt,
+          // Note: seo field not present in schema v2
+          // Create tags relationship
+          ...(validated.tagIds && validated.tagIds.length > 0
+            ? {
+                tags: {
+                  create: validated.tagIds.map((tagId) => ({
+                    tagId,
+                  })),
+                },
+              }
+            : {}),
+          // Create citations if provided
+          ...(validated.citations && validated.citations.length > 0
+            ? {
+                citations: {
+                  create: validated.citations.map((citation, index) => {
+                    const normalized = validationService.normalizeCitation(citation)
+                    return {
+                      url: normalized.url,
+                      title: normalized.title,
+                      domain: normalized.domain,
+                      order: citation.order ?? index,
+                      verified: citation.verified ?? false,
+                    }
+                  }),
+                },
+              }
+            : {}),
+          // Create related articles if provided
+          ...(validated.relatedArticleIds && validated.relatedArticleIds.length > 0
+            ? {
+                relatedFrom: {
+                  create: validated.relatedArticleIds.map((relatedId) => ({
+                    toArticleId: relatedId,
+                  })),
+                },
+              }
+            : {}),
+        },
         include: {
           author: { select: { id: true, name: true, email: true } },
-        } as any,
+          category: { select: { id: true, name: true, slug: true } },
+          tags: { include: { tag: true } },
+          citations: { orderBy: { order: 'asc' } },
+          relatedFrom: { include: { toArticle: true } },
+        },
       })
 
       logger.info('Article created successfully', {
@@ -175,7 +250,7 @@ export class ArticleService {
         status: article.status,
       })
 
-      return article as unknown as ArticleWithRelations
+      return article as ArticleWithRelations
     } catch (error) {
       logger.error('Failed to create article', error as Error, {
         slug: data.slug,
@@ -200,16 +275,14 @@ export class ArticleService {
     const article = await prisma.article.findFirst({
       where: {
         id,
-        // TODO: Re-enable soft delete when schema v2 migrated
-        // ...(includeDeleted ? {} : { deletedAt: null }),
+        ...(includeDeleted ? {} : { deletedAt: null }),
       },
       include: {
         author: { select: { id: true, name: true, email: true } },
-        // TODO: Re-enable when schema v2 is fully migrated
-        // category: { select: { id: true, name: true, slug: true } },
-        // tags: { include: { tag: true } },
-        // citations: { orderBy: { order: 'asc' } },
-        // relatedFrom: { include: { relatedArticle: true } },
+        category: { select: { id: true, name: true, slug: true } },
+        tags: { include: { tag: true } },
+        citations: { orderBy: { order: 'asc' } },
+        relatedFrom: { include: { toArticle: true } },
       },
     })
 
@@ -235,16 +308,14 @@ export class ArticleService {
     const article = await prisma.article.findFirst({
       where: {
         slug,
-        // TODO: Re-enable soft delete when schema v2 migrated
-        // deletedAt: null,
+        deletedAt: null,
       },
       include: {
         author: { select: { id: true, name: true, email: true } },
-        // TODO: Re-enable when schema v2 is fully migrated
-        // category: { select: { id: true, name: true, slug: true } },
-        // tags: { include: { tag: true } },
-        // citations: { orderBy: { order: 'asc' } },
-        // relatedFrom: { include: { relatedArticle: true } },
+        category: { select: { id: true, name: true, slug: true } },
+        tags: { include: { tag: true } },
+        citations: { orderBy: { order: 'asc' } },
+        relatedFrom: { include: { toArticle: true } },
       },
     })
 
@@ -264,16 +335,19 @@ export class ArticleService {
 
     const { page, limit, sortBy, sortOrder, includeDeleted, ...filters } = query
 
+    // Normalize status and type filters
+    const normalizedStatus = normalizeStatus(filters.status)
+    const normalizedType = normalizeType(filters.type)
+
     // Build where clause
     const where: Prisma.ArticleWhereInput = {
       ...(includeDeleted ? {} : { deletedAt: null }),
-      ...(filters.type && { type: filters.type }),
-      ...(filters.status && { status: filters.status }),
+      ...(normalizedType && { type: normalizedType }),
+      ...(normalizedStatus && { status: normalizedStatus }),
       ...(filters.categoryId && { categoryId: filters.categoryId }),
       ...(filters.authorId && { authorId: filters.authorId }),
-      // TODO: Re-enable tag filtering when schema v2 migrated
-      // ...(filters.tagId && { tags: { some: { tagId: filters.tagId } } }),
-      ...(filters.featured && { featuredUntil: { gte: new Date() } }),
+      ...(filters.tagId && { tags: { some: { tagId: filters.tagId } } }),
+      // Note: featuredUntil field not present in schema v2
       ...(filters.search && {
         OR: [
           { title: { contains: filters.search, mode: 'insensitive' } },
@@ -291,12 +365,9 @@ export class ArticleService {
       where,
       include: {
         author: { select: { id: true, name: true, email: true } },
-        // TODO: Re-enable when schema v2 migrated
-        // category: { select: { id: true, name: true, slug: true } },
-        // TODO: Re-enable when schema v2 migrated
-        // tags: { include: { tag: true } },
-        // TODO: Re-enable when schema v2 migrated
-        // citations: { orderBy: { order: 'asc' } },
+        category: { select: { id: true, name: true, slug: true } },
+        tags: { include: { tag: true } },
+        citations: { orderBy: { order: 'asc' } },
       },
       orderBy: { [sortBy]: sortOrder },
       skip: (page - 1) * limit,
@@ -381,69 +452,74 @@ export class ArticleService {
       // Format readTime as string (e.g., "5 min")
       const readTime = readTimeMinutes ? `${readTimeMinutes} min` : undefined
 
+      // Normalize enums
+      const status = normalizeStatus(validated.status)
+      const type = normalizeType(validated.type)
+
+      // Build update data
+      const updateData: Prisma.ArticleUpdateInput = {
+        ...(validated.title && { title: validated.title }),
+        ...(validated.slug && { slug: validated.slug }),
+        ...(sanitizedContent && { content: sanitizedContent }),
+        ...(validated.excerpt !== undefined && { excerpt: validated.excerpt }),
+        ...(validated.coverImage !== undefined && {
+          coverImage: validated.coverImage?.url ?? null,
+          coverImageAlt: validated.coverImage?.alt ?? null,
+        }),
+        ...(type && { type }),
+        ...(status && { status }),
+        ...(validated.categoryId && { categoryId: validated.categoryId }),
+        ...(readTime && { readTime }),
+        // Note: seo field not present in schema v2
+        ...(validated.publishedAt !== undefined && { publishedAt: validated.publishedAt }),
+        updatedAt: new Date(),
+      }
+
+      // Update tags if provided
+      if (validated.tagIds) {
+        updateData.tags = {
+          deleteMany: {},
+          create: validated.tagIds.map((tagId) => ({ tagId })),
+        }
+      }
+
+      // Update citations if provided
+      if (validated.citations) {
+        updateData.citations = {
+          deleteMany: {},
+          create: validated.citations.map((citation, index) => {
+            const normalized = validationService.normalizeCitation(citation)
+            return {
+              url: normalized.url,
+              title: normalized.title,
+              domain: normalized.domain,
+              order: citation.order ?? index,
+              verified: citation.verified ?? false,
+            }
+          }),
+        }
+      }
+
+      // Update related articles if provided
+      if (validated.relatedArticleIds) {
+        updateData.relatedFrom = {
+          deleteMany: {},
+          create: validated.relatedArticleIds.map((relatedId) => ({
+            toArticleId: relatedId,
+          })),
+        }
+      }
+
       // Update article
-      // @ts-ignore - Schema v2 migration in progress
       const article = await prisma.article.update({
         where: { id },
-        data: {
-          ...(validated.title && { title: validated.title }),
-          ...(validated.slug && { slug: validated.slug }),
-          ...(sanitizedContent && { content: sanitizedContent }),
-          ...(validated.excerpt !== undefined && { excerpt: validated.excerpt }),
-          ...(validated.coverImage !== undefined && {
-            coverImage: validated.coverImage as Prisma.InputJsonValue,
-          }),
-          ...(validated.type && { type: validated.type }),
-          ...(validated.status && { status: validated.status }),
-          ...(validated.categoryId && { categoryId: validated.categoryId }),
-          ...(readTime && { readTime }),
-          ...(validated.seo && { seo: validated.seo as Prisma.InputJsonValue }),
-          ...(validated.publishedAt !== undefined && { publishedAt: validated.publishedAt }),
-          ...(validated.featuredUntil !== undefined && { featuredUntil: validated.featuredUntil }),
-          updatedAt: new Date(),
-          // TODO: Re-enable when schema v2 migrated
-          // // Update tags if provided
-          // ...(validated.tagIds && {
-          //   tags: {
-          //     deleteMany: {},
-          //     create: validated.tagIds.map((tagId) => ({ tagId })),
-          //   },
-          // }),
-          // // Update citations if provided
-          // ...(validated.citations && {
-          //   citations: {
-          //     deleteMany: {},
-          //     create: validated.citations.map((citation, index) => {
-          //       const normalized = validationService.normalizeCitation(citation)
-          //       return {
-          //         url: normalized.url,
-          //         title: normalized.title,
-          //         domain: normalized.domain,
-          //         order: citation.order ?? index,
-          //         verified: citation.verified ?? false,
-          //       }
-          //     }),
-          //   },
-          // }),
-          // // Update related articles if provided
-          // ...(validated.relatedArticleIds && {
-          //   relatedFrom: {
-          //     deleteMany: {},
-          //     create: validated.relatedArticleIds.map((relatedId) => ({
-          //       relatedArticleId: relatedId,
-          //     })),
-          //   },
-          // }),
-        },
+        data: updateData,
         include: {
           author: { select: { id: true, name: true, email: true } },
-          // TODO: Re-enable when schema v2 migrated
-        // category: { select: { id: true, name: true, slug: true } },
-          // TODO: Re-enable when schema v2 migrated
-        // tags: { include: { tag: true } },
-          // TODO: Re-enable when schema v2 migrated
-        // citations: { orderBy: { order: 'asc' } },
-          relatedFrom: { include: { relatedArticle: true } },
+          category: { select: { id: true, name: true, slug: true } },
+          tags: { include: { tag: true } },
+          citations: { orderBy: { order: 'asc' } },
+          relatedFrom: { include: { toArticle: true } },
         },
       })
 
@@ -478,12 +554,12 @@ export class ArticleService {
       // Check article exists
       await this.getById(id)
 
-      // Soft delete
+      // Soft delete (set deletedAt and move to archived status)
       await prisma.article.update({
         where: { id },
         data: {
           deletedAt: new Date(),
-          status: 'DELETED',
+          status: 'archived',
         },
       })
 
@@ -544,17 +620,14 @@ export class ArticleService {
         where: { id },
         data: {
           deletedAt: null,
-          status: 'DRAFT',
+          status: 'draft',
         },
         include: {
           author: { select: { id: true, name: true, email: true } },
-          // TODO: Re-enable when schema v2 migrated
-        // category: { select: { id: true, name: true, slug: true } },
-          // TODO: Re-enable when schema v2 migrated
-        // tags: { include: { tag: true } },
-          // TODO: Re-enable when schema v2 migrated
-        // citations: { orderBy: { order: 'asc' } },
-          relatedFrom: { include: { relatedArticle: true } },
+          category: { select: { id: true, name: true, slug: true } },
+          tags: { include: { tag: true } },
+          citations: { orderBy: { order: 'asc' } },
+          relatedFrom: { include: { toArticle: true } },
         },
       })
 
@@ -598,7 +671,7 @@ export class ArticleService {
           case 'publish':
             const publishResult = await tx.article.updateMany({
               where: { id: { in: operation.articleIds }, deletedAt: null },
-              data: { status: 'PUBLISHED', publishedAt: new Date() },
+              data: { status: 'published', publishedAt: new Date() },
             })
             count = publishResult.count
             break
@@ -606,7 +679,7 @@ export class ArticleService {
           case 'archive':
             const archiveResult = await tx.article.updateMany({
               where: { id: { in: operation.articleIds }, deletedAt: null },
-              data: { status: 'ARCHIVED' },
+              data: { status: 'archived' },
             })
             count = archiveResult.count
             break
@@ -614,7 +687,7 @@ export class ArticleService {
           case 'delete':
             const deleteResult = await tx.article.updateMany({
               where: { id: { in: operation.articleIds }, deletedAt: null },
-              data: { deletedAt: new Date(), status: 'DELETED' },
+              data: { deletedAt: new Date(), status: 'archived' },
             })
             count = deleteResult.count
             break
@@ -622,7 +695,7 @@ export class ArticleService {
           case 'restore':
             const restoreResult = await tx.article.updateMany({
               where: { id: { in: operation.articleIds }, deletedAt: { not: null } },
-              data: { deletedAt: null, status: 'DRAFT' },
+              data: { deletedAt: null, status: 'draft' },
             })
             count = restoreResult.count
             break
@@ -657,9 +730,9 @@ export class ArticleService {
 
     const [total, published, draft, archived, byType, byCategory] = await Promise.all([
       prisma.article.count({ where: { deletedAt: null } }),
-      prisma.article.count({ where: { status: 'PUBLISHED', deletedAt: null } }),
-      prisma.article.count({ where: { status: 'DRAFT', deletedAt: null } }),
-      prisma.article.count({ where: { status: 'ARCHIVED', deletedAt: null } }),
+      prisma.article.count({ where: { status: 'published', deletedAt: null } }),
+      prisma.article.count({ where: { status: 'draft', deletedAt: null } }),
+      prisma.article.count({ where: { status: 'archived', deletedAt: null } }),
       prisma.article.groupBy({
         by: ['type'],
         where: { deletedAt: null },

@@ -3,15 +3,18 @@ import { prisma } from '@/lib/prisma';
 import { Prisma } from '@/lib/generated/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { articleService } from '@/lib/services/article-service';
+
+// Force dynamic rendering to prevent build-time errors
+export const dynamic = 'force-dynamic';
 
 // GET /api/articles - Listar artigos com paginação
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
-    const category = searchParams.get('category');
+    const categorySlug = searchParams.get('category');
     const published = searchParams.get('published');
     const type = searchParams.get('type');
-    const level = searchParams.get('level');
     const query = searchParams.get('query'); // Busca por texto
 
     // Paginação
@@ -19,43 +22,46 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '12');
     const skip = (page - 1) * limit;
 
-    const where: Prisma.ArticleWhereInput = {};
+    const where: Prisma.ArticleWhereInput = {
+      deletedAt: null, // Nunca mostrar artigos deletados
+    };
 
-    // Filtrar por busca de texto (título, excerpt, conteúdo, tags)
+    // Filtrar por busca de texto (título, excerpt, conteúdo)
     if (query) {
       where.OR = [
         { title: { contains: query, mode: 'insensitive' } },
         { excerpt: { contains: query, mode: 'insensitive' } },
         { content: { contains: query, mode: 'insensitive' } },
-        { tags: { contains: query } }
       ];
     }
 
     // Filtrar por tipo (news ou educational)
     if (type) {
-      where.type = type;
+      where.type = type as 'news' | 'educational';
     }
 
-    // Filtrar por categoria
-    if (category && category !== 'all') {
-      where.category = category;
-    }
+    // Filtrar por categoria (precisa buscar Category por slug)
+    if (categorySlug && categorySlug !== 'all') {
+      const category = await prisma.category.findUnique({
+        where: { slug: categorySlug },
+        select: { id: true },
+      });
 
-    // Filtrar por nível (para artigos educacionais)
-    if (level && level !== 'all') {
-      where.level = level;
+      if (category) {
+        where.categoryId = category.id;
+      }
     }
 
     // Filtrar por publicados/rascunhos
     if (published === 'all') {
       // Não filtrar - mostrar todos
     } else if (published === 'true') {
-      where.published = true;
+      where.status = 'published';
     } else if (published === 'false') {
-      where.published = false;
+      where.status = 'draft';
     } else if (!published) {
       // Por padrão, mostrar apenas publicados
-      where.published = true;
+      where.status = 'published';
     }
 
     // Buscar total de artigos (para calcular hasMore)
@@ -71,57 +77,63 @@ export async function GET(request: NextRequest) {
         content: true,
         excerpt: true,
         type: true,
-        category: true,
-        tags: true,
-        sentiment: true,
-        level: true,
-        contentType: true,
+        status: true,
         readTime: true,
-        published: true,
-        factCheckSources: true,
         coverImage: true,
         coverImageAlt: true,
+        publishedAt: true,
         createdAt: true,
         updatedAt: true,
+        category: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
+        tags: {
+          include: {
+            tag: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+              },
+            },
+          },
+        },
         author: {
           select: {
             id: true,
             name: true,
             email: true,
-            role: true
-          }
-        }
+            role: true,
+          },
+        },
       },
       orderBy: {
-        createdAt: 'desc'
+        createdAt: 'desc',
       },
       skip,
-      take: limit
+      take: limit,
     });
 
-    // Transformar para formato compatível com NewsItem ou EducationItem
-    const formattedArticles = articles.map((article: any) => {
-      // Parse citations from factCheckSources
-      let citations: string[] | undefined;
-      if (article.factCheckSources) {
-        try {
-          citations = JSON.parse(article.factCheckSources);
-        } catch {
-          citations = undefined;
-        }
-      }
-
+    // Transformar para formato compatível com NewsItem ou EducationItem (mantém compatibilidade de API)
+    const formattedArticles = articles.map((article) => {
       const baseData = {
         id: article.id,
         slug: article.slug,
         title: article.title,
         summary: article.excerpt || '',
         content: article.content,
-        publishedAt: article.createdAt.toISOString(),
+        publishedAt: (article.publishedAt || article.createdAt).toISOString(),
         author: article.author.name || article.author.email,
-        citations, // Add citations to base data
         coverImage: article.coverImage || undefined,
-        coverImageAlt: article.coverImageAlt || undefined
+        coverImageAlt: article.coverImageAlt || undefined,
+        // Manter compatibilidade com API antiga
+        published: article.status === 'published',
+        category: article.category?.slug || 'sem-categoria',
+        tags: article.tags.map((at) => at.tag.slug),
       };
 
       // Se for artigo educacional, incluir campos específicos
@@ -129,10 +141,9 @@ export async function GET(request: NextRequest) {
         return {
           ...baseData,
           type: article.type,
-          level: article.level || 'iniciante',
-          contentType: article.contentType || 'Artigo',
+          level: 'iniciante', // Valor padrão (campo removido do schema v2)
+          contentType: 'Artigo', // Valor padrão (campo removido do schema v2)
           readTime: article.readTime || '5 min',
-          category: article.category
         };
       }
 
@@ -143,11 +154,11 @@ export async function GET(request: NextRequest) {
         url: `/dashboard/noticias/${article.slug}`,
         source: '$MILAGRE Research',
         sources: ['$MILAGRE Research'],
-        category: [article.category.charAt(0).toUpperCase() + article.category.slice(1)],
-        sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
-        keywords: JSON.parse(article.tags || '[]'),
+        category: article.category ? [article.category.name] : ['Sem Categoria'],
+        sentiment: 'neutral', // Valor padrão (campo removido do schema v2)
+        keywords: article.tags.map((at) => at.tag.slug),
         factChecked: true,
-        lastVerified: article.updatedAt.toISOString()
+        lastVerified: article.updatedAt.toISOString(),
       };
     });
 
@@ -164,8 +175,8 @@ export async function GET(request: NextRequest) {
         total,
         totalPages,
         hasMore,
-        count: formattedArticles.length
-      }
+        count: formattedArticles.length,
+      },
     });
   } catch (error) {
     console.error('Erro ao buscar artigos:', error);
@@ -202,30 +213,28 @@ export async function POST(request: NextRequest) {
       slug,
       content,
       excerpt,
-      category,
-      tags,
-      published,
+      category, // category slug (string)
+      tags, // array de tag slugs
+      published, // boolean
       type,
-      level,
-      sentiment,
       readTime,
-      authorId, // Permite passar authorId explicitamente (para geração por IA)
-      factCheckSources, // Citations do Perplexity (JSON array de URLs)
-      coverImage,
-      coverImageAlt
+      authorId,
+      coverImage, // string URL
+      coverImageAlt,
+      citations, // array de URLs (Perplexity citations)
     } = body;
 
     // Validação
-    if (!title || !slug || !content || !category) {
+    if (!title || !slug || !content) {
       return NextResponse.json(
-        { success: false, error: 'Campos obrigatórios faltando' },
+        { success: false, error: 'Campos obrigatórios faltando (title, slug, content)' },
         { status: 400 }
       );
     }
 
     // Verificar se slug já existe
     const existing = await prisma.article.findUnique({
-      where: { slug }
+      where: { slug },
     });
 
     if (existing) {
@@ -235,43 +244,99 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Criar artigo
-    const article = await prisma.article.create({
-      data: {
+    // Buscar categoryId por slug
+    let categoryId: string | undefined;
+    if (category) {
+      const categoryRecord = await prisma.category.findUnique({
+        where: { slug: category },
+        select: { id: true },
+      });
+      categoryId = categoryRecord?.id;
+
+      if (!categoryId) {
+        return NextResponse.json(
+          { success: false, error: `Categoria '${category}' não encontrada` },
+          { status: 400 }
+        );
+      }
+    }
+
+    // Buscar tagIds por slugs
+    let tagIds: string[] = [];
+    if (tags && Array.isArray(tags) && tags.length > 0) {
+      const tagRecords = await prisma.tag.findMany({
+        where: { slug: { in: tags } },
+        select: { id: true, slug: true },
+      });
+
+      tagIds = tagRecords.map((t) => t.id);
+
+      // Verificar se todos os tags foram encontrados
+      if (tagRecords.length !== tags.length) {
+        const foundSlugs = tagRecords.map((t) => t.slug);
+        const missingSlugs = tags.filter((slug: string) => !foundSlugs.includes(slug));
+        return NextResponse.json(
+          { success: false, error: `Tags não encontradas: ${missingSlugs.join(', ')}` },
+          { status: 400 }
+        );
+      }
+    }
+
+    // Converter published (boolean) para status
+    const status = published ? 'published' : 'draft';
+
+    // Preparar coverImage
+    const coverImageData = coverImage
+      ? { url: coverImage, alt: coverImageAlt || '' }
+      : undefined;
+
+    // Preparar citations (converter array de strings para formato Citation)
+    const citationsData =
+      citations && Array.isArray(citations)
+        ? citations.map((url: string, index: number) => ({
+            url,
+            order: index,
+            verified: false
+          }))
+        : undefined;
+
+    // Usar articleService para criar
+    const article = await articleService.create(
+      {
         title,
         slug,
         content,
         excerpt: excerpt || '',
-        category,
-        tags: typeof tags === 'string' ? tags : JSON.stringify(tags || []),
-        published: published ?? false,
         type: type || 'news',
-        level: level || null,
-        sentiment: sentiment || 'neutral',
-        readTime: readTime || null,
-        authorId: authorId || session.user.id, // Usa authorId passado ou do session
-        factCheckSources: factCheckSources || null, // Citations do Perplexity
-        coverImage: coverImage || null,
-        coverImageAlt: coverImageAlt || null
+        status,
+        authorId: authorId || session.user.id,
+        categoryId,
+        tagIds,
+        readTime: readTime ? parseInt(readTime) : undefined,
+        coverImage: coverImageData,
+        citations: citationsData,
+        publishedAt: published ? new Date() : undefined,
       },
-      include: {
-        author: {
-          select: {
-            name: true,
-            email: true
-          }
-        }
-      }
-    });
+      session.user.id
+    );
 
     return NextResponse.json({
       success: true,
-      data: article
+      data: {
+        ...article,
+        // Manter compatibilidade de API
+        published: article.status === 'published',
+        category: article.category?.slug || null,
+        tags: article.tags?.map((at) => at.tag.slug) || [],
+      },
     });
   } catch (error) {
     console.error('Erro ao criar artigo:', error);
     return NextResponse.json(
-      { success: false, error: 'Erro ao criar artigo' },
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Erro ao criar artigo',
+      },
       { status: 500 }
     );
   }

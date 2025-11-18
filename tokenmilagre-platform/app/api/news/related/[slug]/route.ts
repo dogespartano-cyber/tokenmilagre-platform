@@ -18,6 +18,23 @@ interface NewsItem {
   keywords: string[];
 }
 
+type ArticleWithIncludes = {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  sentiment: string | null;
+  createdAt: Date;
+  category: {
+    name: string;
+  } | null;
+  tags: Array<{
+    tag: {
+      slug: string;
+    };
+  }>;
+}
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ slug: string }> }
@@ -57,10 +74,11 @@ export async function GET(
       crypto.coingeckoId.toLowerCase(),
     ];
 
-    // Buscar artigos de notícias publicados
+    // Buscar artigos de notícias publicados (schema v2)
     const articles = await prisma.article.findMany({
       where: {
-        published: true,
+        status: 'published',
+        deletedAt: null,
         type: 'news',
       },
       include: {
@@ -68,6 +86,22 @@ export async function GET(
           select: {
             name: true,
             email: true,
+          },
+        },
+        category: {
+          select: {
+            slug: true,
+            name: true,
+          },
+        },
+        tags: {
+          include: {
+            tag: {
+              select: {
+                slug: true,
+                name: true,
+              },
+            },
           },
         },
       },
@@ -78,10 +112,10 @@ export async function GET(
     });
 
     // Filtrar artigos que contenham algum dos termos nas tags
-    const relatedArticles = articles.filter((article: any) => {
+    const relatedArticles = (articles as ArticleWithIncludes[]).filter((article) => {
       try {
-        const tags = JSON.parse(article.tags || '[]');
-        const tagsLower = tags.map((tag: string) => tag.toLowerCase());
+        // Tags agora vêm do relacionamento M:N
+        const tagsLower = article.tags.map((at) => at.tag.slug.toLowerCase());
 
         // Verificar se algum termo de busca está nas tags
         return searchTerms.some((term) =>
@@ -96,7 +130,7 @@ export async function GET(
     const limitedArticles = relatedArticles.slice(0, 6);
 
     // Mapear para o formato NewsItem
-    const newsItems: NewsItem[] = limitedArticles.map((article: any) => ({
+    const newsItems: NewsItem[] = limitedArticles.map((article) => ({
       id: article.id,
       slug: article.slug,
       title: article.title,
@@ -104,9 +138,9 @@ export async function GET(
       url: `/dashboard/noticias/${article.slug}`,
       source: '$MILAGRE Research',
       publishedAt: article.createdAt.toISOString(),
-      category: [article.category.charAt(0).toUpperCase() + article.category.slice(1)],
+      category: article.category ? [article.category.name] : ['Sem Categoria'],
       sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
-      keywords: JSON.parse(article.tags || '[]'),
+      keywords: article.tags?.map((at) => at.tag.slug) || [],
     }));
 
     return NextResponse.json({

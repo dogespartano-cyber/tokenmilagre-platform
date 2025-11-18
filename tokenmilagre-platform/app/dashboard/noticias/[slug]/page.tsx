@@ -50,7 +50,7 @@ interface NewsItem {
 
 async function getArticle(slug: string): Promise<NewsItem | null> {
   try {
-    // Buscar direto no banco de dados
+    // Buscar direto no banco de dados (schema v2)
     const article = await prisma.article.findUnique({
       where: { slug },
       include: {
@@ -58,6 +58,25 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
           select: {
             name: true,
             email: true
+          }
+        },
+        category: {
+          select: {
+            name: true
+          }
+        },
+        tags: {
+          include: {
+            tag: {
+              select: {
+                name: true
+              }
+            }
+          }
+        },
+        citations: {
+          select: {
+            url: true
           }
         }
       }
@@ -67,18 +86,10 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
       return null;
     }
 
-    // Parse citations do factCheckSources
-    let citations: string[] | undefined;
-    if (article.factCheckSources) {
-      try {
-        citations = JSON.parse(article.factCheckSources);
-      } catch (e) {
-        console.error('Erro ao parsear factCheckSources:', e);
-        citations = undefined;
-      }
-    }
+    // Usar citations do schema v2 (relation)
+    const citations: string[] | undefined = article.citations?.map(c => c.url) || undefined;
 
-    // Formatar para NewsItem
+    // Formatar para NewsItem (schema v2)
     return {
       id: article.id,
       slug: article.slug,
@@ -89,12 +100,12 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
       source: '$MILAGRE Research',
       sources: ['$MILAGRE Research'],
       publishedAt: article.createdAt.toISOString(),
-      category: [article.category.charAt(0).toUpperCase() + article.category.slice(1)],
-      sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
-      keywords: JSON.parse(article.tags || '[]'),
+      category: article.category?.name ? [article.category.name] : [],
+      sentiment: (article.sentiment || 'neutral') as 'positive' | 'neutral' | 'negative',
+      keywords: article.tags?.map(t => t.tag.name) || [],
       factChecked: true,
       lastVerified: article.updatedAt.toISOString(),
-      citations, // ← ADICIONA CITATIONS!
+      citations,
       coverImage: article.coverImage || undefined,
       coverImageAlt: article.coverImageAlt || undefined,
     };
@@ -153,14 +164,36 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
 
   if (article) {
     try {
-      // Buscar todos os artigos direto do banco
+      // Buscar todos os artigos direto do banco (schema v2)
       const articles = await prisma.article.findMany({
-        where: { published: true },
+        where: {
+          status: 'published',
+          deletedAt: null
+        },
         include: {
           author: {
             select: {
               name: true,
               email: true
+            }
+          },
+          category: {
+            select: {
+              name: true
+            }
+          },
+          tags: {
+            include: {
+              tag: {
+                select: {
+                  name: true
+                }
+              }
+            }
+          },
+          citations: {
+            select: {
+              url: true
             }
           }
         },
@@ -169,17 +202,10 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
         }
       });
 
-      // Formatar para NewsItem
+      // Formatar para NewsItem (schema v2)
       const allNews: NewsItem[] = articles.map((a: any) => {
-        // Parse citations
-        let citations: string[] | undefined;
-        if (a.factCheckSources) {
-          try {
-            citations = JSON.parse(a.factCheckSources);
-          } catch (e) {
-            citations = undefined;
-          }
-        }
+        // Usar citations do schema v2
+        const citations: string[] | undefined = a.citations?.map((c: any) => c.url) || undefined;
 
         return {
           id: a.id,
@@ -191,9 +217,9 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
           source: '$MILAGRE Research',
           sources: ['$MILAGRE Research'],
           publishedAt: a.createdAt.toISOString(),
-          category: [a.category.charAt(0).toUpperCase() + a.category.slice(1)],
-          sentiment: a.sentiment as 'positive' | 'neutral' | 'negative',
-          keywords: JSON.parse(a.tags || '[]'),
+          category: a.category?.name ? [a.category.name] : [],
+          sentiment: (a.sentiment || 'neutral') as 'positive' | 'neutral' | 'negative',
+          keywords: a.tags?.map((t: any) => t.tag.name) || [],
           factChecked: true,
           lastVerified: a.updatedAt.toISOString(),
           citations,

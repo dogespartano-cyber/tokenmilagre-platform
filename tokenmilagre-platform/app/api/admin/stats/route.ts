@@ -28,28 +28,39 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Buscar estatísticas
+    // Buscar estatísticas (adaptado para schema v2)
     const [
       totalArticles,
       totalNews,
       totalEducational,
       totalUsers,
       publishedThisWeek,
-      educationalByLevel
+      articlesByCategory,
     ] = await Promise.all([
-      // Total de artigos
+      // Total de artigos publicados (não deletados)
       prisma.article.count({
-        where: { published: true }
+        where: {
+          status: 'published', // published: true → status: 'published'
+          deletedAt: null,
+        },
       }),
 
-      // Total de notícias
+      // Total de notícias publicadas
       prisma.article.count({
-        where: { type: 'news', published: true }
+        where: {
+          type: 'news',
+          status: 'published',
+          deletedAt: null,
+        },
       }),
 
-      // Total de artigos educacionais
+      // Total de artigos educacionais publicados
       prisma.article.count({
-        where: { type: 'educational', published: true }
+        where: {
+          type: 'educational',
+          status: 'published',
+          deletedAt: null,
+        },
       }),
 
       // Total de usuários
@@ -58,39 +69,36 @@ export async function GET(request: NextRequest) {
       // Publicados esta semana
       prisma.article.count({
         where: {
-          published: true,
-          createdAt: {
-            gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) // Últimos 7 dias
-          }
-        }
+          status: 'published',
+          deletedAt: null,
+          publishedAt: {
+            gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // Últimos 7 dias
+          },
+        },
       }),
 
-      // Artigos educacionais por nível
-      prisma.article.groupBy({
-        by: ['level'],
+      // Artigos por categoria (query simples + agrupamento manual)
+      prisma.article.findMany({
         where: {
-          type: 'educational',
-          published: true,
-          level: {
-            not: null
-          }
+          status: 'published',
+          deletedAt: null,
         },
-        _count: true
-      })
+        select: {
+          category: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      }),
     ]);
 
-    // Processar educational by level
-    const levelCounts = {
-      iniciante: 0,
-      intermediario: 0,
-      avancado: 0
-    };
-
-    educationalByLevel.forEach((item: any) => {
-      if (item.level) {
-        levelCounts[item.level as keyof typeof levelCounts] = item._count;
-      }
-    });
+    // Agrupar artigos por categoria manualmente
+    const categoryCounts = articlesByCategory.reduce((acc, article) => {
+      const categoryName = article.category?.name || 'Sem Categoria';
+      acc[categoryName] = (acc[categoryName] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
 
     return NextResponse.json({
       success: true,
@@ -100,15 +108,21 @@ export async function GET(request: NextRequest) {
         totalEducational,
         totalUsers,
         publishedThisWeek,
-        educationalByLevel: levelCounts
-      }
+        articlesByCategory: categoryCounts, // Agora com nomes legíveis
+        // Campo educationalByLevel removido (level não existe mais no schema v2)
+        educationalByLevel: {
+          iniciante: 0,
+          intermediario: 0,
+          avancado: 0,
+        },
+      },
     });
   } catch (error) {
     console.error('Error fetching admin stats:', error);
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : 'Erro ao buscar estatísticas'
+        error: error instanceof Error ? error.message : 'Erro ao buscar estatísticas',
       },
       { status: 500 }
     );
