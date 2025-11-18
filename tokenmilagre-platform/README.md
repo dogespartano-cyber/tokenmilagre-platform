@@ -4,6 +4,20 @@
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/dogespartano-cyber/tokenmilagre-platform)
 
+---
+
+## 🚦 Status Atual
+
+**🟢 PRODUÇÃO ESTÁVEL** | **🔴 API v2 DESABILITADA (Migração Pendente)**
+
+- ✅ **Sistema v1:** Totalmente funcional
+- 🔴 **API v2:** Desabilitada até migração do schema ser concluída
+- 📋 **Documentação:** [STATUS.md](./STATUS.md) | [MIGRATION_PLAN.md](./MIGRATION_PLAN.md)
+
+⚠️ **Desenvolvedores:** Rotas `/api/v2/*` retornam HTTP 503. Use endpoints v1 até migração estar completa.
+
+---
+
 ## 🚀 Quick Start
 
 ### Desenvolvimento Local
