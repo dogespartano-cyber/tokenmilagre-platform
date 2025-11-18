@@ -6,25 +6,41 @@ export async function GET() {
   try {
     const articles = await prisma.article.findMany({
       where: {
-        published: true
+        status: 'published', // published: true → status: 'published'
+        deletedAt: null, // Nunca retornar artigos deletados
       },
       select: {
         id: true,
         title: true,
         slug: true,
-        category: true,
-        createdAt: true
+        createdAt: true,
+        category: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
       },
       orderBy: {
-        createdAt: 'desc'
+        createdAt: 'desc',
       },
-      take: 100 // Últimos 100 artigos
+      take: 100, // Últimos 100 artigos
     });
+
+    // Transformar para manter compatibilidade de API (category como string)
+    const formattedArticles = articles.map((article) => ({
+      id: article.id,
+      title: article.title,
+      slug: article.slug,
+      category: article.category?.slug || 'sem-categoria', // Retorna slug da categoria
+      createdAt: article.createdAt,
+    }));
 
     return NextResponse.json({
       success: true,
-      data: articles,
-      count: articles.length
+      data: formattedArticles,
+      count: formattedArticles.length,
     });
   } catch (error) {
     console.error('Erro ao listar artigos:', error);

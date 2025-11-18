@@ -19,7 +19,6 @@ export async function GET(
             name: true,
             image: true,
             points: true,
-            badges: true,
           },
         },
       },

@@ -4,6 +4,10 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { articleService } from '@/lib/services/article-service';
+
+// Force dynamic rendering to prevent build-time errors
+export const dynamic = 'force-dynamic';
 
 interface NewsItem {
   id: string;
@@ -31,22 +35,46 @@ export async function GET(
     const { slug } = await params;
 
     // 1. Tentar buscar no banco de dados (artigos curados)
-    const article = await prisma.article.findUnique({
-      where: { slug },
+    const article = await prisma.article.findFirst({
+      where: {
+        slug,
+        deletedAt: null, // Nunca retornar artigos deletados
+      },
       include: {
         author: {
           select: {
             id: true,
             name: true,
             email: true,
-            role: true
-          }
-        }
-      }
+            role: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
+        tags: {
+          include: {
+            tag: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+              },
+            },
+          },
+        },
+        citations: {
+          orderBy: { order: 'asc' },
+        },
+      },
     });
 
     if (article) {
-      // Retornar artigo do banco
+      // Retornar artigo do banco (manter compatibilidade de API)
       const formattedArticle: NewsItem = {
         id: article.id,
         slug: article.slug,
@@ -56,32 +84,32 @@ export async function GET(
         url: `/dashboard/noticias/${article.slug}`,
         source: '$MILAGRE Research',
         sources: ['$MILAGRE Research'],
-        publishedAt: article.createdAt.toISOString(),
-        category: article.category ? [article.category] : ['Sem Categoria'],
-        sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
-        keywords: article.tags ? JSON.parse(article.tags) : [],
+        publishedAt: (article.publishedAt || article.createdAt).toISOString(),
+        category: article.category ? [article.category.name] : ['Sem Categoria'],
+        sentiment: 'neutral', // Valor padrão (campo removido do schema v2)
+        keywords: article.tags.map((at) => at.tag.slug),
         factChecked: true,
         lastVerified: article.updatedAt.toISOString(),
       };
 
       return NextResponse.json({
         success: true,
-        data: formattedArticle
+        data: formattedArticle,
       });
     }
 
-    // 2. Se não encontrou no banco, tentar buscar em news.json
+    // 2. Se não encontrou no banco, tentar buscar em news.json (fallback para dados antigos)
     try {
       const newsFilePath = path.join(process.cwd(), 'data', 'news.json');
       const fileContent = await fs.readFile(newsFilePath, 'utf-8');
       const news: NewsItem[] = JSON.parse(fileContent);
 
-      const newsArticle = news.find(item => item.slug === slug || item.id === slug);
+      const newsArticle = news.find((item) => item.slug === slug || item.id === slug);
 
       if (newsArticle) {
         return NextResponse.json({
           success: true,
-          data: newsArticle
+          data: newsArticle,
         });
       }
     } catch (error) {
@@ -92,7 +120,7 @@ export async function GET(
     return NextResponse.json(
       {
         success: false,
-        error: 'Artigo não encontrado'
+        error: 'Artigo não encontrado',
       },
       { status: 404 }
     );
@@ -101,7 +129,7 @@ export async function GET(
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : 'Erro ao buscar artigo'
+        error: error instanceof Error ? error.message : 'Erro ao buscar artigo',
       },
       { status: 500 }
     );
@@ -134,9 +162,13 @@ export async function DELETE(
       );
     }
 
-    // Verificar se artigo existe
-    const article = await prisma.article.findUnique({
-      where: { slug }
+    // Buscar artigo por slug
+    const article = await prisma.article.findFirst({
+      where: {
+        slug,
+        deletedAt: null,
+      },
+      select: { id: true },
     });
 
     if (!article) {
@@ -146,21 +178,19 @@ export async function DELETE(
       );
     }
 
-    // Deletar artigo
-    await prisma.article.delete({
-      where: { slug }
-    });
+    // Soft delete usando articleService
+    await articleService.delete(article.id, session.user.id);
 
     return NextResponse.json({
       success: true,
-      message: 'Artigo deletado com sucesso'
+      message: 'Artigo deletado com sucesso',
     });
   } catch (error) {
     console.error('Erro ao deletar artigo:', error);
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : 'Erro ao deletar artigo'
+        error: error instanceof Error ? error.message : 'Erro ao deletar artigo',
       },
       { status: 500 }
     );
@@ -193,9 +223,13 @@ export async function PATCH(
       );
     }
 
-    // Verificar se artigo existe
-    const article = await prisma.article.findUnique({
-      where: { slug }
+    // Buscar artigo por slug
+    const article = await prisma.article.findFirst({
+      where: {
+        slug,
+        deletedAt: null,
+      },
+      select: { id: true },
     });
 
     if (!article) {
@@ -208,46 +242,89 @@ export async function PATCH(
     // Parse do body
     const body = await request.json();
 
-    // Converter category de array para string (Prisma espera string)
-    const category = body.category !== undefined
-      ? (Array.isArray(body.category) ? body.category[0] : body.category)
-      : undefined;
+    // Preparar dados de atualização
+    const updateData: any = {};
 
-    // Atualizar artigo (apenas campos permitidos)
-    const updatedArticle = await prisma.article.update({
-      where: { slug },
-      data: {
-        ...(body.title !== undefined && { title: body.title }),
-        ...(body.excerpt !== undefined && { excerpt: body.excerpt }),
-        ...(body.content !== undefined && { content: body.content }),
-        ...(category !== undefined && { category: category }),
-        ...(body.tags !== undefined && { tags: typeof body.tags === 'string' ? body.tags : JSON.stringify(body.tags) }),
-        ...(body.published !== undefined && { published: body.published }),
-        ...(body.level !== undefined && { level: body.level }),
-        ...(body.sentiment !== undefined && { sentiment: body.sentiment }),
-        ...(body.readTime !== undefined && { readTime: body.readTime }),
-        updatedAt: new Date()
-      },
-      include: {
-        author: {
-          select: {
-            name: true,
-            email: true
-          }
-        }
+    if (body.title !== undefined) updateData.title = body.title;
+    if (body.excerpt !== undefined) updateData.excerpt = body.excerpt;
+    if (body.content !== undefined) updateData.content = body.content;
+    if (body.slug !== undefined) updateData.slug = body.slug;
+    if (body.type !== undefined) updateData.type = body.type;
+    if (body.readTime !== undefined) updateData.readTime = body.readTime;
+
+    // Converter published (boolean) para status
+    if (body.published !== undefined) {
+      updateData.status = body.published ? 'published' : 'draft';
+      if (body.published) {
+        updateData.publishedAt = new Date();
       }
-    });
+    }
+
+    // Converter category (string slug) para categoryId
+    if (body.category !== undefined) {
+      const categorySlug = Array.isArray(body.category) ? body.category[0] : body.category;
+      if (categorySlug) {
+        const categoryRecord = await prisma.category.findUnique({
+          where: { slug: categorySlug },
+          select: { id: true },
+        });
+
+        if (!categoryRecord) {
+          return NextResponse.json(
+            { success: false, error: `Categoria '${categorySlug}' não encontrada` },
+            { status: 400 }
+          );
+        }
+
+        updateData.categoryId = categoryRecord.id;
+      }
+    }
+
+    // Converter tags (array de slugs) para tagIds
+    if (body.tags !== undefined && Array.isArray(body.tags)) {
+      const tagRecords = await prisma.tag.findMany({
+        where: { slug: { in: body.tags } },
+        select: { id: true, slug: true },
+      });
+
+      if (tagRecords.length !== body.tags.length) {
+        const foundSlugs = tagRecords.map((t) => t.slug);
+        const missingSlugs = body.tags.filter((slug: string) => !foundSlugs.includes(slug));
+        return NextResponse.json(
+          { success: false, error: `Tags não encontradas: ${missingSlugs.join(', ')}` },
+          { status: 400 }
+        );
+      }
+
+      updateData.tagIds = tagRecords.map((t) => t.id);
+    }
+
+    // Converter coverImage (string) para objeto
+    if (body.coverImage !== undefined) {
+      updateData.coverImage = body.coverImage
+        ? { url: body.coverImage, alt: body.coverImageAlt || '' }
+        : null;
+    }
+
+    // Atualizar usando articleService
+    const updatedArticle = await articleService.update(article.id, updateData, session.user.id);
 
     return NextResponse.json({
       success: true,
-      data: updatedArticle
+      data: {
+        ...updatedArticle,
+        // Manter compatibilidade de API
+        published: updatedArticle.status === 'published',
+        category: updatedArticle.category?.slug || null,
+        tags: updatedArticle.tags?.map((at) => at.tag.slug) || [],
+      },
     });
   } catch (error) {
     console.error('Erro ao atualizar artigo:', error);
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : 'Erro ao atualizar artigo'
+        error: error instanceof Error ? error.message : 'Erro ao atualizar artigo',
       },
       { status: 500 }
     );

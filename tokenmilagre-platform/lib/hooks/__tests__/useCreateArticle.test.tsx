@@ -38,11 +38,11 @@ describe('useCreateArticle', () => {
     title: 'New Article',
     slug: 'new-article',
     content: '<p>Article content</p>',
-    type: 'NEWS',
+    type: 'news',
     categoryId: 'cat-1',
     authorId: 'user-1',
     tagIds: ['tag-1'],
-    status: 'DRAFT',
+    status: 'draft',
   }
 
   const mockArticleResponse: ArticleWithRelations = {
@@ -50,8 +50,8 @@ describe('useCreateArticle', () => {
     title: 'New Article',
     slug: 'new-article',
     content: '<p>Article content</p>',
-    type: 'NEWS',
-    status: 'DRAFT',
+    type: 'news',
+    status: 'draft',
     categoryId: 'cat-1',
     authorId: 'user-1',
     readTime: 2,
@@ -312,8 +312,8 @@ describe('useCreateArticleWithSlug', () => {
     title: 'Auto Slug Article',
     slug: 'auto-slug-article',
     content: '<p>Content</p>',
-    type: 'NEWS',
-    status: 'DRAFT',
+    type: 'news',
+    status: 'draft',
     categoryId: 'cat-1',
     authorId: 'user-1',
     readTime: 2,
@@ -353,11 +353,11 @@ describe('useCreateArticleWithSlug', () => {
       result.current.mutate({
         title: 'Auto Slug Article',
         content: '<p>Content</p>',
-        type: 'NEWS',
+        type: 'news',
         categoryId: 'cat-1',
         authorId: 'user-1',
         tagIds: [],
-        status: 'DRAFT',
+        status: 'draft',
       })
     })
 
@@ -383,11 +383,11 @@ describe('useCreateArticleWithSlug', () => {
         title: 'Auto Slug Article',
         slug: 'custom-slug',
         content: '<p>Content</p>',
-        type: 'NEWS',
+        type: 'news',
         categoryId: 'cat-1',
         authorId: 'user-1',
         tagIds: [],
-        status: 'DRAFT',
+        status: 'draft',
       })
     })
 

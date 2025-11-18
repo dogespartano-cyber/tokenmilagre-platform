@@ -39,8 +39,8 @@ describe('useUpdateArticle', () => {
     title: 'Original Title',
     slug: 'original-title',
     content: '<p>Original content</p>',
-    type: 'NEWS',
-    status: 'DRAFT',
+    type: 'news',
+    status: 'draft',
     categoryId: 'cat-1',
     authorId: 'user-1',
     readTime: 2,
@@ -219,7 +219,7 @@ describe('useUpdateArticle', () => {
       ok: true,
       json: async () => ({
         ...mockUpdatedArticle,
-        status: 'PUBLISHED',
+        status: 'published',
       }),
     })
 
@@ -230,7 +230,7 @@ describe('useUpdateArticle', () => {
     act(() => {
       result.current.mutate({
         id: 'art-1',
-        data: { status: 'PUBLISHED' },
+        data: { status: 'published' },
       })
     })
 
@@ -303,7 +303,7 @@ describe('usePublishArticle', () => {
   it('should publish article with correct data', async () => {
     ;(global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ status: 'PUBLISHED' }),
+      json: async () => ({ status: 'published' }),
     })
 
     const { result } = renderHook(() => usePublishArticle(), { wrapper })
@@ -318,7 +318,7 @@ describe('usePublishArticle', () => {
 
     const fetchCall = (global.fetch as jest.Mock).mock.calls[0][1]
     const body = JSON.parse(fetchCall.body)
-    expect(body.status).toBe('PUBLISHED')
+    expect(body.status).toBe('published')
     expect(body.publishedAt).toBeDefined()
   })
 })

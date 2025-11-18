@@ -183,7 +183,7 @@ export function usePublishArticle(options: UseUpdateArticleOptions = {}) {
       updateArticle.mutate({
         id,
         data: {
-          status: 'PUBLISHED',
+          status: 'published',
           publishedAt: new Date(),
         },
       })
@@ -192,7 +192,7 @@ export function usePublishArticle(options: UseUpdateArticleOptions = {}) {
       return updateArticle.mutateAsync({
         id,
         data: {
-          status: 'PUBLISHED',
+          status: 'published',
           publishedAt: new Date(),
         },
       })
@@ -211,13 +211,13 @@ export function useArchiveArticle(options: UseUpdateArticleOptions = {}) {
     mutate: (id: string) => {
       updateArticle.mutate({
         id,
-        data: { status: 'ARCHIVED' },
+        data: { status: 'archived' },
       })
     },
     mutateAsync: (id: string) => {
       return updateArticle.mutateAsync({
         id,
-        data: { status: 'ARCHIVED' },
+        data: { status: 'archived' },
       })
     },
   }

@@ -52,19 +52,19 @@ export async function POST(req: NextRequest) {
       points: { increment: parseInt(points) },
     };
 
-    // Adicionar badge se fornecido
-    if (badge) {
-      const currentBadges = user.badges ? JSON.parse(user.badges) : [];
-      const newBadges = [...currentBadges, {
-        id: badge.id || `badge_${Date.now()}`,
-        name: badge.name,
-        icon: badge.icon,
-        description: badge.description,
-        awardedAt: new Date().toISOString(),
-        reason,
-      }];
-      updateData.badges = JSON.stringify(newBadges);
-    }
+    // TODO: Adicionar badge se fornecido (schema v2 não tem campo badges - implementar futuramente)
+    // if (badge) {
+    //   const currentBadges = user.badges ? JSON.parse(user.badges) : [];
+    //   const newBadges = [...currentBadges, {
+    //     id: badge.id || `badge_${Date.now()}`,
+    //     name: badge.name,
+    //     icon: badge.icon,
+    //     description: badge.description,
+    //     awardedAt: new Date().toISOString(),
+    //     reason,
+    //   }];
+    //   updateData.badges = JSON.stringify(newBadges);
+    // }
 
     const updated = await prisma.user.update({
       where: { id: userId },
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
       data: {
         userId: updated.id,
         points: updated.points,
-        badges: updated.badges ? JSON.parse(updated.badges) : [],
+        // badges: updated.badges ? JSON.parse(updated.badges) : [], // TODO: implementar quando schema v2 tiver badges
       },
       message: `Awarded ${points} points${badge ? ' and badge' : ''} to user`,
     });
@@ -109,7 +109,7 @@ export async function GET(req: NextRequest) {
         email: true,
         image: true,
         points: true,
-        badges: true,
+        // badges: true, // TODO: implementar quando schema v2 tiver badges
       },
     });
 
@@ -124,7 +124,7 @@ export async function GET(req: NextRequest) {
       success: true,
       data: {
         ...user,
-        badges: user.badges ? JSON.parse(user.badges) : [],
+        // badges: user.badges ? JSON.parse(user.badges) : [], // TODO: implementar quando schema v2 tiver badges
       },
     });
   } catch (error) {

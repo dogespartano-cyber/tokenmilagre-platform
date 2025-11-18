@@ -50,8 +50,25 @@ async function getArticle(slug: string): Promise<EducationalArticle | null> {
     where: {
       slug: slug,
       type: 'educational',
-      published: true,
+      status: 'published',
+      deletedAt: null,
     },
+    include: {
+      category: {
+        select: {
+          name: true
+        }
+      },
+      tags: {
+        include: {
+          tag: {
+            select: {
+              name: true
+            }
+          }
+        }
+      }
+    }
   });
 
   if (!article) return null;
@@ -62,11 +79,11 @@ async function getArticle(slug: string): Promise<EducationalArticle | null> {
     title: article.title,
     description: article.excerpt || '',
     content: article.content,
-    category: article.category,
-    level: (article.level || 'iniciante') as 'iniciante' | 'intermediario' | 'avancado',
-    type: (article.contentType || 'Artigo') as 'Artigo' | 'Tutorial',
-    readTime: article.readTime || '10 min',
-    tags: JSON.parse(article.tags || '[]'),
+    category: article.category?.name || 'Educação',
+    level: 'iniciante' as 'iniciante' | 'intermediario' | 'avancado', // TODO: schema v2 removeu level
+    type: 'Artigo' as 'Artigo' | 'Tutorial', // TODO: schema v2 removeu contentType
+    readTime: article.readTime ? `${article.readTime} min` : '10 min',
+    tags: article.tags?.map(t => t.tag.name) || [],
     author: 'Comunidade $MILAGRE',
     publishedAt: article.createdAt.toISOString().split('T')[0],
   };
@@ -76,11 +93,30 @@ async function getRelatedArticles(category: string, currentSlug: string): Promis
   const articles = await prisma.article.findMany({
     where: {
       type: 'educational',
-      published: true,
-      category: category,
+      status: 'published',
+      deletedAt: null,
+      category: {
+        name: category
+      },
       slug: {
         not: currentSlug,
       },
+    },
+    include: {
+      category: {
+        select: {
+          name: true
+        }
+      },
+      tags: {
+        include: {
+          tag: {
+            select: {
+              name: true
+            }
+          }
+        }
+      }
     },
     take: 3,
     orderBy: {
@@ -94,11 +130,11 @@ async function getRelatedArticles(category: string, currentSlug: string): Promis
     title: article.title,
     description: article.excerpt || '',
     content: article.content,
-    category: article.category,
-    level: (article.level || 'iniciante') as 'iniciante' | 'intermediario' | 'avancado',
-    type: (article.contentType || 'Artigo') as 'Artigo' | 'Tutorial',
-    readTime: article.readTime || '10 min',
-    tags: JSON.parse(article.tags || '[]'),
+    category: article.category?.name || 'Educação',
+    level: 'iniciante' as 'iniciante' | 'intermediario' | 'avancado', // TODO: schema v2 removeu level
+    type: 'Artigo' as 'Artigo' | 'Tutorial', // TODO: schema v2 removeu contentType
+    readTime: article.readTime ? `${article.readTime} min` : '10 min',
+    tags: article.tags?.map((t: any) => t.tag.name) || [],
     author: 'Comunidade $MILAGRE',
     publishedAt: article.createdAt.toISOString().split('T')[0],
   }));

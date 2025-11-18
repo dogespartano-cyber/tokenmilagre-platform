@@ -22,18 +22,44 @@ interface NewsItem {
   lastVerified?: string;
 }
 
+type ArticleWithIncludes = {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  sentiment: string | null;
+  factCheckStatus: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  category: {
+    name: string;
+  } | null;
+  tags: Array<{
+    tag: {
+      slug: string;
+    };
+  }>;
+  citations: Array<{
+    url: string;
+  }>;
+}
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const category = searchParams.get('category');
+    const categorySlug = searchParams.get('category');
 
-    // Buscar artigos publicados do banco de dados
+    // Buscar artigos publicados do banco de dados (schema v2)
     const articles = await prisma.article.findMany({
       where: {
-        published: true,
+        status: 'published',
+        deletedAt: null,
         type: 'news',
-        ...(category && category !== 'all' ? {
-          category: category.toLowerCase()
+        ...(categorySlug && categorySlug !== 'all' ? {
+          category: {
+            slug: categorySlug.toLowerCase()
+          }
         } : {})
       },
       include: {
@@ -41,6 +67,28 @@ export async function GET(request: Request) {
           select: {
             name: true,
             email: true
+          }
+        },
+        category: {
+          select: {
+            slug: true,
+            name: true
+          }
+        },
+        tags: {
+          include: {
+            tag: {
+              select: {
+                slug: true,
+                name: true
+              }
+            }
+          }
+        },
+        citations: {
+          select: {
+            url: true,
+            domain: true
           }
         }
       },
@@ -50,7 +98,7 @@ export async function GET(request: Request) {
     });
 
     // Mapear para o formato NewsItem
-    const newsItems: NewsItem[] = articles.map((article: any) => ({
+    const newsItems: NewsItem[] = (articles as ArticleWithIncludes[]).map((article) => ({
       id: article.id,
       slug: article.slug,
       title: article.title,
@@ -58,11 +106,11 @@ export async function GET(request: Request) {
       content: article.content,
       url: `/dashboard/noticias/${article.slug}`,
       source: '$MILAGRE Research',
-      sources: article.factCheckSources ? JSON.parse(article.factCheckSources) : [],
+      sources: article.citations?.map((c) => c.url) || [],
       publishedAt: article.createdAt.toISOString(),
-      category: article.category ? [article.category] : ['Sem Categoria'],
+      category: article.category ? [article.category.name] : ['Sem Categoria'],
       sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
-      keywords: article.tags ? JSON.parse(article.tags) : [],
+      keywords: article.tags?.map((at) => at.tag.slug) || [],
       factChecked: article.factCheckStatus === 'verified',
       lastVerified: article.updatedAt.toISOString()
     }));
