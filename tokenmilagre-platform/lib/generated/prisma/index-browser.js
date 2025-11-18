@@ -157,87 +157,76 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   image: 'image',
   role: 'role',
-  points: 'points',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
-};
-
-exports.Prisma.CategoryScalarFieldEnum = {
-  id: 'id',
-  slug: 'slug',
-  name: 'name',
-  description: 'description',
-  type: 'type',
-  parentId: 'parentId',
-  icon: 'icon',
-  color: 'color',
-  order: 'order',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.TagScalarFieldEnum = {
-  id: 'id',
-  slug: 'slug',
-  name: 'name',
-  usageCount: 'usageCount',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  points: 'points',
+  badges: 'badges'
 };
 
 exports.Prisma.ArticleScalarFieldEnum = {
   id: 'id',
-  slug: 'slug',
   title: 'title',
-  excerpt: 'excerpt',
+  slug: 'slug',
   content: 'content',
   type: 'type',
-  status: 'status',
-  readTime: 'readTime',
-  viewCount: 'viewCount',
+  excerpt: 'excerpt',
+  published: 'published',
   authorId: 'authorId',
-  categoryId: 'categoryId',
+  category: 'category',
+  tags: 'tags',
   sentiment: 'sentiment',
   factCheckScore: 'factCheckScore',
+  factCheckSources: 'factCheckSources',
   factCheckDate: 'factCheckDate',
   factCheckStatus: 'factCheckStatus',
   level: 'level',
   contentType: 'contentType',
+  readTime: 'readTime',
   warningLevel: 'warningLevel',
+  securityTips: 'securityTips',
   courseSequence: 'courseSequence',
+  relatedArticles: 'relatedArticles',
   projectHighlight: 'projectHighlight',
   coverImage: 'coverImage',
   coverImageAlt: 'coverImageAlt',
+  quizData: 'quizData',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ResourceScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  name: 'name',
+  category: 'category',
+  verified: 'verified',
+  shortDescription: 'shortDescription',
+  officialUrl: 'officialUrl',
+  platforms: 'platforms',
+  tags: 'tags',
+  heroTitle: 'heroTitle',
+  heroDescription: 'heroDescription',
+  heroGradient: 'heroGradient',
+  whyGoodTitle: 'whyGoodTitle',
+  whyGoodContent: 'whyGoodContent',
+  features: 'features',
+  howToStartTitle: 'howToStartTitle',
+  howToStartSteps: 'howToStartSteps',
+  pros: 'pros',
+  cons: 'cons',
+  faq: 'faq',
+  securityTips: 'securityTips',
+  securityAudit: 'securityAudit',
+  securityAuditDate: 'securityAuditDate',
+  auditedByCommunity: 'auditedByCommunity',
+  toolConfig: 'toolConfig',
+  interactiveType: 'interactiveType',
+  showCompatibleWallets: 'showCompatibleWallets',
+  relatedResources: 'relatedResources',
+  views: 'views',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  publishedAt: 'publishedAt',
-  deletedAt: 'deletedAt'
-};
-
-exports.Prisma.ArticleTagScalarFieldEnum = {
-  articleId: 'articleId',
-  tagId: 'tagId',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.ArticleRelationScalarFieldEnum = {
-  fromArticleId: 'fromArticleId',
-  toArticleId: 'toArticleId',
-  relationType: 'relationType',
-  order: 'order',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.CitationScalarFieldEnum = {
-  id: 'id',
-  url: 'url',
-  title: 'title',
-  domain: 'domain',
-  articleId: 'articleId',
-  order: 'order',
-  verified: 'verified',
-  createdAt: 'createdAt'
+  lastVerified: 'lastVerified'
 };
 
 exports.Prisma.CryptocurrencyScalarFieldEnum = {
@@ -319,39 +308,80 @@ exports.Prisma.CopilotReportScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.ResourceScalarFieldEnum = {
+exports.Prisma.CommunityStoryScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  authorName: 'authorName',
+  authorAvatar: 'authorAvatar',
+  userId: 'userId',
+  title: 'title',
+  content: 'content',
+  category: 'category',
+  likes: 'likes',
+  verified: 'verified',
+  featured: 'featured',
+  published: 'published',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SocialProjectScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
   name: 'name',
+  description: 'description',
+  longDescription: 'longDescription',
+  fundingGoal: 'fundingGoal',
+  currentFunding: 'currentFunding',
+  currency: 'currency',
+  walletAddress: 'walletAddress',
   category: 'category',
-  verified: 'verified',
-  shortDescription: 'shortDescription',
-  officialUrl: 'officialUrl',
-  platforms: 'platforms',
+  location: 'location',
   tags: 'tags',
-  heroTitle: 'heroTitle',
-  heroDescription: 'heroDescription',
-  heroGradient: 'heroGradient',
-  whyGoodTitle: 'whyGoodTitle',
-  whyGoodContent: 'whyGoodContent',
-  features: 'features',
-  howToStartTitle: 'howToStartTitle',
-  howToStartSteps: 'howToStartSteps',
-  pros: 'pros',
-  cons: 'cons',
-  faq: 'faq',
-  securityTips: 'securityTips',
-  securityAudit: 'securityAudit',
-  securityAuditDate: 'securityAuditDate',
-  auditedByCommunity: 'auditedByCommunity',
-  toolConfig: 'toolConfig',
-  interactiveType: 'interactiveType',
-  showCompatibleWallets: 'showCompatibleWallets',
-  relatedResources: 'relatedResources',
+  verified: 'verified',
+  active: 'active',
+  featured: 'featured',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  supporters: 'supporters',
   views: 'views',
+  coverImage: 'coverImage',
+  gallery: 'gallery',
+  organizer: 'organizer',
+  organizerEmail: 'organizerEmail',
+  organizerPhone: 'organizerPhone',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  lastVerified: 'lastVerified'
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProjectMapScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  country: 'country',
+  markerColor: 'markerColor',
+  markerIcon: 'markerIcon',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  articleSlug: 'articleSlug',
+  completed: 'completed',
+  progress: 'progress',
+  quizScore: 'quizScore',
+  quizAttempts: 'quizAttempts',
+  certificateIssued: 'certificateIssued',
+  certificateUrl: 'certificateUrl',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  lastAccessed: 'lastAccessed'
 };
 
 exports.Prisma.SortOrder = {
@@ -374,33 +404,29 @@ exports.Role = exports.$Enums.Role = {
   VIEWER: 'VIEWER'
 };
 
-exports.ArticleType = exports.$Enums.ArticleType = {
-  news: 'news',
-  educational: 'educational'
-};
-
-exports.ArticleStatus = exports.$Enums.ArticleStatus = {
-  draft: 'draft',
-  published: 'published',
-  archived: 'archived'
-};
-
 exports.Sentiment = exports.$Enums.Sentiment = {
   positive: 'positive',
   neutral: 'neutral',
   negative: 'negative'
 };
 
-exports.Level = exports.$Enums.Level = {
-  iniciante: 'iniciante',
-  intermediario: 'intermediario',
-  avancado: 'avancado'
+exports.WarningLevel = exports.$Enums.WarningLevel = {
+  info: 'info',
+  warning: 'warning',
+  critical: 'critical'
 };
 
-exports.ContentType = exports.$Enums.ContentType = {
-  artigo: 'artigo',
-  tutorial: 'tutorial',
-  curso: 'curso'
+exports.StoryCategory = exports.$Enums.StoryCategory = {
+  transformation: 'transformation',
+  social_project: 'social_project',
+  achievement: 'achievement'
+};
+
+exports.ProjectCategory = exports.$Enums.ProjectCategory = {
+  donations: 'donations',
+  microcredit: 'microcredit',
+  education: 'education',
+  infrastructure: 'infrastructure'
 };
 
 exports.Prisma.ModelName = {
@@ -408,17 +434,16 @@ exports.Prisma.ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   User: 'User',
-  Category: 'Category',
-  Tag: 'Tag',
   Article: 'Article',
-  ArticleTag: 'ArticleTag',
-  ArticleRelation: 'ArticleRelation',
-  Citation: 'Citation',
+  Resource: 'Resource',
   Cryptocurrency: 'Cryptocurrency',
   CopilotActivity: 'CopilotActivity',
   AutomationTask: 'AutomationTask',
   CopilotReport: 'CopilotReport',
-  Resource: 'Resource'
+  CommunityStory: 'CommunityStory',
+  SocialProject: 'SocialProject',
+  ProjectMap: 'ProjectMap',
+  UserProgress: 'UserProgress'
 };
 
 /**

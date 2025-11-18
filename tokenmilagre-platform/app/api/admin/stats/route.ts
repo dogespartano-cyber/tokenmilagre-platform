@@ -39,17 +39,17 @@ export async function GET(request: NextRequest) {
     ] = await Promise.all([
       // Total de artigos
       prisma.article.count({
-        where: { status: 'published', deletedAt: null }
+        where: { published: true }
       }),
 
       // Total de notícias
       prisma.article.count({
-        where: { type: 'news', status: 'published', deletedAt: null }
+        where: { type: 'news', published: true }
       }),
 
       // Total de artigos educacionais
       prisma.article.count({
-        where: { type: 'educational', status: 'published', deletedAt: null }
+        where: { type: 'educational', published: true }
       }),
 
       // Total de usuários
@@ -58,8 +58,7 @@ export async function GET(request: NextRequest) {
       // Publicados esta semana
       prisma.article.count({
         where: {
-          status: 'published',
-          deletedAt: null,
+          published: true,
           createdAt: {
             gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) // Últimos 7 dias
           }
@@ -71,8 +70,7 @@ export async function GET(request: NextRequest) {
         by: ['level'],
         where: {
           type: 'educational',
-          status: 'published',
-          deletedAt: null,
+          published: true,
           level: {
             not: null
           }

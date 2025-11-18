@@ -30,11 +30,10 @@ export async function GET(request: Request) {
     // Buscar artigos publicados do banco de dados
     const articles = await prisma.article.findMany({
       where: {
-        status: 'published', deletedAt: null,
+        published: true,
+        type: 'news',
         ...(category && category !== 'all' ? {
-          category: {
-            slug: category.toLowerCase()
-          }
+          category: category.toLowerCase()
         } : {})
       },
       include: {
@@ -42,12 +41,6 @@ export async function GET(request: Request) {
           select: {
             name: true,
             email: true
-          }
-        },
-        category: {
-          select: {
-            name: true,
-            slug: true
           }
         }
       },
@@ -67,9 +60,9 @@ export async function GET(request: Request) {
       source: '$MILAGRE Research',
       sources: article.factCheckSources ? JSON.parse(article.factCheckSources) : [],
       publishedAt: article.createdAt.toISOString(),
-      category: article.category?.name ? [article.category.name] : ['Sem Categoria'],
+      category: article.category ? [article.category] : ['Sem Categoria'],
       sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
-      keywords: [],
+      keywords: article.tags ? JSON.parse(article.tags) : [],
       factChecked: article.factCheckStatus === 'verified',
       lastVerified: article.updatedAt.toISOString()
     }));

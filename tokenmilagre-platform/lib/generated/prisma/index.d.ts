@@ -34,35 +34,15 @@ export type VerificationToken = $Result.DefaultSelection<Prisma.$VerificationTok
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
- * Model Category
- * 
- */
-export type Category = $Result.DefaultSelection<Prisma.$CategoryPayload>
-/**
- * Model Tag
- * 
- */
-export type Tag = $Result.DefaultSelection<Prisma.$TagPayload>
-/**
  * Model Article
  * 
  */
 export type Article = $Result.DefaultSelection<Prisma.$ArticlePayload>
 /**
- * Model ArticleTag
+ * Model Resource
  * 
  */
-export type ArticleTag = $Result.DefaultSelection<Prisma.$ArticleTagPayload>
-/**
- * Model ArticleRelation
- * 
- */
-export type ArticleRelation = $Result.DefaultSelection<Prisma.$ArticleRelationPayload>
-/**
- * Model Citation
- * 
- */
-export type Citation = $Result.DefaultSelection<Prisma.$CitationPayload>
+export type Resource = $Result.DefaultSelection<Prisma.$ResourcePayload>
 /**
  * Model Cryptocurrency
  * 
@@ -84,10 +64,25 @@ export type AutomationTask = $Result.DefaultSelection<Prisma.$AutomationTaskPayl
  */
 export type CopilotReport = $Result.DefaultSelection<Prisma.$CopilotReportPayload>
 /**
- * Model Resource
+ * Model CommunityStory
  * 
  */
-export type Resource = $Result.DefaultSelection<Prisma.$ResourcePayload>
+export type CommunityStory = $Result.DefaultSelection<Prisma.$CommunityStoryPayload>
+/**
+ * Model SocialProject
+ * 
+ */
+export type SocialProject = $Result.DefaultSelection<Prisma.$SocialProjectPayload>
+/**
+ * Model ProjectMap
+ * 
+ */
+export type ProjectMap = $Result.DefaultSelection<Prisma.$ProjectMapPayload>
+/**
+ * Model UserProgress
+ * 
+ */
+export type UserProgress = $Result.DefaultSelection<Prisma.$UserProgressPayload>
 
 /**
  * Enums
@@ -102,23 +97,6 @@ export namespace $Enums {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
-export const ArticleType: {
-  news: 'news',
-  educational: 'educational'
-};
-
-export type ArticleType = (typeof ArticleType)[keyof typeof ArticleType]
-
-
-export const ArticleStatus: {
-  draft: 'draft',
-  published: 'published',
-  archived: 'archived'
-};
-
-export type ArticleStatus = (typeof ArticleStatus)[keyof typeof ArticleStatus]
-
-
 export const Sentiment: {
   positive: 'positive',
   neutral: 'neutral',
@@ -128,22 +106,32 @@ export const Sentiment: {
 export type Sentiment = (typeof Sentiment)[keyof typeof Sentiment]
 
 
-export const Level: {
-  iniciante: 'iniciante',
-  intermediario: 'intermediario',
-  avancado: 'avancado'
+export const WarningLevel: {
+  info: 'info',
+  warning: 'warning',
+  critical: 'critical'
 };
 
-export type Level = (typeof Level)[keyof typeof Level]
+export type WarningLevel = (typeof WarningLevel)[keyof typeof WarningLevel]
 
 
-export const ContentType: {
-  artigo: 'artigo',
-  tutorial: 'tutorial',
-  curso: 'curso'
+export const StoryCategory: {
+  transformation: 'transformation',
+  social_project: 'social_project',
+  achievement: 'achievement'
 };
 
-export type ContentType = (typeof ContentType)[keyof typeof ContentType]
+export type StoryCategory = (typeof StoryCategory)[keyof typeof StoryCategory]
+
+
+export const ProjectCategory: {
+  donations: 'donations',
+  microcredit: 'microcredit',
+  education: 'education',
+  infrastructure: 'infrastructure'
+};
+
+export type ProjectCategory = (typeof ProjectCategory)[keyof typeof ProjectCategory]
 
 }
 
@@ -151,25 +139,21 @@ export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
 
-export type ArticleType = $Enums.ArticleType
-
-export const ArticleType: typeof $Enums.ArticleType
-
-export type ArticleStatus = $Enums.ArticleStatus
-
-export const ArticleStatus: typeof $Enums.ArticleStatus
-
 export type Sentiment = $Enums.Sentiment
 
 export const Sentiment: typeof $Enums.Sentiment
 
-export type Level = $Enums.Level
+export type WarningLevel = $Enums.WarningLevel
 
-export const Level: typeof $Enums.Level
+export const WarningLevel: typeof $Enums.WarningLevel
 
-export type ContentType = $Enums.ContentType
+export type StoryCategory = $Enums.StoryCategory
 
-export const ContentType: typeof $Enums.ContentType
+export const StoryCategory: typeof $Enums.StoryCategory
+
+export type ProjectCategory = $Enums.ProjectCategory
+
+export const ProjectCategory: typeof $Enums.ProjectCategory
 
 /**
  * ##  Prisma Client ʲˢ
@@ -330,26 +314,6 @@ export class PrismaClient<
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.category`: Exposes CRUD operations for the **Category** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Categories
-    * const categories = await prisma.category.findMany()
-    * ```
-    */
-  get category(): Prisma.CategoryDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.tag`: Exposes CRUD operations for the **Tag** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Tags
-    * const tags = await prisma.tag.findMany()
-    * ```
-    */
-  get tag(): Prisma.TagDelegate<ExtArgs, ClientOptions>;
-
-  /**
    * `prisma.article`: Exposes CRUD operations for the **Article** model.
     * Example usage:
     * ```ts
@@ -360,34 +324,14 @@ export class PrismaClient<
   get article(): Prisma.ArticleDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.articleTag`: Exposes CRUD operations for the **ArticleTag** model.
+   * `prisma.resource`: Exposes CRUD operations for the **Resource** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more ArticleTags
-    * const articleTags = await prisma.articleTag.findMany()
+    * // Fetch zero or more Resources
+    * const resources = await prisma.resource.findMany()
     * ```
     */
-  get articleTag(): Prisma.ArticleTagDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.articleRelation`: Exposes CRUD operations for the **ArticleRelation** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more ArticleRelations
-    * const articleRelations = await prisma.articleRelation.findMany()
-    * ```
-    */
-  get articleRelation(): Prisma.ArticleRelationDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.citation`: Exposes CRUD operations for the **Citation** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Citations
-    * const citations = await prisma.citation.findMany()
-    * ```
-    */
-  get citation(): Prisma.CitationDelegate<ExtArgs, ClientOptions>;
+  get resource(): Prisma.ResourceDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.cryptocurrency`: Exposes CRUD operations for the **Cryptocurrency** model.
@@ -430,14 +374,44 @@ export class PrismaClient<
   get copilotReport(): Prisma.CopilotReportDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.resource`: Exposes CRUD operations for the **Resource** model.
+   * `prisma.communityStory`: Exposes CRUD operations for the **CommunityStory** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Resources
-    * const resources = await prisma.resource.findMany()
+    * // Fetch zero or more CommunityStories
+    * const communityStories = await prisma.communityStory.findMany()
     * ```
     */
-  get resource(): Prisma.ResourceDelegate<ExtArgs, ClientOptions>;
+  get communityStory(): Prisma.CommunityStoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.socialProject`: Exposes CRUD operations for the **SocialProject** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SocialProjects
+    * const socialProjects = await prisma.socialProject.findMany()
+    * ```
+    */
+  get socialProject(): Prisma.SocialProjectDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.projectMap`: Exposes CRUD operations for the **ProjectMap** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProjectMaps
+    * const projectMaps = await prisma.projectMap.findMany()
+    * ```
+    */
+  get projectMap(): Prisma.ProjectMapDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userProgress`: Exposes CRUD operations for the **UserProgress** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserProgresses
+    * const userProgresses = await prisma.userProgress.findMany()
+    * ```
+    */
+  get userProgress(): Prisma.UserProgressDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -883,17 +857,16 @@ export namespace Prisma {
     Session: 'Session',
     VerificationToken: 'VerificationToken',
     User: 'User',
-    Category: 'Category',
-    Tag: 'Tag',
     Article: 'Article',
-    ArticleTag: 'ArticleTag',
-    ArticleRelation: 'ArticleRelation',
-    Citation: 'Citation',
+    Resource: 'Resource',
     Cryptocurrency: 'Cryptocurrency',
     CopilotActivity: 'CopilotActivity',
     AutomationTask: 'AutomationTask',
     CopilotReport: 'CopilotReport',
-    Resource: 'Resource'
+    CommunityStory: 'CommunityStory',
+    SocialProject: 'SocialProject',
+    ProjectMap: 'ProjectMap',
+    UserProgress: 'UserProgress'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -912,7 +885,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "session" | "verificationToken" | "user" | "category" | "tag" | "article" | "articleTag" | "articleRelation" | "citation" | "cryptocurrency" | "copilotActivity" | "automationTask" | "copilotReport" | "resource"
+      modelProps: "account" | "session" | "verificationToken" | "user" | "article" | "resource" | "cryptocurrency" | "copilotActivity" | "automationTask" | "copilotReport" | "communityStory" | "socialProject" | "projectMap" | "userProgress"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1212,154 +1185,6 @@ export namespace Prisma {
           }
         }
       }
-      Category: {
-        payload: Prisma.$CategoryPayload<ExtArgs>
-        fields: Prisma.CategoryFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.CategoryFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CategoryPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.CategoryFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>
-          }
-          findFirst: {
-            args: Prisma.CategoryFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CategoryPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.CategoryFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>
-          }
-          findMany: {
-            args: Prisma.CategoryFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>[]
-          }
-          create: {
-            args: Prisma.CategoryCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>
-          }
-          createMany: {
-            args: Prisma.CategoryCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.CategoryCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>[]
-          }
-          delete: {
-            args: Prisma.CategoryDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>
-          }
-          update: {
-            args: Prisma.CategoryUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>
-          }
-          deleteMany: {
-            args: Prisma.CategoryDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.CategoryUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.CategoryUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>[]
-          }
-          upsert: {
-            args: Prisma.CategoryUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>
-          }
-          aggregate: {
-            args: Prisma.CategoryAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCategory>
-          }
-          groupBy: {
-            args: Prisma.CategoryGroupByArgs<ExtArgs>
-            result: $Utils.Optional<CategoryGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.CategoryCountArgs<ExtArgs>
-            result: $Utils.Optional<CategoryCountAggregateOutputType> | number
-          }
-        }
-      }
-      Tag: {
-        payload: Prisma.$TagPayload<ExtArgs>
-        fields: Prisma.TagFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.TagFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.TagFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>
-          }
-          findFirst: {
-            args: Prisma.TagFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.TagFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>
-          }
-          findMany: {
-            args: Prisma.TagFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
-          }
-          create: {
-            args: Prisma.TagCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>
-          }
-          createMany: {
-            args: Prisma.TagCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.TagCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
-          }
-          delete: {
-            args: Prisma.TagDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>
-          }
-          update: {
-            args: Prisma.TagUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>
-          }
-          deleteMany: {
-            args: Prisma.TagDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.TagUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.TagUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
-          }
-          upsert: {
-            args: Prisma.TagUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>
-          }
-          aggregate: {
-            args: Prisma.TagAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateTag>
-          }
-          groupBy: {
-            args: Prisma.TagGroupByArgs<ExtArgs>
-            result: $Utils.Optional<TagGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.TagCountArgs<ExtArgs>
-            result: $Utils.Optional<TagCountAggregateOutputType> | number
-          }
-        }
-      }
       Article: {
         payload: Prisma.$ArticlePayload<ExtArgs>
         fields: Prisma.ArticleFieldRefs
@@ -1434,225 +1259,77 @@ export namespace Prisma {
           }
         }
       }
-      ArticleTag: {
-        payload: Prisma.$ArticleTagPayload<ExtArgs>
-        fields: Prisma.ArticleTagFieldRefs
+      Resource: {
+        payload: Prisma.$ResourcePayload<ExtArgs>
+        fields: Prisma.ResourceFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ArticleTagFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleTagPayload> | null
+            args: Prisma.ResourceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ArticleTagFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleTagPayload>
+            args: Prisma.ResourceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
           }
           findFirst: {
-            args: Prisma.ArticleTagFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleTagPayload> | null
+            args: Prisma.ResourceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ArticleTagFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleTagPayload>
+            args: Prisma.ResourceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
           }
           findMany: {
-            args: Prisma.ArticleTagFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleTagPayload>[]
+            args: Prisma.ResourceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>[]
           }
           create: {
-            args: Prisma.ArticleTagCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleTagPayload>
+            args: Prisma.ResourceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
           }
           createMany: {
-            args: Prisma.ArticleTagCreateManyArgs<ExtArgs>
+            args: Prisma.ResourceCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ArticleTagCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleTagPayload>[]
+            args: Prisma.ResourceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>[]
           }
           delete: {
-            args: Prisma.ArticleTagDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleTagPayload>
+            args: Prisma.ResourceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
           }
           update: {
-            args: Prisma.ArticleTagUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleTagPayload>
+            args: Prisma.ResourceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
           }
           deleteMany: {
-            args: Prisma.ArticleTagDeleteManyArgs<ExtArgs>
+            args: Prisma.ResourceDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ArticleTagUpdateManyArgs<ExtArgs>
+            args: Prisma.ResourceUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ArticleTagUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleTagPayload>[]
+            args: Prisma.ResourceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>[]
           }
           upsert: {
-            args: Prisma.ArticleTagUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleTagPayload>
+            args: Prisma.ResourceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
           }
           aggregate: {
-            args: Prisma.ArticleTagAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateArticleTag>
+            args: Prisma.ResourceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateResource>
           }
           groupBy: {
-            args: Prisma.ArticleTagGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ArticleTagGroupByOutputType>[]
+            args: Prisma.ResourceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ResourceGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ArticleTagCountArgs<ExtArgs>
-            result: $Utils.Optional<ArticleTagCountAggregateOutputType> | number
-          }
-        }
-      }
-      ArticleRelation: {
-        payload: Prisma.$ArticleRelationPayload<ExtArgs>
-        fields: Prisma.ArticleRelationFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.ArticleRelationFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleRelationPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.ArticleRelationFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleRelationPayload>
-          }
-          findFirst: {
-            args: Prisma.ArticleRelationFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleRelationPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.ArticleRelationFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleRelationPayload>
-          }
-          findMany: {
-            args: Prisma.ArticleRelationFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleRelationPayload>[]
-          }
-          create: {
-            args: Prisma.ArticleRelationCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleRelationPayload>
-          }
-          createMany: {
-            args: Prisma.ArticleRelationCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.ArticleRelationCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleRelationPayload>[]
-          }
-          delete: {
-            args: Prisma.ArticleRelationDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleRelationPayload>
-          }
-          update: {
-            args: Prisma.ArticleRelationUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleRelationPayload>
-          }
-          deleteMany: {
-            args: Prisma.ArticleRelationDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.ArticleRelationUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.ArticleRelationUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleRelationPayload>[]
-          }
-          upsert: {
-            args: Prisma.ArticleRelationUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticleRelationPayload>
-          }
-          aggregate: {
-            args: Prisma.ArticleRelationAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateArticleRelation>
-          }
-          groupBy: {
-            args: Prisma.ArticleRelationGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ArticleRelationGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.ArticleRelationCountArgs<ExtArgs>
-            result: $Utils.Optional<ArticleRelationCountAggregateOutputType> | number
-          }
-        }
-      }
-      Citation: {
-        payload: Prisma.$CitationPayload<ExtArgs>
-        fields: Prisma.CitationFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.CitationFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CitationPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.CitationFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CitationPayload>
-          }
-          findFirst: {
-            args: Prisma.CitationFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CitationPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.CitationFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CitationPayload>
-          }
-          findMany: {
-            args: Prisma.CitationFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CitationPayload>[]
-          }
-          create: {
-            args: Prisma.CitationCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CitationPayload>
-          }
-          createMany: {
-            args: Prisma.CitationCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.CitationCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CitationPayload>[]
-          }
-          delete: {
-            args: Prisma.CitationDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CitationPayload>
-          }
-          update: {
-            args: Prisma.CitationUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CitationPayload>
-          }
-          deleteMany: {
-            args: Prisma.CitationDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.CitationUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.CitationUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CitationPayload>[]
-          }
-          upsert: {
-            args: Prisma.CitationUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CitationPayload>
-          }
-          aggregate: {
-            args: Prisma.CitationAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCitation>
-          }
-          groupBy: {
-            args: Prisma.CitationGroupByArgs<ExtArgs>
-            result: $Utils.Optional<CitationGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.CitationCountArgs<ExtArgs>
-            result: $Utils.Optional<CitationCountAggregateOutputType> | number
+            args: Prisma.ResourceCountArgs<ExtArgs>
+            result: $Utils.Optional<ResourceCountAggregateOutputType> | number
           }
         }
       }
@@ -1952,77 +1629,299 @@ export namespace Prisma {
           }
         }
       }
-      Resource: {
-        payload: Prisma.$ResourcePayload<ExtArgs>
-        fields: Prisma.ResourceFieldRefs
+      CommunityStory: {
+        payload: Prisma.$CommunityStoryPayload<ExtArgs>
+        fields: Prisma.CommunityStoryFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ResourceFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ResourcePayload> | null
+            args: Prisma.CommunityStoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityStoryPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ResourceFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
+            args: Prisma.CommunityStoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityStoryPayload>
           }
           findFirst: {
-            args: Prisma.ResourceFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ResourcePayload> | null
+            args: Prisma.CommunityStoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityStoryPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ResourceFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
+            args: Prisma.CommunityStoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityStoryPayload>
           }
           findMany: {
-            args: Prisma.ResourceFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>[]
+            args: Prisma.CommunityStoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityStoryPayload>[]
           }
           create: {
-            args: Prisma.ResourceCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
+            args: Prisma.CommunityStoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityStoryPayload>
           }
           createMany: {
-            args: Prisma.ResourceCreateManyArgs<ExtArgs>
+            args: Prisma.CommunityStoryCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ResourceCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>[]
+            args: Prisma.CommunityStoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityStoryPayload>[]
           }
           delete: {
-            args: Prisma.ResourceDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
+            args: Prisma.CommunityStoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityStoryPayload>
           }
           update: {
-            args: Prisma.ResourceUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
+            args: Prisma.CommunityStoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityStoryPayload>
           }
           deleteMany: {
-            args: Prisma.ResourceDeleteManyArgs<ExtArgs>
+            args: Prisma.CommunityStoryDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ResourceUpdateManyArgs<ExtArgs>
+            args: Prisma.CommunityStoryUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ResourceUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>[]
+            args: Prisma.CommunityStoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityStoryPayload>[]
           }
           upsert: {
-            args: Prisma.ResourceUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
+            args: Prisma.CommunityStoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityStoryPayload>
           }
           aggregate: {
-            args: Prisma.ResourceAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateResource>
+            args: Prisma.CommunityStoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCommunityStory>
           }
           groupBy: {
-            args: Prisma.ResourceGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ResourceGroupByOutputType>[]
+            args: Prisma.CommunityStoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CommunityStoryGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ResourceCountArgs<ExtArgs>
-            result: $Utils.Optional<ResourceCountAggregateOutputType> | number
+            args: Prisma.CommunityStoryCountArgs<ExtArgs>
+            result: $Utils.Optional<CommunityStoryCountAggregateOutputType> | number
+          }
+        }
+      }
+      SocialProject: {
+        payload: Prisma.$SocialProjectPayload<ExtArgs>
+        fields: Prisma.SocialProjectFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SocialProjectFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialProjectPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SocialProjectFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialProjectPayload>
+          }
+          findFirst: {
+            args: Prisma.SocialProjectFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialProjectPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SocialProjectFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialProjectPayload>
+          }
+          findMany: {
+            args: Prisma.SocialProjectFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialProjectPayload>[]
+          }
+          create: {
+            args: Prisma.SocialProjectCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialProjectPayload>
+          }
+          createMany: {
+            args: Prisma.SocialProjectCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SocialProjectCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialProjectPayload>[]
+          }
+          delete: {
+            args: Prisma.SocialProjectDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialProjectPayload>
+          }
+          update: {
+            args: Prisma.SocialProjectUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialProjectPayload>
+          }
+          deleteMany: {
+            args: Prisma.SocialProjectDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SocialProjectUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SocialProjectUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialProjectPayload>[]
+          }
+          upsert: {
+            args: Prisma.SocialProjectUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialProjectPayload>
+          }
+          aggregate: {
+            args: Prisma.SocialProjectAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSocialProject>
+          }
+          groupBy: {
+            args: Prisma.SocialProjectGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SocialProjectGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SocialProjectCountArgs<ExtArgs>
+            result: $Utils.Optional<SocialProjectCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProjectMap: {
+        payload: Prisma.$ProjectMapPayload<ExtArgs>
+        fields: Prisma.ProjectMapFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProjectMapFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectMapPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProjectMapFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectMapPayload>
+          }
+          findFirst: {
+            args: Prisma.ProjectMapFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectMapPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProjectMapFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectMapPayload>
+          }
+          findMany: {
+            args: Prisma.ProjectMapFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectMapPayload>[]
+          }
+          create: {
+            args: Prisma.ProjectMapCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectMapPayload>
+          }
+          createMany: {
+            args: Prisma.ProjectMapCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProjectMapCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectMapPayload>[]
+          }
+          delete: {
+            args: Prisma.ProjectMapDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectMapPayload>
+          }
+          update: {
+            args: Prisma.ProjectMapUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectMapPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProjectMapDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProjectMapUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProjectMapUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectMapPayload>[]
+          }
+          upsert: {
+            args: Prisma.ProjectMapUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectMapPayload>
+          }
+          aggregate: {
+            args: Prisma.ProjectMapAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProjectMap>
+          }
+          groupBy: {
+            args: Prisma.ProjectMapGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProjectMapGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProjectMapCountArgs<ExtArgs>
+            result: $Utils.Optional<ProjectMapCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserProgress: {
+        payload: Prisma.$UserProgressPayload<ExtArgs>
+        fields: Prisma.UserProgressFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserProgressFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserProgressPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserProgressFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserProgressPayload>
+          }
+          findFirst: {
+            args: Prisma.UserProgressFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserProgressPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserProgressFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserProgressPayload>
+          }
+          findMany: {
+            args: Prisma.UserProgressFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserProgressPayload>[]
+          }
+          create: {
+            args: Prisma.UserProgressCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserProgressPayload>
+          }
+          createMany: {
+            args: Prisma.UserProgressCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserProgressCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserProgressPayload>[]
+          }
+          delete: {
+            args: Prisma.UserProgressDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserProgressPayload>
+          }
+          update: {
+            args: Prisma.UserProgressUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserProgressPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserProgressDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserProgressUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserProgressUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserProgressPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserProgressUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserProgressPayload>
+          }
+          aggregate: {
+            args: Prisma.UserProgressAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserProgress>
+          }
+          groupBy: {
+            args: Prisma.UserProgressGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserProgressGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserProgressCountArgs<ExtArgs>
+            result: $Utils.Optional<UserProgressCountAggregateOutputType> | number
           }
         }
       }
@@ -2126,17 +2025,16 @@ export namespace Prisma {
     session?: SessionOmit
     verificationToken?: VerificationTokenOmit
     user?: UserOmit
-    category?: CategoryOmit
-    tag?: TagOmit
     article?: ArticleOmit
-    articleTag?: ArticleTagOmit
-    articleRelation?: ArticleRelationOmit
-    citation?: CitationOmit
+    resource?: ResourceOmit
     cryptocurrency?: CryptocurrencyOmit
     copilotActivity?: CopilotActivityOmit
     automationTask?: AutomationTaskOmit
     copilotReport?: CopilotReportOmit
-    resource?: ResourceOmit
+    communityStory?: CommunityStoryOmit
+    socialProject?: SocialProjectOmit
+    projectMap?: ProjectMapOmit
+    userProgress?: UserProgressOmit
   }
 
   /* Types for Logging */
@@ -2221,6 +2119,8 @@ export namespace Prisma {
     sessions: number
     articles: number
     copilotActivities: number
+    communityStories: number
+    userProgress: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2228,6 +2128,8 @@ export namespace Prisma {
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     articles?: boolean | UserCountOutputTypeCountArticlesArgs
     copilotActivities?: boolean | UserCountOutputTypeCountCopilotActivitiesArgs
+    communityStories?: boolean | UserCountOutputTypeCountCommunityStoriesArgs
+    userProgress?: boolean | UserCountOutputTypeCountUserProgressArgs
   }
 
   // Custom InputTypes
@@ -2269,133 +2171,18 @@ export namespace Prisma {
     where?: CopilotActivityWhereInput
   }
 
-
   /**
-   * Count Type CategoryCountOutputType
+   * UserCountOutputType without action
    */
-
-  export type CategoryCountOutputType = {
-    children: number
-    articles: number
-  }
-
-  export type CategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    children?: boolean | CategoryCountOutputTypeCountChildrenArgs
-    articles?: boolean | CategoryCountOutputTypeCountArticlesArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * CategoryCountOutputType without action
-   */
-  export type CategoryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CategoryCountOutputType
-     */
-    select?: CategoryCountOutputTypeSelect<ExtArgs> | null
+  export type UserCountOutputTypeCountCommunityStoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommunityStoryWhereInput
   }
 
   /**
-   * CategoryCountOutputType without action
+   * UserCountOutputType without action
    */
-  export type CategoryCountOutputTypeCountChildrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CategoryWhereInput
-  }
-
-  /**
-   * CategoryCountOutputType without action
-   */
-  export type CategoryCountOutputTypeCountArticlesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ArticleWhereInput
-  }
-
-
-  /**
-   * Count Type TagCountOutputType
-   */
-
-  export type TagCountOutputType = {
-    articles: number
-  }
-
-  export type TagCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    articles?: boolean | TagCountOutputTypeCountArticlesArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * TagCountOutputType without action
-   */
-  export type TagCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TagCountOutputType
-     */
-    select?: TagCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * TagCountOutputType without action
-   */
-  export type TagCountOutputTypeCountArticlesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ArticleTagWhereInput
-  }
-
-
-  /**
-   * Count Type ArticleCountOutputType
-   */
-
-  export type ArticleCountOutputType = {
-    tags: number
-    relatedFrom: number
-    relatedTo: number
-    citations: number
-  }
-
-  export type ArticleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tags?: boolean | ArticleCountOutputTypeCountTagsArgs
-    relatedFrom?: boolean | ArticleCountOutputTypeCountRelatedFromArgs
-    relatedTo?: boolean | ArticleCountOutputTypeCountRelatedToArgs
-    citations?: boolean | ArticleCountOutputTypeCountCitationsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * ArticleCountOutputType without action
-   */
-  export type ArticleCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleCountOutputType
-     */
-    select?: ArticleCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * ArticleCountOutputType without action
-   */
-  export type ArticleCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ArticleTagWhereInput
-  }
-
-  /**
-   * ArticleCountOutputType without action
-   */
-  export type ArticleCountOutputTypeCountRelatedFromArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ArticleRelationWhereInput
-  }
-
-  /**
-   * ArticleCountOutputType without action
-   */
-  export type ArticleCountOutputTypeCountRelatedToArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ArticleRelationWhereInput
-  }
-
-  /**
-   * ArticleCountOutputType without action
-   */
-  export type ArticleCountOutputTypeCountCitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CitationWhereInput
+  export type UserCountOutputTypeCountUserProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserProgressWhereInput
   }
 
 
@@ -5628,10 +5415,10 @@ export namespace Prisma {
     password: string | null
     image: string | null
     role: $Enums.Role | null
-    points: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    deletedAt: Date | null
+    points: number | null
+    badges: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -5642,10 +5429,10 @@ export namespace Prisma {
     password: string | null
     image: string | null
     role: $Enums.Role | null
-    points: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    deletedAt: Date | null
+    points: number | null
+    badges: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -5656,10 +5443,10 @@ export namespace Prisma {
     password: number
     image: number
     role: number
-    points: number
     createdAt: number
     updatedAt: number
-    deletedAt: number
+    points: number
+    badges: number
     _all: number
   }
 
@@ -5680,10 +5467,10 @@ export namespace Prisma {
     password?: true
     image?: true
     role?: true
-    points?: true
     createdAt?: true
     updatedAt?: true
-    deletedAt?: true
+    points?: true
+    badges?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -5694,10 +5481,10 @@ export namespace Prisma {
     password?: true
     image?: true
     role?: true
-    points?: true
     createdAt?: true
     updatedAt?: true
-    deletedAt?: true
+    points?: true
+    badges?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -5708,10 +5495,10 @@ export namespace Prisma {
     password?: true
     image?: true
     role?: true
-    points?: true
     createdAt?: true
     updatedAt?: true
-    deletedAt?: true
+    points?: true
+    badges?: true
     _all?: true
   }
 
@@ -5809,10 +5596,10 @@ export namespace Prisma {
     password: string
     image: string | null
     role: $Enums.Role
-    points: number
     createdAt: Date
     updatedAt: Date
-    deletedAt: Date | null
+    points: number
+    badges: string | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -5842,14 +5629,16 @@ export namespace Prisma {
     password?: boolean
     image?: boolean
     role?: boolean
-    points?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    deletedAt?: boolean
+    points?: boolean
+    badges?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     articles?: boolean | User$articlesArgs<ExtArgs>
     copilotActivities?: boolean | User$copilotActivitiesArgs<ExtArgs>
+    communityStories?: boolean | User$communityStoriesArgs<ExtArgs>
+    userProgress?: boolean | User$userProgressArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -5861,10 +5650,10 @@ export namespace Prisma {
     password?: boolean
     image?: boolean
     role?: boolean
-    points?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    deletedAt?: boolean
+    points?: boolean
+    badges?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5875,10 +5664,10 @@ export namespace Prisma {
     password?: boolean
     image?: boolean
     role?: boolean
-    points?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    deletedAt?: boolean
+    points?: boolean
+    badges?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -5889,18 +5678,20 @@ export namespace Prisma {
     password?: boolean
     image?: boolean
     role?: boolean
-    points?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    deletedAt?: boolean
+    points?: boolean
+    badges?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "password" | "image" | "role" | "points" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "password" | "image" | "role" | "createdAt" | "updatedAt" | "points" | "badges", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     articles?: boolean | User$articlesArgs<ExtArgs>
     copilotActivities?: boolean | User$copilotActivitiesArgs<ExtArgs>
+    communityStories?: boolean | User$communityStoriesArgs<ExtArgs>
+    userProgress?: boolean | User$userProgressArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5913,6 +5704,8 @@ export namespace Prisma {
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       articles: Prisma.$ArticlePayload<ExtArgs>[]
       copilotActivities: Prisma.$CopilotActivityPayload<ExtArgs>[]
+      communityStories: Prisma.$CommunityStoryPayload<ExtArgs>[]
+      userProgress: Prisma.$UserProgressPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5922,10 +5715,10 @@ export namespace Prisma {
       password: string
       image: string | null
       role: $Enums.Role
-      points: number
       createdAt: Date
       updatedAt: Date
-      deletedAt: Date | null
+      points: number
+      badges: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -6324,6 +6117,8 @@ export namespace Prisma {
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     articles<T extends User$articlesArgs<ExtArgs> = {}>(args?: Subset<T, User$articlesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     copilotActivities<T extends User$copilotActivitiesArgs<ExtArgs> = {}>(args?: Subset<T, User$copilotActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CopilotActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    communityStories<T extends User$communityStoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$communityStoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommunityStoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    userProgress<T extends User$userProgressArgs<ExtArgs> = {}>(args?: Subset<T, User$userProgressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6360,10 +6155,10 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly image: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
-    readonly points: FieldRef<"User", 'Int'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
-    readonly deletedAt: FieldRef<"User", 'DateTime'>
+    readonly points: FieldRef<"User", 'Int'>
+    readonly badges: FieldRef<"User", 'String'>
   }
     
 
@@ -6848,6 +6643,54 @@ export namespace Prisma {
   }
 
   /**
+   * User.communityStories
+   */
+  export type User$communityStoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityStory
+     */
+    select?: CommunityStorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityStory
+     */
+    omit?: CommunityStoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityStoryInclude<ExtArgs> | null
+    where?: CommunityStoryWhereInput
+    orderBy?: CommunityStoryOrderByWithRelationInput | CommunityStoryOrderByWithRelationInput[]
+    cursor?: CommunityStoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommunityStoryScalarFieldEnum | CommunityStoryScalarFieldEnum[]
+  }
+
+  /**
+   * User.userProgress
+   */
+  export type User$userProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserProgress
+     */
+    select?: UserProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserProgress
+     */
+    omit?: UserProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserProgressInclude<ExtArgs> | null
+    where?: UserProgressWhereInput
+    orderBy?: UserProgressOrderByWithRelationInput | UserProgressOrderByWithRelationInput[]
+    cursor?: UserProgressWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserProgressScalarFieldEnum | UserProgressScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6867,2370 +6710,6 @@ export namespace Prisma {
 
 
   /**
-   * Model Category
-   */
-
-  export type AggregateCategory = {
-    _count: CategoryCountAggregateOutputType | null
-    _avg: CategoryAvgAggregateOutputType | null
-    _sum: CategorySumAggregateOutputType | null
-    _min: CategoryMinAggregateOutputType | null
-    _max: CategoryMaxAggregateOutputType | null
-  }
-
-  export type CategoryAvgAggregateOutputType = {
-    order: number | null
-  }
-
-  export type CategorySumAggregateOutputType = {
-    order: number | null
-  }
-
-  export type CategoryMinAggregateOutputType = {
-    id: string | null
-    slug: string | null
-    name: string | null
-    description: string | null
-    type: string | null
-    parentId: string | null
-    icon: string | null
-    color: string | null
-    order: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type CategoryMaxAggregateOutputType = {
-    id: string | null
-    slug: string | null
-    name: string | null
-    description: string | null
-    type: string | null
-    parentId: string | null
-    icon: string | null
-    color: string | null
-    order: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type CategoryCountAggregateOutputType = {
-    id: number
-    slug: number
-    name: number
-    description: number
-    type: number
-    parentId: number
-    icon: number
-    color: number
-    order: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type CategoryAvgAggregateInputType = {
-    order?: true
-  }
-
-  export type CategorySumAggregateInputType = {
-    order?: true
-  }
-
-  export type CategoryMinAggregateInputType = {
-    id?: true
-    slug?: true
-    name?: true
-    description?: true
-    type?: true
-    parentId?: true
-    icon?: true
-    color?: true
-    order?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type CategoryMaxAggregateInputType = {
-    id?: true
-    slug?: true
-    name?: true
-    description?: true
-    type?: true
-    parentId?: true
-    icon?: true
-    color?: true
-    order?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type CategoryCountAggregateInputType = {
-    id?: true
-    slug?: true
-    name?: true
-    description?: true
-    type?: true
-    parentId?: true
-    icon?: true
-    color?: true
-    order?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type CategoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Category to aggregate.
-     */
-    where?: CategoryWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Categories to fetch.
-     */
-    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: CategoryWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Categories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Categories.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Categories
-    **/
-    _count?: true | CategoryCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: CategoryAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: CategorySumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: CategoryMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: CategoryMaxAggregateInputType
-  }
-
-  export type GetCategoryAggregateType<T extends CategoryAggregateArgs> = {
-        [P in keyof T & keyof AggregateCategory]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateCategory[P]>
-      : GetScalarType<T[P], AggregateCategory[P]>
-  }
-
-
-
-
-  export type CategoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CategoryWhereInput
-    orderBy?: CategoryOrderByWithAggregationInput | CategoryOrderByWithAggregationInput[]
-    by: CategoryScalarFieldEnum[] | CategoryScalarFieldEnum
-    having?: CategoryScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: CategoryCountAggregateInputType | true
-    _avg?: CategoryAvgAggregateInputType
-    _sum?: CategorySumAggregateInputType
-    _min?: CategoryMinAggregateInputType
-    _max?: CategoryMaxAggregateInputType
-  }
-
-  export type CategoryGroupByOutputType = {
-    id: string
-    slug: string
-    name: string
-    description: string | null
-    type: string
-    parentId: string | null
-    icon: string | null
-    color: string | null
-    order: number
-    createdAt: Date
-    updatedAt: Date
-    _count: CategoryCountAggregateOutputType | null
-    _avg: CategoryAvgAggregateOutputType | null
-    _sum: CategorySumAggregateOutputType | null
-    _min: CategoryMinAggregateOutputType | null
-    _max: CategoryMaxAggregateOutputType | null
-  }
-
-  type GetCategoryGroupByPayload<T extends CategoryGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<CategoryGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof CategoryGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], CategoryGroupByOutputType[P]>
-            : GetScalarType<T[P], CategoryGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type CategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    slug?: boolean
-    name?: boolean
-    description?: boolean
-    type?: boolean
-    parentId?: boolean
-    icon?: boolean
-    color?: boolean
-    order?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    parent?: boolean | Category$parentArgs<ExtArgs>
-    children?: boolean | Category$childrenArgs<ExtArgs>
-    articles?: boolean | Category$articlesArgs<ExtArgs>
-    _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["category"]>
-
-  export type CategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    slug?: boolean
-    name?: boolean
-    description?: boolean
-    type?: boolean
-    parentId?: boolean
-    icon?: boolean
-    color?: boolean
-    order?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    parent?: boolean | Category$parentArgs<ExtArgs>
-  }, ExtArgs["result"]["category"]>
-
-  export type CategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    slug?: boolean
-    name?: boolean
-    description?: boolean
-    type?: boolean
-    parentId?: boolean
-    icon?: boolean
-    color?: boolean
-    order?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    parent?: boolean | Category$parentArgs<ExtArgs>
-  }, ExtArgs["result"]["category"]>
-
-  export type CategorySelectScalar = {
-    id?: boolean
-    slug?: boolean
-    name?: boolean
-    description?: boolean
-    type?: boolean
-    parentId?: boolean
-    icon?: boolean
-    color?: boolean
-    order?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "description" | "type" | "parentId" | "icon" | "color" | "order" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
-  export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    parent?: boolean | Category$parentArgs<ExtArgs>
-    children?: boolean | Category$childrenArgs<ExtArgs>
-    articles?: boolean | Category$articlesArgs<ExtArgs>
-    _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type CategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    parent?: boolean | Category$parentArgs<ExtArgs>
-  }
-  export type CategoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    parent?: boolean | Category$parentArgs<ExtArgs>
-  }
-
-  export type $CategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Category"
-    objects: {
-      parent: Prisma.$CategoryPayload<ExtArgs> | null
-      children: Prisma.$CategoryPayload<ExtArgs>[]
-      articles: Prisma.$ArticlePayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      slug: string
-      name: string
-      description: string | null
-      type: string
-      parentId: string | null
-      icon: string | null
-      color: string | null
-      order: number
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["category"]>
-    composites: {}
-  }
-
-  type CategoryGetPayload<S extends boolean | null | undefined | CategoryDefaultArgs> = $Result.GetResult<Prisma.$CategoryPayload, S>
-
-  type CategoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<CategoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: CategoryCountAggregateInputType | true
-    }
-
-  export interface CategoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Category'], meta: { name: 'Category' } }
-    /**
-     * Find zero or one Category that matches the filter.
-     * @param {CategoryFindUniqueArgs} args - Arguments to find a Category
-     * @example
-     * // Get one Category
-     * const category = await prisma.category.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends CategoryFindUniqueArgs>(args: SelectSubset<T, CategoryFindUniqueArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Category that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {CategoryFindUniqueOrThrowArgs} args - Arguments to find a Category
-     * @example
-     * // Get one Category
-     * const category = await prisma.category.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends CategoryFindUniqueOrThrowArgs>(args: SelectSubset<T, CategoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Category that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CategoryFindFirstArgs} args - Arguments to find a Category
-     * @example
-     * // Get one Category
-     * const category = await prisma.category.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends CategoryFindFirstArgs>(args?: SelectSubset<T, CategoryFindFirstArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Category that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CategoryFindFirstOrThrowArgs} args - Arguments to find a Category
-     * @example
-     * // Get one Category
-     * const category = await prisma.category.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends CategoryFindFirstOrThrowArgs>(args?: SelectSubset<T, CategoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Categories that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CategoryFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Categories
-     * const categories = await prisma.category.findMany()
-     * 
-     * // Get first 10 Categories
-     * const categories = await prisma.category.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const categoryWithIdOnly = await prisma.category.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends CategoryFindManyArgs>(args?: SelectSubset<T, CategoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Category.
-     * @param {CategoryCreateArgs} args - Arguments to create a Category.
-     * @example
-     * // Create one Category
-     * const Category = await prisma.category.create({
-     *   data: {
-     *     // ... data to create a Category
-     *   }
-     * })
-     * 
-     */
-    create<T extends CategoryCreateArgs>(args: SelectSubset<T, CategoryCreateArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Categories.
-     * @param {CategoryCreateManyArgs} args - Arguments to create many Categories.
-     * @example
-     * // Create many Categories
-     * const category = await prisma.category.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends CategoryCreateManyArgs>(args?: SelectSubset<T, CategoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Categories and returns the data saved in the database.
-     * @param {CategoryCreateManyAndReturnArgs} args - Arguments to create many Categories.
-     * @example
-     * // Create many Categories
-     * const category = await prisma.category.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Categories and only return the `id`
-     * const categoryWithIdOnly = await prisma.category.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends CategoryCreateManyAndReturnArgs>(args?: SelectSubset<T, CategoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Category.
-     * @param {CategoryDeleteArgs} args - Arguments to delete one Category.
-     * @example
-     * // Delete one Category
-     * const Category = await prisma.category.delete({
-     *   where: {
-     *     // ... filter to delete one Category
-     *   }
-     * })
-     * 
-     */
-    delete<T extends CategoryDeleteArgs>(args: SelectSubset<T, CategoryDeleteArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Category.
-     * @param {CategoryUpdateArgs} args - Arguments to update one Category.
-     * @example
-     * // Update one Category
-     * const category = await prisma.category.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends CategoryUpdateArgs>(args: SelectSubset<T, CategoryUpdateArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Categories.
-     * @param {CategoryDeleteManyArgs} args - Arguments to filter Categories to delete.
-     * @example
-     * // Delete a few Categories
-     * const { count } = await prisma.category.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends CategoryDeleteManyArgs>(args?: SelectSubset<T, CategoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Categories.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CategoryUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Categories
-     * const category = await prisma.category.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends CategoryUpdateManyArgs>(args: SelectSubset<T, CategoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Categories and returns the data updated in the database.
-     * @param {CategoryUpdateManyAndReturnArgs} args - Arguments to update many Categories.
-     * @example
-     * // Update many Categories
-     * const category = await prisma.category.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Categories and only return the `id`
-     * const categoryWithIdOnly = await prisma.category.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends CategoryUpdateManyAndReturnArgs>(args: SelectSubset<T, CategoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Category.
-     * @param {CategoryUpsertArgs} args - Arguments to update or create a Category.
-     * @example
-     * // Update or create a Category
-     * const category = await prisma.category.upsert({
-     *   create: {
-     *     // ... data to create a Category
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Category we want to update
-     *   }
-     * })
-     */
-    upsert<T extends CategoryUpsertArgs>(args: SelectSubset<T, CategoryUpsertArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Categories.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CategoryCountArgs} args - Arguments to filter Categories to count.
-     * @example
-     * // Count the number of Categories
-     * const count = await prisma.category.count({
-     *   where: {
-     *     // ... the filter for the Categories we want to count
-     *   }
-     * })
-    **/
-    count<T extends CategoryCountArgs>(
-      args?: Subset<T, CategoryCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], CategoryCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Category.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends CategoryAggregateArgs>(args: Subset<T, CategoryAggregateArgs>): Prisma.PrismaPromise<GetCategoryAggregateType<T>>
-
-    /**
-     * Group by Category.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CategoryGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends CategoryGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CategoryGroupByArgs['orderBy'] }
-        : { orderBy?: CategoryGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, CategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Category model
-   */
-  readonly fields: CategoryFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Category.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    parent<T extends Category$parentArgs<ExtArgs> = {}>(args?: Subset<T, Category$parentArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    children<T extends Category$childrenArgs<ExtArgs> = {}>(args?: Subset<T, Category$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    articles<T extends Category$articlesArgs<ExtArgs> = {}>(args?: Subset<T, Category$articlesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Category model
-   */
-  interface CategoryFieldRefs {
-    readonly id: FieldRef<"Category", 'String'>
-    readonly slug: FieldRef<"Category", 'String'>
-    readonly name: FieldRef<"Category", 'String'>
-    readonly description: FieldRef<"Category", 'String'>
-    readonly type: FieldRef<"Category", 'String'>
-    readonly parentId: FieldRef<"Category", 'String'>
-    readonly icon: FieldRef<"Category", 'String'>
-    readonly color: FieldRef<"Category", 'String'>
-    readonly order: FieldRef<"Category", 'Int'>
-    readonly createdAt: FieldRef<"Category", 'DateTime'>
-    readonly updatedAt: FieldRef<"Category", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Category findUnique
-   */
-  export type CategoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-    /**
-     * Filter, which Category to fetch.
-     */
-    where: CategoryWhereUniqueInput
-  }
-
-  /**
-   * Category findUniqueOrThrow
-   */
-  export type CategoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-    /**
-     * Filter, which Category to fetch.
-     */
-    where: CategoryWhereUniqueInput
-  }
-
-  /**
-   * Category findFirst
-   */
-  export type CategoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-    /**
-     * Filter, which Category to fetch.
-     */
-    where?: CategoryWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Categories to fetch.
-     */
-    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Categories.
-     */
-    cursor?: CategoryWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Categories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Categories.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Categories.
-     */
-    distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
-  }
-
-  /**
-   * Category findFirstOrThrow
-   */
-  export type CategoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-    /**
-     * Filter, which Category to fetch.
-     */
-    where?: CategoryWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Categories to fetch.
-     */
-    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Categories.
-     */
-    cursor?: CategoryWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Categories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Categories.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Categories.
-     */
-    distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
-  }
-
-  /**
-   * Category findMany
-   */
-  export type CategoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-    /**
-     * Filter, which Categories to fetch.
-     */
-    where?: CategoryWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Categories to fetch.
-     */
-    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Categories.
-     */
-    cursor?: CategoryWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Categories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Categories.
-     */
-    skip?: number
-    distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
-  }
-
-  /**
-   * Category create
-   */
-  export type CategoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Category.
-     */
-    data: XOR<CategoryCreateInput, CategoryUncheckedCreateInput>
-  }
-
-  /**
-   * Category createMany
-   */
-  export type CategoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Categories.
-     */
-    data: CategoryCreateManyInput | CategoryCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Category createManyAndReturn
-   */
-  export type CategoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * The data used to create many Categories.
-     */
-    data: CategoryCreateManyInput | CategoryCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Category update
-   */
-  export type CategoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Category.
-     */
-    data: XOR<CategoryUpdateInput, CategoryUncheckedUpdateInput>
-    /**
-     * Choose, which Category to update.
-     */
-    where: CategoryWhereUniqueInput
-  }
-
-  /**
-   * Category updateMany
-   */
-  export type CategoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Categories.
-     */
-    data: XOR<CategoryUpdateManyMutationInput, CategoryUncheckedUpdateManyInput>
-    /**
-     * Filter which Categories to update
-     */
-    where?: CategoryWhereInput
-    /**
-     * Limit how many Categories to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Category updateManyAndReturn
-   */
-  export type CategoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * The data used to update Categories.
-     */
-    data: XOR<CategoryUpdateManyMutationInput, CategoryUncheckedUpdateManyInput>
-    /**
-     * Filter which Categories to update
-     */
-    where?: CategoryWhereInput
-    /**
-     * Limit how many Categories to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Category upsert
-   */
-  export type CategoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Category to update in case it exists.
-     */
-    where: CategoryWhereUniqueInput
-    /**
-     * In case the Category found by the `where` argument doesn't exist, create a new Category with this data.
-     */
-    create: XOR<CategoryCreateInput, CategoryUncheckedCreateInput>
-    /**
-     * In case the Category was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<CategoryUpdateInput, CategoryUncheckedUpdateInput>
-  }
-
-  /**
-   * Category delete
-   */
-  export type CategoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-    /**
-     * Filter which Category to delete.
-     */
-    where: CategoryWhereUniqueInput
-  }
-
-  /**
-   * Category deleteMany
-   */
-  export type CategoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Categories to delete
-     */
-    where?: CategoryWhereInput
-    /**
-     * Limit how many Categories to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Category.parent
-   */
-  export type Category$parentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-    where?: CategoryWhereInput
-  }
-
-  /**
-   * Category.children
-   */
-  export type Category$childrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-    where?: CategoryWhereInput
-    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
-    cursor?: CategoryWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
-  }
-
-  /**
-   * Category.articles
-   */
-  export type Category$articlesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Article
-     */
-    select?: ArticleSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Article
-     */
-    omit?: ArticleOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleInclude<ExtArgs> | null
-    where?: ArticleWhereInput
-    orderBy?: ArticleOrderByWithRelationInput | ArticleOrderByWithRelationInput[]
-    cursor?: ArticleWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ArticleScalarFieldEnum | ArticleScalarFieldEnum[]
-  }
-
-  /**
-   * Category without action
-   */
-  export type CategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Tag
-   */
-
-  export type AggregateTag = {
-    _count: TagCountAggregateOutputType | null
-    _avg: TagAvgAggregateOutputType | null
-    _sum: TagSumAggregateOutputType | null
-    _min: TagMinAggregateOutputType | null
-    _max: TagMaxAggregateOutputType | null
-  }
-
-  export type TagAvgAggregateOutputType = {
-    usageCount: number | null
-  }
-
-  export type TagSumAggregateOutputType = {
-    usageCount: number | null
-  }
-
-  export type TagMinAggregateOutputType = {
-    id: string | null
-    slug: string | null
-    name: string | null
-    usageCount: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type TagMaxAggregateOutputType = {
-    id: string | null
-    slug: string | null
-    name: string | null
-    usageCount: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type TagCountAggregateOutputType = {
-    id: number
-    slug: number
-    name: number
-    usageCount: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type TagAvgAggregateInputType = {
-    usageCount?: true
-  }
-
-  export type TagSumAggregateInputType = {
-    usageCount?: true
-  }
-
-  export type TagMinAggregateInputType = {
-    id?: true
-    slug?: true
-    name?: true
-    usageCount?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type TagMaxAggregateInputType = {
-    id?: true
-    slug?: true
-    name?: true
-    usageCount?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type TagCountAggregateInputType = {
-    id?: true
-    slug?: true
-    name?: true
-    usageCount?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type TagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Tag to aggregate.
-     */
-    where?: TagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Tags to fetch.
-     */
-    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: TagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Tags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Tags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Tags
-    **/
-    _count?: true | TagCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: TagAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: TagSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: TagMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: TagMaxAggregateInputType
-  }
-
-  export type GetTagAggregateType<T extends TagAggregateArgs> = {
-        [P in keyof T & keyof AggregateTag]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTag[P]>
-      : GetScalarType<T[P], AggregateTag[P]>
-  }
-
-
-
-
-  export type TagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TagWhereInput
-    orderBy?: TagOrderByWithAggregationInput | TagOrderByWithAggregationInput[]
-    by: TagScalarFieldEnum[] | TagScalarFieldEnum
-    having?: TagScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: TagCountAggregateInputType | true
-    _avg?: TagAvgAggregateInputType
-    _sum?: TagSumAggregateInputType
-    _min?: TagMinAggregateInputType
-    _max?: TagMaxAggregateInputType
-  }
-
-  export type TagGroupByOutputType = {
-    id: string
-    slug: string
-    name: string
-    usageCount: number
-    createdAt: Date
-    updatedAt: Date
-    _count: TagCountAggregateOutputType | null
-    _avg: TagAvgAggregateOutputType | null
-    _sum: TagSumAggregateOutputType | null
-    _min: TagMinAggregateOutputType | null
-    _max: TagMaxAggregateOutputType | null
-  }
-
-  type GetTagGroupByPayload<T extends TagGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<TagGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof TagGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], TagGroupByOutputType[P]>
-            : GetScalarType<T[P], TagGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type TagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    slug?: boolean
-    name?: boolean
-    usageCount?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    articles?: boolean | Tag$articlesArgs<ExtArgs>
-    _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["tag"]>
-
-  export type TagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    slug?: boolean
-    name?: boolean
-    usageCount?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["tag"]>
-
-  export type TagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    slug?: boolean
-    name?: boolean
-    usageCount?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["tag"]>
-
-  export type TagSelectScalar = {
-    id?: boolean
-    slug?: boolean
-    name?: boolean
-    usageCount?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type TagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "usageCount" | "createdAt" | "updatedAt", ExtArgs["result"]["tag"]>
-  export type TagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    articles?: boolean | Tag$articlesArgs<ExtArgs>
-    _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type TagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type TagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $TagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Tag"
-    objects: {
-      articles: Prisma.$ArticleTagPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      slug: string
-      name: string
-      usageCount: number
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["tag"]>
-    composites: {}
-  }
-
-  type TagGetPayload<S extends boolean | null | undefined | TagDefaultArgs> = $Result.GetResult<Prisma.$TagPayload, S>
-
-  type TagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<TagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: TagCountAggregateInputType | true
-    }
-
-  export interface TagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Tag'], meta: { name: 'Tag' } }
-    /**
-     * Find zero or one Tag that matches the filter.
-     * @param {TagFindUniqueArgs} args - Arguments to find a Tag
-     * @example
-     * // Get one Tag
-     * const tag = await prisma.tag.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends TagFindUniqueArgs>(args: SelectSubset<T, TagFindUniqueArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Tag that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {TagFindUniqueOrThrowArgs} args - Arguments to find a Tag
-     * @example
-     * // Get one Tag
-     * const tag = await prisma.tag.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends TagFindUniqueOrThrowArgs>(args: SelectSubset<T, TagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Tag that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagFindFirstArgs} args - Arguments to find a Tag
-     * @example
-     * // Get one Tag
-     * const tag = await prisma.tag.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends TagFindFirstArgs>(args?: SelectSubset<T, TagFindFirstArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Tag that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagFindFirstOrThrowArgs} args - Arguments to find a Tag
-     * @example
-     * // Get one Tag
-     * const tag = await prisma.tag.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends TagFindFirstOrThrowArgs>(args?: SelectSubset<T, TagFindFirstOrThrowArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Tags that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Tags
-     * const tags = await prisma.tag.findMany()
-     * 
-     * // Get first 10 Tags
-     * const tags = await prisma.tag.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const tagWithIdOnly = await prisma.tag.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends TagFindManyArgs>(args?: SelectSubset<T, TagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Tag.
-     * @param {TagCreateArgs} args - Arguments to create a Tag.
-     * @example
-     * // Create one Tag
-     * const Tag = await prisma.tag.create({
-     *   data: {
-     *     // ... data to create a Tag
-     *   }
-     * })
-     * 
-     */
-    create<T extends TagCreateArgs>(args: SelectSubset<T, TagCreateArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Tags.
-     * @param {TagCreateManyArgs} args - Arguments to create many Tags.
-     * @example
-     * // Create many Tags
-     * const tag = await prisma.tag.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends TagCreateManyArgs>(args?: SelectSubset<T, TagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Tags and returns the data saved in the database.
-     * @param {TagCreateManyAndReturnArgs} args - Arguments to create many Tags.
-     * @example
-     * // Create many Tags
-     * const tag = await prisma.tag.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Tags and only return the `id`
-     * const tagWithIdOnly = await prisma.tag.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends TagCreateManyAndReturnArgs>(args?: SelectSubset<T, TagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Tag.
-     * @param {TagDeleteArgs} args - Arguments to delete one Tag.
-     * @example
-     * // Delete one Tag
-     * const Tag = await prisma.tag.delete({
-     *   where: {
-     *     // ... filter to delete one Tag
-     *   }
-     * })
-     * 
-     */
-    delete<T extends TagDeleteArgs>(args: SelectSubset<T, TagDeleteArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Tag.
-     * @param {TagUpdateArgs} args - Arguments to update one Tag.
-     * @example
-     * // Update one Tag
-     * const tag = await prisma.tag.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends TagUpdateArgs>(args: SelectSubset<T, TagUpdateArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Tags.
-     * @param {TagDeleteManyArgs} args - Arguments to filter Tags to delete.
-     * @example
-     * // Delete a few Tags
-     * const { count } = await prisma.tag.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends TagDeleteManyArgs>(args?: SelectSubset<T, TagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Tags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Tags
-     * const tag = await prisma.tag.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends TagUpdateManyArgs>(args: SelectSubset<T, TagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Tags and returns the data updated in the database.
-     * @param {TagUpdateManyAndReturnArgs} args - Arguments to update many Tags.
-     * @example
-     * // Update many Tags
-     * const tag = await prisma.tag.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Tags and only return the `id`
-     * const tagWithIdOnly = await prisma.tag.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends TagUpdateManyAndReturnArgs>(args: SelectSubset<T, TagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Tag.
-     * @param {TagUpsertArgs} args - Arguments to update or create a Tag.
-     * @example
-     * // Update or create a Tag
-     * const tag = await prisma.tag.upsert({
-     *   create: {
-     *     // ... data to create a Tag
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Tag we want to update
-     *   }
-     * })
-     */
-    upsert<T extends TagUpsertArgs>(args: SelectSubset<T, TagUpsertArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Tags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagCountArgs} args - Arguments to filter Tags to count.
-     * @example
-     * // Count the number of Tags
-     * const count = await prisma.tag.count({
-     *   where: {
-     *     // ... the filter for the Tags we want to count
-     *   }
-     * })
-    **/
-    count<T extends TagCountArgs>(
-      args?: Subset<T, TagCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], TagCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Tag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends TagAggregateArgs>(args: Subset<T, TagAggregateArgs>): Prisma.PrismaPromise<GetTagAggregateType<T>>
-
-    /**
-     * Group by Tag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends TagGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TagGroupByArgs['orderBy'] }
-        : { orderBy?: TagGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, TagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Tag model
-   */
-  readonly fields: TagFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Tag.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__TagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    articles<T extends Tag$articlesArgs<ExtArgs> = {}>(args?: Subset<T, Tag$articlesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticleTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Tag model
-   */
-  interface TagFieldRefs {
-    readonly id: FieldRef<"Tag", 'String'>
-    readonly slug: FieldRef<"Tag", 'String'>
-    readonly name: FieldRef<"Tag", 'String'>
-    readonly usageCount: FieldRef<"Tag", 'Int'>
-    readonly createdAt: FieldRef<"Tag", 'DateTime'>
-    readonly updatedAt: FieldRef<"Tag", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Tag findUnique
-   */
-  export type TagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * Filter, which Tag to fetch.
-     */
-    where: TagWhereUniqueInput
-  }
-
-  /**
-   * Tag findUniqueOrThrow
-   */
-  export type TagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * Filter, which Tag to fetch.
-     */
-    where: TagWhereUniqueInput
-  }
-
-  /**
-   * Tag findFirst
-   */
-  export type TagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * Filter, which Tag to fetch.
-     */
-    where?: TagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Tags to fetch.
-     */
-    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Tags.
-     */
-    cursor?: TagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Tags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Tags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Tags.
-     */
-    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
-  }
-
-  /**
-   * Tag findFirstOrThrow
-   */
-  export type TagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * Filter, which Tag to fetch.
-     */
-    where?: TagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Tags to fetch.
-     */
-    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Tags.
-     */
-    cursor?: TagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Tags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Tags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Tags.
-     */
-    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
-  }
-
-  /**
-   * Tag findMany
-   */
-  export type TagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * Filter, which Tags to fetch.
-     */
-    where?: TagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Tags to fetch.
-     */
-    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Tags.
-     */
-    cursor?: TagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Tags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Tags.
-     */
-    skip?: number
-    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
-  }
-
-  /**
-   * Tag create
-   */
-  export type TagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Tag.
-     */
-    data: XOR<TagCreateInput, TagUncheckedCreateInput>
-  }
-
-  /**
-   * Tag createMany
-   */
-  export type TagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Tags.
-     */
-    data: TagCreateManyInput | TagCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Tag createManyAndReturn
-   */
-  export type TagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * The data used to create many Tags.
-     */
-    data: TagCreateManyInput | TagCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Tag update
-   */
-  export type TagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Tag.
-     */
-    data: XOR<TagUpdateInput, TagUncheckedUpdateInput>
-    /**
-     * Choose, which Tag to update.
-     */
-    where: TagWhereUniqueInput
-  }
-
-  /**
-   * Tag updateMany
-   */
-  export type TagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Tags.
-     */
-    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyInput>
-    /**
-     * Filter which Tags to update
-     */
-    where?: TagWhereInput
-    /**
-     * Limit how many Tags to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Tag updateManyAndReturn
-   */
-  export type TagUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * The data used to update Tags.
-     */
-    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyInput>
-    /**
-     * Filter which Tags to update
-     */
-    where?: TagWhereInput
-    /**
-     * Limit how many Tags to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Tag upsert
-   */
-  export type TagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Tag to update in case it exists.
-     */
-    where: TagWhereUniqueInput
-    /**
-     * In case the Tag found by the `where` argument doesn't exist, create a new Tag with this data.
-     */
-    create: XOR<TagCreateInput, TagUncheckedCreateInput>
-    /**
-     * In case the Tag was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<TagUpdateInput, TagUncheckedUpdateInput>
-  }
-
-  /**
-   * Tag delete
-   */
-  export type TagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * Filter which Tag to delete.
-     */
-    where: TagWhereUniqueInput
-  }
-
-  /**
-   * Tag deleteMany
-   */
-  export type TagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Tags to delete
-     */
-    where?: TagWhereInput
-    /**
-     * Limit how many Tags to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Tag.articles
-   */
-  export type Tag$articlesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagInclude<ExtArgs> | null
-    where?: ArticleTagWhereInput
-    orderBy?: ArticleTagOrderByWithRelationInput | ArticleTagOrderByWithRelationInput[]
-    cursor?: ArticleTagWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ArticleTagScalarFieldEnum | ArticleTagScalarFieldEnum[]
-  }
-
-  /**
-   * Tag without action
-   */
-  export type TagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model Article
    */
 
@@ -9243,203 +6722,211 @@ export namespace Prisma {
   }
 
   export type ArticleAvgAggregateOutputType = {
-    viewCount: number | null
     factCheckScore: number | null
     courseSequence: number | null
   }
 
   export type ArticleSumAggregateOutputType = {
-    viewCount: number | null
     factCheckScore: number | null
     courseSequence: number | null
   }
 
   export type ArticleMinAggregateOutputType = {
     id: string | null
-    slug: string | null
     title: string | null
-    excerpt: string | null
+    slug: string | null
     content: string | null
-    type: $Enums.ArticleType | null
-    status: $Enums.ArticleStatus | null
-    readTime: string | null
-    viewCount: number | null
+    type: string | null
+    excerpt: string | null
+    published: boolean | null
     authorId: string | null
-    categoryId: string | null
+    category: string | null
+    tags: string | null
     sentiment: $Enums.Sentiment | null
     factCheckScore: number | null
+    factCheckSources: string | null
     factCheckDate: Date | null
     factCheckStatus: string | null
-    level: $Enums.Level | null
-    contentType: $Enums.ContentType | null
-    warningLevel: string | null
+    level: string | null
+    contentType: string | null
+    readTime: string | null
+    warningLevel: $Enums.WarningLevel | null
+    securityTips: string | null
     courseSequence: number | null
+    relatedArticles: string | null
     projectHighlight: boolean | null
     coverImage: string | null
     coverImageAlt: string | null
+    quizData: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    publishedAt: Date | null
-    deletedAt: Date | null
   }
 
   export type ArticleMaxAggregateOutputType = {
     id: string | null
-    slug: string | null
     title: string | null
-    excerpt: string | null
+    slug: string | null
     content: string | null
-    type: $Enums.ArticleType | null
-    status: $Enums.ArticleStatus | null
-    readTime: string | null
-    viewCount: number | null
+    type: string | null
+    excerpt: string | null
+    published: boolean | null
     authorId: string | null
-    categoryId: string | null
+    category: string | null
+    tags: string | null
     sentiment: $Enums.Sentiment | null
     factCheckScore: number | null
+    factCheckSources: string | null
     factCheckDate: Date | null
     factCheckStatus: string | null
-    level: $Enums.Level | null
-    contentType: $Enums.ContentType | null
-    warningLevel: string | null
+    level: string | null
+    contentType: string | null
+    readTime: string | null
+    warningLevel: $Enums.WarningLevel | null
+    securityTips: string | null
     courseSequence: number | null
+    relatedArticles: string | null
     projectHighlight: boolean | null
     coverImage: string | null
     coverImageAlt: string | null
+    quizData: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    publishedAt: Date | null
-    deletedAt: Date | null
   }
 
   export type ArticleCountAggregateOutputType = {
     id: number
-    slug: number
     title: number
-    excerpt: number
+    slug: number
     content: number
     type: number
-    status: number
-    readTime: number
-    viewCount: number
+    excerpt: number
+    published: number
     authorId: number
-    categoryId: number
+    category: number
+    tags: number
     sentiment: number
     factCheckScore: number
+    factCheckSources: number
     factCheckDate: number
     factCheckStatus: number
     level: number
     contentType: number
+    readTime: number
     warningLevel: number
+    securityTips: number
     courseSequence: number
+    relatedArticles: number
     projectHighlight: number
     coverImage: number
     coverImageAlt: number
+    quizData: number
     createdAt: number
     updatedAt: number
-    publishedAt: number
-    deletedAt: number
     _all: number
   }
 
 
   export type ArticleAvgAggregateInputType = {
-    viewCount?: true
     factCheckScore?: true
     courseSequence?: true
   }
 
   export type ArticleSumAggregateInputType = {
-    viewCount?: true
     factCheckScore?: true
     courseSequence?: true
   }
 
   export type ArticleMinAggregateInputType = {
     id?: true
-    slug?: true
     title?: true
-    excerpt?: true
+    slug?: true
     content?: true
     type?: true
-    status?: true
-    readTime?: true
-    viewCount?: true
+    excerpt?: true
+    published?: true
     authorId?: true
-    categoryId?: true
+    category?: true
+    tags?: true
     sentiment?: true
     factCheckScore?: true
+    factCheckSources?: true
     factCheckDate?: true
     factCheckStatus?: true
     level?: true
     contentType?: true
+    readTime?: true
     warningLevel?: true
+    securityTips?: true
     courseSequence?: true
+    relatedArticles?: true
     projectHighlight?: true
     coverImage?: true
     coverImageAlt?: true
+    quizData?: true
     createdAt?: true
     updatedAt?: true
-    publishedAt?: true
-    deletedAt?: true
   }
 
   export type ArticleMaxAggregateInputType = {
     id?: true
-    slug?: true
     title?: true
-    excerpt?: true
+    slug?: true
     content?: true
     type?: true
-    status?: true
-    readTime?: true
-    viewCount?: true
+    excerpt?: true
+    published?: true
     authorId?: true
-    categoryId?: true
+    category?: true
+    tags?: true
     sentiment?: true
     factCheckScore?: true
+    factCheckSources?: true
     factCheckDate?: true
     factCheckStatus?: true
     level?: true
     contentType?: true
+    readTime?: true
     warningLevel?: true
+    securityTips?: true
     courseSequence?: true
+    relatedArticles?: true
     projectHighlight?: true
     coverImage?: true
     coverImageAlt?: true
+    quizData?: true
     createdAt?: true
     updatedAt?: true
-    publishedAt?: true
-    deletedAt?: true
   }
 
   export type ArticleCountAggregateInputType = {
     id?: true
-    slug?: true
     title?: true
-    excerpt?: true
+    slug?: true
     content?: true
     type?: true
-    status?: true
-    readTime?: true
-    viewCount?: true
+    excerpt?: true
+    published?: true
     authorId?: true
-    categoryId?: true
+    category?: true
+    tags?: true
     sentiment?: true
     factCheckScore?: true
+    factCheckSources?: true
     factCheckDate?: true
     factCheckStatus?: true
     level?: true
     contentType?: true
+    readTime?: true
     warningLevel?: true
+    securityTips?: true
     courseSequence?: true
+    relatedArticles?: true
     projectHighlight?: true
     coverImage?: true
     coverImageAlt?: true
+    quizData?: true
     createdAt?: true
     updatedAt?: true
-    publishedAt?: true
-    deletedAt?: true
     _all?: true
   }
 
@@ -9531,31 +7018,33 @@ export namespace Prisma {
 
   export type ArticleGroupByOutputType = {
     id: string
-    slug: string
     title: string
-    excerpt: string
+    slug: string
     content: string
-    type: $Enums.ArticleType
-    status: $Enums.ArticleStatus
-    readTime: string | null
-    viewCount: number
+    type: string
+    excerpt: string | null
+    published: boolean
     authorId: string
-    categoryId: string
-    sentiment: $Enums.Sentiment | null
+    category: string
+    tags: string
+    sentiment: $Enums.Sentiment
     factCheckScore: number | null
+    factCheckSources: string | null
     factCheckDate: Date | null
     factCheckStatus: string | null
-    level: $Enums.Level | null
-    contentType: $Enums.ContentType | null
-    warningLevel: string | null
+    level: string | null
+    contentType: string | null
+    readTime: string | null
+    warningLevel: $Enums.WarningLevel | null
+    securityTips: string | null
     courseSequence: number | null
+    relatedArticles: string | null
     projectHighlight: boolean
     coverImage: string | null
     coverImageAlt: string | null
+    quizData: string | null
     createdAt: Date
     updatedAt: Date
-    publishedAt: Date | null
-    deletedAt: Date | null
     _count: ArticleCountAggregateOutputType | null
     _avg: ArticleAvgAggregateOutputType | null
     _sum: ArticleSumAggregateOutputType | null
@@ -9579,187 +7068,176 @@ export namespace Prisma {
 
   export type ArticleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    slug?: boolean
     title?: boolean
-    excerpt?: boolean
+    slug?: boolean
     content?: boolean
     type?: boolean
-    status?: boolean
-    readTime?: boolean
-    viewCount?: boolean
+    excerpt?: boolean
+    published?: boolean
     authorId?: boolean
-    categoryId?: boolean
+    category?: boolean
+    tags?: boolean
     sentiment?: boolean
     factCheckScore?: boolean
+    factCheckSources?: boolean
     factCheckDate?: boolean
     factCheckStatus?: boolean
     level?: boolean
     contentType?: boolean
+    readTime?: boolean
     warningLevel?: boolean
+    securityTips?: boolean
     courseSequence?: boolean
+    relatedArticles?: boolean
     projectHighlight?: boolean
     coverImage?: boolean
     coverImageAlt?: boolean
+    quizData?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    publishedAt?: boolean
-    deletedAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
-    tags?: boolean | Article$tagsArgs<ExtArgs>
-    relatedFrom?: boolean | Article$relatedFromArgs<ExtArgs>
-    relatedTo?: boolean | Article$relatedToArgs<ExtArgs>
-    citations?: boolean | Article$citationsArgs<ExtArgs>
-    _count?: boolean | ArticleCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["article"]>
 
   export type ArticleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    slug?: boolean
     title?: boolean
-    excerpt?: boolean
+    slug?: boolean
     content?: boolean
     type?: boolean
-    status?: boolean
-    readTime?: boolean
-    viewCount?: boolean
+    excerpt?: boolean
+    published?: boolean
     authorId?: boolean
-    categoryId?: boolean
+    category?: boolean
+    tags?: boolean
     sentiment?: boolean
     factCheckScore?: boolean
+    factCheckSources?: boolean
     factCheckDate?: boolean
     factCheckStatus?: boolean
     level?: boolean
     contentType?: boolean
+    readTime?: boolean
     warningLevel?: boolean
+    securityTips?: boolean
     courseSequence?: boolean
+    relatedArticles?: boolean
     projectHighlight?: boolean
     coverImage?: boolean
     coverImageAlt?: boolean
+    quizData?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    publishedAt?: boolean
-    deletedAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["article"]>
 
   export type ArticleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    slug?: boolean
     title?: boolean
-    excerpt?: boolean
+    slug?: boolean
     content?: boolean
     type?: boolean
-    status?: boolean
-    readTime?: boolean
-    viewCount?: boolean
+    excerpt?: boolean
+    published?: boolean
     authorId?: boolean
-    categoryId?: boolean
+    category?: boolean
+    tags?: boolean
     sentiment?: boolean
     factCheckScore?: boolean
+    factCheckSources?: boolean
     factCheckDate?: boolean
     factCheckStatus?: boolean
     level?: boolean
     contentType?: boolean
+    readTime?: boolean
     warningLevel?: boolean
+    securityTips?: boolean
     courseSequence?: boolean
+    relatedArticles?: boolean
     projectHighlight?: boolean
     coverImage?: boolean
     coverImageAlt?: boolean
+    quizData?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    publishedAt?: boolean
-    deletedAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["article"]>
 
   export type ArticleSelectScalar = {
     id?: boolean
-    slug?: boolean
     title?: boolean
-    excerpt?: boolean
+    slug?: boolean
     content?: boolean
     type?: boolean
-    status?: boolean
-    readTime?: boolean
-    viewCount?: boolean
+    excerpt?: boolean
+    published?: boolean
     authorId?: boolean
-    categoryId?: boolean
+    category?: boolean
+    tags?: boolean
     sentiment?: boolean
     factCheckScore?: boolean
+    factCheckSources?: boolean
     factCheckDate?: boolean
     factCheckStatus?: boolean
     level?: boolean
     contentType?: boolean
+    readTime?: boolean
     warningLevel?: boolean
+    securityTips?: boolean
     courseSequence?: boolean
+    relatedArticles?: boolean
     projectHighlight?: boolean
     coverImage?: boolean
     coverImageAlt?: boolean
+    quizData?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    publishedAt?: boolean
-    deletedAt?: boolean
   }
 
-  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "excerpt" | "content" | "type" | "status" | "readTime" | "viewCount" | "authorId" | "categoryId" | "sentiment" | "factCheckScore" | "factCheckDate" | "factCheckStatus" | "level" | "contentType" | "warningLevel" | "courseSequence" | "projectHighlight" | "coverImage" | "coverImageAlt" | "createdAt" | "updatedAt" | "publishedAt" | "deletedAt", ExtArgs["result"]["article"]>
+  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "type" | "excerpt" | "published" | "authorId" | "category" | "tags" | "sentiment" | "factCheckScore" | "factCheckSources" | "factCheckDate" | "factCheckStatus" | "level" | "contentType" | "readTime" | "warningLevel" | "securityTips" | "courseSequence" | "relatedArticles" | "projectHighlight" | "coverImage" | "coverImageAlt" | "quizData" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
   export type ArticleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
-    tags?: boolean | Article$tagsArgs<ExtArgs>
-    relatedFrom?: boolean | Article$relatedFromArgs<ExtArgs>
-    relatedTo?: boolean | Article$relatedToArgs<ExtArgs>
-    citations?: boolean | Article$citationsArgs<ExtArgs>
-    _count?: boolean | ArticleCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ArticleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
   }
   export type ArticleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
   }
 
   export type $ArticlePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Article"
     objects: {
       author: Prisma.$UserPayload<ExtArgs>
-      category: Prisma.$CategoryPayload<ExtArgs>
-      tags: Prisma.$ArticleTagPayload<ExtArgs>[]
-      relatedFrom: Prisma.$ArticleRelationPayload<ExtArgs>[]
-      relatedTo: Prisma.$ArticleRelationPayload<ExtArgs>[]
-      citations: Prisma.$CitationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      slug: string
       title: string
-      excerpt: string
+      slug: string
       content: string
-      type: $Enums.ArticleType
-      status: $Enums.ArticleStatus
-      readTime: string | null
-      viewCount: number
+      type: string
+      excerpt: string | null
+      published: boolean
       authorId: string
-      categoryId: string
-      sentiment: $Enums.Sentiment | null
+      category: string
+      tags: string
+      sentiment: $Enums.Sentiment
       factCheckScore: number | null
+      factCheckSources: string | null
       factCheckDate: Date | null
       factCheckStatus: string | null
-      level: $Enums.Level | null
-      contentType: $Enums.ContentType | null
-      warningLevel: string | null
+      level: string | null
+      contentType: string | null
+      readTime: string | null
+      warningLevel: $Enums.WarningLevel | null
+      securityTips: string | null
       courseSequence: number | null
+      relatedArticles: string | null
       projectHighlight: boolean
       coverImage: string | null
       coverImageAlt: string | null
+      quizData: string | null
       createdAt: Date
       updatedAt: Date
-      publishedAt: Date | null
-      deletedAt: Date | null
     }, ExtArgs["result"]["article"]>
     composites: {}
   }
@@ -10155,11 +7633,6 @@ export namespace Prisma {
   export interface Prisma__ArticleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    tags<T extends Article$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Article$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticleTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    relatedFrom<T extends Article$relatedFromArgs<ExtArgs> = {}>(args?: Subset<T, Article$relatedFromArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticleRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    relatedTo<T extends Article$relatedToArgs<ExtArgs> = {}>(args?: Subset<T, Article$relatedToArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticleRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    citations<T extends Article$citationsArgs<ExtArgs> = {}>(args?: Subset<T, Article$citationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10190,31 +7663,33 @@ export namespace Prisma {
    */
   interface ArticleFieldRefs {
     readonly id: FieldRef<"Article", 'String'>
-    readonly slug: FieldRef<"Article", 'String'>
     readonly title: FieldRef<"Article", 'String'>
-    readonly excerpt: FieldRef<"Article", 'String'>
+    readonly slug: FieldRef<"Article", 'String'>
     readonly content: FieldRef<"Article", 'String'>
-    readonly type: FieldRef<"Article", 'ArticleType'>
-    readonly status: FieldRef<"Article", 'ArticleStatus'>
-    readonly readTime: FieldRef<"Article", 'String'>
-    readonly viewCount: FieldRef<"Article", 'Int'>
+    readonly type: FieldRef<"Article", 'String'>
+    readonly excerpt: FieldRef<"Article", 'String'>
+    readonly published: FieldRef<"Article", 'Boolean'>
     readonly authorId: FieldRef<"Article", 'String'>
-    readonly categoryId: FieldRef<"Article", 'String'>
+    readonly category: FieldRef<"Article", 'String'>
+    readonly tags: FieldRef<"Article", 'String'>
     readonly sentiment: FieldRef<"Article", 'Sentiment'>
     readonly factCheckScore: FieldRef<"Article", 'Float'>
+    readonly factCheckSources: FieldRef<"Article", 'String'>
     readonly factCheckDate: FieldRef<"Article", 'DateTime'>
     readonly factCheckStatus: FieldRef<"Article", 'String'>
-    readonly level: FieldRef<"Article", 'Level'>
-    readonly contentType: FieldRef<"Article", 'ContentType'>
-    readonly warningLevel: FieldRef<"Article", 'String'>
+    readonly level: FieldRef<"Article", 'String'>
+    readonly contentType: FieldRef<"Article", 'String'>
+    readonly readTime: FieldRef<"Article", 'String'>
+    readonly warningLevel: FieldRef<"Article", 'WarningLevel'>
+    readonly securityTips: FieldRef<"Article", 'String'>
     readonly courseSequence: FieldRef<"Article", 'Int'>
+    readonly relatedArticles: FieldRef<"Article", 'String'>
     readonly projectHighlight: FieldRef<"Article", 'Boolean'>
     readonly coverImage: FieldRef<"Article", 'String'>
     readonly coverImageAlt: FieldRef<"Article", 'String'>
+    readonly quizData: FieldRef<"Article", 'String'>
     readonly createdAt: FieldRef<"Article", 'DateTime'>
     readonly updatedAt: FieldRef<"Article", 'DateTime'>
-    readonly publishedAt: FieldRef<"Article", 'DateTime'>
-    readonly deletedAt: FieldRef<"Article", 'DateTime'>
   }
     
 
@@ -10611,102 +8086,6 @@ export namespace Prisma {
   }
 
   /**
-   * Article.tags
-   */
-  export type Article$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagInclude<ExtArgs> | null
-    where?: ArticleTagWhereInput
-    orderBy?: ArticleTagOrderByWithRelationInput | ArticleTagOrderByWithRelationInput[]
-    cursor?: ArticleTagWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ArticleTagScalarFieldEnum | ArticleTagScalarFieldEnum[]
-  }
-
-  /**
-   * Article.relatedFrom
-   */
-  export type Article$relatedFromArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationInclude<ExtArgs> | null
-    where?: ArticleRelationWhereInput
-    orderBy?: ArticleRelationOrderByWithRelationInput | ArticleRelationOrderByWithRelationInput[]
-    cursor?: ArticleRelationWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ArticleRelationScalarFieldEnum | ArticleRelationScalarFieldEnum[]
-  }
-
-  /**
-   * Article.relatedTo
-   */
-  export type Article$relatedToArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationInclude<ExtArgs> | null
-    where?: ArticleRelationWhereInput
-    orderBy?: ArticleRelationOrderByWithRelationInput | ArticleRelationOrderByWithRelationInput[]
-    cursor?: ArticleRelationWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ArticleRelationScalarFieldEnum | ArticleRelationScalarFieldEnum[]
-  }
-
-  /**
-   * Article.citations
-   */
-  export type Article$citationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Citation
-     */
-    select?: CitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Citation
-     */
-    omit?: CitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CitationInclude<ExtArgs> | null
-    where?: CitationWhereInput
-    orderBy?: CitationOrderByWithRelationInput | CitationOrderByWithRelationInput[]
-    cursor?: CitationWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CitationScalarFieldEnum | CitationScalarFieldEnum[]
-  }
-
-  /**
    * Article without action
    */
   export type ArticleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10726,2560 +8105,694 @@ export namespace Prisma {
 
 
   /**
-   * Model ArticleTag
+   * Model Resource
    */
 
-  export type AggregateArticleTag = {
-    _count: ArticleTagCountAggregateOutputType | null
-    _min: ArticleTagMinAggregateOutputType | null
-    _max: ArticleTagMaxAggregateOutputType | null
+  export type AggregateResource = {
+    _count: ResourceCountAggregateOutputType | null
+    _avg: ResourceAvgAggregateOutputType | null
+    _sum: ResourceSumAggregateOutputType | null
+    _min: ResourceMinAggregateOutputType | null
+    _max: ResourceMaxAggregateOutputType | null
   }
 
-  export type ArticleTagMinAggregateOutputType = {
-    articleId: string | null
-    tagId: string | null
-    createdAt: Date | null
+  export type ResourceAvgAggregateOutputType = {
+    views: number | null
   }
 
-  export type ArticleTagMaxAggregateOutputType = {
-    articleId: string | null
-    tagId: string | null
-    createdAt: Date | null
+  export type ResourceSumAggregateOutputType = {
+    views: number | null
   }
 
-  export type ArticleTagCountAggregateOutputType = {
-    articleId: number
-    tagId: number
-    createdAt: number
-    _all: number
-  }
-
-
-  export type ArticleTagMinAggregateInputType = {
-    articleId?: true
-    tagId?: true
-    createdAt?: true
-  }
-
-  export type ArticleTagMaxAggregateInputType = {
-    articleId?: true
-    tagId?: true
-    createdAt?: true
-  }
-
-  export type ArticleTagCountAggregateInputType = {
-    articleId?: true
-    tagId?: true
-    createdAt?: true
-    _all?: true
-  }
-
-  export type ArticleTagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which ArticleTag to aggregate.
-     */
-    where?: ArticleTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ArticleTags to fetch.
-     */
-    orderBy?: ArticleTagOrderByWithRelationInput | ArticleTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: ArticleTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ArticleTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ArticleTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned ArticleTags
-    **/
-    _count?: true | ArticleTagCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: ArticleTagMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: ArticleTagMaxAggregateInputType
-  }
-
-  export type GetArticleTagAggregateType<T extends ArticleTagAggregateArgs> = {
-        [P in keyof T & keyof AggregateArticleTag]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateArticleTag[P]>
-      : GetScalarType<T[P], AggregateArticleTag[P]>
-  }
-
-
-
-
-  export type ArticleTagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ArticleTagWhereInput
-    orderBy?: ArticleTagOrderByWithAggregationInput | ArticleTagOrderByWithAggregationInput[]
-    by: ArticleTagScalarFieldEnum[] | ArticleTagScalarFieldEnum
-    having?: ArticleTagScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: ArticleTagCountAggregateInputType | true
-    _min?: ArticleTagMinAggregateInputType
-    _max?: ArticleTagMaxAggregateInputType
-  }
-
-  export type ArticleTagGroupByOutputType = {
-    articleId: string
-    tagId: string
-    createdAt: Date
-    _count: ArticleTagCountAggregateOutputType | null
-    _min: ArticleTagMinAggregateOutputType | null
-    _max: ArticleTagMaxAggregateOutputType | null
-  }
-
-  type GetArticleTagGroupByPayload<T extends ArticleTagGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<ArticleTagGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof ArticleTagGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], ArticleTagGroupByOutputType[P]>
-            : GetScalarType<T[P], ArticleTagGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type ArticleTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    articleId?: boolean
-    tagId?: boolean
-    createdAt?: boolean
-    article?: boolean | ArticleDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["articleTag"]>
-
-  export type ArticleTagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    articleId?: boolean
-    tagId?: boolean
-    createdAt?: boolean
-    article?: boolean | ArticleDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["articleTag"]>
-
-  export type ArticleTagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    articleId?: boolean
-    tagId?: boolean
-    createdAt?: boolean
-    article?: boolean | ArticleDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["articleTag"]>
-
-  export type ArticleTagSelectScalar = {
-    articleId?: boolean
-    tagId?: boolean
-    createdAt?: boolean
-  }
-
-  export type ArticleTagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"articleId" | "tagId" | "createdAt", ExtArgs["result"]["articleTag"]>
-  export type ArticleTagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    article?: boolean | ArticleDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }
-  export type ArticleTagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    article?: boolean | ArticleDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }
-  export type ArticleTagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    article?: boolean | ArticleDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }
-
-  export type $ArticleTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "ArticleTag"
-    objects: {
-      article: Prisma.$ArticlePayload<ExtArgs>
-      tag: Prisma.$TagPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      articleId: string
-      tagId: string
-      createdAt: Date
-    }, ExtArgs["result"]["articleTag"]>
-    composites: {}
-  }
-
-  type ArticleTagGetPayload<S extends boolean | null | undefined | ArticleTagDefaultArgs> = $Result.GetResult<Prisma.$ArticleTagPayload, S>
-
-  type ArticleTagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ArticleTagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ArticleTagCountAggregateInputType | true
-    }
-
-  export interface ArticleTagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ArticleTag'], meta: { name: 'ArticleTag' } }
-    /**
-     * Find zero or one ArticleTag that matches the filter.
-     * @param {ArticleTagFindUniqueArgs} args - Arguments to find a ArticleTag
-     * @example
-     * // Get one ArticleTag
-     * const articleTag = await prisma.articleTag.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends ArticleTagFindUniqueArgs>(args: SelectSubset<T, ArticleTagFindUniqueArgs<ExtArgs>>): Prisma__ArticleTagClient<$Result.GetResult<Prisma.$ArticleTagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one ArticleTag that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {ArticleTagFindUniqueOrThrowArgs} args - Arguments to find a ArticleTag
-     * @example
-     * // Get one ArticleTag
-     * const articleTag = await prisma.articleTag.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends ArticleTagFindUniqueOrThrowArgs>(args: SelectSubset<T, ArticleTagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ArticleTagClient<$Result.GetResult<Prisma.$ArticleTagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first ArticleTag that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleTagFindFirstArgs} args - Arguments to find a ArticleTag
-     * @example
-     * // Get one ArticleTag
-     * const articleTag = await prisma.articleTag.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends ArticleTagFindFirstArgs>(args?: SelectSubset<T, ArticleTagFindFirstArgs<ExtArgs>>): Prisma__ArticleTagClient<$Result.GetResult<Prisma.$ArticleTagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first ArticleTag that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleTagFindFirstOrThrowArgs} args - Arguments to find a ArticleTag
-     * @example
-     * // Get one ArticleTag
-     * const articleTag = await prisma.articleTag.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends ArticleTagFindFirstOrThrowArgs>(args?: SelectSubset<T, ArticleTagFindFirstOrThrowArgs<ExtArgs>>): Prisma__ArticleTagClient<$Result.GetResult<Prisma.$ArticleTagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more ArticleTags that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleTagFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all ArticleTags
-     * const articleTags = await prisma.articleTag.findMany()
-     * 
-     * // Get first 10 ArticleTags
-     * const articleTags = await prisma.articleTag.findMany({ take: 10 })
-     * 
-     * // Only select the `articleId`
-     * const articleTagWithArticleIdOnly = await prisma.articleTag.findMany({ select: { articleId: true } })
-     * 
-     */
-    findMany<T extends ArticleTagFindManyArgs>(args?: SelectSubset<T, ArticleTagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticleTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a ArticleTag.
-     * @param {ArticleTagCreateArgs} args - Arguments to create a ArticleTag.
-     * @example
-     * // Create one ArticleTag
-     * const ArticleTag = await prisma.articleTag.create({
-     *   data: {
-     *     // ... data to create a ArticleTag
-     *   }
-     * })
-     * 
-     */
-    create<T extends ArticleTagCreateArgs>(args: SelectSubset<T, ArticleTagCreateArgs<ExtArgs>>): Prisma__ArticleTagClient<$Result.GetResult<Prisma.$ArticleTagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many ArticleTags.
-     * @param {ArticleTagCreateManyArgs} args - Arguments to create many ArticleTags.
-     * @example
-     * // Create many ArticleTags
-     * const articleTag = await prisma.articleTag.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends ArticleTagCreateManyArgs>(args?: SelectSubset<T, ArticleTagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many ArticleTags and returns the data saved in the database.
-     * @param {ArticleTagCreateManyAndReturnArgs} args - Arguments to create many ArticleTags.
-     * @example
-     * // Create many ArticleTags
-     * const articleTag = await prisma.articleTag.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many ArticleTags and only return the `articleId`
-     * const articleTagWithArticleIdOnly = await prisma.articleTag.createManyAndReturn({
-     *   select: { articleId: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends ArticleTagCreateManyAndReturnArgs>(args?: SelectSubset<T, ArticleTagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticleTagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a ArticleTag.
-     * @param {ArticleTagDeleteArgs} args - Arguments to delete one ArticleTag.
-     * @example
-     * // Delete one ArticleTag
-     * const ArticleTag = await prisma.articleTag.delete({
-     *   where: {
-     *     // ... filter to delete one ArticleTag
-     *   }
-     * })
-     * 
-     */
-    delete<T extends ArticleTagDeleteArgs>(args: SelectSubset<T, ArticleTagDeleteArgs<ExtArgs>>): Prisma__ArticleTagClient<$Result.GetResult<Prisma.$ArticleTagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one ArticleTag.
-     * @param {ArticleTagUpdateArgs} args - Arguments to update one ArticleTag.
-     * @example
-     * // Update one ArticleTag
-     * const articleTag = await prisma.articleTag.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends ArticleTagUpdateArgs>(args: SelectSubset<T, ArticleTagUpdateArgs<ExtArgs>>): Prisma__ArticleTagClient<$Result.GetResult<Prisma.$ArticleTagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more ArticleTags.
-     * @param {ArticleTagDeleteManyArgs} args - Arguments to filter ArticleTags to delete.
-     * @example
-     * // Delete a few ArticleTags
-     * const { count } = await prisma.articleTag.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends ArticleTagDeleteManyArgs>(args?: SelectSubset<T, ArticleTagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more ArticleTags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleTagUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many ArticleTags
-     * const articleTag = await prisma.articleTag.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends ArticleTagUpdateManyArgs>(args: SelectSubset<T, ArticleTagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more ArticleTags and returns the data updated in the database.
-     * @param {ArticleTagUpdateManyAndReturnArgs} args - Arguments to update many ArticleTags.
-     * @example
-     * // Update many ArticleTags
-     * const articleTag = await prisma.articleTag.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more ArticleTags and only return the `articleId`
-     * const articleTagWithArticleIdOnly = await prisma.articleTag.updateManyAndReturn({
-     *   select: { articleId: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends ArticleTagUpdateManyAndReturnArgs>(args: SelectSubset<T, ArticleTagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticleTagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one ArticleTag.
-     * @param {ArticleTagUpsertArgs} args - Arguments to update or create a ArticleTag.
-     * @example
-     * // Update or create a ArticleTag
-     * const articleTag = await prisma.articleTag.upsert({
-     *   create: {
-     *     // ... data to create a ArticleTag
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the ArticleTag we want to update
-     *   }
-     * })
-     */
-    upsert<T extends ArticleTagUpsertArgs>(args: SelectSubset<T, ArticleTagUpsertArgs<ExtArgs>>): Prisma__ArticleTagClient<$Result.GetResult<Prisma.$ArticleTagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of ArticleTags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleTagCountArgs} args - Arguments to filter ArticleTags to count.
-     * @example
-     * // Count the number of ArticleTags
-     * const count = await prisma.articleTag.count({
-     *   where: {
-     *     // ... the filter for the ArticleTags we want to count
-     *   }
-     * })
-    **/
-    count<T extends ArticleTagCountArgs>(
-      args?: Subset<T, ArticleTagCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], ArticleTagCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a ArticleTag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleTagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends ArticleTagAggregateArgs>(args: Subset<T, ArticleTagAggregateArgs>): Prisma.PrismaPromise<GetArticleTagAggregateType<T>>
-
-    /**
-     * Group by ArticleTag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleTagGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends ArticleTagGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ArticleTagGroupByArgs['orderBy'] }
-        : { orderBy?: ArticleTagGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, ArticleTagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetArticleTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the ArticleTag model
-   */
-  readonly fields: ArticleTagFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for ArticleTag.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__ArticleTagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    article<T extends ArticleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ArticleDefaultArgs<ExtArgs>>): Prisma__ArticleClient<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    tag<T extends TagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TagDefaultArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the ArticleTag model
-   */
-  interface ArticleTagFieldRefs {
-    readonly articleId: FieldRef<"ArticleTag", 'String'>
-    readonly tagId: FieldRef<"ArticleTag", 'String'>
-    readonly createdAt: FieldRef<"ArticleTag", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * ArticleTag findUnique
-   */
-  export type ArticleTagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagInclude<ExtArgs> | null
-    /**
-     * Filter, which ArticleTag to fetch.
-     */
-    where: ArticleTagWhereUniqueInput
-  }
-
-  /**
-   * ArticleTag findUniqueOrThrow
-   */
-  export type ArticleTagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagInclude<ExtArgs> | null
-    /**
-     * Filter, which ArticleTag to fetch.
-     */
-    where: ArticleTagWhereUniqueInput
-  }
-
-  /**
-   * ArticleTag findFirst
-   */
-  export type ArticleTagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagInclude<ExtArgs> | null
-    /**
-     * Filter, which ArticleTag to fetch.
-     */
-    where?: ArticleTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ArticleTags to fetch.
-     */
-    orderBy?: ArticleTagOrderByWithRelationInput | ArticleTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ArticleTags.
-     */
-    cursor?: ArticleTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ArticleTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ArticleTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ArticleTags.
-     */
-    distinct?: ArticleTagScalarFieldEnum | ArticleTagScalarFieldEnum[]
-  }
-
-  /**
-   * ArticleTag findFirstOrThrow
-   */
-  export type ArticleTagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagInclude<ExtArgs> | null
-    /**
-     * Filter, which ArticleTag to fetch.
-     */
-    where?: ArticleTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ArticleTags to fetch.
-     */
-    orderBy?: ArticleTagOrderByWithRelationInput | ArticleTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ArticleTags.
-     */
-    cursor?: ArticleTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ArticleTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ArticleTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ArticleTags.
-     */
-    distinct?: ArticleTagScalarFieldEnum | ArticleTagScalarFieldEnum[]
-  }
-
-  /**
-   * ArticleTag findMany
-   */
-  export type ArticleTagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagInclude<ExtArgs> | null
-    /**
-     * Filter, which ArticleTags to fetch.
-     */
-    where?: ArticleTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ArticleTags to fetch.
-     */
-    orderBy?: ArticleTagOrderByWithRelationInput | ArticleTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing ArticleTags.
-     */
-    cursor?: ArticleTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ArticleTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ArticleTags.
-     */
-    skip?: number
-    distinct?: ArticleTagScalarFieldEnum | ArticleTagScalarFieldEnum[]
-  }
-
-  /**
-   * ArticleTag create
-   */
-  export type ArticleTagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagInclude<ExtArgs> | null
-    /**
-     * The data needed to create a ArticleTag.
-     */
-    data: XOR<ArticleTagCreateInput, ArticleTagUncheckedCreateInput>
-  }
-
-  /**
-   * ArticleTag createMany
-   */
-  export type ArticleTagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many ArticleTags.
-     */
-    data: ArticleTagCreateManyInput | ArticleTagCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * ArticleTag createManyAndReturn
-   */
-  export type ArticleTagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * The data used to create many ArticleTags.
-     */
-    data: ArticleTagCreateManyInput | ArticleTagCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * ArticleTag update
-   */
-  export type ArticleTagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagInclude<ExtArgs> | null
-    /**
-     * The data needed to update a ArticleTag.
-     */
-    data: XOR<ArticleTagUpdateInput, ArticleTagUncheckedUpdateInput>
-    /**
-     * Choose, which ArticleTag to update.
-     */
-    where: ArticleTagWhereUniqueInput
-  }
-
-  /**
-   * ArticleTag updateMany
-   */
-  export type ArticleTagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update ArticleTags.
-     */
-    data: XOR<ArticleTagUpdateManyMutationInput, ArticleTagUncheckedUpdateManyInput>
-    /**
-     * Filter which ArticleTags to update
-     */
-    where?: ArticleTagWhereInput
-    /**
-     * Limit how many ArticleTags to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * ArticleTag updateManyAndReturn
-   */
-  export type ArticleTagUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * The data used to update ArticleTags.
-     */
-    data: XOR<ArticleTagUpdateManyMutationInput, ArticleTagUncheckedUpdateManyInput>
-    /**
-     * Filter which ArticleTags to update
-     */
-    where?: ArticleTagWhereInput
-    /**
-     * Limit how many ArticleTags to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * ArticleTag upsert
-   */
-  export type ArticleTagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagInclude<ExtArgs> | null
-    /**
-     * The filter to search for the ArticleTag to update in case it exists.
-     */
-    where: ArticleTagWhereUniqueInput
-    /**
-     * In case the ArticleTag found by the `where` argument doesn't exist, create a new ArticleTag with this data.
-     */
-    create: XOR<ArticleTagCreateInput, ArticleTagUncheckedCreateInput>
-    /**
-     * In case the ArticleTag was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<ArticleTagUpdateInput, ArticleTagUncheckedUpdateInput>
-  }
-
-  /**
-   * ArticleTag delete
-   */
-  export type ArticleTagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagInclude<ExtArgs> | null
-    /**
-     * Filter which ArticleTag to delete.
-     */
-    where: ArticleTagWhereUniqueInput
-  }
-
-  /**
-   * ArticleTag deleteMany
-   */
-  export type ArticleTagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which ArticleTags to delete
-     */
-    where?: ArticleTagWhereInput
-    /**
-     * Limit how many ArticleTags to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * ArticleTag without action
-   */
-  export type ArticleTagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleTag
-     */
-    select?: ArticleTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleTag
-     */
-    omit?: ArticleTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleTagInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model ArticleRelation
-   */
-
-  export type AggregateArticleRelation = {
-    _count: ArticleRelationCountAggregateOutputType | null
-    _avg: ArticleRelationAvgAggregateOutputType | null
-    _sum: ArticleRelationSumAggregateOutputType | null
-    _min: ArticleRelationMinAggregateOutputType | null
-    _max: ArticleRelationMaxAggregateOutputType | null
-  }
-
-  export type ArticleRelationAvgAggregateOutputType = {
-    order: number | null
-  }
-
-  export type ArticleRelationSumAggregateOutputType = {
-    order: number | null
-  }
-
-  export type ArticleRelationMinAggregateOutputType = {
-    fromArticleId: string | null
-    toArticleId: string | null
-    relationType: string | null
-    order: number | null
-    createdAt: Date | null
-  }
-
-  export type ArticleRelationMaxAggregateOutputType = {
-    fromArticleId: string | null
-    toArticleId: string | null
-    relationType: string | null
-    order: number | null
-    createdAt: Date | null
-  }
-
-  export type ArticleRelationCountAggregateOutputType = {
-    fromArticleId: number
-    toArticleId: number
-    relationType: number
-    order: number
-    createdAt: number
-    _all: number
-  }
-
-
-  export type ArticleRelationAvgAggregateInputType = {
-    order?: true
-  }
-
-  export type ArticleRelationSumAggregateInputType = {
-    order?: true
-  }
-
-  export type ArticleRelationMinAggregateInputType = {
-    fromArticleId?: true
-    toArticleId?: true
-    relationType?: true
-    order?: true
-    createdAt?: true
-  }
-
-  export type ArticleRelationMaxAggregateInputType = {
-    fromArticleId?: true
-    toArticleId?: true
-    relationType?: true
-    order?: true
-    createdAt?: true
-  }
-
-  export type ArticleRelationCountAggregateInputType = {
-    fromArticleId?: true
-    toArticleId?: true
-    relationType?: true
-    order?: true
-    createdAt?: true
-    _all?: true
-  }
-
-  export type ArticleRelationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which ArticleRelation to aggregate.
-     */
-    where?: ArticleRelationWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ArticleRelations to fetch.
-     */
-    orderBy?: ArticleRelationOrderByWithRelationInput | ArticleRelationOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: ArticleRelationWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ArticleRelations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ArticleRelations.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned ArticleRelations
-    **/
-    _count?: true | ArticleRelationCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: ArticleRelationAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ArticleRelationSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: ArticleRelationMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: ArticleRelationMaxAggregateInputType
-  }
-
-  export type GetArticleRelationAggregateType<T extends ArticleRelationAggregateArgs> = {
-        [P in keyof T & keyof AggregateArticleRelation]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateArticleRelation[P]>
-      : GetScalarType<T[P], AggregateArticleRelation[P]>
-  }
-
-
-
-
-  export type ArticleRelationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ArticleRelationWhereInput
-    orderBy?: ArticleRelationOrderByWithAggregationInput | ArticleRelationOrderByWithAggregationInput[]
-    by: ArticleRelationScalarFieldEnum[] | ArticleRelationScalarFieldEnum
-    having?: ArticleRelationScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: ArticleRelationCountAggregateInputType | true
-    _avg?: ArticleRelationAvgAggregateInputType
-    _sum?: ArticleRelationSumAggregateInputType
-    _min?: ArticleRelationMinAggregateInputType
-    _max?: ArticleRelationMaxAggregateInputType
-  }
-
-  export type ArticleRelationGroupByOutputType = {
-    fromArticleId: string
-    toArticleId: string
-    relationType: string
-    order: number | null
-    createdAt: Date
-    _count: ArticleRelationCountAggregateOutputType | null
-    _avg: ArticleRelationAvgAggregateOutputType | null
-    _sum: ArticleRelationSumAggregateOutputType | null
-    _min: ArticleRelationMinAggregateOutputType | null
-    _max: ArticleRelationMaxAggregateOutputType | null
-  }
-
-  type GetArticleRelationGroupByPayload<T extends ArticleRelationGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<ArticleRelationGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof ArticleRelationGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], ArticleRelationGroupByOutputType[P]>
-            : GetScalarType<T[P], ArticleRelationGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type ArticleRelationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    fromArticleId?: boolean
-    toArticleId?: boolean
-    relationType?: boolean
-    order?: boolean
-    createdAt?: boolean
-    fromArticle?: boolean | ArticleDefaultArgs<ExtArgs>
-    toArticle?: boolean | ArticleDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["articleRelation"]>
-
-  export type ArticleRelationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    fromArticleId?: boolean
-    toArticleId?: boolean
-    relationType?: boolean
-    order?: boolean
-    createdAt?: boolean
-    fromArticle?: boolean | ArticleDefaultArgs<ExtArgs>
-    toArticle?: boolean | ArticleDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["articleRelation"]>
-
-  export type ArticleRelationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    fromArticleId?: boolean
-    toArticleId?: boolean
-    relationType?: boolean
-    order?: boolean
-    createdAt?: boolean
-    fromArticle?: boolean | ArticleDefaultArgs<ExtArgs>
-    toArticle?: boolean | ArticleDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["articleRelation"]>
-
-  export type ArticleRelationSelectScalar = {
-    fromArticleId?: boolean
-    toArticleId?: boolean
-    relationType?: boolean
-    order?: boolean
-    createdAt?: boolean
-  }
-
-  export type ArticleRelationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"fromArticleId" | "toArticleId" | "relationType" | "order" | "createdAt", ExtArgs["result"]["articleRelation"]>
-  export type ArticleRelationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    fromArticle?: boolean | ArticleDefaultArgs<ExtArgs>
-    toArticle?: boolean | ArticleDefaultArgs<ExtArgs>
-  }
-  export type ArticleRelationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    fromArticle?: boolean | ArticleDefaultArgs<ExtArgs>
-    toArticle?: boolean | ArticleDefaultArgs<ExtArgs>
-  }
-  export type ArticleRelationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    fromArticle?: boolean | ArticleDefaultArgs<ExtArgs>
-    toArticle?: boolean | ArticleDefaultArgs<ExtArgs>
-  }
-
-  export type $ArticleRelationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "ArticleRelation"
-    objects: {
-      fromArticle: Prisma.$ArticlePayload<ExtArgs>
-      toArticle: Prisma.$ArticlePayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      fromArticleId: string
-      toArticleId: string
-      relationType: string
-      order: number | null
-      createdAt: Date
-    }, ExtArgs["result"]["articleRelation"]>
-    composites: {}
-  }
-
-  type ArticleRelationGetPayload<S extends boolean | null | undefined | ArticleRelationDefaultArgs> = $Result.GetResult<Prisma.$ArticleRelationPayload, S>
-
-  type ArticleRelationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ArticleRelationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ArticleRelationCountAggregateInputType | true
-    }
-
-  export interface ArticleRelationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ArticleRelation'], meta: { name: 'ArticleRelation' } }
-    /**
-     * Find zero or one ArticleRelation that matches the filter.
-     * @param {ArticleRelationFindUniqueArgs} args - Arguments to find a ArticleRelation
-     * @example
-     * // Get one ArticleRelation
-     * const articleRelation = await prisma.articleRelation.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends ArticleRelationFindUniqueArgs>(args: SelectSubset<T, ArticleRelationFindUniqueArgs<ExtArgs>>): Prisma__ArticleRelationClient<$Result.GetResult<Prisma.$ArticleRelationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one ArticleRelation that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {ArticleRelationFindUniqueOrThrowArgs} args - Arguments to find a ArticleRelation
-     * @example
-     * // Get one ArticleRelation
-     * const articleRelation = await prisma.articleRelation.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends ArticleRelationFindUniqueOrThrowArgs>(args: SelectSubset<T, ArticleRelationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ArticleRelationClient<$Result.GetResult<Prisma.$ArticleRelationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first ArticleRelation that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleRelationFindFirstArgs} args - Arguments to find a ArticleRelation
-     * @example
-     * // Get one ArticleRelation
-     * const articleRelation = await prisma.articleRelation.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends ArticleRelationFindFirstArgs>(args?: SelectSubset<T, ArticleRelationFindFirstArgs<ExtArgs>>): Prisma__ArticleRelationClient<$Result.GetResult<Prisma.$ArticleRelationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first ArticleRelation that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleRelationFindFirstOrThrowArgs} args - Arguments to find a ArticleRelation
-     * @example
-     * // Get one ArticleRelation
-     * const articleRelation = await prisma.articleRelation.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends ArticleRelationFindFirstOrThrowArgs>(args?: SelectSubset<T, ArticleRelationFindFirstOrThrowArgs<ExtArgs>>): Prisma__ArticleRelationClient<$Result.GetResult<Prisma.$ArticleRelationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more ArticleRelations that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleRelationFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all ArticleRelations
-     * const articleRelations = await prisma.articleRelation.findMany()
-     * 
-     * // Get first 10 ArticleRelations
-     * const articleRelations = await prisma.articleRelation.findMany({ take: 10 })
-     * 
-     * // Only select the `fromArticleId`
-     * const articleRelationWithFromArticleIdOnly = await prisma.articleRelation.findMany({ select: { fromArticleId: true } })
-     * 
-     */
-    findMany<T extends ArticleRelationFindManyArgs>(args?: SelectSubset<T, ArticleRelationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticleRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a ArticleRelation.
-     * @param {ArticleRelationCreateArgs} args - Arguments to create a ArticleRelation.
-     * @example
-     * // Create one ArticleRelation
-     * const ArticleRelation = await prisma.articleRelation.create({
-     *   data: {
-     *     // ... data to create a ArticleRelation
-     *   }
-     * })
-     * 
-     */
-    create<T extends ArticleRelationCreateArgs>(args: SelectSubset<T, ArticleRelationCreateArgs<ExtArgs>>): Prisma__ArticleRelationClient<$Result.GetResult<Prisma.$ArticleRelationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many ArticleRelations.
-     * @param {ArticleRelationCreateManyArgs} args - Arguments to create many ArticleRelations.
-     * @example
-     * // Create many ArticleRelations
-     * const articleRelation = await prisma.articleRelation.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends ArticleRelationCreateManyArgs>(args?: SelectSubset<T, ArticleRelationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many ArticleRelations and returns the data saved in the database.
-     * @param {ArticleRelationCreateManyAndReturnArgs} args - Arguments to create many ArticleRelations.
-     * @example
-     * // Create many ArticleRelations
-     * const articleRelation = await prisma.articleRelation.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many ArticleRelations and only return the `fromArticleId`
-     * const articleRelationWithFromArticleIdOnly = await prisma.articleRelation.createManyAndReturn({
-     *   select: { fromArticleId: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends ArticleRelationCreateManyAndReturnArgs>(args?: SelectSubset<T, ArticleRelationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticleRelationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a ArticleRelation.
-     * @param {ArticleRelationDeleteArgs} args - Arguments to delete one ArticleRelation.
-     * @example
-     * // Delete one ArticleRelation
-     * const ArticleRelation = await prisma.articleRelation.delete({
-     *   where: {
-     *     // ... filter to delete one ArticleRelation
-     *   }
-     * })
-     * 
-     */
-    delete<T extends ArticleRelationDeleteArgs>(args: SelectSubset<T, ArticleRelationDeleteArgs<ExtArgs>>): Prisma__ArticleRelationClient<$Result.GetResult<Prisma.$ArticleRelationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one ArticleRelation.
-     * @param {ArticleRelationUpdateArgs} args - Arguments to update one ArticleRelation.
-     * @example
-     * // Update one ArticleRelation
-     * const articleRelation = await prisma.articleRelation.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends ArticleRelationUpdateArgs>(args: SelectSubset<T, ArticleRelationUpdateArgs<ExtArgs>>): Prisma__ArticleRelationClient<$Result.GetResult<Prisma.$ArticleRelationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more ArticleRelations.
-     * @param {ArticleRelationDeleteManyArgs} args - Arguments to filter ArticleRelations to delete.
-     * @example
-     * // Delete a few ArticleRelations
-     * const { count } = await prisma.articleRelation.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends ArticleRelationDeleteManyArgs>(args?: SelectSubset<T, ArticleRelationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more ArticleRelations.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleRelationUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many ArticleRelations
-     * const articleRelation = await prisma.articleRelation.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends ArticleRelationUpdateManyArgs>(args: SelectSubset<T, ArticleRelationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more ArticleRelations and returns the data updated in the database.
-     * @param {ArticleRelationUpdateManyAndReturnArgs} args - Arguments to update many ArticleRelations.
-     * @example
-     * // Update many ArticleRelations
-     * const articleRelation = await prisma.articleRelation.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more ArticleRelations and only return the `fromArticleId`
-     * const articleRelationWithFromArticleIdOnly = await prisma.articleRelation.updateManyAndReturn({
-     *   select: { fromArticleId: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends ArticleRelationUpdateManyAndReturnArgs>(args: SelectSubset<T, ArticleRelationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticleRelationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one ArticleRelation.
-     * @param {ArticleRelationUpsertArgs} args - Arguments to update or create a ArticleRelation.
-     * @example
-     * // Update or create a ArticleRelation
-     * const articleRelation = await prisma.articleRelation.upsert({
-     *   create: {
-     *     // ... data to create a ArticleRelation
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the ArticleRelation we want to update
-     *   }
-     * })
-     */
-    upsert<T extends ArticleRelationUpsertArgs>(args: SelectSubset<T, ArticleRelationUpsertArgs<ExtArgs>>): Prisma__ArticleRelationClient<$Result.GetResult<Prisma.$ArticleRelationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of ArticleRelations.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleRelationCountArgs} args - Arguments to filter ArticleRelations to count.
-     * @example
-     * // Count the number of ArticleRelations
-     * const count = await prisma.articleRelation.count({
-     *   where: {
-     *     // ... the filter for the ArticleRelations we want to count
-     *   }
-     * })
-    **/
-    count<T extends ArticleRelationCountArgs>(
-      args?: Subset<T, ArticleRelationCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], ArticleRelationCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a ArticleRelation.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleRelationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends ArticleRelationAggregateArgs>(args: Subset<T, ArticleRelationAggregateArgs>): Prisma.PrismaPromise<GetArticleRelationAggregateType<T>>
-
-    /**
-     * Group by ArticleRelation.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleRelationGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends ArticleRelationGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ArticleRelationGroupByArgs['orderBy'] }
-        : { orderBy?: ArticleRelationGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, ArticleRelationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetArticleRelationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the ArticleRelation model
-   */
-  readonly fields: ArticleRelationFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for ArticleRelation.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__ArticleRelationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    fromArticle<T extends ArticleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ArticleDefaultArgs<ExtArgs>>): Prisma__ArticleClient<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    toArticle<T extends ArticleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ArticleDefaultArgs<ExtArgs>>): Prisma__ArticleClient<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the ArticleRelation model
-   */
-  interface ArticleRelationFieldRefs {
-    readonly fromArticleId: FieldRef<"ArticleRelation", 'String'>
-    readonly toArticleId: FieldRef<"ArticleRelation", 'String'>
-    readonly relationType: FieldRef<"ArticleRelation", 'String'>
-    readonly order: FieldRef<"ArticleRelation", 'Int'>
-    readonly createdAt: FieldRef<"ArticleRelation", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * ArticleRelation findUnique
-   */
-  export type ArticleRelationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationInclude<ExtArgs> | null
-    /**
-     * Filter, which ArticleRelation to fetch.
-     */
-    where: ArticleRelationWhereUniqueInput
-  }
-
-  /**
-   * ArticleRelation findUniqueOrThrow
-   */
-  export type ArticleRelationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationInclude<ExtArgs> | null
-    /**
-     * Filter, which ArticleRelation to fetch.
-     */
-    where: ArticleRelationWhereUniqueInput
-  }
-
-  /**
-   * ArticleRelation findFirst
-   */
-  export type ArticleRelationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationInclude<ExtArgs> | null
-    /**
-     * Filter, which ArticleRelation to fetch.
-     */
-    where?: ArticleRelationWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ArticleRelations to fetch.
-     */
-    orderBy?: ArticleRelationOrderByWithRelationInput | ArticleRelationOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ArticleRelations.
-     */
-    cursor?: ArticleRelationWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ArticleRelations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ArticleRelations.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ArticleRelations.
-     */
-    distinct?: ArticleRelationScalarFieldEnum | ArticleRelationScalarFieldEnum[]
-  }
-
-  /**
-   * ArticleRelation findFirstOrThrow
-   */
-  export type ArticleRelationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationInclude<ExtArgs> | null
-    /**
-     * Filter, which ArticleRelation to fetch.
-     */
-    where?: ArticleRelationWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ArticleRelations to fetch.
-     */
-    orderBy?: ArticleRelationOrderByWithRelationInput | ArticleRelationOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ArticleRelations.
-     */
-    cursor?: ArticleRelationWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ArticleRelations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ArticleRelations.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ArticleRelations.
-     */
-    distinct?: ArticleRelationScalarFieldEnum | ArticleRelationScalarFieldEnum[]
-  }
-
-  /**
-   * ArticleRelation findMany
-   */
-  export type ArticleRelationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationInclude<ExtArgs> | null
-    /**
-     * Filter, which ArticleRelations to fetch.
-     */
-    where?: ArticleRelationWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ArticleRelations to fetch.
-     */
-    orderBy?: ArticleRelationOrderByWithRelationInput | ArticleRelationOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing ArticleRelations.
-     */
-    cursor?: ArticleRelationWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ArticleRelations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ArticleRelations.
-     */
-    skip?: number
-    distinct?: ArticleRelationScalarFieldEnum | ArticleRelationScalarFieldEnum[]
-  }
-
-  /**
-   * ArticleRelation create
-   */
-  export type ArticleRelationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationInclude<ExtArgs> | null
-    /**
-     * The data needed to create a ArticleRelation.
-     */
-    data: XOR<ArticleRelationCreateInput, ArticleRelationUncheckedCreateInput>
-  }
-
-  /**
-   * ArticleRelation createMany
-   */
-  export type ArticleRelationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many ArticleRelations.
-     */
-    data: ArticleRelationCreateManyInput | ArticleRelationCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * ArticleRelation createManyAndReturn
-   */
-  export type ArticleRelationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * The data used to create many ArticleRelations.
-     */
-    data: ArticleRelationCreateManyInput | ArticleRelationCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * ArticleRelation update
-   */
-  export type ArticleRelationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationInclude<ExtArgs> | null
-    /**
-     * The data needed to update a ArticleRelation.
-     */
-    data: XOR<ArticleRelationUpdateInput, ArticleRelationUncheckedUpdateInput>
-    /**
-     * Choose, which ArticleRelation to update.
-     */
-    where: ArticleRelationWhereUniqueInput
-  }
-
-  /**
-   * ArticleRelation updateMany
-   */
-  export type ArticleRelationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update ArticleRelations.
-     */
-    data: XOR<ArticleRelationUpdateManyMutationInput, ArticleRelationUncheckedUpdateManyInput>
-    /**
-     * Filter which ArticleRelations to update
-     */
-    where?: ArticleRelationWhereInput
-    /**
-     * Limit how many ArticleRelations to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * ArticleRelation updateManyAndReturn
-   */
-  export type ArticleRelationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * The data used to update ArticleRelations.
-     */
-    data: XOR<ArticleRelationUpdateManyMutationInput, ArticleRelationUncheckedUpdateManyInput>
-    /**
-     * Filter which ArticleRelations to update
-     */
-    where?: ArticleRelationWhereInput
-    /**
-     * Limit how many ArticleRelations to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * ArticleRelation upsert
-   */
-  export type ArticleRelationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationInclude<ExtArgs> | null
-    /**
-     * The filter to search for the ArticleRelation to update in case it exists.
-     */
-    where: ArticleRelationWhereUniqueInput
-    /**
-     * In case the ArticleRelation found by the `where` argument doesn't exist, create a new ArticleRelation with this data.
-     */
-    create: XOR<ArticleRelationCreateInput, ArticleRelationUncheckedCreateInput>
-    /**
-     * In case the ArticleRelation was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<ArticleRelationUpdateInput, ArticleRelationUncheckedUpdateInput>
-  }
-
-  /**
-   * ArticleRelation delete
-   */
-  export type ArticleRelationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationInclude<ExtArgs> | null
-    /**
-     * Filter which ArticleRelation to delete.
-     */
-    where: ArticleRelationWhereUniqueInput
-  }
-
-  /**
-   * ArticleRelation deleteMany
-   */
-  export type ArticleRelationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which ArticleRelations to delete
-     */
-    where?: ArticleRelationWhereInput
-    /**
-     * Limit how many ArticleRelations to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * ArticleRelation without action
-   */
-  export type ArticleRelationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ArticleRelation
-     */
-    select?: ArticleRelationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ArticleRelation
-     */
-    omit?: ArticleRelationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ArticleRelationInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Citation
-   */
-
-  export type AggregateCitation = {
-    _count: CitationCountAggregateOutputType | null
-    _avg: CitationAvgAggregateOutputType | null
-    _sum: CitationSumAggregateOutputType | null
-    _min: CitationMinAggregateOutputType | null
-    _max: CitationMaxAggregateOutputType | null
-  }
-
-  export type CitationAvgAggregateOutputType = {
-    order: number | null
-  }
-
-  export type CitationSumAggregateOutputType = {
-    order: number | null
-  }
-
-  export type CitationMinAggregateOutputType = {
+  export type ResourceMinAggregateOutputType = {
     id: string | null
-    url: string | null
-    title: string | null
-    domain: string | null
-    articleId: string | null
-    order: number | null
+    slug: string | null
+    name: string | null
+    category: string | null
     verified: boolean | null
+    shortDescription: string | null
+    officialUrl: string | null
+    platforms: string | null
+    tags: string | null
+    heroTitle: string | null
+    heroDescription: string | null
+    heroGradient: string | null
+    whyGoodTitle: string | null
+    whyGoodContent: string | null
+    features: string | null
+    howToStartTitle: string | null
+    howToStartSteps: string | null
+    pros: string | null
+    cons: string | null
+    faq: string | null
+    securityTips: string | null
+    securityAudit: string | null
+    securityAuditDate: Date | null
+    auditedByCommunity: boolean | null
+    toolConfig: string | null
+    interactiveType: string | null
+    showCompatibleWallets: boolean | null
+    relatedResources: string | null
+    views: number | null
     createdAt: Date | null
+    updatedAt: Date | null
+    lastVerified: Date | null
   }
 
-  export type CitationMaxAggregateOutputType = {
+  export type ResourceMaxAggregateOutputType = {
     id: string | null
-    url: string | null
-    title: string | null
-    domain: string | null
-    articleId: string | null
-    order: number | null
+    slug: string | null
+    name: string | null
+    category: string | null
     verified: boolean | null
+    shortDescription: string | null
+    officialUrl: string | null
+    platforms: string | null
+    tags: string | null
+    heroTitle: string | null
+    heroDescription: string | null
+    heroGradient: string | null
+    whyGoodTitle: string | null
+    whyGoodContent: string | null
+    features: string | null
+    howToStartTitle: string | null
+    howToStartSteps: string | null
+    pros: string | null
+    cons: string | null
+    faq: string | null
+    securityTips: string | null
+    securityAudit: string | null
+    securityAuditDate: Date | null
+    auditedByCommunity: boolean | null
+    toolConfig: string | null
+    interactiveType: string | null
+    showCompatibleWallets: boolean | null
+    relatedResources: string | null
+    views: number | null
     createdAt: Date | null
+    updatedAt: Date | null
+    lastVerified: Date | null
   }
 
-  export type CitationCountAggregateOutputType = {
+  export type ResourceCountAggregateOutputType = {
     id: number
-    url: number
-    title: number
-    domain: number
-    articleId: number
-    order: number
+    slug: number
+    name: number
+    category: number
     verified: number
+    shortDescription: number
+    officialUrl: number
+    platforms: number
+    tags: number
+    heroTitle: number
+    heroDescription: number
+    heroGradient: number
+    whyGoodTitle: number
+    whyGoodContent: number
+    features: number
+    howToStartTitle: number
+    howToStartSteps: number
+    pros: number
+    cons: number
+    faq: number
+    securityTips: number
+    securityAudit: number
+    securityAuditDate: number
+    auditedByCommunity: number
+    toolConfig: number
+    interactiveType: number
+    showCompatibleWallets: number
+    relatedResources: number
+    views: number
     createdAt: number
+    updatedAt: number
+    lastVerified: number
     _all: number
   }
 
 
-  export type CitationAvgAggregateInputType = {
-    order?: true
+  export type ResourceAvgAggregateInputType = {
+    views?: true
   }
 
-  export type CitationSumAggregateInputType = {
-    order?: true
+  export type ResourceSumAggregateInputType = {
+    views?: true
   }
 
-  export type CitationMinAggregateInputType = {
+  export type ResourceMinAggregateInputType = {
     id?: true
-    url?: true
-    title?: true
-    domain?: true
-    articleId?: true
-    order?: true
+    slug?: true
+    name?: true
+    category?: true
     verified?: true
+    shortDescription?: true
+    officialUrl?: true
+    platforms?: true
+    tags?: true
+    heroTitle?: true
+    heroDescription?: true
+    heroGradient?: true
+    whyGoodTitle?: true
+    whyGoodContent?: true
+    features?: true
+    howToStartTitle?: true
+    howToStartSteps?: true
+    pros?: true
+    cons?: true
+    faq?: true
+    securityTips?: true
+    securityAudit?: true
+    securityAuditDate?: true
+    auditedByCommunity?: true
+    toolConfig?: true
+    interactiveType?: true
+    showCompatibleWallets?: true
+    relatedResources?: true
+    views?: true
     createdAt?: true
+    updatedAt?: true
+    lastVerified?: true
   }
 
-  export type CitationMaxAggregateInputType = {
+  export type ResourceMaxAggregateInputType = {
     id?: true
-    url?: true
-    title?: true
-    domain?: true
-    articleId?: true
-    order?: true
+    slug?: true
+    name?: true
+    category?: true
     verified?: true
+    shortDescription?: true
+    officialUrl?: true
+    platforms?: true
+    tags?: true
+    heroTitle?: true
+    heroDescription?: true
+    heroGradient?: true
+    whyGoodTitle?: true
+    whyGoodContent?: true
+    features?: true
+    howToStartTitle?: true
+    howToStartSteps?: true
+    pros?: true
+    cons?: true
+    faq?: true
+    securityTips?: true
+    securityAudit?: true
+    securityAuditDate?: true
+    auditedByCommunity?: true
+    toolConfig?: true
+    interactiveType?: true
+    showCompatibleWallets?: true
+    relatedResources?: true
+    views?: true
     createdAt?: true
+    updatedAt?: true
+    lastVerified?: true
   }
 
-  export type CitationCountAggregateInputType = {
+  export type ResourceCountAggregateInputType = {
     id?: true
-    url?: true
-    title?: true
-    domain?: true
-    articleId?: true
-    order?: true
+    slug?: true
+    name?: true
+    category?: true
     verified?: true
+    shortDescription?: true
+    officialUrl?: true
+    platforms?: true
+    tags?: true
+    heroTitle?: true
+    heroDescription?: true
+    heroGradient?: true
+    whyGoodTitle?: true
+    whyGoodContent?: true
+    features?: true
+    howToStartTitle?: true
+    howToStartSteps?: true
+    pros?: true
+    cons?: true
+    faq?: true
+    securityTips?: true
+    securityAudit?: true
+    securityAuditDate?: true
+    auditedByCommunity?: true
+    toolConfig?: true
+    interactiveType?: true
+    showCompatibleWallets?: true
+    relatedResources?: true
+    views?: true
     createdAt?: true
+    updatedAt?: true
+    lastVerified?: true
     _all?: true
   }
 
-  export type CitationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResourceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Citation to aggregate.
+     * Filter which Resource to aggregate.
      */
-    where?: CitationWhereInput
+    where?: ResourceWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Citations to fetch.
+     * Determine the order of Resources to fetch.
      */
-    orderBy?: CitationOrderByWithRelationInput | CitationOrderByWithRelationInput[]
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: CitationWhereUniqueInput
+    cursor?: ResourceWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Citations from the position of the cursor.
+     * Take `±n` Resources from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Citations.
+     * Skip the first `n` Resources.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Citations
+     * Count returned Resources
     **/
-    _count?: true | CitationCountAggregateInputType
+    _count?: true | ResourceCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: CitationAvgAggregateInputType
+    _avg?: ResourceAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: CitationSumAggregateInputType
+    _sum?: ResourceSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: CitationMinAggregateInputType
+    _min?: ResourceMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: CitationMaxAggregateInputType
+    _max?: ResourceMaxAggregateInputType
   }
 
-  export type GetCitationAggregateType<T extends CitationAggregateArgs> = {
-        [P in keyof T & keyof AggregateCitation]: P extends '_count' | 'count'
+  export type GetResourceAggregateType<T extends ResourceAggregateArgs> = {
+        [P in keyof T & keyof AggregateResource]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateCitation[P]>
-      : GetScalarType<T[P], AggregateCitation[P]>
+        : GetScalarType<T[P], AggregateResource[P]>
+      : GetScalarType<T[P], AggregateResource[P]>
   }
 
 
 
 
-  export type CitationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CitationWhereInput
-    orderBy?: CitationOrderByWithAggregationInput | CitationOrderByWithAggregationInput[]
-    by: CitationScalarFieldEnum[] | CitationScalarFieldEnum
-    having?: CitationScalarWhereWithAggregatesInput
+  export type ResourceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResourceWhereInput
+    orderBy?: ResourceOrderByWithAggregationInput | ResourceOrderByWithAggregationInput[]
+    by: ResourceScalarFieldEnum[] | ResourceScalarFieldEnum
+    having?: ResourceScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: CitationCountAggregateInputType | true
-    _avg?: CitationAvgAggregateInputType
-    _sum?: CitationSumAggregateInputType
-    _min?: CitationMinAggregateInputType
-    _max?: CitationMaxAggregateInputType
+    _count?: ResourceCountAggregateInputType | true
+    _avg?: ResourceAvgAggregateInputType
+    _sum?: ResourceSumAggregateInputType
+    _min?: ResourceMinAggregateInputType
+    _max?: ResourceMaxAggregateInputType
   }
 
-  export type CitationGroupByOutputType = {
+  export type ResourceGroupByOutputType = {
     id: string
-    url: string
-    title: string | null
-    domain: string | null
-    articleId: string
-    order: number
+    slug: string
+    name: string
+    category: string
     verified: boolean
+    shortDescription: string
+    officialUrl: string
+    platforms: string
+    tags: string
+    heroTitle: string
+    heroDescription: string
+    heroGradient: string
+    whyGoodTitle: string
+    whyGoodContent: string
+    features: string
+    howToStartTitle: string
+    howToStartSteps: string
+    pros: string
+    cons: string
+    faq: string
+    securityTips: string
+    securityAudit: string | null
+    securityAuditDate: Date | null
+    auditedByCommunity: boolean
+    toolConfig: string | null
+    interactiveType: string | null
+    showCompatibleWallets: boolean
+    relatedResources: string | null
+    views: number
     createdAt: Date
-    _count: CitationCountAggregateOutputType | null
-    _avg: CitationAvgAggregateOutputType | null
-    _sum: CitationSumAggregateOutputType | null
-    _min: CitationMinAggregateOutputType | null
-    _max: CitationMaxAggregateOutputType | null
+    updatedAt: Date
+    lastVerified: Date
+    _count: ResourceCountAggregateOutputType | null
+    _avg: ResourceAvgAggregateOutputType | null
+    _sum: ResourceSumAggregateOutputType | null
+    _min: ResourceMinAggregateOutputType | null
+    _max: ResourceMaxAggregateOutputType | null
   }
 
-  type GetCitationGroupByPayload<T extends CitationGroupByArgs> = Prisma.PrismaPromise<
+  type GetResourceGroupByPayload<T extends ResourceGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<CitationGroupByOutputType, T['by']> &
+      PickEnumerable<ResourceGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof CitationGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ResourceGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], CitationGroupByOutputType[P]>
-            : GetScalarType<T[P], CitationGroupByOutputType[P]>
+              : GetScalarType<T[P], ResourceGroupByOutputType[P]>
+            : GetScalarType<T[P], ResourceGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type CitationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ResourceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    url?: boolean
-    title?: boolean
-    domain?: boolean
-    articleId?: boolean
-    order?: boolean
+    slug?: boolean
+    name?: boolean
+    category?: boolean
     verified?: boolean
+    shortDescription?: boolean
+    officialUrl?: boolean
+    platforms?: boolean
+    tags?: boolean
+    heroTitle?: boolean
+    heroDescription?: boolean
+    heroGradient?: boolean
+    whyGoodTitle?: boolean
+    whyGoodContent?: boolean
+    features?: boolean
+    howToStartTitle?: boolean
+    howToStartSteps?: boolean
+    pros?: boolean
+    cons?: boolean
+    faq?: boolean
+    securityTips?: boolean
+    securityAudit?: boolean
+    securityAuditDate?: boolean
+    auditedByCommunity?: boolean
+    toolConfig?: boolean
+    interactiveType?: boolean
+    showCompatibleWallets?: boolean
+    relatedResources?: boolean
+    views?: boolean
     createdAt?: boolean
-    article?: boolean | ArticleDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["citation"]>
+    updatedAt?: boolean
+    lastVerified?: boolean
+  }, ExtArgs["result"]["resource"]>
 
-  export type CitationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ResourceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    url?: boolean
-    title?: boolean
-    domain?: boolean
-    articleId?: boolean
-    order?: boolean
+    slug?: boolean
+    name?: boolean
+    category?: boolean
     verified?: boolean
+    shortDescription?: boolean
+    officialUrl?: boolean
+    platforms?: boolean
+    tags?: boolean
+    heroTitle?: boolean
+    heroDescription?: boolean
+    heroGradient?: boolean
+    whyGoodTitle?: boolean
+    whyGoodContent?: boolean
+    features?: boolean
+    howToStartTitle?: boolean
+    howToStartSteps?: boolean
+    pros?: boolean
+    cons?: boolean
+    faq?: boolean
+    securityTips?: boolean
+    securityAudit?: boolean
+    securityAuditDate?: boolean
+    auditedByCommunity?: boolean
+    toolConfig?: boolean
+    interactiveType?: boolean
+    showCompatibleWallets?: boolean
+    relatedResources?: boolean
+    views?: boolean
     createdAt?: boolean
-    article?: boolean | ArticleDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["citation"]>
+    updatedAt?: boolean
+    lastVerified?: boolean
+  }, ExtArgs["result"]["resource"]>
 
-  export type CitationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ResourceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    url?: boolean
-    title?: boolean
-    domain?: boolean
-    articleId?: boolean
-    order?: boolean
+    slug?: boolean
+    name?: boolean
+    category?: boolean
     verified?: boolean
+    shortDescription?: boolean
+    officialUrl?: boolean
+    platforms?: boolean
+    tags?: boolean
+    heroTitle?: boolean
+    heroDescription?: boolean
+    heroGradient?: boolean
+    whyGoodTitle?: boolean
+    whyGoodContent?: boolean
+    features?: boolean
+    howToStartTitle?: boolean
+    howToStartSteps?: boolean
+    pros?: boolean
+    cons?: boolean
+    faq?: boolean
+    securityTips?: boolean
+    securityAudit?: boolean
+    securityAuditDate?: boolean
+    auditedByCommunity?: boolean
+    toolConfig?: boolean
+    interactiveType?: boolean
+    showCompatibleWallets?: boolean
+    relatedResources?: boolean
+    views?: boolean
     createdAt?: boolean
-    article?: boolean | ArticleDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["citation"]>
+    updatedAt?: boolean
+    lastVerified?: boolean
+  }, ExtArgs["result"]["resource"]>
 
-  export type CitationSelectScalar = {
+  export type ResourceSelectScalar = {
     id?: boolean
-    url?: boolean
-    title?: boolean
-    domain?: boolean
-    articleId?: boolean
-    order?: boolean
+    slug?: boolean
+    name?: boolean
+    category?: boolean
     verified?: boolean
+    shortDescription?: boolean
+    officialUrl?: boolean
+    platforms?: boolean
+    tags?: boolean
+    heroTitle?: boolean
+    heroDescription?: boolean
+    heroGradient?: boolean
+    whyGoodTitle?: boolean
+    whyGoodContent?: boolean
+    features?: boolean
+    howToStartTitle?: boolean
+    howToStartSteps?: boolean
+    pros?: boolean
+    cons?: boolean
+    faq?: boolean
+    securityTips?: boolean
+    securityAudit?: boolean
+    securityAuditDate?: boolean
+    auditedByCommunity?: boolean
+    toolConfig?: boolean
+    interactiveType?: boolean
+    showCompatibleWallets?: boolean
+    relatedResources?: boolean
+    views?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
+    lastVerified?: boolean
   }
 
-  export type CitationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "url" | "title" | "domain" | "articleId" | "order" | "verified" | "createdAt", ExtArgs["result"]["citation"]>
-  export type CitationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    article?: boolean | ArticleDefaultArgs<ExtArgs>
-  }
-  export type CitationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    article?: boolean | ArticleDefaultArgs<ExtArgs>
-  }
-  export type CitationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    article?: boolean | ArticleDefaultArgs<ExtArgs>
-  }
+  export type ResourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "category" | "verified" | "shortDescription" | "officialUrl" | "platforms" | "tags" | "heroTitle" | "heroDescription" | "heroGradient" | "whyGoodTitle" | "whyGoodContent" | "features" | "howToStartTitle" | "howToStartSteps" | "pros" | "cons" | "faq" | "securityTips" | "securityAudit" | "securityAuditDate" | "auditedByCommunity" | "toolConfig" | "interactiveType" | "showCompatibleWallets" | "relatedResources" | "views" | "createdAt" | "updatedAt" | "lastVerified", ExtArgs["result"]["resource"]>
 
-  export type $CitationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Citation"
-    objects: {
-      article: Prisma.$ArticlePayload<ExtArgs>
-    }
+  export type $ResourcePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Resource"
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      url: string
-      title: string | null
-      domain: string | null
-      articleId: string
-      order: number
+      slug: string
+      name: string
+      category: string
       verified: boolean
+      shortDescription: string
+      officialUrl: string
+      platforms: string
+      tags: string
+      heroTitle: string
+      heroDescription: string
+      heroGradient: string
+      whyGoodTitle: string
+      whyGoodContent: string
+      features: string
+      howToStartTitle: string
+      howToStartSteps: string
+      pros: string
+      cons: string
+      faq: string
+      securityTips: string
+      securityAudit: string | null
+      securityAuditDate: Date | null
+      auditedByCommunity: boolean
+      toolConfig: string | null
+      interactiveType: string | null
+      showCompatibleWallets: boolean
+      relatedResources: string | null
+      views: number
       createdAt: Date
-    }, ExtArgs["result"]["citation"]>
+      updatedAt: Date
+      lastVerified: Date
+    }, ExtArgs["result"]["resource"]>
     composites: {}
   }
 
-  type CitationGetPayload<S extends boolean | null | undefined | CitationDefaultArgs> = $Result.GetResult<Prisma.$CitationPayload, S>
+  type ResourceGetPayload<S extends boolean | null | undefined | ResourceDefaultArgs> = $Result.GetResult<Prisma.$ResourcePayload, S>
 
-  type CitationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<CitationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: CitationCountAggregateInputType | true
+  type ResourceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ResourceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ResourceCountAggregateInputType | true
     }
 
-  export interface CitationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Citation'], meta: { name: 'Citation' } }
+  export interface ResourceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Resource'], meta: { name: 'Resource' } }
     /**
-     * Find zero or one Citation that matches the filter.
-     * @param {CitationFindUniqueArgs} args - Arguments to find a Citation
+     * Find zero or one Resource that matches the filter.
+     * @param {ResourceFindUniqueArgs} args - Arguments to find a Resource
      * @example
-     * // Get one Citation
-     * const citation = await prisma.citation.findUnique({
+     * // Get one Resource
+     * const resource = await prisma.resource.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends CitationFindUniqueArgs>(args: SelectSubset<T, CitationFindUniqueArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends ResourceFindUniqueArgs>(args: SelectSubset<T, ResourceFindUniqueArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Citation that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Resource that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {CitationFindUniqueOrThrowArgs} args - Arguments to find a Citation
+     * @param {ResourceFindUniqueOrThrowArgs} args - Arguments to find a Resource
      * @example
-     * // Get one Citation
-     * const citation = await prisma.citation.findUniqueOrThrow({
+     * // Get one Resource
+     * const resource = await prisma.resource.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends CitationFindUniqueOrThrowArgs>(args: SelectSubset<T, CitationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends ResourceFindUniqueOrThrowArgs>(args: SelectSubset<T, ResourceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Citation that matches the filter.
+     * Find the first Resource that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CitationFindFirstArgs} args - Arguments to find a Citation
+     * @param {ResourceFindFirstArgs} args - Arguments to find a Resource
      * @example
-     * // Get one Citation
-     * const citation = await prisma.citation.findFirst({
+     * // Get one Resource
+     * const resource = await prisma.resource.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends CitationFindFirstArgs>(args?: SelectSubset<T, CitationFindFirstArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends ResourceFindFirstArgs>(args?: SelectSubset<T, ResourceFindFirstArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Citation that matches the filter or
+     * Find the first Resource that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CitationFindFirstOrThrowArgs} args - Arguments to find a Citation
+     * @param {ResourceFindFirstOrThrowArgs} args - Arguments to find a Resource
      * @example
-     * // Get one Citation
-     * const citation = await prisma.citation.findFirstOrThrow({
+     * // Get one Resource
+     * const resource = await prisma.resource.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends CitationFindFirstOrThrowArgs>(args?: SelectSubset<T, CitationFindFirstOrThrowArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends ResourceFindFirstOrThrowArgs>(args?: SelectSubset<T, ResourceFindFirstOrThrowArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Citations that matches the filter.
+     * Find zero or more Resources that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CitationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {ResourceFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Citations
-     * const citations = await prisma.citation.findMany()
+     * // Get all Resources
+     * const resources = await prisma.resource.findMany()
      * 
-     * // Get first 10 Citations
-     * const citations = await prisma.citation.findMany({ take: 10 })
+     * // Get first 10 Resources
+     * const resources = await prisma.resource.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const citationWithIdOnly = await prisma.citation.findMany({ select: { id: true } })
+     * const resourceWithIdOnly = await prisma.resource.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends CitationFindManyArgs>(args?: SelectSubset<T, CitationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends ResourceFindManyArgs>(args?: SelectSubset<T, ResourceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Citation.
-     * @param {CitationCreateArgs} args - Arguments to create a Citation.
+     * Create a Resource.
+     * @param {ResourceCreateArgs} args - Arguments to create a Resource.
      * @example
-     * // Create one Citation
-     * const Citation = await prisma.citation.create({
+     * // Create one Resource
+     * const Resource = await prisma.resource.create({
      *   data: {
-     *     // ... data to create a Citation
+     *     // ... data to create a Resource
      *   }
      * })
      * 
      */
-    create<T extends CitationCreateArgs>(args: SelectSubset<T, CitationCreateArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends ResourceCreateArgs>(args: SelectSubset<T, ResourceCreateArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Citations.
-     * @param {CitationCreateManyArgs} args - Arguments to create many Citations.
+     * Create many Resources.
+     * @param {ResourceCreateManyArgs} args - Arguments to create many Resources.
      * @example
-     * // Create many Citations
-     * const citation = await prisma.citation.createMany({
+     * // Create many Resources
+     * const resource = await prisma.resource.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends CitationCreateManyArgs>(args?: SelectSubset<T, CitationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends ResourceCreateManyArgs>(args?: SelectSubset<T, ResourceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Citations and returns the data saved in the database.
-     * @param {CitationCreateManyAndReturnArgs} args - Arguments to create many Citations.
+     * Create many Resources and returns the data saved in the database.
+     * @param {ResourceCreateManyAndReturnArgs} args - Arguments to create many Resources.
      * @example
-     * // Create many Citations
-     * const citation = await prisma.citation.createManyAndReturn({
+     * // Create many Resources
+     * const resource = await prisma.resource.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Citations and only return the `id`
-     * const citationWithIdOnly = await prisma.citation.createManyAndReturn({
+     * // Create many Resources and only return the `id`
+     * const resourceWithIdOnly = await prisma.resource.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -13289,28 +8802,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends CitationCreateManyAndReturnArgs>(args?: SelectSubset<T, CitationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends ResourceCreateManyAndReturnArgs>(args?: SelectSubset<T, ResourceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Citation.
-     * @param {CitationDeleteArgs} args - Arguments to delete one Citation.
+     * Delete a Resource.
+     * @param {ResourceDeleteArgs} args - Arguments to delete one Resource.
      * @example
-     * // Delete one Citation
-     * const Citation = await prisma.citation.delete({
+     * // Delete one Resource
+     * const Resource = await prisma.resource.delete({
      *   where: {
-     *     // ... filter to delete one Citation
+     *     // ... filter to delete one Resource
      *   }
      * })
      * 
      */
-    delete<T extends CitationDeleteArgs>(args: SelectSubset<T, CitationDeleteArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends ResourceDeleteArgs>(args: SelectSubset<T, ResourceDeleteArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Citation.
-     * @param {CitationUpdateArgs} args - Arguments to update one Citation.
+     * Update one Resource.
+     * @param {ResourceUpdateArgs} args - Arguments to update one Resource.
      * @example
-     * // Update one Citation
-     * const citation = await prisma.citation.update({
+     * // Update one Resource
+     * const resource = await prisma.resource.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -13320,30 +8833,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends CitationUpdateArgs>(args: SelectSubset<T, CitationUpdateArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends ResourceUpdateArgs>(args: SelectSubset<T, ResourceUpdateArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Citations.
-     * @param {CitationDeleteManyArgs} args - Arguments to filter Citations to delete.
+     * Delete zero or more Resources.
+     * @param {ResourceDeleteManyArgs} args - Arguments to filter Resources to delete.
      * @example
-     * // Delete a few Citations
-     * const { count } = await prisma.citation.deleteMany({
+     * // Delete a few Resources
+     * const { count } = await prisma.resource.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends CitationDeleteManyArgs>(args?: SelectSubset<T, CitationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends ResourceDeleteManyArgs>(args?: SelectSubset<T, ResourceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Citations.
+     * Update zero or more Resources.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CitationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ResourceUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Citations
-     * const citation = await prisma.citation.updateMany({
+     * // Update many Resources
+     * const resource = await prisma.resource.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -13353,14 +8866,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends CitationUpdateManyArgs>(args: SelectSubset<T, CitationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends ResourceUpdateManyArgs>(args: SelectSubset<T, ResourceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Citations and returns the data updated in the database.
-     * @param {CitationUpdateManyAndReturnArgs} args - Arguments to update many Citations.
+     * Update zero or more Resources and returns the data updated in the database.
+     * @param {ResourceUpdateManyAndReturnArgs} args - Arguments to update many Resources.
      * @example
-     * // Update many Citations
-     * const citation = await prisma.citation.updateManyAndReturn({
+     * // Update many Resources
+     * const resource = await prisma.resource.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -13369,8 +8882,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Citations and only return the `id`
-     * const citationWithIdOnly = await prisma.citation.updateManyAndReturn({
+     * // Update zero or more Resources and only return the `id`
+     * const resourceWithIdOnly = await prisma.resource.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -13383,56 +8896,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends CitationUpdateManyAndReturnArgs>(args: SelectSubset<T, CitationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends ResourceUpdateManyAndReturnArgs>(args: SelectSubset<T, ResourceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Citation.
-     * @param {CitationUpsertArgs} args - Arguments to update or create a Citation.
+     * Create or update one Resource.
+     * @param {ResourceUpsertArgs} args - Arguments to update or create a Resource.
      * @example
-     * // Update or create a Citation
-     * const citation = await prisma.citation.upsert({
+     * // Update or create a Resource
+     * const resource = await prisma.resource.upsert({
      *   create: {
-     *     // ... data to create a Citation
+     *     // ... data to create a Resource
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Citation we want to update
+     *     // ... the filter for the Resource we want to update
      *   }
      * })
      */
-    upsert<T extends CitationUpsertArgs>(args: SelectSubset<T, CitationUpsertArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends ResourceUpsertArgs>(args: SelectSubset<T, ResourceUpsertArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Citations.
+     * Count the number of Resources.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CitationCountArgs} args - Arguments to filter Citations to count.
+     * @param {ResourceCountArgs} args - Arguments to filter Resources to count.
      * @example
-     * // Count the number of Citations
-     * const count = await prisma.citation.count({
+     * // Count the number of Resources
+     * const count = await prisma.resource.count({
      *   where: {
-     *     // ... the filter for the Citations we want to count
+     *     // ... the filter for the Resources we want to count
      *   }
      * })
     **/
-    count<T extends CitationCountArgs>(
-      args?: Subset<T, CitationCountArgs>,
+    count<T extends ResourceCountArgs>(
+      args?: Subset<T, ResourceCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], CitationCountAggregateOutputType>
+          : GetScalarType<T['select'], ResourceCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Citation.
+     * Allows you to perform aggregations operations on a Resource.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CitationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ResourceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -13452,13 +8965,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends CitationAggregateArgs>(args: Subset<T, CitationAggregateArgs>): Prisma.PrismaPromise<GetCitationAggregateType<T>>
+    aggregate<T extends ResourceAggregateArgs>(args: Subset<T, ResourceAggregateArgs>): Prisma.PrismaPromise<GetResourceAggregateType<T>>
 
     /**
-     * Group by Citation.
+     * Group by Resource.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CitationGroupByArgs} args - Group by arguments.
+     * @param {ResourceGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -13473,14 +8986,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends CitationGroupByArgs,
+      T extends ResourceGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CitationGroupByArgs['orderBy'] }
-        : { orderBy?: CitationGroupByArgs['orderBy'] },
+        ? { orderBy: ResourceGroupByArgs['orderBy'] }
+        : { orderBy?: ResourceGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -13529,22 +9042,21 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, CitationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCitationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ResourceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetResourceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Citation model
+   * Fields of the Resource model
    */
-  readonly fields: CitationFieldRefs;
+  readonly fields: ResourceFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Citation.
+   * The delegate class that acts as a "Promise-like" for Resource.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__CitationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__ResourceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    article<T extends ArticleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ArticleDefaultArgs<ExtArgs>>): Prisma__ArticleClient<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13571,428 +9083,404 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Citation model
+   * Fields of the Resource model
    */
-  interface CitationFieldRefs {
-    readonly id: FieldRef<"Citation", 'String'>
-    readonly url: FieldRef<"Citation", 'String'>
-    readonly title: FieldRef<"Citation", 'String'>
-    readonly domain: FieldRef<"Citation", 'String'>
-    readonly articleId: FieldRef<"Citation", 'String'>
-    readonly order: FieldRef<"Citation", 'Int'>
-    readonly verified: FieldRef<"Citation", 'Boolean'>
-    readonly createdAt: FieldRef<"Citation", 'DateTime'>
+  interface ResourceFieldRefs {
+    readonly id: FieldRef<"Resource", 'String'>
+    readonly slug: FieldRef<"Resource", 'String'>
+    readonly name: FieldRef<"Resource", 'String'>
+    readonly category: FieldRef<"Resource", 'String'>
+    readonly verified: FieldRef<"Resource", 'Boolean'>
+    readonly shortDescription: FieldRef<"Resource", 'String'>
+    readonly officialUrl: FieldRef<"Resource", 'String'>
+    readonly platforms: FieldRef<"Resource", 'String'>
+    readonly tags: FieldRef<"Resource", 'String'>
+    readonly heroTitle: FieldRef<"Resource", 'String'>
+    readonly heroDescription: FieldRef<"Resource", 'String'>
+    readonly heroGradient: FieldRef<"Resource", 'String'>
+    readonly whyGoodTitle: FieldRef<"Resource", 'String'>
+    readonly whyGoodContent: FieldRef<"Resource", 'String'>
+    readonly features: FieldRef<"Resource", 'String'>
+    readonly howToStartTitle: FieldRef<"Resource", 'String'>
+    readonly howToStartSteps: FieldRef<"Resource", 'String'>
+    readonly pros: FieldRef<"Resource", 'String'>
+    readonly cons: FieldRef<"Resource", 'String'>
+    readonly faq: FieldRef<"Resource", 'String'>
+    readonly securityTips: FieldRef<"Resource", 'String'>
+    readonly securityAudit: FieldRef<"Resource", 'String'>
+    readonly securityAuditDate: FieldRef<"Resource", 'DateTime'>
+    readonly auditedByCommunity: FieldRef<"Resource", 'Boolean'>
+    readonly toolConfig: FieldRef<"Resource", 'String'>
+    readonly interactiveType: FieldRef<"Resource", 'String'>
+    readonly showCompatibleWallets: FieldRef<"Resource", 'Boolean'>
+    readonly relatedResources: FieldRef<"Resource", 'String'>
+    readonly views: FieldRef<"Resource", 'Int'>
+    readonly createdAt: FieldRef<"Resource", 'DateTime'>
+    readonly updatedAt: FieldRef<"Resource", 'DateTime'>
+    readonly lastVerified: FieldRef<"Resource", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Citation findUnique
+   * Resource findUnique
    */
-  export type CitationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResourceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Citation
+     * Select specific fields to fetch from the Resource
      */
-    select?: CitationSelect<ExtArgs> | null
+    select?: ResourceSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Citation
+     * Omit specific fields from the Resource
      */
-    omit?: CitationOmit<ExtArgs> | null
+    omit?: ResourceOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Resource to fetch.
      */
-    include?: CitationInclude<ExtArgs> | null
-    /**
-     * Filter, which Citation to fetch.
-     */
-    where: CitationWhereUniqueInput
+    where: ResourceWhereUniqueInput
   }
 
   /**
-   * Citation findUniqueOrThrow
+   * Resource findUniqueOrThrow
    */
-  export type CitationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResourceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Citation
+     * Select specific fields to fetch from the Resource
      */
-    select?: CitationSelect<ExtArgs> | null
+    select?: ResourceSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Citation
+     * Omit specific fields from the Resource
      */
-    omit?: CitationOmit<ExtArgs> | null
+    omit?: ResourceOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Resource to fetch.
      */
-    include?: CitationInclude<ExtArgs> | null
-    /**
-     * Filter, which Citation to fetch.
-     */
-    where: CitationWhereUniqueInput
+    where: ResourceWhereUniqueInput
   }
 
   /**
-   * Citation findFirst
+   * Resource findFirst
    */
-  export type CitationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResourceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Citation
+     * Select specific fields to fetch from the Resource
      */
-    select?: CitationSelect<ExtArgs> | null
+    select?: ResourceSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Citation
+     * Omit specific fields from the Resource
      */
-    omit?: CitationOmit<ExtArgs> | null
+    omit?: ResourceOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Resource to fetch.
      */
-    include?: CitationInclude<ExtArgs> | null
-    /**
-     * Filter, which Citation to fetch.
-     */
-    where?: CitationWhereInput
+    where?: ResourceWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Citations to fetch.
+     * Determine the order of Resources to fetch.
      */
-    orderBy?: CitationOrderByWithRelationInput | CitationOrderByWithRelationInput[]
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Citations.
+     * Sets the position for searching for Resources.
      */
-    cursor?: CitationWhereUniqueInput
+    cursor?: ResourceWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Citations from the position of the cursor.
+     * Take `±n` Resources from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Citations.
+     * Skip the first `n` Resources.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Citations.
+     * Filter by unique combinations of Resources.
      */
-    distinct?: CitationScalarFieldEnum | CitationScalarFieldEnum[]
+    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
   }
 
   /**
-   * Citation findFirstOrThrow
+   * Resource findFirstOrThrow
    */
-  export type CitationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResourceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Citation
+     * Select specific fields to fetch from the Resource
      */
-    select?: CitationSelect<ExtArgs> | null
+    select?: ResourceSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Citation
+     * Omit specific fields from the Resource
      */
-    omit?: CitationOmit<ExtArgs> | null
+    omit?: ResourceOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Resource to fetch.
      */
-    include?: CitationInclude<ExtArgs> | null
-    /**
-     * Filter, which Citation to fetch.
-     */
-    where?: CitationWhereInput
+    where?: ResourceWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Citations to fetch.
+     * Determine the order of Resources to fetch.
      */
-    orderBy?: CitationOrderByWithRelationInput | CitationOrderByWithRelationInput[]
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Citations.
+     * Sets the position for searching for Resources.
      */
-    cursor?: CitationWhereUniqueInput
+    cursor?: ResourceWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Citations from the position of the cursor.
+     * Take `±n` Resources from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Citations.
+     * Skip the first `n` Resources.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Citations.
+     * Filter by unique combinations of Resources.
      */
-    distinct?: CitationScalarFieldEnum | CitationScalarFieldEnum[]
+    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
   }
 
   /**
-   * Citation findMany
+   * Resource findMany
    */
-  export type CitationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResourceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Citation
+     * Select specific fields to fetch from the Resource
      */
-    select?: CitationSelect<ExtArgs> | null
+    select?: ResourceSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Citation
+     * Omit specific fields from the Resource
      */
-    omit?: CitationOmit<ExtArgs> | null
+    omit?: ResourceOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Resources to fetch.
      */
-    include?: CitationInclude<ExtArgs> | null
-    /**
-     * Filter, which Citations to fetch.
-     */
-    where?: CitationWhereInput
+    where?: ResourceWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Citations to fetch.
+     * Determine the order of Resources to fetch.
      */
-    orderBy?: CitationOrderByWithRelationInput | CitationOrderByWithRelationInput[]
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Citations.
+     * Sets the position for listing Resources.
      */
-    cursor?: CitationWhereUniqueInput
+    cursor?: ResourceWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Citations from the position of the cursor.
+     * Take `±n` Resources from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Citations.
+     * Skip the first `n` Resources.
      */
     skip?: number
-    distinct?: CitationScalarFieldEnum | CitationScalarFieldEnum[]
+    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
   }
 
   /**
-   * Citation create
+   * Resource create
    */
-  export type CitationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResourceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Citation
+     * Select specific fields to fetch from the Resource
      */
-    select?: CitationSelect<ExtArgs> | null
+    select?: ResourceSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Citation
+     * Omit specific fields from the Resource
      */
-    omit?: CitationOmit<ExtArgs> | null
+    omit?: ResourceOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The data needed to create a Resource.
      */
-    include?: CitationInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Citation.
-     */
-    data: XOR<CitationCreateInput, CitationUncheckedCreateInput>
+    data: XOR<ResourceCreateInput, ResourceUncheckedCreateInput>
   }
 
   /**
-   * Citation createMany
+   * Resource createMany
    */
-  export type CitationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResourceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Citations.
+     * The data used to create many Resources.
      */
-    data: CitationCreateManyInput | CitationCreateManyInput[]
+    data: ResourceCreateManyInput | ResourceCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Citation createManyAndReturn
+   * Resource createManyAndReturn
    */
-  export type CitationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResourceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Citation
+     * Select specific fields to fetch from the Resource
      */
-    select?: CitationSelectCreateManyAndReturn<ExtArgs> | null
+    select?: ResourceSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Citation
+     * Omit specific fields from the Resource
      */
-    omit?: CitationOmit<ExtArgs> | null
+    omit?: ResourceOmit<ExtArgs> | null
     /**
-     * The data used to create many Citations.
+     * The data used to create many Resources.
      */
-    data: CitationCreateManyInput | CitationCreateManyInput[]
+    data: ResourceCreateManyInput | ResourceCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CitationIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Citation update
+   * Resource update
    */
-  export type CitationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResourceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Citation
+     * Select specific fields to fetch from the Resource
      */
-    select?: CitationSelect<ExtArgs> | null
+    select?: ResourceSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Citation
+     * Omit specific fields from the Resource
      */
-    omit?: CitationOmit<ExtArgs> | null
+    omit?: ResourceOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The data needed to update a Resource.
      */
-    include?: CitationInclude<ExtArgs> | null
+    data: XOR<ResourceUpdateInput, ResourceUncheckedUpdateInput>
     /**
-     * The data needed to update a Citation.
+     * Choose, which Resource to update.
      */
-    data: XOR<CitationUpdateInput, CitationUncheckedUpdateInput>
-    /**
-     * Choose, which Citation to update.
-     */
-    where: CitationWhereUniqueInput
+    where: ResourceWhereUniqueInput
   }
 
   /**
-   * Citation updateMany
+   * Resource updateMany
    */
-  export type CitationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResourceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Citations.
+     * The data used to update Resources.
      */
-    data: XOR<CitationUpdateManyMutationInput, CitationUncheckedUpdateManyInput>
+    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyInput>
     /**
-     * Filter which Citations to update
+     * Filter which Resources to update
      */
-    where?: CitationWhereInput
+    where?: ResourceWhereInput
     /**
-     * Limit how many Citations to update.
+     * Limit how many Resources to update.
      */
     limit?: number
   }
 
   /**
-   * Citation updateManyAndReturn
+   * Resource updateManyAndReturn
    */
-  export type CitationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResourceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Citation
+     * Select specific fields to fetch from the Resource
      */
-    select?: CitationSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: ResourceSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Citation
+     * Omit specific fields from the Resource
      */
-    omit?: CitationOmit<ExtArgs> | null
+    omit?: ResourceOmit<ExtArgs> | null
     /**
-     * The data used to update Citations.
+     * The data used to update Resources.
      */
-    data: XOR<CitationUpdateManyMutationInput, CitationUncheckedUpdateManyInput>
+    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyInput>
     /**
-     * Filter which Citations to update
+     * Filter which Resources to update
      */
-    where?: CitationWhereInput
+    where?: ResourceWhereInput
     /**
-     * Limit how many Citations to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CitationIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Citation upsert
-   */
-  export type CitationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Citation
-     */
-    select?: CitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Citation
-     */
-    omit?: CitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CitationInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Citation to update in case it exists.
-     */
-    where: CitationWhereUniqueInput
-    /**
-     * In case the Citation found by the `where` argument doesn't exist, create a new Citation with this data.
-     */
-    create: XOR<CitationCreateInput, CitationUncheckedCreateInput>
-    /**
-     * In case the Citation was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<CitationUpdateInput, CitationUncheckedUpdateInput>
-  }
-
-  /**
-   * Citation delete
-   */
-  export type CitationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Citation
-     */
-    select?: CitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Citation
-     */
-    omit?: CitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CitationInclude<ExtArgs> | null
-    /**
-     * Filter which Citation to delete.
-     */
-    where: CitationWhereUniqueInput
-  }
-
-  /**
-   * Citation deleteMany
-   */
-  export type CitationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Citations to delete
-     */
-    where?: CitationWhereInput
-    /**
-     * Limit how many Citations to delete.
+     * Limit how many Resources to update.
      */
     limit?: number
   }
 
   /**
-   * Citation without action
+   * Resource upsert
    */
-  export type CitationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResourceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Citation
+     * Select specific fields to fetch from the Resource
      */
-    select?: CitationSelect<ExtArgs> | null
+    select?: ResourceSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Citation
+     * Omit specific fields from the Resource
      */
-    omit?: CitationOmit<ExtArgs> | null
+    omit?: ResourceOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The filter to search for the Resource to update in case it exists.
      */
-    include?: CitationInclude<ExtArgs> | null
+    where: ResourceWhereUniqueInput
+    /**
+     * In case the Resource found by the `where` argument doesn't exist, create a new Resource with this data.
+     */
+    create: XOR<ResourceCreateInput, ResourceUncheckedCreateInput>
+    /**
+     * In case the Resource was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ResourceUpdateInput, ResourceUncheckedUpdateInput>
+  }
+
+  /**
+   * Resource delete
+   */
+  export type ResourceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Filter which Resource to delete.
+     */
+    where: ResourceWhereUniqueInput
+  }
+
+  /**
+   * Resource deleteMany
+   */
+  export type ResourceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Resources to delete
+     */
+    where?: ResourceWhereInput
+    /**
+     * Limit how many Resources to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Resource without action
+   */
+  export type ResourceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
   }
 
 
@@ -18805,694 +14293,492 @@ export namespace Prisma {
 
 
   /**
-   * Model Resource
+   * Model CommunityStory
    */
 
-  export type AggregateResource = {
-    _count: ResourceCountAggregateOutputType | null
-    _avg: ResourceAvgAggregateOutputType | null
-    _sum: ResourceSumAggregateOutputType | null
-    _min: ResourceMinAggregateOutputType | null
-    _max: ResourceMaxAggregateOutputType | null
+  export type AggregateCommunityStory = {
+    _count: CommunityStoryCountAggregateOutputType | null
+    _avg: CommunityStoryAvgAggregateOutputType | null
+    _sum: CommunityStorySumAggregateOutputType | null
+    _min: CommunityStoryMinAggregateOutputType | null
+    _max: CommunityStoryMaxAggregateOutputType | null
   }
 
-  export type ResourceAvgAggregateOutputType = {
-    views: number | null
+  export type CommunityStoryAvgAggregateOutputType = {
+    likes: number | null
   }
 
-  export type ResourceSumAggregateOutputType = {
-    views: number | null
+  export type CommunityStorySumAggregateOutputType = {
+    likes: number | null
   }
 
-  export type ResourceMinAggregateOutputType = {
+  export type CommunityStoryMinAggregateOutputType = {
     id: string | null
     slug: string | null
-    name: string | null
-    category: string | null
+    authorName: string | null
+    authorAvatar: string | null
+    userId: string | null
+    title: string | null
+    content: string | null
+    category: $Enums.StoryCategory | null
+    likes: number | null
     verified: boolean | null
-    shortDescription: string | null
-    officialUrl: string | null
-    platforms: string | null
-    tags: string | null
-    heroTitle: string | null
-    heroDescription: string | null
-    heroGradient: string | null
-    whyGoodTitle: string | null
-    whyGoodContent: string | null
-    features: string | null
-    howToStartTitle: string | null
-    howToStartSteps: string | null
-    pros: string | null
-    cons: string | null
-    faq: string | null
-    securityTips: string | null
-    securityAudit: string | null
-    securityAuditDate: Date | null
-    auditedByCommunity: boolean | null
-    toolConfig: string | null
-    interactiveType: string | null
-    showCompatibleWallets: boolean | null
-    relatedResources: string | null
-    views: number | null
+    featured: boolean | null
+    published: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
-    lastVerified: Date | null
   }
 
-  export type ResourceMaxAggregateOutputType = {
+  export type CommunityStoryMaxAggregateOutputType = {
     id: string | null
     slug: string | null
-    name: string | null
-    category: string | null
+    authorName: string | null
+    authorAvatar: string | null
+    userId: string | null
+    title: string | null
+    content: string | null
+    category: $Enums.StoryCategory | null
+    likes: number | null
     verified: boolean | null
-    shortDescription: string | null
-    officialUrl: string | null
-    platforms: string | null
-    tags: string | null
-    heroTitle: string | null
-    heroDescription: string | null
-    heroGradient: string | null
-    whyGoodTitle: string | null
-    whyGoodContent: string | null
-    features: string | null
-    howToStartTitle: string | null
-    howToStartSteps: string | null
-    pros: string | null
-    cons: string | null
-    faq: string | null
-    securityTips: string | null
-    securityAudit: string | null
-    securityAuditDate: Date | null
-    auditedByCommunity: boolean | null
-    toolConfig: string | null
-    interactiveType: string | null
-    showCompatibleWallets: boolean | null
-    relatedResources: string | null
-    views: number | null
+    featured: boolean | null
+    published: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
-    lastVerified: Date | null
   }
 
-  export type ResourceCountAggregateOutputType = {
+  export type CommunityStoryCountAggregateOutputType = {
     id: number
     slug: number
-    name: number
+    authorName: number
+    authorAvatar: number
+    userId: number
+    title: number
+    content: number
     category: number
+    likes: number
     verified: number
-    shortDescription: number
-    officialUrl: number
-    platforms: number
-    tags: number
-    heroTitle: number
-    heroDescription: number
-    heroGradient: number
-    whyGoodTitle: number
-    whyGoodContent: number
-    features: number
-    howToStartTitle: number
-    howToStartSteps: number
-    pros: number
-    cons: number
-    faq: number
-    securityTips: number
-    securityAudit: number
-    securityAuditDate: number
-    auditedByCommunity: number
-    toolConfig: number
-    interactiveType: number
-    showCompatibleWallets: number
-    relatedResources: number
-    views: number
+    featured: number
+    published: number
     createdAt: number
     updatedAt: number
-    lastVerified: number
     _all: number
   }
 
 
-  export type ResourceAvgAggregateInputType = {
-    views?: true
+  export type CommunityStoryAvgAggregateInputType = {
+    likes?: true
   }
 
-  export type ResourceSumAggregateInputType = {
-    views?: true
+  export type CommunityStorySumAggregateInputType = {
+    likes?: true
   }
 
-  export type ResourceMinAggregateInputType = {
+  export type CommunityStoryMinAggregateInputType = {
     id?: true
     slug?: true
-    name?: true
+    authorName?: true
+    authorAvatar?: true
+    userId?: true
+    title?: true
+    content?: true
     category?: true
+    likes?: true
     verified?: true
-    shortDescription?: true
-    officialUrl?: true
-    platforms?: true
-    tags?: true
-    heroTitle?: true
-    heroDescription?: true
-    heroGradient?: true
-    whyGoodTitle?: true
-    whyGoodContent?: true
-    features?: true
-    howToStartTitle?: true
-    howToStartSteps?: true
-    pros?: true
-    cons?: true
-    faq?: true
-    securityTips?: true
-    securityAudit?: true
-    securityAuditDate?: true
-    auditedByCommunity?: true
-    toolConfig?: true
-    interactiveType?: true
-    showCompatibleWallets?: true
-    relatedResources?: true
-    views?: true
+    featured?: true
+    published?: true
     createdAt?: true
     updatedAt?: true
-    lastVerified?: true
   }
 
-  export type ResourceMaxAggregateInputType = {
+  export type CommunityStoryMaxAggregateInputType = {
     id?: true
     slug?: true
-    name?: true
+    authorName?: true
+    authorAvatar?: true
+    userId?: true
+    title?: true
+    content?: true
     category?: true
+    likes?: true
     verified?: true
-    shortDescription?: true
-    officialUrl?: true
-    platforms?: true
-    tags?: true
-    heroTitle?: true
-    heroDescription?: true
-    heroGradient?: true
-    whyGoodTitle?: true
-    whyGoodContent?: true
-    features?: true
-    howToStartTitle?: true
-    howToStartSteps?: true
-    pros?: true
-    cons?: true
-    faq?: true
-    securityTips?: true
-    securityAudit?: true
-    securityAuditDate?: true
-    auditedByCommunity?: true
-    toolConfig?: true
-    interactiveType?: true
-    showCompatibleWallets?: true
-    relatedResources?: true
-    views?: true
+    featured?: true
+    published?: true
     createdAt?: true
     updatedAt?: true
-    lastVerified?: true
   }
 
-  export type ResourceCountAggregateInputType = {
+  export type CommunityStoryCountAggregateInputType = {
     id?: true
     slug?: true
-    name?: true
+    authorName?: true
+    authorAvatar?: true
+    userId?: true
+    title?: true
+    content?: true
     category?: true
+    likes?: true
     verified?: true
-    shortDescription?: true
-    officialUrl?: true
-    platforms?: true
-    tags?: true
-    heroTitle?: true
-    heroDescription?: true
-    heroGradient?: true
-    whyGoodTitle?: true
-    whyGoodContent?: true
-    features?: true
-    howToStartTitle?: true
-    howToStartSteps?: true
-    pros?: true
-    cons?: true
-    faq?: true
-    securityTips?: true
-    securityAudit?: true
-    securityAuditDate?: true
-    auditedByCommunity?: true
-    toolConfig?: true
-    interactiveType?: true
-    showCompatibleWallets?: true
-    relatedResources?: true
-    views?: true
+    featured?: true
+    published?: true
     createdAt?: true
     updatedAt?: true
-    lastVerified?: true
     _all?: true
   }
 
-  export type ResourceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CommunityStoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Resource to aggregate.
+     * Filter which CommunityStory to aggregate.
      */
-    where?: ResourceWhereInput
+    where?: CommunityStoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Resources to fetch.
+     * Determine the order of CommunityStories to fetch.
      */
-    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    orderBy?: CommunityStoryOrderByWithRelationInput | CommunityStoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ResourceWhereUniqueInput
+    cursor?: CommunityStoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Resources from the position of the cursor.
+     * Take `±n` CommunityStories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Resources.
+     * Skip the first `n` CommunityStories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Resources
+     * Count returned CommunityStories
     **/
-    _count?: true | ResourceCountAggregateInputType
+    _count?: true | CommunityStoryCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: ResourceAvgAggregateInputType
+    _avg?: CommunityStoryAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: ResourceSumAggregateInputType
+    _sum?: CommunityStorySumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ResourceMinAggregateInputType
+    _min?: CommunityStoryMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ResourceMaxAggregateInputType
+    _max?: CommunityStoryMaxAggregateInputType
   }
 
-  export type GetResourceAggregateType<T extends ResourceAggregateArgs> = {
-        [P in keyof T & keyof AggregateResource]: P extends '_count' | 'count'
+  export type GetCommunityStoryAggregateType<T extends CommunityStoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateCommunityStory]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateResource[P]>
-      : GetScalarType<T[P], AggregateResource[P]>
+        : GetScalarType<T[P], AggregateCommunityStory[P]>
+      : GetScalarType<T[P], AggregateCommunityStory[P]>
   }
 
 
 
 
-  export type ResourceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ResourceWhereInput
-    orderBy?: ResourceOrderByWithAggregationInput | ResourceOrderByWithAggregationInput[]
-    by: ResourceScalarFieldEnum[] | ResourceScalarFieldEnum
-    having?: ResourceScalarWhereWithAggregatesInput
+  export type CommunityStoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommunityStoryWhereInput
+    orderBy?: CommunityStoryOrderByWithAggregationInput | CommunityStoryOrderByWithAggregationInput[]
+    by: CommunityStoryScalarFieldEnum[] | CommunityStoryScalarFieldEnum
+    having?: CommunityStoryScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ResourceCountAggregateInputType | true
-    _avg?: ResourceAvgAggregateInputType
-    _sum?: ResourceSumAggregateInputType
-    _min?: ResourceMinAggregateInputType
-    _max?: ResourceMaxAggregateInputType
+    _count?: CommunityStoryCountAggregateInputType | true
+    _avg?: CommunityStoryAvgAggregateInputType
+    _sum?: CommunityStorySumAggregateInputType
+    _min?: CommunityStoryMinAggregateInputType
+    _max?: CommunityStoryMaxAggregateInputType
   }
 
-  export type ResourceGroupByOutputType = {
+  export type CommunityStoryGroupByOutputType = {
     id: string
     slug: string
-    name: string
-    category: string
+    authorName: string
+    authorAvatar: string | null
+    userId: string | null
+    title: string
+    content: string
+    category: $Enums.StoryCategory
+    likes: number
     verified: boolean
-    shortDescription: string
-    officialUrl: string
-    platforms: string
-    tags: string
-    heroTitle: string
-    heroDescription: string
-    heroGradient: string
-    whyGoodTitle: string
-    whyGoodContent: string
-    features: string
-    howToStartTitle: string
-    howToStartSteps: string
-    pros: string
-    cons: string
-    faq: string
-    securityTips: string
-    securityAudit: string | null
-    securityAuditDate: Date | null
-    auditedByCommunity: boolean
-    toolConfig: string | null
-    interactiveType: string | null
-    showCompatibleWallets: boolean
-    relatedResources: string | null
-    views: number
+    featured: boolean
+    published: boolean
     createdAt: Date
     updatedAt: Date
-    lastVerified: Date
-    _count: ResourceCountAggregateOutputType | null
-    _avg: ResourceAvgAggregateOutputType | null
-    _sum: ResourceSumAggregateOutputType | null
-    _min: ResourceMinAggregateOutputType | null
-    _max: ResourceMaxAggregateOutputType | null
+    _count: CommunityStoryCountAggregateOutputType | null
+    _avg: CommunityStoryAvgAggregateOutputType | null
+    _sum: CommunityStorySumAggregateOutputType | null
+    _min: CommunityStoryMinAggregateOutputType | null
+    _max: CommunityStoryMaxAggregateOutputType | null
   }
 
-  type GetResourceGroupByPayload<T extends ResourceGroupByArgs> = Prisma.PrismaPromise<
+  type GetCommunityStoryGroupByPayload<T extends CommunityStoryGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ResourceGroupByOutputType, T['by']> &
+      PickEnumerable<CommunityStoryGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ResourceGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof CommunityStoryGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ResourceGroupByOutputType[P]>
-            : GetScalarType<T[P], ResourceGroupByOutputType[P]>
+              : GetScalarType<T[P], CommunityStoryGroupByOutputType[P]>
+            : GetScalarType<T[P], CommunityStoryGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ResourceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CommunityStorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     slug?: boolean
-    name?: boolean
+    authorName?: boolean
+    authorAvatar?: boolean
+    userId?: boolean
+    title?: boolean
+    content?: boolean
     category?: boolean
+    likes?: boolean
     verified?: boolean
-    shortDescription?: boolean
-    officialUrl?: boolean
-    platforms?: boolean
-    tags?: boolean
-    heroTitle?: boolean
-    heroDescription?: boolean
-    heroGradient?: boolean
-    whyGoodTitle?: boolean
-    whyGoodContent?: boolean
-    features?: boolean
-    howToStartTitle?: boolean
-    howToStartSteps?: boolean
-    pros?: boolean
-    cons?: boolean
-    faq?: boolean
-    securityTips?: boolean
-    securityAudit?: boolean
-    securityAuditDate?: boolean
-    auditedByCommunity?: boolean
-    toolConfig?: boolean
-    interactiveType?: boolean
-    showCompatibleWallets?: boolean
-    relatedResources?: boolean
-    views?: boolean
+    featured?: boolean
+    published?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    lastVerified?: boolean
-  }, ExtArgs["result"]["resource"]>
+    user?: boolean | CommunityStory$userArgs<ExtArgs>
+  }, ExtArgs["result"]["communityStory"]>
 
-  export type ResourceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CommunityStorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     slug?: boolean
-    name?: boolean
+    authorName?: boolean
+    authorAvatar?: boolean
+    userId?: boolean
+    title?: boolean
+    content?: boolean
     category?: boolean
+    likes?: boolean
     verified?: boolean
-    shortDescription?: boolean
-    officialUrl?: boolean
-    platforms?: boolean
-    tags?: boolean
-    heroTitle?: boolean
-    heroDescription?: boolean
-    heroGradient?: boolean
-    whyGoodTitle?: boolean
-    whyGoodContent?: boolean
-    features?: boolean
-    howToStartTitle?: boolean
-    howToStartSteps?: boolean
-    pros?: boolean
-    cons?: boolean
-    faq?: boolean
-    securityTips?: boolean
-    securityAudit?: boolean
-    securityAuditDate?: boolean
-    auditedByCommunity?: boolean
-    toolConfig?: boolean
-    interactiveType?: boolean
-    showCompatibleWallets?: boolean
-    relatedResources?: boolean
-    views?: boolean
+    featured?: boolean
+    published?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    lastVerified?: boolean
-  }, ExtArgs["result"]["resource"]>
+    user?: boolean | CommunityStory$userArgs<ExtArgs>
+  }, ExtArgs["result"]["communityStory"]>
 
-  export type ResourceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CommunityStorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     slug?: boolean
-    name?: boolean
+    authorName?: boolean
+    authorAvatar?: boolean
+    userId?: boolean
+    title?: boolean
+    content?: boolean
     category?: boolean
+    likes?: boolean
     verified?: boolean
-    shortDescription?: boolean
-    officialUrl?: boolean
-    platforms?: boolean
-    tags?: boolean
-    heroTitle?: boolean
-    heroDescription?: boolean
-    heroGradient?: boolean
-    whyGoodTitle?: boolean
-    whyGoodContent?: boolean
-    features?: boolean
-    howToStartTitle?: boolean
-    howToStartSteps?: boolean
-    pros?: boolean
-    cons?: boolean
-    faq?: boolean
-    securityTips?: boolean
-    securityAudit?: boolean
-    securityAuditDate?: boolean
-    auditedByCommunity?: boolean
-    toolConfig?: boolean
-    interactiveType?: boolean
-    showCompatibleWallets?: boolean
-    relatedResources?: boolean
-    views?: boolean
+    featured?: boolean
+    published?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    lastVerified?: boolean
-  }, ExtArgs["result"]["resource"]>
+    user?: boolean | CommunityStory$userArgs<ExtArgs>
+  }, ExtArgs["result"]["communityStory"]>
 
-  export type ResourceSelectScalar = {
+  export type CommunityStorySelectScalar = {
     id?: boolean
     slug?: boolean
-    name?: boolean
+    authorName?: boolean
+    authorAvatar?: boolean
+    userId?: boolean
+    title?: boolean
+    content?: boolean
     category?: boolean
+    likes?: boolean
     verified?: boolean
-    shortDescription?: boolean
-    officialUrl?: boolean
-    platforms?: boolean
-    tags?: boolean
-    heroTitle?: boolean
-    heroDescription?: boolean
-    heroGradient?: boolean
-    whyGoodTitle?: boolean
-    whyGoodContent?: boolean
-    features?: boolean
-    howToStartTitle?: boolean
-    howToStartSteps?: boolean
-    pros?: boolean
-    cons?: boolean
-    faq?: boolean
-    securityTips?: boolean
-    securityAudit?: boolean
-    securityAuditDate?: boolean
-    auditedByCommunity?: boolean
-    toolConfig?: boolean
-    interactiveType?: boolean
-    showCompatibleWallets?: boolean
-    relatedResources?: boolean
-    views?: boolean
+    featured?: boolean
+    published?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    lastVerified?: boolean
   }
 
-  export type ResourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "category" | "verified" | "shortDescription" | "officialUrl" | "platforms" | "tags" | "heroTitle" | "heroDescription" | "heroGradient" | "whyGoodTitle" | "whyGoodContent" | "features" | "howToStartTitle" | "howToStartSteps" | "pros" | "cons" | "faq" | "securityTips" | "securityAudit" | "securityAuditDate" | "auditedByCommunity" | "toolConfig" | "interactiveType" | "showCompatibleWallets" | "relatedResources" | "views" | "createdAt" | "updatedAt" | "lastVerified", ExtArgs["result"]["resource"]>
+  export type CommunityStoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "authorName" | "authorAvatar" | "userId" | "title" | "content" | "category" | "likes" | "verified" | "featured" | "published" | "createdAt" | "updatedAt", ExtArgs["result"]["communityStory"]>
+  export type CommunityStoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | CommunityStory$userArgs<ExtArgs>
+  }
+  export type CommunityStoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | CommunityStory$userArgs<ExtArgs>
+  }
+  export type CommunityStoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | CommunityStory$userArgs<ExtArgs>
+  }
 
-  export type $ResourcePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Resource"
-    objects: {}
+  export type $CommunityStoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CommunityStory"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       slug: string
-      name: string
-      category: string
+      authorName: string
+      authorAvatar: string | null
+      userId: string | null
+      title: string
+      content: string
+      category: $Enums.StoryCategory
+      likes: number
       verified: boolean
-      shortDescription: string
-      officialUrl: string
-      platforms: string
-      tags: string
-      heroTitle: string
-      heroDescription: string
-      heroGradient: string
-      whyGoodTitle: string
-      whyGoodContent: string
-      features: string
-      howToStartTitle: string
-      howToStartSteps: string
-      pros: string
-      cons: string
-      faq: string
-      securityTips: string
-      securityAudit: string | null
-      securityAuditDate: Date | null
-      auditedByCommunity: boolean
-      toolConfig: string | null
-      interactiveType: string | null
-      showCompatibleWallets: boolean
-      relatedResources: string | null
-      views: number
+      featured: boolean
+      published: boolean
       createdAt: Date
       updatedAt: Date
-      lastVerified: Date
-    }, ExtArgs["result"]["resource"]>
+    }, ExtArgs["result"]["communityStory"]>
     composites: {}
   }
 
-  type ResourceGetPayload<S extends boolean | null | undefined | ResourceDefaultArgs> = $Result.GetResult<Prisma.$ResourcePayload, S>
+  type CommunityStoryGetPayload<S extends boolean | null | undefined | CommunityStoryDefaultArgs> = $Result.GetResult<Prisma.$CommunityStoryPayload, S>
 
-  type ResourceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ResourceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ResourceCountAggregateInputType | true
+  type CommunityStoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CommunityStoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CommunityStoryCountAggregateInputType | true
     }
 
-  export interface ResourceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Resource'], meta: { name: 'Resource' } }
+  export interface CommunityStoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CommunityStory'], meta: { name: 'CommunityStory' } }
     /**
-     * Find zero or one Resource that matches the filter.
-     * @param {ResourceFindUniqueArgs} args - Arguments to find a Resource
+     * Find zero or one CommunityStory that matches the filter.
+     * @param {CommunityStoryFindUniqueArgs} args - Arguments to find a CommunityStory
      * @example
-     * // Get one Resource
-     * const resource = await prisma.resource.findUnique({
+     * // Get one CommunityStory
+     * const communityStory = await prisma.communityStory.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ResourceFindUniqueArgs>(args: SelectSubset<T, ResourceFindUniqueArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends CommunityStoryFindUniqueArgs>(args: SelectSubset<T, CommunityStoryFindUniqueArgs<ExtArgs>>): Prisma__CommunityStoryClient<$Result.GetResult<Prisma.$CommunityStoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Resource that matches the filter or throw an error with `error.code='P2025'`
+     * Find one CommunityStory that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ResourceFindUniqueOrThrowArgs} args - Arguments to find a Resource
+     * @param {CommunityStoryFindUniqueOrThrowArgs} args - Arguments to find a CommunityStory
      * @example
-     * // Get one Resource
-     * const resource = await prisma.resource.findUniqueOrThrow({
+     * // Get one CommunityStory
+     * const communityStory = await prisma.communityStory.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ResourceFindUniqueOrThrowArgs>(args: SelectSubset<T, ResourceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends CommunityStoryFindUniqueOrThrowArgs>(args: SelectSubset<T, CommunityStoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CommunityStoryClient<$Result.GetResult<Prisma.$CommunityStoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Resource that matches the filter.
+     * Find the first CommunityStory that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ResourceFindFirstArgs} args - Arguments to find a Resource
+     * @param {CommunityStoryFindFirstArgs} args - Arguments to find a CommunityStory
      * @example
-     * // Get one Resource
-     * const resource = await prisma.resource.findFirst({
+     * // Get one CommunityStory
+     * const communityStory = await prisma.communityStory.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ResourceFindFirstArgs>(args?: SelectSubset<T, ResourceFindFirstArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends CommunityStoryFindFirstArgs>(args?: SelectSubset<T, CommunityStoryFindFirstArgs<ExtArgs>>): Prisma__CommunityStoryClient<$Result.GetResult<Prisma.$CommunityStoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Resource that matches the filter or
+     * Find the first CommunityStory that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ResourceFindFirstOrThrowArgs} args - Arguments to find a Resource
+     * @param {CommunityStoryFindFirstOrThrowArgs} args - Arguments to find a CommunityStory
      * @example
-     * // Get one Resource
-     * const resource = await prisma.resource.findFirstOrThrow({
+     * // Get one CommunityStory
+     * const communityStory = await prisma.communityStory.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ResourceFindFirstOrThrowArgs>(args?: SelectSubset<T, ResourceFindFirstOrThrowArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends CommunityStoryFindFirstOrThrowArgs>(args?: SelectSubset<T, CommunityStoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__CommunityStoryClient<$Result.GetResult<Prisma.$CommunityStoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Resources that matches the filter.
+     * Find zero or more CommunityStories that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ResourceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {CommunityStoryFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Resources
-     * const resources = await prisma.resource.findMany()
+     * // Get all CommunityStories
+     * const communityStories = await prisma.communityStory.findMany()
      * 
-     * // Get first 10 Resources
-     * const resources = await prisma.resource.findMany({ take: 10 })
+     * // Get first 10 CommunityStories
+     * const communityStories = await prisma.communityStory.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const resourceWithIdOnly = await prisma.resource.findMany({ select: { id: true } })
+     * const communityStoryWithIdOnly = await prisma.communityStory.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ResourceFindManyArgs>(args?: SelectSubset<T, ResourceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends CommunityStoryFindManyArgs>(args?: SelectSubset<T, CommunityStoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommunityStoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Resource.
-     * @param {ResourceCreateArgs} args - Arguments to create a Resource.
+     * Create a CommunityStory.
+     * @param {CommunityStoryCreateArgs} args - Arguments to create a CommunityStory.
      * @example
-     * // Create one Resource
-     * const Resource = await prisma.resource.create({
+     * // Create one CommunityStory
+     * const CommunityStory = await prisma.communityStory.create({
      *   data: {
-     *     // ... data to create a Resource
+     *     // ... data to create a CommunityStory
      *   }
      * })
      * 
      */
-    create<T extends ResourceCreateArgs>(args: SelectSubset<T, ResourceCreateArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends CommunityStoryCreateArgs>(args: SelectSubset<T, CommunityStoryCreateArgs<ExtArgs>>): Prisma__CommunityStoryClient<$Result.GetResult<Prisma.$CommunityStoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Resources.
-     * @param {ResourceCreateManyArgs} args - Arguments to create many Resources.
+     * Create many CommunityStories.
+     * @param {CommunityStoryCreateManyArgs} args - Arguments to create many CommunityStories.
      * @example
-     * // Create many Resources
-     * const resource = await prisma.resource.createMany({
+     * // Create many CommunityStories
+     * const communityStory = await prisma.communityStory.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ResourceCreateManyArgs>(args?: SelectSubset<T, ResourceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends CommunityStoryCreateManyArgs>(args?: SelectSubset<T, CommunityStoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Resources and returns the data saved in the database.
-     * @param {ResourceCreateManyAndReturnArgs} args - Arguments to create many Resources.
+     * Create many CommunityStories and returns the data saved in the database.
+     * @param {CommunityStoryCreateManyAndReturnArgs} args - Arguments to create many CommunityStories.
      * @example
-     * // Create many Resources
-     * const resource = await prisma.resource.createManyAndReturn({
+     * // Create many CommunityStories
+     * const communityStory = await prisma.communityStory.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Resources and only return the `id`
-     * const resourceWithIdOnly = await prisma.resource.createManyAndReturn({
+     * // Create many CommunityStories and only return the `id`
+     * const communityStoryWithIdOnly = await prisma.communityStory.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -19502,28 +14788,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ResourceCreateManyAndReturnArgs>(args?: SelectSubset<T, ResourceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends CommunityStoryCreateManyAndReturnArgs>(args?: SelectSubset<T, CommunityStoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommunityStoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Resource.
-     * @param {ResourceDeleteArgs} args - Arguments to delete one Resource.
+     * Delete a CommunityStory.
+     * @param {CommunityStoryDeleteArgs} args - Arguments to delete one CommunityStory.
      * @example
-     * // Delete one Resource
-     * const Resource = await prisma.resource.delete({
+     * // Delete one CommunityStory
+     * const CommunityStory = await prisma.communityStory.delete({
      *   where: {
-     *     // ... filter to delete one Resource
+     *     // ... filter to delete one CommunityStory
      *   }
      * })
      * 
      */
-    delete<T extends ResourceDeleteArgs>(args: SelectSubset<T, ResourceDeleteArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends CommunityStoryDeleteArgs>(args: SelectSubset<T, CommunityStoryDeleteArgs<ExtArgs>>): Prisma__CommunityStoryClient<$Result.GetResult<Prisma.$CommunityStoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Resource.
-     * @param {ResourceUpdateArgs} args - Arguments to update one Resource.
+     * Update one CommunityStory.
+     * @param {CommunityStoryUpdateArgs} args - Arguments to update one CommunityStory.
      * @example
-     * // Update one Resource
-     * const resource = await prisma.resource.update({
+     * // Update one CommunityStory
+     * const communityStory = await prisma.communityStory.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -19533,30 +14819,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ResourceUpdateArgs>(args: SelectSubset<T, ResourceUpdateArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends CommunityStoryUpdateArgs>(args: SelectSubset<T, CommunityStoryUpdateArgs<ExtArgs>>): Prisma__CommunityStoryClient<$Result.GetResult<Prisma.$CommunityStoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Resources.
-     * @param {ResourceDeleteManyArgs} args - Arguments to filter Resources to delete.
+     * Delete zero or more CommunityStories.
+     * @param {CommunityStoryDeleteManyArgs} args - Arguments to filter CommunityStories to delete.
      * @example
-     * // Delete a few Resources
-     * const { count } = await prisma.resource.deleteMany({
+     * // Delete a few CommunityStories
+     * const { count } = await prisma.communityStory.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ResourceDeleteManyArgs>(args?: SelectSubset<T, ResourceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends CommunityStoryDeleteManyArgs>(args?: SelectSubset<T, CommunityStoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Resources.
+     * Update zero or more CommunityStories.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ResourceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {CommunityStoryUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Resources
-     * const resource = await prisma.resource.updateMany({
+     * // Update many CommunityStories
+     * const communityStory = await prisma.communityStory.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -19566,14 +14852,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ResourceUpdateManyArgs>(args: SelectSubset<T, ResourceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends CommunityStoryUpdateManyArgs>(args: SelectSubset<T, CommunityStoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Resources and returns the data updated in the database.
-     * @param {ResourceUpdateManyAndReturnArgs} args - Arguments to update many Resources.
+     * Update zero or more CommunityStories and returns the data updated in the database.
+     * @param {CommunityStoryUpdateManyAndReturnArgs} args - Arguments to update many CommunityStories.
      * @example
-     * // Update many Resources
-     * const resource = await prisma.resource.updateManyAndReturn({
+     * // Update many CommunityStories
+     * const communityStory = await prisma.communityStory.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -19582,8 +14868,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Resources and only return the `id`
-     * const resourceWithIdOnly = await prisma.resource.updateManyAndReturn({
+     * // Update zero or more CommunityStories and only return the `id`
+     * const communityStoryWithIdOnly = await prisma.communityStory.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -19596,56 +14882,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ResourceUpdateManyAndReturnArgs>(args: SelectSubset<T, ResourceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends CommunityStoryUpdateManyAndReturnArgs>(args: SelectSubset<T, CommunityStoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommunityStoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Resource.
-     * @param {ResourceUpsertArgs} args - Arguments to update or create a Resource.
+     * Create or update one CommunityStory.
+     * @param {CommunityStoryUpsertArgs} args - Arguments to update or create a CommunityStory.
      * @example
-     * // Update or create a Resource
-     * const resource = await prisma.resource.upsert({
+     * // Update or create a CommunityStory
+     * const communityStory = await prisma.communityStory.upsert({
      *   create: {
-     *     // ... data to create a Resource
+     *     // ... data to create a CommunityStory
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Resource we want to update
+     *     // ... the filter for the CommunityStory we want to update
      *   }
      * })
      */
-    upsert<T extends ResourceUpsertArgs>(args: SelectSubset<T, ResourceUpsertArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends CommunityStoryUpsertArgs>(args: SelectSubset<T, CommunityStoryUpsertArgs<ExtArgs>>): Prisma__CommunityStoryClient<$Result.GetResult<Prisma.$CommunityStoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Resources.
+     * Count the number of CommunityStories.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ResourceCountArgs} args - Arguments to filter Resources to count.
+     * @param {CommunityStoryCountArgs} args - Arguments to filter CommunityStories to count.
      * @example
-     * // Count the number of Resources
-     * const count = await prisma.resource.count({
+     * // Count the number of CommunityStories
+     * const count = await prisma.communityStory.count({
      *   where: {
-     *     // ... the filter for the Resources we want to count
+     *     // ... the filter for the CommunityStories we want to count
      *   }
      * })
     **/
-    count<T extends ResourceCountArgs>(
-      args?: Subset<T, ResourceCountArgs>,
+    count<T extends CommunityStoryCountArgs>(
+      args?: Subset<T, CommunityStoryCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ResourceCountAggregateOutputType>
+          : GetScalarType<T['select'], CommunityStoryCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Resource.
+     * Allows you to perform aggregations operations on a CommunityStory.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ResourceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {CommunityStoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -19665,13 +14951,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ResourceAggregateArgs>(args: Subset<T, ResourceAggregateArgs>): Prisma.PrismaPromise<GetResourceAggregateType<T>>
+    aggregate<T extends CommunityStoryAggregateArgs>(args: Subset<T, CommunityStoryAggregateArgs>): Prisma.PrismaPromise<GetCommunityStoryAggregateType<T>>
 
     /**
-     * Group by Resource.
+     * Group by CommunityStory.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ResourceGroupByArgs} args - Group by arguments.
+     * @param {CommunityStoryGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -19686,14 +14972,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ResourceGroupByArgs,
+      T extends CommunityStoryGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ResourceGroupByArgs['orderBy'] }
-        : { orderBy?: ResourceGroupByArgs['orderBy'] },
+        ? { orderBy: CommunityStoryGroupByArgs['orderBy'] }
+        : { orderBy?: CommunityStoryGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -19742,20 +15028,1390 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ResourceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetResourceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, CommunityStoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCommunityStoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Resource model
+   * Fields of the CommunityStory model
    */
-  readonly fields: ResourceFieldRefs;
+  readonly fields: CommunityStoryFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Resource.
+   * The delegate class that acts as a "Promise-like" for CommunityStory.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ResourceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__CommunityStoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends CommunityStory$userArgs<ExtArgs> = {}>(args?: Subset<T, CommunityStory$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CommunityStory model
+   */
+  interface CommunityStoryFieldRefs {
+    readonly id: FieldRef<"CommunityStory", 'String'>
+    readonly slug: FieldRef<"CommunityStory", 'String'>
+    readonly authorName: FieldRef<"CommunityStory", 'String'>
+    readonly authorAvatar: FieldRef<"CommunityStory", 'String'>
+    readonly userId: FieldRef<"CommunityStory", 'String'>
+    readonly title: FieldRef<"CommunityStory", 'String'>
+    readonly content: FieldRef<"CommunityStory", 'String'>
+    readonly category: FieldRef<"CommunityStory", 'StoryCategory'>
+    readonly likes: FieldRef<"CommunityStory", 'Int'>
+    readonly verified: FieldRef<"CommunityStory", 'Boolean'>
+    readonly featured: FieldRef<"CommunityStory", 'Boolean'>
+    readonly published: FieldRef<"CommunityStory", 'Boolean'>
+    readonly createdAt: FieldRef<"CommunityStory", 'DateTime'>
+    readonly updatedAt: FieldRef<"CommunityStory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CommunityStory findUnique
+   */
+  export type CommunityStoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityStory
+     */
+    select?: CommunityStorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityStory
+     */
+    omit?: CommunityStoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityStoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CommunityStory to fetch.
+     */
+    where: CommunityStoryWhereUniqueInput
+  }
+
+  /**
+   * CommunityStory findUniqueOrThrow
+   */
+  export type CommunityStoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityStory
+     */
+    select?: CommunityStorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityStory
+     */
+    omit?: CommunityStoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityStoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CommunityStory to fetch.
+     */
+    where: CommunityStoryWhereUniqueInput
+  }
+
+  /**
+   * CommunityStory findFirst
+   */
+  export type CommunityStoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityStory
+     */
+    select?: CommunityStorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityStory
+     */
+    omit?: CommunityStoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityStoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CommunityStory to fetch.
+     */
+    where?: CommunityStoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CommunityStories to fetch.
+     */
+    orderBy?: CommunityStoryOrderByWithRelationInput | CommunityStoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CommunityStories.
+     */
+    cursor?: CommunityStoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CommunityStories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CommunityStories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CommunityStories.
+     */
+    distinct?: CommunityStoryScalarFieldEnum | CommunityStoryScalarFieldEnum[]
+  }
+
+  /**
+   * CommunityStory findFirstOrThrow
+   */
+  export type CommunityStoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityStory
+     */
+    select?: CommunityStorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityStory
+     */
+    omit?: CommunityStoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityStoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CommunityStory to fetch.
+     */
+    where?: CommunityStoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CommunityStories to fetch.
+     */
+    orderBy?: CommunityStoryOrderByWithRelationInput | CommunityStoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CommunityStories.
+     */
+    cursor?: CommunityStoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CommunityStories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CommunityStories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CommunityStories.
+     */
+    distinct?: CommunityStoryScalarFieldEnum | CommunityStoryScalarFieldEnum[]
+  }
+
+  /**
+   * CommunityStory findMany
+   */
+  export type CommunityStoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityStory
+     */
+    select?: CommunityStorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityStory
+     */
+    omit?: CommunityStoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityStoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CommunityStories to fetch.
+     */
+    where?: CommunityStoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CommunityStories to fetch.
+     */
+    orderBy?: CommunityStoryOrderByWithRelationInput | CommunityStoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CommunityStories.
+     */
+    cursor?: CommunityStoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CommunityStories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CommunityStories.
+     */
+    skip?: number
+    distinct?: CommunityStoryScalarFieldEnum | CommunityStoryScalarFieldEnum[]
+  }
+
+  /**
+   * CommunityStory create
+   */
+  export type CommunityStoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityStory
+     */
+    select?: CommunityStorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityStory
+     */
+    omit?: CommunityStoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityStoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CommunityStory.
+     */
+    data: XOR<CommunityStoryCreateInput, CommunityStoryUncheckedCreateInput>
+  }
+
+  /**
+   * CommunityStory createMany
+   */
+  export type CommunityStoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CommunityStories.
+     */
+    data: CommunityStoryCreateManyInput | CommunityStoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CommunityStory createManyAndReturn
+   */
+  export type CommunityStoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityStory
+     */
+    select?: CommunityStorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityStory
+     */
+    omit?: CommunityStoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many CommunityStories.
+     */
+    data: CommunityStoryCreateManyInput | CommunityStoryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityStoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CommunityStory update
+   */
+  export type CommunityStoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityStory
+     */
+    select?: CommunityStorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityStory
+     */
+    omit?: CommunityStoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityStoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CommunityStory.
+     */
+    data: XOR<CommunityStoryUpdateInput, CommunityStoryUncheckedUpdateInput>
+    /**
+     * Choose, which CommunityStory to update.
+     */
+    where: CommunityStoryWhereUniqueInput
+  }
+
+  /**
+   * CommunityStory updateMany
+   */
+  export type CommunityStoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CommunityStories.
+     */
+    data: XOR<CommunityStoryUpdateManyMutationInput, CommunityStoryUncheckedUpdateManyInput>
+    /**
+     * Filter which CommunityStories to update
+     */
+    where?: CommunityStoryWhereInput
+    /**
+     * Limit how many CommunityStories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CommunityStory updateManyAndReturn
+   */
+  export type CommunityStoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityStory
+     */
+    select?: CommunityStorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityStory
+     */
+    omit?: CommunityStoryOmit<ExtArgs> | null
+    /**
+     * The data used to update CommunityStories.
+     */
+    data: XOR<CommunityStoryUpdateManyMutationInput, CommunityStoryUncheckedUpdateManyInput>
+    /**
+     * Filter which CommunityStories to update
+     */
+    where?: CommunityStoryWhereInput
+    /**
+     * Limit how many CommunityStories to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityStoryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CommunityStory upsert
+   */
+  export type CommunityStoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityStory
+     */
+    select?: CommunityStorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityStory
+     */
+    omit?: CommunityStoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityStoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CommunityStory to update in case it exists.
+     */
+    where: CommunityStoryWhereUniqueInput
+    /**
+     * In case the CommunityStory found by the `where` argument doesn't exist, create a new CommunityStory with this data.
+     */
+    create: XOR<CommunityStoryCreateInput, CommunityStoryUncheckedCreateInput>
+    /**
+     * In case the CommunityStory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CommunityStoryUpdateInput, CommunityStoryUncheckedUpdateInput>
+  }
+
+  /**
+   * CommunityStory delete
+   */
+  export type CommunityStoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityStory
+     */
+    select?: CommunityStorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityStory
+     */
+    omit?: CommunityStoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityStoryInclude<ExtArgs> | null
+    /**
+     * Filter which CommunityStory to delete.
+     */
+    where: CommunityStoryWhereUniqueInput
+  }
+
+  /**
+   * CommunityStory deleteMany
+   */
+  export type CommunityStoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CommunityStories to delete
+     */
+    where?: CommunityStoryWhereInput
+    /**
+     * Limit how many CommunityStories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CommunityStory.user
+   */
+  export type CommunityStory$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * CommunityStory without action
+   */
+  export type CommunityStoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityStory
+     */
+    select?: CommunityStorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityStory
+     */
+    omit?: CommunityStoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityStoryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SocialProject
+   */
+
+  export type AggregateSocialProject = {
+    _count: SocialProjectCountAggregateOutputType | null
+    _avg: SocialProjectAvgAggregateOutputType | null
+    _sum: SocialProjectSumAggregateOutputType | null
+    _min: SocialProjectMinAggregateOutputType | null
+    _max: SocialProjectMaxAggregateOutputType | null
+  }
+
+  export type SocialProjectAvgAggregateOutputType = {
+    fundingGoal: number | null
+    currentFunding: number | null
+    supporters: number | null
+    views: number | null
+  }
+
+  export type SocialProjectSumAggregateOutputType = {
+    fundingGoal: number | null
+    currentFunding: number | null
+    supporters: number | null
+    views: number | null
+  }
+
+  export type SocialProjectMinAggregateOutputType = {
+    id: string | null
+    slug: string | null
+    name: string | null
+    description: string | null
+    longDescription: string | null
+    fundingGoal: number | null
+    currentFunding: number | null
+    currency: string | null
+    walletAddress: string | null
+    category: $Enums.ProjectCategory | null
+    location: string | null
+    tags: string | null
+    verified: boolean | null
+    active: boolean | null
+    featured: boolean | null
+    startDate: Date | null
+    endDate: Date | null
+    supporters: number | null
+    views: number | null
+    coverImage: string | null
+    gallery: string | null
+    organizer: string | null
+    organizerEmail: string | null
+    organizerPhone: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SocialProjectMaxAggregateOutputType = {
+    id: string | null
+    slug: string | null
+    name: string | null
+    description: string | null
+    longDescription: string | null
+    fundingGoal: number | null
+    currentFunding: number | null
+    currency: string | null
+    walletAddress: string | null
+    category: $Enums.ProjectCategory | null
+    location: string | null
+    tags: string | null
+    verified: boolean | null
+    active: boolean | null
+    featured: boolean | null
+    startDate: Date | null
+    endDate: Date | null
+    supporters: number | null
+    views: number | null
+    coverImage: string | null
+    gallery: string | null
+    organizer: string | null
+    organizerEmail: string | null
+    organizerPhone: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SocialProjectCountAggregateOutputType = {
+    id: number
+    slug: number
+    name: number
+    description: number
+    longDescription: number
+    fundingGoal: number
+    currentFunding: number
+    currency: number
+    walletAddress: number
+    category: number
+    location: number
+    tags: number
+    verified: number
+    active: number
+    featured: number
+    startDate: number
+    endDate: number
+    supporters: number
+    views: number
+    coverImage: number
+    gallery: number
+    organizer: number
+    organizerEmail: number
+    organizerPhone: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SocialProjectAvgAggregateInputType = {
+    fundingGoal?: true
+    currentFunding?: true
+    supporters?: true
+    views?: true
+  }
+
+  export type SocialProjectSumAggregateInputType = {
+    fundingGoal?: true
+    currentFunding?: true
+    supporters?: true
+    views?: true
+  }
+
+  export type SocialProjectMinAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    longDescription?: true
+    fundingGoal?: true
+    currentFunding?: true
+    currency?: true
+    walletAddress?: true
+    category?: true
+    location?: true
+    tags?: true
+    verified?: true
+    active?: true
+    featured?: true
+    startDate?: true
+    endDate?: true
+    supporters?: true
+    views?: true
+    coverImage?: true
+    gallery?: true
+    organizer?: true
+    organizerEmail?: true
+    organizerPhone?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SocialProjectMaxAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    longDescription?: true
+    fundingGoal?: true
+    currentFunding?: true
+    currency?: true
+    walletAddress?: true
+    category?: true
+    location?: true
+    tags?: true
+    verified?: true
+    active?: true
+    featured?: true
+    startDate?: true
+    endDate?: true
+    supporters?: true
+    views?: true
+    coverImage?: true
+    gallery?: true
+    organizer?: true
+    organizerEmail?: true
+    organizerPhone?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SocialProjectCountAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    longDescription?: true
+    fundingGoal?: true
+    currentFunding?: true
+    currency?: true
+    walletAddress?: true
+    category?: true
+    location?: true
+    tags?: true
+    verified?: true
+    active?: true
+    featured?: true
+    startDate?: true
+    endDate?: true
+    supporters?: true
+    views?: true
+    coverImage?: true
+    gallery?: true
+    organizer?: true
+    organizerEmail?: true
+    organizerPhone?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SocialProjectAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SocialProject to aggregate.
+     */
+    where?: SocialProjectWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SocialProjects to fetch.
+     */
+    orderBy?: SocialProjectOrderByWithRelationInput | SocialProjectOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SocialProjectWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SocialProjects from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SocialProjects.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SocialProjects
+    **/
+    _count?: true | SocialProjectCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SocialProjectAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SocialProjectSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SocialProjectMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SocialProjectMaxAggregateInputType
+  }
+
+  export type GetSocialProjectAggregateType<T extends SocialProjectAggregateArgs> = {
+        [P in keyof T & keyof AggregateSocialProject]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSocialProject[P]>
+      : GetScalarType<T[P], AggregateSocialProject[P]>
+  }
+
+
+
+
+  export type SocialProjectGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SocialProjectWhereInput
+    orderBy?: SocialProjectOrderByWithAggregationInput | SocialProjectOrderByWithAggregationInput[]
+    by: SocialProjectScalarFieldEnum[] | SocialProjectScalarFieldEnum
+    having?: SocialProjectScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SocialProjectCountAggregateInputType | true
+    _avg?: SocialProjectAvgAggregateInputType
+    _sum?: SocialProjectSumAggregateInputType
+    _min?: SocialProjectMinAggregateInputType
+    _max?: SocialProjectMaxAggregateInputType
+  }
+
+  export type SocialProjectGroupByOutputType = {
+    id: string
+    slug: string
+    name: string
+    description: string
+    longDescription: string | null
+    fundingGoal: number
+    currentFunding: number
+    currency: string
+    walletAddress: string | null
+    category: $Enums.ProjectCategory
+    location: string | null
+    tags: string | null
+    verified: boolean
+    active: boolean
+    featured: boolean
+    startDate: Date
+    endDate: Date | null
+    supporters: number
+    views: number
+    coverImage: string | null
+    gallery: string | null
+    organizer: string
+    organizerEmail: string | null
+    organizerPhone: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: SocialProjectCountAggregateOutputType | null
+    _avg: SocialProjectAvgAggregateOutputType | null
+    _sum: SocialProjectSumAggregateOutputType | null
+    _min: SocialProjectMinAggregateOutputType | null
+    _max: SocialProjectMaxAggregateOutputType | null
+  }
+
+  type GetSocialProjectGroupByPayload<T extends SocialProjectGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SocialProjectGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SocialProjectGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SocialProjectGroupByOutputType[P]>
+            : GetScalarType<T[P], SocialProjectGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SocialProjectSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    longDescription?: boolean
+    fundingGoal?: boolean
+    currentFunding?: boolean
+    currency?: boolean
+    walletAddress?: boolean
+    category?: boolean
+    location?: boolean
+    tags?: boolean
+    verified?: boolean
+    active?: boolean
+    featured?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    supporters?: boolean
+    views?: boolean
+    coverImage?: boolean
+    gallery?: boolean
+    organizer?: boolean
+    organizerEmail?: boolean
+    organizerPhone?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["socialProject"]>
+
+  export type SocialProjectSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    longDescription?: boolean
+    fundingGoal?: boolean
+    currentFunding?: boolean
+    currency?: boolean
+    walletAddress?: boolean
+    category?: boolean
+    location?: boolean
+    tags?: boolean
+    verified?: boolean
+    active?: boolean
+    featured?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    supporters?: boolean
+    views?: boolean
+    coverImage?: boolean
+    gallery?: boolean
+    organizer?: boolean
+    organizerEmail?: boolean
+    organizerPhone?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["socialProject"]>
+
+  export type SocialProjectSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    longDescription?: boolean
+    fundingGoal?: boolean
+    currentFunding?: boolean
+    currency?: boolean
+    walletAddress?: boolean
+    category?: boolean
+    location?: boolean
+    tags?: boolean
+    verified?: boolean
+    active?: boolean
+    featured?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    supporters?: boolean
+    views?: boolean
+    coverImage?: boolean
+    gallery?: boolean
+    organizer?: boolean
+    organizerEmail?: boolean
+    organizerPhone?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["socialProject"]>
+
+  export type SocialProjectSelectScalar = {
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    longDescription?: boolean
+    fundingGoal?: boolean
+    currentFunding?: boolean
+    currency?: boolean
+    walletAddress?: boolean
+    category?: boolean
+    location?: boolean
+    tags?: boolean
+    verified?: boolean
+    active?: boolean
+    featured?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    supporters?: boolean
+    views?: boolean
+    coverImage?: boolean
+    gallery?: boolean
+    organizer?: boolean
+    organizerEmail?: boolean
+    organizerPhone?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SocialProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "description" | "longDescription" | "fundingGoal" | "currentFunding" | "currency" | "walletAddress" | "category" | "location" | "tags" | "verified" | "active" | "featured" | "startDate" | "endDate" | "supporters" | "views" | "coverImage" | "gallery" | "organizer" | "organizerEmail" | "organizerPhone" | "createdAt" | "updatedAt", ExtArgs["result"]["socialProject"]>
+
+  export type $SocialProjectPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SocialProject"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      slug: string
+      name: string
+      description: string
+      longDescription: string | null
+      fundingGoal: number
+      currentFunding: number
+      currency: string
+      walletAddress: string | null
+      category: $Enums.ProjectCategory
+      location: string | null
+      tags: string | null
+      verified: boolean
+      active: boolean
+      featured: boolean
+      startDate: Date
+      endDate: Date | null
+      supporters: number
+      views: number
+      coverImage: string | null
+      gallery: string | null
+      organizer: string
+      organizerEmail: string | null
+      organizerPhone: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["socialProject"]>
+    composites: {}
+  }
+
+  type SocialProjectGetPayload<S extends boolean | null | undefined | SocialProjectDefaultArgs> = $Result.GetResult<Prisma.$SocialProjectPayload, S>
+
+  type SocialProjectCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SocialProjectFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SocialProjectCountAggregateInputType | true
+    }
+
+  export interface SocialProjectDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SocialProject'], meta: { name: 'SocialProject' } }
+    /**
+     * Find zero or one SocialProject that matches the filter.
+     * @param {SocialProjectFindUniqueArgs} args - Arguments to find a SocialProject
+     * @example
+     * // Get one SocialProject
+     * const socialProject = await prisma.socialProject.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SocialProjectFindUniqueArgs>(args: SelectSubset<T, SocialProjectFindUniqueArgs<ExtArgs>>): Prisma__SocialProjectClient<$Result.GetResult<Prisma.$SocialProjectPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SocialProject that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SocialProjectFindUniqueOrThrowArgs} args - Arguments to find a SocialProject
+     * @example
+     * // Get one SocialProject
+     * const socialProject = await prisma.socialProject.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SocialProjectFindUniqueOrThrowArgs>(args: SelectSubset<T, SocialProjectFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SocialProjectClient<$Result.GetResult<Prisma.$SocialProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SocialProject that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialProjectFindFirstArgs} args - Arguments to find a SocialProject
+     * @example
+     * // Get one SocialProject
+     * const socialProject = await prisma.socialProject.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SocialProjectFindFirstArgs>(args?: SelectSubset<T, SocialProjectFindFirstArgs<ExtArgs>>): Prisma__SocialProjectClient<$Result.GetResult<Prisma.$SocialProjectPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SocialProject that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialProjectFindFirstOrThrowArgs} args - Arguments to find a SocialProject
+     * @example
+     * // Get one SocialProject
+     * const socialProject = await prisma.socialProject.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SocialProjectFindFirstOrThrowArgs>(args?: SelectSubset<T, SocialProjectFindFirstOrThrowArgs<ExtArgs>>): Prisma__SocialProjectClient<$Result.GetResult<Prisma.$SocialProjectPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SocialProjects that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialProjectFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SocialProjects
+     * const socialProjects = await prisma.socialProject.findMany()
+     * 
+     * // Get first 10 SocialProjects
+     * const socialProjects = await prisma.socialProject.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const socialProjectWithIdOnly = await prisma.socialProject.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SocialProjectFindManyArgs>(args?: SelectSubset<T, SocialProjectFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SocialProject.
+     * @param {SocialProjectCreateArgs} args - Arguments to create a SocialProject.
+     * @example
+     * // Create one SocialProject
+     * const SocialProject = await prisma.socialProject.create({
+     *   data: {
+     *     // ... data to create a SocialProject
+     *   }
+     * })
+     * 
+     */
+    create<T extends SocialProjectCreateArgs>(args: SelectSubset<T, SocialProjectCreateArgs<ExtArgs>>): Prisma__SocialProjectClient<$Result.GetResult<Prisma.$SocialProjectPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SocialProjects.
+     * @param {SocialProjectCreateManyArgs} args - Arguments to create many SocialProjects.
+     * @example
+     * // Create many SocialProjects
+     * const socialProject = await prisma.socialProject.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SocialProjectCreateManyArgs>(args?: SelectSubset<T, SocialProjectCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SocialProjects and returns the data saved in the database.
+     * @param {SocialProjectCreateManyAndReturnArgs} args - Arguments to create many SocialProjects.
+     * @example
+     * // Create many SocialProjects
+     * const socialProject = await prisma.socialProject.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SocialProjects and only return the `id`
+     * const socialProjectWithIdOnly = await prisma.socialProject.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SocialProjectCreateManyAndReturnArgs>(args?: SelectSubset<T, SocialProjectCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialProjectPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SocialProject.
+     * @param {SocialProjectDeleteArgs} args - Arguments to delete one SocialProject.
+     * @example
+     * // Delete one SocialProject
+     * const SocialProject = await prisma.socialProject.delete({
+     *   where: {
+     *     // ... filter to delete one SocialProject
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SocialProjectDeleteArgs>(args: SelectSubset<T, SocialProjectDeleteArgs<ExtArgs>>): Prisma__SocialProjectClient<$Result.GetResult<Prisma.$SocialProjectPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SocialProject.
+     * @param {SocialProjectUpdateArgs} args - Arguments to update one SocialProject.
+     * @example
+     * // Update one SocialProject
+     * const socialProject = await prisma.socialProject.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SocialProjectUpdateArgs>(args: SelectSubset<T, SocialProjectUpdateArgs<ExtArgs>>): Prisma__SocialProjectClient<$Result.GetResult<Prisma.$SocialProjectPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SocialProjects.
+     * @param {SocialProjectDeleteManyArgs} args - Arguments to filter SocialProjects to delete.
+     * @example
+     * // Delete a few SocialProjects
+     * const { count } = await prisma.socialProject.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SocialProjectDeleteManyArgs>(args?: SelectSubset<T, SocialProjectDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SocialProjects.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialProjectUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SocialProjects
+     * const socialProject = await prisma.socialProject.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SocialProjectUpdateManyArgs>(args: SelectSubset<T, SocialProjectUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SocialProjects and returns the data updated in the database.
+     * @param {SocialProjectUpdateManyAndReturnArgs} args - Arguments to update many SocialProjects.
+     * @example
+     * // Update many SocialProjects
+     * const socialProject = await prisma.socialProject.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SocialProjects and only return the `id`
+     * const socialProjectWithIdOnly = await prisma.socialProject.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SocialProjectUpdateManyAndReturnArgs>(args: SelectSubset<T, SocialProjectUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialProjectPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SocialProject.
+     * @param {SocialProjectUpsertArgs} args - Arguments to update or create a SocialProject.
+     * @example
+     * // Update or create a SocialProject
+     * const socialProject = await prisma.socialProject.upsert({
+     *   create: {
+     *     // ... data to create a SocialProject
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SocialProject we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SocialProjectUpsertArgs>(args: SelectSubset<T, SocialProjectUpsertArgs<ExtArgs>>): Prisma__SocialProjectClient<$Result.GetResult<Prisma.$SocialProjectPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SocialProjects.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialProjectCountArgs} args - Arguments to filter SocialProjects to count.
+     * @example
+     * // Count the number of SocialProjects
+     * const count = await prisma.socialProject.count({
+     *   where: {
+     *     // ... the filter for the SocialProjects we want to count
+     *   }
+     * })
+    **/
+    count<T extends SocialProjectCountArgs>(
+      args?: Subset<T, SocialProjectCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SocialProjectCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SocialProject.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialProjectAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SocialProjectAggregateArgs>(args: Subset<T, SocialProjectAggregateArgs>): Prisma.PrismaPromise<GetSocialProjectAggregateType<T>>
+
+    /**
+     * Group by SocialProject.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialProjectGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SocialProjectGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SocialProjectGroupByArgs['orderBy'] }
+        : { orderBy?: SocialProjectGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SocialProjectGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSocialProjectGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SocialProject model
+   */
+  readonly fields: SocialProjectFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SocialProject.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SocialProjectClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -19783,404 +16439,2713 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Resource model
+   * Fields of the SocialProject model
    */
-  interface ResourceFieldRefs {
-    readonly id: FieldRef<"Resource", 'String'>
-    readonly slug: FieldRef<"Resource", 'String'>
-    readonly name: FieldRef<"Resource", 'String'>
-    readonly category: FieldRef<"Resource", 'String'>
-    readonly verified: FieldRef<"Resource", 'Boolean'>
-    readonly shortDescription: FieldRef<"Resource", 'String'>
-    readonly officialUrl: FieldRef<"Resource", 'String'>
-    readonly platforms: FieldRef<"Resource", 'String'>
-    readonly tags: FieldRef<"Resource", 'String'>
-    readonly heroTitle: FieldRef<"Resource", 'String'>
-    readonly heroDescription: FieldRef<"Resource", 'String'>
-    readonly heroGradient: FieldRef<"Resource", 'String'>
-    readonly whyGoodTitle: FieldRef<"Resource", 'String'>
-    readonly whyGoodContent: FieldRef<"Resource", 'String'>
-    readonly features: FieldRef<"Resource", 'String'>
-    readonly howToStartTitle: FieldRef<"Resource", 'String'>
-    readonly howToStartSteps: FieldRef<"Resource", 'String'>
-    readonly pros: FieldRef<"Resource", 'String'>
-    readonly cons: FieldRef<"Resource", 'String'>
-    readonly faq: FieldRef<"Resource", 'String'>
-    readonly securityTips: FieldRef<"Resource", 'String'>
-    readonly securityAudit: FieldRef<"Resource", 'String'>
-    readonly securityAuditDate: FieldRef<"Resource", 'DateTime'>
-    readonly auditedByCommunity: FieldRef<"Resource", 'Boolean'>
-    readonly toolConfig: FieldRef<"Resource", 'String'>
-    readonly interactiveType: FieldRef<"Resource", 'String'>
-    readonly showCompatibleWallets: FieldRef<"Resource", 'Boolean'>
-    readonly relatedResources: FieldRef<"Resource", 'String'>
-    readonly views: FieldRef<"Resource", 'Int'>
-    readonly createdAt: FieldRef<"Resource", 'DateTime'>
-    readonly updatedAt: FieldRef<"Resource", 'DateTime'>
-    readonly lastVerified: FieldRef<"Resource", 'DateTime'>
+  interface SocialProjectFieldRefs {
+    readonly id: FieldRef<"SocialProject", 'String'>
+    readonly slug: FieldRef<"SocialProject", 'String'>
+    readonly name: FieldRef<"SocialProject", 'String'>
+    readonly description: FieldRef<"SocialProject", 'String'>
+    readonly longDescription: FieldRef<"SocialProject", 'String'>
+    readonly fundingGoal: FieldRef<"SocialProject", 'Float'>
+    readonly currentFunding: FieldRef<"SocialProject", 'Float'>
+    readonly currency: FieldRef<"SocialProject", 'String'>
+    readonly walletAddress: FieldRef<"SocialProject", 'String'>
+    readonly category: FieldRef<"SocialProject", 'ProjectCategory'>
+    readonly location: FieldRef<"SocialProject", 'String'>
+    readonly tags: FieldRef<"SocialProject", 'String'>
+    readonly verified: FieldRef<"SocialProject", 'Boolean'>
+    readonly active: FieldRef<"SocialProject", 'Boolean'>
+    readonly featured: FieldRef<"SocialProject", 'Boolean'>
+    readonly startDate: FieldRef<"SocialProject", 'DateTime'>
+    readonly endDate: FieldRef<"SocialProject", 'DateTime'>
+    readonly supporters: FieldRef<"SocialProject", 'Int'>
+    readonly views: FieldRef<"SocialProject", 'Int'>
+    readonly coverImage: FieldRef<"SocialProject", 'String'>
+    readonly gallery: FieldRef<"SocialProject", 'String'>
+    readonly organizer: FieldRef<"SocialProject", 'String'>
+    readonly organizerEmail: FieldRef<"SocialProject", 'String'>
+    readonly organizerPhone: FieldRef<"SocialProject", 'String'>
+    readonly createdAt: FieldRef<"SocialProject", 'DateTime'>
+    readonly updatedAt: FieldRef<"SocialProject", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Resource findUnique
+   * SocialProject findUnique
    */
-  export type ResourceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Resource
+     * Select specific fields to fetch from the SocialProject
      */
-    select?: ResourceSelect<ExtArgs> | null
+    select?: SocialProjectSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Resource
+     * Omit specific fields from the SocialProject
      */
-    omit?: ResourceOmit<ExtArgs> | null
+    omit?: SocialProjectOmit<ExtArgs> | null
     /**
-     * Filter, which Resource to fetch.
+     * Filter, which SocialProject to fetch.
      */
-    where: ResourceWhereUniqueInput
+    where: SocialProjectWhereUniqueInput
   }
 
   /**
-   * Resource findUniqueOrThrow
+   * SocialProject findUniqueOrThrow
    */
-  export type ResourceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Resource
+     * Select specific fields to fetch from the SocialProject
      */
-    select?: ResourceSelect<ExtArgs> | null
+    select?: SocialProjectSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Resource
+     * Omit specific fields from the SocialProject
      */
-    omit?: ResourceOmit<ExtArgs> | null
+    omit?: SocialProjectOmit<ExtArgs> | null
     /**
-     * Filter, which Resource to fetch.
+     * Filter, which SocialProject to fetch.
      */
-    where: ResourceWhereUniqueInput
+    where: SocialProjectWhereUniqueInput
   }
 
   /**
-   * Resource findFirst
+   * SocialProject findFirst
    */
-  export type ResourceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Resource
+     * Select specific fields to fetch from the SocialProject
      */
-    select?: ResourceSelect<ExtArgs> | null
+    select?: SocialProjectSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Resource
+     * Omit specific fields from the SocialProject
      */
-    omit?: ResourceOmit<ExtArgs> | null
+    omit?: SocialProjectOmit<ExtArgs> | null
     /**
-     * Filter, which Resource to fetch.
+     * Filter, which SocialProject to fetch.
      */
-    where?: ResourceWhereInput
+    where?: SocialProjectWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Resources to fetch.
+     * Determine the order of SocialProjects to fetch.
      */
-    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    orderBy?: SocialProjectOrderByWithRelationInput | SocialProjectOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Resources.
+     * Sets the position for searching for SocialProjects.
      */
-    cursor?: ResourceWhereUniqueInput
+    cursor?: SocialProjectWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Resources from the position of the cursor.
+     * Take `±n` SocialProjects from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Resources.
+     * Skip the first `n` SocialProjects.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Resources.
+     * Filter by unique combinations of SocialProjects.
      */
-    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+    distinct?: SocialProjectScalarFieldEnum | SocialProjectScalarFieldEnum[]
   }
 
   /**
-   * Resource findFirstOrThrow
+   * SocialProject findFirstOrThrow
    */
-  export type ResourceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Resource
+     * Select specific fields to fetch from the SocialProject
      */
-    select?: ResourceSelect<ExtArgs> | null
+    select?: SocialProjectSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Resource
+     * Omit specific fields from the SocialProject
      */
-    omit?: ResourceOmit<ExtArgs> | null
+    omit?: SocialProjectOmit<ExtArgs> | null
     /**
-     * Filter, which Resource to fetch.
+     * Filter, which SocialProject to fetch.
      */
-    where?: ResourceWhereInput
+    where?: SocialProjectWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Resources to fetch.
+     * Determine the order of SocialProjects to fetch.
      */
-    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    orderBy?: SocialProjectOrderByWithRelationInput | SocialProjectOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Resources.
+     * Sets the position for searching for SocialProjects.
      */
-    cursor?: ResourceWhereUniqueInput
+    cursor?: SocialProjectWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Resources from the position of the cursor.
+     * Take `±n` SocialProjects from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Resources.
+     * Skip the first `n` SocialProjects.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Resources.
+     * Filter by unique combinations of SocialProjects.
      */
-    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+    distinct?: SocialProjectScalarFieldEnum | SocialProjectScalarFieldEnum[]
   }
 
   /**
-   * Resource findMany
+   * SocialProject findMany
    */
-  export type ResourceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Resource
+     * Select specific fields to fetch from the SocialProject
      */
-    select?: ResourceSelect<ExtArgs> | null
+    select?: SocialProjectSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Resource
+     * Omit specific fields from the SocialProject
      */
-    omit?: ResourceOmit<ExtArgs> | null
+    omit?: SocialProjectOmit<ExtArgs> | null
     /**
-     * Filter, which Resources to fetch.
+     * Filter, which SocialProjects to fetch.
      */
-    where?: ResourceWhereInput
+    where?: SocialProjectWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Resources to fetch.
+     * Determine the order of SocialProjects to fetch.
      */
-    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    orderBy?: SocialProjectOrderByWithRelationInput | SocialProjectOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Resources.
+     * Sets the position for listing SocialProjects.
      */
-    cursor?: ResourceWhereUniqueInput
+    cursor?: SocialProjectWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Resources from the position of the cursor.
+     * Take `±n` SocialProjects from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Resources.
+     * Skip the first `n` SocialProjects.
      */
     skip?: number
-    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+    distinct?: SocialProjectScalarFieldEnum | SocialProjectScalarFieldEnum[]
   }
 
   /**
-   * Resource create
+   * SocialProject create
    */
-  export type ResourceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Resource
+     * Select specific fields to fetch from the SocialProject
      */
-    select?: ResourceSelect<ExtArgs> | null
+    select?: SocialProjectSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Resource
+     * Omit specific fields from the SocialProject
      */
-    omit?: ResourceOmit<ExtArgs> | null
+    omit?: SocialProjectOmit<ExtArgs> | null
     /**
-     * The data needed to create a Resource.
+     * The data needed to create a SocialProject.
      */
-    data: XOR<ResourceCreateInput, ResourceUncheckedCreateInput>
+    data: XOR<SocialProjectCreateInput, SocialProjectUncheckedCreateInput>
   }
 
   /**
-   * Resource createMany
+   * SocialProject createMany
    */
-  export type ResourceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Resources.
+     * The data used to create many SocialProjects.
      */
-    data: ResourceCreateManyInput | ResourceCreateManyInput[]
+    data: SocialProjectCreateManyInput | SocialProjectCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Resource createManyAndReturn
+   * SocialProject createManyAndReturn
    */
-  export type ResourceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Resource
+     * Select specific fields to fetch from the SocialProject
      */
-    select?: ResourceSelectCreateManyAndReturn<ExtArgs> | null
+    select?: SocialProjectSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Resource
+     * Omit specific fields from the SocialProject
      */
-    omit?: ResourceOmit<ExtArgs> | null
+    omit?: SocialProjectOmit<ExtArgs> | null
     /**
-     * The data used to create many Resources.
+     * The data used to create many SocialProjects.
      */
-    data: ResourceCreateManyInput | ResourceCreateManyInput[]
+    data: SocialProjectCreateManyInput | SocialProjectCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Resource update
+   * SocialProject update
    */
-  export type ResourceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Resource
+     * Select specific fields to fetch from the SocialProject
      */
-    select?: ResourceSelect<ExtArgs> | null
+    select?: SocialProjectSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Resource
+     * Omit specific fields from the SocialProject
      */
-    omit?: ResourceOmit<ExtArgs> | null
+    omit?: SocialProjectOmit<ExtArgs> | null
     /**
-     * The data needed to update a Resource.
+     * The data needed to update a SocialProject.
      */
-    data: XOR<ResourceUpdateInput, ResourceUncheckedUpdateInput>
+    data: XOR<SocialProjectUpdateInput, SocialProjectUncheckedUpdateInput>
     /**
-     * Choose, which Resource to update.
+     * Choose, which SocialProject to update.
      */
-    where: ResourceWhereUniqueInput
+    where: SocialProjectWhereUniqueInput
   }
 
   /**
-   * Resource updateMany
+   * SocialProject updateMany
    */
-  export type ResourceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Resources.
+     * The data used to update SocialProjects.
      */
-    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyInput>
+    data: XOR<SocialProjectUpdateManyMutationInput, SocialProjectUncheckedUpdateManyInput>
     /**
-     * Filter which Resources to update
+     * Filter which SocialProjects to update
      */
-    where?: ResourceWhereInput
+    where?: SocialProjectWhereInput
     /**
-     * Limit how many Resources to update.
+     * Limit how many SocialProjects to update.
      */
     limit?: number
   }
 
   /**
-   * Resource updateManyAndReturn
+   * SocialProject updateManyAndReturn
    */
-  export type ResourceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Resource
+     * Select specific fields to fetch from the SocialProject
      */
-    select?: ResourceSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: SocialProjectSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Resource
+     * Omit specific fields from the SocialProject
      */
-    omit?: ResourceOmit<ExtArgs> | null
+    omit?: SocialProjectOmit<ExtArgs> | null
     /**
-     * The data used to update Resources.
+     * The data used to update SocialProjects.
      */
-    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyInput>
+    data: XOR<SocialProjectUpdateManyMutationInput, SocialProjectUncheckedUpdateManyInput>
     /**
-     * Filter which Resources to update
+     * Filter which SocialProjects to update
      */
-    where?: ResourceWhereInput
+    where?: SocialProjectWhereInput
     /**
-     * Limit how many Resources to update.
+     * Limit how many SocialProjects to update.
      */
     limit?: number
   }
 
   /**
-   * Resource upsert
+   * SocialProject upsert
    */
-  export type ResourceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Resource
+     * Select specific fields to fetch from the SocialProject
      */
-    select?: ResourceSelect<ExtArgs> | null
+    select?: SocialProjectSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Resource
+     * Omit specific fields from the SocialProject
      */
-    omit?: ResourceOmit<ExtArgs> | null
+    omit?: SocialProjectOmit<ExtArgs> | null
     /**
-     * The filter to search for the Resource to update in case it exists.
+     * The filter to search for the SocialProject to update in case it exists.
      */
-    where: ResourceWhereUniqueInput
+    where: SocialProjectWhereUniqueInput
     /**
-     * In case the Resource found by the `where` argument doesn't exist, create a new Resource with this data.
+     * In case the SocialProject found by the `where` argument doesn't exist, create a new SocialProject with this data.
      */
-    create: XOR<ResourceCreateInput, ResourceUncheckedCreateInput>
+    create: XOR<SocialProjectCreateInput, SocialProjectUncheckedCreateInput>
     /**
-     * In case the Resource was found with the provided `where` argument, update it with this data.
+     * In case the SocialProject was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ResourceUpdateInput, ResourceUncheckedUpdateInput>
+    update: XOR<SocialProjectUpdateInput, SocialProjectUncheckedUpdateInput>
   }
 
   /**
-   * Resource delete
+   * SocialProject delete
    */
-  export type ResourceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Resource
+     * Select specific fields to fetch from the SocialProject
      */
-    select?: ResourceSelect<ExtArgs> | null
+    select?: SocialProjectSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Resource
+     * Omit specific fields from the SocialProject
      */
-    omit?: ResourceOmit<ExtArgs> | null
+    omit?: SocialProjectOmit<ExtArgs> | null
     /**
-     * Filter which Resource to delete.
+     * Filter which SocialProject to delete.
      */
-    where: ResourceWhereUniqueInput
+    where: SocialProjectWhereUniqueInput
   }
 
   /**
-   * Resource deleteMany
+   * SocialProject deleteMany
    */
-  export type ResourceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Resources to delete
+     * Filter which SocialProjects to delete
      */
-    where?: ResourceWhereInput
+    where?: SocialProjectWhereInput
     /**
-     * Limit how many Resources to delete.
+     * Limit how many SocialProjects to delete.
      */
     limit?: number
   }
 
   /**
-   * Resource without action
+   * SocialProject without action
    */
-  export type ResourceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SocialProjectDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Resource
+     * Select specific fields to fetch from the SocialProject
      */
-    select?: ResourceSelect<ExtArgs> | null
+    select?: SocialProjectSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Resource
+     * Omit specific fields from the SocialProject
      */
-    omit?: ResourceOmit<ExtArgs> | null
+    omit?: SocialProjectOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProjectMap
+   */
+
+  export type AggregateProjectMap = {
+    _count: ProjectMapCountAggregateOutputType | null
+    _avg: ProjectMapAvgAggregateOutputType | null
+    _sum: ProjectMapSumAggregateOutputType | null
+    _min: ProjectMapMinAggregateOutputType | null
+    _max: ProjectMapMaxAggregateOutputType | null
+  }
+
+  export type ProjectMapAvgAggregateOutputType = {
+    latitude: number | null
+    longitude: number | null
+  }
+
+  export type ProjectMapSumAggregateOutputType = {
+    latitude: number | null
+    longitude: number | null
+  }
+
+  export type ProjectMapMinAggregateOutputType = {
+    id: string | null
+    projectId: string | null
+    latitude: number | null
+    longitude: number | null
+    address: string | null
+    city: string | null
+    state: string | null
+    country: string | null
+    markerColor: string | null
+    markerIcon: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProjectMapMaxAggregateOutputType = {
+    id: string | null
+    projectId: string | null
+    latitude: number | null
+    longitude: number | null
+    address: string | null
+    city: string | null
+    state: string | null
+    country: string | null
+    markerColor: string | null
+    markerIcon: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProjectMapCountAggregateOutputType = {
+    id: number
+    projectId: number
+    latitude: number
+    longitude: number
+    address: number
+    city: number
+    state: number
+    country: number
+    markerColor: number
+    markerIcon: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProjectMapAvgAggregateInputType = {
+    latitude?: true
+    longitude?: true
+  }
+
+  export type ProjectMapSumAggregateInputType = {
+    latitude?: true
+    longitude?: true
+  }
+
+  export type ProjectMapMinAggregateInputType = {
+    id?: true
+    projectId?: true
+    latitude?: true
+    longitude?: true
+    address?: true
+    city?: true
+    state?: true
+    country?: true
+    markerColor?: true
+    markerIcon?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProjectMapMaxAggregateInputType = {
+    id?: true
+    projectId?: true
+    latitude?: true
+    longitude?: true
+    address?: true
+    city?: true
+    state?: true
+    country?: true
+    markerColor?: true
+    markerIcon?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProjectMapCountAggregateInputType = {
+    id?: true
+    projectId?: true
+    latitude?: true
+    longitude?: true
+    address?: true
+    city?: true
+    state?: true
+    country?: true
+    markerColor?: true
+    markerIcon?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProjectMapAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectMap to aggregate.
+     */
+    where?: ProjectMapWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectMaps to fetch.
+     */
+    orderBy?: ProjectMapOrderByWithRelationInput | ProjectMapOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProjectMapWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectMaps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectMaps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProjectMaps
+    **/
+    _count?: true | ProjectMapCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProjectMapAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProjectMapSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProjectMapMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProjectMapMaxAggregateInputType
+  }
+
+  export type GetProjectMapAggregateType<T extends ProjectMapAggregateArgs> = {
+        [P in keyof T & keyof AggregateProjectMap]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProjectMap[P]>
+      : GetScalarType<T[P], AggregateProjectMap[P]>
+  }
+
+
+
+
+  export type ProjectMapGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectMapWhereInput
+    orderBy?: ProjectMapOrderByWithAggregationInput | ProjectMapOrderByWithAggregationInput[]
+    by: ProjectMapScalarFieldEnum[] | ProjectMapScalarFieldEnum
+    having?: ProjectMapScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProjectMapCountAggregateInputType | true
+    _avg?: ProjectMapAvgAggregateInputType
+    _sum?: ProjectMapSumAggregateInputType
+    _min?: ProjectMapMinAggregateInputType
+    _max?: ProjectMapMaxAggregateInputType
+  }
+
+  export type ProjectMapGroupByOutputType = {
+    id: string
+    projectId: string
+    latitude: number
+    longitude: number
+    address: string | null
+    city: string
+    state: string
+    country: string
+    markerColor: string
+    markerIcon: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ProjectMapCountAggregateOutputType | null
+    _avg: ProjectMapAvgAggregateOutputType | null
+    _sum: ProjectMapSumAggregateOutputType | null
+    _min: ProjectMapMinAggregateOutputType | null
+    _max: ProjectMapMaxAggregateOutputType | null
+  }
+
+  type GetProjectMapGroupByPayload<T extends ProjectMapGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProjectMapGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProjectMapGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProjectMapGroupByOutputType[P]>
+            : GetScalarType<T[P], ProjectMapGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProjectMapSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    projectId?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    address?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    markerColor?: boolean
+    markerIcon?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["projectMap"]>
+
+  export type ProjectMapSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    projectId?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    address?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    markerColor?: boolean
+    markerIcon?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["projectMap"]>
+
+  export type ProjectMapSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    projectId?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    address?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    markerColor?: boolean
+    markerIcon?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["projectMap"]>
+
+  export type ProjectMapSelectScalar = {
+    id?: boolean
+    projectId?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    address?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    markerColor?: boolean
+    markerIcon?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProjectMapOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "projectId" | "latitude" | "longitude" | "address" | "city" | "state" | "country" | "markerColor" | "markerIcon" | "createdAt" | "updatedAt", ExtArgs["result"]["projectMap"]>
+
+  export type $ProjectMapPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProjectMap"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      projectId: string
+      latitude: number
+      longitude: number
+      address: string | null
+      city: string
+      state: string
+      country: string
+      markerColor: string
+      markerIcon: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["projectMap"]>
+    composites: {}
+  }
+
+  type ProjectMapGetPayload<S extends boolean | null | undefined | ProjectMapDefaultArgs> = $Result.GetResult<Prisma.$ProjectMapPayload, S>
+
+  type ProjectMapCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProjectMapFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProjectMapCountAggregateInputType | true
+    }
+
+  export interface ProjectMapDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProjectMap'], meta: { name: 'ProjectMap' } }
+    /**
+     * Find zero or one ProjectMap that matches the filter.
+     * @param {ProjectMapFindUniqueArgs} args - Arguments to find a ProjectMap
+     * @example
+     * // Get one ProjectMap
+     * const projectMap = await prisma.projectMap.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProjectMapFindUniqueArgs>(args: SelectSubset<T, ProjectMapFindUniqueArgs<ExtArgs>>): Prisma__ProjectMapClient<$Result.GetResult<Prisma.$ProjectMapPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProjectMap that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProjectMapFindUniqueOrThrowArgs} args - Arguments to find a ProjectMap
+     * @example
+     * // Get one ProjectMap
+     * const projectMap = await prisma.projectMap.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProjectMapFindUniqueOrThrowArgs>(args: SelectSubset<T, ProjectMapFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProjectMapClient<$Result.GetResult<Prisma.$ProjectMapPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectMap that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectMapFindFirstArgs} args - Arguments to find a ProjectMap
+     * @example
+     * // Get one ProjectMap
+     * const projectMap = await prisma.projectMap.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProjectMapFindFirstArgs>(args?: SelectSubset<T, ProjectMapFindFirstArgs<ExtArgs>>): Prisma__ProjectMapClient<$Result.GetResult<Prisma.$ProjectMapPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectMap that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectMapFindFirstOrThrowArgs} args - Arguments to find a ProjectMap
+     * @example
+     * // Get one ProjectMap
+     * const projectMap = await prisma.projectMap.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProjectMapFindFirstOrThrowArgs>(args?: SelectSubset<T, ProjectMapFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProjectMapClient<$Result.GetResult<Prisma.$ProjectMapPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProjectMaps that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectMapFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProjectMaps
+     * const projectMaps = await prisma.projectMap.findMany()
+     * 
+     * // Get first 10 ProjectMaps
+     * const projectMaps = await prisma.projectMap.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const projectMapWithIdOnly = await prisma.projectMap.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProjectMapFindManyArgs>(args?: SelectSubset<T, ProjectMapFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectMapPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProjectMap.
+     * @param {ProjectMapCreateArgs} args - Arguments to create a ProjectMap.
+     * @example
+     * // Create one ProjectMap
+     * const ProjectMap = await prisma.projectMap.create({
+     *   data: {
+     *     // ... data to create a ProjectMap
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProjectMapCreateArgs>(args: SelectSubset<T, ProjectMapCreateArgs<ExtArgs>>): Prisma__ProjectMapClient<$Result.GetResult<Prisma.$ProjectMapPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProjectMaps.
+     * @param {ProjectMapCreateManyArgs} args - Arguments to create many ProjectMaps.
+     * @example
+     * // Create many ProjectMaps
+     * const projectMap = await prisma.projectMap.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProjectMapCreateManyArgs>(args?: SelectSubset<T, ProjectMapCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProjectMaps and returns the data saved in the database.
+     * @param {ProjectMapCreateManyAndReturnArgs} args - Arguments to create many ProjectMaps.
+     * @example
+     * // Create many ProjectMaps
+     * const projectMap = await prisma.projectMap.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProjectMaps and only return the `id`
+     * const projectMapWithIdOnly = await prisma.projectMap.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProjectMapCreateManyAndReturnArgs>(args?: SelectSubset<T, ProjectMapCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectMapPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProjectMap.
+     * @param {ProjectMapDeleteArgs} args - Arguments to delete one ProjectMap.
+     * @example
+     * // Delete one ProjectMap
+     * const ProjectMap = await prisma.projectMap.delete({
+     *   where: {
+     *     // ... filter to delete one ProjectMap
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProjectMapDeleteArgs>(args: SelectSubset<T, ProjectMapDeleteArgs<ExtArgs>>): Prisma__ProjectMapClient<$Result.GetResult<Prisma.$ProjectMapPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProjectMap.
+     * @param {ProjectMapUpdateArgs} args - Arguments to update one ProjectMap.
+     * @example
+     * // Update one ProjectMap
+     * const projectMap = await prisma.projectMap.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProjectMapUpdateArgs>(args: SelectSubset<T, ProjectMapUpdateArgs<ExtArgs>>): Prisma__ProjectMapClient<$Result.GetResult<Prisma.$ProjectMapPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProjectMaps.
+     * @param {ProjectMapDeleteManyArgs} args - Arguments to filter ProjectMaps to delete.
+     * @example
+     * // Delete a few ProjectMaps
+     * const { count } = await prisma.projectMap.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProjectMapDeleteManyArgs>(args?: SelectSubset<T, ProjectMapDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectMaps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectMapUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProjectMaps
+     * const projectMap = await prisma.projectMap.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProjectMapUpdateManyArgs>(args: SelectSubset<T, ProjectMapUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectMaps and returns the data updated in the database.
+     * @param {ProjectMapUpdateManyAndReturnArgs} args - Arguments to update many ProjectMaps.
+     * @example
+     * // Update many ProjectMaps
+     * const projectMap = await prisma.projectMap.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProjectMaps and only return the `id`
+     * const projectMapWithIdOnly = await prisma.projectMap.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProjectMapUpdateManyAndReturnArgs>(args: SelectSubset<T, ProjectMapUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectMapPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProjectMap.
+     * @param {ProjectMapUpsertArgs} args - Arguments to update or create a ProjectMap.
+     * @example
+     * // Update or create a ProjectMap
+     * const projectMap = await prisma.projectMap.upsert({
+     *   create: {
+     *     // ... data to create a ProjectMap
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProjectMap we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProjectMapUpsertArgs>(args: SelectSubset<T, ProjectMapUpsertArgs<ExtArgs>>): Prisma__ProjectMapClient<$Result.GetResult<Prisma.$ProjectMapPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProjectMaps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectMapCountArgs} args - Arguments to filter ProjectMaps to count.
+     * @example
+     * // Count the number of ProjectMaps
+     * const count = await prisma.projectMap.count({
+     *   where: {
+     *     // ... the filter for the ProjectMaps we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProjectMapCountArgs>(
+      args?: Subset<T, ProjectMapCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProjectMapCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProjectMap.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectMapAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProjectMapAggregateArgs>(args: Subset<T, ProjectMapAggregateArgs>): Prisma.PrismaPromise<GetProjectMapAggregateType<T>>
+
+    /**
+     * Group by ProjectMap.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectMapGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProjectMapGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProjectMapGroupByArgs['orderBy'] }
+        : { orderBy?: ProjectMapGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProjectMapGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProjectMapGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProjectMap model
+   */
+  readonly fields: ProjectMapFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProjectMap.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProjectMapClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProjectMap model
+   */
+  interface ProjectMapFieldRefs {
+    readonly id: FieldRef<"ProjectMap", 'String'>
+    readonly projectId: FieldRef<"ProjectMap", 'String'>
+    readonly latitude: FieldRef<"ProjectMap", 'Float'>
+    readonly longitude: FieldRef<"ProjectMap", 'Float'>
+    readonly address: FieldRef<"ProjectMap", 'String'>
+    readonly city: FieldRef<"ProjectMap", 'String'>
+    readonly state: FieldRef<"ProjectMap", 'String'>
+    readonly country: FieldRef<"ProjectMap", 'String'>
+    readonly markerColor: FieldRef<"ProjectMap", 'String'>
+    readonly markerIcon: FieldRef<"ProjectMap", 'String'>
+    readonly createdAt: FieldRef<"ProjectMap", 'DateTime'>
+    readonly updatedAt: FieldRef<"ProjectMap", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProjectMap findUnique
+   */
+  export type ProjectMapFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectMap
+     */
+    select?: ProjectMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectMap
+     */
+    omit?: ProjectMapOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectMap to fetch.
+     */
+    where: ProjectMapWhereUniqueInput
+  }
+
+  /**
+   * ProjectMap findUniqueOrThrow
+   */
+  export type ProjectMapFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectMap
+     */
+    select?: ProjectMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectMap
+     */
+    omit?: ProjectMapOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectMap to fetch.
+     */
+    where: ProjectMapWhereUniqueInput
+  }
+
+  /**
+   * ProjectMap findFirst
+   */
+  export type ProjectMapFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectMap
+     */
+    select?: ProjectMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectMap
+     */
+    omit?: ProjectMapOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectMap to fetch.
+     */
+    where?: ProjectMapWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectMaps to fetch.
+     */
+    orderBy?: ProjectMapOrderByWithRelationInput | ProjectMapOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectMaps.
+     */
+    cursor?: ProjectMapWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectMaps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectMaps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectMaps.
+     */
+    distinct?: ProjectMapScalarFieldEnum | ProjectMapScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectMap findFirstOrThrow
+   */
+  export type ProjectMapFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectMap
+     */
+    select?: ProjectMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectMap
+     */
+    omit?: ProjectMapOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectMap to fetch.
+     */
+    where?: ProjectMapWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectMaps to fetch.
+     */
+    orderBy?: ProjectMapOrderByWithRelationInput | ProjectMapOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectMaps.
+     */
+    cursor?: ProjectMapWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectMaps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectMaps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectMaps.
+     */
+    distinct?: ProjectMapScalarFieldEnum | ProjectMapScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectMap findMany
+   */
+  export type ProjectMapFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectMap
+     */
+    select?: ProjectMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectMap
+     */
+    omit?: ProjectMapOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectMaps to fetch.
+     */
+    where?: ProjectMapWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectMaps to fetch.
+     */
+    orderBy?: ProjectMapOrderByWithRelationInput | ProjectMapOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProjectMaps.
+     */
+    cursor?: ProjectMapWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectMaps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectMaps.
+     */
+    skip?: number
+    distinct?: ProjectMapScalarFieldEnum | ProjectMapScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectMap create
+   */
+  export type ProjectMapCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectMap
+     */
+    select?: ProjectMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectMap
+     */
+    omit?: ProjectMapOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ProjectMap.
+     */
+    data: XOR<ProjectMapCreateInput, ProjectMapUncheckedCreateInput>
+  }
+
+  /**
+   * ProjectMap createMany
+   */
+  export type ProjectMapCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProjectMaps.
+     */
+    data: ProjectMapCreateManyInput | ProjectMapCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectMap createManyAndReturn
+   */
+  export type ProjectMapCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectMap
+     */
+    select?: ProjectMapSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectMap
+     */
+    omit?: ProjectMapOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProjectMaps.
+     */
+    data: ProjectMapCreateManyInput | ProjectMapCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectMap update
+   */
+  export type ProjectMapUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectMap
+     */
+    select?: ProjectMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectMap
+     */
+    omit?: ProjectMapOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ProjectMap.
+     */
+    data: XOR<ProjectMapUpdateInput, ProjectMapUncheckedUpdateInput>
+    /**
+     * Choose, which ProjectMap to update.
+     */
+    where: ProjectMapWhereUniqueInput
+  }
+
+  /**
+   * ProjectMap updateMany
+   */
+  export type ProjectMapUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProjectMaps.
+     */
+    data: XOR<ProjectMapUpdateManyMutationInput, ProjectMapUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectMaps to update
+     */
+    where?: ProjectMapWhereInput
+    /**
+     * Limit how many ProjectMaps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectMap updateManyAndReturn
+   */
+  export type ProjectMapUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectMap
+     */
+    select?: ProjectMapSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectMap
+     */
+    omit?: ProjectMapOmit<ExtArgs> | null
+    /**
+     * The data used to update ProjectMaps.
+     */
+    data: XOR<ProjectMapUpdateManyMutationInput, ProjectMapUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectMaps to update
+     */
+    where?: ProjectMapWhereInput
+    /**
+     * Limit how many ProjectMaps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectMap upsert
+   */
+  export type ProjectMapUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectMap
+     */
+    select?: ProjectMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectMap
+     */
+    omit?: ProjectMapOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ProjectMap to update in case it exists.
+     */
+    where: ProjectMapWhereUniqueInput
+    /**
+     * In case the ProjectMap found by the `where` argument doesn't exist, create a new ProjectMap with this data.
+     */
+    create: XOR<ProjectMapCreateInput, ProjectMapUncheckedCreateInput>
+    /**
+     * In case the ProjectMap was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProjectMapUpdateInput, ProjectMapUncheckedUpdateInput>
+  }
+
+  /**
+   * ProjectMap delete
+   */
+  export type ProjectMapDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectMap
+     */
+    select?: ProjectMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectMap
+     */
+    omit?: ProjectMapOmit<ExtArgs> | null
+    /**
+     * Filter which ProjectMap to delete.
+     */
+    where: ProjectMapWhereUniqueInput
+  }
+
+  /**
+   * ProjectMap deleteMany
+   */
+  export type ProjectMapDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectMaps to delete
+     */
+    where?: ProjectMapWhereInput
+    /**
+     * Limit how many ProjectMaps to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectMap without action
+   */
+  export type ProjectMapDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectMap
+     */
+    select?: ProjectMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectMap
+     */
+    omit?: ProjectMapOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserProgress
+   */
+
+  export type AggregateUserProgress = {
+    _count: UserProgressCountAggregateOutputType | null
+    _avg: UserProgressAvgAggregateOutputType | null
+    _sum: UserProgressSumAggregateOutputType | null
+    _min: UserProgressMinAggregateOutputType | null
+    _max: UserProgressMaxAggregateOutputType | null
+  }
+
+  export type UserProgressAvgAggregateOutputType = {
+    progress: number | null
+    quizScore: number | null
+    quizAttempts: number | null
+  }
+
+  export type UserProgressSumAggregateOutputType = {
+    progress: number | null
+    quizScore: number | null
+    quizAttempts: number | null
+  }
+
+  export type UserProgressMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    articleSlug: string | null
+    completed: boolean | null
+    progress: number | null
+    quizScore: number | null
+    quizAttempts: number | null
+    certificateIssued: boolean | null
+    certificateUrl: string | null
+    startedAt: Date | null
+    completedAt: Date | null
+    lastAccessed: Date | null
+  }
+
+  export type UserProgressMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    articleSlug: string | null
+    completed: boolean | null
+    progress: number | null
+    quizScore: number | null
+    quizAttempts: number | null
+    certificateIssued: boolean | null
+    certificateUrl: string | null
+    startedAt: Date | null
+    completedAt: Date | null
+    lastAccessed: Date | null
+  }
+
+  export type UserProgressCountAggregateOutputType = {
+    id: number
+    userId: number
+    articleSlug: number
+    completed: number
+    progress: number
+    quizScore: number
+    quizAttempts: number
+    certificateIssued: number
+    certificateUrl: number
+    startedAt: number
+    completedAt: number
+    lastAccessed: number
+    _all: number
+  }
+
+
+  export type UserProgressAvgAggregateInputType = {
+    progress?: true
+    quizScore?: true
+    quizAttempts?: true
+  }
+
+  export type UserProgressSumAggregateInputType = {
+    progress?: true
+    quizScore?: true
+    quizAttempts?: true
+  }
+
+  export type UserProgressMinAggregateInputType = {
+    id?: true
+    userId?: true
+    articleSlug?: true
+    completed?: true
+    progress?: true
+    quizScore?: true
+    quizAttempts?: true
+    certificateIssued?: true
+    certificateUrl?: true
+    startedAt?: true
+    completedAt?: true
+    lastAccessed?: true
+  }
+
+  export type UserProgressMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    articleSlug?: true
+    completed?: true
+    progress?: true
+    quizScore?: true
+    quizAttempts?: true
+    certificateIssued?: true
+    certificateUrl?: true
+    startedAt?: true
+    completedAt?: true
+    lastAccessed?: true
+  }
+
+  export type UserProgressCountAggregateInputType = {
+    id?: true
+    userId?: true
+    articleSlug?: true
+    completed?: true
+    progress?: true
+    quizScore?: true
+    quizAttempts?: true
+    certificateIssued?: true
+    certificateUrl?: true
+    startedAt?: true
+    completedAt?: true
+    lastAccessed?: true
+    _all?: true
+  }
+
+  export type UserProgressAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserProgress to aggregate.
+     */
+    where?: UserProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserProgresses to fetch.
+     */
+    orderBy?: UserProgressOrderByWithRelationInput | UserProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserProgresses
+    **/
+    _count?: true | UserProgressCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserProgressAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserProgressSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserProgressMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserProgressMaxAggregateInputType
+  }
+
+  export type GetUserProgressAggregateType<T extends UserProgressAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserProgress]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserProgress[P]>
+      : GetScalarType<T[P], AggregateUserProgress[P]>
+  }
+
+
+
+
+  export type UserProgressGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserProgressWhereInput
+    orderBy?: UserProgressOrderByWithAggregationInput | UserProgressOrderByWithAggregationInput[]
+    by: UserProgressScalarFieldEnum[] | UserProgressScalarFieldEnum
+    having?: UserProgressScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserProgressCountAggregateInputType | true
+    _avg?: UserProgressAvgAggregateInputType
+    _sum?: UserProgressSumAggregateInputType
+    _min?: UserProgressMinAggregateInputType
+    _max?: UserProgressMaxAggregateInputType
+  }
+
+  export type UserProgressGroupByOutputType = {
+    id: string
+    userId: string
+    articleSlug: string
+    completed: boolean
+    progress: number
+    quizScore: number | null
+    quizAttempts: number
+    certificateIssued: boolean
+    certificateUrl: string | null
+    startedAt: Date
+    completedAt: Date | null
+    lastAccessed: Date
+    _count: UserProgressCountAggregateOutputType | null
+    _avg: UserProgressAvgAggregateOutputType | null
+    _sum: UserProgressSumAggregateOutputType | null
+    _min: UserProgressMinAggregateOutputType | null
+    _max: UserProgressMaxAggregateOutputType | null
+  }
+
+  type GetUserProgressGroupByPayload<T extends UserProgressGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserProgressGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserProgressGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserProgressGroupByOutputType[P]>
+            : GetScalarType<T[P], UserProgressGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserProgressSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    articleSlug?: boolean
+    completed?: boolean
+    progress?: boolean
+    quizScore?: boolean
+    quizAttempts?: boolean
+    certificateIssued?: boolean
+    certificateUrl?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    lastAccessed?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userProgress"]>
+
+  export type UserProgressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    articleSlug?: boolean
+    completed?: boolean
+    progress?: boolean
+    quizScore?: boolean
+    quizAttempts?: boolean
+    certificateIssued?: boolean
+    certificateUrl?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    lastAccessed?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userProgress"]>
+
+  export type UserProgressSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    articleSlug?: boolean
+    completed?: boolean
+    progress?: boolean
+    quizScore?: boolean
+    quizAttempts?: boolean
+    certificateIssued?: boolean
+    certificateUrl?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    lastAccessed?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userProgress"]>
+
+  export type UserProgressSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    articleSlug?: boolean
+    completed?: boolean
+    progress?: boolean
+    quizScore?: boolean
+    quizAttempts?: boolean
+    certificateIssued?: boolean
+    certificateUrl?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    lastAccessed?: boolean
+  }
+
+  export type UserProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "articleSlug" | "completed" | "progress" | "quizScore" | "quizAttempts" | "certificateIssued" | "certificateUrl" | "startedAt" | "completedAt" | "lastAccessed", ExtArgs["result"]["userProgress"]>
+  export type UserProgressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserProgressIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserProgressIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserProgressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserProgress"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      articleSlug: string
+      completed: boolean
+      progress: number
+      quizScore: number | null
+      quizAttempts: number
+      certificateIssued: boolean
+      certificateUrl: string | null
+      startedAt: Date
+      completedAt: Date | null
+      lastAccessed: Date
+    }, ExtArgs["result"]["userProgress"]>
+    composites: {}
+  }
+
+  type UserProgressGetPayload<S extends boolean | null | undefined | UserProgressDefaultArgs> = $Result.GetResult<Prisma.$UserProgressPayload, S>
+
+  type UserProgressCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserProgressFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserProgressCountAggregateInputType | true
+    }
+
+  export interface UserProgressDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserProgress'], meta: { name: 'UserProgress' } }
+    /**
+     * Find zero or one UserProgress that matches the filter.
+     * @param {UserProgressFindUniqueArgs} args - Arguments to find a UserProgress
+     * @example
+     * // Get one UserProgress
+     * const userProgress = await prisma.userProgress.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserProgressFindUniqueArgs>(args: SelectSubset<T, UserProgressFindUniqueArgs<ExtArgs>>): Prisma__UserProgressClient<$Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserProgress that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserProgressFindUniqueOrThrowArgs} args - Arguments to find a UserProgress
+     * @example
+     * // Get one UserProgress
+     * const userProgress = await prisma.userProgress.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserProgressFindUniqueOrThrowArgs>(args: SelectSubset<T, UserProgressFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserProgressClient<$Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserProgress that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserProgressFindFirstArgs} args - Arguments to find a UserProgress
+     * @example
+     * // Get one UserProgress
+     * const userProgress = await prisma.userProgress.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserProgressFindFirstArgs>(args?: SelectSubset<T, UserProgressFindFirstArgs<ExtArgs>>): Prisma__UserProgressClient<$Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserProgress that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserProgressFindFirstOrThrowArgs} args - Arguments to find a UserProgress
+     * @example
+     * // Get one UserProgress
+     * const userProgress = await prisma.userProgress.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserProgressFindFirstOrThrowArgs>(args?: SelectSubset<T, UserProgressFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserProgressClient<$Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserProgresses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserProgressFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserProgresses
+     * const userProgresses = await prisma.userProgress.findMany()
+     * 
+     * // Get first 10 UserProgresses
+     * const userProgresses = await prisma.userProgress.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userProgressWithIdOnly = await prisma.userProgress.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserProgressFindManyArgs>(args?: SelectSubset<T, UserProgressFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserProgress.
+     * @param {UserProgressCreateArgs} args - Arguments to create a UserProgress.
+     * @example
+     * // Create one UserProgress
+     * const UserProgress = await prisma.userProgress.create({
+     *   data: {
+     *     // ... data to create a UserProgress
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserProgressCreateArgs>(args: SelectSubset<T, UserProgressCreateArgs<ExtArgs>>): Prisma__UserProgressClient<$Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserProgresses.
+     * @param {UserProgressCreateManyArgs} args - Arguments to create many UserProgresses.
+     * @example
+     * // Create many UserProgresses
+     * const userProgress = await prisma.userProgress.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserProgressCreateManyArgs>(args?: SelectSubset<T, UserProgressCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserProgresses and returns the data saved in the database.
+     * @param {UserProgressCreateManyAndReturnArgs} args - Arguments to create many UserProgresses.
+     * @example
+     * // Create many UserProgresses
+     * const userProgress = await prisma.userProgress.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserProgresses and only return the `id`
+     * const userProgressWithIdOnly = await prisma.userProgress.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserProgressCreateManyAndReturnArgs>(args?: SelectSubset<T, UserProgressCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserProgress.
+     * @param {UserProgressDeleteArgs} args - Arguments to delete one UserProgress.
+     * @example
+     * // Delete one UserProgress
+     * const UserProgress = await prisma.userProgress.delete({
+     *   where: {
+     *     // ... filter to delete one UserProgress
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserProgressDeleteArgs>(args: SelectSubset<T, UserProgressDeleteArgs<ExtArgs>>): Prisma__UserProgressClient<$Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserProgress.
+     * @param {UserProgressUpdateArgs} args - Arguments to update one UserProgress.
+     * @example
+     * // Update one UserProgress
+     * const userProgress = await prisma.userProgress.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserProgressUpdateArgs>(args: SelectSubset<T, UserProgressUpdateArgs<ExtArgs>>): Prisma__UserProgressClient<$Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserProgresses.
+     * @param {UserProgressDeleteManyArgs} args - Arguments to filter UserProgresses to delete.
+     * @example
+     * // Delete a few UserProgresses
+     * const { count } = await prisma.userProgress.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserProgressDeleteManyArgs>(args?: SelectSubset<T, UserProgressDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserProgresses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserProgressUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserProgresses
+     * const userProgress = await prisma.userProgress.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserProgressUpdateManyArgs>(args: SelectSubset<T, UserProgressUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserProgresses and returns the data updated in the database.
+     * @param {UserProgressUpdateManyAndReturnArgs} args - Arguments to update many UserProgresses.
+     * @example
+     * // Update many UserProgresses
+     * const userProgress = await prisma.userProgress.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserProgresses and only return the `id`
+     * const userProgressWithIdOnly = await prisma.userProgress.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserProgressUpdateManyAndReturnArgs>(args: SelectSubset<T, UserProgressUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserProgress.
+     * @param {UserProgressUpsertArgs} args - Arguments to update or create a UserProgress.
+     * @example
+     * // Update or create a UserProgress
+     * const userProgress = await prisma.userProgress.upsert({
+     *   create: {
+     *     // ... data to create a UserProgress
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserProgress we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserProgressUpsertArgs>(args: SelectSubset<T, UserProgressUpsertArgs<ExtArgs>>): Prisma__UserProgressClient<$Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserProgresses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserProgressCountArgs} args - Arguments to filter UserProgresses to count.
+     * @example
+     * // Count the number of UserProgresses
+     * const count = await prisma.userProgress.count({
+     *   where: {
+     *     // ... the filter for the UserProgresses we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserProgressCountArgs>(
+      args?: Subset<T, UserProgressCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserProgressCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserProgress.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserProgressAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserProgressAggregateArgs>(args: Subset<T, UserProgressAggregateArgs>): Prisma.PrismaPromise<GetUserProgressAggregateType<T>>
+
+    /**
+     * Group by UserProgress.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserProgressGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserProgressGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserProgressGroupByArgs['orderBy'] }
+        : { orderBy?: UserProgressGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserProgressGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserProgressGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserProgress model
+   */
+  readonly fields: UserProgressFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserProgress.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserProgressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserProgress model
+   */
+  interface UserProgressFieldRefs {
+    readonly id: FieldRef<"UserProgress", 'String'>
+    readonly userId: FieldRef<"UserProgress", 'String'>
+    readonly articleSlug: FieldRef<"UserProgress", 'String'>
+    readonly completed: FieldRef<"UserProgress", 'Boolean'>
+    readonly progress: FieldRef<"UserProgress", 'Int'>
+    readonly quizScore: FieldRef<"UserProgress", 'Float'>
+    readonly quizAttempts: FieldRef<"UserProgress", 'Int'>
+    readonly certificateIssued: FieldRef<"UserProgress", 'Boolean'>
+    readonly certificateUrl: FieldRef<"UserProgress", 'String'>
+    readonly startedAt: FieldRef<"UserProgress", 'DateTime'>
+    readonly completedAt: FieldRef<"UserProgress", 'DateTime'>
+    readonly lastAccessed: FieldRef<"UserProgress", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserProgress findUnique
+   */
+  export type UserProgressFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserProgress
+     */
+    select?: UserProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserProgress
+     */
+    omit?: UserProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which UserProgress to fetch.
+     */
+    where: UserProgressWhereUniqueInput
+  }
+
+  /**
+   * UserProgress findUniqueOrThrow
+   */
+  export type UserProgressFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserProgress
+     */
+    select?: UserProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserProgress
+     */
+    omit?: UserProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which UserProgress to fetch.
+     */
+    where: UserProgressWhereUniqueInput
+  }
+
+  /**
+   * UserProgress findFirst
+   */
+  export type UserProgressFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserProgress
+     */
+    select?: UserProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserProgress
+     */
+    omit?: UserProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which UserProgress to fetch.
+     */
+    where?: UserProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserProgresses to fetch.
+     */
+    orderBy?: UserProgressOrderByWithRelationInput | UserProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserProgresses.
+     */
+    cursor?: UserProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserProgresses.
+     */
+    distinct?: UserProgressScalarFieldEnum | UserProgressScalarFieldEnum[]
+  }
+
+  /**
+   * UserProgress findFirstOrThrow
+   */
+  export type UserProgressFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserProgress
+     */
+    select?: UserProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserProgress
+     */
+    omit?: UserProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which UserProgress to fetch.
+     */
+    where?: UserProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserProgresses to fetch.
+     */
+    orderBy?: UserProgressOrderByWithRelationInput | UserProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserProgresses.
+     */
+    cursor?: UserProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserProgresses.
+     */
+    distinct?: UserProgressScalarFieldEnum | UserProgressScalarFieldEnum[]
+  }
+
+  /**
+   * UserProgress findMany
+   */
+  export type UserProgressFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserProgress
+     */
+    select?: UserProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserProgress
+     */
+    omit?: UserProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which UserProgresses to fetch.
+     */
+    where?: UserProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserProgresses to fetch.
+     */
+    orderBy?: UserProgressOrderByWithRelationInput | UserProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserProgresses.
+     */
+    cursor?: UserProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserProgresses.
+     */
+    skip?: number
+    distinct?: UserProgressScalarFieldEnum | UserProgressScalarFieldEnum[]
+  }
+
+  /**
+   * UserProgress create
+   */
+  export type UserProgressCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserProgress
+     */
+    select?: UserProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserProgress
+     */
+    omit?: UserProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserProgressInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserProgress.
+     */
+    data: XOR<UserProgressCreateInput, UserProgressUncheckedCreateInput>
+  }
+
+  /**
+   * UserProgress createMany
+   */
+  export type UserProgressCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserProgresses.
+     */
+    data: UserProgressCreateManyInput | UserProgressCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserProgress createManyAndReturn
+   */
+  export type UserProgressCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserProgress
+     */
+    select?: UserProgressSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserProgress
+     */
+    omit?: UserProgressOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserProgresses.
+     */
+    data: UserProgressCreateManyInput | UserProgressCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserProgressIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserProgress update
+   */
+  export type UserProgressUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserProgress
+     */
+    select?: UserProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserProgress
+     */
+    omit?: UserProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserProgressInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserProgress.
+     */
+    data: XOR<UserProgressUpdateInput, UserProgressUncheckedUpdateInput>
+    /**
+     * Choose, which UserProgress to update.
+     */
+    where: UserProgressWhereUniqueInput
+  }
+
+  /**
+   * UserProgress updateMany
+   */
+  export type UserProgressUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserProgresses.
+     */
+    data: XOR<UserProgressUpdateManyMutationInput, UserProgressUncheckedUpdateManyInput>
+    /**
+     * Filter which UserProgresses to update
+     */
+    where?: UserProgressWhereInput
+    /**
+     * Limit how many UserProgresses to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserProgress updateManyAndReturn
+   */
+  export type UserProgressUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserProgress
+     */
+    select?: UserProgressSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserProgress
+     */
+    omit?: UserProgressOmit<ExtArgs> | null
+    /**
+     * The data used to update UserProgresses.
+     */
+    data: XOR<UserProgressUpdateManyMutationInput, UserProgressUncheckedUpdateManyInput>
+    /**
+     * Filter which UserProgresses to update
+     */
+    where?: UserProgressWhereInput
+    /**
+     * Limit how many UserProgresses to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserProgressIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserProgress upsert
+   */
+  export type UserProgressUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserProgress
+     */
+    select?: UserProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserProgress
+     */
+    omit?: UserProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserProgressInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserProgress to update in case it exists.
+     */
+    where: UserProgressWhereUniqueInput
+    /**
+     * In case the UserProgress found by the `where` argument doesn't exist, create a new UserProgress with this data.
+     */
+    create: XOR<UserProgressCreateInput, UserProgressUncheckedCreateInput>
+    /**
+     * In case the UserProgress was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserProgressUpdateInput, UserProgressUncheckedUpdateInput>
+  }
+
+  /**
+   * UserProgress delete
+   */
+  export type UserProgressDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserProgress
+     */
+    select?: UserProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserProgress
+     */
+    omit?: UserProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserProgressInclude<ExtArgs> | null
+    /**
+     * Filter which UserProgress to delete.
+     */
+    where: UserProgressWhereUniqueInput
+  }
+
+  /**
+   * UserProgress deleteMany
+   */
+  export type UserProgressDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserProgresses to delete
+     */
+    where?: UserProgressWhereInput
+    /**
+     * Limit how many UserProgresses to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserProgress without action
+   */
+  export type UserProgressDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserProgress
+     */
+    select?: UserProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserProgress
+     */
+    omit?: UserProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserProgressInclude<ExtArgs> | null
   }
 
 
@@ -20243,108 +19208,85 @@ export namespace Prisma {
     password: 'password',
     image: 'image',
     role: 'role',
-    points: 'points',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    deletedAt: 'deletedAt'
+    points: 'points',
+    badges: 'badges'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-  export const CategoryScalarFieldEnum: {
-    id: 'id',
-    slug: 'slug',
-    name: 'name',
-    description: 'description',
-    type: 'type',
-    parentId: 'parentId',
-    icon: 'icon',
-    color: 'color',
-    order: 'order',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
-
-
-  export const TagScalarFieldEnum: {
-    id: 'id',
-    slug: 'slug',
-    name: 'name',
-    usageCount: 'usageCount',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
-
-
   export const ArticleScalarFieldEnum: {
     id: 'id',
-    slug: 'slug',
     title: 'title',
-    excerpt: 'excerpt',
+    slug: 'slug',
     content: 'content',
     type: 'type',
-    status: 'status',
-    readTime: 'readTime',
-    viewCount: 'viewCount',
+    excerpt: 'excerpt',
+    published: 'published',
     authorId: 'authorId',
-    categoryId: 'categoryId',
+    category: 'category',
+    tags: 'tags',
     sentiment: 'sentiment',
     factCheckScore: 'factCheckScore',
+    factCheckSources: 'factCheckSources',
     factCheckDate: 'factCheckDate',
     factCheckStatus: 'factCheckStatus',
     level: 'level',
     contentType: 'contentType',
+    readTime: 'readTime',
     warningLevel: 'warningLevel',
+    securityTips: 'securityTips',
     courseSequence: 'courseSequence',
+    relatedArticles: 'relatedArticles',
     projectHighlight: 'projectHighlight',
     coverImage: 'coverImage',
     coverImageAlt: 'coverImageAlt',
+    quizData: 'quizData',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    publishedAt: 'publishedAt',
-    deletedAt: 'deletedAt'
+    updatedAt: 'updatedAt'
   };
 
   export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
 
 
-  export const ArticleTagScalarFieldEnum: {
-    articleId: 'articleId',
-    tagId: 'tagId',
-    createdAt: 'createdAt'
-  };
-
-  export type ArticleTagScalarFieldEnum = (typeof ArticleTagScalarFieldEnum)[keyof typeof ArticleTagScalarFieldEnum]
-
-
-  export const ArticleRelationScalarFieldEnum: {
-    fromArticleId: 'fromArticleId',
-    toArticleId: 'toArticleId',
-    relationType: 'relationType',
-    order: 'order',
-    createdAt: 'createdAt'
-  };
-
-  export type ArticleRelationScalarFieldEnum = (typeof ArticleRelationScalarFieldEnum)[keyof typeof ArticleRelationScalarFieldEnum]
-
-
-  export const CitationScalarFieldEnum: {
+  export const ResourceScalarFieldEnum: {
     id: 'id',
-    url: 'url',
-    title: 'title',
-    domain: 'domain',
-    articleId: 'articleId',
-    order: 'order',
+    slug: 'slug',
+    name: 'name',
+    category: 'category',
     verified: 'verified',
-    createdAt: 'createdAt'
+    shortDescription: 'shortDescription',
+    officialUrl: 'officialUrl',
+    platforms: 'platforms',
+    tags: 'tags',
+    heroTitle: 'heroTitle',
+    heroDescription: 'heroDescription',
+    heroGradient: 'heroGradient',
+    whyGoodTitle: 'whyGoodTitle',
+    whyGoodContent: 'whyGoodContent',
+    features: 'features',
+    howToStartTitle: 'howToStartTitle',
+    howToStartSteps: 'howToStartSteps',
+    pros: 'pros',
+    cons: 'cons',
+    faq: 'faq',
+    securityTips: 'securityTips',
+    securityAudit: 'securityAudit',
+    securityAuditDate: 'securityAuditDate',
+    auditedByCommunity: 'auditedByCommunity',
+    toolConfig: 'toolConfig',
+    interactiveType: 'interactiveType',
+    showCompatibleWallets: 'showCompatibleWallets',
+    relatedResources: 'relatedResources',
+    views: 'views',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    lastVerified: 'lastVerified'
   };
 
-  export type CitationScalarFieldEnum = (typeof CitationScalarFieldEnum)[keyof typeof CitationScalarFieldEnum]
+  export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typeof ResourceScalarFieldEnum]
 
 
   export const CryptocurrencyScalarFieldEnum: {
@@ -20438,42 +19380,92 @@ export namespace Prisma {
   export type CopilotReportScalarFieldEnum = (typeof CopilotReportScalarFieldEnum)[keyof typeof CopilotReportScalarFieldEnum]
 
 
-  export const ResourceScalarFieldEnum: {
+  export const CommunityStoryScalarFieldEnum: {
+    id: 'id',
+    slug: 'slug',
+    authorName: 'authorName',
+    authorAvatar: 'authorAvatar',
+    userId: 'userId',
+    title: 'title',
+    content: 'content',
+    category: 'category',
+    likes: 'likes',
+    verified: 'verified',
+    featured: 'featured',
+    published: 'published',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CommunityStoryScalarFieldEnum = (typeof CommunityStoryScalarFieldEnum)[keyof typeof CommunityStoryScalarFieldEnum]
+
+
+  export const SocialProjectScalarFieldEnum: {
     id: 'id',
     slug: 'slug',
     name: 'name',
+    description: 'description',
+    longDescription: 'longDescription',
+    fundingGoal: 'fundingGoal',
+    currentFunding: 'currentFunding',
+    currency: 'currency',
+    walletAddress: 'walletAddress',
     category: 'category',
-    verified: 'verified',
-    shortDescription: 'shortDescription',
-    officialUrl: 'officialUrl',
-    platforms: 'platforms',
+    location: 'location',
     tags: 'tags',
-    heroTitle: 'heroTitle',
-    heroDescription: 'heroDescription',
-    heroGradient: 'heroGradient',
-    whyGoodTitle: 'whyGoodTitle',
-    whyGoodContent: 'whyGoodContent',
-    features: 'features',
-    howToStartTitle: 'howToStartTitle',
-    howToStartSteps: 'howToStartSteps',
-    pros: 'pros',
-    cons: 'cons',
-    faq: 'faq',
-    securityTips: 'securityTips',
-    securityAudit: 'securityAudit',
-    securityAuditDate: 'securityAuditDate',
-    auditedByCommunity: 'auditedByCommunity',
-    toolConfig: 'toolConfig',
-    interactiveType: 'interactiveType',
-    showCompatibleWallets: 'showCompatibleWallets',
-    relatedResources: 'relatedResources',
+    verified: 'verified',
+    active: 'active',
+    featured: 'featured',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    supporters: 'supporters',
     views: 'views',
+    coverImage: 'coverImage',
+    gallery: 'gallery',
+    organizer: 'organizer',
+    organizerEmail: 'organizerEmail',
+    organizerPhone: 'organizerPhone',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    lastVerified: 'lastVerified'
+    updatedAt: 'updatedAt'
   };
 
-  export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typeof ResourceScalarFieldEnum]
+  export type SocialProjectScalarFieldEnum = (typeof SocialProjectScalarFieldEnum)[keyof typeof SocialProjectScalarFieldEnum]
+
+
+  export const ProjectMapScalarFieldEnum: {
+    id: 'id',
+    projectId: 'projectId',
+    latitude: 'latitude',
+    longitude: 'longitude',
+    address: 'address',
+    city: 'city',
+    state: 'state',
+    country: 'country',
+    markerColor: 'markerColor',
+    markerIcon: 'markerIcon',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProjectMapScalarFieldEnum = (typeof ProjectMapScalarFieldEnum)[keyof typeof ProjectMapScalarFieldEnum]
+
+
+  export const UserProgressScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    articleSlug: 'articleSlug',
+    completed: 'completed',
+    progress: 'progress',
+    quizScore: 'quizScore',
+    quizAttempts: 'quizAttempts',
+    certificateIssued: 'certificateIssued',
+    certificateUrl: 'certificateUrl',
+    startedAt: 'startedAt',
+    completedAt: 'completedAt',
+    lastAccessed: 'lastAccessed'
+  };
+
+  export type UserProgressScalarFieldEnum = (typeof UserProgressScalarFieldEnum)[keyof typeof UserProgressScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -20562,30 +19554,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'ArticleType'
+   * Reference to a field of type 'Boolean'
    */
-  export type EnumArticleTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ArticleType'>
-    
-
-
-  /**
-   * Reference to a field of type 'ArticleType[]'
-   */
-  export type ListEnumArticleTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ArticleType[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'ArticleStatus'
-   */
-  export type EnumArticleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ArticleStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'ArticleStatus[]'
-   */
-  export type ListEnumArticleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ArticleStatus[]'>
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -20618,37 +19589,44 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Level'
+   * Reference to a field of type 'WarningLevel'
    */
-  export type EnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Level'>
+  export type EnumWarningLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WarningLevel'>
     
 
 
   /**
-   * Reference to a field of type 'Level[]'
+   * Reference to a field of type 'WarningLevel[]'
    */
-  export type ListEnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Level[]'>
+  export type ListEnumWarningLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WarningLevel[]'>
     
 
 
   /**
-   * Reference to a field of type 'ContentType'
+   * Reference to a field of type 'StoryCategory'
    */
-  export type EnumContentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentType'>
+  export type EnumStoryCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StoryCategory'>
     
 
 
   /**
-   * Reference to a field of type 'ContentType[]'
+   * Reference to a field of type 'StoryCategory[]'
    */
-  export type ListEnumContentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentType[]'>
+  export type ListEnumStoryCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StoryCategory[]'>
     
 
 
   /**
-   * Reference to a field of type 'Boolean'
+   * Reference to a field of type 'ProjectCategory'
    */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+  export type EnumProjectCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectCategory'>
+    
+
+
+  /**
+   * Reference to a field of type 'ProjectCategory[]'
+   */
+  export type ListEnumProjectCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectCategory[]'>
     
   /**
    * Deep Input Types
@@ -20852,14 +19830,16 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     image?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
-    points?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    points?: IntFilter<"User"> | number
+    badges?: StringNullableFilter<"User"> | string | null
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     articles?: ArticleListRelationFilter
     copilotActivities?: CopilotActivityListRelationFilter
+    communityStories?: CommunityStoryListRelationFilter
+    userProgress?: UserProgressListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -20870,14 +19850,16 @@ export namespace Prisma {
     password?: SortOrder
     image?: SortOrderInput | SortOrder
     role?: SortOrder
-    points?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    deletedAt?: SortOrderInput | SortOrder
+    points?: SortOrder
+    badges?: SortOrderInput | SortOrder
     accounts?: AccountOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     articles?: ArticleOrderByRelationAggregateInput
     copilotActivities?: CopilotActivityOrderByRelationAggregateInput
+    communityStories?: CommunityStoryOrderByRelationAggregateInput
+    userProgress?: UserProgressOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -20891,14 +19873,16 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     image?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
-    points?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    points?: IntFilter<"User"> | number
+    badges?: StringNullableFilter<"User"> | string | null
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     articles?: ArticleListRelationFilter
     copilotActivities?: CopilotActivityListRelationFilter
+    communityStories?: CommunityStoryListRelationFilter
+    userProgress?: UserProgressListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -20909,10 +19893,10 @@ export namespace Prisma {
     password?: SortOrder
     image?: SortOrderInput | SortOrder
     role?: SortOrder
-    points?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    deletedAt?: SortOrderInput | SortOrder
+    points?: SortOrder
+    badges?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -20931,165 +19915,10 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
-    points?: IntWithAggregatesFilter<"User"> | number
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
-    deletedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-  }
-
-  export type CategoryWhereInput = {
-    AND?: CategoryWhereInput | CategoryWhereInput[]
-    OR?: CategoryWhereInput[]
-    NOT?: CategoryWhereInput | CategoryWhereInput[]
-    id?: StringFilter<"Category"> | string
-    slug?: StringFilter<"Category"> | string
-    name?: StringFilter<"Category"> | string
-    description?: StringNullableFilter<"Category"> | string | null
-    type?: StringFilter<"Category"> | string
-    parentId?: StringNullableFilter<"Category"> | string | null
-    icon?: StringNullableFilter<"Category"> | string | null
-    color?: StringNullableFilter<"Category"> | string | null
-    order?: IntFilter<"Category"> | number
-    createdAt?: DateTimeFilter<"Category"> | Date | string
-    updatedAt?: DateTimeFilter<"Category"> | Date | string
-    parent?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
-    children?: CategoryListRelationFilter
-    articles?: ArticleListRelationFilter
-  }
-
-  export type CategoryOrderByWithRelationInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    description?: SortOrderInput | SortOrder
-    type?: SortOrder
-    parentId?: SortOrderInput | SortOrder
-    icon?: SortOrderInput | SortOrder
-    color?: SortOrderInput | SortOrder
-    order?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    parent?: CategoryOrderByWithRelationInput
-    children?: CategoryOrderByRelationAggregateInput
-    articles?: ArticleOrderByRelationAggregateInput
-  }
-
-  export type CategoryWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    slug?: string
-    AND?: CategoryWhereInput | CategoryWhereInput[]
-    OR?: CategoryWhereInput[]
-    NOT?: CategoryWhereInput | CategoryWhereInput[]
-    name?: StringFilter<"Category"> | string
-    description?: StringNullableFilter<"Category"> | string | null
-    type?: StringFilter<"Category"> | string
-    parentId?: StringNullableFilter<"Category"> | string | null
-    icon?: StringNullableFilter<"Category"> | string | null
-    color?: StringNullableFilter<"Category"> | string | null
-    order?: IntFilter<"Category"> | number
-    createdAt?: DateTimeFilter<"Category"> | Date | string
-    updatedAt?: DateTimeFilter<"Category"> | Date | string
-    parent?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
-    children?: CategoryListRelationFilter
-    articles?: ArticleListRelationFilter
-  }, "id" | "slug">
-
-  export type CategoryOrderByWithAggregationInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    description?: SortOrderInput | SortOrder
-    type?: SortOrder
-    parentId?: SortOrderInput | SortOrder
-    icon?: SortOrderInput | SortOrder
-    color?: SortOrderInput | SortOrder
-    order?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: CategoryCountOrderByAggregateInput
-    _avg?: CategoryAvgOrderByAggregateInput
-    _max?: CategoryMaxOrderByAggregateInput
-    _min?: CategoryMinOrderByAggregateInput
-    _sum?: CategorySumOrderByAggregateInput
-  }
-
-  export type CategoryScalarWhereWithAggregatesInput = {
-    AND?: CategoryScalarWhereWithAggregatesInput | CategoryScalarWhereWithAggregatesInput[]
-    OR?: CategoryScalarWhereWithAggregatesInput[]
-    NOT?: CategoryScalarWhereWithAggregatesInput | CategoryScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Category"> | string
-    slug?: StringWithAggregatesFilter<"Category"> | string
-    name?: StringWithAggregatesFilter<"Category"> | string
-    description?: StringNullableWithAggregatesFilter<"Category"> | string | null
-    type?: StringWithAggregatesFilter<"Category"> | string
-    parentId?: StringNullableWithAggregatesFilter<"Category"> | string | null
-    icon?: StringNullableWithAggregatesFilter<"Category"> | string | null
-    color?: StringNullableWithAggregatesFilter<"Category"> | string | null
-    order?: IntWithAggregatesFilter<"Category"> | number
-    createdAt?: DateTimeWithAggregatesFilter<"Category"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Category"> | Date | string
-  }
-
-  export type TagWhereInput = {
-    AND?: TagWhereInput | TagWhereInput[]
-    OR?: TagWhereInput[]
-    NOT?: TagWhereInput | TagWhereInput[]
-    id?: StringFilter<"Tag"> | string
-    slug?: StringFilter<"Tag"> | string
-    name?: StringFilter<"Tag"> | string
-    usageCount?: IntFilter<"Tag"> | number
-    createdAt?: DateTimeFilter<"Tag"> | Date | string
-    updatedAt?: DateTimeFilter<"Tag"> | Date | string
-    articles?: ArticleTagListRelationFilter
-  }
-
-  export type TagOrderByWithRelationInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    usageCount?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    articles?: ArticleTagOrderByRelationAggregateInput
-  }
-
-  export type TagWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    slug?: string
-    AND?: TagWhereInput | TagWhereInput[]
-    OR?: TagWhereInput[]
-    NOT?: TagWhereInput | TagWhereInput[]
-    name?: StringFilter<"Tag"> | string
-    usageCount?: IntFilter<"Tag"> | number
-    createdAt?: DateTimeFilter<"Tag"> | Date | string
-    updatedAt?: DateTimeFilter<"Tag"> | Date | string
-    articles?: ArticleTagListRelationFilter
-  }, "id" | "slug">
-
-  export type TagOrderByWithAggregationInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    usageCount?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: TagCountOrderByAggregateInput
-    _avg?: TagAvgOrderByAggregateInput
-    _max?: TagMaxOrderByAggregateInput
-    _min?: TagMinOrderByAggregateInput
-    _sum?: TagSumOrderByAggregateInput
-  }
-
-  export type TagScalarWhereWithAggregatesInput = {
-    AND?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
-    OR?: TagScalarWhereWithAggregatesInput[]
-    NOT?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Tag"> | string
-    slug?: StringWithAggregatesFilter<"Tag"> | string
-    name?: StringWithAggregatesFilter<"Tag"> | string
-    usageCount?: IntWithAggregatesFilter<"Tag"> | number
-    createdAt?: DateTimeWithAggregatesFilter<"Tag"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Tag"> | Date | string
+    points?: IntWithAggregatesFilter<"User"> | number
+    badges?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type ArticleWhereInput = {
@@ -21097,72 +19926,66 @@ export namespace Prisma {
     OR?: ArticleWhereInput[]
     NOT?: ArticleWhereInput | ArticleWhereInput[]
     id?: StringFilter<"Article"> | string
-    slug?: StringFilter<"Article"> | string
     title?: StringFilter<"Article"> | string
-    excerpt?: StringFilter<"Article"> | string
+    slug?: StringFilter<"Article"> | string
     content?: StringFilter<"Article"> | string
-    type?: EnumArticleTypeFilter<"Article"> | $Enums.ArticleType
-    status?: EnumArticleStatusFilter<"Article"> | $Enums.ArticleStatus
-    readTime?: StringNullableFilter<"Article"> | string | null
-    viewCount?: IntFilter<"Article"> | number
+    type?: StringFilter<"Article"> | string
+    excerpt?: StringNullableFilter<"Article"> | string | null
+    published?: BoolFilter<"Article"> | boolean
     authorId?: StringFilter<"Article"> | string
-    categoryId?: StringFilter<"Article"> | string
-    sentiment?: EnumSentimentNullableFilter<"Article"> | $Enums.Sentiment | null
+    category?: StringFilter<"Article"> | string
+    tags?: StringFilter<"Article"> | string
+    sentiment?: EnumSentimentFilter<"Article"> | $Enums.Sentiment
     factCheckScore?: FloatNullableFilter<"Article"> | number | null
+    factCheckSources?: StringNullableFilter<"Article"> | string | null
     factCheckDate?: DateTimeNullableFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableFilter<"Article"> | string | null
-    level?: EnumLevelNullableFilter<"Article"> | $Enums.Level | null
-    contentType?: EnumContentTypeNullableFilter<"Article"> | $Enums.ContentType | null
-    warningLevel?: StringNullableFilter<"Article"> | string | null
+    level?: StringNullableFilter<"Article"> | string | null
+    contentType?: StringNullableFilter<"Article"> | string | null
+    readTime?: StringNullableFilter<"Article"> | string | null
+    warningLevel?: EnumWarningLevelNullableFilter<"Article"> | $Enums.WarningLevel | null
+    securityTips?: StringNullableFilter<"Article"> | string | null
     courseSequence?: IntNullableFilter<"Article"> | number | null
+    relatedArticles?: StringNullableFilter<"Article"> | string | null
     projectHighlight?: BoolFilter<"Article"> | boolean
     coverImage?: StringNullableFilter<"Article"> | string | null
     coverImageAlt?: StringNullableFilter<"Article"> | string | null
+    quizData?: StringNullableFilter<"Article"> | string | null
     createdAt?: DateTimeFilter<"Article"> | Date | string
     updatedAt?: DateTimeFilter<"Article"> | Date | string
-    publishedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
-    deletedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
-    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
-    tags?: ArticleTagListRelationFilter
-    relatedFrom?: ArticleRelationListRelationFilter
-    relatedTo?: ArticleRelationListRelationFilter
-    citations?: CitationListRelationFilter
   }
 
   export type ArticleOrderByWithRelationInput = {
     id?: SortOrder
-    slug?: SortOrder
     title?: SortOrder
-    excerpt?: SortOrder
+    slug?: SortOrder
     content?: SortOrder
     type?: SortOrder
-    status?: SortOrder
-    readTime?: SortOrderInput | SortOrder
-    viewCount?: SortOrder
+    excerpt?: SortOrderInput | SortOrder
+    published?: SortOrder
     authorId?: SortOrder
-    categoryId?: SortOrder
-    sentiment?: SortOrderInput | SortOrder
+    category?: SortOrder
+    tags?: SortOrder
+    sentiment?: SortOrder
     factCheckScore?: SortOrderInput | SortOrder
+    factCheckSources?: SortOrderInput | SortOrder
     factCheckDate?: SortOrderInput | SortOrder
     factCheckStatus?: SortOrderInput | SortOrder
     level?: SortOrderInput | SortOrder
     contentType?: SortOrderInput | SortOrder
+    readTime?: SortOrderInput | SortOrder
     warningLevel?: SortOrderInput | SortOrder
+    securityTips?: SortOrderInput | SortOrder
     courseSequence?: SortOrderInput | SortOrder
+    relatedArticles?: SortOrderInput | SortOrder
     projectHighlight?: SortOrder
     coverImage?: SortOrderInput | SortOrder
     coverImageAlt?: SortOrderInput | SortOrder
+    quizData?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    publishedAt?: SortOrderInput | SortOrder
-    deletedAt?: SortOrderInput | SortOrder
     author?: UserOrderByWithRelationInput
-    category?: CategoryOrderByWithRelationInput
-    tags?: ArticleTagOrderByRelationAggregateInput
-    relatedFrom?: ArticleRelationOrderByRelationAggregateInput
-    relatedTo?: ArticleRelationOrderByRelationAggregateInput
-    citations?: CitationOrderByRelationAggregateInput
   }
 
   export type ArticleWhereUniqueInput = Prisma.AtLeast<{
@@ -21172,64 +19995,63 @@ export namespace Prisma {
     OR?: ArticleWhereInput[]
     NOT?: ArticleWhereInput | ArticleWhereInput[]
     title?: StringFilter<"Article"> | string
-    excerpt?: StringFilter<"Article"> | string
     content?: StringFilter<"Article"> | string
-    type?: EnumArticleTypeFilter<"Article"> | $Enums.ArticleType
-    status?: EnumArticleStatusFilter<"Article"> | $Enums.ArticleStatus
-    readTime?: StringNullableFilter<"Article"> | string | null
-    viewCount?: IntFilter<"Article"> | number
+    type?: StringFilter<"Article"> | string
+    excerpt?: StringNullableFilter<"Article"> | string | null
+    published?: BoolFilter<"Article"> | boolean
     authorId?: StringFilter<"Article"> | string
-    categoryId?: StringFilter<"Article"> | string
-    sentiment?: EnumSentimentNullableFilter<"Article"> | $Enums.Sentiment | null
+    category?: StringFilter<"Article"> | string
+    tags?: StringFilter<"Article"> | string
+    sentiment?: EnumSentimentFilter<"Article"> | $Enums.Sentiment
     factCheckScore?: FloatNullableFilter<"Article"> | number | null
+    factCheckSources?: StringNullableFilter<"Article"> | string | null
     factCheckDate?: DateTimeNullableFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableFilter<"Article"> | string | null
-    level?: EnumLevelNullableFilter<"Article"> | $Enums.Level | null
-    contentType?: EnumContentTypeNullableFilter<"Article"> | $Enums.ContentType | null
-    warningLevel?: StringNullableFilter<"Article"> | string | null
+    level?: StringNullableFilter<"Article"> | string | null
+    contentType?: StringNullableFilter<"Article"> | string | null
+    readTime?: StringNullableFilter<"Article"> | string | null
+    warningLevel?: EnumWarningLevelNullableFilter<"Article"> | $Enums.WarningLevel | null
+    securityTips?: StringNullableFilter<"Article"> | string | null
     courseSequence?: IntNullableFilter<"Article"> | number | null
+    relatedArticles?: StringNullableFilter<"Article"> | string | null
     projectHighlight?: BoolFilter<"Article"> | boolean
     coverImage?: StringNullableFilter<"Article"> | string | null
     coverImageAlt?: StringNullableFilter<"Article"> | string | null
+    quizData?: StringNullableFilter<"Article"> | string | null
     createdAt?: DateTimeFilter<"Article"> | Date | string
     updatedAt?: DateTimeFilter<"Article"> | Date | string
-    publishedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
-    deletedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
-    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
-    tags?: ArticleTagListRelationFilter
-    relatedFrom?: ArticleRelationListRelationFilter
-    relatedTo?: ArticleRelationListRelationFilter
-    citations?: CitationListRelationFilter
   }, "id" | "slug">
 
   export type ArticleOrderByWithAggregationInput = {
     id?: SortOrder
-    slug?: SortOrder
     title?: SortOrder
-    excerpt?: SortOrder
+    slug?: SortOrder
     content?: SortOrder
     type?: SortOrder
-    status?: SortOrder
-    readTime?: SortOrderInput | SortOrder
-    viewCount?: SortOrder
+    excerpt?: SortOrderInput | SortOrder
+    published?: SortOrder
     authorId?: SortOrder
-    categoryId?: SortOrder
-    sentiment?: SortOrderInput | SortOrder
+    category?: SortOrder
+    tags?: SortOrder
+    sentiment?: SortOrder
     factCheckScore?: SortOrderInput | SortOrder
+    factCheckSources?: SortOrderInput | SortOrder
     factCheckDate?: SortOrderInput | SortOrder
     factCheckStatus?: SortOrderInput | SortOrder
     level?: SortOrderInput | SortOrder
     contentType?: SortOrderInput | SortOrder
+    readTime?: SortOrderInput | SortOrder
     warningLevel?: SortOrderInput | SortOrder
+    securityTips?: SortOrderInput | SortOrder
     courseSequence?: SortOrderInput | SortOrder
+    relatedArticles?: SortOrderInput | SortOrder
     projectHighlight?: SortOrder
     coverImage?: SortOrderInput | SortOrder
     coverImageAlt?: SortOrderInput | SortOrder
+    quizData?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    publishedAt?: SortOrderInput | SortOrder
-    deletedAt?: SortOrderInput | SortOrder
     _count?: ArticleCountOrderByAggregateInput
     _avg?: ArticleAvgOrderByAggregateInput
     _max?: ArticleMaxOrderByAggregateInput
@@ -21242,213 +20064,222 @@ export namespace Prisma {
     OR?: ArticleScalarWhereWithAggregatesInput[]
     NOT?: ArticleScalarWhereWithAggregatesInput | ArticleScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Article"> | string
-    slug?: StringWithAggregatesFilter<"Article"> | string
     title?: StringWithAggregatesFilter<"Article"> | string
-    excerpt?: StringWithAggregatesFilter<"Article"> | string
+    slug?: StringWithAggregatesFilter<"Article"> | string
     content?: StringWithAggregatesFilter<"Article"> | string
-    type?: EnumArticleTypeWithAggregatesFilter<"Article"> | $Enums.ArticleType
-    status?: EnumArticleStatusWithAggregatesFilter<"Article"> | $Enums.ArticleStatus
-    readTime?: StringNullableWithAggregatesFilter<"Article"> | string | null
-    viewCount?: IntWithAggregatesFilter<"Article"> | number
+    type?: StringWithAggregatesFilter<"Article"> | string
+    excerpt?: StringNullableWithAggregatesFilter<"Article"> | string | null
+    published?: BoolWithAggregatesFilter<"Article"> | boolean
     authorId?: StringWithAggregatesFilter<"Article"> | string
-    categoryId?: StringWithAggregatesFilter<"Article"> | string
-    sentiment?: EnumSentimentNullableWithAggregatesFilter<"Article"> | $Enums.Sentiment | null
+    category?: StringWithAggregatesFilter<"Article"> | string
+    tags?: StringWithAggregatesFilter<"Article"> | string
+    sentiment?: EnumSentimentWithAggregatesFilter<"Article"> | $Enums.Sentiment
     factCheckScore?: FloatNullableWithAggregatesFilter<"Article"> | number | null
+    factCheckSources?: StringNullableWithAggregatesFilter<"Article"> | string | null
     factCheckDate?: DateTimeNullableWithAggregatesFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableWithAggregatesFilter<"Article"> | string | null
-    level?: EnumLevelNullableWithAggregatesFilter<"Article"> | $Enums.Level | null
-    contentType?: EnumContentTypeNullableWithAggregatesFilter<"Article"> | $Enums.ContentType | null
-    warningLevel?: StringNullableWithAggregatesFilter<"Article"> | string | null
+    level?: StringNullableWithAggregatesFilter<"Article"> | string | null
+    contentType?: StringNullableWithAggregatesFilter<"Article"> | string | null
+    readTime?: StringNullableWithAggregatesFilter<"Article"> | string | null
+    warningLevel?: EnumWarningLevelNullableWithAggregatesFilter<"Article"> | $Enums.WarningLevel | null
+    securityTips?: StringNullableWithAggregatesFilter<"Article"> | string | null
     courseSequence?: IntNullableWithAggregatesFilter<"Article"> | number | null
+    relatedArticles?: StringNullableWithAggregatesFilter<"Article"> | string | null
     projectHighlight?: BoolWithAggregatesFilter<"Article"> | boolean
     coverImage?: StringNullableWithAggregatesFilter<"Article"> | string | null
     coverImageAlt?: StringNullableWithAggregatesFilter<"Article"> | string | null
+    quizData?: StringNullableWithAggregatesFilter<"Article"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Article"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Article"> | Date | string
-    publishedAt?: DateTimeNullableWithAggregatesFilter<"Article"> | Date | string | null
-    deletedAt?: DateTimeNullableWithAggregatesFilter<"Article"> | Date | string | null
   }
 
-  export type ArticleTagWhereInput = {
-    AND?: ArticleTagWhereInput | ArticleTagWhereInput[]
-    OR?: ArticleTagWhereInput[]
-    NOT?: ArticleTagWhereInput | ArticleTagWhereInput[]
-    articleId?: StringFilter<"ArticleTag"> | string
-    tagId?: StringFilter<"ArticleTag"> | string
-    createdAt?: DateTimeFilter<"ArticleTag"> | Date | string
-    article?: XOR<ArticleScalarRelationFilter, ArticleWhereInput>
-    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
+  export type ResourceWhereInput = {
+    AND?: ResourceWhereInput | ResourceWhereInput[]
+    OR?: ResourceWhereInput[]
+    NOT?: ResourceWhereInput | ResourceWhereInput[]
+    id?: StringFilter<"Resource"> | string
+    slug?: StringFilter<"Resource"> | string
+    name?: StringFilter<"Resource"> | string
+    category?: StringFilter<"Resource"> | string
+    verified?: BoolFilter<"Resource"> | boolean
+    shortDescription?: StringFilter<"Resource"> | string
+    officialUrl?: StringFilter<"Resource"> | string
+    platforms?: StringFilter<"Resource"> | string
+    tags?: StringFilter<"Resource"> | string
+    heroTitle?: StringFilter<"Resource"> | string
+    heroDescription?: StringFilter<"Resource"> | string
+    heroGradient?: StringFilter<"Resource"> | string
+    whyGoodTitle?: StringFilter<"Resource"> | string
+    whyGoodContent?: StringFilter<"Resource"> | string
+    features?: StringFilter<"Resource"> | string
+    howToStartTitle?: StringFilter<"Resource"> | string
+    howToStartSteps?: StringFilter<"Resource"> | string
+    pros?: StringFilter<"Resource"> | string
+    cons?: StringFilter<"Resource"> | string
+    faq?: StringFilter<"Resource"> | string
+    securityTips?: StringFilter<"Resource"> | string
+    securityAudit?: StringNullableFilter<"Resource"> | string | null
+    securityAuditDate?: DateTimeNullableFilter<"Resource"> | Date | string | null
+    auditedByCommunity?: BoolFilter<"Resource"> | boolean
+    toolConfig?: StringNullableFilter<"Resource"> | string | null
+    interactiveType?: StringNullableFilter<"Resource"> | string | null
+    showCompatibleWallets?: BoolFilter<"Resource"> | boolean
+    relatedResources?: StringNullableFilter<"Resource"> | string | null
+    views?: IntFilter<"Resource"> | number
+    createdAt?: DateTimeFilter<"Resource"> | Date | string
+    updatedAt?: DateTimeFilter<"Resource"> | Date | string
+    lastVerified?: DateTimeFilter<"Resource"> | Date | string
   }
 
-  export type ArticleTagOrderByWithRelationInput = {
-    articleId?: SortOrder
-    tagId?: SortOrder
-    createdAt?: SortOrder
-    article?: ArticleOrderByWithRelationInput
-    tag?: TagOrderByWithRelationInput
-  }
-
-  export type ArticleTagWhereUniqueInput = Prisma.AtLeast<{
-    articleId_tagId?: ArticleTagArticleIdTagIdCompoundUniqueInput
-    AND?: ArticleTagWhereInput | ArticleTagWhereInput[]
-    OR?: ArticleTagWhereInput[]
-    NOT?: ArticleTagWhereInput | ArticleTagWhereInput[]
-    articleId?: StringFilter<"ArticleTag"> | string
-    tagId?: StringFilter<"ArticleTag"> | string
-    createdAt?: DateTimeFilter<"ArticleTag"> | Date | string
-    article?: XOR<ArticleScalarRelationFilter, ArticleWhereInput>
-    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
-  }, "articleId_tagId">
-
-  export type ArticleTagOrderByWithAggregationInput = {
-    articleId?: SortOrder
-    tagId?: SortOrder
-    createdAt?: SortOrder
-    _count?: ArticleTagCountOrderByAggregateInput
-    _max?: ArticleTagMaxOrderByAggregateInput
-    _min?: ArticleTagMinOrderByAggregateInput
-  }
-
-  export type ArticleTagScalarWhereWithAggregatesInput = {
-    AND?: ArticleTagScalarWhereWithAggregatesInput | ArticleTagScalarWhereWithAggregatesInput[]
-    OR?: ArticleTagScalarWhereWithAggregatesInput[]
-    NOT?: ArticleTagScalarWhereWithAggregatesInput | ArticleTagScalarWhereWithAggregatesInput[]
-    articleId?: StringWithAggregatesFilter<"ArticleTag"> | string
-    tagId?: StringWithAggregatesFilter<"ArticleTag"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"ArticleTag"> | Date | string
-  }
-
-  export type ArticleRelationWhereInput = {
-    AND?: ArticleRelationWhereInput | ArticleRelationWhereInput[]
-    OR?: ArticleRelationWhereInput[]
-    NOT?: ArticleRelationWhereInput | ArticleRelationWhereInput[]
-    fromArticleId?: StringFilter<"ArticleRelation"> | string
-    toArticleId?: StringFilter<"ArticleRelation"> | string
-    relationType?: StringFilter<"ArticleRelation"> | string
-    order?: IntNullableFilter<"ArticleRelation"> | number | null
-    createdAt?: DateTimeFilter<"ArticleRelation"> | Date | string
-    fromArticle?: XOR<ArticleScalarRelationFilter, ArticleWhereInput>
-    toArticle?: XOR<ArticleScalarRelationFilter, ArticleWhereInput>
-  }
-
-  export type ArticleRelationOrderByWithRelationInput = {
-    fromArticleId?: SortOrder
-    toArticleId?: SortOrder
-    relationType?: SortOrder
-    order?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    fromArticle?: ArticleOrderByWithRelationInput
-    toArticle?: ArticleOrderByWithRelationInput
-  }
-
-  export type ArticleRelationWhereUniqueInput = Prisma.AtLeast<{
-    fromArticleId_toArticleId?: ArticleRelationFromArticleIdToArticleIdCompoundUniqueInput
-    AND?: ArticleRelationWhereInput | ArticleRelationWhereInput[]
-    OR?: ArticleRelationWhereInput[]
-    NOT?: ArticleRelationWhereInput | ArticleRelationWhereInput[]
-    fromArticleId?: StringFilter<"ArticleRelation"> | string
-    toArticleId?: StringFilter<"ArticleRelation"> | string
-    relationType?: StringFilter<"ArticleRelation"> | string
-    order?: IntNullableFilter<"ArticleRelation"> | number | null
-    createdAt?: DateTimeFilter<"ArticleRelation"> | Date | string
-    fromArticle?: XOR<ArticleScalarRelationFilter, ArticleWhereInput>
-    toArticle?: XOR<ArticleScalarRelationFilter, ArticleWhereInput>
-  }, "fromArticleId_toArticleId">
-
-  export type ArticleRelationOrderByWithAggregationInput = {
-    fromArticleId?: SortOrder
-    toArticleId?: SortOrder
-    relationType?: SortOrder
-    order?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    _count?: ArticleRelationCountOrderByAggregateInput
-    _avg?: ArticleRelationAvgOrderByAggregateInput
-    _max?: ArticleRelationMaxOrderByAggregateInput
-    _min?: ArticleRelationMinOrderByAggregateInput
-    _sum?: ArticleRelationSumOrderByAggregateInput
-  }
-
-  export type ArticleRelationScalarWhereWithAggregatesInput = {
-    AND?: ArticleRelationScalarWhereWithAggregatesInput | ArticleRelationScalarWhereWithAggregatesInput[]
-    OR?: ArticleRelationScalarWhereWithAggregatesInput[]
-    NOT?: ArticleRelationScalarWhereWithAggregatesInput | ArticleRelationScalarWhereWithAggregatesInput[]
-    fromArticleId?: StringWithAggregatesFilter<"ArticleRelation"> | string
-    toArticleId?: StringWithAggregatesFilter<"ArticleRelation"> | string
-    relationType?: StringWithAggregatesFilter<"ArticleRelation"> | string
-    order?: IntNullableWithAggregatesFilter<"ArticleRelation"> | number | null
-    createdAt?: DateTimeWithAggregatesFilter<"ArticleRelation"> | Date | string
-  }
-
-  export type CitationWhereInput = {
-    AND?: CitationWhereInput | CitationWhereInput[]
-    OR?: CitationWhereInput[]
-    NOT?: CitationWhereInput | CitationWhereInput[]
-    id?: StringFilter<"Citation"> | string
-    url?: StringFilter<"Citation"> | string
-    title?: StringNullableFilter<"Citation"> | string | null
-    domain?: StringNullableFilter<"Citation"> | string | null
-    articleId?: StringFilter<"Citation"> | string
-    order?: IntFilter<"Citation"> | number
-    verified?: BoolFilter<"Citation"> | boolean
-    createdAt?: DateTimeFilter<"Citation"> | Date | string
-    article?: XOR<ArticleScalarRelationFilter, ArticleWhereInput>
-  }
-
-  export type CitationOrderByWithRelationInput = {
+  export type ResourceOrderByWithRelationInput = {
     id?: SortOrder
-    url?: SortOrder
-    title?: SortOrderInput | SortOrder
-    domain?: SortOrderInput | SortOrder
-    articleId?: SortOrder
-    order?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
     verified?: SortOrder
+    shortDescription?: SortOrder
+    officialUrl?: SortOrder
+    platforms?: SortOrder
+    tags?: SortOrder
+    heroTitle?: SortOrder
+    heroDescription?: SortOrder
+    heroGradient?: SortOrder
+    whyGoodTitle?: SortOrder
+    whyGoodContent?: SortOrder
+    features?: SortOrder
+    howToStartTitle?: SortOrder
+    howToStartSteps?: SortOrder
+    pros?: SortOrder
+    cons?: SortOrder
+    faq?: SortOrder
+    securityTips?: SortOrder
+    securityAudit?: SortOrderInput | SortOrder
+    securityAuditDate?: SortOrderInput | SortOrder
+    auditedByCommunity?: SortOrder
+    toolConfig?: SortOrderInput | SortOrder
+    interactiveType?: SortOrderInput | SortOrder
+    showCompatibleWallets?: SortOrder
+    relatedResources?: SortOrderInput | SortOrder
+    views?: SortOrder
     createdAt?: SortOrder
-    article?: ArticleOrderByWithRelationInput
+    updatedAt?: SortOrder
+    lastVerified?: SortOrder
   }
 
-  export type CitationWhereUniqueInput = Prisma.AtLeast<{
+  export type ResourceWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: CitationWhereInput | CitationWhereInput[]
-    OR?: CitationWhereInput[]
-    NOT?: CitationWhereInput | CitationWhereInput[]
-    url?: StringFilter<"Citation"> | string
-    title?: StringNullableFilter<"Citation"> | string | null
-    domain?: StringNullableFilter<"Citation"> | string | null
-    articleId?: StringFilter<"Citation"> | string
-    order?: IntFilter<"Citation"> | number
-    verified?: BoolFilter<"Citation"> | boolean
-    createdAt?: DateTimeFilter<"Citation"> | Date | string
-    article?: XOR<ArticleScalarRelationFilter, ArticleWhereInput>
-  }, "id">
+    slug?: string
+    AND?: ResourceWhereInput | ResourceWhereInput[]
+    OR?: ResourceWhereInput[]
+    NOT?: ResourceWhereInput | ResourceWhereInput[]
+    name?: StringFilter<"Resource"> | string
+    category?: StringFilter<"Resource"> | string
+    verified?: BoolFilter<"Resource"> | boolean
+    shortDescription?: StringFilter<"Resource"> | string
+    officialUrl?: StringFilter<"Resource"> | string
+    platforms?: StringFilter<"Resource"> | string
+    tags?: StringFilter<"Resource"> | string
+    heroTitle?: StringFilter<"Resource"> | string
+    heroDescription?: StringFilter<"Resource"> | string
+    heroGradient?: StringFilter<"Resource"> | string
+    whyGoodTitle?: StringFilter<"Resource"> | string
+    whyGoodContent?: StringFilter<"Resource"> | string
+    features?: StringFilter<"Resource"> | string
+    howToStartTitle?: StringFilter<"Resource"> | string
+    howToStartSteps?: StringFilter<"Resource"> | string
+    pros?: StringFilter<"Resource"> | string
+    cons?: StringFilter<"Resource"> | string
+    faq?: StringFilter<"Resource"> | string
+    securityTips?: StringFilter<"Resource"> | string
+    securityAudit?: StringNullableFilter<"Resource"> | string | null
+    securityAuditDate?: DateTimeNullableFilter<"Resource"> | Date | string | null
+    auditedByCommunity?: BoolFilter<"Resource"> | boolean
+    toolConfig?: StringNullableFilter<"Resource"> | string | null
+    interactiveType?: StringNullableFilter<"Resource"> | string | null
+    showCompatibleWallets?: BoolFilter<"Resource"> | boolean
+    relatedResources?: StringNullableFilter<"Resource"> | string | null
+    views?: IntFilter<"Resource"> | number
+    createdAt?: DateTimeFilter<"Resource"> | Date | string
+    updatedAt?: DateTimeFilter<"Resource"> | Date | string
+    lastVerified?: DateTimeFilter<"Resource"> | Date | string
+  }, "id" | "slug">
 
-  export type CitationOrderByWithAggregationInput = {
+  export type ResourceOrderByWithAggregationInput = {
     id?: SortOrder
-    url?: SortOrder
-    title?: SortOrderInput | SortOrder
-    domain?: SortOrderInput | SortOrder
-    articleId?: SortOrder
-    order?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
     verified?: SortOrder
+    shortDescription?: SortOrder
+    officialUrl?: SortOrder
+    platforms?: SortOrder
+    tags?: SortOrder
+    heroTitle?: SortOrder
+    heroDescription?: SortOrder
+    heroGradient?: SortOrder
+    whyGoodTitle?: SortOrder
+    whyGoodContent?: SortOrder
+    features?: SortOrder
+    howToStartTitle?: SortOrder
+    howToStartSteps?: SortOrder
+    pros?: SortOrder
+    cons?: SortOrder
+    faq?: SortOrder
+    securityTips?: SortOrder
+    securityAudit?: SortOrderInput | SortOrder
+    securityAuditDate?: SortOrderInput | SortOrder
+    auditedByCommunity?: SortOrder
+    toolConfig?: SortOrderInput | SortOrder
+    interactiveType?: SortOrderInput | SortOrder
+    showCompatibleWallets?: SortOrder
+    relatedResources?: SortOrderInput | SortOrder
+    views?: SortOrder
     createdAt?: SortOrder
-    _count?: CitationCountOrderByAggregateInput
-    _avg?: CitationAvgOrderByAggregateInput
-    _max?: CitationMaxOrderByAggregateInput
-    _min?: CitationMinOrderByAggregateInput
-    _sum?: CitationSumOrderByAggregateInput
+    updatedAt?: SortOrder
+    lastVerified?: SortOrder
+    _count?: ResourceCountOrderByAggregateInput
+    _avg?: ResourceAvgOrderByAggregateInput
+    _max?: ResourceMaxOrderByAggregateInput
+    _min?: ResourceMinOrderByAggregateInput
+    _sum?: ResourceSumOrderByAggregateInput
   }
 
-  export type CitationScalarWhereWithAggregatesInput = {
-    AND?: CitationScalarWhereWithAggregatesInput | CitationScalarWhereWithAggregatesInput[]
-    OR?: CitationScalarWhereWithAggregatesInput[]
-    NOT?: CitationScalarWhereWithAggregatesInput | CitationScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Citation"> | string
-    url?: StringWithAggregatesFilter<"Citation"> | string
-    title?: StringNullableWithAggregatesFilter<"Citation"> | string | null
-    domain?: StringNullableWithAggregatesFilter<"Citation"> | string | null
-    articleId?: StringWithAggregatesFilter<"Citation"> | string
-    order?: IntWithAggregatesFilter<"Citation"> | number
-    verified?: BoolWithAggregatesFilter<"Citation"> | boolean
-    createdAt?: DateTimeWithAggregatesFilter<"Citation"> | Date | string
+  export type ResourceScalarWhereWithAggregatesInput = {
+    AND?: ResourceScalarWhereWithAggregatesInput | ResourceScalarWhereWithAggregatesInput[]
+    OR?: ResourceScalarWhereWithAggregatesInput[]
+    NOT?: ResourceScalarWhereWithAggregatesInput | ResourceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Resource"> | string
+    slug?: StringWithAggregatesFilter<"Resource"> | string
+    name?: StringWithAggregatesFilter<"Resource"> | string
+    category?: StringWithAggregatesFilter<"Resource"> | string
+    verified?: BoolWithAggregatesFilter<"Resource"> | boolean
+    shortDescription?: StringWithAggregatesFilter<"Resource"> | string
+    officialUrl?: StringWithAggregatesFilter<"Resource"> | string
+    platforms?: StringWithAggregatesFilter<"Resource"> | string
+    tags?: StringWithAggregatesFilter<"Resource"> | string
+    heroTitle?: StringWithAggregatesFilter<"Resource"> | string
+    heroDescription?: StringWithAggregatesFilter<"Resource"> | string
+    heroGradient?: StringWithAggregatesFilter<"Resource"> | string
+    whyGoodTitle?: StringWithAggregatesFilter<"Resource"> | string
+    whyGoodContent?: StringWithAggregatesFilter<"Resource"> | string
+    features?: StringWithAggregatesFilter<"Resource"> | string
+    howToStartTitle?: StringWithAggregatesFilter<"Resource"> | string
+    howToStartSteps?: StringWithAggregatesFilter<"Resource"> | string
+    pros?: StringWithAggregatesFilter<"Resource"> | string
+    cons?: StringWithAggregatesFilter<"Resource"> | string
+    faq?: StringWithAggregatesFilter<"Resource"> | string
+    securityTips?: StringWithAggregatesFilter<"Resource"> | string
+    securityAudit?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    securityAuditDate?: DateTimeNullableWithAggregatesFilter<"Resource"> | Date | string | null
+    auditedByCommunity?: BoolWithAggregatesFilter<"Resource"> | boolean
+    toolConfig?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    interactiveType?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    showCompatibleWallets?: BoolWithAggregatesFilter<"Resource"> | boolean
+    relatedResources?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    views?: IntWithAggregatesFilter<"Resource"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
+    lastVerified?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
   }
 
   export type CryptocurrencyWhereInput = {
@@ -21903,193 +20734,447 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"CopilotReport"> | Date | string
   }
 
-  export type ResourceWhereInput = {
-    AND?: ResourceWhereInput | ResourceWhereInput[]
-    OR?: ResourceWhereInput[]
-    NOT?: ResourceWhereInput | ResourceWhereInput[]
-    id?: StringFilter<"Resource"> | string
-    slug?: StringFilter<"Resource"> | string
-    name?: StringFilter<"Resource"> | string
-    category?: StringFilter<"Resource"> | string
-    verified?: BoolFilter<"Resource"> | boolean
-    shortDescription?: StringFilter<"Resource"> | string
-    officialUrl?: StringFilter<"Resource"> | string
-    platforms?: StringFilter<"Resource"> | string
-    tags?: StringFilter<"Resource"> | string
-    heroTitle?: StringFilter<"Resource"> | string
-    heroDescription?: StringFilter<"Resource"> | string
-    heroGradient?: StringFilter<"Resource"> | string
-    whyGoodTitle?: StringFilter<"Resource"> | string
-    whyGoodContent?: StringFilter<"Resource"> | string
-    features?: StringFilter<"Resource"> | string
-    howToStartTitle?: StringFilter<"Resource"> | string
-    howToStartSteps?: StringFilter<"Resource"> | string
-    pros?: StringFilter<"Resource"> | string
-    cons?: StringFilter<"Resource"> | string
-    faq?: StringFilter<"Resource"> | string
-    securityTips?: StringFilter<"Resource"> | string
-    securityAudit?: StringNullableFilter<"Resource"> | string | null
-    securityAuditDate?: DateTimeNullableFilter<"Resource"> | Date | string | null
-    auditedByCommunity?: BoolFilter<"Resource"> | boolean
-    toolConfig?: StringNullableFilter<"Resource"> | string | null
-    interactiveType?: StringNullableFilter<"Resource"> | string | null
-    showCompatibleWallets?: BoolFilter<"Resource"> | boolean
-    relatedResources?: StringNullableFilter<"Resource"> | string | null
-    views?: IntFilter<"Resource"> | number
-    createdAt?: DateTimeFilter<"Resource"> | Date | string
-    updatedAt?: DateTimeFilter<"Resource"> | Date | string
-    lastVerified?: DateTimeFilter<"Resource"> | Date | string
+  export type CommunityStoryWhereInput = {
+    AND?: CommunityStoryWhereInput | CommunityStoryWhereInput[]
+    OR?: CommunityStoryWhereInput[]
+    NOT?: CommunityStoryWhereInput | CommunityStoryWhereInput[]
+    id?: StringFilter<"CommunityStory"> | string
+    slug?: StringFilter<"CommunityStory"> | string
+    authorName?: StringFilter<"CommunityStory"> | string
+    authorAvatar?: StringNullableFilter<"CommunityStory"> | string | null
+    userId?: StringNullableFilter<"CommunityStory"> | string | null
+    title?: StringFilter<"CommunityStory"> | string
+    content?: StringFilter<"CommunityStory"> | string
+    category?: EnumStoryCategoryFilter<"CommunityStory"> | $Enums.StoryCategory
+    likes?: IntFilter<"CommunityStory"> | number
+    verified?: BoolFilter<"CommunityStory"> | boolean
+    featured?: BoolFilter<"CommunityStory"> | boolean
+    published?: BoolFilter<"CommunityStory"> | boolean
+    createdAt?: DateTimeFilter<"CommunityStory"> | Date | string
+    updatedAt?: DateTimeFilter<"CommunityStory"> | Date | string
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
-  export type ResourceOrderByWithRelationInput = {
+  export type CommunityStoryOrderByWithRelationInput = {
     id?: SortOrder
     slug?: SortOrder
-    name?: SortOrder
+    authorName?: SortOrder
+    authorAvatar?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    title?: SortOrder
+    content?: SortOrder
     category?: SortOrder
+    likes?: SortOrder
     verified?: SortOrder
-    shortDescription?: SortOrder
-    officialUrl?: SortOrder
-    platforms?: SortOrder
-    tags?: SortOrder
-    heroTitle?: SortOrder
-    heroDescription?: SortOrder
-    heroGradient?: SortOrder
-    whyGoodTitle?: SortOrder
-    whyGoodContent?: SortOrder
-    features?: SortOrder
-    howToStartTitle?: SortOrder
-    howToStartSteps?: SortOrder
-    pros?: SortOrder
-    cons?: SortOrder
-    faq?: SortOrder
-    securityTips?: SortOrder
-    securityAudit?: SortOrderInput | SortOrder
-    securityAuditDate?: SortOrderInput | SortOrder
-    auditedByCommunity?: SortOrder
-    toolConfig?: SortOrderInput | SortOrder
-    interactiveType?: SortOrderInput | SortOrder
-    showCompatibleWallets?: SortOrder
-    relatedResources?: SortOrderInput | SortOrder
-    views?: SortOrder
+    featured?: SortOrder
+    published?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    lastVerified?: SortOrder
+    user?: UserOrderByWithRelationInput
   }
 
-  export type ResourceWhereUniqueInput = Prisma.AtLeast<{
+  export type CommunityStoryWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     slug?: string
-    AND?: ResourceWhereInput | ResourceWhereInput[]
-    OR?: ResourceWhereInput[]
-    NOT?: ResourceWhereInput | ResourceWhereInput[]
-    name?: StringFilter<"Resource"> | string
-    category?: StringFilter<"Resource"> | string
-    verified?: BoolFilter<"Resource"> | boolean
-    shortDescription?: StringFilter<"Resource"> | string
-    officialUrl?: StringFilter<"Resource"> | string
-    platforms?: StringFilter<"Resource"> | string
-    tags?: StringFilter<"Resource"> | string
-    heroTitle?: StringFilter<"Resource"> | string
-    heroDescription?: StringFilter<"Resource"> | string
-    heroGradient?: StringFilter<"Resource"> | string
-    whyGoodTitle?: StringFilter<"Resource"> | string
-    whyGoodContent?: StringFilter<"Resource"> | string
-    features?: StringFilter<"Resource"> | string
-    howToStartTitle?: StringFilter<"Resource"> | string
-    howToStartSteps?: StringFilter<"Resource"> | string
-    pros?: StringFilter<"Resource"> | string
-    cons?: StringFilter<"Resource"> | string
-    faq?: StringFilter<"Resource"> | string
-    securityTips?: StringFilter<"Resource"> | string
-    securityAudit?: StringNullableFilter<"Resource"> | string | null
-    securityAuditDate?: DateTimeNullableFilter<"Resource"> | Date | string | null
-    auditedByCommunity?: BoolFilter<"Resource"> | boolean
-    toolConfig?: StringNullableFilter<"Resource"> | string | null
-    interactiveType?: StringNullableFilter<"Resource"> | string | null
-    showCompatibleWallets?: BoolFilter<"Resource"> | boolean
-    relatedResources?: StringNullableFilter<"Resource"> | string | null
-    views?: IntFilter<"Resource"> | number
-    createdAt?: DateTimeFilter<"Resource"> | Date | string
-    updatedAt?: DateTimeFilter<"Resource"> | Date | string
-    lastVerified?: DateTimeFilter<"Resource"> | Date | string
+    AND?: CommunityStoryWhereInput | CommunityStoryWhereInput[]
+    OR?: CommunityStoryWhereInput[]
+    NOT?: CommunityStoryWhereInput | CommunityStoryWhereInput[]
+    authorName?: StringFilter<"CommunityStory"> | string
+    authorAvatar?: StringNullableFilter<"CommunityStory"> | string | null
+    userId?: StringNullableFilter<"CommunityStory"> | string | null
+    title?: StringFilter<"CommunityStory"> | string
+    content?: StringFilter<"CommunityStory"> | string
+    category?: EnumStoryCategoryFilter<"CommunityStory"> | $Enums.StoryCategory
+    likes?: IntFilter<"CommunityStory"> | number
+    verified?: BoolFilter<"CommunityStory"> | boolean
+    featured?: BoolFilter<"CommunityStory"> | boolean
+    published?: BoolFilter<"CommunityStory"> | boolean
+    createdAt?: DateTimeFilter<"CommunityStory"> | Date | string
+    updatedAt?: DateTimeFilter<"CommunityStory"> | Date | string
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id" | "slug">
 
-  export type ResourceOrderByWithAggregationInput = {
+  export type CommunityStoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    authorName?: SortOrder
+    authorAvatar?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    category?: SortOrder
+    likes?: SortOrder
+    verified?: SortOrder
+    featured?: SortOrder
+    published?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CommunityStoryCountOrderByAggregateInput
+    _avg?: CommunityStoryAvgOrderByAggregateInput
+    _max?: CommunityStoryMaxOrderByAggregateInput
+    _min?: CommunityStoryMinOrderByAggregateInput
+    _sum?: CommunityStorySumOrderByAggregateInput
+  }
+
+  export type CommunityStoryScalarWhereWithAggregatesInput = {
+    AND?: CommunityStoryScalarWhereWithAggregatesInput | CommunityStoryScalarWhereWithAggregatesInput[]
+    OR?: CommunityStoryScalarWhereWithAggregatesInput[]
+    NOT?: CommunityStoryScalarWhereWithAggregatesInput | CommunityStoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CommunityStory"> | string
+    slug?: StringWithAggregatesFilter<"CommunityStory"> | string
+    authorName?: StringWithAggregatesFilter<"CommunityStory"> | string
+    authorAvatar?: StringNullableWithAggregatesFilter<"CommunityStory"> | string | null
+    userId?: StringNullableWithAggregatesFilter<"CommunityStory"> | string | null
+    title?: StringWithAggregatesFilter<"CommunityStory"> | string
+    content?: StringWithAggregatesFilter<"CommunityStory"> | string
+    category?: EnumStoryCategoryWithAggregatesFilter<"CommunityStory"> | $Enums.StoryCategory
+    likes?: IntWithAggregatesFilter<"CommunityStory"> | number
+    verified?: BoolWithAggregatesFilter<"CommunityStory"> | boolean
+    featured?: BoolWithAggregatesFilter<"CommunityStory"> | boolean
+    published?: BoolWithAggregatesFilter<"CommunityStory"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"CommunityStory"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CommunityStory"> | Date | string
+  }
+
+  export type SocialProjectWhereInput = {
+    AND?: SocialProjectWhereInput | SocialProjectWhereInput[]
+    OR?: SocialProjectWhereInput[]
+    NOT?: SocialProjectWhereInput | SocialProjectWhereInput[]
+    id?: StringFilter<"SocialProject"> | string
+    slug?: StringFilter<"SocialProject"> | string
+    name?: StringFilter<"SocialProject"> | string
+    description?: StringFilter<"SocialProject"> | string
+    longDescription?: StringNullableFilter<"SocialProject"> | string | null
+    fundingGoal?: FloatFilter<"SocialProject"> | number
+    currentFunding?: FloatFilter<"SocialProject"> | number
+    currency?: StringFilter<"SocialProject"> | string
+    walletAddress?: StringNullableFilter<"SocialProject"> | string | null
+    category?: EnumProjectCategoryFilter<"SocialProject"> | $Enums.ProjectCategory
+    location?: StringNullableFilter<"SocialProject"> | string | null
+    tags?: StringNullableFilter<"SocialProject"> | string | null
+    verified?: BoolFilter<"SocialProject"> | boolean
+    active?: BoolFilter<"SocialProject"> | boolean
+    featured?: BoolFilter<"SocialProject"> | boolean
+    startDate?: DateTimeFilter<"SocialProject"> | Date | string
+    endDate?: DateTimeNullableFilter<"SocialProject"> | Date | string | null
+    supporters?: IntFilter<"SocialProject"> | number
+    views?: IntFilter<"SocialProject"> | number
+    coverImage?: StringNullableFilter<"SocialProject"> | string | null
+    gallery?: StringNullableFilter<"SocialProject"> | string | null
+    organizer?: StringFilter<"SocialProject"> | string
+    organizerEmail?: StringNullableFilter<"SocialProject"> | string | null
+    organizerPhone?: StringNullableFilter<"SocialProject"> | string | null
+    createdAt?: DateTimeFilter<"SocialProject"> | Date | string
+    updatedAt?: DateTimeFilter<"SocialProject"> | Date | string
+  }
+
+  export type SocialProjectOrderByWithRelationInput = {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    description?: SortOrder
+    longDescription?: SortOrderInput | SortOrder
+    fundingGoal?: SortOrder
+    currentFunding?: SortOrder
+    currency?: SortOrder
+    walletAddress?: SortOrderInput | SortOrder
     category?: SortOrder
+    location?: SortOrderInput | SortOrder
+    tags?: SortOrderInput | SortOrder
     verified?: SortOrder
-    shortDescription?: SortOrder
-    officialUrl?: SortOrder
-    platforms?: SortOrder
-    tags?: SortOrder
-    heroTitle?: SortOrder
-    heroDescription?: SortOrder
-    heroGradient?: SortOrder
-    whyGoodTitle?: SortOrder
-    whyGoodContent?: SortOrder
-    features?: SortOrder
-    howToStartTitle?: SortOrder
-    howToStartSteps?: SortOrder
-    pros?: SortOrder
-    cons?: SortOrder
-    faq?: SortOrder
-    securityTips?: SortOrder
-    securityAudit?: SortOrderInput | SortOrder
-    securityAuditDate?: SortOrderInput | SortOrder
-    auditedByCommunity?: SortOrder
-    toolConfig?: SortOrderInput | SortOrder
-    interactiveType?: SortOrderInput | SortOrder
-    showCompatibleWallets?: SortOrder
-    relatedResources?: SortOrderInput | SortOrder
+    active?: SortOrder
+    featured?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrderInput | SortOrder
+    supporters?: SortOrder
     views?: SortOrder
+    coverImage?: SortOrderInput | SortOrder
+    gallery?: SortOrderInput | SortOrder
+    organizer?: SortOrder
+    organizerEmail?: SortOrderInput | SortOrder
+    organizerPhone?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    lastVerified?: SortOrder
-    _count?: ResourceCountOrderByAggregateInput
-    _avg?: ResourceAvgOrderByAggregateInput
-    _max?: ResourceMaxOrderByAggregateInput
-    _min?: ResourceMinOrderByAggregateInput
-    _sum?: ResourceSumOrderByAggregateInput
   }
 
-  export type ResourceScalarWhereWithAggregatesInput = {
-    AND?: ResourceScalarWhereWithAggregatesInput | ResourceScalarWhereWithAggregatesInput[]
-    OR?: ResourceScalarWhereWithAggregatesInput[]
-    NOT?: ResourceScalarWhereWithAggregatesInput | ResourceScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Resource"> | string
-    slug?: StringWithAggregatesFilter<"Resource"> | string
-    name?: StringWithAggregatesFilter<"Resource"> | string
-    category?: StringWithAggregatesFilter<"Resource"> | string
-    verified?: BoolWithAggregatesFilter<"Resource"> | boolean
-    shortDescription?: StringWithAggregatesFilter<"Resource"> | string
-    officialUrl?: StringWithAggregatesFilter<"Resource"> | string
-    platforms?: StringWithAggregatesFilter<"Resource"> | string
-    tags?: StringWithAggregatesFilter<"Resource"> | string
-    heroTitle?: StringWithAggregatesFilter<"Resource"> | string
-    heroDescription?: StringWithAggregatesFilter<"Resource"> | string
-    heroGradient?: StringWithAggregatesFilter<"Resource"> | string
-    whyGoodTitle?: StringWithAggregatesFilter<"Resource"> | string
-    whyGoodContent?: StringWithAggregatesFilter<"Resource"> | string
-    features?: StringWithAggregatesFilter<"Resource"> | string
-    howToStartTitle?: StringWithAggregatesFilter<"Resource"> | string
-    howToStartSteps?: StringWithAggregatesFilter<"Resource"> | string
-    pros?: StringWithAggregatesFilter<"Resource"> | string
-    cons?: StringWithAggregatesFilter<"Resource"> | string
-    faq?: StringWithAggregatesFilter<"Resource"> | string
-    securityTips?: StringWithAggregatesFilter<"Resource"> | string
-    securityAudit?: StringNullableWithAggregatesFilter<"Resource"> | string | null
-    securityAuditDate?: DateTimeNullableWithAggregatesFilter<"Resource"> | Date | string | null
-    auditedByCommunity?: BoolWithAggregatesFilter<"Resource"> | boolean
-    toolConfig?: StringNullableWithAggregatesFilter<"Resource"> | string | null
-    interactiveType?: StringNullableWithAggregatesFilter<"Resource"> | string | null
-    showCompatibleWallets?: BoolWithAggregatesFilter<"Resource"> | boolean
-    relatedResources?: StringNullableWithAggregatesFilter<"Resource"> | string | null
-    views?: IntWithAggregatesFilter<"Resource"> | number
-    createdAt?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
-    lastVerified?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
+  export type SocialProjectWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    slug?: string
+    AND?: SocialProjectWhereInput | SocialProjectWhereInput[]
+    OR?: SocialProjectWhereInput[]
+    NOT?: SocialProjectWhereInput | SocialProjectWhereInput[]
+    name?: StringFilter<"SocialProject"> | string
+    description?: StringFilter<"SocialProject"> | string
+    longDescription?: StringNullableFilter<"SocialProject"> | string | null
+    fundingGoal?: FloatFilter<"SocialProject"> | number
+    currentFunding?: FloatFilter<"SocialProject"> | number
+    currency?: StringFilter<"SocialProject"> | string
+    walletAddress?: StringNullableFilter<"SocialProject"> | string | null
+    category?: EnumProjectCategoryFilter<"SocialProject"> | $Enums.ProjectCategory
+    location?: StringNullableFilter<"SocialProject"> | string | null
+    tags?: StringNullableFilter<"SocialProject"> | string | null
+    verified?: BoolFilter<"SocialProject"> | boolean
+    active?: BoolFilter<"SocialProject"> | boolean
+    featured?: BoolFilter<"SocialProject"> | boolean
+    startDate?: DateTimeFilter<"SocialProject"> | Date | string
+    endDate?: DateTimeNullableFilter<"SocialProject"> | Date | string | null
+    supporters?: IntFilter<"SocialProject"> | number
+    views?: IntFilter<"SocialProject"> | number
+    coverImage?: StringNullableFilter<"SocialProject"> | string | null
+    gallery?: StringNullableFilter<"SocialProject"> | string | null
+    organizer?: StringFilter<"SocialProject"> | string
+    organizerEmail?: StringNullableFilter<"SocialProject"> | string | null
+    organizerPhone?: StringNullableFilter<"SocialProject"> | string | null
+    createdAt?: DateTimeFilter<"SocialProject"> | Date | string
+    updatedAt?: DateTimeFilter<"SocialProject"> | Date | string
+  }, "id" | "slug">
+
+  export type SocialProjectOrderByWithAggregationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    longDescription?: SortOrderInput | SortOrder
+    fundingGoal?: SortOrder
+    currentFunding?: SortOrder
+    currency?: SortOrder
+    walletAddress?: SortOrderInput | SortOrder
+    category?: SortOrder
+    location?: SortOrderInput | SortOrder
+    tags?: SortOrderInput | SortOrder
+    verified?: SortOrder
+    active?: SortOrder
+    featured?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrderInput | SortOrder
+    supporters?: SortOrder
+    views?: SortOrder
+    coverImage?: SortOrderInput | SortOrder
+    gallery?: SortOrderInput | SortOrder
+    organizer?: SortOrder
+    organizerEmail?: SortOrderInput | SortOrder
+    organizerPhone?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SocialProjectCountOrderByAggregateInput
+    _avg?: SocialProjectAvgOrderByAggregateInput
+    _max?: SocialProjectMaxOrderByAggregateInput
+    _min?: SocialProjectMinOrderByAggregateInput
+    _sum?: SocialProjectSumOrderByAggregateInput
+  }
+
+  export type SocialProjectScalarWhereWithAggregatesInput = {
+    AND?: SocialProjectScalarWhereWithAggregatesInput | SocialProjectScalarWhereWithAggregatesInput[]
+    OR?: SocialProjectScalarWhereWithAggregatesInput[]
+    NOT?: SocialProjectScalarWhereWithAggregatesInput | SocialProjectScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SocialProject"> | string
+    slug?: StringWithAggregatesFilter<"SocialProject"> | string
+    name?: StringWithAggregatesFilter<"SocialProject"> | string
+    description?: StringWithAggregatesFilter<"SocialProject"> | string
+    longDescription?: StringNullableWithAggregatesFilter<"SocialProject"> | string | null
+    fundingGoal?: FloatWithAggregatesFilter<"SocialProject"> | number
+    currentFunding?: FloatWithAggregatesFilter<"SocialProject"> | number
+    currency?: StringWithAggregatesFilter<"SocialProject"> | string
+    walletAddress?: StringNullableWithAggregatesFilter<"SocialProject"> | string | null
+    category?: EnumProjectCategoryWithAggregatesFilter<"SocialProject"> | $Enums.ProjectCategory
+    location?: StringNullableWithAggregatesFilter<"SocialProject"> | string | null
+    tags?: StringNullableWithAggregatesFilter<"SocialProject"> | string | null
+    verified?: BoolWithAggregatesFilter<"SocialProject"> | boolean
+    active?: BoolWithAggregatesFilter<"SocialProject"> | boolean
+    featured?: BoolWithAggregatesFilter<"SocialProject"> | boolean
+    startDate?: DateTimeWithAggregatesFilter<"SocialProject"> | Date | string
+    endDate?: DateTimeNullableWithAggregatesFilter<"SocialProject"> | Date | string | null
+    supporters?: IntWithAggregatesFilter<"SocialProject"> | number
+    views?: IntWithAggregatesFilter<"SocialProject"> | number
+    coverImage?: StringNullableWithAggregatesFilter<"SocialProject"> | string | null
+    gallery?: StringNullableWithAggregatesFilter<"SocialProject"> | string | null
+    organizer?: StringWithAggregatesFilter<"SocialProject"> | string
+    organizerEmail?: StringNullableWithAggregatesFilter<"SocialProject"> | string | null
+    organizerPhone?: StringNullableWithAggregatesFilter<"SocialProject"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"SocialProject"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SocialProject"> | Date | string
+  }
+
+  export type ProjectMapWhereInput = {
+    AND?: ProjectMapWhereInput | ProjectMapWhereInput[]
+    OR?: ProjectMapWhereInput[]
+    NOT?: ProjectMapWhereInput | ProjectMapWhereInput[]
+    id?: StringFilter<"ProjectMap"> | string
+    projectId?: StringFilter<"ProjectMap"> | string
+    latitude?: FloatFilter<"ProjectMap"> | number
+    longitude?: FloatFilter<"ProjectMap"> | number
+    address?: StringNullableFilter<"ProjectMap"> | string | null
+    city?: StringFilter<"ProjectMap"> | string
+    state?: StringFilter<"ProjectMap"> | string
+    country?: StringFilter<"ProjectMap"> | string
+    markerColor?: StringFilter<"ProjectMap"> | string
+    markerIcon?: StringNullableFilter<"ProjectMap"> | string | null
+    createdAt?: DateTimeFilter<"ProjectMap"> | Date | string
+    updatedAt?: DateTimeFilter<"ProjectMap"> | Date | string
+  }
+
+  export type ProjectMapOrderByWithRelationInput = {
+    id?: SortOrder
+    projectId?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    address?: SortOrderInput | SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    markerColor?: SortOrder
+    markerIcon?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectMapWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    projectId?: string
+    AND?: ProjectMapWhereInput | ProjectMapWhereInput[]
+    OR?: ProjectMapWhereInput[]
+    NOT?: ProjectMapWhereInput | ProjectMapWhereInput[]
+    latitude?: FloatFilter<"ProjectMap"> | number
+    longitude?: FloatFilter<"ProjectMap"> | number
+    address?: StringNullableFilter<"ProjectMap"> | string | null
+    city?: StringFilter<"ProjectMap"> | string
+    state?: StringFilter<"ProjectMap"> | string
+    country?: StringFilter<"ProjectMap"> | string
+    markerColor?: StringFilter<"ProjectMap"> | string
+    markerIcon?: StringNullableFilter<"ProjectMap"> | string | null
+    createdAt?: DateTimeFilter<"ProjectMap"> | Date | string
+    updatedAt?: DateTimeFilter<"ProjectMap"> | Date | string
+  }, "id" | "projectId">
+
+  export type ProjectMapOrderByWithAggregationInput = {
+    id?: SortOrder
+    projectId?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    address?: SortOrderInput | SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    markerColor?: SortOrder
+    markerIcon?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProjectMapCountOrderByAggregateInput
+    _avg?: ProjectMapAvgOrderByAggregateInput
+    _max?: ProjectMapMaxOrderByAggregateInput
+    _min?: ProjectMapMinOrderByAggregateInput
+    _sum?: ProjectMapSumOrderByAggregateInput
+  }
+
+  export type ProjectMapScalarWhereWithAggregatesInput = {
+    AND?: ProjectMapScalarWhereWithAggregatesInput | ProjectMapScalarWhereWithAggregatesInput[]
+    OR?: ProjectMapScalarWhereWithAggregatesInput[]
+    NOT?: ProjectMapScalarWhereWithAggregatesInput | ProjectMapScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProjectMap"> | string
+    projectId?: StringWithAggregatesFilter<"ProjectMap"> | string
+    latitude?: FloatWithAggregatesFilter<"ProjectMap"> | number
+    longitude?: FloatWithAggregatesFilter<"ProjectMap"> | number
+    address?: StringNullableWithAggregatesFilter<"ProjectMap"> | string | null
+    city?: StringWithAggregatesFilter<"ProjectMap"> | string
+    state?: StringWithAggregatesFilter<"ProjectMap"> | string
+    country?: StringWithAggregatesFilter<"ProjectMap"> | string
+    markerColor?: StringWithAggregatesFilter<"ProjectMap"> | string
+    markerIcon?: StringNullableWithAggregatesFilter<"ProjectMap"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ProjectMap"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ProjectMap"> | Date | string
+  }
+
+  export type UserProgressWhereInput = {
+    AND?: UserProgressWhereInput | UserProgressWhereInput[]
+    OR?: UserProgressWhereInput[]
+    NOT?: UserProgressWhereInput | UserProgressWhereInput[]
+    id?: StringFilter<"UserProgress"> | string
+    userId?: StringFilter<"UserProgress"> | string
+    articleSlug?: StringFilter<"UserProgress"> | string
+    completed?: BoolFilter<"UserProgress"> | boolean
+    progress?: IntFilter<"UserProgress"> | number
+    quizScore?: FloatNullableFilter<"UserProgress"> | number | null
+    quizAttempts?: IntFilter<"UserProgress"> | number
+    certificateIssued?: BoolFilter<"UserProgress"> | boolean
+    certificateUrl?: StringNullableFilter<"UserProgress"> | string | null
+    startedAt?: DateTimeFilter<"UserProgress"> | Date | string
+    completedAt?: DateTimeNullableFilter<"UserProgress"> | Date | string | null
+    lastAccessed?: DateTimeFilter<"UserProgress"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserProgressOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    articleSlug?: SortOrder
+    completed?: SortOrder
+    progress?: SortOrder
+    quizScore?: SortOrderInput | SortOrder
+    quizAttempts?: SortOrder
+    certificateIssued?: SortOrder
+    certificateUrl?: SortOrderInput | SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    lastAccessed?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserProgressWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_articleSlug?: UserProgressUserIdArticleSlugCompoundUniqueInput
+    AND?: UserProgressWhereInput | UserProgressWhereInput[]
+    OR?: UserProgressWhereInput[]
+    NOT?: UserProgressWhereInput | UserProgressWhereInput[]
+    userId?: StringFilter<"UserProgress"> | string
+    articleSlug?: StringFilter<"UserProgress"> | string
+    completed?: BoolFilter<"UserProgress"> | boolean
+    progress?: IntFilter<"UserProgress"> | number
+    quizScore?: FloatNullableFilter<"UserProgress"> | number | null
+    quizAttempts?: IntFilter<"UserProgress"> | number
+    certificateIssued?: BoolFilter<"UserProgress"> | boolean
+    certificateUrl?: StringNullableFilter<"UserProgress"> | string | null
+    startedAt?: DateTimeFilter<"UserProgress"> | Date | string
+    completedAt?: DateTimeNullableFilter<"UserProgress"> | Date | string | null
+    lastAccessed?: DateTimeFilter<"UserProgress"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_articleSlug">
+
+  export type UserProgressOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    articleSlug?: SortOrder
+    completed?: SortOrder
+    progress?: SortOrder
+    quizScore?: SortOrderInput | SortOrder
+    quizAttempts?: SortOrder
+    certificateIssued?: SortOrder
+    certificateUrl?: SortOrderInput | SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    lastAccessed?: SortOrder
+    _count?: UserProgressCountOrderByAggregateInput
+    _avg?: UserProgressAvgOrderByAggregateInput
+    _max?: UserProgressMaxOrderByAggregateInput
+    _min?: UserProgressMinOrderByAggregateInput
+    _sum?: UserProgressSumOrderByAggregateInput
+  }
+
+  export type UserProgressScalarWhereWithAggregatesInput = {
+    AND?: UserProgressScalarWhereWithAggregatesInput | UserProgressScalarWhereWithAggregatesInput[]
+    OR?: UserProgressScalarWhereWithAggregatesInput[]
+    NOT?: UserProgressScalarWhereWithAggregatesInput | UserProgressScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserProgress"> | string
+    userId?: StringWithAggregatesFilter<"UserProgress"> | string
+    articleSlug?: StringWithAggregatesFilter<"UserProgress"> | string
+    completed?: BoolWithAggregatesFilter<"UserProgress"> | boolean
+    progress?: IntWithAggregatesFilter<"UserProgress"> | number
+    quizScore?: FloatNullableWithAggregatesFilter<"UserProgress"> | number | null
+    quizAttempts?: IntWithAggregatesFilter<"UserProgress"> | number
+    certificateIssued?: BoolWithAggregatesFilter<"UserProgress"> | boolean
+    certificateUrl?: StringNullableWithAggregatesFilter<"UserProgress"> | string | null
+    startedAt?: DateTimeWithAggregatesFilter<"UserProgress"> | Date | string
+    completedAt?: DateTimeNullableWithAggregatesFilter<"UserProgress"> | Date | string | null
+    lastAccessed?: DateTimeWithAggregatesFilter<"UserProgress"> | Date | string
   }
 
   export type AccountCreateInput = {
@@ -22294,14 +21379,16 @@ export namespace Prisma {
     password: string
     image?: string | null
     role?: $Enums.Role
-    points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    deletedAt?: Date | string | null
+    points?: number
+    badges?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     articles?: ArticleCreateNestedManyWithoutAuthorInput
     copilotActivities?: CopilotActivityCreateNestedManyWithoutUserInput
+    communityStories?: CommunityStoryCreateNestedManyWithoutUserInput
+    userProgress?: UserProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -22312,14 +21399,16 @@ export namespace Prisma {
     password: string
     image?: string | null
     role?: $Enums.Role
-    points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    deletedAt?: Date | string | null
+    points?: number
+    badges?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     articles?: ArticleUncheckedCreateNestedManyWithoutAuthorInput
     copilotActivities?: CopilotActivityUncheckedCreateNestedManyWithoutUserInput
+    communityStories?: CommunityStoryUncheckedCreateNestedManyWithoutUserInput
+    userProgress?: UserProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -22330,14 +21419,16 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     articles?: ArticleUpdateManyWithoutAuthorNestedInput
     copilotActivities?: CopilotActivityUpdateManyWithoutUserNestedInput
+    communityStories?: CommunityStoryUpdateManyWithoutUserNestedInput
+    userProgress?: UserProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -22348,14 +21439,16 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     articles?: ArticleUncheckedUpdateManyWithoutAuthorNestedInput
     copilotActivities?: CopilotActivityUncheckedUpdateManyWithoutUserNestedInput
+    communityStories?: CommunityStoryUncheckedUpdateManyWithoutUserNestedInput
+    userProgress?: UserProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -22366,10 +21459,10 @@ export namespace Prisma {
     password: string
     image?: string | null
     role?: $Enums.Role
-    points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    deletedAt?: Date | string | null
+    points?: number
+    badges?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -22380,10 +21473,10 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -22394,569 +21487,471 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     points?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type CategoryCreateInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string | null
-    type: string
-    icon?: string | null
-    color?: string | null
-    order?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    parent?: CategoryCreateNestedOneWithoutChildrenInput
-    children?: CategoryCreateNestedManyWithoutParentInput
-    articles?: ArticleCreateNestedManyWithoutCategoryInput
-  }
-
-  export type CategoryUncheckedCreateInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string | null
-    type: string
-    parentId?: string | null
-    icon?: string | null
-    color?: string | null
-    order?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    children?: CategoryUncheckedCreateNestedManyWithoutParentInput
-    articles?: ArticleUncheckedCreateNestedManyWithoutCategoryInput
-  }
-
-  export type CategoryUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    parent?: CategoryUpdateOneWithoutChildrenNestedInput
-    children?: CategoryUpdateManyWithoutParentNestedInput
-    articles?: ArticleUpdateManyWithoutCategoryNestedInput
-  }
-
-  export type CategoryUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    children?: CategoryUncheckedUpdateManyWithoutParentNestedInput
-    articles?: ArticleUncheckedUpdateManyWithoutCategoryNestedInput
-  }
-
-  export type CategoryCreateManyInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string | null
-    type: string
-    parentId?: string | null
-    icon?: string | null
-    color?: string | null
-    order?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type CategoryUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CategoryUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TagCreateInput = {
-    id?: string
-    slug: string
-    name: string
-    usageCount?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    articles?: ArticleTagCreateNestedManyWithoutTagInput
-  }
-
-  export type TagUncheckedCreateInput = {
-    id?: string
-    slug: string
-    name: string
-    usageCount?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    articles?: ArticleTagUncheckedCreateNestedManyWithoutTagInput
-  }
-
-  export type TagUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    usageCount?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    articles?: ArticleTagUpdateManyWithoutTagNestedInput
-  }
-
-  export type TagUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    usageCount?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    articles?: ArticleTagUncheckedUpdateManyWithoutTagNestedInput
-  }
-
-  export type TagCreateManyInput = {
-    id?: string
-    slug: string
-    name: string
-    usageCount?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TagUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    usageCount?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TagUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    usageCount?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ArticleCreateInput = {
     id?: string
-    slug: string
     title: string
-    excerpt: string
+    slug: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    sentiment?: $Enums.Sentiment | null
+    type?: string
+    excerpt?: string | null
+    published?: boolean
+    category: string
+    tags: string
+    sentiment?: $Enums.Sentiment
     factCheckScore?: number | null
+    factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
+    level?: string | null
+    contentType?: string | null
+    readTime?: string | null
+    warningLevel?: $Enums.WarningLevel | null
+    securityTips?: string | null
     courseSequence?: number | null
+    relatedArticles?: string | null
     projectHighlight?: boolean
     coverImage?: string | null
     coverImageAlt?: string | null
+    quizData?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
     author: UserCreateNestedOneWithoutArticlesInput
-    category: CategoryCreateNestedOneWithoutArticlesInput
-    tags?: ArticleTagCreateNestedManyWithoutArticleInput
-    relatedFrom?: ArticleRelationCreateNestedManyWithoutFromArticleInput
-    relatedTo?: ArticleRelationCreateNestedManyWithoutToArticleInput
-    citations?: CitationCreateNestedManyWithoutArticleInput
   }
 
   export type ArticleUncheckedCreateInput = {
     id?: string
-    slug: string
     title: string
-    excerpt: string
+    slug: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
+    type?: string
+    excerpt?: string | null
+    published?: boolean
     authorId: string
-    categoryId: string
-    sentiment?: $Enums.Sentiment | null
+    category: string
+    tags: string
+    sentiment?: $Enums.Sentiment
     factCheckScore?: number | null
+    factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
+    level?: string | null
+    contentType?: string | null
+    readTime?: string | null
+    warningLevel?: $Enums.WarningLevel | null
+    securityTips?: string | null
     courseSequence?: number | null
+    relatedArticles?: string | null
     projectHighlight?: boolean
     coverImage?: string | null
     coverImageAlt?: string | null
+    quizData?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-    tags?: ArticleTagUncheckedCreateNestedManyWithoutArticleInput
-    relatedFrom?: ArticleRelationUncheckedCreateNestedManyWithoutFromArticleInput
-    relatedTo?: ArticleRelationUncheckedCreateNestedManyWithoutToArticleInput
-    citations?: CitationUncheckedCreateNestedManyWithoutArticleInput
   }
 
   export type ArticleUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    type?: StringFieldUpdateOperationsInput | string
+    excerpt?: NullableStringFieldUpdateOperationsInput | string | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: StringFieldUpdateOperationsInput | string
+    sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
+    readTime?: NullableStringFieldUpdateOperationsInput | string | null
+    warningLevel?: NullableEnumWarningLevelFieldUpdateOperationsInput | $Enums.WarningLevel | null
+    securityTips?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
+    relatedArticles?: NullableStringFieldUpdateOperationsInput | string | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
+    quizData?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     author?: UserUpdateOneRequiredWithoutArticlesNestedInput
-    category?: CategoryUpdateOneRequiredWithoutArticlesNestedInput
-    tags?: ArticleTagUpdateManyWithoutArticleNestedInput
-    relatedFrom?: ArticleRelationUpdateManyWithoutFromArticleNestedInput
-    relatedTo?: ArticleRelationUpdateManyWithoutToArticleNestedInput
-    citations?: CitationUpdateManyWithoutArticleNestedInput
   }
 
   export type ArticleUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    excerpt?: NullableStringFieldUpdateOperationsInput | string | null
+    published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
-    categoryId?: StringFieldUpdateOperationsInput | string
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: StringFieldUpdateOperationsInput | string
+    sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
+    readTime?: NullableStringFieldUpdateOperationsInput | string | null
+    warningLevel?: NullableEnumWarningLevelFieldUpdateOperationsInput | $Enums.WarningLevel | null
+    securityTips?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
+    relatedArticles?: NullableStringFieldUpdateOperationsInput | string | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
+    quizData?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    tags?: ArticleTagUncheckedUpdateManyWithoutArticleNestedInput
-    relatedFrom?: ArticleRelationUncheckedUpdateManyWithoutFromArticleNestedInput
-    relatedTo?: ArticleRelationUncheckedUpdateManyWithoutToArticleNestedInput
-    citations?: CitationUncheckedUpdateManyWithoutArticleNestedInput
   }
 
   export type ArticleCreateManyInput = {
     id?: string
-    slug: string
     title: string
-    excerpt: string
+    slug: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
+    type?: string
+    excerpt?: string | null
+    published?: boolean
     authorId: string
-    categoryId: string
-    sentiment?: $Enums.Sentiment | null
+    category: string
+    tags: string
+    sentiment?: $Enums.Sentiment
     factCheckScore?: number | null
+    factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
+    level?: string | null
+    contentType?: string | null
+    readTime?: string | null
+    warningLevel?: $Enums.WarningLevel | null
+    securityTips?: string | null
     courseSequence?: number | null
+    relatedArticles?: string | null
     projectHighlight?: boolean
     coverImage?: string | null
     coverImageAlt?: string | null
+    quizData?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
   }
 
   export type ArticleUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    type?: StringFieldUpdateOperationsInput | string
+    excerpt?: NullableStringFieldUpdateOperationsInput | string | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: StringFieldUpdateOperationsInput | string
+    sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
+    readTime?: NullableStringFieldUpdateOperationsInput | string | null
+    warningLevel?: NullableEnumWarningLevelFieldUpdateOperationsInput | $Enums.WarningLevel | null
+    securityTips?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
+    relatedArticles?: NullableStringFieldUpdateOperationsInput | string | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
+    quizData?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ArticleUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    excerpt?: NullableStringFieldUpdateOperationsInput | string | null
+    published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
-    categoryId?: StringFieldUpdateOperationsInput | string
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: StringFieldUpdateOperationsInput | string
+    sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
+    readTime?: NullableStringFieldUpdateOperationsInput | string | null
+    warningLevel?: NullableEnumWarningLevelFieldUpdateOperationsInput | $Enums.WarningLevel | null
+    securityTips?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
+    relatedArticles?: NullableStringFieldUpdateOperationsInput | string | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
+    quizData?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type ArticleTagCreateInput = {
-    createdAt?: Date | string
-    article: ArticleCreateNestedOneWithoutTagsInput
-    tag: TagCreateNestedOneWithoutArticlesInput
-  }
-
-  export type ArticleTagUncheckedCreateInput = {
-    articleId: string
-    tagId: string
-    createdAt?: Date | string
-  }
-
-  export type ArticleTagUpdateInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    article?: ArticleUpdateOneRequiredWithoutTagsNestedInput
-    tag?: TagUpdateOneRequiredWithoutArticlesNestedInput
-  }
-
-  export type ArticleTagUncheckedUpdateInput = {
-    articleId?: StringFieldUpdateOperationsInput | string
-    tagId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleTagCreateManyInput = {
-    articleId: string
-    tagId: string
-    createdAt?: Date | string
-  }
-
-  export type ArticleTagUpdateManyMutationInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleTagUncheckedUpdateManyInput = {
-    articleId?: StringFieldUpdateOperationsInput | string
-    tagId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleRelationCreateInput = {
-    relationType?: string
-    order?: number | null
-    createdAt?: Date | string
-    fromArticle: ArticleCreateNestedOneWithoutRelatedFromInput
-    toArticle: ArticleCreateNestedOneWithoutRelatedToInput
-  }
-
-  export type ArticleRelationUncheckedCreateInput = {
-    fromArticleId: string
-    toArticleId: string
-    relationType?: string
-    order?: number | null
-    createdAt?: Date | string
-  }
-
-  export type ArticleRelationUpdateInput = {
-    relationType?: StringFieldUpdateOperationsInput | string
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromArticle?: ArticleUpdateOneRequiredWithoutRelatedFromNestedInput
-    toArticle?: ArticleUpdateOneRequiredWithoutRelatedToNestedInput
-  }
-
-  export type ArticleRelationUncheckedUpdateInput = {
-    fromArticleId?: StringFieldUpdateOperationsInput | string
-    toArticleId?: StringFieldUpdateOperationsInput | string
-    relationType?: StringFieldUpdateOperationsInput | string
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleRelationCreateManyInput = {
-    fromArticleId: string
-    toArticleId: string
-    relationType?: string
-    order?: number | null
-    createdAt?: Date | string
-  }
-
-  export type ArticleRelationUpdateManyMutationInput = {
-    relationType?: StringFieldUpdateOperationsInput | string
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleRelationUncheckedUpdateManyInput = {
-    fromArticleId?: StringFieldUpdateOperationsInput | string
-    toArticleId?: StringFieldUpdateOperationsInput | string
-    relationType?: StringFieldUpdateOperationsInput | string
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CitationCreateInput = {
+  export type ResourceCreateInput = {
     id?: string
-    url: string
-    title?: string | null
-    domain?: string | null
-    order?: number
+    slug: string
+    name: string
+    category: string
     verified?: boolean
+    shortDescription: string
+    officialUrl: string
+    platforms: string
+    tags: string
+    heroTitle: string
+    heroDescription: string
+    heroGradient: string
+    whyGoodTitle: string
+    whyGoodContent: string
+    features: string
+    howToStartTitle: string
+    howToStartSteps: string
+    pros: string
+    cons: string
+    faq: string
+    securityTips: string
+    securityAudit?: string | null
+    securityAuditDate?: Date | string | null
+    auditedByCommunity?: boolean
+    toolConfig?: string | null
+    interactiveType?: string | null
+    showCompatibleWallets?: boolean
+    relatedResources?: string | null
+    views?: number
     createdAt?: Date | string
-    article: ArticleCreateNestedOneWithoutCitationsInput
+    updatedAt?: Date | string
+    lastVerified?: Date | string
   }
 
-  export type CitationUncheckedCreateInput = {
+  export type ResourceUncheckedCreateInput = {
     id?: string
-    url: string
-    title?: string | null
-    domain?: string | null
-    articleId: string
-    order?: number
+    slug: string
+    name: string
+    category: string
     verified?: boolean
+    shortDescription: string
+    officialUrl: string
+    platforms: string
+    tags: string
+    heroTitle: string
+    heroDescription: string
+    heroGradient: string
+    whyGoodTitle: string
+    whyGoodContent: string
+    features: string
+    howToStartTitle: string
+    howToStartSteps: string
+    pros: string
+    cons: string
+    faq: string
+    securityTips: string
+    securityAudit?: string | null
+    securityAuditDate?: Date | string | null
+    auditedByCommunity?: boolean
+    toolConfig?: string | null
+    interactiveType?: string | null
+    showCompatibleWallets?: boolean
+    relatedResources?: string | null
+    views?: number
     createdAt?: Date | string
+    updatedAt?: Date | string
+    lastVerified?: Date | string
   }
 
-  export type CitationUpdateInput = {
+  export type ResourceUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    domain?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     verified?: BoolFieldUpdateOperationsInput | boolean
+    shortDescription?: StringFieldUpdateOperationsInput | string
+    officialUrl?: StringFieldUpdateOperationsInput | string
+    platforms?: StringFieldUpdateOperationsInput | string
+    tags?: StringFieldUpdateOperationsInput | string
+    heroTitle?: StringFieldUpdateOperationsInput | string
+    heroDescription?: StringFieldUpdateOperationsInput | string
+    heroGradient?: StringFieldUpdateOperationsInput | string
+    whyGoodTitle?: StringFieldUpdateOperationsInput | string
+    whyGoodContent?: StringFieldUpdateOperationsInput | string
+    features?: StringFieldUpdateOperationsInput | string
+    howToStartTitle?: StringFieldUpdateOperationsInput | string
+    howToStartSteps?: StringFieldUpdateOperationsInput | string
+    pros?: StringFieldUpdateOperationsInput | string
+    cons?: StringFieldUpdateOperationsInput | string
+    faq?: StringFieldUpdateOperationsInput | string
+    securityTips?: StringFieldUpdateOperationsInput | string
+    securityAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    securityAuditDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditedByCommunity?: BoolFieldUpdateOperationsInput | boolean
+    toolConfig?: NullableStringFieldUpdateOperationsInput | string | null
+    interactiveType?: NullableStringFieldUpdateOperationsInput | string | null
+    showCompatibleWallets?: BoolFieldUpdateOperationsInput | boolean
+    relatedResources?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    article?: ArticleUpdateOneRequiredWithoutCitationsNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastVerified?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CitationUncheckedUpdateInput = {
+  export type ResourceUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    domain?: NullableStringFieldUpdateOperationsInput | string | null
-    articleId?: StringFieldUpdateOperationsInput | string
-    order?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     verified?: BoolFieldUpdateOperationsInput | boolean
+    shortDescription?: StringFieldUpdateOperationsInput | string
+    officialUrl?: StringFieldUpdateOperationsInput | string
+    platforms?: StringFieldUpdateOperationsInput | string
+    tags?: StringFieldUpdateOperationsInput | string
+    heroTitle?: StringFieldUpdateOperationsInput | string
+    heroDescription?: StringFieldUpdateOperationsInput | string
+    heroGradient?: StringFieldUpdateOperationsInput | string
+    whyGoodTitle?: StringFieldUpdateOperationsInput | string
+    whyGoodContent?: StringFieldUpdateOperationsInput | string
+    features?: StringFieldUpdateOperationsInput | string
+    howToStartTitle?: StringFieldUpdateOperationsInput | string
+    howToStartSteps?: StringFieldUpdateOperationsInput | string
+    pros?: StringFieldUpdateOperationsInput | string
+    cons?: StringFieldUpdateOperationsInput | string
+    faq?: StringFieldUpdateOperationsInput | string
+    securityTips?: StringFieldUpdateOperationsInput | string
+    securityAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    securityAuditDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditedByCommunity?: BoolFieldUpdateOperationsInput | boolean
+    toolConfig?: NullableStringFieldUpdateOperationsInput | string | null
+    interactiveType?: NullableStringFieldUpdateOperationsInput | string | null
+    showCompatibleWallets?: BoolFieldUpdateOperationsInput | boolean
+    relatedResources?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastVerified?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CitationCreateManyInput = {
+  export type ResourceCreateManyInput = {
     id?: string
-    url: string
-    title?: string | null
-    domain?: string | null
-    articleId: string
-    order?: number
+    slug: string
+    name: string
+    category: string
     verified?: boolean
+    shortDescription: string
+    officialUrl: string
+    platforms: string
+    tags: string
+    heroTitle: string
+    heroDescription: string
+    heroGradient: string
+    whyGoodTitle: string
+    whyGoodContent: string
+    features: string
+    howToStartTitle: string
+    howToStartSteps: string
+    pros: string
+    cons: string
+    faq: string
+    securityTips: string
+    securityAudit?: string | null
+    securityAuditDate?: Date | string | null
+    auditedByCommunity?: boolean
+    toolConfig?: string | null
+    interactiveType?: string | null
+    showCompatibleWallets?: boolean
+    relatedResources?: string | null
+    views?: number
     createdAt?: Date | string
+    updatedAt?: Date | string
+    lastVerified?: Date | string
   }
 
-  export type CitationUpdateManyMutationInput = {
+  export type ResourceUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    domain?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     verified?: BoolFieldUpdateOperationsInput | boolean
+    shortDescription?: StringFieldUpdateOperationsInput | string
+    officialUrl?: StringFieldUpdateOperationsInput | string
+    platforms?: StringFieldUpdateOperationsInput | string
+    tags?: StringFieldUpdateOperationsInput | string
+    heroTitle?: StringFieldUpdateOperationsInput | string
+    heroDescription?: StringFieldUpdateOperationsInput | string
+    heroGradient?: StringFieldUpdateOperationsInput | string
+    whyGoodTitle?: StringFieldUpdateOperationsInput | string
+    whyGoodContent?: StringFieldUpdateOperationsInput | string
+    features?: StringFieldUpdateOperationsInput | string
+    howToStartTitle?: StringFieldUpdateOperationsInput | string
+    howToStartSteps?: StringFieldUpdateOperationsInput | string
+    pros?: StringFieldUpdateOperationsInput | string
+    cons?: StringFieldUpdateOperationsInput | string
+    faq?: StringFieldUpdateOperationsInput | string
+    securityTips?: StringFieldUpdateOperationsInput | string
+    securityAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    securityAuditDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditedByCommunity?: BoolFieldUpdateOperationsInput | boolean
+    toolConfig?: NullableStringFieldUpdateOperationsInput | string | null
+    interactiveType?: NullableStringFieldUpdateOperationsInput | string | null
+    showCompatibleWallets?: BoolFieldUpdateOperationsInput | boolean
+    relatedResources?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastVerified?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CitationUncheckedUpdateManyInput = {
+  export type ResourceUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    domain?: NullableStringFieldUpdateOperationsInput | string | null
-    articleId?: StringFieldUpdateOperationsInput | string
-    order?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     verified?: BoolFieldUpdateOperationsInput | boolean
+    shortDescription?: StringFieldUpdateOperationsInput | string
+    officialUrl?: StringFieldUpdateOperationsInput | string
+    platforms?: StringFieldUpdateOperationsInput | string
+    tags?: StringFieldUpdateOperationsInput | string
+    heroTitle?: StringFieldUpdateOperationsInput | string
+    heroDescription?: StringFieldUpdateOperationsInput | string
+    heroGradient?: StringFieldUpdateOperationsInput | string
+    whyGoodTitle?: StringFieldUpdateOperationsInput | string
+    whyGoodContent?: StringFieldUpdateOperationsInput | string
+    features?: StringFieldUpdateOperationsInput | string
+    howToStartTitle?: StringFieldUpdateOperationsInput | string
+    howToStartSteps?: StringFieldUpdateOperationsInput | string
+    pros?: StringFieldUpdateOperationsInput | string
+    cons?: StringFieldUpdateOperationsInput | string
+    faq?: StringFieldUpdateOperationsInput | string
+    securityTips?: StringFieldUpdateOperationsInput | string
+    securityAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    securityAuditDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    auditedByCommunity?: BoolFieldUpdateOperationsInput | boolean
+    toolConfig?: NullableStringFieldUpdateOperationsInput | string | null
+    interactiveType?: NullableStringFieldUpdateOperationsInput | string | null
+    showCompatibleWallets?: BoolFieldUpdateOperationsInput | boolean
+    relatedResources?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastVerified?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CryptocurrencyCreateInput = {
@@ -23511,249 +22506,534 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ResourceCreateInput = {
+  export type CommunityStoryCreateInput = {
+    id?: string
+    slug: string
+    authorName: string
+    authorAvatar?: string | null
+    title: string
+    content: string
+    category: $Enums.StoryCategory
+    likes?: number
+    verified?: boolean
+    featured?: boolean
+    published?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user?: UserCreateNestedOneWithoutCommunityStoriesInput
+  }
+
+  export type CommunityStoryUncheckedCreateInput = {
+    id?: string
+    slug: string
+    authorName: string
+    authorAvatar?: string | null
+    userId?: string | null
+    title: string
+    content: string
+    category: $Enums.StoryCategory
+    likes?: number
+    verified?: boolean
+    featured?: boolean
+    published?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommunityStoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    authorName?: StringFieldUpdateOperationsInput | string
+    authorAvatar?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    category?: EnumStoryCategoryFieldUpdateOperationsInput | $Enums.StoryCategory
+    likes?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutCommunityStoriesNestedInput
+  }
+
+  export type CommunityStoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    authorName?: StringFieldUpdateOperationsInput | string
+    authorAvatar?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    category?: EnumStoryCategoryFieldUpdateOperationsInput | $Enums.StoryCategory
+    likes?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommunityStoryCreateManyInput = {
+    id?: string
+    slug: string
+    authorName: string
+    authorAvatar?: string | null
+    userId?: string | null
+    title: string
+    content: string
+    category: $Enums.StoryCategory
+    likes?: number
+    verified?: boolean
+    featured?: boolean
+    published?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommunityStoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    authorName?: StringFieldUpdateOperationsInput | string
+    authorAvatar?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    category?: EnumStoryCategoryFieldUpdateOperationsInput | $Enums.StoryCategory
+    likes?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommunityStoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    authorName?: StringFieldUpdateOperationsInput | string
+    authorAvatar?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    category?: EnumStoryCategoryFieldUpdateOperationsInput | $Enums.StoryCategory
+    likes?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    published?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SocialProjectCreateInput = {
     id?: string
     slug: string
     name: string
-    category: string
+    description: string
+    longDescription?: string | null
+    fundingGoal: number
+    currentFunding?: number
+    currency?: string
+    walletAddress?: string | null
+    category: $Enums.ProjectCategory
+    location?: string | null
+    tags?: string | null
     verified?: boolean
-    shortDescription: string
-    officialUrl: string
-    platforms: string
-    tags: string
-    heroTitle: string
-    heroDescription: string
-    heroGradient: string
-    whyGoodTitle: string
-    whyGoodContent: string
-    features: string
-    howToStartTitle: string
-    howToStartSteps: string
-    pros: string
-    cons: string
-    faq: string
-    securityTips: string
-    securityAudit?: string | null
-    securityAuditDate?: Date | string | null
-    auditedByCommunity?: boolean
-    toolConfig?: string | null
-    interactiveType?: string | null
-    showCompatibleWallets?: boolean
-    relatedResources?: string | null
+    active?: boolean
+    featured?: boolean
+    startDate: Date | string
+    endDate?: Date | string | null
+    supporters?: number
     views?: number
+    coverImage?: string | null
+    gallery?: string | null
+    organizer: string
+    organizerEmail?: string | null
+    organizerPhone?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    lastVerified?: Date | string
   }
 
-  export type ResourceUncheckedCreateInput = {
+  export type SocialProjectUncheckedCreateInput = {
     id?: string
     slug: string
     name: string
-    category: string
+    description: string
+    longDescription?: string | null
+    fundingGoal: number
+    currentFunding?: number
+    currency?: string
+    walletAddress?: string | null
+    category: $Enums.ProjectCategory
+    location?: string | null
+    tags?: string | null
     verified?: boolean
-    shortDescription: string
-    officialUrl: string
-    platforms: string
-    tags: string
-    heroTitle: string
-    heroDescription: string
-    heroGradient: string
-    whyGoodTitle: string
-    whyGoodContent: string
-    features: string
-    howToStartTitle: string
-    howToStartSteps: string
-    pros: string
-    cons: string
-    faq: string
-    securityTips: string
-    securityAudit?: string | null
-    securityAuditDate?: Date | string | null
-    auditedByCommunity?: boolean
-    toolConfig?: string | null
-    interactiveType?: string | null
-    showCompatibleWallets?: boolean
-    relatedResources?: string | null
+    active?: boolean
+    featured?: boolean
+    startDate: Date | string
+    endDate?: Date | string | null
+    supporters?: number
     views?: number
+    coverImage?: string | null
+    gallery?: string | null
+    organizer: string
+    organizerEmail?: string | null
+    organizerPhone?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    lastVerified?: Date | string
   }
 
-  export type ResourceUpdateInput = {
+  export type SocialProjectUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingGoal?: FloatFieldUpdateOperationsInput | number
+    currentFunding?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumProjectCategoryFieldUpdateOperationsInput | $Enums.ProjectCategory
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
-    shortDescription?: StringFieldUpdateOperationsInput | string
-    officialUrl?: StringFieldUpdateOperationsInput | string
-    platforms?: StringFieldUpdateOperationsInput | string
-    tags?: StringFieldUpdateOperationsInput | string
-    heroTitle?: StringFieldUpdateOperationsInput | string
-    heroDescription?: StringFieldUpdateOperationsInput | string
-    heroGradient?: StringFieldUpdateOperationsInput | string
-    whyGoodTitle?: StringFieldUpdateOperationsInput | string
-    whyGoodContent?: StringFieldUpdateOperationsInput | string
-    features?: StringFieldUpdateOperationsInput | string
-    howToStartTitle?: StringFieldUpdateOperationsInput | string
-    howToStartSteps?: StringFieldUpdateOperationsInput | string
-    pros?: StringFieldUpdateOperationsInput | string
-    cons?: StringFieldUpdateOperationsInput | string
-    faq?: StringFieldUpdateOperationsInput | string
-    securityTips?: StringFieldUpdateOperationsInput | string
-    securityAudit?: NullableStringFieldUpdateOperationsInput | string | null
-    securityAuditDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditedByCommunity?: BoolFieldUpdateOperationsInput | boolean
-    toolConfig?: NullableStringFieldUpdateOperationsInput | string | null
-    interactiveType?: NullableStringFieldUpdateOperationsInput | string | null
-    showCompatibleWallets?: BoolFieldUpdateOperationsInput | boolean
-    relatedResources?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    supporters?: IntFieldUpdateOperationsInput | number
     views?: IntFieldUpdateOperationsInput | number
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    gallery?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer?: StringFieldUpdateOperationsInput | string
+    organizerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    organizerPhone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    lastVerified?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ResourceUncheckedUpdateInput = {
+  export type SocialProjectUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingGoal?: FloatFieldUpdateOperationsInput | number
+    currentFunding?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumProjectCategoryFieldUpdateOperationsInput | $Enums.ProjectCategory
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
-    shortDescription?: StringFieldUpdateOperationsInput | string
-    officialUrl?: StringFieldUpdateOperationsInput | string
-    platforms?: StringFieldUpdateOperationsInput | string
-    tags?: StringFieldUpdateOperationsInput | string
-    heroTitle?: StringFieldUpdateOperationsInput | string
-    heroDescription?: StringFieldUpdateOperationsInput | string
-    heroGradient?: StringFieldUpdateOperationsInput | string
-    whyGoodTitle?: StringFieldUpdateOperationsInput | string
-    whyGoodContent?: StringFieldUpdateOperationsInput | string
-    features?: StringFieldUpdateOperationsInput | string
-    howToStartTitle?: StringFieldUpdateOperationsInput | string
-    howToStartSteps?: StringFieldUpdateOperationsInput | string
-    pros?: StringFieldUpdateOperationsInput | string
-    cons?: StringFieldUpdateOperationsInput | string
-    faq?: StringFieldUpdateOperationsInput | string
-    securityTips?: StringFieldUpdateOperationsInput | string
-    securityAudit?: NullableStringFieldUpdateOperationsInput | string | null
-    securityAuditDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditedByCommunity?: BoolFieldUpdateOperationsInput | boolean
-    toolConfig?: NullableStringFieldUpdateOperationsInput | string | null
-    interactiveType?: NullableStringFieldUpdateOperationsInput | string | null
-    showCompatibleWallets?: BoolFieldUpdateOperationsInput | boolean
-    relatedResources?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    supporters?: IntFieldUpdateOperationsInput | number
     views?: IntFieldUpdateOperationsInput | number
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    gallery?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer?: StringFieldUpdateOperationsInput | string
+    organizerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    organizerPhone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    lastVerified?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ResourceCreateManyInput = {
+  export type SocialProjectCreateManyInput = {
     id?: string
     slug: string
     name: string
-    category: string
+    description: string
+    longDescription?: string | null
+    fundingGoal: number
+    currentFunding?: number
+    currency?: string
+    walletAddress?: string | null
+    category: $Enums.ProjectCategory
+    location?: string | null
+    tags?: string | null
     verified?: boolean
-    shortDescription: string
-    officialUrl: string
-    platforms: string
-    tags: string
-    heroTitle: string
-    heroDescription: string
-    heroGradient: string
-    whyGoodTitle: string
-    whyGoodContent: string
-    features: string
-    howToStartTitle: string
-    howToStartSteps: string
-    pros: string
-    cons: string
-    faq: string
-    securityTips: string
-    securityAudit?: string | null
-    securityAuditDate?: Date | string | null
-    auditedByCommunity?: boolean
-    toolConfig?: string | null
-    interactiveType?: string | null
-    showCompatibleWallets?: boolean
-    relatedResources?: string | null
+    active?: boolean
+    featured?: boolean
+    startDate: Date | string
+    endDate?: Date | string | null
+    supporters?: number
     views?: number
+    coverImage?: string | null
+    gallery?: string | null
+    organizer: string
+    organizerEmail?: string | null
+    organizerPhone?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    lastVerified?: Date | string
   }
 
-  export type ResourceUpdateManyMutationInput = {
+  export type SocialProjectUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingGoal?: FloatFieldUpdateOperationsInput | number
+    currentFunding?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumProjectCategoryFieldUpdateOperationsInput | $Enums.ProjectCategory
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
-    shortDescription?: StringFieldUpdateOperationsInput | string
-    officialUrl?: StringFieldUpdateOperationsInput | string
-    platforms?: StringFieldUpdateOperationsInput | string
-    tags?: StringFieldUpdateOperationsInput | string
-    heroTitle?: StringFieldUpdateOperationsInput | string
-    heroDescription?: StringFieldUpdateOperationsInput | string
-    heroGradient?: StringFieldUpdateOperationsInput | string
-    whyGoodTitle?: StringFieldUpdateOperationsInput | string
-    whyGoodContent?: StringFieldUpdateOperationsInput | string
-    features?: StringFieldUpdateOperationsInput | string
-    howToStartTitle?: StringFieldUpdateOperationsInput | string
-    howToStartSteps?: StringFieldUpdateOperationsInput | string
-    pros?: StringFieldUpdateOperationsInput | string
-    cons?: StringFieldUpdateOperationsInput | string
-    faq?: StringFieldUpdateOperationsInput | string
-    securityTips?: StringFieldUpdateOperationsInput | string
-    securityAudit?: NullableStringFieldUpdateOperationsInput | string | null
-    securityAuditDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditedByCommunity?: BoolFieldUpdateOperationsInput | boolean
-    toolConfig?: NullableStringFieldUpdateOperationsInput | string | null
-    interactiveType?: NullableStringFieldUpdateOperationsInput | string | null
-    showCompatibleWallets?: BoolFieldUpdateOperationsInput | boolean
-    relatedResources?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    supporters?: IntFieldUpdateOperationsInput | number
     views?: IntFieldUpdateOperationsInput | number
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    gallery?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer?: StringFieldUpdateOperationsInput | string
+    organizerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    organizerPhone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    lastVerified?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ResourceUncheckedUpdateManyInput = {
+  export type SocialProjectUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingGoal?: FloatFieldUpdateOperationsInput | number
+    currentFunding?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumProjectCategoryFieldUpdateOperationsInput | $Enums.ProjectCategory
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
-    shortDescription?: StringFieldUpdateOperationsInput | string
-    officialUrl?: StringFieldUpdateOperationsInput | string
-    platforms?: StringFieldUpdateOperationsInput | string
-    tags?: StringFieldUpdateOperationsInput | string
-    heroTitle?: StringFieldUpdateOperationsInput | string
-    heroDescription?: StringFieldUpdateOperationsInput | string
-    heroGradient?: StringFieldUpdateOperationsInput | string
-    whyGoodTitle?: StringFieldUpdateOperationsInput | string
-    whyGoodContent?: StringFieldUpdateOperationsInput | string
-    features?: StringFieldUpdateOperationsInput | string
-    howToStartTitle?: StringFieldUpdateOperationsInput | string
-    howToStartSteps?: StringFieldUpdateOperationsInput | string
-    pros?: StringFieldUpdateOperationsInput | string
-    cons?: StringFieldUpdateOperationsInput | string
-    faq?: StringFieldUpdateOperationsInput | string
-    securityTips?: StringFieldUpdateOperationsInput | string
-    securityAudit?: NullableStringFieldUpdateOperationsInput | string | null
-    securityAuditDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    auditedByCommunity?: BoolFieldUpdateOperationsInput | boolean
-    toolConfig?: NullableStringFieldUpdateOperationsInput | string | null
-    interactiveType?: NullableStringFieldUpdateOperationsInput | string | null
-    showCompatibleWallets?: BoolFieldUpdateOperationsInput | boolean
-    relatedResources?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    supporters?: IntFieldUpdateOperationsInput | number
     views?: IntFieldUpdateOperationsInput | number
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    gallery?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer?: StringFieldUpdateOperationsInput | string
+    organizerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    organizerPhone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    lastVerified?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectMapCreateInput = {
+    id?: string
+    projectId: string
+    latitude: number
+    longitude: number
+    address?: string | null
+    city: string
+    state: string
+    country?: string
+    markerColor?: string
+    markerIcon?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProjectMapUncheckedCreateInput = {
+    id?: string
+    projectId: string
+    latitude: number
+    longitude: number
+    address?: string | null
+    city: string
+    state: string
+    country?: string
+    markerColor?: string
+    markerIcon?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProjectMapUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    markerColor?: StringFieldUpdateOperationsInput | string
+    markerIcon?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectMapUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    markerColor?: StringFieldUpdateOperationsInput | string
+    markerIcon?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectMapCreateManyInput = {
+    id?: string
+    projectId: string
+    latitude: number
+    longitude: number
+    address?: string | null
+    city: string
+    state: string
+    country?: string
+    markerColor?: string
+    markerIcon?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProjectMapUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    markerColor?: StringFieldUpdateOperationsInput | string
+    markerIcon?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectMapUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    markerColor?: StringFieldUpdateOperationsInput | string
+    markerIcon?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserProgressCreateInput = {
+    id?: string
+    articleSlug: string
+    completed?: boolean
+    progress?: number
+    quizScore?: number | null
+    quizAttempts?: number
+    certificateIssued?: boolean
+    certificateUrl?: string | null
+    startedAt?: Date | string
+    completedAt?: Date | string | null
+    lastAccessed?: Date | string
+    user: UserCreateNestedOneWithoutUserProgressInput
+  }
+
+  export type UserProgressUncheckedCreateInput = {
+    id?: string
+    userId: string
+    articleSlug: string
+    completed?: boolean
+    progress?: number
+    quizScore?: number | null
+    quizAttempts?: number
+    certificateIssued?: boolean
+    certificateUrl?: string | null
+    startedAt?: Date | string
+    completedAt?: Date | string | null
+    lastAccessed?: Date | string
+  }
+
+  export type UserProgressUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    articleSlug?: StringFieldUpdateOperationsInput | string
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    progress?: IntFieldUpdateOperationsInput | number
+    quizScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    quizAttempts?: IntFieldUpdateOperationsInput | number
+    certificateIssued?: BoolFieldUpdateOperationsInput | boolean
+    certificateUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessed?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUserProgressNestedInput
+  }
+
+  export type UserProgressUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    articleSlug?: StringFieldUpdateOperationsInput | string
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    progress?: IntFieldUpdateOperationsInput | number
+    quizScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    quizAttempts?: IntFieldUpdateOperationsInput | number
+    certificateIssued?: BoolFieldUpdateOperationsInput | boolean
+    certificateUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessed?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserProgressCreateManyInput = {
+    id?: string
+    userId: string
+    articleSlug: string
+    completed?: boolean
+    progress?: number
+    quizScore?: number | null
+    quizAttempts?: number
+    certificateIssued?: boolean
+    certificateUrl?: string | null
+    startedAt?: Date | string
+    completedAt?: Date | string | null
+    lastAccessed?: Date | string
+  }
+
+  export type UserProgressUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    articleSlug?: StringFieldUpdateOperationsInput | string
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    progress?: IntFieldUpdateOperationsInput | number
+    quizScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    quizAttempts?: IntFieldUpdateOperationsInput | number
+    certificateIssued?: BoolFieldUpdateOperationsInput | boolean
+    certificateUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessed?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserProgressUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    articleSlug?: StringFieldUpdateOperationsInput | string
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    progress?: IntFieldUpdateOperationsInput | number
+    quizScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    quizAttempts?: IntFieldUpdateOperationsInput | number
+    certificateIssued?: BoolFieldUpdateOperationsInput | boolean
+    certificateUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessed?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -24039,6 +23319,18 @@ export namespace Prisma {
     none?: CopilotActivityWhereInput
   }
 
+  export type CommunityStoryListRelationFilter = {
+    every?: CommunityStoryWhereInput
+    some?: CommunityStoryWhereInput
+    none?: CommunityStoryWhereInput
+  }
+
+  export type UserProgressListRelationFilter = {
+    every?: UserProgressWhereInput
+    some?: UserProgressWhereInput
+    none?: UserProgressWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -24055,6 +23347,14 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type CommunityStoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserProgressOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -24063,10 +23363,10 @@ export namespace Prisma {
     password?: SortOrder
     image?: SortOrder
     role?: SortOrder
-    points?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    deletedAt?: SortOrder
+    points?: SortOrder
+    badges?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -24081,10 +23381,10 @@ export namespace Prisma {
     password?: SortOrder
     image?: SortOrder
     role?: SortOrder
-    points?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    deletedAt?: SortOrder
+    points?: SortOrder
+    badges?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -24095,10 +23395,10 @@ export namespace Prisma {
     password?: SortOrder
     image?: SortOrder
     role?: SortOrder
-    points?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    deletedAt?: SortOrder
+    points?: SortOrder
+    badges?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -24145,135 +23445,16 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type CategoryNullableScalarRelationFilter = {
-    is?: CategoryWhereInput | null
-    isNot?: CategoryWhereInput | null
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type CategoryListRelationFilter = {
-    every?: CategoryWhereInput
-    some?: CategoryWhereInput
-    none?: CategoryWhereInput
-  }
-
-  export type CategoryOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type CategoryCountOrderByAggregateInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    type?: SortOrder
-    parentId?: SortOrder
-    icon?: SortOrder
-    color?: SortOrder
-    order?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type CategoryAvgOrderByAggregateInput = {
-    order?: SortOrder
-  }
-
-  export type CategoryMaxOrderByAggregateInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    type?: SortOrder
-    parentId?: SortOrder
-    icon?: SortOrder
-    color?: SortOrder
-    order?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type CategoryMinOrderByAggregateInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    type?: SortOrder
-    parentId?: SortOrder
-    icon?: SortOrder
-    color?: SortOrder
-    order?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type CategorySumOrderByAggregateInput = {
-    order?: SortOrder
-  }
-
-  export type ArticleTagListRelationFilter = {
-    every?: ArticleTagWhereInput
-    some?: ArticleTagWhereInput
-    none?: ArticleTagWhereInput
-  }
-
-  export type ArticleTagOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type TagCountOrderByAggregateInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    usageCount?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TagAvgOrderByAggregateInput = {
-    usageCount?: SortOrder
-  }
-
-  export type TagMaxOrderByAggregateInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    usageCount?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TagMinOrderByAggregateInput = {
-    id?: SortOrder
-    slug?: SortOrder
-    name?: SortOrder
-    usageCount?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TagSumOrderByAggregateInput = {
-    usageCount?: SortOrder
-  }
-
-  export type EnumArticleTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleType | EnumArticleTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleTypeFilter<$PrismaModel> | $Enums.ArticleType
-  }
-
-  export type EnumArticleStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleStatus | EnumArticleStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleStatusFilter<$PrismaModel> | $Enums.ArticleStatus
-  }
-
-  export type EnumSentimentNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Sentiment | EnumSentimentFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumSentimentNullableFilter<$PrismaModel> | $Enums.Sentiment | null
+  export type EnumSentimentFilter<$PrismaModel = never> = {
+    equals?: $Enums.Sentiment | EnumSentimentFieldRefInput<$PrismaModel>
+    in?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel>
+    not?: NestedEnumSentimentFilter<$PrismaModel> | $Enums.Sentiment
   }
 
   export type FloatNullableFilter<$PrismaModel = never> = {
@@ -24287,177 +23468,132 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type EnumLevelNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumLevelNullableFilter<$PrismaModel> | $Enums.Level | null
-  }
-
-  export type EnumContentTypeNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumContentTypeNullableFilter<$PrismaModel> | $Enums.ContentType | null
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type CategoryScalarRelationFilter = {
-    is?: CategoryWhereInput
-    isNot?: CategoryWhereInput
-  }
-
-  export type ArticleRelationListRelationFilter = {
-    every?: ArticleRelationWhereInput
-    some?: ArticleRelationWhereInput
-    none?: ArticleRelationWhereInput
-  }
-
-  export type CitationListRelationFilter = {
-    every?: CitationWhereInput
-    some?: CitationWhereInput
-    none?: CitationWhereInput
-  }
-
-  export type ArticleRelationOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type CitationOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type EnumWarningLevelNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.WarningLevel | EnumWarningLevelFieldRefInput<$PrismaModel> | null
+    in?: $Enums.WarningLevel[] | ListEnumWarningLevelFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.WarningLevel[] | ListEnumWarningLevelFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumWarningLevelNullableFilter<$PrismaModel> | $Enums.WarningLevel | null
   }
 
   export type ArticleCountOrderByAggregateInput = {
     id?: SortOrder
-    slug?: SortOrder
     title?: SortOrder
-    excerpt?: SortOrder
+    slug?: SortOrder
     content?: SortOrder
     type?: SortOrder
-    status?: SortOrder
-    readTime?: SortOrder
-    viewCount?: SortOrder
+    excerpt?: SortOrder
+    published?: SortOrder
     authorId?: SortOrder
-    categoryId?: SortOrder
+    category?: SortOrder
+    tags?: SortOrder
     sentiment?: SortOrder
     factCheckScore?: SortOrder
+    factCheckSources?: SortOrder
     factCheckDate?: SortOrder
     factCheckStatus?: SortOrder
     level?: SortOrder
     contentType?: SortOrder
+    readTime?: SortOrder
     warningLevel?: SortOrder
+    securityTips?: SortOrder
     courseSequence?: SortOrder
+    relatedArticles?: SortOrder
     projectHighlight?: SortOrder
     coverImage?: SortOrder
     coverImageAlt?: SortOrder
+    quizData?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    publishedAt?: SortOrder
-    deletedAt?: SortOrder
   }
 
   export type ArticleAvgOrderByAggregateInput = {
-    viewCount?: SortOrder
     factCheckScore?: SortOrder
     courseSequence?: SortOrder
   }
 
   export type ArticleMaxOrderByAggregateInput = {
     id?: SortOrder
-    slug?: SortOrder
     title?: SortOrder
-    excerpt?: SortOrder
+    slug?: SortOrder
     content?: SortOrder
     type?: SortOrder
-    status?: SortOrder
-    readTime?: SortOrder
-    viewCount?: SortOrder
+    excerpt?: SortOrder
+    published?: SortOrder
     authorId?: SortOrder
-    categoryId?: SortOrder
+    category?: SortOrder
+    tags?: SortOrder
     sentiment?: SortOrder
     factCheckScore?: SortOrder
+    factCheckSources?: SortOrder
     factCheckDate?: SortOrder
     factCheckStatus?: SortOrder
     level?: SortOrder
     contentType?: SortOrder
+    readTime?: SortOrder
     warningLevel?: SortOrder
+    securityTips?: SortOrder
     courseSequence?: SortOrder
+    relatedArticles?: SortOrder
     projectHighlight?: SortOrder
     coverImage?: SortOrder
     coverImageAlt?: SortOrder
+    quizData?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    publishedAt?: SortOrder
-    deletedAt?: SortOrder
   }
 
   export type ArticleMinOrderByAggregateInput = {
     id?: SortOrder
-    slug?: SortOrder
     title?: SortOrder
-    excerpt?: SortOrder
+    slug?: SortOrder
     content?: SortOrder
     type?: SortOrder
-    status?: SortOrder
-    readTime?: SortOrder
-    viewCount?: SortOrder
+    excerpt?: SortOrder
+    published?: SortOrder
     authorId?: SortOrder
-    categoryId?: SortOrder
+    category?: SortOrder
+    tags?: SortOrder
     sentiment?: SortOrder
     factCheckScore?: SortOrder
+    factCheckSources?: SortOrder
     factCheckDate?: SortOrder
     factCheckStatus?: SortOrder
     level?: SortOrder
     contentType?: SortOrder
+    readTime?: SortOrder
     warningLevel?: SortOrder
+    securityTips?: SortOrder
     courseSequence?: SortOrder
+    relatedArticles?: SortOrder
     projectHighlight?: SortOrder
     coverImage?: SortOrder
     coverImageAlt?: SortOrder
+    quizData?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    publishedAt?: SortOrder
-    deletedAt?: SortOrder
   }
 
   export type ArticleSumOrderByAggregateInput = {
-    viewCount?: SortOrder
     factCheckScore?: SortOrder
     courseSequence?: SortOrder
   }
 
-  export type EnumArticleTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleType | EnumArticleTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleTypeWithAggregatesFilter<$PrismaModel> | $Enums.ArticleType
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumArticleTypeFilter<$PrismaModel>
-    _max?: NestedEnumArticleTypeFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type EnumArticleStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleStatus | EnumArticleStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleStatusWithAggregatesFilter<$PrismaModel> | $Enums.ArticleStatus
+  export type EnumSentimentWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Sentiment | EnumSentimentFieldRefInput<$PrismaModel>
+    in?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel>
+    not?: NestedEnumSentimentWithAggregatesFilter<$PrismaModel> | $Enums.Sentiment
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumArticleStatusFilter<$PrismaModel>
-    _max?: NestedEnumArticleStatusFilter<$PrismaModel>
-  }
-
-  export type EnumSentimentNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Sentiment | EnumSentimentFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumSentimentNullableWithAggregatesFilter<$PrismaModel> | $Enums.Sentiment | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumSentimentNullableFilter<$PrismaModel>
-    _max?: NestedEnumSentimentNullableFilter<$PrismaModel>
+    _min?: NestedEnumSentimentFilter<$PrismaModel>
+    _max?: NestedEnumSentimentFilter<$PrismaModel>
   }
 
   export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -24476,143 +23612,127 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
-  export type EnumLevelNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumLevelNullableWithAggregatesFilter<$PrismaModel> | $Enums.Level | null
+  export type EnumWarningLevelNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WarningLevel | EnumWarningLevelFieldRefInput<$PrismaModel> | null
+    in?: $Enums.WarningLevel[] | ListEnumWarningLevelFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.WarningLevel[] | ListEnumWarningLevelFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumWarningLevelNullableWithAggregatesFilter<$PrismaModel> | $Enums.WarningLevel | null
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumLevelNullableFilter<$PrismaModel>
-    _max?: NestedEnumLevelNullableFilter<$PrismaModel>
+    _min?: NestedEnumWarningLevelNullableFilter<$PrismaModel>
+    _max?: NestedEnumWarningLevelNullableFilter<$PrismaModel>
   }
 
-  export type EnumContentTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumContentTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.ContentType | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumContentTypeNullableFilter<$PrismaModel>
-    _max?: NestedEnumContentTypeNullableFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type ArticleScalarRelationFilter = {
-    is?: ArticleWhereInput
-    isNot?: ArticleWhereInput
-  }
-
-  export type TagScalarRelationFilter = {
-    is?: TagWhereInput
-    isNot?: TagWhereInput
-  }
-
-  export type ArticleTagArticleIdTagIdCompoundUniqueInput = {
-    articleId: string
-    tagId: string
-  }
-
-  export type ArticleTagCountOrderByAggregateInput = {
-    articleId?: SortOrder
-    tagId?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type ArticleTagMaxOrderByAggregateInput = {
-    articleId?: SortOrder
-    tagId?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type ArticleTagMinOrderByAggregateInput = {
-    articleId?: SortOrder
-    tagId?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type ArticleRelationFromArticleIdToArticleIdCompoundUniqueInput = {
-    fromArticleId: string
-    toArticleId: string
-  }
-
-  export type ArticleRelationCountOrderByAggregateInput = {
-    fromArticleId?: SortOrder
-    toArticleId?: SortOrder
-    relationType?: SortOrder
-    order?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type ArticleRelationAvgOrderByAggregateInput = {
-    order?: SortOrder
-  }
-
-  export type ArticleRelationMaxOrderByAggregateInput = {
-    fromArticleId?: SortOrder
-    toArticleId?: SortOrder
-    relationType?: SortOrder
-    order?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type ArticleRelationMinOrderByAggregateInput = {
-    fromArticleId?: SortOrder
-    toArticleId?: SortOrder
-    relationType?: SortOrder
-    order?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type ArticleRelationSumOrderByAggregateInput = {
-    order?: SortOrder
-  }
-
-  export type CitationCountOrderByAggregateInput = {
+  export type ResourceCountOrderByAggregateInput = {
     id?: SortOrder
-    url?: SortOrder
-    title?: SortOrder
-    domain?: SortOrder
-    articleId?: SortOrder
-    order?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
     verified?: SortOrder
+    shortDescription?: SortOrder
+    officialUrl?: SortOrder
+    platforms?: SortOrder
+    tags?: SortOrder
+    heroTitle?: SortOrder
+    heroDescription?: SortOrder
+    heroGradient?: SortOrder
+    whyGoodTitle?: SortOrder
+    whyGoodContent?: SortOrder
+    features?: SortOrder
+    howToStartTitle?: SortOrder
+    howToStartSteps?: SortOrder
+    pros?: SortOrder
+    cons?: SortOrder
+    faq?: SortOrder
+    securityTips?: SortOrder
+    securityAudit?: SortOrder
+    securityAuditDate?: SortOrder
+    auditedByCommunity?: SortOrder
+    toolConfig?: SortOrder
+    interactiveType?: SortOrder
+    showCompatibleWallets?: SortOrder
+    relatedResources?: SortOrder
+    views?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
+    lastVerified?: SortOrder
   }
 
-  export type CitationAvgOrderByAggregateInput = {
-    order?: SortOrder
+  export type ResourceAvgOrderByAggregateInput = {
+    views?: SortOrder
   }
 
-  export type CitationMaxOrderByAggregateInput = {
+  export type ResourceMaxOrderByAggregateInput = {
     id?: SortOrder
-    url?: SortOrder
-    title?: SortOrder
-    domain?: SortOrder
-    articleId?: SortOrder
-    order?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
     verified?: SortOrder
+    shortDescription?: SortOrder
+    officialUrl?: SortOrder
+    platforms?: SortOrder
+    tags?: SortOrder
+    heroTitle?: SortOrder
+    heroDescription?: SortOrder
+    heroGradient?: SortOrder
+    whyGoodTitle?: SortOrder
+    whyGoodContent?: SortOrder
+    features?: SortOrder
+    howToStartTitle?: SortOrder
+    howToStartSteps?: SortOrder
+    pros?: SortOrder
+    cons?: SortOrder
+    faq?: SortOrder
+    securityTips?: SortOrder
+    securityAudit?: SortOrder
+    securityAuditDate?: SortOrder
+    auditedByCommunity?: SortOrder
+    toolConfig?: SortOrder
+    interactiveType?: SortOrder
+    showCompatibleWallets?: SortOrder
+    relatedResources?: SortOrder
+    views?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
+    lastVerified?: SortOrder
   }
 
-  export type CitationMinOrderByAggregateInput = {
+  export type ResourceMinOrderByAggregateInput = {
     id?: SortOrder
-    url?: SortOrder
-    title?: SortOrder
-    domain?: SortOrder
-    articleId?: SortOrder
-    order?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
     verified?: SortOrder
+    shortDescription?: SortOrder
+    officialUrl?: SortOrder
+    platforms?: SortOrder
+    tags?: SortOrder
+    heroTitle?: SortOrder
+    heroDescription?: SortOrder
+    heroGradient?: SortOrder
+    whyGoodTitle?: SortOrder
+    whyGoodContent?: SortOrder
+    features?: SortOrder
+    howToStartTitle?: SortOrder
+    howToStartSteps?: SortOrder
+    pros?: SortOrder
+    cons?: SortOrder
+    faq?: SortOrder
+    securityTips?: SortOrder
+    securityAudit?: SortOrder
+    securityAuditDate?: SortOrder
+    auditedByCommunity?: SortOrder
+    toolConfig?: SortOrder
+    interactiveType?: SortOrder
+    showCompatibleWallets?: SortOrder
+    relatedResources?: SortOrder
+    views?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
+    lastVerified?: SortOrder
   }
 
-  export type CitationSumOrderByAggregateInput = {
-    order?: SortOrder
+  export type ResourceSumOrderByAggregateInput = {
+    views?: SortOrder
   }
 
   export type CryptocurrencyCountOrderByAggregateInput = {
@@ -24902,117 +24022,347 @@ export namespace Prisma {
     alertsFound?: SortOrder
   }
 
-  export type ResourceCountOrderByAggregateInput = {
+  export type EnumStoryCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.StoryCategory | EnumStoryCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.StoryCategory[] | ListEnumStoryCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.StoryCategory[] | ListEnumStoryCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumStoryCategoryFilter<$PrismaModel> | $Enums.StoryCategory
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type CommunityStoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    authorName?: SortOrder
+    authorAvatar?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    category?: SortOrder
+    likes?: SortOrder
+    verified?: SortOrder
+    featured?: SortOrder
+    published?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CommunityStoryAvgOrderByAggregateInput = {
+    likes?: SortOrder
+  }
+
+  export type CommunityStoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    authorName?: SortOrder
+    authorAvatar?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    category?: SortOrder
+    likes?: SortOrder
+    verified?: SortOrder
+    featured?: SortOrder
+    published?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CommunityStoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    authorName?: SortOrder
+    authorAvatar?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    category?: SortOrder
+    likes?: SortOrder
+    verified?: SortOrder
+    featured?: SortOrder
+    published?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CommunityStorySumOrderByAggregateInput = {
+    likes?: SortOrder
+  }
+
+  export type EnumStoryCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.StoryCategory | EnumStoryCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.StoryCategory[] | ListEnumStoryCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.StoryCategory[] | ListEnumStoryCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumStoryCategoryWithAggregatesFilter<$PrismaModel> | $Enums.StoryCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStoryCategoryFilter<$PrismaModel>
+    _max?: NestedEnumStoryCategoryFilter<$PrismaModel>
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type EnumProjectCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProjectCategory | EnumProjectCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.ProjectCategory[] | ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ProjectCategory[] | ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumProjectCategoryFilter<$PrismaModel> | $Enums.ProjectCategory
+  }
+
+  export type SocialProjectCountOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    description?: SortOrder
+    longDescription?: SortOrder
+    fundingGoal?: SortOrder
+    currentFunding?: SortOrder
+    currency?: SortOrder
+    walletAddress?: SortOrder
     category?: SortOrder
-    verified?: SortOrder
-    shortDescription?: SortOrder
-    officialUrl?: SortOrder
-    platforms?: SortOrder
+    location?: SortOrder
     tags?: SortOrder
-    heroTitle?: SortOrder
-    heroDescription?: SortOrder
-    heroGradient?: SortOrder
-    whyGoodTitle?: SortOrder
-    whyGoodContent?: SortOrder
-    features?: SortOrder
-    howToStartTitle?: SortOrder
-    howToStartSteps?: SortOrder
-    pros?: SortOrder
-    cons?: SortOrder
-    faq?: SortOrder
-    securityTips?: SortOrder
-    securityAudit?: SortOrder
-    securityAuditDate?: SortOrder
-    auditedByCommunity?: SortOrder
-    toolConfig?: SortOrder
-    interactiveType?: SortOrder
-    showCompatibleWallets?: SortOrder
-    relatedResources?: SortOrder
+    verified?: SortOrder
+    active?: SortOrder
+    featured?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    supporters?: SortOrder
     views?: SortOrder
+    coverImage?: SortOrder
+    gallery?: SortOrder
+    organizer?: SortOrder
+    organizerEmail?: SortOrder
+    organizerPhone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    lastVerified?: SortOrder
   }
 
-  export type ResourceAvgOrderByAggregateInput = {
+  export type SocialProjectAvgOrderByAggregateInput = {
+    fundingGoal?: SortOrder
+    currentFunding?: SortOrder
+    supporters?: SortOrder
     views?: SortOrder
   }
 
-  export type ResourceMaxOrderByAggregateInput = {
+  export type SocialProjectMaxOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    description?: SortOrder
+    longDescription?: SortOrder
+    fundingGoal?: SortOrder
+    currentFunding?: SortOrder
+    currency?: SortOrder
+    walletAddress?: SortOrder
     category?: SortOrder
-    verified?: SortOrder
-    shortDescription?: SortOrder
-    officialUrl?: SortOrder
-    platforms?: SortOrder
+    location?: SortOrder
     tags?: SortOrder
-    heroTitle?: SortOrder
-    heroDescription?: SortOrder
-    heroGradient?: SortOrder
-    whyGoodTitle?: SortOrder
-    whyGoodContent?: SortOrder
-    features?: SortOrder
-    howToStartTitle?: SortOrder
-    howToStartSteps?: SortOrder
-    pros?: SortOrder
-    cons?: SortOrder
-    faq?: SortOrder
-    securityTips?: SortOrder
-    securityAudit?: SortOrder
-    securityAuditDate?: SortOrder
-    auditedByCommunity?: SortOrder
-    toolConfig?: SortOrder
-    interactiveType?: SortOrder
-    showCompatibleWallets?: SortOrder
-    relatedResources?: SortOrder
+    verified?: SortOrder
+    active?: SortOrder
+    featured?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    supporters?: SortOrder
     views?: SortOrder
+    coverImage?: SortOrder
+    gallery?: SortOrder
+    organizer?: SortOrder
+    organizerEmail?: SortOrder
+    organizerPhone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    lastVerified?: SortOrder
   }
 
-  export type ResourceMinOrderByAggregateInput = {
+  export type SocialProjectMinOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    description?: SortOrder
+    longDescription?: SortOrder
+    fundingGoal?: SortOrder
+    currentFunding?: SortOrder
+    currency?: SortOrder
+    walletAddress?: SortOrder
     category?: SortOrder
-    verified?: SortOrder
-    shortDescription?: SortOrder
-    officialUrl?: SortOrder
-    platforms?: SortOrder
+    location?: SortOrder
     tags?: SortOrder
-    heroTitle?: SortOrder
-    heroDescription?: SortOrder
-    heroGradient?: SortOrder
-    whyGoodTitle?: SortOrder
-    whyGoodContent?: SortOrder
-    features?: SortOrder
-    howToStartTitle?: SortOrder
-    howToStartSteps?: SortOrder
-    pros?: SortOrder
-    cons?: SortOrder
-    faq?: SortOrder
-    securityTips?: SortOrder
-    securityAudit?: SortOrder
-    securityAuditDate?: SortOrder
-    auditedByCommunity?: SortOrder
-    toolConfig?: SortOrder
-    interactiveType?: SortOrder
-    showCompatibleWallets?: SortOrder
-    relatedResources?: SortOrder
+    verified?: SortOrder
+    active?: SortOrder
+    featured?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    supporters?: SortOrder
     views?: SortOrder
+    coverImage?: SortOrder
+    gallery?: SortOrder
+    organizer?: SortOrder
+    organizerEmail?: SortOrder
+    organizerPhone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    lastVerified?: SortOrder
   }
 
-  export type ResourceSumOrderByAggregateInput = {
+  export type SocialProjectSumOrderByAggregateInput = {
+    fundingGoal?: SortOrder
+    currentFunding?: SortOrder
+    supporters?: SortOrder
     views?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type EnumProjectCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProjectCategory | EnumProjectCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.ProjectCategory[] | ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ProjectCategory[] | ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumProjectCategoryWithAggregatesFilter<$PrismaModel> | $Enums.ProjectCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumProjectCategoryFilter<$PrismaModel>
+    _max?: NestedEnumProjectCategoryFilter<$PrismaModel>
+  }
+
+  export type ProjectMapCountOrderByAggregateInput = {
+    id?: SortOrder
+    projectId?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    address?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    markerColor?: SortOrder
+    markerIcon?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectMapAvgOrderByAggregateInput = {
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type ProjectMapMaxOrderByAggregateInput = {
+    id?: SortOrder
+    projectId?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    address?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    markerColor?: SortOrder
+    markerIcon?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectMapMinOrderByAggregateInput = {
+    id?: SortOrder
+    projectId?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    address?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    markerColor?: SortOrder
+    markerIcon?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectMapSumOrderByAggregateInput = {
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type UserProgressUserIdArticleSlugCompoundUniqueInput = {
+    userId: string
+    articleSlug: string
+  }
+
+  export type UserProgressCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    articleSlug?: SortOrder
+    completed?: SortOrder
+    progress?: SortOrder
+    quizScore?: SortOrder
+    quizAttempts?: SortOrder
+    certificateIssued?: SortOrder
+    certificateUrl?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrder
+    lastAccessed?: SortOrder
+  }
+
+  export type UserProgressAvgOrderByAggregateInput = {
+    progress?: SortOrder
+    quizScore?: SortOrder
+    quizAttempts?: SortOrder
+  }
+
+  export type UserProgressMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    articleSlug?: SortOrder
+    completed?: SortOrder
+    progress?: SortOrder
+    quizScore?: SortOrder
+    quizAttempts?: SortOrder
+    certificateIssued?: SortOrder
+    certificateUrl?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrder
+    lastAccessed?: SortOrder
+  }
+
+  export type UserProgressMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    articleSlug?: SortOrder
+    completed?: SortOrder
+    progress?: SortOrder
+    quizScore?: SortOrder
+    quizAttempts?: SortOrder
+    certificateIssued?: SortOrder
+    certificateUrl?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrder
+    lastAccessed?: SortOrder
+  }
+
+  export type UserProgressSumOrderByAggregateInput = {
+    progress?: SortOrder
+    quizScore?: SortOrder
+    quizAttempts?: SortOrder
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -25091,6 +24441,20 @@ export namespace Prisma {
     connect?: CopilotActivityWhereUniqueInput | CopilotActivityWhereUniqueInput[]
   }
 
+  export type CommunityStoryCreateNestedManyWithoutUserInput = {
+    create?: XOR<CommunityStoryCreateWithoutUserInput, CommunityStoryUncheckedCreateWithoutUserInput> | CommunityStoryCreateWithoutUserInput[] | CommunityStoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CommunityStoryCreateOrConnectWithoutUserInput | CommunityStoryCreateOrConnectWithoutUserInput[]
+    createMany?: CommunityStoryCreateManyUserInputEnvelope
+    connect?: CommunityStoryWhereUniqueInput | CommunityStoryWhereUniqueInput[]
+  }
+
+  export type UserProgressCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserProgressCreateWithoutUserInput, UserProgressUncheckedCreateWithoutUserInput> | UserProgressCreateWithoutUserInput[] | UserProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserProgressCreateOrConnectWithoutUserInput | UserProgressCreateOrConnectWithoutUserInput[]
+    createMany?: UserProgressCreateManyUserInputEnvelope
+    connect?: UserProgressWhereUniqueInput | UserProgressWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -25117,6 +24481,20 @@ export namespace Prisma {
     connectOrCreate?: CopilotActivityCreateOrConnectWithoutUserInput | CopilotActivityCreateOrConnectWithoutUserInput[]
     createMany?: CopilotActivityCreateManyUserInputEnvelope
     connect?: CopilotActivityWhereUniqueInput | CopilotActivityWhereUniqueInput[]
+  }
+
+  export type CommunityStoryUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<CommunityStoryCreateWithoutUserInput, CommunityStoryUncheckedCreateWithoutUserInput> | CommunityStoryCreateWithoutUserInput[] | CommunityStoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CommunityStoryCreateOrConnectWithoutUserInput | CommunityStoryCreateOrConnectWithoutUserInput[]
+    createMany?: CommunityStoryCreateManyUserInputEnvelope
+    connect?: CommunityStoryWhereUniqueInput | CommunityStoryWhereUniqueInput[]
+  }
+
+  export type UserProgressUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserProgressCreateWithoutUserInput, UserProgressUncheckedCreateWithoutUserInput> | UserProgressCreateWithoutUserInput[] | UserProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserProgressCreateOrConnectWithoutUserInput | UserProgressCreateOrConnectWithoutUserInput[]
+    createMany?: UserProgressCreateManyUserInputEnvelope
+    connect?: UserProgressWhereUniqueInput | UserProgressWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -25191,6 +24569,34 @@ export namespace Prisma {
     deleteMany?: CopilotActivityScalarWhereInput | CopilotActivityScalarWhereInput[]
   }
 
+  export type CommunityStoryUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CommunityStoryCreateWithoutUserInput, CommunityStoryUncheckedCreateWithoutUserInput> | CommunityStoryCreateWithoutUserInput[] | CommunityStoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CommunityStoryCreateOrConnectWithoutUserInput | CommunityStoryCreateOrConnectWithoutUserInput[]
+    upsert?: CommunityStoryUpsertWithWhereUniqueWithoutUserInput | CommunityStoryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CommunityStoryCreateManyUserInputEnvelope
+    set?: CommunityStoryWhereUniqueInput | CommunityStoryWhereUniqueInput[]
+    disconnect?: CommunityStoryWhereUniqueInput | CommunityStoryWhereUniqueInput[]
+    delete?: CommunityStoryWhereUniqueInput | CommunityStoryWhereUniqueInput[]
+    connect?: CommunityStoryWhereUniqueInput | CommunityStoryWhereUniqueInput[]
+    update?: CommunityStoryUpdateWithWhereUniqueWithoutUserInput | CommunityStoryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CommunityStoryUpdateManyWithWhereWithoutUserInput | CommunityStoryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CommunityStoryScalarWhereInput | CommunityStoryScalarWhereInput[]
+  }
+
+  export type UserProgressUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserProgressCreateWithoutUserInput, UserProgressUncheckedCreateWithoutUserInput> | UserProgressCreateWithoutUserInput[] | UserProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserProgressCreateOrConnectWithoutUserInput | UserProgressCreateOrConnectWithoutUserInput[]
+    upsert?: UserProgressUpsertWithWhereUniqueWithoutUserInput | UserProgressUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserProgressCreateManyUserInputEnvelope
+    set?: UserProgressWhereUniqueInput | UserProgressWhereUniqueInput[]
+    disconnect?: UserProgressWhereUniqueInput | UserProgressWhereUniqueInput[]
+    delete?: UserProgressWhereUniqueInput | UserProgressWhereUniqueInput[]
+    connect?: UserProgressWhereUniqueInput | UserProgressWhereUniqueInput[]
+    update?: UserProgressUpdateWithWhereUniqueWithoutUserInput | UserProgressUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserProgressUpdateManyWithWhereWithoutUserInput | UserProgressUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserProgressScalarWhereInput | UserProgressScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -25247,146 +24653,32 @@ export namespace Prisma {
     deleteMany?: CopilotActivityScalarWhereInput | CopilotActivityScalarWhereInput[]
   }
 
-  export type CategoryCreateNestedOneWithoutChildrenInput = {
-    create?: XOR<CategoryCreateWithoutChildrenInput, CategoryUncheckedCreateWithoutChildrenInput>
-    connectOrCreate?: CategoryCreateOrConnectWithoutChildrenInput
-    connect?: CategoryWhereUniqueInput
+  export type CommunityStoryUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CommunityStoryCreateWithoutUserInput, CommunityStoryUncheckedCreateWithoutUserInput> | CommunityStoryCreateWithoutUserInput[] | CommunityStoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CommunityStoryCreateOrConnectWithoutUserInput | CommunityStoryCreateOrConnectWithoutUserInput[]
+    upsert?: CommunityStoryUpsertWithWhereUniqueWithoutUserInput | CommunityStoryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CommunityStoryCreateManyUserInputEnvelope
+    set?: CommunityStoryWhereUniqueInput | CommunityStoryWhereUniqueInput[]
+    disconnect?: CommunityStoryWhereUniqueInput | CommunityStoryWhereUniqueInput[]
+    delete?: CommunityStoryWhereUniqueInput | CommunityStoryWhereUniqueInput[]
+    connect?: CommunityStoryWhereUniqueInput | CommunityStoryWhereUniqueInput[]
+    update?: CommunityStoryUpdateWithWhereUniqueWithoutUserInput | CommunityStoryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CommunityStoryUpdateManyWithWhereWithoutUserInput | CommunityStoryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CommunityStoryScalarWhereInput | CommunityStoryScalarWhereInput[]
   }
 
-  export type CategoryCreateNestedManyWithoutParentInput = {
-    create?: XOR<CategoryCreateWithoutParentInput, CategoryUncheckedCreateWithoutParentInput> | CategoryCreateWithoutParentInput[] | CategoryUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: CategoryCreateOrConnectWithoutParentInput | CategoryCreateOrConnectWithoutParentInput[]
-    createMany?: CategoryCreateManyParentInputEnvelope
-    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-  }
-
-  export type ArticleCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<ArticleCreateWithoutCategoryInput, ArticleUncheckedCreateWithoutCategoryInput> | ArticleCreateWithoutCategoryInput[] | ArticleUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: ArticleCreateOrConnectWithoutCategoryInput | ArticleCreateOrConnectWithoutCategoryInput[]
-    createMany?: ArticleCreateManyCategoryInputEnvelope
-    connect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
-  }
-
-  export type CategoryUncheckedCreateNestedManyWithoutParentInput = {
-    create?: XOR<CategoryCreateWithoutParentInput, CategoryUncheckedCreateWithoutParentInput> | CategoryCreateWithoutParentInput[] | CategoryUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: CategoryCreateOrConnectWithoutParentInput | CategoryCreateOrConnectWithoutParentInput[]
-    createMany?: CategoryCreateManyParentInputEnvelope
-    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-  }
-
-  export type ArticleUncheckedCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<ArticleCreateWithoutCategoryInput, ArticleUncheckedCreateWithoutCategoryInput> | ArticleCreateWithoutCategoryInput[] | ArticleUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: ArticleCreateOrConnectWithoutCategoryInput | ArticleCreateOrConnectWithoutCategoryInput[]
-    createMany?: ArticleCreateManyCategoryInputEnvelope
-    connect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
-  }
-
-  export type CategoryUpdateOneWithoutChildrenNestedInput = {
-    create?: XOR<CategoryCreateWithoutChildrenInput, CategoryUncheckedCreateWithoutChildrenInput>
-    connectOrCreate?: CategoryCreateOrConnectWithoutChildrenInput
-    upsert?: CategoryUpsertWithoutChildrenInput
-    disconnect?: CategoryWhereInput | boolean
-    delete?: CategoryWhereInput | boolean
-    connect?: CategoryWhereUniqueInput
-    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutChildrenInput, CategoryUpdateWithoutChildrenInput>, CategoryUncheckedUpdateWithoutChildrenInput>
-  }
-
-  export type CategoryUpdateManyWithoutParentNestedInput = {
-    create?: XOR<CategoryCreateWithoutParentInput, CategoryUncheckedCreateWithoutParentInput> | CategoryCreateWithoutParentInput[] | CategoryUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: CategoryCreateOrConnectWithoutParentInput | CategoryCreateOrConnectWithoutParentInput[]
-    upsert?: CategoryUpsertWithWhereUniqueWithoutParentInput | CategoryUpsertWithWhereUniqueWithoutParentInput[]
-    createMany?: CategoryCreateManyParentInputEnvelope
-    set?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-    disconnect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-    delete?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-    update?: CategoryUpdateWithWhereUniqueWithoutParentInput | CategoryUpdateWithWhereUniqueWithoutParentInput[]
-    updateMany?: CategoryUpdateManyWithWhereWithoutParentInput | CategoryUpdateManyWithWhereWithoutParentInput[]
-    deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
-  }
-
-  export type ArticleUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<ArticleCreateWithoutCategoryInput, ArticleUncheckedCreateWithoutCategoryInput> | ArticleCreateWithoutCategoryInput[] | ArticleUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: ArticleCreateOrConnectWithoutCategoryInput | ArticleCreateOrConnectWithoutCategoryInput[]
-    upsert?: ArticleUpsertWithWhereUniqueWithoutCategoryInput | ArticleUpsertWithWhereUniqueWithoutCategoryInput[]
-    createMany?: ArticleCreateManyCategoryInputEnvelope
-    set?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
-    disconnect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
-    delete?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
-    connect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
-    update?: ArticleUpdateWithWhereUniqueWithoutCategoryInput | ArticleUpdateWithWhereUniqueWithoutCategoryInput[]
-    updateMany?: ArticleUpdateManyWithWhereWithoutCategoryInput | ArticleUpdateManyWithWhereWithoutCategoryInput[]
-    deleteMany?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
-  }
-
-  export type CategoryUncheckedUpdateManyWithoutParentNestedInput = {
-    create?: XOR<CategoryCreateWithoutParentInput, CategoryUncheckedCreateWithoutParentInput> | CategoryCreateWithoutParentInput[] | CategoryUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: CategoryCreateOrConnectWithoutParentInput | CategoryCreateOrConnectWithoutParentInput[]
-    upsert?: CategoryUpsertWithWhereUniqueWithoutParentInput | CategoryUpsertWithWhereUniqueWithoutParentInput[]
-    createMany?: CategoryCreateManyParentInputEnvelope
-    set?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-    disconnect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-    delete?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-    update?: CategoryUpdateWithWhereUniqueWithoutParentInput | CategoryUpdateWithWhereUniqueWithoutParentInput[]
-    updateMany?: CategoryUpdateManyWithWhereWithoutParentInput | CategoryUpdateManyWithWhereWithoutParentInput[]
-    deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
-  }
-
-  export type ArticleUncheckedUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<ArticleCreateWithoutCategoryInput, ArticleUncheckedCreateWithoutCategoryInput> | ArticleCreateWithoutCategoryInput[] | ArticleUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: ArticleCreateOrConnectWithoutCategoryInput | ArticleCreateOrConnectWithoutCategoryInput[]
-    upsert?: ArticleUpsertWithWhereUniqueWithoutCategoryInput | ArticleUpsertWithWhereUniqueWithoutCategoryInput[]
-    createMany?: ArticleCreateManyCategoryInputEnvelope
-    set?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
-    disconnect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
-    delete?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
-    connect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
-    update?: ArticleUpdateWithWhereUniqueWithoutCategoryInput | ArticleUpdateWithWhereUniqueWithoutCategoryInput[]
-    updateMany?: ArticleUpdateManyWithWhereWithoutCategoryInput | ArticleUpdateManyWithWhereWithoutCategoryInput[]
-    deleteMany?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
-  }
-
-  export type ArticleTagCreateNestedManyWithoutTagInput = {
-    create?: XOR<ArticleTagCreateWithoutTagInput, ArticleTagUncheckedCreateWithoutTagInput> | ArticleTagCreateWithoutTagInput[] | ArticleTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: ArticleTagCreateOrConnectWithoutTagInput | ArticleTagCreateOrConnectWithoutTagInput[]
-    createMany?: ArticleTagCreateManyTagInputEnvelope
-    connect?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-  }
-
-  export type ArticleTagUncheckedCreateNestedManyWithoutTagInput = {
-    create?: XOR<ArticleTagCreateWithoutTagInput, ArticleTagUncheckedCreateWithoutTagInput> | ArticleTagCreateWithoutTagInput[] | ArticleTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: ArticleTagCreateOrConnectWithoutTagInput | ArticleTagCreateOrConnectWithoutTagInput[]
-    createMany?: ArticleTagCreateManyTagInputEnvelope
-    connect?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-  }
-
-  export type ArticleTagUpdateManyWithoutTagNestedInput = {
-    create?: XOR<ArticleTagCreateWithoutTagInput, ArticleTagUncheckedCreateWithoutTagInput> | ArticleTagCreateWithoutTagInput[] | ArticleTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: ArticleTagCreateOrConnectWithoutTagInput | ArticleTagCreateOrConnectWithoutTagInput[]
-    upsert?: ArticleTagUpsertWithWhereUniqueWithoutTagInput | ArticleTagUpsertWithWhereUniqueWithoutTagInput[]
-    createMany?: ArticleTagCreateManyTagInputEnvelope
-    set?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    disconnect?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    delete?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    connect?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    update?: ArticleTagUpdateWithWhereUniqueWithoutTagInput | ArticleTagUpdateWithWhereUniqueWithoutTagInput[]
-    updateMany?: ArticleTagUpdateManyWithWhereWithoutTagInput | ArticleTagUpdateManyWithWhereWithoutTagInput[]
-    deleteMany?: ArticleTagScalarWhereInput | ArticleTagScalarWhereInput[]
-  }
-
-  export type ArticleTagUncheckedUpdateManyWithoutTagNestedInput = {
-    create?: XOR<ArticleTagCreateWithoutTagInput, ArticleTagUncheckedCreateWithoutTagInput> | ArticleTagCreateWithoutTagInput[] | ArticleTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: ArticleTagCreateOrConnectWithoutTagInput | ArticleTagCreateOrConnectWithoutTagInput[]
-    upsert?: ArticleTagUpsertWithWhereUniqueWithoutTagInput | ArticleTagUpsertWithWhereUniqueWithoutTagInput[]
-    createMany?: ArticleTagCreateManyTagInputEnvelope
-    set?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    disconnect?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    delete?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    connect?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    update?: ArticleTagUpdateWithWhereUniqueWithoutTagInput | ArticleTagUpdateWithWhereUniqueWithoutTagInput[]
-    updateMany?: ArticleTagUpdateManyWithWhereWithoutTagInput | ArticleTagUpdateManyWithWhereWithoutTagInput[]
-    deleteMany?: ArticleTagScalarWhereInput | ArticleTagScalarWhereInput[]
+  export type UserProgressUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserProgressCreateWithoutUserInput, UserProgressUncheckedCreateWithoutUserInput> | UserProgressCreateWithoutUserInput[] | UserProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserProgressCreateOrConnectWithoutUserInput | UserProgressCreateOrConnectWithoutUserInput[]
+    upsert?: UserProgressUpsertWithWhereUniqueWithoutUserInput | UserProgressUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserProgressCreateManyUserInputEnvelope
+    set?: UserProgressWhereUniqueInput | UserProgressWhereUniqueInput[]
+    disconnect?: UserProgressWhereUniqueInput | UserProgressWhereUniqueInput[]
+    delete?: UserProgressWhereUniqueInput | UserProgressWhereUniqueInput[]
+    connect?: UserProgressWhereUniqueInput | UserProgressWhereUniqueInput[]
+    update?: UserProgressUpdateWithWhereUniqueWithoutUserInput | UserProgressUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserProgressUpdateManyWithWhereWithoutUserInput | UserProgressUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserProgressScalarWhereInput | UserProgressScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutArticlesInput = {
@@ -25395,78 +24687,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type CategoryCreateNestedOneWithoutArticlesInput = {
-    create?: XOR<CategoryCreateWithoutArticlesInput, CategoryUncheckedCreateWithoutArticlesInput>
-    connectOrCreate?: CategoryCreateOrConnectWithoutArticlesInput
-    connect?: CategoryWhereUniqueInput
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
-  export type ArticleTagCreateNestedManyWithoutArticleInput = {
-    create?: XOR<ArticleTagCreateWithoutArticleInput, ArticleTagUncheckedCreateWithoutArticleInput> | ArticleTagCreateWithoutArticleInput[] | ArticleTagUncheckedCreateWithoutArticleInput[]
-    connectOrCreate?: ArticleTagCreateOrConnectWithoutArticleInput | ArticleTagCreateOrConnectWithoutArticleInput[]
-    createMany?: ArticleTagCreateManyArticleInputEnvelope
-    connect?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-  }
-
-  export type ArticleRelationCreateNestedManyWithoutFromArticleInput = {
-    create?: XOR<ArticleRelationCreateWithoutFromArticleInput, ArticleRelationUncheckedCreateWithoutFromArticleInput> | ArticleRelationCreateWithoutFromArticleInput[] | ArticleRelationUncheckedCreateWithoutFromArticleInput[]
-    connectOrCreate?: ArticleRelationCreateOrConnectWithoutFromArticleInput | ArticleRelationCreateOrConnectWithoutFromArticleInput[]
-    createMany?: ArticleRelationCreateManyFromArticleInputEnvelope
-    connect?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-  }
-
-  export type ArticleRelationCreateNestedManyWithoutToArticleInput = {
-    create?: XOR<ArticleRelationCreateWithoutToArticleInput, ArticleRelationUncheckedCreateWithoutToArticleInput> | ArticleRelationCreateWithoutToArticleInput[] | ArticleRelationUncheckedCreateWithoutToArticleInput[]
-    connectOrCreate?: ArticleRelationCreateOrConnectWithoutToArticleInput | ArticleRelationCreateOrConnectWithoutToArticleInput[]
-    createMany?: ArticleRelationCreateManyToArticleInputEnvelope
-    connect?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-  }
-
-  export type CitationCreateNestedManyWithoutArticleInput = {
-    create?: XOR<CitationCreateWithoutArticleInput, CitationUncheckedCreateWithoutArticleInput> | CitationCreateWithoutArticleInput[] | CitationUncheckedCreateWithoutArticleInput[]
-    connectOrCreate?: CitationCreateOrConnectWithoutArticleInput | CitationCreateOrConnectWithoutArticleInput[]
-    createMany?: CitationCreateManyArticleInputEnvelope
-    connect?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
-  }
-
-  export type ArticleTagUncheckedCreateNestedManyWithoutArticleInput = {
-    create?: XOR<ArticleTagCreateWithoutArticleInput, ArticleTagUncheckedCreateWithoutArticleInput> | ArticleTagCreateWithoutArticleInput[] | ArticleTagUncheckedCreateWithoutArticleInput[]
-    connectOrCreate?: ArticleTagCreateOrConnectWithoutArticleInput | ArticleTagCreateOrConnectWithoutArticleInput[]
-    createMany?: ArticleTagCreateManyArticleInputEnvelope
-    connect?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-  }
-
-  export type ArticleRelationUncheckedCreateNestedManyWithoutFromArticleInput = {
-    create?: XOR<ArticleRelationCreateWithoutFromArticleInput, ArticleRelationUncheckedCreateWithoutFromArticleInput> | ArticleRelationCreateWithoutFromArticleInput[] | ArticleRelationUncheckedCreateWithoutFromArticleInput[]
-    connectOrCreate?: ArticleRelationCreateOrConnectWithoutFromArticleInput | ArticleRelationCreateOrConnectWithoutFromArticleInput[]
-    createMany?: ArticleRelationCreateManyFromArticleInputEnvelope
-    connect?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-  }
-
-  export type ArticleRelationUncheckedCreateNestedManyWithoutToArticleInput = {
-    create?: XOR<ArticleRelationCreateWithoutToArticleInput, ArticleRelationUncheckedCreateWithoutToArticleInput> | ArticleRelationCreateWithoutToArticleInput[] | ArticleRelationUncheckedCreateWithoutToArticleInput[]
-    connectOrCreate?: ArticleRelationCreateOrConnectWithoutToArticleInput | ArticleRelationCreateOrConnectWithoutToArticleInput[]
-    createMany?: ArticleRelationCreateManyToArticleInputEnvelope
-    connect?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-  }
-
-  export type CitationUncheckedCreateNestedManyWithoutArticleInput = {
-    create?: XOR<CitationCreateWithoutArticleInput, CitationUncheckedCreateWithoutArticleInput> | CitationCreateWithoutArticleInput[] | CitationUncheckedCreateWithoutArticleInput[]
-    connectOrCreate?: CitationCreateOrConnectWithoutArticleInput | CitationCreateOrConnectWithoutArticleInput[]
-    createMany?: CitationCreateManyArticleInputEnvelope
-    connect?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
-  }
-
-  export type EnumArticleTypeFieldUpdateOperationsInput = {
-    set?: $Enums.ArticleType
-  }
-
-  export type EnumArticleStatusFieldUpdateOperationsInput = {
-    set?: $Enums.ArticleStatus
-  }
-
-  export type NullableEnumSentimentFieldUpdateOperationsInput = {
-    set?: $Enums.Sentiment | null
+  export type EnumSentimentFieldUpdateOperationsInput = {
+    set?: $Enums.Sentiment
   }
 
   export type NullableFloatFieldUpdateOperationsInput = {
@@ -25477,16 +24703,8 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type NullableEnumLevelFieldUpdateOperationsInput = {
-    set?: $Enums.Level | null
-  }
-
-  export type NullableEnumContentTypeFieldUpdateOperationsInput = {
-    set?: $Enums.ContentType | null
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
+  export type NullableEnumWarningLevelFieldUpdateOperationsInput = {
+    set?: $Enums.WarningLevel | null
   }
 
   export type UserUpdateOneRequiredWithoutArticlesNestedInput = {
@@ -25495,196 +24713,6 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutArticlesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutArticlesInput, UserUpdateWithoutArticlesInput>, UserUncheckedUpdateWithoutArticlesInput>
-  }
-
-  export type CategoryUpdateOneRequiredWithoutArticlesNestedInput = {
-    create?: XOR<CategoryCreateWithoutArticlesInput, CategoryUncheckedCreateWithoutArticlesInput>
-    connectOrCreate?: CategoryCreateOrConnectWithoutArticlesInput
-    upsert?: CategoryUpsertWithoutArticlesInput
-    connect?: CategoryWhereUniqueInput
-    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutArticlesInput, CategoryUpdateWithoutArticlesInput>, CategoryUncheckedUpdateWithoutArticlesInput>
-  }
-
-  export type ArticleTagUpdateManyWithoutArticleNestedInput = {
-    create?: XOR<ArticleTagCreateWithoutArticleInput, ArticleTagUncheckedCreateWithoutArticleInput> | ArticleTagCreateWithoutArticleInput[] | ArticleTagUncheckedCreateWithoutArticleInput[]
-    connectOrCreate?: ArticleTagCreateOrConnectWithoutArticleInput | ArticleTagCreateOrConnectWithoutArticleInput[]
-    upsert?: ArticleTagUpsertWithWhereUniqueWithoutArticleInput | ArticleTagUpsertWithWhereUniqueWithoutArticleInput[]
-    createMany?: ArticleTagCreateManyArticleInputEnvelope
-    set?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    disconnect?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    delete?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    connect?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    update?: ArticleTagUpdateWithWhereUniqueWithoutArticleInput | ArticleTagUpdateWithWhereUniqueWithoutArticleInput[]
-    updateMany?: ArticleTagUpdateManyWithWhereWithoutArticleInput | ArticleTagUpdateManyWithWhereWithoutArticleInput[]
-    deleteMany?: ArticleTagScalarWhereInput | ArticleTagScalarWhereInput[]
-  }
-
-  export type ArticleRelationUpdateManyWithoutFromArticleNestedInput = {
-    create?: XOR<ArticleRelationCreateWithoutFromArticleInput, ArticleRelationUncheckedCreateWithoutFromArticleInput> | ArticleRelationCreateWithoutFromArticleInput[] | ArticleRelationUncheckedCreateWithoutFromArticleInput[]
-    connectOrCreate?: ArticleRelationCreateOrConnectWithoutFromArticleInput | ArticleRelationCreateOrConnectWithoutFromArticleInput[]
-    upsert?: ArticleRelationUpsertWithWhereUniqueWithoutFromArticleInput | ArticleRelationUpsertWithWhereUniqueWithoutFromArticleInput[]
-    createMany?: ArticleRelationCreateManyFromArticleInputEnvelope
-    set?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    disconnect?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    delete?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    connect?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    update?: ArticleRelationUpdateWithWhereUniqueWithoutFromArticleInput | ArticleRelationUpdateWithWhereUniqueWithoutFromArticleInput[]
-    updateMany?: ArticleRelationUpdateManyWithWhereWithoutFromArticleInput | ArticleRelationUpdateManyWithWhereWithoutFromArticleInput[]
-    deleteMany?: ArticleRelationScalarWhereInput | ArticleRelationScalarWhereInput[]
-  }
-
-  export type ArticleRelationUpdateManyWithoutToArticleNestedInput = {
-    create?: XOR<ArticleRelationCreateWithoutToArticleInput, ArticleRelationUncheckedCreateWithoutToArticleInput> | ArticleRelationCreateWithoutToArticleInput[] | ArticleRelationUncheckedCreateWithoutToArticleInput[]
-    connectOrCreate?: ArticleRelationCreateOrConnectWithoutToArticleInput | ArticleRelationCreateOrConnectWithoutToArticleInput[]
-    upsert?: ArticleRelationUpsertWithWhereUniqueWithoutToArticleInput | ArticleRelationUpsertWithWhereUniqueWithoutToArticleInput[]
-    createMany?: ArticleRelationCreateManyToArticleInputEnvelope
-    set?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    disconnect?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    delete?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    connect?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    update?: ArticleRelationUpdateWithWhereUniqueWithoutToArticleInput | ArticleRelationUpdateWithWhereUniqueWithoutToArticleInput[]
-    updateMany?: ArticleRelationUpdateManyWithWhereWithoutToArticleInput | ArticleRelationUpdateManyWithWhereWithoutToArticleInput[]
-    deleteMany?: ArticleRelationScalarWhereInput | ArticleRelationScalarWhereInput[]
-  }
-
-  export type CitationUpdateManyWithoutArticleNestedInput = {
-    create?: XOR<CitationCreateWithoutArticleInput, CitationUncheckedCreateWithoutArticleInput> | CitationCreateWithoutArticleInput[] | CitationUncheckedCreateWithoutArticleInput[]
-    connectOrCreate?: CitationCreateOrConnectWithoutArticleInput | CitationCreateOrConnectWithoutArticleInput[]
-    upsert?: CitationUpsertWithWhereUniqueWithoutArticleInput | CitationUpsertWithWhereUniqueWithoutArticleInput[]
-    createMany?: CitationCreateManyArticleInputEnvelope
-    set?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
-    disconnect?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
-    delete?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
-    connect?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
-    update?: CitationUpdateWithWhereUniqueWithoutArticleInput | CitationUpdateWithWhereUniqueWithoutArticleInput[]
-    updateMany?: CitationUpdateManyWithWhereWithoutArticleInput | CitationUpdateManyWithWhereWithoutArticleInput[]
-    deleteMany?: CitationScalarWhereInput | CitationScalarWhereInput[]
-  }
-
-  export type ArticleTagUncheckedUpdateManyWithoutArticleNestedInput = {
-    create?: XOR<ArticleTagCreateWithoutArticleInput, ArticleTagUncheckedCreateWithoutArticleInput> | ArticleTagCreateWithoutArticleInput[] | ArticleTagUncheckedCreateWithoutArticleInput[]
-    connectOrCreate?: ArticleTagCreateOrConnectWithoutArticleInput | ArticleTagCreateOrConnectWithoutArticleInput[]
-    upsert?: ArticleTagUpsertWithWhereUniqueWithoutArticleInput | ArticleTagUpsertWithWhereUniqueWithoutArticleInput[]
-    createMany?: ArticleTagCreateManyArticleInputEnvelope
-    set?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    disconnect?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    delete?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    connect?: ArticleTagWhereUniqueInput | ArticleTagWhereUniqueInput[]
-    update?: ArticleTagUpdateWithWhereUniqueWithoutArticleInput | ArticleTagUpdateWithWhereUniqueWithoutArticleInput[]
-    updateMany?: ArticleTagUpdateManyWithWhereWithoutArticleInput | ArticleTagUpdateManyWithWhereWithoutArticleInput[]
-    deleteMany?: ArticleTagScalarWhereInput | ArticleTagScalarWhereInput[]
-  }
-
-  export type ArticleRelationUncheckedUpdateManyWithoutFromArticleNestedInput = {
-    create?: XOR<ArticleRelationCreateWithoutFromArticleInput, ArticleRelationUncheckedCreateWithoutFromArticleInput> | ArticleRelationCreateWithoutFromArticleInput[] | ArticleRelationUncheckedCreateWithoutFromArticleInput[]
-    connectOrCreate?: ArticleRelationCreateOrConnectWithoutFromArticleInput | ArticleRelationCreateOrConnectWithoutFromArticleInput[]
-    upsert?: ArticleRelationUpsertWithWhereUniqueWithoutFromArticleInput | ArticleRelationUpsertWithWhereUniqueWithoutFromArticleInput[]
-    createMany?: ArticleRelationCreateManyFromArticleInputEnvelope
-    set?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    disconnect?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    delete?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    connect?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    update?: ArticleRelationUpdateWithWhereUniqueWithoutFromArticleInput | ArticleRelationUpdateWithWhereUniqueWithoutFromArticleInput[]
-    updateMany?: ArticleRelationUpdateManyWithWhereWithoutFromArticleInput | ArticleRelationUpdateManyWithWhereWithoutFromArticleInput[]
-    deleteMany?: ArticleRelationScalarWhereInput | ArticleRelationScalarWhereInput[]
-  }
-
-  export type ArticleRelationUncheckedUpdateManyWithoutToArticleNestedInput = {
-    create?: XOR<ArticleRelationCreateWithoutToArticleInput, ArticleRelationUncheckedCreateWithoutToArticleInput> | ArticleRelationCreateWithoutToArticleInput[] | ArticleRelationUncheckedCreateWithoutToArticleInput[]
-    connectOrCreate?: ArticleRelationCreateOrConnectWithoutToArticleInput | ArticleRelationCreateOrConnectWithoutToArticleInput[]
-    upsert?: ArticleRelationUpsertWithWhereUniqueWithoutToArticleInput | ArticleRelationUpsertWithWhereUniqueWithoutToArticleInput[]
-    createMany?: ArticleRelationCreateManyToArticleInputEnvelope
-    set?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    disconnect?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    delete?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    connect?: ArticleRelationWhereUniqueInput | ArticleRelationWhereUniqueInput[]
-    update?: ArticleRelationUpdateWithWhereUniqueWithoutToArticleInput | ArticleRelationUpdateWithWhereUniqueWithoutToArticleInput[]
-    updateMany?: ArticleRelationUpdateManyWithWhereWithoutToArticleInput | ArticleRelationUpdateManyWithWhereWithoutToArticleInput[]
-    deleteMany?: ArticleRelationScalarWhereInput | ArticleRelationScalarWhereInput[]
-  }
-
-  export type CitationUncheckedUpdateManyWithoutArticleNestedInput = {
-    create?: XOR<CitationCreateWithoutArticleInput, CitationUncheckedCreateWithoutArticleInput> | CitationCreateWithoutArticleInput[] | CitationUncheckedCreateWithoutArticleInput[]
-    connectOrCreate?: CitationCreateOrConnectWithoutArticleInput | CitationCreateOrConnectWithoutArticleInput[]
-    upsert?: CitationUpsertWithWhereUniqueWithoutArticleInput | CitationUpsertWithWhereUniqueWithoutArticleInput[]
-    createMany?: CitationCreateManyArticleInputEnvelope
-    set?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
-    disconnect?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
-    delete?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
-    connect?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
-    update?: CitationUpdateWithWhereUniqueWithoutArticleInput | CitationUpdateWithWhereUniqueWithoutArticleInput[]
-    updateMany?: CitationUpdateManyWithWhereWithoutArticleInput | CitationUpdateManyWithWhereWithoutArticleInput[]
-    deleteMany?: CitationScalarWhereInput | CitationScalarWhereInput[]
-  }
-
-  export type ArticleCreateNestedOneWithoutTagsInput = {
-    create?: XOR<ArticleCreateWithoutTagsInput, ArticleUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: ArticleCreateOrConnectWithoutTagsInput
-    connect?: ArticleWhereUniqueInput
-  }
-
-  export type TagCreateNestedOneWithoutArticlesInput = {
-    create?: XOR<TagCreateWithoutArticlesInput, TagUncheckedCreateWithoutArticlesInput>
-    connectOrCreate?: TagCreateOrConnectWithoutArticlesInput
-    connect?: TagWhereUniqueInput
-  }
-
-  export type ArticleUpdateOneRequiredWithoutTagsNestedInput = {
-    create?: XOR<ArticleCreateWithoutTagsInput, ArticleUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: ArticleCreateOrConnectWithoutTagsInput
-    upsert?: ArticleUpsertWithoutTagsInput
-    connect?: ArticleWhereUniqueInput
-    update?: XOR<XOR<ArticleUpdateToOneWithWhereWithoutTagsInput, ArticleUpdateWithoutTagsInput>, ArticleUncheckedUpdateWithoutTagsInput>
-  }
-
-  export type TagUpdateOneRequiredWithoutArticlesNestedInput = {
-    create?: XOR<TagCreateWithoutArticlesInput, TagUncheckedCreateWithoutArticlesInput>
-    connectOrCreate?: TagCreateOrConnectWithoutArticlesInput
-    upsert?: TagUpsertWithoutArticlesInput
-    connect?: TagWhereUniqueInput
-    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutArticlesInput, TagUpdateWithoutArticlesInput>, TagUncheckedUpdateWithoutArticlesInput>
-  }
-
-  export type ArticleCreateNestedOneWithoutRelatedFromInput = {
-    create?: XOR<ArticleCreateWithoutRelatedFromInput, ArticleUncheckedCreateWithoutRelatedFromInput>
-    connectOrCreate?: ArticleCreateOrConnectWithoutRelatedFromInput
-    connect?: ArticleWhereUniqueInput
-  }
-
-  export type ArticleCreateNestedOneWithoutRelatedToInput = {
-    create?: XOR<ArticleCreateWithoutRelatedToInput, ArticleUncheckedCreateWithoutRelatedToInput>
-    connectOrCreate?: ArticleCreateOrConnectWithoutRelatedToInput
-    connect?: ArticleWhereUniqueInput
-  }
-
-  export type ArticleUpdateOneRequiredWithoutRelatedFromNestedInput = {
-    create?: XOR<ArticleCreateWithoutRelatedFromInput, ArticleUncheckedCreateWithoutRelatedFromInput>
-    connectOrCreate?: ArticleCreateOrConnectWithoutRelatedFromInput
-    upsert?: ArticleUpsertWithoutRelatedFromInput
-    connect?: ArticleWhereUniqueInput
-    update?: XOR<XOR<ArticleUpdateToOneWithWhereWithoutRelatedFromInput, ArticleUpdateWithoutRelatedFromInput>, ArticleUncheckedUpdateWithoutRelatedFromInput>
-  }
-
-  export type ArticleUpdateOneRequiredWithoutRelatedToNestedInput = {
-    create?: XOR<ArticleCreateWithoutRelatedToInput, ArticleUncheckedCreateWithoutRelatedToInput>
-    connectOrCreate?: ArticleCreateOrConnectWithoutRelatedToInput
-    upsert?: ArticleUpsertWithoutRelatedToInput
-    connect?: ArticleWhereUniqueInput
-    update?: XOR<XOR<ArticleUpdateToOneWithWhereWithoutRelatedToInput, ArticleUpdateWithoutRelatedToInput>, ArticleUncheckedUpdateWithoutRelatedToInput>
-  }
-
-  export type ArticleCreateNestedOneWithoutCitationsInput = {
-    create?: XOR<ArticleCreateWithoutCitationsInput, ArticleUncheckedCreateWithoutCitationsInput>
-    connectOrCreate?: ArticleCreateOrConnectWithoutCitationsInput
-    connect?: ArticleWhereUniqueInput
-  }
-
-  export type ArticleUpdateOneRequiredWithoutCitationsNestedInput = {
-    create?: XOR<ArticleCreateWithoutCitationsInput, ArticleUncheckedCreateWithoutCitationsInput>
-    connectOrCreate?: ArticleCreateOrConnectWithoutCitationsInput
-    upsert?: ArticleUpsertWithoutCitationsInput
-    connect?: ArticleWhereUniqueInput
-    update?: XOR<XOR<ArticleUpdateToOneWithWhereWithoutCitationsInput, ArticleUpdateWithoutCitationsInput>, ArticleUncheckedUpdateWithoutCitationsInput>
   }
 
   export type UserCreateNestedOneWithoutCopilotActivitiesInput = {
@@ -25699,6 +24727,52 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutCopilotActivitiesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCopilotActivitiesInput, UserUpdateWithoutCopilotActivitiesInput>, UserUncheckedUpdateWithoutCopilotActivitiesInput>
+  }
+
+  export type UserCreateNestedOneWithoutCommunityStoriesInput = {
+    create?: XOR<UserCreateWithoutCommunityStoriesInput, UserUncheckedCreateWithoutCommunityStoriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCommunityStoriesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumStoryCategoryFieldUpdateOperationsInput = {
+    set?: $Enums.StoryCategory
+  }
+
+  export type UserUpdateOneWithoutCommunityStoriesNestedInput = {
+    create?: XOR<UserCreateWithoutCommunityStoriesInput, UserUncheckedCreateWithoutCommunityStoriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCommunityStoriesInput
+    upsert?: UserUpsertWithoutCommunityStoriesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCommunityStoriesInput, UserUpdateWithoutCommunityStoriesInput>, UserUncheckedUpdateWithoutCommunityStoriesInput>
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type EnumProjectCategoryFieldUpdateOperationsInput = {
+    set?: $Enums.ProjectCategory
+  }
+
+  export type UserCreateNestedOneWithoutUserProgressInput = {
+    create?: XOR<UserCreateWithoutUserProgressInput, UserUncheckedCreateWithoutUserProgressInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserProgressInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutUserProgressNestedInput = {
+    create?: XOR<UserCreateWithoutUserProgressInput, UserUncheckedCreateWithoutUserProgressInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserProgressInput
+    upsert?: UserUpsertWithoutUserProgressInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserProgressInput, UserUpdateWithoutUserProgressInput>, UserUncheckedUpdateWithoutUserProgressInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -25906,74 +24980,41 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedEnumArticleTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleType | EnumArticleTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleTypeFilter<$PrismaModel> | $Enums.ArticleType
-  }
-
-  export type NestedEnumArticleStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleStatus | EnumArticleStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleStatusFilter<$PrismaModel> | $Enums.ArticleStatus
-  }
-
-  export type NestedEnumSentimentNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Sentiment | EnumSentimentFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumSentimentNullableFilter<$PrismaModel> | $Enums.Sentiment | null
-  }
-
-  export type NestedEnumLevelNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumLevelNullableFilter<$PrismaModel> | $Enums.Level | null
-  }
-
-  export type NestedEnumContentTypeNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumContentTypeNullableFilter<$PrismaModel> | $Enums.ContentType | null
-  }
-
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type NestedEnumArticleTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleType | EnumArticleTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleTypeWithAggregatesFilter<$PrismaModel> | $Enums.ArticleType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumArticleTypeFilter<$PrismaModel>
-    _max?: NestedEnumArticleTypeFilter<$PrismaModel>
+  export type NestedEnumSentimentFilter<$PrismaModel = never> = {
+    equals?: $Enums.Sentiment | EnumSentimentFieldRefInput<$PrismaModel>
+    in?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel>
+    not?: NestedEnumSentimentFilter<$PrismaModel> | $Enums.Sentiment
   }
 
-  export type NestedEnumArticleStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleStatus | EnumArticleStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleStatusWithAggregatesFilter<$PrismaModel> | $Enums.ArticleStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumArticleStatusFilter<$PrismaModel>
-    _max?: NestedEnumArticleStatusFilter<$PrismaModel>
+  export type NestedEnumWarningLevelNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.WarningLevel | EnumWarningLevelFieldRefInput<$PrismaModel> | null
+    in?: $Enums.WarningLevel[] | ListEnumWarningLevelFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.WarningLevel[] | ListEnumWarningLevelFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumWarningLevelNullableFilter<$PrismaModel> | $Enums.WarningLevel | null
   }
 
-  export type NestedEnumSentimentNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Sentiment | EnumSentimentFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumSentimentNullableWithAggregatesFilter<$PrismaModel> | $Enums.Sentiment | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumSentimentNullableFilter<$PrismaModel>
-    _max?: NestedEnumSentimentNullableFilter<$PrismaModel>
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedEnumSentimentWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Sentiment | EnumSentimentFieldRefInput<$PrismaModel>
+    in?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel>
+    not?: NestedEnumSentimentWithAggregatesFilter<$PrismaModel> | $Enums.Sentiment
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSentimentFilter<$PrismaModel>
+    _max?: NestedEnumSentimentFilter<$PrismaModel>
   }
 
   export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -25992,32 +25033,64 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
-  export type NestedEnumLevelNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumLevelNullableWithAggregatesFilter<$PrismaModel> | $Enums.Level | null
+  export type NestedEnumWarningLevelNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WarningLevel | EnumWarningLevelFieldRefInput<$PrismaModel> | null
+    in?: $Enums.WarningLevel[] | ListEnumWarningLevelFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.WarningLevel[] | ListEnumWarningLevelFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumWarningLevelNullableWithAggregatesFilter<$PrismaModel> | $Enums.WarningLevel | null
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumLevelNullableFilter<$PrismaModel>
-    _max?: NestedEnumLevelNullableFilter<$PrismaModel>
+    _min?: NestedEnumWarningLevelNullableFilter<$PrismaModel>
+    _max?: NestedEnumWarningLevelNullableFilter<$PrismaModel>
   }
 
-  export type NestedEnumContentTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumContentTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.ContentType | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumContentTypeNullableFilter<$PrismaModel>
-    _max?: NestedEnumContentTypeNullableFilter<$PrismaModel>
+  export type NestedEnumStoryCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.StoryCategory | EnumStoryCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.StoryCategory[] | ListEnumStoryCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.StoryCategory[] | ListEnumStoryCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumStoryCategoryFilter<$PrismaModel> | $Enums.StoryCategory
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+  export type NestedEnumStoryCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.StoryCategory | EnumStoryCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.StoryCategory[] | ListEnumStoryCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.StoryCategory[] | ListEnumStoryCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumStoryCategoryWithAggregatesFilter<$PrismaModel> | $Enums.StoryCategory
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+    _min?: NestedEnumStoryCategoryFilter<$PrismaModel>
+    _max?: NestedEnumStoryCategoryFilter<$PrismaModel>
+  }
+
+  export type NestedEnumProjectCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProjectCategory | EnumProjectCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.ProjectCategory[] | ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ProjectCategory[] | ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumProjectCategoryFilter<$PrismaModel> | $Enums.ProjectCategory
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedEnumProjectCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProjectCategory | EnumProjectCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.ProjectCategory[] | ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ProjectCategory[] | ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumProjectCategoryWithAggregatesFilter<$PrismaModel> | $Enums.ProjectCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumProjectCategoryFilter<$PrismaModel>
+    _max?: NestedEnumProjectCategoryFilter<$PrismaModel>
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -26028,13 +25101,15 @@ export namespace Prisma {
     password: string
     image?: string | null
     role?: $Enums.Role
-    points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    deletedAt?: Date | string | null
+    points?: number
+    badges?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     articles?: ArticleCreateNestedManyWithoutAuthorInput
     copilotActivities?: CopilotActivityCreateNestedManyWithoutUserInput
+    communityStories?: CommunityStoryCreateNestedManyWithoutUserInput
+    userProgress?: UserProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -26045,13 +25120,15 @@ export namespace Prisma {
     password: string
     image?: string | null
     role?: $Enums.Role
-    points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    deletedAt?: Date | string | null
+    points?: number
+    badges?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     articles?: ArticleUncheckedCreateNestedManyWithoutAuthorInput
     copilotActivities?: CopilotActivityUncheckedCreateNestedManyWithoutUserInput
+    communityStories?: CommunityStoryUncheckedCreateNestedManyWithoutUserInput
+    userProgress?: UserProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -26078,13 +25155,15 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     articles?: ArticleUpdateManyWithoutAuthorNestedInput
     copilotActivities?: CopilotActivityUpdateManyWithoutUserNestedInput
+    communityStories?: CommunityStoryUpdateManyWithoutUserNestedInput
+    userProgress?: UserProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -26095,13 +25174,15 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     articles?: ArticleUncheckedUpdateManyWithoutAuthorNestedInput
     copilotActivities?: CopilotActivityUncheckedUpdateManyWithoutUserNestedInput
+    communityStories?: CommunityStoryUncheckedUpdateManyWithoutUserNestedInput
+    userProgress?: UserProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -26112,13 +25193,15 @@ export namespace Prisma {
     password: string
     image?: string | null
     role?: $Enums.Role
-    points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    deletedAt?: Date | string | null
+    points?: number
+    badges?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     articles?: ArticleCreateNestedManyWithoutAuthorInput
     copilotActivities?: CopilotActivityCreateNestedManyWithoutUserInput
+    communityStories?: CommunityStoryCreateNestedManyWithoutUserInput
+    userProgress?: UserProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -26129,13 +25212,15 @@ export namespace Prisma {
     password: string
     image?: string | null
     role?: $Enums.Role
-    points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    deletedAt?: Date | string | null
+    points?: number
+    badges?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     articles?: ArticleUncheckedCreateNestedManyWithoutAuthorInput
     copilotActivities?: CopilotActivityUncheckedCreateNestedManyWithoutUserInput
+    communityStories?: CommunityStoryUncheckedCreateNestedManyWithoutUserInput
+    userProgress?: UserProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -26162,13 +25247,15 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     articles?: ArticleUpdateManyWithoutAuthorNestedInput
     copilotActivities?: CopilotActivityUpdateManyWithoutUserNestedInput
+    communityStories?: CommunityStoryUpdateManyWithoutUserNestedInput
+    userProgress?: UserProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -26179,13 +25266,15 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     articles?: ArticleUncheckedUpdateManyWithoutAuthorNestedInput
     copilotActivities?: CopilotActivityUncheckedUpdateManyWithoutUserNestedInput
+    communityStories?: CommunityStoryUncheckedUpdateManyWithoutUserNestedInput
+    userProgress?: UserProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -26250,66 +25339,62 @@ export namespace Prisma {
 
   export type ArticleCreateWithoutAuthorInput = {
     id?: string
-    slug: string
     title: string
-    excerpt: string
+    slug: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    sentiment?: $Enums.Sentiment | null
+    type?: string
+    excerpt?: string | null
+    published?: boolean
+    category: string
+    tags: string
+    sentiment?: $Enums.Sentiment
     factCheckScore?: number | null
+    factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
+    level?: string | null
+    contentType?: string | null
+    readTime?: string | null
+    warningLevel?: $Enums.WarningLevel | null
+    securityTips?: string | null
     courseSequence?: number | null
+    relatedArticles?: string | null
     projectHighlight?: boolean
     coverImage?: string | null
     coverImageAlt?: string | null
+    quizData?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-    category: CategoryCreateNestedOneWithoutArticlesInput
-    tags?: ArticleTagCreateNestedManyWithoutArticleInput
-    relatedFrom?: ArticleRelationCreateNestedManyWithoutFromArticleInput
-    relatedTo?: ArticleRelationCreateNestedManyWithoutToArticleInput
-    citations?: CitationCreateNestedManyWithoutArticleInput
   }
 
   export type ArticleUncheckedCreateWithoutAuthorInput = {
     id?: string
-    slug: string
     title: string
-    excerpt: string
+    slug: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    categoryId: string
-    sentiment?: $Enums.Sentiment | null
+    type?: string
+    excerpt?: string | null
+    published?: boolean
+    category: string
+    tags: string
+    sentiment?: $Enums.Sentiment
     factCheckScore?: number | null
+    factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
+    level?: string | null
+    contentType?: string | null
+    readTime?: string | null
+    warningLevel?: $Enums.WarningLevel | null
+    securityTips?: string | null
     courseSequence?: number | null
+    relatedArticles?: string | null
     projectHighlight?: boolean
     coverImage?: string | null
     coverImageAlt?: string | null
+    quizData?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-    tags?: ArticleTagUncheckedCreateNestedManyWithoutArticleInput
-    relatedFrom?: ArticleRelationUncheckedCreateNestedManyWithoutFromArticleInput
-    relatedTo?: ArticleRelationUncheckedCreateNestedManyWithoutToArticleInput
-    citations?: CitationUncheckedCreateNestedManyWithoutArticleInput
   }
 
   export type ArticleCreateOrConnectWithoutAuthorInput = {
@@ -26353,6 +25438,86 @@ export namespace Prisma {
 
   export type CopilotActivityCreateManyUserInputEnvelope = {
     data: CopilotActivityCreateManyUserInput | CopilotActivityCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CommunityStoryCreateWithoutUserInput = {
+    id?: string
+    slug: string
+    authorName: string
+    authorAvatar?: string | null
+    title: string
+    content: string
+    category: $Enums.StoryCategory
+    likes?: number
+    verified?: boolean
+    featured?: boolean
+    published?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommunityStoryUncheckedCreateWithoutUserInput = {
+    id?: string
+    slug: string
+    authorName: string
+    authorAvatar?: string | null
+    title: string
+    content: string
+    category: $Enums.StoryCategory
+    likes?: number
+    verified?: boolean
+    featured?: boolean
+    published?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommunityStoryCreateOrConnectWithoutUserInput = {
+    where: CommunityStoryWhereUniqueInput
+    create: XOR<CommunityStoryCreateWithoutUserInput, CommunityStoryUncheckedCreateWithoutUserInput>
+  }
+
+  export type CommunityStoryCreateManyUserInputEnvelope = {
+    data: CommunityStoryCreateManyUserInput | CommunityStoryCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserProgressCreateWithoutUserInput = {
+    id?: string
+    articleSlug: string
+    completed?: boolean
+    progress?: number
+    quizScore?: number | null
+    quizAttempts?: number
+    certificateIssued?: boolean
+    certificateUrl?: string | null
+    startedAt?: Date | string
+    completedAt?: Date | string | null
+    lastAccessed?: Date | string
+  }
+
+  export type UserProgressUncheckedCreateWithoutUserInput = {
+    id?: string
+    articleSlug: string
+    completed?: boolean
+    progress?: number
+    quizScore?: number | null
+    quizAttempts?: number
+    certificateIssued?: boolean
+    certificateUrl?: string | null
+    startedAt?: Date | string
+    completedAt?: Date | string | null
+    lastAccessed?: Date | string
+  }
+
+  export type UserProgressCreateOrConnectWithoutUserInput = {
+    where: UserProgressWhereUniqueInput
+    create: XOR<UserProgressCreateWithoutUserInput, UserProgressUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserProgressCreateManyUserInputEnvelope = {
+    data: UserProgressCreateManyUserInput | UserProgressCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -26437,31 +25602,33 @@ export namespace Prisma {
     OR?: ArticleScalarWhereInput[]
     NOT?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
     id?: StringFilter<"Article"> | string
-    slug?: StringFilter<"Article"> | string
     title?: StringFilter<"Article"> | string
-    excerpt?: StringFilter<"Article"> | string
+    slug?: StringFilter<"Article"> | string
     content?: StringFilter<"Article"> | string
-    type?: EnumArticleTypeFilter<"Article"> | $Enums.ArticleType
-    status?: EnumArticleStatusFilter<"Article"> | $Enums.ArticleStatus
-    readTime?: StringNullableFilter<"Article"> | string | null
-    viewCount?: IntFilter<"Article"> | number
+    type?: StringFilter<"Article"> | string
+    excerpt?: StringNullableFilter<"Article"> | string | null
+    published?: BoolFilter<"Article"> | boolean
     authorId?: StringFilter<"Article"> | string
-    categoryId?: StringFilter<"Article"> | string
-    sentiment?: EnumSentimentNullableFilter<"Article"> | $Enums.Sentiment | null
+    category?: StringFilter<"Article"> | string
+    tags?: StringFilter<"Article"> | string
+    sentiment?: EnumSentimentFilter<"Article"> | $Enums.Sentiment
     factCheckScore?: FloatNullableFilter<"Article"> | number | null
+    factCheckSources?: StringNullableFilter<"Article"> | string | null
     factCheckDate?: DateTimeNullableFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableFilter<"Article"> | string | null
-    level?: EnumLevelNullableFilter<"Article"> | $Enums.Level | null
-    contentType?: EnumContentTypeNullableFilter<"Article"> | $Enums.ContentType | null
-    warningLevel?: StringNullableFilter<"Article"> | string | null
+    level?: StringNullableFilter<"Article"> | string | null
+    contentType?: StringNullableFilter<"Article"> | string | null
+    readTime?: StringNullableFilter<"Article"> | string | null
+    warningLevel?: EnumWarningLevelNullableFilter<"Article"> | $Enums.WarningLevel | null
+    securityTips?: StringNullableFilter<"Article"> | string | null
     courseSequence?: IntNullableFilter<"Article"> | number | null
+    relatedArticles?: StringNullableFilter<"Article"> | string | null
     projectHighlight?: BoolFilter<"Article"> | boolean
     coverImage?: StringNullableFilter<"Article"> | string | null
     coverImageAlt?: StringNullableFilter<"Article"> | string | null
+    quizData?: StringNullableFilter<"Article"> | string | null
     createdAt?: DateTimeFilter<"Article"> | Date | string
     updatedAt?: DateTimeFilter<"Article"> | Date | string
-    publishedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
-    deletedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
   }
 
   export type CopilotActivityUpsertWithWhereUniqueWithoutUserInput = {
@@ -26496,288 +25663,74 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"CopilotActivity"> | Date | string
   }
 
-  export type CategoryCreateWithoutChildrenInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string | null
-    type: string
-    icon?: string | null
-    color?: string | null
-    order?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    parent?: CategoryCreateNestedOneWithoutChildrenInput
-    articles?: ArticleCreateNestedManyWithoutCategoryInput
+  export type CommunityStoryUpsertWithWhereUniqueWithoutUserInput = {
+    where: CommunityStoryWhereUniqueInput
+    update: XOR<CommunityStoryUpdateWithoutUserInput, CommunityStoryUncheckedUpdateWithoutUserInput>
+    create: XOR<CommunityStoryCreateWithoutUserInput, CommunityStoryUncheckedCreateWithoutUserInput>
   }
 
-  export type CategoryUncheckedCreateWithoutChildrenInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string | null
-    type: string
-    parentId?: string | null
-    icon?: string | null
-    color?: string | null
-    order?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    articles?: ArticleUncheckedCreateNestedManyWithoutCategoryInput
+  export type CommunityStoryUpdateWithWhereUniqueWithoutUserInput = {
+    where: CommunityStoryWhereUniqueInput
+    data: XOR<CommunityStoryUpdateWithoutUserInput, CommunityStoryUncheckedUpdateWithoutUserInput>
   }
 
-  export type CategoryCreateOrConnectWithoutChildrenInput = {
-    where: CategoryWhereUniqueInput
-    create: XOR<CategoryCreateWithoutChildrenInput, CategoryUncheckedCreateWithoutChildrenInput>
+  export type CommunityStoryUpdateManyWithWhereWithoutUserInput = {
+    where: CommunityStoryScalarWhereInput
+    data: XOR<CommunityStoryUpdateManyMutationInput, CommunityStoryUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type CategoryCreateWithoutParentInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string | null
-    type: string
-    icon?: string | null
-    color?: string | null
-    order?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    children?: CategoryCreateNestedManyWithoutParentInput
-    articles?: ArticleCreateNestedManyWithoutCategoryInput
+  export type CommunityStoryScalarWhereInput = {
+    AND?: CommunityStoryScalarWhereInput | CommunityStoryScalarWhereInput[]
+    OR?: CommunityStoryScalarWhereInput[]
+    NOT?: CommunityStoryScalarWhereInput | CommunityStoryScalarWhereInput[]
+    id?: StringFilter<"CommunityStory"> | string
+    slug?: StringFilter<"CommunityStory"> | string
+    authorName?: StringFilter<"CommunityStory"> | string
+    authorAvatar?: StringNullableFilter<"CommunityStory"> | string | null
+    userId?: StringNullableFilter<"CommunityStory"> | string | null
+    title?: StringFilter<"CommunityStory"> | string
+    content?: StringFilter<"CommunityStory"> | string
+    category?: EnumStoryCategoryFilter<"CommunityStory"> | $Enums.StoryCategory
+    likes?: IntFilter<"CommunityStory"> | number
+    verified?: BoolFilter<"CommunityStory"> | boolean
+    featured?: BoolFilter<"CommunityStory"> | boolean
+    published?: BoolFilter<"CommunityStory"> | boolean
+    createdAt?: DateTimeFilter<"CommunityStory"> | Date | string
+    updatedAt?: DateTimeFilter<"CommunityStory"> | Date | string
   }
 
-  export type CategoryUncheckedCreateWithoutParentInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string | null
-    type: string
-    icon?: string | null
-    color?: string | null
-    order?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    children?: CategoryUncheckedCreateNestedManyWithoutParentInput
-    articles?: ArticleUncheckedCreateNestedManyWithoutCategoryInput
+  export type UserProgressUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserProgressWhereUniqueInput
+    update: XOR<UserProgressUpdateWithoutUserInput, UserProgressUncheckedUpdateWithoutUserInput>
+    create: XOR<UserProgressCreateWithoutUserInput, UserProgressUncheckedCreateWithoutUserInput>
   }
 
-  export type CategoryCreateOrConnectWithoutParentInput = {
-    where: CategoryWhereUniqueInput
-    create: XOR<CategoryCreateWithoutParentInput, CategoryUncheckedCreateWithoutParentInput>
+  export type UserProgressUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserProgressWhereUniqueInput
+    data: XOR<UserProgressUpdateWithoutUserInput, UserProgressUncheckedUpdateWithoutUserInput>
   }
 
-  export type CategoryCreateManyParentInputEnvelope = {
-    data: CategoryCreateManyParentInput | CategoryCreateManyParentInput[]
-    skipDuplicates?: boolean
+  export type UserProgressUpdateManyWithWhereWithoutUserInput = {
+    where: UserProgressScalarWhereInput
+    data: XOR<UserProgressUpdateManyMutationInput, UserProgressUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type ArticleCreateWithoutCategoryInput = {
-    id?: string
-    slug: string
-    title: string
-    excerpt: string
-    content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    sentiment?: $Enums.Sentiment | null
-    factCheckScore?: number | null
-    factCheckDate?: Date | string | null
-    factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
-    courseSequence?: number | null
-    projectHighlight?: boolean
-    coverImage?: string | null
-    coverImageAlt?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-    author: UserCreateNestedOneWithoutArticlesInput
-    tags?: ArticleTagCreateNestedManyWithoutArticleInput
-    relatedFrom?: ArticleRelationCreateNestedManyWithoutFromArticleInput
-    relatedTo?: ArticleRelationCreateNestedManyWithoutToArticleInput
-    citations?: CitationCreateNestedManyWithoutArticleInput
-  }
-
-  export type ArticleUncheckedCreateWithoutCategoryInput = {
-    id?: string
-    slug: string
-    title: string
-    excerpt: string
-    content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    authorId: string
-    sentiment?: $Enums.Sentiment | null
-    factCheckScore?: number | null
-    factCheckDate?: Date | string | null
-    factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
-    courseSequence?: number | null
-    projectHighlight?: boolean
-    coverImage?: string | null
-    coverImageAlt?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-    tags?: ArticleTagUncheckedCreateNestedManyWithoutArticleInput
-    relatedFrom?: ArticleRelationUncheckedCreateNestedManyWithoutFromArticleInput
-    relatedTo?: ArticleRelationUncheckedCreateNestedManyWithoutToArticleInput
-    citations?: CitationUncheckedCreateNestedManyWithoutArticleInput
-  }
-
-  export type ArticleCreateOrConnectWithoutCategoryInput = {
-    where: ArticleWhereUniqueInput
-    create: XOR<ArticleCreateWithoutCategoryInput, ArticleUncheckedCreateWithoutCategoryInput>
-  }
-
-  export type ArticleCreateManyCategoryInputEnvelope = {
-    data: ArticleCreateManyCategoryInput | ArticleCreateManyCategoryInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type CategoryUpsertWithoutChildrenInput = {
-    update: XOR<CategoryUpdateWithoutChildrenInput, CategoryUncheckedUpdateWithoutChildrenInput>
-    create: XOR<CategoryCreateWithoutChildrenInput, CategoryUncheckedCreateWithoutChildrenInput>
-    where?: CategoryWhereInput
-  }
-
-  export type CategoryUpdateToOneWithWhereWithoutChildrenInput = {
-    where?: CategoryWhereInput
-    data: XOR<CategoryUpdateWithoutChildrenInput, CategoryUncheckedUpdateWithoutChildrenInput>
-  }
-
-  export type CategoryUpdateWithoutChildrenInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    parent?: CategoryUpdateOneWithoutChildrenNestedInput
-    articles?: ArticleUpdateManyWithoutCategoryNestedInput
-  }
-
-  export type CategoryUncheckedUpdateWithoutChildrenInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    articles?: ArticleUncheckedUpdateManyWithoutCategoryNestedInput
-  }
-
-  export type CategoryUpsertWithWhereUniqueWithoutParentInput = {
-    where: CategoryWhereUniqueInput
-    update: XOR<CategoryUpdateWithoutParentInput, CategoryUncheckedUpdateWithoutParentInput>
-    create: XOR<CategoryCreateWithoutParentInput, CategoryUncheckedCreateWithoutParentInput>
-  }
-
-  export type CategoryUpdateWithWhereUniqueWithoutParentInput = {
-    where: CategoryWhereUniqueInput
-    data: XOR<CategoryUpdateWithoutParentInput, CategoryUncheckedUpdateWithoutParentInput>
-  }
-
-  export type CategoryUpdateManyWithWhereWithoutParentInput = {
-    where: CategoryScalarWhereInput
-    data: XOR<CategoryUpdateManyMutationInput, CategoryUncheckedUpdateManyWithoutParentInput>
-  }
-
-  export type CategoryScalarWhereInput = {
-    AND?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
-    OR?: CategoryScalarWhereInput[]
-    NOT?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
-    id?: StringFilter<"Category"> | string
-    slug?: StringFilter<"Category"> | string
-    name?: StringFilter<"Category"> | string
-    description?: StringNullableFilter<"Category"> | string | null
-    type?: StringFilter<"Category"> | string
-    parentId?: StringNullableFilter<"Category"> | string | null
-    icon?: StringNullableFilter<"Category"> | string | null
-    color?: StringNullableFilter<"Category"> | string | null
-    order?: IntFilter<"Category"> | number
-    createdAt?: DateTimeFilter<"Category"> | Date | string
-    updatedAt?: DateTimeFilter<"Category"> | Date | string
-  }
-
-  export type ArticleUpsertWithWhereUniqueWithoutCategoryInput = {
-    where: ArticleWhereUniqueInput
-    update: XOR<ArticleUpdateWithoutCategoryInput, ArticleUncheckedUpdateWithoutCategoryInput>
-    create: XOR<ArticleCreateWithoutCategoryInput, ArticleUncheckedCreateWithoutCategoryInput>
-  }
-
-  export type ArticleUpdateWithWhereUniqueWithoutCategoryInput = {
-    where: ArticleWhereUniqueInput
-    data: XOR<ArticleUpdateWithoutCategoryInput, ArticleUncheckedUpdateWithoutCategoryInput>
-  }
-
-  export type ArticleUpdateManyWithWhereWithoutCategoryInput = {
-    where: ArticleScalarWhereInput
-    data: XOR<ArticleUpdateManyMutationInput, ArticleUncheckedUpdateManyWithoutCategoryInput>
-  }
-
-  export type ArticleTagCreateWithoutTagInput = {
-    createdAt?: Date | string
-    article: ArticleCreateNestedOneWithoutTagsInput
-  }
-
-  export type ArticleTagUncheckedCreateWithoutTagInput = {
-    articleId: string
-    createdAt?: Date | string
-  }
-
-  export type ArticleTagCreateOrConnectWithoutTagInput = {
-    where: ArticleTagWhereUniqueInput
-    create: XOR<ArticleTagCreateWithoutTagInput, ArticleTagUncheckedCreateWithoutTagInput>
-  }
-
-  export type ArticleTagCreateManyTagInputEnvelope = {
-    data: ArticleTagCreateManyTagInput | ArticleTagCreateManyTagInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ArticleTagUpsertWithWhereUniqueWithoutTagInput = {
-    where: ArticleTagWhereUniqueInput
-    update: XOR<ArticleTagUpdateWithoutTagInput, ArticleTagUncheckedUpdateWithoutTagInput>
-    create: XOR<ArticleTagCreateWithoutTagInput, ArticleTagUncheckedCreateWithoutTagInput>
-  }
-
-  export type ArticleTagUpdateWithWhereUniqueWithoutTagInput = {
-    where: ArticleTagWhereUniqueInput
-    data: XOR<ArticleTagUpdateWithoutTagInput, ArticleTagUncheckedUpdateWithoutTagInput>
-  }
-
-  export type ArticleTagUpdateManyWithWhereWithoutTagInput = {
-    where: ArticleTagScalarWhereInput
-    data: XOR<ArticleTagUpdateManyMutationInput, ArticleTagUncheckedUpdateManyWithoutTagInput>
-  }
-
-  export type ArticleTagScalarWhereInput = {
-    AND?: ArticleTagScalarWhereInput | ArticleTagScalarWhereInput[]
-    OR?: ArticleTagScalarWhereInput[]
-    NOT?: ArticleTagScalarWhereInput | ArticleTagScalarWhereInput[]
-    articleId?: StringFilter<"ArticleTag"> | string
-    tagId?: StringFilter<"ArticleTag"> | string
-    createdAt?: DateTimeFilter<"ArticleTag"> | Date | string
+  export type UserProgressScalarWhereInput = {
+    AND?: UserProgressScalarWhereInput | UserProgressScalarWhereInput[]
+    OR?: UserProgressScalarWhereInput[]
+    NOT?: UserProgressScalarWhereInput | UserProgressScalarWhereInput[]
+    id?: StringFilter<"UserProgress"> | string
+    userId?: StringFilter<"UserProgress"> | string
+    articleSlug?: StringFilter<"UserProgress"> | string
+    completed?: BoolFilter<"UserProgress"> | boolean
+    progress?: IntFilter<"UserProgress"> | number
+    quizScore?: FloatNullableFilter<"UserProgress"> | number | null
+    quizAttempts?: IntFilter<"UserProgress"> | number
+    certificateIssued?: BoolFilter<"UserProgress"> | boolean
+    certificateUrl?: StringNullableFilter<"UserProgress"> | string | null
+    startedAt?: DateTimeFilter<"UserProgress"> | Date | string
+    completedAt?: DateTimeNullableFilter<"UserProgress"> | Date | string | null
+    lastAccessed?: DateTimeFilter<"UserProgress"> | Date | string
   }
 
   export type UserCreateWithoutArticlesInput = {
@@ -26788,13 +25741,15 @@ export namespace Prisma {
     password: string
     image?: string | null
     role?: $Enums.Role
-    points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    deletedAt?: Date | string | null
+    points?: number
+    badges?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     copilotActivities?: CopilotActivityCreateNestedManyWithoutUserInput
+    communityStories?: CommunityStoryCreateNestedManyWithoutUserInput
+    userProgress?: UserProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutArticlesInput = {
@@ -26805,151 +25760,20 @@ export namespace Prisma {
     password: string
     image?: string | null
     role?: $Enums.Role
-    points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    deletedAt?: Date | string | null
+    points?: number
+    badges?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     copilotActivities?: CopilotActivityUncheckedCreateNestedManyWithoutUserInput
+    communityStories?: CommunityStoryUncheckedCreateNestedManyWithoutUserInput
+    userProgress?: UserProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutArticlesInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutArticlesInput, UserUncheckedCreateWithoutArticlesInput>
-  }
-
-  export type CategoryCreateWithoutArticlesInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string | null
-    type: string
-    icon?: string | null
-    color?: string | null
-    order?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    parent?: CategoryCreateNestedOneWithoutChildrenInput
-    children?: CategoryCreateNestedManyWithoutParentInput
-  }
-
-  export type CategoryUncheckedCreateWithoutArticlesInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string | null
-    type: string
-    parentId?: string | null
-    icon?: string | null
-    color?: string | null
-    order?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    children?: CategoryUncheckedCreateNestedManyWithoutParentInput
-  }
-
-  export type CategoryCreateOrConnectWithoutArticlesInput = {
-    where: CategoryWhereUniqueInput
-    create: XOR<CategoryCreateWithoutArticlesInput, CategoryUncheckedCreateWithoutArticlesInput>
-  }
-
-  export type ArticleTagCreateWithoutArticleInput = {
-    createdAt?: Date | string
-    tag: TagCreateNestedOneWithoutArticlesInput
-  }
-
-  export type ArticleTagUncheckedCreateWithoutArticleInput = {
-    tagId: string
-    createdAt?: Date | string
-  }
-
-  export type ArticleTagCreateOrConnectWithoutArticleInput = {
-    where: ArticleTagWhereUniqueInput
-    create: XOR<ArticleTagCreateWithoutArticleInput, ArticleTagUncheckedCreateWithoutArticleInput>
-  }
-
-  export type ArticleTagCreateManyArticleInputEnvelope = {
-    data: ArticleTagCreateManyArticleInput | ArticleTagCreateManyArticleInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ArticleRelationCreateWithoutFromArticleInput = {
-    relationType?: string
-    order?: number | null
-    createdAt?: Date | string
-    toArticle: ArticleCreateNestedOneWithoutRelatedToInput
-  }
-
-  export type ArticleRelationUncheckedCreateWithoutFromArticleInput = {
-    toArticleId: string
-    relationType?: string
-    order?: number | null
-    createdAt?: Date | string
-  }
-
-  export type ArticleRelationCreateOrConnectWithoutFromArticleInput = {
-    where: ArticleRelationWhereUniqueInput
-    create: XOR<ArticleRelationCreateWithoutFromArticleInput, ArticleRelationUncheckedCreateWithoutFromArticleInput>
-  }
-
-  export type ArticleRelationCreateManyFromArticleInputEnvelope = {
-    data: ArticleRelationCreateManyFromArticleInput | ArticleRelationCreateManyFromArticleInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ArticleRelationCreateWithoutToArticleInput = {
-    relationType?: string
-    order?: number | null
-    createdAt?: Date | string
-    fromArticle: ArticleCreateNestedOneWithoutRelatedFromInput
-  }
-
-  export type ArticleRelationUncheckedCreateWithoutToArticleInput = {
-    fromArticleId: string
-    relationType?: string
-    order?: number | null
-    createdAt?: Date | string
-  }
-
-  export type ArticleRelationCreateOrConnectWithoutToArticleInput = {
-    where: ArticleRelationWhereUniqueInput
-    create: XOR<ArticleRelationCreateWithoutToArticleInput, ArticleRelationUncheckedCreateWithoutToArticleInput>
-  }
-
-  export type ArticleRelationCreateManyToArticleInputEnvelope = {
-    data: ArticleRelationCreateManyToArticleInput | ArticleRelationCreateManyToArticleInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type CitationCreateWithoutArticleInput = {
-    id?: string
-    url: string
-    title?: string | null
-    domain?: string | null
-    order?: number
-    verified?: boolean
-    createdAt?: Date | string
-  }
-
-  export type CitationUncheckedCreateWithoutArticleInput = {
-    id?: string
-    url: string
-    title?: string | null
-    domain?: string | null
-    order?: number
-    verified?: boolean
-    createdAt?: Date | string
-  }
-
-  export type CitationCreateOrConnectWithoutArticleInput = {
-    where: CitationWhereUniqueInput
-    create: XOR<CitationCreateWithoutArticleInput, CitationUncheckedCreateWithoutArticleInput>
-  }
-
-  export type CitationCreateManyArticleInputEnvelope = {
-    data: CitationCreateManyArticleInput | CitationCreateManyArticleInput[]
-    skipDuplicates?: boolean
   }
 
   export type UserUpsertWithoutArticlesInput = {
@@ -26971,13 +25795,15 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     copilotActivities?: CopilotActivityUpdateManyWithoutUserNestedInput
+    communityStories?: CommunityStoryUpdateManyWithoutUserNestedInput
+    userProgress?: UserProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutArticlesInput = {
@@ -26988,771 +25814,15 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     copilotActivities?: CopilotActivityUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type CategoryUpsertWithoutArticlesInput = {
-    update: XOR<CategoryUpdateWithoutArticlesInput, CategoryUncheckedUpdateWithoutArticlesInput>
-    create: XOR<CategoryCreateWithoutArticlesInput, CategoryUncheckedCreateWithoutArticlesInput>
-    where?: CategoryWhereInput
-  }
-
-  export type CategoryUpdateToOneWithWhereWithoutArticlesInput = {
-    where?: CategoryWhereInput
-    data: XOR<CategoryUpdateWithoutArticlesInput, CategoryUncheckedUpdateWithoutArticlesInput>
-  }
-
-  export type CategoryUpdateWithoutArticlesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    parent?: CategoryUpdateOneWithoutChildrenNestedInput
-    children?: CategoryUpdateManyWithoutParentNestedInput
-  }
-
-  export type CategoryUncheckedUpdateWithoutArticlesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    children?: CategoryUncheckedUpdateManyWithoutParentNestedInput
-  }
-
-  export type ArticleTagUpsertWithWhereUniqueWithoutArticleInput = {
-    where: ArticleTagWhereUniqueInput
-    update: XOR<ArticleTagUpdateWithoutArticleInput, ArticleTagUncheckedUpdateWithoutArticleInput>
-    create: XOR<ArticleTagCreateWithoutArticleInput, ArticleTagUncheckedCreateWithoutArticleInput>
-  }
-
-  export type ArticleTagUpdateWithWhereUniqueWithoutArticleInput = {
-    where: ArticleTagWhereUniqueInput
-    data: XOR<ArticleTagUpdateWithoutArticleInput, ArticleTagUncheckedUpdateWithoutArticleInput>
-  }
-
-  export type ArticleTagUpdateManyWithWhereWithoutArticleInput = {
-    where: ArticleTagScalarWhereInput
-    data: XOR<ArticleTagUpdateManyMutationInput, ArticleTagUncheckedUpdateManyWithoutArticleInput>
-  }
-
-  export type ArticleRelationUpsertWithWhereUniqueWithoutFromArticleInput = {
-    where: ArticleRelationWhereUniqueInput
-    update: XOR<ArticleRelationUpdateWithoutFromArticleInput, ArticleRelationUncheckedUpdateWithoutFromArticleInput>
-    create: XOR<ArticleRelationCreateWithoutFromArticleInput, ArticleRelationUncheckedCreateWithoutFromArticleInput>
-  }
-
-  export type ArticleRelationUpdateWithWhereUniqueWithoutFromArticleInput = {
-    where: ArticleRelationWhereUniqueInput
-    data: XOR<ArticleRelationUpdateWithoutFromArticleInput, ArticleRelationUncheckedUpdateWithoutFromArticleInput>
-  }
-
-  export type ArticleRelationUpdateManyWithWhereWithoutFromArticleInput = {
-    where: ArticleRelationScalarWhereInput
-    data: XOR<ArticleRelationUpdateManyMutationInput, ArticleRelationUncheckedUpdateManyWithoutFromArticleInput>
-  }
-
-  export type ArticleRelationScalarWhereInput = {
-    AND?: ArticleRelationScalarWhereInput | ArticleRelationScalarWhereInput[]
-    OR?: ArticleRelationScalarWhereInput[]
-    NOT?: ArticleRelationScalarWhereInput | ArticleRelationScalarWhereInput[]
-    fromArticleId?: StringFilter<"ArticleRelation"> | string
-    toArticleId?: StringFilter<"ArticleRelation"> | string
-    relationType?: StringFilter<"ArticleRelation"> | string
-    order?: IntNullableFilter<"ArticleRelation"> | number | null
-    createdAt?: DateTimeFilter<"ArticleRelation"> | Date | string
-  }
-
-  export type ArticleRelationUpsertWithWhereUniqueWithoutToArticleInput = {
-    where: ArticleRelationWhereUniqueInput
-    update: XOR<ArticleRelationUpdateWithoutToArticleInput, ArticleRelationUncheckedUpdateWithoutToArticleInput>
-    create: XOR<ArticleRelationCreateWithoutToArticleInput, ArticleRelationUncheckedCreateWithoutToArticleInput>
-  }
-
-  export type ArticleRelationUpdateWithWhereUniqueWithoutToArticleInput = {
-    where: ArticleRelationWhereUniqueInput
-    data: XOR<ArticleRelationUpdateWithoutToArticleInput, ArticleRelationUncheckedUpdateWithoutToArticleInput>
-  }
-
-  export type ArticleRelationUpdateManyWithWhereWithoutToArticleInput = {
-    where: ArticleRelationScalarWhereInput
-    data: XOR<ArticleRelationUpdateManyMutationInput, ArticleRelationUncheckedUpdateManyWithoutToArticleInput>
-  }
-
-  export type CitationUpsertWithWhereUniqueWithoutArticleInput = {
-    where: CitationWhereUniqueInput
-    update: XOR<CitationUpdateWithoutArticleInput, CitationUncheckedUpdateWithoutArticleInput>
-    create: XOR<CitationCreateWithoutArticleInput, CitationUncheckedCreateWithoutArticleInput>
-  }
-
-  export type CitationUpdateWithWhereUniqueWithoutArticleInput = {
-    where: CitationWhereUniqueInput
-    data: XOR<CitationUpdateWithoutArticleInput, CitationUncheckedUpdateWithoutArticleInput>
-  }
-
-  export type CitationUpdateManyWithWhereWithoutArticleInput = {
-    where: CitationScalarWhereInput
-    data: XOR<CitationUpdateManyMutationInput, CitationUncheckedUpdateManyWithoutArticleInput>
-  }
-
-  export type CitationScalarWhereInput = {
-    AND?: CitationScalarWhereInput | CitationScalarWhereInput[]
-    OR?: CitationScalarWhereInput[]
-    NOT?: CitationScalarWhereInput | CitationScalarWhereInput[]
-    id?: StringFilter<"Citation"> | string
-    url?: StringFilter<"Citation"> | string
-    title?: StringNullableFilter<"Citation"> | string | null
-    domain?: StringNullableFilter<"Citation"> | string | null
-    articleId?: StringFilter<"Citation"> | string
-    order?: IntFilter<"Citation"> | number
-    verified?: BoolFilter<"Citation"> | boolean
-    createdAt?: DateTimeFilter<"Citation"> | Date | string
-  }
-
-  export type ArticleCreateWithoutTagsInput = {
-    id?: string
-    slug: string
-    title: string
-    excerpt: string
-    content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    sentiment?: $Enums.Sentiment | null
-    factCheckScore?: number | null
-    factCheckDate?: Date | string | null
-    factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
-    courseSequence?: number | null
-    projectHighlight?: boolean
-    coverImage?: string | null
-    coverImageAlt?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-    author: UserCreateNestedOneWithoutArticlesInput
-    category: CategoryCreateNestedOneWithoutArticlesInput
-    relatedFrom?: ArticleRelationCreateNestedManyWithoutFromArticleInput
-    relatedTo?: ArticleRelationCreateNestedManyWithoutToArticleInput
-    citations?: CitationCreateNestedManyWithoutArticleInput
-  }
-
-  export type ArticleUncheckedCreateWithoutTagsInput = {
-    id?: string
-    slug: string
-    title: string
-    excerpt: string
-    content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    authorId: string
-    categoryId: string
-    sentiment?: $Enums.Sentiment | null
-    factCheckScore?: number | null
-    factCheckDate?: Date | string | null
-    factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
-    courseSequence?: number | null
-    projectHighlight?: boolean
-    coverImage?: string | null
-    coverImageAlt?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-    relatedFrom?: ArticleRelationUncheckedCreateNestedManyWithoutFromArticleInput
-    relatedTo?: ArticleRelationUncheckedCreateNestedManyWithoutToArticleInput
-    citations?: CitationUncheckedCreateNestedManyWithoutArticleInput
-  }
-
-  export type ArticleCreateOrConnectWithoutTagsInput = {
-    where: ArticleWhereUniqueInput
-    create: XOR<ArticleCreateWithoutTagsInput, ArticleUncheckedCreateWithoutTagsInput>
-  }
-
-  export type TagCreateWithoutArticlesInput = {
-    id?: string
-    slug: string
-    name: string
-    usageCount?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TagUncheckedCreateWithoutArticlesInput = {
-    id?: string
-    slug: string
-    name: string
-    usageCount?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TagCreateOrConnectWithoutArticlesInput = {
-    where: TagWhereUniqueInput
-    create: XOR<TagCreateWithoutArticlesInput, TagUncheckedCreateWithoutArticlesInput>
-  }
-
-  export type ArticleUpsertWithoutTagsInput = {
-    update: XOR<ArticleUpdateWithoutTagsInput, ArticleUncheckedUpdateWithoutTagsInput>
-    create: XOR<ArticleCreateWithoutTagsInput, ArticleUncheckedCreateWithoutTagsInput>
-    where?: ArticleWhereInput
-  }
-
-  export type ArticleUpdateToOneWithWhereWithoutTagsInput = {
-    where?: ArticleWhereInput
-    data: XOR<ArticleUpdateWithoutTagsInput, ArticleUncheckedUpdateWithoutTagsInput>
-  }
-
-  export type ArticleUpdateWithoutTagsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
-    factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
-    projectHighlight?: BoolFieldUpdateOperationsInput | boolean
-    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: UserUpdateOneRequiredWithoutArticlesNestedInput
-    category?: CategoryUpdateOneRequiredWithoutArticlesNestedInput
-    relatedFrom?: ArticleRelationUpdateManyWithoutFromArticleNestedInput
-    relatedTo?: ArticleRelationUpdateManyWithoutToArticleNestedInput
-    citations?: CitationUpdateManyWithoutArticleNestedInput
-  }
-
-  export type ArticleUncheckedUpdateWithoutTagsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    authorId?: StringFieldUpdateOperationsInput | string
-    categoryId?: StringFieldUpdateOperationsInput | string
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
-    factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
-    projectHighlight?: BoolFieldUpdateOperationsInput | boolean
-    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    relatedFrom?: ArticleRelationUncheckedUpdateManyWithoutFromArticleNestedInput
-    relatedTo?: ArticleRelationUncheckedUpdateManyWithoutToArticleNestedInput
-    citations?: CitationUncheckedUpdateManyWithoutArticleNestedInput
-  }
-
-  export type TagUpsertWithoutArticlesInput = {
-    update: XOR<TagUpdateWithoutArticlesInput, TagUncheckedUpdateWithoutArticlesInput>
-    create: XOR<TagCreateWithoutArticlesInput, TagUncheckedCreateWithoutArticlesInput>
-    where?: TagWhereInput
-  }
-
-  export type TagUpdateToOneWithWhereWithoutArticlesInput = {
-    where?: TagWhereInput
-    data: XOR<TagUpdateWithoutArticlesInput, TagUncheckedUpdateWithoutArticlesInput>
-  }
-
-  export type TagUpdateWithoutArticlesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    usageCount?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TagUncheckedUpdateWithoutArticlesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    usageCount?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleCreateWithoutRelatedFromInput = {
-    id?: string
-    slug: string
-    title: string
-    excerpt: string
-    content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    sentiment?: $Enums.Sentiment | null
-    factCheckScore?: number | null
-    factCheckDate?: Date | string | null
-    factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
-    courseSequence?: number | null
-    projectHighlight?: boolean
-    coverImage?: string | null
-    coverImageAlt?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-    author: UserCreateNestedOneWithoutArticlesInput
-    category: CategoryCreateNestedOneWithoutArticlesInput
-    tags?: ArticleTagCreateNestedManyWithoutArticleInput
-    relatedTo?: ArticleRelationCreateNestedManyWithoutToArticleInput
-    citations?: CitationCreateNestedManyWithoutArticleInput
-  }
-
-  export type ArticleUncheckedCreateWithoutRelatedFromInput = {
-    id?: string
-    slug: string
-    title: string
-    excerpt: string
-    content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    authorId: string
-    categoryId: string
-    sentiment?: $Enums.Sentiment | null
-    factCheckScore?: number | null
-    factCheckDate?: Date | string | null
-    factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
-    courseSequence?: number | null
-    projectHighlight?: boolean
-    coverImage?: string | null
-    coverImageAlt?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-    tags?: ArticleTagUncheckedCreateNestedManyWithoutArticleInput
-    relatedTo?: ArticleRelationUncheckedCreateNestedManyWithoutToArticleInput
-    citations?: CitationUncheckedCreateNestedManyWithoutArticleInput
-  }
-
-  export type ArticleCreateOrConnectWithoutRelatedFromInput = {
-    where: ArticleWhereUniqueInput
-    create: XOR<ArticleCreateWithoutRelatedFromInput, ArticleUncheckedCreateWithoutRelatedFromInput>
-  }
-
-  export type ArticleCreateWithoutRelatedToInput = {
-    id?: string
-    slug: string
-    title: string
-    excerpt: string
-    content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    sentiment?: $Enums.Sentiment | null
-    factCheckScore?: number | null
-    factCheckDate?: Date | string | null
-    factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
-    courseSequence?: number | null
-    projectHighlight?: boolean
-    coverImage?: string | null
-    coverImageAlt?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-    author: UserCreateNestedOneWithoutArticlesInput
-    category: CategoryCreateNestedOneWithoutArticlesInput
-    tags?: ArticleTagCreateNestedManyWithoutArticleInput
-    relatedFrom?: ArticleRelationCreateNestedManyWithoutFromArticleInput
-    citations?: CitationCreateNestedManyWithoutArticleInput
-  }
-
-  export type ArticleUncheckedCreateWithoutRelatedToInput = {
-    id?: string
-    slug: string
-    title: string
-    excerpt: string
-    content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    authorId: string
-    categoryId: string
-    sentiment?: $Enums.Sentiment | null
-    factCheckScore?: number | null
-    factCheckDate?: Date | string | null
-    factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
-    courseSequence?: number | null
-    projectHighlight?: boolean
-    coverImage?: string | null
-    coverImageAlt?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-    tags?: ArticleTagUncheckedCreateNestedManyWithoutArticleInput
-    relatedFrom?: ArticleRelationUncheckedCreateNestedManyWithoutFromArticleInput
-    citations?: CitationUncheckedCreateNestedManyWithoutArticleInput
-  }
-
-  export type ArticleCreateOrConnectWithoutRelatedToInput = {
-    where: ArticleWhereUniqueInput
-    create: XOR<ArticleCreateWithoutRelatedToInput, ArticleUncheckedCreateWithoutRelatedToInput>
-  }
-
-  export type ArticleUpsertWithoutRelatedFromInput = {
-    update: XOR<ArticleUpdateWithoutRelatedFromInput, ArticleUncheckedUpdateWithoutRelatedFromInput>
-    create: XOR<ArticleCreateWithoutRelatedFromInput, ArticleUncheckedCreateWithoutRelatedFromInput>
-    where?: ArticleWhereInput
-  }
-
-  export type ArticleUpdateToOneWithWhereWithoutRelatedFromInput = {
-    where?: ArticleWhereInput
-    data: XOR<ArticleUpdateWithoutRelatedFromInput, ArticleUncheckedUpdateWithoutRelatedFromInput>
-  }
-
-  export type ArticleUpdateWithoutRelatedFromInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
-    factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
-    projectHighlight?: BoolFieldUpdateOperationsInput | boolean
-    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: UserUpdateOneRequiredWithoutArticlesNestedInput
-    category?: CategoryUpdateOneRequiredWithoutArticlesNestedInput
-    tags?: ArticleTagUpdateManyWithoutArticleNestedInput
-    relatedTo?: ArticleRelationUpdateManyWithoutToArticleNestedInput
-    citations?: CitationUpdateManyWithoutArticleNestedInput
-  }
-
-  export type ArticleUncheckedUpdateWithoutRelatedFromInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    authorId?: StringFieldUpdateOperationsInput | string
-    categoryId?: StringFieldUpdateOperationsInput | string
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
-    factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
-    projectHighlight?: BoolFieldUpdateOperationsInput | boolean
-    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    tags?: ArticleTagUncheckedUpdateManyWithoutArticleNestedInput
-    relatedTo?: ArticleRelationUncheckedUpdateManyWithoutToArticleNestedInput
-    citations?: CitationUncheckedUpdateManyWithoutArticleNestedInput
-  }
-
-  export type ArticleUpsertWithoutRelatedToInput = {
-    update: XOR<ArticleUpdateWithoutRelatedToInput, ArticleUncheckedUpdateWithoutRelatedToInput>
-    create: XOR<ArticleCreateWithoutRelatedToInput, ArticleUncheckedCreateWithoutRelatedToInput>
-    where?: ArticleWhereInput
-  }
-
-  export type ArticleUpdateToOneWithWhereWithoutRelatedToInput = {
-    where?: ArticleWhereInput
-    data: XOR<ArticleUpdateWithoutRelatedToInput, ArticleUncheckedUpdateWithoutRelatedToInput>
-  }
-
-  export type ArticleUpdateWithoutRelatedToInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
-    factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
-    projectHighlight?: BoolFieldUpdateOperationsInput | boolean
-    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: UserUpdateOneRequiredWithoutArticlesNestedInput
-    category?: CategoryUpdateOneRequiredWithoutArticlesNestedInput
-    tags?: ArticleTagUpdateManyWithoutArticleNestedInput
-    relatedFrom?: ArticleRelationUpdateManyWithoutFromArticleNestedInput
-    citations?: CitationUpdateManyWithoutArticleNestedInput
-  }
-
-  export type ArticleUncheckedUpdateWithoutRelatedToInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    authorId?: StringFieldUpdateOperationsInput | string
-    categoryId?: StringFieldUpdateOperationsInput | string
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
-    factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
-    projectHighlight?: BoolFieldUpdateOperationsInput | boolean
-    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    tags?: ArticleTagUncheckedUpdateManyWithoutArticleNestedInput
-    relatedFrom?: ArticleRelationUncheckedUpdateManyWithoutFromArticleNestedInput
-    citations?: CitationUncheckedUpdateManyWithoutArticleNestedInput
-  }
-
-  export type ArticleCreateWithoutCitationsInput = {
-    id?: string
-    slug: string
-    title: string
-    excerpt: string
-    content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    sentiment?: $Enums.Sentiment | null
-    factCheckScore?: number | null
-    factCheckDate?: Date | string | null
-    factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
-    courseSequence?: number | null
-    projectHighlight?: boolean
-    coverImage?: string | null
-    coverImageAlt?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-    author: UserCreateNestedOneWithoutArticlesInput
-    category: CategoryCreateNestedOneWithoutArticlesInput
-    tags?: ArticleTagCreateNestedManyWithoutArticleInput
-    relatedFrom?: ArticleRelationCreateNestedManyWithoutFromArticleInput
-    relatedTo?: ArticleRelationCreateNestedManyWithoutToArticleInput
-  }
-
-  export type ArticleUncheckedCreateWithoutCitationsInput = {
-    id?: string
-    slug: string
-    title: string
-    excerpt: string
-    content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    authorId: string
-    categoryId: string
-    sentiment?: $Enums.Sentiment | null
-    factCheckScore?: number | null
-    factCheckDate?: Date | string | null
-    factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
-    courseSequence?: number | null
-    projectHighlight?: boolean
-    coverImage?: string | null
-    coverImageAlt?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-    tags?: ArticleTagUncheckedCreateNestedManyWithoutArticleInput
-    relatedFrom?: ArticleRelationUncheckedCreateNestedManyWithoutFromArticleInput
-    relatedTo?: ArticleRelationUncheckedCreateNestedManyWithoutToArticleInput
-  }
-
-  export type ArticleCreateOrConnectWithoutCitationsInput = {
-    where: ArticleWhereUniqueInput
-    create: XOR<ArticleCreateWithoutCitationsInput, ArticleUncheckedCreateWithoutCitationsInput>
-  }
-
-  export type ArticleUpsertWithoutCitationsInput = {
-    update: XOR<ArticleUpdateWithoutCitationsInput, ArticleUncheckedUpdateWithoutCitationsInput>
-    create: XOR<ArticleCreateWithoutCitationsInput, ArticleUncheckedCreateWithoutCitationsInput>
-    where?: ArticleWhereInput
-  }
-
-  export type ArticleUpdateToOneWithWhereWithoutCitationsInput = {
-    where?: ArticleWhereInput
-    data: XOR<ArticleUpdateWithoutCitationsInput, ArticleUncheckedUpdateWithoutCitationsInput>
-  }
-
-  export type ArticleUpdateWithoutCitationsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
-    factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
-    projectHighlight?: BoolFieldUpdateOperationsInput | boolean
-    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: UserUpdateOneRequiredWithoutArticlesNestedInput
-    category?: CategoryUpdateOneRequiredWithoutArticlesNestedInput
-    tags?: ArticleTagUpdateManyWithoutArticleNestedInput
-    relatedFrom?: ArticleRelationUpdateManyWithoutFromArticleNestedInput
-    relatedTo?: ArticleRelationUpdateManyWithoutToArticleNestedInput
-  }
-
-  export type ArticleUncheckedUpdateWithoutCitationsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    authorId?: StringFieldUpdateOperationsInput | string
-    categoryId?: StringFieldUpdateOperationsInput | string
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
-    factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
-    projectHighlight?: BoolFieldUpdateOperationsInput | boolean
-    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    tags?: ArticleTagUncheckedUpdateManyWithoutArticleNestedInput
-    relatedFrom?: ArticleRelationUncheckedUpdateManyWithoutFromArticleNestedInput
-    relatedTo?: ArticleRelationUncheckedUpdateManyWithoutToArticleNestedInput
+    communityStories?: CommunityStoryUncheckedUpdateManyWithoutUserNestedInput
+    userProgress?: UserProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCopilotActivitiesInput = {
@@ -27763,13 +25833,15 @@ export namespace Prisma {
     password: string
     image?: string | null
     role?: $Enums.Role
-    points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    deletedAt?: Date | string | null
+    points?: number
+    badges?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     articles?: ArticleCreateNestedManyWithoutAuthorInput
+    communityStories?: CommunityStoryCreateNestedManyWithoutUserInput
+    userProgress?: UserProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCopilotActivitiesInput = {
@@ -27780,13 +25852,15 @@ export namespace Prisma {
     password: string
     image?: string | null
     role?: $Enums.Role
-    points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    deletedAt?: Date | string | null
+    points?: number
+    badges?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     articles?: ArticleUncheckedCreateNestedManyWithoutAuthorInput
+    communityStories?: CommunityStoryUncheckedCreateNestedManyWithoutUserInput
+    userProgress?: UserProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCopilotActivitiesInput = {
@@ -27813,13 +25887,15 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     articles?: ArticleUpdateManyWithoutAuthorNestedInput
+    communityStories?: CommunityStoryUpdateManyWithoutUserNestedInput
+    userProgress?: UserProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCopilotActivitiesInput = {
@@ -27830,13 +25906,199 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     articles?: ArticleUncheckedUpdateManyWithoutAuthorNestedInput
+    communityStories?: CommunityStoryUncheckedUpdateManyWithoutUserNestedInput
+    userProgress?: UserProgressUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutCommunityStoriesInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    password: string
+    image?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    points?: number
+    badges?: string | null
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    articles?: ArticleCreateNestedManyWithoutAuthorInput
+    copilotActivities?: CopilotActivityCreateNestedManyWithoutUserInput
+    userProgress?: UserProgressCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCommunityStoriesInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    password: string
+    image?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    points?: number
+    badges?: string | null
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    articles?: ArticleUncheckedCreateNestedManyWithoutAuthorInput
+    copilotActivities?: CopilotActivityUncheckedCreateNestedManyWithoutUserInput
+    userProgress?: UserProgressUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCommunityStoriesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCommunityStoriesInput, UserUncheckedCreateWithoutCommunityStoriesInput>
+  }
+
+  export type UserUpsertWithoutCommunityStoriesInput = {
+    update: XOR<UserUpdateWithoutCommunityStoriesInput, UserUncheckedUpdateWithoutCommunityStoriesInput>
+    create: XOR<UserCreateWithoutCommunityStoriesInput, UserUncheckedCreateWithoutCommunityStoriesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCommunityStoriesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCommunityStoriesInput, UserUncheckedUpdateWithoutCommunityStoriesInput>
+  }
+
+  export type UserUpdateWithoutCommunityStoriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    articles?: ArticleUpdateManyWithoutAuthorNestedInput
+    copilotActivities?: CopilotActivityUpdateManyWithoutUserNestedInput
+    userProgress?: UserProgressUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCommunityStoriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    articles?: ArticleUncheckedUpdateManyWithoutAuthorNestedInput
+    copilotActivities?: CopilotActivityUncheckedUpdateManyWithoutUserNestedInput
+    userProgress?: UserProgressUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutUserProgressInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    password: string
+    image?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    points?: number
+    badges?: string | null
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    articles?: ArticleCreateNestedManyWithoutAuthorInput
+    copilotActivities?: CopilotActivityCreateNestedManyWithoutUserInput
+    communityStories?: CommunityStoryCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUserProgressInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    password: string
+    image?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    points?: number
+    badges?: string | null
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    articles?: ArticleUncheckedCreateNestedManyWithoutAuthorInput
+    copilotActivities?: CopilotActivityUncheckedCreateNestedManyWithoutUserInput
+    communityStories?: CommunityStoryUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUserProgressInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUserProgressInput, UserUncheckedCreateWithoutUserProgressInput>
+  }
+
+  export type UserUpsertWithoutUserProgressInput = {
+    update: XOR<UserUpdateWithoutUserProgressInput, UserUncheckedUpdateWithoutUserProgressInput>
+    create: XOR<UserCreateWithoutUserProgressInput, UserUncheckedCreateWithoutUserProgressInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUserProgressInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUserProgressInput, UserUncheckedUpdateWithoutUserProgressInput>
+  }
+
+  export type UserUpdateWithoutUserProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    articles?: ArticleUpdateManyWithoutAuthorNestedInput
+    copilotActivities?: CopilotActivityUpdateManyWithoutUserNestedInput
+    communityStories?: CommunityStoryUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUserProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    points?: IntFieldUpdateOperationsInput | number
+    badges?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    articles?: ArticleUncheckedUpdateManyWithoutAuthorNestedInput
+    copilotActivities?: CopilotActivityUncheckedUpdateManyWithoutUserNestedInput
+    communityStories?: CommunityStoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -27861,30 +26123,32 @@ export namespace Prisma {
 
   export type ArticleCreateManyAuthorInput = {
     id?: string
-    slug: string
     title: string
-    excerpt: string
+    slug: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    categoryId: string
-    sentiment?: $Enums.Sentiment | null
+    type?: string
+    excerpt?: string | null
+    published?: boolean
+    category: string
+    tags: string
+    sentiment?: $Enums.Sentiment
     factCheckScore?: number | null
+    factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
+    level?: string | null
+    contentType?: string | null
+    readTime?: string | null
+    warningLevel?: $Enums.WarningLevel | null
+    securityTips?: string | null
     courseSequence?: number | null
+    relatedArticles?: string | null
     projectHighlight?: boolean
     coverImage?: string | null
     coverImageAlt?: string | null
+    quizData?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
   }
 
   export type CopilotActivityCreateManyUserInput = {
@@ -27897,6 +26161,36 @@ export namespace Prisma {
     confirmed?: boolean
     confirmedAt?: Date | string | null
     createdAt?: Date | string
+  }
+
+  export type CommunityStoryCreateManyUserInput = {
+    id?: string
+    slug: string
+    authorName: string
+    authorAvatar?: string | null
+    title: string
+    content: string
+    category: $Enums.StoryCategory
+    likes?: number
+    verified?: boolean
+    featured?: boolean
+    published?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserProgressCreateManyUserInput = {
+    id?: string
+    articleSlug: string
+    completed?: boolean
+    progress?: number
+    quizScore?: number | null
+    quizAttempts?: number
+    certificateIssued?: boolean
+    certificateUrl?: string | null
+    startedAt?: Date | string
+    completedAt?: Date | string | null
+    lastAccessed?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -27961,94 +26255,92 @@ export namespace Prisma {
 
   export type ArticleUpdateWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    type?: StringFieldUpdateOperationsInput | string
+    excerpt?: NullableStringFieldUpdateOperationsInput | string | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: StringFieldUpdateOperationsInput | string
+    sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
+    readTime?: NullableStringFieldUpdateOperationsInput | string | null
+    warningLevel?: NullableEnumWarningLevelFieldUpdateOperationsInput | $Enums.WarningLevel | null
+    securityTips?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
+    relatedArticles?: NullableStringFieldUpdateOperationsInput | string | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
+    quizData?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    category?: CategoryUpdateOneRequiredWithoutArticlesNestedInput
-    tags?: ArticleTagUpdateManyWithoutArticleNestedInput
-    relatedFrom?: ArticleRelationUpdateManyWithoutFromArticleNestedInput
-    relatedTo?: ArticleRelationUpdateManyWithoutToArticleNestedInput
-    citations?: CitationUpdateManyWithoutArticleNestedInput
   }
 
   export type ArticleUncheckedUpdateWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    categoryId?: StringFieldUpdateOperationsInput | string
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    type?: StringFieldUpdateOperationsInput | string
+    excerpt?: NullableStringFieldUpdateOperationsInput | string | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: StringFieldUpdateOperationsInput | string
+    sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
+    readTime?: NullableStringFieldUpdateOperationsInput | string | null
+    warningLevel?: NullableEnumWarningLevelFieldUpdateOperationsInput | $Enums.WarningLevel | null
+    securityTips?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
+    relatedArticles?: NullableStringFieldUpdateOperationsInput | string | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
+    quizData?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    tags?: ArticleTagUncheckedUpdateManyWithoutArticleNestedInput
-    relatedFrom?: ArticleRelationUncheckedUpdateManyWithoutFromArticleNestedInput
-    relatedTo?: ArticleRelationUncheckedUpdateManyWithoutToArticleNestedInput
-    citations?: CitationUncheckedUpdateManyWithoutArticleNestedInput
   }
 
   export type ArticleUncheckedUpdateManyWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    categoryId?: StringFieldUpdateOperationsInput | string
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    type?: StringFieldUpdateOperationsInput | string
+    excerpt?: NullableStringFieldUpdateOperationsInput | string | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: StringFieldUpdateOperationsInput | string
+    sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
+    readTime?: NullableStringFieldUpdateOperationsInput | string | null
+    warningLevel?: NullableEnumWarningLevelFieldUpdateOperationsInput | $Enums.WarningLevel | null
+    securityTips?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
+    relatedArticles?: NullableStringFieldUpdateOperationsInput | string | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
+    quizData?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type CopilotActivityUpdateWithoutUserInput = {
@@ -28087,316 +26379,94 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CategoryCreateManyParentInput = {
-    id?: string
-    slug: string
-    name: string
-    description?: string | null
-    type: string
-    icon?: string | null
-    color?: string | null
-    order?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ArticleCreateManyCategoryInput = {
-    id?: string
-    slug: string
-    title: string
-    excerpt: string
-    content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
-    readTime?: string | null
-    viewCount?: number
-    authorId: string
-    sentiment?: $Enums.Sentiment | null
-    factCheckScore?: number | null
-    factCheckDate?: Date | string | null
-    factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
-    warningLevel?: string | null
-    courseSequence?: number | null
-    projectHighlight?: boolean
-    coverImage?: string | null
-    coverImageAlt?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    publishedAt?: Date | string | null
-    deletedAt?: Date | string | null
-  }
-
-  export type CategoryUpdateWithoutParentInput = {
+  export type CommunityStoryUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    children?: CategoryUpdateManyWithoutParentNestedInput
-    articles?: ArticleUpdateManyWithoutCategoryNestedInput
-  }
-
-  export type CategoryUncheckedUpdateWithoutParentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    children?: CategoryUncheckedUpdateManyWithoutParentNestedInput
-    articles?: ArticleUncheckedUpdateManyWithoutCategoryNestedInput
-  }
-
-  export type CategoryUncheckedUpdateManyWithoutParentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleUpdateWithoutCategoryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
+    authorName?: StringFieldUpdateOperationsInput | string
+    authorAvatar?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
-    factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
-    projectHighlight?: BoolFieldUpdateOperationsInput | boolean
-    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumStoryCategoryFieldUpdateOperationsInput | $Enums.StoryCategory
+    likes?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    published?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: UserUpdateOneRequiredWithoutArticlesNestedInput
-    tags?: ArticleTagUpdateManyWithoutArticleNestedInput
-    relatedFrom?: ArticleRelationUpdateManyWithoutFromArticleNestedInput
-    relatedTo?: ArticleRelationUpdateManyWithoutToArticleNestedInput
-    citations?: CitationUpdateManyWithoutArticleNestedInput
   }
 
-  export type ArticleUncheckedUpdateWithoutCategoryInput = {
+  export type CommunityStoryUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    authorName?: StringFieldUpdateOperationsInput | string
+    authorAvatar?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    authorId?: StringFieldUpdateOperationsInput | string
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
-    factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
-    projectHighlight?: BoolFieldUpdateOperationsInput | boolean
-    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumStoryCategoryFieldUpdateOperationsInput | $Enums.StoryCategory
+    likes?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    published?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    tags?: ArticleTagUncheckedUpdateManyWithoutArticleNestedInput
-    relatedFrom?: ArticleRelationUncheckedUpdateManyWithoutFromArticleNestedInput
-    relatedTo?: ArticleRelationUncheckedUpdateManyWithoutToArticleNestedInput
-    citations?: CitationUncheckedUpdateManyWithoutArticleNestedInput
   }
 
-  export type ArticleUncheckedUpdateManyWithoutCategoryInput = {
+  export type CommunityStoryUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    authorName?: StringFieldUpdateOperationsInput | string
+    authorAvatar?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
-    excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
-    readTime?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    authorId?: StringFieldUpdateOperationsInput | string
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
-    factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
-    warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
-    projectHighlight?: BoolFieldUpdateOperationsInput | boolean
-    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumStoryCategoryFieldUpdateOperationsInput | $Enums.StoryCategory
+    likes?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    published?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type ArticleTagCreateManyTagInput = {
-    articleId: string
-    createdAt?: Date | string
-  }
-
-  export type ArticleTagUpdateWithoutTagInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    article?: ArticleUpdateOneRequiredWithoutTagsNestedInput
-  }
-
-  export type ArticleTagUncheckedUpdateWithoutTagInput = {
-    articleId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleTagUncheckedUpdateManyWithoutTagInput = {
-    articleId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleTagCreateManyArticleInput = {
-    tagId: string
-    createdAt?: Date | string
-  }
-
-  export type ArticleRelationCreateManyFromArticleInput = {
-    toArticleId: string
-    relationType?: string
-    order?: number | null
-    createdAt?: Date | string
-  }
-
-  export type ArticleRelationCreateManyToArticleInput = {
-    fromArticleId: string
-    relationType?: string
-    order?: number | null
-    createdAt?: Date | string
-  }
-
-  export type CitationCreateManyArticleInput = {
-    id?: string
-    url: string
-    title?: string | null
-    domain?: string | null
-    order?: number
-    verified?: boolean
-    createdAt?: Date | string
-  }
-
-  export type ArticleTagUpdateWithoutArticleInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tag?: TagUpdateOneRequiredWithoutArticlesNestedInput
-  }
-
-  export type ArticleTagUncheckedUpdateWithoutArticleInput = {
-    tagId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleTagUncheckedUpdateManyWithoutArticleInput = {
-    tagId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleRelationUpdateWithoutFromArticleInput = {
-    relationType?: StringFieldUpdateOperationsInput | string
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    toArticle?: ArticleUpdateOneRequiredWithoutRelatedToNestedInput
-  }
-
-  export type ArticleRelationUncheckedUpdateWithoutFromArticleInput = {
-    toArticleId?: StringFieldUpdateOperationsInput | string
-    relationType?: StringFieldUpdateOperationsInput | string
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleRelationUncheckedUpdateManyWithoutFromArticleInput = {
-    toArticleId?: StringFieldUpdateOperationsInput | string
-    relationType?: StringFieldUpdateOperationsInput | string
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleRelationUpdateWithoutToArticleInput = {
-    relationType?: StringFieldUpdateOperationsInput | string
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromArticle?: ArticleUpdateOneRequiredWithoutRelatedFromNestedInput
-  }
-
-  export type ArticleRelationUncheckedUpdateWithoutToArticleInput = {
-    fromArticleId?: StringFieldUpdateOperationsInput | string
-    relationType?: StringFieldUpdateOperationsInput | string
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ArticleRelationUncheckedUpdateManyWithoutToArticleInput = {
-    fromArticleId?: StringFieldUpdateOperationsInput | string
-    relationType?: StringFieldUpdateOperationsInput | string
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CitationUpdateWithoutArticleInput = {
+  export type UserProgressUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    domain?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    articleSlug?: StringFieldUpdateOperationsInput | string
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    progress?: IntFieldUpdateOperationsInput | number
+    quizScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    quizAttempts?: IntFieldUpdateOperationsInput | number
+    certificateIssued?: BoolFieldUpdateOperationsInput | boolean
+    certificateUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessed?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CitationUncheckedUpdateWithoutArticleInput = {
+  export type UserProgressUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    domain?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    articleSlug?: StringFieldUpdateOperationsInput | string
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    progress?: IntFieldUpdateOperationsInput | number
+    quizScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    quizAttempts?: IntFieldUpdateOperationsInput | number
+    certificateIssued?: BoolFieldUpdateOperationsInput | boolean
+    certificateUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessed?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CitationUncheckedUpdateManyWithoutArticleInput = {
+  export type UserProgressUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    domain?: NullableStringFieldUpdateOperationsInput | string | null
-    order?: IntFieldUpdateOperationsInput | number
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    articleSlug?: StringFieldUpdateOperationsInput | string
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    progress?: IntFieldUpdateOperationsInput | number
+    quizScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    quizAttempts?: IntFieldUpdateOperationsInput | number
+    certificateIssued?: BoolFieldUpdateOperationsInput | boolean
+    certificateUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessed?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
