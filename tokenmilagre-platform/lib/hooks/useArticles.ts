@@ -33,15 +33,7 @@
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query'
 import { articleKeys } from './query-keys'
 import type { ArticleQuery } from '@/lib/schemas/article-schemas'
-
-// TODO: Move to proper type definition when schema-v2 is migrated
-type ArticleListResult = {
-  articles: any[]
-  total: number
-  page: number
-  limit: number
-  totalPages: number
-}
+import type { ArticleListResult } from '@/lib/services/article-service'
 
 /**
  * Fetches articles from API v2

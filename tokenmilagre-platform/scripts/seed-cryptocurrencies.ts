@@ -24,15 +24,15 @@ async function seedCryptocurrencies() {
   // Verificar quais moedas já existem no banco
   console.log('🔍 Verificando moedas existentes no banco...');
   const existingCryptos = await prisma.cryptocurrency.findMany({
-    select: { slug: true, name: true },
+    select: { coingeckoId: true, name: true },
   });
-  const existingSlugs = new Set(existingCryptos.map((c: any) => c.slug));
+  const existingIds = new Set(existingCryptos.map((c: any) => c.coingeckoId));
 
   console.log(`   ✅ ${existingCryptos.length} moedas já existem no banco:`);
-  existingCryptos.forEach((c: any) => console.log(`      - ${c.name} (${c.slug})`));
+  existingCryptos.forEach((c: any) => console.log(`      - ${c.name} (${c.coingeckoId})`));
 
   // Filtrar apenas moedas que ainda não existem
-  const missingCryptos = TOP_CRYPTOS.filter(crypto => !existingSlugs.has(crypto.slug));
+  const missingCryptos = TOP_CRYPTOS.filter(crypto => !existingIds.has(crypto.coingeckoId));
 
   if (missingCryptos.length === 0) {
     console.log('\n✨ Todas as moedas do top 10 já estão no banco!');
@@ -84,7 +84,7 @@ async function seedCryptocurrencies() {
 
       // Criar/atualizar no banco
       await prisma.cryptocurrency.upsert({
-        where: { slug: crypto.slug },
+        where: { coingeckoId: crypto.coingeckoId },
         update: {
           coingeckoId: data.id,
           symbol: data.symbol.toUpperCase(),

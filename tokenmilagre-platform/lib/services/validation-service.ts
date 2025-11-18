@@ -129,7 +129,7 @@ export class ValidationService {
 
     return {
       success: false,
-      errors: result.error.flatten() as z.ZodFormattedError<z.infer<T>>,
+      errors: result.error.format(),
     }
   }
 
@@ -147,12 +147,12 @@ export class ValidationService {
    * // => '<p>Safe content</p>'
    * ```
    */
-  sanitizeHtml(html: string, options?: DOMPurify.Config): string {
+  sanitizeHtml(html: string, options?: any): string {
     if (!this.options.sanitizeHtml) {
       return html
     }
 
-    const defaultOptions: DOMPurify.Config = {
+    const defaultOptions = {
       ALLOWED_TAGS: [
         'p',
         'br',
@@ -178,7 +178,7 @@ export class ValidationService {
       ALLOW_DATA_ATTR: false,
     }
 
-    return DOMPurify.sanitize(html, { ...defaultOptions, ...options })
+    return String(DOMPurify.sanitize(html, { ...defaultOptions, ...options }))
   }
 
   /**

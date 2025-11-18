@@ -2,9 +2,8 @@ import Script from 'next/script';
 import { getAllResources } from '@/lib/resources';
 import RecursosClient from './RecursosClient';
 
-// ISR: Gera estático no primeiro acesso, revalida a cada 1 hora
-// Recursos verificados mudam raramente - ISR otimiza performance E quota do DB
-export const revalidate = 3600;
+// Dynamic rendering - fetch data at request time
+export const dynamic = 'force-dynamic';
 
 export default async function RecursosPage() {
   const resources = await getAllResources({ verified: true });

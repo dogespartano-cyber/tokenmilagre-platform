@@ -38,16 +38,7 @@
 import { useMutation, useQueryClient, type UseMutationOptions } from '@tanstack/react-query'
 import { articleKeys } from './query-keys'
 import type { ArticleUpdateInput } from '@/lib/schemas/article-schemas'
-
-// TODO: Move to shared types when schema-v2 is migrated
-type ArticleWithRelations = any
-type ArticleListResult = {
-  articles: any[]
-  total: number
-  page: number
-  limit: number
-  totalPages: number
-}
+import type { ArticleWithRelations, ArticleListResult } from '@/lib/services/article-service'
 
 /**
  * Update article mutation variables

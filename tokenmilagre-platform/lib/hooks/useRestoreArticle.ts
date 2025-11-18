@@ -31,9 +31,7 @@
 
 import { useMutation, useQueryClient, type UseMutationOptions } from '@tanstack/react-query'
 import { articleKeys } from './query-keys'
-
-// TODO: Import from proper type when schema-v2 is migrated
-type ArticleWithRelations = any
+import type { ArticleWithRelations } from '@/lib/services/article-service'
 
 /**
  * Restores article via API v2
