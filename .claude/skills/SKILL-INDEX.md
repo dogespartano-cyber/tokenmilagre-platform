@@ -1,226 +1,211 @@
 # Token Milagre - Skills Index
 
-**Última atualização**: 2025-11-17
+**Última atualização**: 2025-11-18 07:56 UTC
 **Total de skills**: 24
-**Total de linhas**: 12,305
-**Tokens estimados**: ~45,280 (usando 3.68 tokens/linha)
+**Total de linhas**: 10,585
+**Tokens estimados**: ~38,941 (usando 3.68 tokens/linha)
 
 ---
 
 ## 📊 Ranking por Tamanho
 
-| Rank | Skill | Linhas | Tokens | Status | Prioridade Otimização |
-|------|-------|--------|--------|--------|----------------------|
-| 1 | audit/troubleshooting | 1,648 | ~6,065 | 🔴 CRÍTICO | 🔥 URGENTE (-91%) |
-| 2 | core/tokenmilagre-database | 1,247 | ~4,589 | 🔴 CRÍTICO | 🔥 ALTA (-50%) |
-| 3 | core/tokenmilagre-testing | 756 | ~2,782 | 🟡 ALTO | ⚠️ MÉDIA (-40%) |
-| 4 | features/tokenmilagre-content-quality | 740 | ~2,723 | 🟡 ALTO | ⚠️ MÉDIA (-40%) |
-| 5 | features/tokenmilagre-api-integrations | 730 | ~2,686 | 🟡 ALTO | ⚠️ MÉDIA (-40%) |
-| 6 | project-specific/server-manager | 717 | ~2,639 | 🟡 ALTO | ⚠️ MÉDIA (-35%) |
-| 7 | _meta/skill-optimization-playbook | 699 | ~2,572 | ✅ META | - |
-| 8 | audit/due-diligence-report | 687 | ~2,528 | 🟡 MÉDIO | ⚠️ BAIXA (-30%) |
-| 9 | features/tokenmilagre-component-patterns | 672 | ~2,473 | 🟡 MÉDIO | ⚠️ BAIXA (-30%) |
-| 10 | features/chat-workflow | 561 | ~2,064 | 🟢 OK | - |
-| 11 | features/tokenmilagre-citations | 524 | ~1,928 | 🟢 OK | - |
-| 12 | features/tokenmilagre-article-workflow | 505 | ~1,858 | 🟢 OK | - |
-| 13 | core/tokenmilagre-scripts | 494 | ~1,818 | ✅ OTIMIZADO | - |
-| 14 | project-specific/tokenmilagre-url-security | 491 | ~1,807 | ✅ OTIMIZADO | - |
-| 15 | features/tokenmilagre-copilot-tools | 466 | ~1,715 | ✅ OTIMIZADO | - |
-| 16 | core/tokenmilagre-refactoring | 414 | ~1,524 | 🟢 OK | - |
-| 17 | audit/platform-audit | 403 | ~1,483 | ✅ OTIMIZADO | - |
-| 18 | audit/database-setup | 384 | ~1,413 | 🟢 OK | - |
-| 19 | features/article-creation | 369 | ~1,358 | 🟢 OK | - |
-| 20 | _meta/skills-navigator | 367 | ~1,350 | 🟢 OK | - |
-| 21 | _meta/project-context | 356 | ~1,310 | 🟡 OTIMIZAR | 🔥 ALTA (-50%) |
-| 22 | _meta/project-manager-brutal-honesty | 295 | ~1,086 | ✅ OTIMIZADO | - |
-| 23 | project-specific/design-system | 145 | ~534 | 🟢 OK | - |
-| 24 | project-specific/pages-reference | 142 | ~523 | 🟢 OK | - |
+| Rank | Skill | Linhas | Tokens | Categoria | Frequência | Status | Otimização |
+|------|-------|--------|--------|-----------|------------|--------|------------|
+| 1 | tokenmilagre-testing | 756 | ~2,782 | core | weekly | 🔴 CRÍTICO | -33% |
+| 2 | tokenmilagre-content-quality | 740 | ~2,723 | features | weekly | 🔴 CRÍTICO | -45% |
+| 3 | tokenmilagre-api-integrations | 730 | ~2,686 | features | weekly | 🔴 CRÍTICO | -45% |
+| 4 | skill-optimization-playbook | 699 | ~2,572 | _meta | occasional | 🔴 CRÍTICO | -57% |
+| 5 | tokenmilagre-component-patterns | 672 | ~2,472 | features | monthly | 🔴 CRÍTICO | -40% |
+| 6 | chat-workflow | 561 | ~2,064 | features | occasional | 🟡 ALTO | -28% |
+| 7 | tokenmilagre-citations | 524 | ~1,928 | features | weekly | 🟡 ALTO | -23% |
+| 8 | tokenmilagre-article-workflow | 505 | ~1,858 | features | weekly | 🟡 ALTO | -20% |
+| 9 | tokenmilagre-scripts | 494 | ~1,817 | core | monthly | 🟢 OK | - |
+| 10 | tokenmilagre-url-security | 491 | ~1,806 | project-specific | occasional | 🟡 ALTO | -28% |
+| 11 | tokenmilagre-database | 481 | ~1,770 | core | daily | 🟢 OK | - |
+| 12 | tokenmilagre-copilot-tools | 466 | ~1,714 | features | monthly | 🟡 ALTO | -14% |
+| 13 | tokenmilagre-refactoring | 414 | ~1,523 | core | weekly | 🟢 OK | - |
+| 14 | platform-audit | 403 | ~1,483 | audit | monthly | 🟡 ALTO | -13% |
+| 15 | database-setup | 384 | ~1,413 | audit | occasional | 🟡 ALTO | -8% |
+| 16 | article-creation | 369 | ~1,357 | features | occasional | 🟢 OK | - |
+| 17 | skills-navigator | 367 | ~1,350 | _meta | daily | 🟡 ALTO | -18% |
+| 18 | troubleshooting | 304 | ~1,118 | audit | daily | 🟢 OK | - |
+| 19 | server-manager | 302 | ~1,111 | project-specific | monthly | 🟢 OK | - |
+| 20 | project-manager-brutal-honesty | 295 | ~1,085 | _meta | occasional | 🟢 OK | - |
+| 21 | project-context | 209 | ~769 | _meta | daily | 🟢 OK | - |
+| 22 | design-system | 145 | ~533 | project-specific | daily | 🟢 OK | - |
+| 23 | pages-reference | 142 | ~522 | project-specific | weekly | 🟢 OK | - |
+| 24 | due-diligence-report | 132 | ~485 | audit | occasional | 🟢 OK | - |
 
 ---
 
 ## 🎯 Status de Otimização
 
-### ✅ Skills Otimizadas (5)
-- **platform-audit**: 932 → 403 linhas (-57%, Pattern 2: Snapshot Temporal)
-- **project-manager-brutal-honesty**: 922 → 295 linhas (-68%, Pattern 4: Excessive Examples)
-- **tokenmilagre-scripts**: 920 → 494 linhas (-46%, Pattern 4: Excessive Examples)
-- **tokenmilagre-copilot-tools**: 893 → 466 linhas (-48%, Pattern 4: Excessive Examples)
-- **tokenmilagre-url-security**: 792 → 491 linhas (-38%, Pattern 4: Excessive Examples)
+### 🔴 Skills Críticas (Excede limite em >50%)
 
-**Total reduzido**: 4,459 → 2,149 linhas (-2,310, -52%)
+- **skill-optimization-playbook**: 699 linhas (limite: 300) - -57% recomendado
+- **tokenmilagre-testing**: 756 linhas (limite: 500) - -33% recomendado
+- **tokenmilagre-component-patterns**: 672 linhas (limite: 400) - -40% recomendado
+- **tokenmilagre-content-quality**: 740 linhas (limite: 400) - -45% recomendado
+- **tokenmilagre-api-integrations**: 730 linhas (limite: 400) - -45% recomendado
 
-### 🔴 Skills Críticas Não Otimizadas (2)
-- **troubleshooting**: 1,648 linhas (~6,065 tokens) - DEVERIA ser docs/
-- **tokenmilagre-database**: 1,247 linhas (~4,589 tokens) - Duplicações de Prisma
+### 🟡 Skills com Oportunidades (Excede limite)
 
-**Impacto não otimizado**: ~10,654 tokens (23% do total)
+- **skills-navigator**: 367 linhas (limite: 300) - -18% recomendado
+- **chat-workflow**: 561 linhas (limite: 400) - -28% recomendado
+- **tokenmilagre-copilot-tools**: 466 linhas (limite: 400) - -14% recomendado
+- **tokenmilagre-citations**: 524 linhas (limite: 400) - -23% recomendado
+- **tokenmilagre-article-workflow**: 505 linhas (limite: 400) - -20% recomendado
+- **database-setup**: 384 linhas (limite: 350) - -8% recomendado
+- **platform-audit**: 403 linhas (limite: 350) - -13% recomendado
+- **tokenmilagre-url-security**: 491 linhas (limite: 350) - -28% recomendado
 
-### 🟡 Skills com Oportunidades (7)
-- tokenmilagre-testing (756 linhas)
-- tokenmilagre-content-quality (740 linhas)
-- tokenmilagre-api-integrations (730 linhas)
-- server-manager (717 linhas)
-- due-diligence-report (687 linhas)
-- tokenmilagre-component-patterns (672 linhas)
-- project-context (356 linhas)
+### 🟢 Skills OK (Dentro do limite)
 
-**Potencial de redução**: ~2,500 linhas (~9,200 tokens)
+Total: 11 skills
 
 ---
 
-## 🔍 Análise de Redundância
+## 📋 Skills por Categoria
 
-### Padrões Prisma (14 skills)
-Skills que duplicam padrões de Prisma:
-- tokenmilagre-database (fonte primária)
-- tokenmilagre-copilot-tools (duplica queries)
-- tokenmilagre-scripts (duplica migrations)
-- tokenmilagre-testing (duplica mocks)
-- troubleshooting (duplica troubleshooting)
-- + 9 outras
 
-**Redundância estimada**: ~500 linhas (~1,840 tokens)
+### Meta (_meta/) - 4 skills
 
-### Padrões de Testing (4 skills)
-- tokenmilagre-testing (fonte primária)
-- tokenmilagre-copilot-tools
-- tokenmilagre-scripts
-- article-creation
+**Total**: 1,570 linhas (~5,776 tokens)
+**Limite por skill**: 300 linhas
 
-**Redundância estimada**: ~200 linhas (~736 tokens)
+| Skill | Linhas | Status | Frequência |
+|-------|--------|--------|------------|
+| skill-optimization-playbook | 699 | 🔴 CRÍTICO | occasional |
+| skills-navigator | 367 | 🟡 ALTO | daily |
+| project-manager-brutal-honesty | 295 | 🟢 OK | occasional |
+| project-context | 209 | 🟢 OK | daily |
 
-### Error Handling (6+ skills)
-Função `getErrorMessage` duplicada em múltiplas skills.
+### Audit (audit/) - 4 skills
 
-**Redundância estimada**: ~150 linhas (~552 tokens)
+**Total**: 1,223 linhas (~4,499 tokens)
+**Limite por skill**: 350 linhas
 
----
+| Skill | Linhas | Status | Frequência |
+|-------|--------|--------|------------|
+| platform-audit | 403 | 🟡 ALTO | monthly |
+| database-setup | 384 | 🟡 ALTO | occasional |
+| troubleshooting | 304 | 🟢 OK | daily |
+| due-diligence-report | 132 | 🟢 OK | occasional |
 
-## 📈 Métricas de Impacto
+### Core (core/) - 4 skills
 
-### Token Economy (Atual)
-- **Total skills**: 12,305 linhas (~45,280 tokens)
-- **Carregadas por conversa**: Varia (project-context sempre carregado)
-- **Custo por conversa**: ~$0.005-$0.01 (dependendo do modelo)
+**Total**: 2,145 linhas (~7,892 tokens)
+**Limite por skill**: 500 linhas
 
-### Token Economy (Pós-otimização potencial)
-- **Redução já alcançada**: -2,310 linhas (-8,500 tokens, -19%)
-- **Redução potencial adicional**: -3,150 linhas (-11,592 tokens, -26%)
-- **Redução total possível**: -5,460 linhas (-20,092 tokens, -44%)
+| Skill | Linhas | Status | Frequência |
+|-------|--------|--------|------------|
+| tokenmilagre-testing | 756 | 🔴 CRÍTICO | weekly |
+| tokenmilagre-scripts | 494 | 🟢 OK | monthly |
+| tokenmilagre-database | 481 | 🟢 OK | daily |
+| tokenmilagre-refactoring | 414 | 🟢 OK | weekly |
 
-### ROI de Otimização Adicional
-**Investimento**: +3 horas de trabalho
-**Retorno**: -11,592 tokens/conversa
-**Payback**: Imediato (primeira conversa)
-**Economia anual** (1,000 conversas): ~$35-$70
+### Features (features/) - 8 skills
 
----
+**Total**: 4,567 linhas (~16,802 tokens)
+**Limite por skill**: 400 linhas
 
-## 🏗️ Oportunidades de Consolidação
+| Skill | Linhas | Status | Frequência |
+|-------|--------|--------|------------|
+| tokenmilagre-content-quality | 740 | 🔴 CRÍTICO | weekly |
+| tokenmilagre-api-integrations | 730 | 🔴 CRÍTICO | weekly |
+| tokenmilagre-component-patterns | 672 | 🔴 CRÍTICO | monthly |
+| chat-workflow | 561 | 🟡 ALTO | occasional |
+| tokenmilagre-citations | 524 | 🟡 ALTO | weekly |
+| tokenmilagre-article-workflow | 505 | 🟡 ALTO | weekly |
+| tokenmilagre-copilot-tools | 466 | 🟡 ALTO | monthly |
+| article-creation | 369 | 🟢 OK | occasional |
 
-### Merge Recomendado 1: Integrations
-```
-tokenmilagre-copilot-tools (466) + tokenmilagre-api-integrations (730)
-= tokenmilagre-integrations (400 linhas otimizadas)
+### Project-Specific (project-specific/) - 4 skills
 
-Redução: -796 linhas
-Razão: Ambas tratam de integração com APIs externas
-```
+**Total**: 1,080 linhas (~3,972 tokens)
+**Limite por skill**: 350 linhas
 
-### Merge Recomendado 2: Content
-```
-tokenmilagre-content-quality (740) + tokenmilagre-article-workflow (505)
-= tokenmilagre-content (500 linhas otimizadas)
-
-Redução: -745 linhas
-Razão: Workflow de artigos É parte do quality control
-```
-
-### Merge Recomendado 3: Audit
-```
-due-diligence-report (687) → docs/templates/
-platform-audit (403) → Já otimizado, manter
-
-Redução: -687 linhas (mover para docs/)
-Razão: Template, não processo
-```
-
-**Total de consolidação**: -2,228 linhas (~8,199 tokens)
+| Skill | Linhas | Status | Frequência |
+|-------|--------|--------|------------|
+| tokenmilagre-url-security | 491 | 🟡 ALTO | occasional |
+| server-manager | 302 | 🟢 OK | monthly |
+| design-system | 145 | 🟢 OK | daily |
+| pages-reference | 142 | 🟢 OK | weekly |
 
 ---
 
-## 📋 Checklist de Otimização
+## 📈 Métricas de Eficiência
 
-### Fase 1: Crítico (Urgente)
-- [ ] troubleshooting → Mover para docs/ (-91%, ~5,500 tokens)
-- [ ] tokenmilagre-database → Otimizar (-50%, ~2,300 tokens)
-- [ ] project-context → Redução agressiva (-50%, ~650 tokens)
+### Por Frequência de Uso
 
-**Impacto Fase 1**: -8,450 tokens em 2-3 horas
+**Daily** (5 skills):
 
-### Fase 2: Consolidação (Alta prioridade)
-- [ ] Merge: copilot-tools + api-integrations → integrations
-- [ ] Merge: content-quality + article-workflow → content
-- [ ] Move: due-diligence-report → docs/templates/
+**Daily** (5 skills): 1,506 linhas
+- design-system: 145L
+- project-context: 209L
+- troubleshooting: 304L
+- skills-navigator: 367L
+- tokenmilagre-database: 481L
 
-**Impacto Fase 2**: -8,199 tokens em 1.5 horas
+**Weekly** (7 skills): 3,811 linhas
+- pages-reference: 142L
+- tokenmilagre-refactoring: 414L
+- tokenmilagre-article-workflow: 505L
+- tokenmilagre-citations: 524L
+- tokenmilagre-api-integrations: 730L
+- tokenmilagre-content-quality: 740L
+- tokenmilagre-testing: 756L
 
-### Fase 3: Redundância (Média prioridade)
-- [ ] Criar prisma-patterns skill centralizada
-- [ ] Criar error-handling patterns library
-- [ ] Atualizar 14 skills para referenciar em vez de duplicar
+**Monthly** (5 skills): 2,337 linhas
+- server-manager: 302L
+- platform-audit: 403L
+- tokenmilagre-copilot-tools: 466L
+- tokenmilagre-scripts: 494L
+- tokenmilagre-component-patterns: 672L
 
-**Impacto Fase 3**: -3,128 tokens em 2 horas
-
-### Fase 4: Otimização incremental (Baixa prioridade)
-- [ ] tokenmilagre-testing (-40%)
-- [ ] server-manager (-35%)
-- [ ] component-patterns (-30%)
-
-**Impacto Fase 4**: -3,015 tokens em 2 horas
+**Occasional** (7 skills): 2,931 linhas
+- due-diligence-report: 132L
+- project-manager-brutal-honesty: 295L
+- article-creation: 369L
+- database-setup: 384L
+- tokenmilagre-url-security: 491L
+- chat-workflow: 561L
+- skill-optimization-playbook: 699L
 
 ---
 
-## 🚨 Políticas de Manutenção
+## 🎯 Recomendações de Otimização
 
-### Size Limits (Proposto)
+### Size Limits por Categoria
+
 ```yaml
 skill_size_limits:
-  _meta/*: 250 lines max
-  core/*: 500 lines max
-  features/*: 400 lines max
-  audit/*: 300 lines max
-  project-specific/*: 350 lines max
-
-exceptions:
-  - skill-optimization-playbook (meta-skill)
-  - troubleshooting (será movido para docs/)
+  _meta: 300 lines max
+  core: 500 lines max
+  features: 400 lines max
+  audit: 350 lines max
+  project-specific: 350 lines max
 ```
 
-### CI/CD Checks (Proposto)
-- Pre-commit hook: Verificar tamanho de skills
-- PR check: Alertar se skill > limit
-- Monthly audit: Identificar crescimento de skills
+### Próximas Ações
+
+**Urgente** (Esta Semana):
+- Otimizar **tokenmilagre-testing**: 756 → ~506 linhas (-33%)
+- Otimizar **tokenmilagre-content-quality**: 740 → ~407 linhas (-45%)
+- Otimizar **tokenmilagre-api-integrations**: 730 → ~401 linhas (-45%)
+
 
 ---
 
 ## 📚 Referências
 
-- **Playbook**: `.claude/skills/_meta/skill-optimization-playbook/SKILL.md`
-- **Backups**: Todos os `.backup.md` preservados
-- **Commits**: Branch `claude/optimize-project-context-skill-016DWBL2BFqyQB5Aee6PY2d9`
+- **Geração**: Script automático `generate-skill-index.py`
+- **Auditoria completa**: `BRUTAL-AUDIT-REPORT.md`
+- **Workflow**: `SKILLS-WORKFLOW.md`
+- **Ecosystem**: `SKILLS-ECOSYSTEM.md`
 
 ---
 
-## 🎯 Próximos Passos Recomendados
-
-1. **Urgente**: Consolidar troubleshooting → docs/
-2. **Alta prioridade**: Otimizar tokenmilagre-database
-3. **Média prioridade**: Implementar merges de skills relacionadas
-4. **Contínuo**: Aplicar size limits em novas skills
-
----
-
-**Gerado por**: Claude Code (Dev Senior Mode)
-**Data**: 2025-11-17
-**Status**: 🔥 AUDIT COMPLETO - AÇÃO REQUERIDA
+**Gerado automaticamente por**: `generate-skill-index.py`
+**Próxima atualização**: Rodar script após modificações
+**CI/CD**: Configurar pre-commit hook para auto-update

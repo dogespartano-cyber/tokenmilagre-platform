@@ -1,607 +1,227 @@
 # Server Manager Skill
 
-**Versão**: 2.0
-**Última atualização**: 2025-01-08
-**Propósito**: Gerenciamento completo do servidor Next.js com suporte cross-platform
+**Versão**: 2.1-optimized
+**Última atualização**: 2025-11-18
+**Propósito**: Gerenciamento do servidor Next.js cross-platform
 
 ---
 
 ## 📁 Arquivos
 
-### Scripts
-- **Linux/Mac**: `server/server-manager.sh` (Bash)
-- **Windows**: `server/server-manager.ps1` (PowerShell)
-
-### Configuração
-- **Variáveis de ambiente**: `.env` (raiz do projeto)
-- **Log file**:
-  - Linux: `/tmp/tokenmilagre-server.log`
-  - Windows: `%TEMP%\tokenmilagre-server.log`
+- **Linux/Mac**: `server/server-manager.sh`
+- **Windows**: `server/server-manager.ps1`
+- **Log**: `/tmp/tokenmilagre-server.log` (Linux) | `%TEMP%\tokenmilagre-server.log` (Windows)
 
 ---
 
-## 🎯 Funcionalidades
+## 🎯 Comandos (10 opções)
 
-Ambos os scripts (Bash e PowerShell) possuem **10 opções** idênticas:
-
-| Opção | Comando | Descrição |
-|-------|---------|-----------|
-| **(1)** | `start` | Iniciar servidor de desenvolvimento |
-| **(2)** | `stop` | Parar servidor graciosamente |
-| **(3)** | `restart` | Reiniciar servidor |
-| **(4)** | `status` | Status detalhado + health check |
-| **(5)** | `kill` | Forçar encerramento (kill -9) |
-| **(6)** | `logs` | Logs em tempo real (tail -f) |
-| **(7)** | `clean` | Limpar processos Node.js zombie |
-| **(8)** | `cover-logs` | **Logs filtrados de geração de capas IA** |
-| **(9)** | `start-preview` | **Sync + Start preview branch** |
-| **(10)** | `promote-preview` | **Deploy para produção (main)** |
+| # | Comando | Descrição |
+|---|---------|-----------|
+| 1 | `start` | Iniciar servidor dev |
+| 2 | `stop` | Parar graciosamente |
+| 3 | `restart` | Reiniciar |
+| 4 | `status` | Status + health check + build info |
+| 5 | `kill` | Force kill (kill -9) |
+| 6 | `logs` | Logs tempo real |
+| 7 | `clean` | Limpar processos zombie |
+| 8 | `cover-logs` | Logs filtrados de capas IA |
+| 9 | `start-preview` | Sync + start preview branch |
+| 10 | `promote-preview` | Deploy para produção (main) |
 
 ---
 
-## 🖥️ Versão Bash (Linux/Mac)
+## 🚀 Uso Rápido
 
-### Configuração Padrão
+**Bash** (Linux/Mac):
 ```bash
-PROJECT_DIR="/home/destakar/Trabalho/tokenmilagre-platform"
+cd server
+./server-manager.sh [comando]   # ou sem args para menu
+```
+
+**PowerShell** (Windows):
+```powershell
+cd server
+.\server-manager.ps1 [comando]  # ou sem args para menu
+```
+
+**Exemplos**:
+```bash
+./server-manager.sh start            # Iniciar
+./server-manager.sh status           # Ver status + build info
+./server-manager.sh start-preview    # Testar preview local
+./server-manager.sh promote-preview  # Deploy produção
+```
+
+---
+
+## ⚙️ Configuração
+
+**Bash** (`server-manager.sh`):
+```bash
+PROJECT_DIR="/home/usuario/tokenmilagre-platform"
 PORT=3000
 LOG_FILE="/tmp/tokenmilagre-server.log"
 ```
 
-### Como Usar
-
-**Modo Interativo**:
-```bash
-cd /path/to/server
-./server-manager.sh
-```
-
-**Comandos Diretos**:
-```bash
-./server-manager.sh start              # Iniciar servidor
-./server-manager.sh stop               # Parar servidor
-./server-manager.sh restart            # Reiniciar
-./server-manager.sh status             # Ver status
-./server-manager.sh logs               # Logs tempo real
-./server-manager.sh cover-logs         # Logs de capas IA
-./server-manager.sh start-preview      # Preview workflow
-./server-manager.sh promote-preview    # Deploy produção
-./server-manager.sh clean              # Limpar processos
-./server-manager.sh kill               # Force kill
-```
-
-### Detecção de Processos (Bash)
-```bash
-# Tenta múltiplos métodos (em ordem de preferência)
-ss -tulpn | grep :3000              # Método 1 (preferido)
-netstat -tulpn | grep :3000         # Método 2 (fallback)
-lsof -ti :3000                      # Método 3 (alternativa)
-```
-
-### Health Check (Bash)
-```bash
-# Detecta processo em loop infinito
-cpu=$(ps aux | grep $PID | awk '{print $3}')
-if [ $cpu -gt 70 ]; then
-    echo "[LOOP DETECTED]"
-fi
-```
-
-### Zombie Process Detection (Bash)
-```bash
-# Detecta processos defunct
-zombie_count=$(ps aux | grep -E "\[node.*\].*defunct" | wc -l)
-```
-
-### Visual (Bash)
-```
-┌─[ SERVER STATUS ]────────────────────────────────┐
-│ Next.js Server: [ONLINE] PID: 12345 | Port: 3000
-│    [+] CPU: 45.23s | MEM: 256MB
-│    [+] Port: 3000
-│    [+] URL: http://localhost:3000
-└──────────────────────────────────────────────────┘
-```
-
-**Características Únicas do Bash**:
-- ✅ ASCII art completo (box drawing characters)
-- ✅ View Cover Logs com colorização avançada
-- ✅ Health check (CPU > 70%)
-- ✅ Zombie process detection
-- ✅ Múltiplos métodos de detecção de processos
-
----
-
-## 🪟 Versão PowerShell (Windows)
-
-### Configuração Padrão
+**PowerShell** (`server-manager.ps1`):
 ```powershell
-$Global:ProjectDir = "C:\Users\Kasnen\Desktop\Claude\tokenmilagre-platform"
+$Global:ProjectDir = "C:\Users\usuario\tokenmilagre-platform"
 $Global:Port = 3000
 $Global:LogFile = "$env:TEMP\tokenmilagre-server.log"
 ```
 
-### Como Usar
-
-**Modo Interativo**:
-```powershell
-cd C:\path\to\server
-.\server-manager.ps1
-```
-
-**Comandos Diretos**:
-```powershell
-.\server-manager.ps1 start              # Iniciar servidor
-.\server-manager.ps1 stop               # Parar servidor
-.\server-manager.ps1 restart            # Reiniciar
-.\server-manager.ps1 status             # Ver status
-.\server-manager.ps1 logs               # Logs tempo real
-.\server-manager.ps1 cover-logs         # Logs de capas IA
-.\server-manager.ps1 start-preview      # Preview workflow
-.\server-manager.ps1 promote-preview    # Deploy produção
-.\server-manager.ps1 clean              # Limpar processos
-.\server-manager.ps1 kill               # Force kill
-```
-
-### Detecção de Processos (PowerShell)
-```powershell
-# Usa API nativa do Windows
-$connection = Get-NetTCPConnection -LocalPort $Global:Port -ErrorAction SilentlyContinue
-$proc = Get-Process -Id $connection.OwningProcess
-```
-
-### Health Check (PowerShell)
-```powershell
-# Detecta CPU alta e processos não-responsivos
-$procInfo = [PSCustomObject]@{
-    Id = $proc.Id
-    CPU = $proc.CPU
-    IsHighCPU = ($cpuPercent -gt 70)
-    Responding = $proc.Responding
-}
-```
-
-### Unresponsive Process Detection (PowerShell)
-```powershell
-# Detecta processos travados (equivalente a zombie no Linux)
-$unresponsiveProcs = Get-Process -Name "node" |
-                     Where-Object { -not $_.Responding }
-```
-
-### Visual (PowerShell)
-```
-  =========================================================
-                     SERVER STATUS
-  =========================================================
-  Next.js Server: RUNNING
-
-  [OK]  PID: 12345
-  [OK]  CPU: 45.23s | MEM: 256MB
-  [OK]  Port: 3000
-  [OK]  URL: http://localhost:3000
-  =========================================================
-```
-
-**Características Únicas do PowerShell**:
-- ✅ Apenas ASCII simples (compatibilidade total)
-- ✅ Detecção nativa de conexões TCP (Get-NetTCPConnection)
-- ✅ Health check (CPU > 70% + Responding)
-- ✅ Unresponsive process detection
-
 ---
 
-## ⚠️ Problemas Conhecidos - Windows (PowerShell)
+## 🔄 Preview Workflow
 
-### 1. **Parsing Error com Caracteres Unicode** ❌
-**Problema**: PowerShell não suporta box drawing characters (┌─┐) diretamente em strings.
+### Opção 9: Start Preview
 
-**Erro**:
-```
-ParserError: '}' de fechamento ausente no bloco de instrução
-```
+**Fluxo**:
+1. Busca branches `claude/*` remotas
+2. Identifica mais recente (por data)
+3. Checkout automático
+4. `npm install`
+5. Inicia servidor
 
-**Solução**: Usar apenas ASCII simples (`===` em vez de `┌─┐`).
-
----
-
-### 2. **Parsing Error com Colchetes em Strings** ❌
-**Problema**: PowerShell interpreta `[+]`, `[-]`, `[!]`, `[>]` como operadores.
-
-**Erro**:
-```
-ParserError: Expressão ausente após operador unário '+'
-```
-
-**Tentativas que NÃO funcionaram**:
-- ❌ `Write-Host "[+] "` - Erro
-- ❌ `Write-Host '[+] '` - Erro (aspas simples também falham)
-- ❌ `Write-Host "[-] "` - Erro
-
-**Solução Final**: Usar texto simples sem colchetes.
-```powershell
-Write-Host "[OK]  " -ForegroundColor Green   # ✅ Funciona
-Write-Host "[ERR] " -ForegroundColor Red     # ✅ Funciona
-Write-Host "[!!!] " -ForegroundColor Yellow  # ✅ Funciona
-Write-Host "[>>>] " -ForegroundColor Green   # ✅ Funciona
-```
-
----
-
-### 3. **Caractere `&` em Strings** ❌
-**Problema**: `&` é reservado para operador de execução em background.
-
-**Erro**:
-```
-O caráter de E comercial (&) não é permitido
-```
-
-**Solução**: Usar "and" em vez de "&".
-```powershell
-# ❌ Não funciona
-"Sync & Start Preview"
-
-# ✅ Funciona
-"Sync and Start Preview"
-```
-
----
-
-### 4. **Emoji no Comentário de Cabeçalho** ❌
-**Problema**: Emojis UTF-8 podem causar problemas de parsing.
-
-**Solução**: Remover emojis dos comentários.
-```powershell
-# ❌ Não funciona
-# 🚀 SERVER MANAGER 🚀
-
-# ✅ Funciona
-# SERVER MANAGER
-```
-
----
-
-### 5. **Checkout de Preview Falha** ⚠️
-**Problema**: Git não consegue fazer checkout quando a branch preview tem nome longo.
-
-**Saída**:
-```
-[ERR] Falha ao fazer checkout para claude/review-project-skills-011CUwD4VMTszjRZBNv4rtFs
-```
-
-**Causa**: Branch pode não existir localmente ou ter conflitos.
-
-**Workaround Atual**: O script continua e inicia na branch `main`.
-
----
-
-### 6. **Servidor Inicia em Background mas Job Fica Órfão** ⚠️
-**Problema**: Usar `Start-Job` cria um job que continua rodando mesmo após o script encerrar.
-
-**Impacto**: Múltiplas execuções criam múltiplos jobs órfãos.
-
-**Solução Atual**: Funcional mas não ideal. Jobs são limpos ao parar o servidor.
-
----
-
-### 7. **Variáveis de Ambiente Obrigatórias Faltando** 🔴 CRÍTICO
-**Problema**: Next.js valida variáveis de ambiente no startup. Se faltarem, o servidor crasha imediatamente.
-
-**Erro**:
-```
-❌ Erro de validação de variáveis de ambiente:
-  NEXT_PUBLIC_SOLANA_NETWORK: Invalid option
-  NEXT_PUBLIC_TOKEN_ADDRESS: Invalid input: expected string, received undefined
-```
-
-**Solução**: Adicionar ao `.env` (raiz do projeto):
-```env
-# Solana Network (mainnet-beta, devnet, testnet)
-NEXT_PUBLIC_SOLANA_NETWORK="mainnet-beta"
-
-# Token Milagre Address (Solana mainnet - mínimo 32 caracteres)
-NEXT_PUBLIC_TOKEN_ADDRESS="11111111111111111111111111111111111111111111"
-```
-
-**Validação**: Ver `lib/env.ts` para regras completas.
-
----
-
-## 🔄 Preview Workflow (Opções 9 e 10)
-
-Sistema completo de gestão de branches preview do Claude Code.
-
-### **Opção 9: Sync & Start Preview**
-
-**O que faz**:
-1. Busca branches `claude/*` no remoto
-2. Identifica a **mais recente** (por data de commit)
-3. Faz checkout automático
-4. Atualiza dependências (`npm install`)
-5. Inicia servidor na branch preview
-
-**Bash**:
+**Uso**:
 ```bash
-./server-manager.sh start preview
+./server-manager.sh start-preview
 ```
 
-**PowerShell**:
-```powershell
-.\server-manager.ps1 start-preview
-```
+### Opção 10: Promote to Production
 
----
-
-### **Opção 10: Promote Preview to Production**
-
-**O que faz**:
-1. Mostra branch preview mais recente
-2. Mostra commits que serão promovidos
+**Fluxo**:
+1. Mostra preview mais recente
+2. Exibe commits a promover
 3. **Pede confirmação** ⚠️
-4. Faz checkout para `main`
-5. Merge da preview em `main`
-6. **Pergunta se quer fazer push** ⚠️
-7. Se sim: Push para produção (Vercel faz deploy)
-8. Opcionalmente: Deleta branch preview local
+4. Checkout `main` + merge
+5. **Pergunta se quer push** ⚠️
+6. Push → Vercel auto-deploy
 
-**Bash**:
+**Uso**:
 ```bash
 ./server-manager.sh promote-preview
 ```
 
-**PowerShell**:
-```powershell
-.\server-manager.ps1 promote-preview
-```
-
-**Fluxo Completo**:
-```
-1. Claude Code cria preview branch (claude/*)
-   ↓
-2. Usuário testa localmente (opção 9)
-   ↓
-3. Se aprovado, promove para produção (opção 10)
-   ↓
-4. Vercel detecta push em main e faz deploy automático
-```
-
 ---
 
-## 🎨 Cover Logs (Opção 8)
+## 📊 Build Info (Status)
 
-Funcionalidade especial que filtra logs relacionados à **geração de capas com IA**.
-
-### Palavras-chave Filtradas
-- `generateCoverImage`
-- `saveCoverImage`
-- `Geração de Imagem` / `Geracao de Imagem`
-- `INÍCIO - Geração` / `FIM - Geração`
-- `estimateImageSize`
-
-### Colorização (Bash)
-```bash
-# Colorir baseado no conteúdo
-[generateCoverImage]    → Magenta
-[saveCoverImage]        → Cyan
-✅                      → Verde
-❌                      → Vermelho
-🎨                      → Magenta
-INÍCIO/FIM - Geração    → Amarelo
-```
-
-### Colorização (PowerShell)
-```powershell
-# Colorir baseado no conteúdo
-[generateCoverImage]    → Magenta
-[saveCoverImage]        → Cyan
-OK                      → Verde
-ERR/ERROR               → Vermelho
-INÍCIO/FIM              → Amarelo
-```
-
-**Uso**:
-```bash
-# Bash
-./server-manager.sh cover-logs
-
-# PowerShell
-.\server-manager.ps1 cover-logs
-```
-
----
-
-## 📋 Build Info - Informações de Deploy
-
-### Funcionalidade Adicionada (v2.1)
-
-Ao visualizar o **status do servidor** (opção 4), agora é exibida uma seção completa de **BUILD INFO** com detalhes sobre qual versão do código está rodando.
-
-### Informações Exibidas
+Exibido ao rodar `status` (opção 4):
 
 ```
 ---------------------------------------------------------
                    BUILD INFO
 ---------------------------------------------------------
-
-Type: [PROD] Production       # ou [PREV] Preview, [DEV] Development
-Branch: main                  # Branch atual do Git
-Commit: 28acef2 - feat: Add   # Hash (7 chars) + mensagem do commit
-Status: Clean ✓               # ou Dirty (X files) ⚠
-Updated: 2025-11-09 00:06:47  # Data/hora do último commit
-vs Main: 5 ahead              # Comparação com origin/main (só em preview/dev)
+Type: [PROD] Production       # ou [PREV], [DEV]
+Branch: main
+Commit: 28acef2 - feat: Add server manager
+Status: Clean ✓              # ou Dirty (X files) ⚠
+Updated: 2025-11-18 00:06:47
+vs Main: up to date          # ou "5 ahead", "3 behind"
 ```
 
-### Tipos de Build
+**Tipos**:
+- `[PROD]` (verde): Branch `main`
+- `[PREV]` (amarelo): Branches `claude/*`
+- `[DEV]` (cinza): Outras branches
 
-| Tipo | Ícone | Cor | Quando |
-|------|-------|-----|--------|
-| **Production** | `[PROD]` | Verde | Branch `main` |
-| **Preview** | `[PREV]` | Amarelo | Branches `claude/*` |
-| **Development** | `[DEV]` | Cinza | Outras branches |
+**Status Git**:
+- `Clean ✓`: Sem mudanças
+- `Dirty (X files) ⚠`: X arquivos modificados
 
-### Estado Git
+---
 
-| Status | Significado | Ícone |
-|--------|-------------|-------|
-| **Clean** | Sem mudanças não commitadas | ✓ (verde) |
-| **Dirty** | X arquivos modificados | ⚠ (amarelo) |
+## 🎨 Cover Logs (Opção 8)
 
-### Comparação com Main
+Filtra logs de geração de capas IA.
 
-Quando **não** está na branch `main`, exibe comparação:
+**Keywords filtradas**:
+- `generateCoverImage`
+- `saveCoverImage`
+- `estimateImageSize`
+- `INÍCIO - Geração` / `FIM - Geração`
 
-- **`5 ahead`** - 5 commits à frente da main
-- **`3 behind`** - 3 commits atrás da main
-- **`2 ahead, 1 behind`** - Divergente (precisa rebase/merge)
-- **`up to date`** - Sincronizado com main
+**Colorização**:
+- `[generateCoverImage]` → Magenta
+- `[saveCoverImage]` → Cyan
+- ✅ / `OK` → Verde
+- ❌ / `ERR` → Vermelho
+- `INÍCIO/FIM` → Amarelo
 
-### Implementação
+---
 
-**Bash** (`get_build_info()`):
+## ⚠️ Problemas Conhecidos (Windows PowerShell)
+
+### 1. Caracteres Unicode
+❌ Box drawing (`┌─┐`) não funciona
+✅ Usar ASCII simples (`===`)
+
+### 2. Colchetes `[+]`, `[-]`
+❌ PowerShell interpreta como operadores
+✅ Usar `[OK]`, `[ERR]`, `[!!!]`, `[>>>]`
+
+### 3. Caractere `&`
+❌ Reservado para background operator
+✅ Usar "and" em strings
+
+### 4. Emojis
+❌ UTF-8 pode causar parsing error
+✅ Remover emojis dos comentários
+
+### 5. Preview Checkout Falha
+⚠️ Branch pode não existir localmente
+**Workaround**: Script continua em `main`
+
+### 6. Variáveis de Ambiente Obrigatórias 🔴
+Next.js requer no `.env`:
+```env
+NEXT_PUBLIC_SOLANA_NETWORK="mainnet-beta"
+NEXT_PUBLIC_TOKEN_ADDRESS="11111111111111111111111111111111111111111111"
+```
+
+Validação: `lib/env.ts`
+
+---
+
+## 🛠️ Features Técnicas
+
+### Health Check
+- **Bash**: CPU > 70% detectado
+- **PowerShell**: CPU > 70% + `Responding` check
+
+### Zombie Detection
+- **Bash**: Defunct processes
+- **PowerShell**: Unresponsive processes
+
+### Process Detection
+**Bash** (múltiplos métodos):
 ```bash
-get_build_info() {
-    cd "$PROJECT_DIR" 2>/dev/null || return 1
-
-    # Coleta informações do Git
-    local branch=$(git branch --show-current)
-    local commit_hash=$(git rev-parse --short=7 HEAD)
-    local commit_msg=$(git log -1 --pretty=format:"%s")
-    local git_changes=$(git status --porcelain | wc -l)
-    # ... outros campos
-
-    # Retorna via echo (parsing no show_status)
-    echo "BRANCH:$branch"
-    echo "TYPE:$type"
-    # ...
-}
+ss -tulpn | grep :3000              # Preferido
+netstat -tulpn | grep :3000         # Fallback
+lsof -ti :3000                      # Alternativa
 ```
 
-**PowerShell** (`Get-BuildInfo`):
+**PowerShell** (API nativa):
 ```powershell
-function Get-BuildInfo {
-    Push-Location $Global:ProjectDir
-
-    try {
-        $buildInfo = @{
-            Branch = git branch --show-current
-            CommitHash = git rev-parse --short=7 HEAD
-            CommitMessage = git log -1 --pretty=format:"%s"
-            GitStatus = "Clean" # ou "Dirty (X files)"
-            # ... outros campos
-        }
-
-        return $buildInfo
-    } finally {
-        Pop-Location
-    }
-}
+Get-NetTCPConnection -LocalPort 3000
+Get-Process -Id $connection.OwningProcess
 ```
-
-### Exemplos de Uso
-
-**Verificar versão rodando em produção**:
-```bash
-# Bash
-./server-manager.sh status
-
-# PowerShell
-.\server-manager.ps1 status
-```
-
-**Exemplo de output Preview**:
-```
-Type: [PREV] Preview
-Branch: claude/review-project-skills-011CUwD4VMTszjRZBNv4rtFs
-Commit: 0f841d9 - docs: Adicionar instruções de aprendizado...
-Status: Clean ✓
-Updated: 2025-11-08 23:28:18 +0000
-vs Main: 4 ahead
-```
-
-**Exemplo de output Development (dirty)**:
-```
-Type: [DEV] Development
-Branch: feature/new-ui
-Commit: abc1234 - WIP: Redesign dashboard layout
-Status: Dirty (5 files) ⚠
-Updated: 2025-11-09 14:30:00 -0300
-vs Main: 2 ahead, 3 behind
-```
-
-### 💡 Por Que é Útil
-
-1. **Identificar rapidamente qual versão está rodando** (produção vs preview vs dev)
-2. **Verificar se há mudanças não commitadas** que podem afetar o comportamento
-3. **Saber se a branch está sincronizada** com produção (main)
-4. **Debugar discrepâncias** entre ambiente local e produção
-5. **Confirmar que preview foi aplicado** após sync
 
 ---
 
-## 📊 Comparação Bash vs PowerShell
+## 🔍 Debugging Rápido
 
-| Funcionalidade | Bash (Linux/Mac) | PowerShell (Windows) |
-|----------------|------------------|----------------------|
-| **ASCII Art Completo** | ✅ Box drawing chars | ✅ ASCII simples |
-| **Build Info Display** | ✅ | ✅ |
-| **View Cover Logs** | ✅ | ✅ |
-| **Health Check (CPU > 70%)** | ✅ | ✅ |
-| **Zombie Detection** | ✅ Defunct processes | ✅ Unresponsive processes |
-| **Menu 10 opções** | ✅ | ✅ |
-| **Preview Workflow** | ✅ | ✅ |
-| **Real-time Logs** | ✅ `tail -f` | ✅ `Get-Content -Wait` |
-| **Colorização** | ✅ ANSI codes | ✅ PowerShell colors |
-| **Compatibilidade** | ✅ Linux/Mac/WSL | ✅ Windows 10/11 |
+### Servidor não inicia
 
----
-
-## 🛠️ Manutenção e Atualização
-
-### **Atualizando Caminhos de Projeto**
-
-**Bash** (`server-manager.sh`):
+1. Verificar `.env`:
 ```bash
-# Linha 15
-PROJECT_DIR="/home/SEU_USUARIO/Trabalho/tokenmilagre-platform"
-```
-
-**PowerShell** (`server-manager.ps1`):
-```powershell
-# Linha 11
-$Global:ProjectDir = "C:\Users\SEU_USUARIO\Desktop\Claude\tokenmilagre-platform"
-```
-
-### **Atualizando Porta**
-
-Ambos os scripts:
-```bash
-PORT=3000  # Bash
-$Global:Port = 3000  # PowerShell
-```
-
-### **Sincronizando Funcionalidades**
-
-Quando adicionar nova funcionalidade:
-1. ✅ Adicione no Bash primeiro
-2. ✅ Porte para PowerShell (sem Unicode, sem `&`)
-3. ✅ Teste em ambos os sistemas
-4. ✅ Atualize esta skill
-
----
-
-## 🔍 Debugging
-
-### **Servidor não inicia**
-
-1. Verificar variáveis de ambiente:
-```bash
-# Verificar se .env existe
 ls -la .env
-
-# Ver erros de validação
-npm run dev
+npm run dev  # Ver erros de validação
 ```
 
-2. Verificar porta em uso:
+2. Verificar porta:
 ```bash
 # Linux/Mac
 lsof -i :3000
@@ -610,108 +230,73 @@ lsof -i :3000
 Get-NetTCPConnection -LocalPort 3000
 ```
 
-3. Verificar logs:
+3. Ver logs:
 ```bash
 # Linux
 tail -f /tmp/tokenmilagre-server.log
 
 # Windows
-Get-Content $env:TEMP\tokenmilagre-server.log -Wait -Tail 50
+Get-Content $env:TEMP\tokenmilagre-server.log -Wait
 ```
 
-### **Preview não sincroniza**
+### Preview não sincroniza
 
-1. Verificar se branch existe:
 ```bash
 git fetch origin --prune
 git branch -r | grep claude/
-```
-
-2. Verificar conflitos:
-```bash
-git status
-```
-
-3. Fazer checkout manual:
-```bash
 git checkout claude/BRANCH_NAME
 npm install
 ```
 
-### **PowerShell: erro de parsing**
-
-1. Verificar encoding UTF-8:
-```powershell
-Get-Content server-manager.ps1 -Encoding UTF8
-```
-
-2. Remover caracteres especiais:
-   - ❌ Emojis
-   - ❌ Box drawing (`┌─┐`)
-   - ❌ `&` em strings
-
-3. Testar sintaxe:
-```powershell
-powershell.exe -ExecutionPolicy Bypass -File server-manager.ps1 -h
-```
-
 ---
 
-## 📝 Checklist de Compatibilidade PowerShell
+## 📋 Checklist PowerShell Port
 
-Ao portar funcionalidades do Bash para PowerShell:
+Ao adicionar features no PowerShell:
 
-- [ ] ✅ Remover box drawing characters (`┌─┐` → `===`)
-- [ ] ✅ Trocar `&` por "and" em strings
-- [ ] ✅ Remover emojis dos comentários
-- [ ] ✅ Usar `[OK]`, `[ERR]`, `[!!!]`, `[>>>]` em vez de `[+]`, `[-]`, `[!]`, `[>]`
-- [ ] ✅ Testar com `powershell.exe -ExecutionPolicy Bypass -File script.ps1`
-- [ ] ✅ Verificar compatibilidade com Windows 10/11
-- [ ] ✅ Documentar novos problemas encontrados
+- [ ] Remover box drawing (`┌─┐` → `===`)
+- [ ] Trocar `&` por "and"
+- [ ] Remover emojis
+- [ ] Usar `[OK]`/`[ERR]` em vez de `[+]`/`[-]`
+- [ ] Testar: `powershell.exe -ExecutionPolicy Bypass -File script.ps1`
 
 ---
 
 ## 🎯 Uso com Claude Code
 
-### **Comandos para Claude**
-
-Quando precisar atualizar os scripts, use:
-
+**Comandos úteis**:
 ```
-Leia a skill server-manager e atualize o script PowerShell com a nova funcionalidade X
+Leia server-manager e atualize o PowerShell com funcionalidade X
 ```
-
-ou
-
 ```
-Compare os dois scripts (Bash e PowerShell) usando a skill server-manager e sincronize a funcionalidade Y
+Compare server-manager Bash e PowerShell e sincronize Y
 ```
 
-### **Informações que a Skill Contém**
+---
 
-- ✅ Localização dos arquivos
-- ✅ Configuração padrão
-- ✅ Todas as 10 funcionalidades
-- ✅ Diferenças entre Bash e PowerShell
-- ✅ Problemas conhecidos do Windows
-- ✅ Workarounds e soluções
-- ✅ Preview workflow completo
-- ✅ Cover logs filtering
-- ✅ Health check implementation
-- ✅ Checklist de compatibilidade
+## 📊 Comparação Bash vs PowerShell
+
+| Feature | Bash | PowerShell |
+|---------|------|------------|
+| ASCII Art | Box drawing | ASCII simples |
+| Build Info | ✅ | ✅ |
+| Cover Logs | ✅ | ✅ |
+| Health Check | ✅ CPU | ✅ CPU + Responding |
+| Zombie Detection | ✅ Defunct | ✅ Unresponsive |
+| Menu 10 opções | ✅ | ✅ |
+| Preview Workflow | ✅ | ✅ |
+| Real-time Logs | `tail -f` | `Get-Content -Wait` |
+| Colorização | ANSI codes | PowerShell colors |
 
 ---
 
 ## 📚 Referências
 
-- **Documentação Next.js**: https://nextjs.org/docs
-- **PowerShell Docs**: https://learn.microsoft.com/powershell
-- **Git Branch Management**: https://git-scm.com/docs/git-branch
-- **Vercel Deployments**: https://vercel.com/docs/deployments
+**Detalhes completos**: Ver `docs/SERVER-MANAGER-DETAILED.md` (problemas, workarounds, exemplos)
+**Scripts**: `server/server-manager.sh` | `server/server-manager.ps1`
 
 ---
 
-**Última sincronização**: 2025-11-09
-**Scripts versionados**: Bash v2.1 | PowerShell v2.1
 **Status**: ✅ Ambos funcionais e sincronizados
-**Última feature**: Build Info Display (detalhes de produção/preview/dev no status)
+**Scripts versionados**: Bash v2.1 | PowerShell v2.1
+**Última feature**: Build Info Display
