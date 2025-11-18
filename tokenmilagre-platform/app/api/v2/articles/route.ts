@@ -160,7 +160,7 @@ export async function POST(request: NextRequest) {
       articleId: article.id,
       slug: article.slug,
       type: article.type,
-      status: article.status,
+      // status: article.status, // TODO: Enable when schema-v2 is migrated
     })
 
     // Get rate limit info for headers

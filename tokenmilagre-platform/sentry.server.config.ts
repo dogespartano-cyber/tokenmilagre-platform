@@ -52,10 +52,5 @@ Sentry.init({
   },
 
   // Integrations
-  integrations: [
-    // Performance monitoring
-    new Sentry.BrowserTracing({
-      tracingOrigins: ['localhost', /^\//],
-    }),
-  ],
+  integrations: [],
 });

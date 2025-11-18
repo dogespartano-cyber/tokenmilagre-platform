@@ -49,8 +49,10 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-markdown": "^10.1.0",
+    "reflect-metadata": "^0.2.2",
     "remark-gfm": "^4.0.1",
     "simple-statistics": "^7.8.8",
+    "tsyringe": "^4.10.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {

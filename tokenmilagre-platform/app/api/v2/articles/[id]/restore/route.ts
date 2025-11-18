@@ -19,9 +19,10 @@ import { checkRateLimit, getRateLimitInfo } from '@/lib/middleware/rate-limit'
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params
     const articleService = ServiceLocator.getArticle()
     const logger = ServiceLocator.getLogger()
 

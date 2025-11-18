@@ -23,9 +23,10 @@ import { checkRateLimit, getRateLimitInfo } from '@/lib/middleware/rate-limit'
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params
     const articleService = ServiceLocator.getArticle()
     const logger = ServiceLocator.getLogger()
 
@@ -97,9 +98,10 @@ export async function GET(
  */
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params
     const articleService = ServiceLocator.getArticle()
     const logger = ServiceLocator.getLogger()
 
@@ -160,9 +162,10 @@ export async function PATCH(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params
     const articleService = ServiceLocator.getArticle()
     const logger = ServiceLocator.getLogger()
 

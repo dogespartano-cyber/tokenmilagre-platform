@@ -50,11 +50,6 @@ Sentry.init({
   },
 
   integrations: [
-    // Performance monitoring
-    new Sentry.BrowserTracing({
-      tracingOrigins: ['localhost', /^\//],
-    }),
-
     // Session Replay with privacy
     Sentry.replayIntegration({
       maskAllText: true,

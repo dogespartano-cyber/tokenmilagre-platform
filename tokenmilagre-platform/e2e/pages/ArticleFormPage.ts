@@ -157,7 +157,7 @@ export class ArticleFormPage {
 
   async getValidationError(field: string): Promise<string> {
     const error = this.page.locator(`[data-testid="validation-error-${field}"]`)
-    return error.textContent() || ''
+    return (await error.textContent()) || ''
   }
 
   async assertSubmitButtonDisabled() {
