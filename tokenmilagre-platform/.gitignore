@@ -30,6 +30,11 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# build logs
+build.log
+full-build-log.txt
+*-build-log.txt
+
 # env files (can opt-in for committing if needed)
 .env*
 !.env.example
@@ -57,6 +62,9 @@ lib/generated/prisma/*.node
 lib/generated/prisma/*.wasm
 lib/generated/prisma/query_engine_bg.js
 lib/generated/prisma/*-loader.mjs
+
+# Prisma v2 generated files (temporary during migration)
+lib/generated/prisma-v2/
 
 # Database files
 *.db
