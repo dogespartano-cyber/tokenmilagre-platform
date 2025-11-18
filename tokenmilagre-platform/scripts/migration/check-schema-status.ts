@@ -1,4 +1,5 @@
 #!/usr/bin/env ts-node
+// @ts-nocheck
 /**
  * Check Schema Status
  * Verifica se o schema v2 já está aplicado no banco

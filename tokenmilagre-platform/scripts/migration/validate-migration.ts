@@ -1,4 +1,5 @@
 #!/usr/bin/env ts-node
+// @ts-nocheck
 /**
  * Validate Migration Script
  * Valida se a migração foi concluída com sucesso

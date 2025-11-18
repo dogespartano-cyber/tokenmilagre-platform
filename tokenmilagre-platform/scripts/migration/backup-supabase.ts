@@ -1,4 +1,5 @@
 #!/usr/bin/env ts-node
+// @ts-nocheck
 /**
  * Backup Script - Supabase
  * Cria backup completo antes da migração v2

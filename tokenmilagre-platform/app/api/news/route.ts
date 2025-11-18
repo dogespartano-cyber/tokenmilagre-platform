@@ -69,7 +69,7 @@ export async function GET(request: Request) {
       publishedAt: article.createdAt.toISOString(),
       category: article.category?.name ? [article.category.name] : ['Sem Categoria'],
       sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
-      keywords: JSON.parse(article.tags || '[]'),
+      keywords: [],
       factChecked: article.factCheckStatus === 'verified',
       lastVerified: article.updatedAt.toISOString()
     }));

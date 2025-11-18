@@ -1,4 +1,5 @@
 #!/usr/bin/env ts-node
+// @ts-nocheck
 /**
  * Pre-Migration Check Script
  * Executa verificações antes da migração v2

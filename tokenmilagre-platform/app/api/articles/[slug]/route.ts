@@ -41,6 +41,12 @@ export async function GET(
             email: true,
             role: true
           }
+        },
+        category: {
+          select: {
+            name: true,
+            slug: true
+          }
         }
       }
     });
@@ -57,9 +63,9 @@ export async function GET(
         source: '$MILAGRE Research',
         sources: ['$MILAGRE Research'],
         publishedAt: article.createdAt.toISOString(),
-        category: [article.category.charAt(0).toUpperCase() + article.category.slice(1)],
+        category: article.category?.name ? [article.category.name] : ['Sem Categoria'],
         sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
-        keywords: JSON.parse(article.tags || '[]'),
+        keywords: [],
         factChecked: true,
         lastVerified: article.updatedAt.toISOString(),
       };

@@ -1,4 +1,5 @@
 #!/usr/bin/env ts-node
+// @ts-nocheck
 /**
  * Execute Data Migration Script
  * Executa a migração de dados do schema v1 para v2

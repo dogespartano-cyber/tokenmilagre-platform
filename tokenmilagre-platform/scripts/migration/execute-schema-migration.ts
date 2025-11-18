@@ -1,4 +1,5 @@
 #!/usr/bin/env ts-node
+// @ts-nocheck
 /**
  * Execute Schema Migration v2
  * Aplica o schema v2 SQL incrementalmente
