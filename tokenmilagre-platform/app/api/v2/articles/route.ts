@@ -12,6 +12,9 @@ import { articleQuerySchema } from '@/lib/schemas/article-schemas'
 import { authenticate, authenticateOptional, requireMinimumRole } from '@/lib/middleware/auth'
 import { checkRateLimit, getRateLimitInfo } from '@/lib/middleware/rate-limit'
 
+// Force dynamic rendering - no static generation
+export const dynamic = 'force-dynamic'
+
 /**
  * GET /api/v2/articles
  * Lists articles with filtering and pagination

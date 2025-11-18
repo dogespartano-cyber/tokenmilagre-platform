@@ -10,6 +10,8 @@ import { errorHandler } from '@/lib/services/error-service'
 import { authenticate, requireMinimumRole } from '@/lib/middleware/auth'
 import { checkRateLimit, getRateLimitInfo } from '@/lib/middleware/rate-limit'
 
+export const dynamic = 'force-dynamic'
+
 /**
  * POST /api/v2/articles/[id]/restore
  * Restores a soft-deleted article (sets deletedAt = null, status = DRAFT)

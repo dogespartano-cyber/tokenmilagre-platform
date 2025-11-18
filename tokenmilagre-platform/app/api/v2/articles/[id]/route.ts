@@ -9,8 +9,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { ServiceLocator } from '@/lib/di/container'
 import { errorHandler } from '@/lib/services/error-service'
-import { authenticate, authenticateOptional, requireOwnershipOrAdmin } from '@/lib/middleware/auth'
+import { articleUpdateSchema } from '@/lib/schemas/article-schemas'
+import { authenticate, requireMinimumRole } from '@/lib/middleware/auth'
 import { checkRateLimit, getRateLimitInfo } from '@/lib/middleware/rate-limit'
+
+export const dynamic = 'force-dynamic'
 
 /**
  * GET /api/v2/articles/[id]
