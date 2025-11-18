@@ -11,6 +11,9 @@ import { bulkArticleOperationSchema } from '@/lib/schemas/article-schemas'
 import { authenticate, requireMinimumRole } from '@/lib/middleware/auth'
 import { checkRateLimit, getRateLimitInfo } from '@/lib/middleware/rate-limit'
 
+// Force dynamic rendering to prevent build-time errors
+export const dynamic = 'force-dynamic'
+
 /**
  * POST /api/v2/articles/bulk
  * Performs bulk operation on multiple articles (max 50)

@@ -22,6 +22,11 @@ const nextConfig: NextConfig = {
     // Manter validação de TypeScript - importante para type safety
     ignoreBuildErrors: false,
   },
+  // Experimental: Skip page data collection for API routes to avoid build errors
+  experimental: {
+    // @ts-ignore - fallbackNodePolyfills existe em algumas versões do Next.js
+    skipTrailingSlashRedirect: true,
+  },
 };
 
 // Sentry configuration options

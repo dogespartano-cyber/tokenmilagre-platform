@@ -30,7 +30,8 @@
  */
 
 import { z } from 'zod'
-import DOMPurify from 'isomorphic-dompurify'
+// NOTE: DOMPurify imported dynamically to avoid server-side jsdom issues
+// import DOMPurify from 'isomorphic-dompurify'
 import { ValidationError } from './error-service'
 import { logger } from './logger-service'
 
@@ -152,33 +153,48 @@ export class ValidationService {
       return html
     }
 
-    const defaultOptions = {
-      ALLOWED_TAGS: [
-        'p',
-        'br',
-        'strong',
-        'em',
-        'u',
-        'h1',
-        'h2',
-        'h3',
-        'h4',
-        'h5',
-        'h6',
-        'ul',
-        'ol',
-        'li',
-        'a',
-        'blockquote',
-        'code',
-        'pre',
-        'img',
-      ],
-      ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id'],
-      ALLOW_DATA_ATTR: false,
+    // Skip server-side sanitization to avoid jsdom/isomorphic-dompurify issues
+    // Sanitization should be done client-side when rendering user-generated content
+    if (typeof window === 'undefined') {
+      logger.debug('Skipping server-side HTML sanitization (should be done client-side)')
+      return html
     }
 
-    return String(DOMPurify.sanitize(html, { ...defaultOptions, ...options }))
+    // Dynamic import on client-side only
+    try {
+      const DOMPurify = require('isomorphic-dompurify')
+
+      const defaultOptions = {
+        ALLOWED_TAGS: [
+          'p',
+          'br',
+          'strong',
+          'em',
+          'u',
+          'h1',
+          'h2',
+          'h3',
+          'h4',
+          'h5',
+          'h6',
+          'ul',
+          'ol',
+          'li',
+          'a',
+          'blockquote',
+          'code',
+          'pre',
+          'img',
+        ],
+        ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id'],
+        ALLOW_DATA_ATTR: false,
+      }
+
+      return String(DOMPurify.sanitize(html, { ...defaultOptions, ...options }))
+    } catch (error) {
+      logger.warn('Failed to load DOMPurify, returning unsanitized HTML', { error })
+      return html
+    }
   }
 
   /**

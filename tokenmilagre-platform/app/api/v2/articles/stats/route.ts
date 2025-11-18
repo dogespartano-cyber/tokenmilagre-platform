@@ -10,6 +10,9 @@ import { errorHandler } from '@/lib/services/error-service'
 import { authenticateOptional } from '@/lib/middleware/auth'
 import { checkRateLimit, getRateLimitInfo } from '@/lib/middleware/rate-limit'
 
+// Force dynamic rendering to prevent build-time errors
+export const dynamic = 'force-dynamic'
+
 /**
  * GET /api/v2/articles/stats
  * Gets article statistics
