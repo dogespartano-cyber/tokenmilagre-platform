@@ -218,14 +218,15 @@ async function main() {
 
     const validations = [];
 
-    // Verificar artigos sem categoria
-    const articlesWithoutCategory = await prisma.article.count({
-      where: { categoryId: null }
-    });
+    // Verificar artigos sem categoria via raw SQL (compatível com v1 e v2)
+    const articlesWithoutCategory = await prisma.$queryRaw<Array<{ count: bigint }>>`
+      SELECT COUNT(*) as count FROM "Article" WHERE "categoryId" IS NULL
+    `;
+    const noCategory = Number(articlesWithoutCategory[0]?.count || 0);
 
-    if (articlesWithoutCategory > 0) {
-      console.error(`❌ ERRO: ${articlesWithoutCategory} artigos sem categoria!`);
-      validations.push({ check: 'articles_without_category', status: 'FAILED', count: articlesWithoutCategory });
+    if (noCategory > 0) {
+      console.error(`❌ ERRO: ${noCategory} artigos sem categoria!`);
+      validations.push({ check: 'articles_without_category', status: 'FAILED', count: noCategory });
     } else {
       console.log(`✅ Todos os artigos têm categoria.`);
       validations.push({ check: 'articles_without_category', status: 'PASSED' });
