@@ -1,0 +1,125 @@
+{
+  "timestamp": "2025-11-18T15:38:57.593Z",
+  "summary": {
+    "total_checks": 7,
+    "errors": 0,
+    "warnings": 1,
+    "ok": 6
+  },
+  "checks": [
+    {
+      "name": "CONTAGEM_GERAL",
+      "status": "OK",
+      "message": "Total: 100 artigos, 1 usuários",
+      "data": {
+        "userCount": 1,
+        "articleCount": 100,
+        "accountCount": 0,
+        "sessionCount": 0
+      }
+    },
+    {
+      "name": "CATEGORIAS_UNICAS",
+      "status": "OK",
+      "message": "9 categorias únicas encontradas",
+      "data": [
+        {
+          "slug": "bitcoin",
+          "name": "bitcoin",
+          "article_count": 32
+        },
+        {
+          "slug": "seguranca",
+          "name": "seguranca",
+          "article_count": 19
+        },
+        {
+          "slug": "blockchain",
+          "name": "blockchain",
+          "article_count": 12
+        },
+        {
+          "slug": "altcoins",
+          "name": "altcoins",
+          "article_count": 9
+        },
+        {
+          "slug": "defi",
+          "name": "defi",
+          "article_count": 9
+        },
+        {
+          "slug": "politica",
+          "name": "politica",
+          "article_count": 8
+        },
+        {
+          "slug": "ethereum",
+          "name": "ethereum",
+          "article_count": 4
+        },
+        {
+          "slug": "trading",
+          "name": "trading",
+          "article_count": 4
+        },
+        {
+          "slug": "desenvolvimento",
+          "name": "desenvolvimento",
+          "article_count": 3
+        }
+      ]
+    },
+    {
+      "name": "TIPOS_INVALIDOS",
+      "status": "WARNING",
+      "message": "1 tipos inválidos serão convertidos para \"news\"",
+      "data": [
+        {
+          "type": "Artigo",
+          "count": 15
+        }
+      ]
+    },
+    {
+      "name": "STATUS_PUBLICACAO",
+      "status": "OK",
+      "message": "Status de publicação mapeado",
+      "data": [
+        {
+          "published": true,
+          "count": 100
+        }
+      ]
+    },
+    {
+      "name": "ARTIGOS_SEM_CATEGORIA",
+      "status": "OK",
+      "message": "Todos os artigos têm categoria",
+      "data": {
+        "count": 0
+      }
+    },
+    {
+      "name": "ARTIGOS_ORFAOS",
+      "status": "OK",
+      "message": "Nenhum artigo órfão encontrado",
+      "data": {
+        "count": 0
+      }
+    },
+    {
+      "name": "DISTRIBUICAO_AUTORES",
+      "status": "OK",
+      "message": "Distribuição de autores mapeada",
+      "data": [
+        {
+          "name": "Admin",
+          "email": "admin@tokenmilagre.xyz",
+          "article_count": 100
+        }
+      ]
+    }
+  ],
+  "ready_for_migration": true
+}
