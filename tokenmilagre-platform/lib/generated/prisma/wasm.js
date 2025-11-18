@@ -129,76 +129,87 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   image: 'image',
   role: 'role',
+  points: 'points',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  points: 'points',
-  badges: 'badges'
+  deletedAt: 'deletedAt'
 };
 
-exports.Prisma.ArticleScalarFieldEnum = {
+exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
-  title: 'title',
   slug: 'slug',
-  content: 'content',
+  name: 'name',
+  description: 'description',
   type: 'type',
-  excerpt: 'excerpt',
-  published: 'published',
-  authorId: 'authorId',
-  category: 'category',
-  tags: 'tags',
-  sentiment: 'sentiment',
-  factCheckScore: 'factCheckScore',
-  factCheckSources: 'factCheckSources',
-  factCheckDate: 'factCheckDate',
-  factCheckStatus: 'factCheckStatus',
-  level: 'level',
-  contentType: 'contentType',
-  readTime: 'readTime',
-  warningLevel: 'warningLevel',
-  securityTips: 'securityTips',
-  courseSequence: 'courseSequence',
-  relatedArticles: 'relatedArticles',
-  projectHighlight: 'projectHighlight',
-  coverImage: 'coverImage',
-  coverImageAlt: 'coverImageAlt',
-  quizData: 'quizData',
+  parentId: 'parentId',
+  icon: 'icon',
+  color: 'color',
+  order: 'order',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.ResourceScalarFieldEnum = {
+exports.Prisma.TagScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
   name: 'name',
-  category: 'category',
-  verified: 'verified',
-  shortDescription: 'shortDescription',
-  officialUrl: 'officialUrl',
-  platforms: 'platforms',
-  tags: 'tags',
-  heroTitle: 'heroTitle',
-  heroDescription: 'heroDescription',
-  heroGradient: 'heroGradient',
-  whyGoodTitle: 'whyGoodTitle',
-  whyGoodContent: 'whyGoodContent',
-  features: 'features',
-  howToStartTitle: 'howToStartTitle',
-  howToStartSteps: 'howToStartSteps',
-  pros: 'pros',
-  cons: 'cons',
-  faq: 'faq',
-  securityTips: 'securityTips',
-  securityAudit: 'securityAudit',
-  securityAuditDate: 'securityAuditDate',
-  auditedByCommunity: 'auditedByCommunity',
-  toolConfig: 'toolConfig',
-  interactiveType: 'interactiveType',
-  showCompatibleWallets: 'showCompatibleWallets',
-  relatedResources: 'relatedResources',
-  views: 'views',
+  usageCount: 'usageCount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ArticleScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  excerpt: 'excerpt',
+  content: 'content',
+  type: 'type',
+  status: 'status',
+  readTime: 'readTime',
+  viewCount: 'viewCount',
+  authorId: 'authorId',
+  categoryId: 'categoryId',
+  sentiment: 'sentiment',
+  factCheckScore: 'factCheckScore',
+  factCheckDate: 'factCheckDate',
+  factCheckStatus: 'factCheckStatus',
+  level: 'level',
+  contentType: 'contentType',
+  warningLevel: 'warningLevel',
+  courseSequence: 'courseSequence',
+  projectHighlight: 'projectHighlight',
+  coverImage: 'coverImage',
+  coverImageAlt: 'coverImageAlt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  lastVerified: 'lastVerified'
+  publishedAt: 'publishedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.ArticleTagScalarFieldEnum = {
+  articleId: 'articleId',
+  tagId: 'tagId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ArticleRelationScalarFieldEnum = {
+  fromArticleId: 'fromArticleId',
+  toArticleId: 'toArticleId',
+  relationType: 'relationType',
+  order: 'order',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CitationScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  title: 'title',
+  domain: 'domain',
+  articleId: 'articleId',
+  order: 'order',
+  verified: 'verified',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.CryptocurrencyScalarFieldEnum = {
@@ -280,80 +291,39 @@ exports.Prisma.CopilotReportScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.CommunityStoryScalarFieldEnum = {
-  id: 'id',
-  slug: 'slug',
-  authorName: 'authorName',
-  authorAvatar: 'authorAvatar',
-  userId: 'userId',
-  title: 'title',
-  content: 'content',
-  category: 'category',
-  likes: 'likes',
-  verified: 'verified',
-  featured: 'featured',
-  published: 'published',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.SocialProjectScalarFieldEnum = {
+exports.Prisma.ResourceScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
   name: 'name',
-  description: 'description',
-  longDescription: 'longDescription',
-  fundingGoal: 'fundingGoal',
-  currentFunding: 'currentFunding',
-  currency: 'currency',
-  walletAddress: 'walletAddress',
   category: 'category',
-  location: 'location',
-  tags: 'tags',
   verified: 'verified',
-  active: 'active',
-  featured: 'featured',
-  startDate: 'startDate',
-  endDate: 'endDate',
-  supporters: 'supporters',
+  shortDescription: 'shortDescription',
+  officialUrl: 'officialUrl',
+  platforms: 'platforms',
+  tags: 'tags',
+  heroTitle: 'heroTitle',
+  heroDescription: 'heroDescription',
+  heroGradient: 'heroGradient',
+  whyGoodTitle: 'whyGoodTitle',
+  whyGoodContent: 'whyGoodContent',
+  features: 'features',
+  howToStartTitle: 'howToStartTitle',
+  howToStartSteps: 'howToStartSteps',
+  pros: 'pros',
+  cons: 'cons',
+  faq: 'faq',
+  securityTips: 'securityTips',
+  securityAudit: 'securityAudit',
+  securityAuditDate: 'securityAuditDate',
+  auditedByCommunity: 'auditedByCommunity',
+  toolConfig: 'toolConfig',
+  interactiveType: 'interactiveType',
+  showCompatibleWallets: 'showCompatibleWallets',
+  relatedResources: 'relatedResources',
   views: 'views',
-  coverImage: 'coverImage',
-  gallery: 'gallery',
-  organizer: 'organizer',
-  organizerEmail: 'organizerEmail',
-  organizerPhone: 'organizerPhone',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.ProjectMapScalarFieldEnum = {
-  id: 'id',
-  projectId: 'projectId',
-  latitude: 'latitude',
-  longitude: 'longitude',
-  address: 'address',
-  city: 'city',
-  state: 'state',
-  country: 'country',
-  markerColor: 'markerColor',
-  markerIcon: 'markerIcon',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.UserProgressScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  articleSlug: 'articleSlug',
-  completed: 'completed',
-  progress: 'progress',
-  quizScore: 'quizScore',
-  quizAttempts: 'quizAttempts',
-  certificateIssued: 'certificateIssued',
-  certificateUrl: 'certificateUrl',
-  startedAt: 'startedAt',
-  completedAt: 'completedAt',
-  lastAccessed: 'lastAccessed'
+  updatedAt: 'updatedAt',
+  lastVerified: 'lastVerified'
 };
 
 exports.Prisma.SortOrder = {
@@ -376,29 +346,33 @@ exports.Role = exports.$Enums.Role = {
   VIEWER: 'VIEWER'
 };
 
+exports.ArticleType = exports.$Enums.ArticleType = {
+  news: 'news',
+  educational: 'educational'
+};
+
+exports.ArticleStatus = exports.$Enums.ArticleStatus = {
+  draft: 'draft',
+  published: 'published',
+  archived: 'archived'
+};
+
 exports.Sentiment = exports.$Enums.Sentiment = {
   positive: 'positive',
   neutral: 'neutral',
   negative: 'negative'
 };
 
-exports.WarningLevel = exports.$Enums.WarningLevel = {
-  info: 'info',
-  warning: 'warning',
-  critical: 'critical'
+exports.Level = exports.$Enums.Level = {
+  iniciante: 'iniciante',
+  intermediario: 'intermediario',
+  avancado: 'avancado'
 };
 
-exports.StoryCategory = exports.$Enums.StoryCategory = {
-  transformation: 'transformation',
-  social_project: 'social_project',
-  achievement: 'achievement'
-};
-
-exports.ProjectCategory = exports.$Enums.ProjectCategory = {
-  donations: 'donations',
-  microcredit: 'microcredit',
-  education: 'education',
-  infrastructure: 'infrastructure'
+exports.ContentType = exports.$Enums.ContentType = {
+  artigo: 'artigo',
+  tutorial: 'tutorial',
+  curso: 'curso'
 };
 
 exports.Prisma.ModelName = {
@@ -406,16 +380,17 @@ exports.Prisma.ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   User: 'User',
+  Category: 'Category',
+  Tag: 'Tag',
   Article: 'Article',
-  Resource: 'Resource',
+  ArticleTag: 'ArticleTag',
+  ArticleRelation: 'ArticleRelation',
+  Citation: 'Citation',
   Cryptocurrency: 'Cryptocurrency',
   CopilotActivity: 'CopilotActivity',
   AutomationTask: 'AutomationTask',
   CopilotReport: 'CopilotReport',
-  CommunityStory: 'CommunityStory',
-  SocialProject: 'SocialProject',
-  ProjectMap: 'ProjectMap',
-  UserProgress: 'UserProgress'
+  Resource: 'Resource'
 };
 /**
  * Create the Client
@@ -428,7 +403,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Kasnen\\Desktop\\Claude\\tokenmilagre-platform\\lib\\generated\\prisma",
+      "value": "C:\\Users\\Kasnen\\Desktop\\Claude\\tokenmilagre-platform\\lib\\generated\\prisma-v2",
       "fromEnvVar": null
     },
     "config": {
@@ -442,11 +417,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Kasnen\\Desktop\\Claude\\tokenmilagre-platform\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Kasnen\\Desktop\\Claude\\tokenmilagre-platform\\prisma\\schema-v2.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
+    "rootEnvPath": "../../../.env",
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -465,13 +440,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n// Updated: 2025-11-05 - Force regeneration\n\ngenerator client {\n  provider   = \"prisma-client-js\"\n  output     = \"../lib/generated/prisma\"\n  engineType = \"library\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n// Enums\nenum Role {\n  ADMIN\n  EDITOR\n  VIEWER\n}\n\nenum Sentiment {\n  positive\n  neutral\n  negative\n}\n\nenum WarningLevel {\n  info\n  warning\n  critical\n}\n\nenum StoryCategory {\n  transformation\n  social_project\n  achievement\n}\n\nenum ProjectCategory {\n  donations\n  microcredit\n  education\n  infrastructure\n}\n\n// NextAuth Models\nmodel Account {\n  id                String  @id @default(cuid())\n  userId            String\n  type              String\n  provider          String\n  providerAccountId String\n  refresh_token     String?\n  access_token      String?\n  expires_at        Int?\n  token_type        String?\n  scope             String?\n  id_token          String?\n  session_state     String?\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([provider, providerAccountId])\n}\n\nmodel Session {\n  id           String   @id @default(cuid())\n  sessionToken String   @unique\n  userId       String\n  expires      DateTime\n  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n}\n\nmodel VerificationToken {\n  identifier String\n  token      String   @unique\n  expires    DateTime\n\n  @@unique([identifier, token])\n}\n\n// Application Models\nmodel User {\n  id            String    @id @default(cuid())\n  name          String?\n  email         String    @unique\n  emailVerified DateTime?\n  password      String\n  image         String?\n  role          Role      @default(VIEWER)\n  createdAt     DateTime  @default(now())\n  updatedAt     DateTime  @updatedAt\n\n  // Gamificação (FASE 3)\n  points Int     @default(0)\n  badges String? // JSON array de badges conquistados\n\n  accounts          Account[]\n  sessions          Session[]\n  articles          Article[]\n  copilotActivities CopilotActivity[]\n  communityStories  CommunityStory[]\n  userProgress      UserProgress[]\n}\n\nmodel Article {\n  id      String @id @default(cuid())\n  title   String\n  slug    String @unique\n  content String // Markdown content\n\n  // Tipo de artigo: 'news' ou 'educational'\n  type String @default(\"news\") // 'news' | 'educational'\n\n  // Campos compartilhados\n  // Alinhado com API: excerpt usado internamente, exposto como summary\n  excerpt String? // Resumo do artigo (API: summary) - também usado como description em educacionais\n\n  published Boolean @default(false)\n  authorId  String\n  author    User    @relation(fields: [authorId], references: [id], onDelete: Cascade)\n\n  // Alinhado com API: category armazenada como string slug, exposta como array\n  category String // Slug único (ex: \"bitcoin\", \"ethereum\", \"blockchain\", \"trading\", etc)\n\n  // Alinhado com API: tags armazenadas como JSON, expostas como keywords\n  tags String // JSON array (API: keywords)\n\n  // Campos específicos de NOTÍCIAS\n  sentiment Sentiment @default(neutral)\n\n  // Fact-checking fields (apenas notícias)\n  factCheckScore   Float? // Score de 0-100 (threshold padrão: 70%)\n  factCheckSources String? // JSON array com URLs das fontes consultadas\n  factCheckDate    DateTime? // Data da verificação\n  factCheckStatus  String? // verified (>=70%), failed (<70%), skipped (sem APIs)\n\n  // Campos específicos de ARTIGOS EDUCACIONAIS\n  level       String? // 'iniciante' | 'intermediario' | 'avancado'\n  contentType String? // 'Artigo' | 'Tutorial' | 'Curso' (FASE 2)\n  readTime    String? // Ex: '8 min', '15 min'\n\n  // FASE 1 - Segurança\n  warningLevel WarningLevel? // Nível de alerta do conteúdo\n  securityTips String? // JSON array com dicas de segurança contextualizadas\n\n  // FASE 2 - Cursos e Relacionamentos\n  courseSequence   Int? // Ordem no curso (se contentType = 'Curso')\n  relatedArticles  String? // JSON array de slugs relacionados\n  projectHighlight Boolean @default(false) // Destacar como caso de uso real\n\n  // Imagem de Capa (gerada por IA)\n  coverImage    String? // URL da imagem de capa\n  coverImageAlt String? // Texto alternativo para acessibilidade\n\n  // FASE 5 - Cursos Interativos\n  quizData String? // JSON com quiz interativo\n\n  createdAt DateTime @default(now()) // API: publishedAt\n  updatedAt DateTime @updatedAt // API: lastVerified\n\n  @@index([authorId])\n  @@index([published])\n  @@index([slug])\n  @@index([category])\n  @@index([type])\n  @@index([projectHighlight])\n}\n\nmodel Resource {\n  id       String  @id @default(cuid())\n  slug     String  @unique\n  name     String\n  category String // wallets, exchanges, browsers, defi, explorers, tools\n  verified Boolean @default(true)\n\n  // Básico\n  shortDescription String\n  officialUrl      String\n  platforms        String // JSON array: [\"Web\", \"iOS\", \"Android\"]\n  tags             String // JSON array: [\"DeFi\", \"NFTs\"]\n\n  // Hero section\n  heroTitle       String\n  heroDescription String\n  heroGradient    String\n\n  // Why good section\n  whyGoodTitle   String\n  whyGoodContent String // JSON array de paragraphs\n\n  // Features\n  features String // JSON array: [{ icon, title, description }]\n\n  // How to start\n  howToStartTitle String\n  howToStartSteps String // JSON array: [{ number, title, description }]\n\n  // Pros and Cons\n  pros String // JSON array\n  cons String // JSON array\n\n  // FAQ\n  faq String // JSON array: [{ question, answer }]\n\n  // Security tips\n  securityTips String // JSON array: [{ icon, title, description }]\n\n  // FASE 1 - Auditoria de Segurança\n  securityAudit      String? // Link para relatório de auditoria\n  securityAuditDate  DateTime? // Data da última auditoria\n  auditedByCommunity Boolean   @default(false) // Badge de \"Auditado pela Comunidade\"\n\n  // FASE 4 - Ferramentas Interativas\n  toolConfig      String? // JSON config para ferramentas interativas (calculadoras)\n  interactiveType String? // 'calculator' | 'simulator' | 'map' | null\n\n  // Opcionais\n  showCompatibleWallets Boolean @default(false)\n  relatedResources      String? // JSON array de slugs\n\n  // Metadados\n  views        Int      @default(0)\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n  lastVerified DateTime @default(now())\n\n  @@index([slug])\n  @@index([category])\n  @@index([verified])\n  @@index([interactiveType])\n}\n\nmodel Cryptocurrency {\n  id String @id @default(cuid())\n\n  // Identificadores CoinGecko\n  coingeckoId String @unique // bitcoin, ethereum, solana\n  symbol      String // BTC, ETH, SOL\n  name        String // Bitcoin, Ethereum, Solana\n\n  // Dados de Mercado (atualizados via API)\n  currentPrice             Float?\n  marketCap                Float?\n  marketCapRank            Int?\n  totalVolume              Float?\n  high24h                  Float?\n  low24h                   Float?\n  priceChange24h           Float?\n  priceChangePercentage24h Float?\n  circulatingSupply        Float?\n  totalSupply              Float?\n  maxSupply                Float?\n  ath                      Float? // All-Time High\n  athDate                  DateTime?\n  atl                      Float? // All-Time Low\n  atlDate                  DateTime?\n\n  // Informações Descritivas\n  description String? // Descrição em português\n  homepage    String? // Site oficial\n  whitepaper  String?\n  blockchain  String? // Solana, Ethereum, etc\n\n  // Links sociais (JSON)\n  socialLinks String? // { twitter, telegram, discord, reddit }\n\n  // Imagens\n  imageSmall String? // 32x32\n  imageLarge String? // 256x256\n\n  // Metadados\n  slug        String? // bitcoin, ethereum (para URL - opcional, derivado de coingeckoId)\n  lastUpdated DateTime @default(now())\n  createdAt   DateTime @default(now())\n\n  @@index([symbol])\n  @@index([marketCapRank])\n}\n\nmodel CopilotActivity {\n  id     String @id @default(cuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  action     String // Nome da ferramenta executada\n  parameters String // JSON com parâmetros da ação\n  result     String? // JSON com resultado da execução\n  status     String // 'pending', 'approved', 'rejected', 'executing', 'executed', 'failed'\n\n  requiresConfirmation Boolean   @default(false)\n  confirmed            Boolean   @default(false)\n  confirmedAt          DateTime?\n\n  createdAt DateTime @default(now())\n\n  @@index([userId])\n  @@index([status])\n  @@index([createdAt])\n}\n\nmodel AutomationTask {\n  id String @id @default(cuid())\n\n  // Task info\n  name        String // Nome da tarefa (ex: \"daily_report\", \"trending_topics_update\")\n  description String? // Descrição da tarefa\n  type        String // 'scheduled', 'triggered', 'manual'\n  schedule    String? // Cron expression (ex: \"0 21 * * *\" para diário às 21h)\n\n  // Execution\n  enabled  Boolean   @default(true)\n  lastRun  DateTime?\n  nextRun  DateTime?\n  runCount Int       @default(0)\n\n  // Configuration\n  config String? // JSON com configuração específica da tarefa\n\n  // Results\n  lastResult String? // JSON com resultado da última execução\n  lastStatus String? // 'success', 'failed', 'skipped'\n  lastError  String? // Mensagem de erro (se houver)\n\n  // Metadata\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([name])\n  @@index([enabled])\n  @@index([nextRun])\n}\n\nmodel CopilotReport {\n  id String @id @default(cuid())\n\n  // Report info\n  type  String // 'daily', 'weekly', 'monthly', 'custom'\n  title String // Título do relatório\n\n  // Period\n  startDate DateTime\n  endDate   DateTime\n\n  // Content\n  summary  String // Resumo executivo (texto)\n  data     String // JSON com todos os dados do relatório\n  sections String // JSON array com seções incluídas\n\n  // Metadata\n  generatedBy String // 'automated' | 'manual' | userId\n  taskId      String? // ID da AutomationTask (se foi agendado)\n\n  // Stats\n  articlesAnalyzed Int @default(0)\n  alertsFound      Int @default(0)\n\n  createdAt DateTime @default(now())\n\n  @@index([type])\n  @@index([createdAt])\n  @@index([taskId])\n}\n\n// FASE 3 - Histórias da Comunidade\nmodel CommunityStory {\n  id           String  @id @default(cuid())\n  slug         String  @unique\n  authorName   String\n  authorAvatar String?\n  userId       String? // Opcional: link com usuário registrado\n  user         User?   @relation(fields: [userId], references: [id], onDelete: SetNull)\n\n  title    String\n  content  String        @db.Text\n  category StoryCategory // transformation | social_project | achievement\n\n  likes     Int     @default(0)\n  verified  Boolean @default(false) // Verificada pela comunidade\n  featured  Boolean @default(false) // Destacada na home\n  published Boolean @default(false)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([slug])\n  @@index([category])\n  @@index([published])\n  @@index([featured])\n  @@index([userId])\n}\n\n// FASE 3 - Projetos Sociais\nmodel SocialProject {\n  id              String  @id @default(cuid())\n  slug            String  @unique\n  name            String\n  description     String  @db.Text\n  longDescription String? @db.Text\n\n  // Financiamento\n  fundingGoal    Float\n  currentFunding Float   @default(0)\n  currency       String  @default(\"BRL\") // BRL, USD, MILAGRE\n  walletAddress  String?\n\n  // Categorização\n  category ProjectCategory // donations | microcredit | education | infrastructure\n  location String? // Cidade, Estado\n  tags     String? // JSON array\n\n  // Status\n  verified Boolean @default(false)\n  active   Boolean @default(true)\n  featured Boolean @default(false)\n\n  // Datas\n  startDate DateTime\n  endDate   DateTime?\n\n  // Métricas\n  supporters Int @default(0)\n  views      Int @default(0)\n\n  // Mídia\n  coverImage String?\n  gallery    String? // JSON array de URLs\n\n  // Responsável\n  organizer      String // Nome do organizador\n  organizerEmail String?\n  organizerPhone String?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([slug])\n  @@index([category])\n  @@index([verified])\n  @@index([active])\n  @@index([featured])\n}\n\n// FASE 4 - Mapa de Projetos\nmodel ProjectMap {\n  id        String @id @default(cuid())\n  projectId String @unique // Referência ao SocialProject\n\n  // Geolocalização\n  latitude  Float\n  longitude Float\n  address   String?\n  city      String\n  state     String\n  country   String  @default(\"Brasil\")\n\n  // Display\n  markerColor String  @default(\"#8B5CF6\") // Cor do marcador no mapa\n  markerIcon  String? // Ícone customizado\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([city])\n  @@index([state])\n}\n\n// FASE 5 - Progresso do Usuário (Cursos)\nmodel UserProgress {\n  id     String @id @default(cuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  articleSlug String // Slug do artigo/curso\n\n  // Progresso\n  completed Boolean @default(false)\n  progress  Int     @default(0) // 0-100%\n\n  // Quiz (se houver)\n  quizScore    Float? // 0-100\n  quizAttempts Int    @default(0)\n\n  // Certificado\n  certificateIssued Boolean @default(false)\n  certificateUrl    String?\n\n  // Timestamps\n  startedAt    DateTime  @default(now())\n  completedAt  DateTime?\n  lastAccessed DateTime  @default(now())\n\n  @@unique([userId, articleSlug])\n  @@index([userId])\n  @@index([articleSlug])\n  @@index([completed])\n}\n",
-  "inlineSchemaHash": "83b44586041fe639da48fcf3c5f0c595e57ae972c980a46f5582f4a92c6a2693",
+  "inlineSchema": "// Prisma Schema v2.0.0 - Optimized\n// Data: 2025-11-18\n// Status: DEVELOPMENT\n\ngenerator client {\n  provider   = \"prisma-client-js\"\n  output     = \"../lib/generated/prisma-v2\"\n  engineType = \"library\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n// ============================================================================\n// ENUMS\n// ============================================================================\n\nenum Role {\n  ADMIN\n  EDITOR\n  VIEWER\n}\n\nenum ArticleType {\n  news\n  educational\n}\n\nenum ArticleStatus {\n  draft\n  published\n  archived\n}\n\nenum Sentiment {\n  positive\n  neutral\n  negative\n}\n\nenum Level {\n  iniciante\n  intermediario\n  avancado\n}\n\nenum ContentType {\n  artigo\n  tutorial\n  curso\n}\n\n// ============================================================================\n// NEXTAUTH MODELS (Mantidos)\n// ============================================================================\n\nmodel Account {\n  id                String  @id @default(cuid())\n  userId            String\n  type              String\n  provider          String\n  providerAccountId String\n  refresh_token     String?\n  access_token      String?\n  expires_at        Int?\n  token_type        String?\n  scope             String?\n  id_token          String?\n  session_state     String?\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([provider, providerAccountId])\n}\n\nmodel Session {\n  id           String   @id @default(cuid())\n  sessionToken String   @unique\n  userId       String\n  expires      DateTime\n  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n}\n\nmodel VerificationToken {\n  identifier String\n  token      String   @unique\n  expires    DateTime\n\n  @@unique([identifier, token])\n}\n\n// ============================================================================\n// USER MODEL\n// ============================================================================\n\nmodel User {\n  id            String    @id @default(cuid())\n  name          String?\n  email         String    @unique\n  emailVerified DateTime?\n  password      String\n  image         String?\n  role          Role      @default(VIEWER)\n\n  // Gamificação (Fase 3 - placeholder)\n  points Int @default(0)\n\n  // Timestamps\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  deletedAt DateTime? // Soft delete\n\n  // Relações\n  accounts          Account[]\n  sessions          Session[]\n  articles          Article[]\n  copilotActivities CopilotActivity[]\n\n  @@index([email])\n  @@index([role])\n  @@index([deletedAt])\n}\n\n// ============================================================================\n// CATEGORY MODEL (NOVO - Tabela separada)\n// ============================================================================\n\nmodel Category {\n  id          String  @id @default(cuid())\n  slug        String  @unique\n  name        String\n  description String?\n  type        String // 'news' | 'educational' | 'resource'\n\n  // Hierarchy (para subcategorias futuras)\n  parentId String?\n  parent   Category?  @relation(\"CategoryHierarchy\", fields: [parentId], references: [id])\n  children Category[] @relation(\"CategoryHierarchy\")\n\n  // Metadados\n  icon  String? // FontAwesome icon\n  color String? // Hex color\n  order Int     @default(0)\n\n  // Relações\n  articles Article[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([slug])\n  @@index([type])\n  @@index([parentId])\n}\n\n// ============================================================================\n// TAG MODEL (NOVO - Tabela separada)\n// ============================================================================\n\nmodel Tag {\n  id   String @id @default(cuid())\n  slug String @unique\n  name String\n\n  // Relações M:N\n  articles ArticleTag[]\n\n  // Metadados\n  usageCount Int @default(0)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([slug])\n  @@index([usageCount])\n}\n\n// ============================================================================\n// ARTICLE MODEL (OTIMIZADO)\n// ============================================================================\n\nmodel Article {\n  id      String @id @default(cuid())\n  slug    String @unique\n  title   String\n  excerpt String @db.Text\n  content String @db.Text\n\n  // Tipo e Status\n  type   ArticleType   @default(news)\n  status ArticleStatus @default(draft)\n\n  // Metadados\n  readTime  String?\n  viewCount Int     @default(0)\n\n  // Relacionamento com Author\n  authorId String\n  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)\n\n  // Relacionamento com Category (M:1)\n  categoryId String\n  category   Category @relation(fields: [categoryId], references: [id])\n\n  // Tags (M:N via pivot)\n  tags ArticleTag[]\n\n  // Artigos relacionados (M:N via pivot)\n  relatedFrom ArticleRelation[] @relation(\"ArticleFrom\")\n  relatedTo   ArticleRelation[] @relation(\"ArticleTo\")\n\n  // Campos específicos de NOTÍCIAS\n  sentiment Sentiment?\n\n  // Fact-checking\n  factCheckScore  Float?\n  factCheckDate   DateTime?\n  factCheckStatus String?\n  citations       Citation[]\n\n  // Campos específicos de EDUCACIONAIS\n  level       Level?\n  contentType ContentType?\n\n  // Segurança (Fase 1 - placeholder)\n  warningLevel String?\n\n  // Curso (Fase 2 - placeholder)\n  courseSequence   Int?\n  projectHighlight Boolean @default(false)\n\n  // Imagem de capa\n  coverImage    String?\n  coverImageAlt String?\n\n  // Timestamps\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n  publishedAt DateTime?\n  deletedAt   DateTime? // Soft delete\n\n  @@index([slug])\n  @@index([authorId])\n  @@index([categoryId])\n  @@index([type])\n  @@index([status])\n  @@index([deletedAt])\n  @@index([publishedAt])\n  // Índices compostos para queries combinadas\n  @@index([type, status, publishedAt])\n  @@index([type, categoryId, status])\n  @@index([authorId, status])\n  @@index([status, createdAt])\n}\n\n// ============================================================================\n// ARTICLE-TAG PIVOT (NOVO - M:N)\n// ============================================================================\n\nmodel ArticleTag {\n  articleId String\n  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)\n\n  tagId String\n  tag   Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)\n\n  createdAt DateTime @default(now())\n\n  @@id([articleId, tagId])\n  @@index([articleId])\n  @@index([tagId])\n}\n\n// ============================================================================\n// ARTICLE RELATION PIVOT (NOVO - M:N para artigos relacionados)\n// ============================================================================\n\nmodel ArticleRelation {\n  fromArticleId String\n  fromArticle   Article @relation(\"ArticleFrom\", fields: [fromArticleId], references: [id], onDelete: Cascade)\n\n  toArticleId String\n  toArticle   Article @relation(\"ArticleTo\", fields: [toArticleId], references: [id], onDelete: Cascade)\n\n  // Tipo de relação\n  relationType String @default(\"related\") // similar, sequência, referência\n  order        Int? // Para sequências de curso\n\n  createdAt DateTime @default(now())\n\n  @@id([fromArticleId, toArticleId])\n  @@index([fromArticleId])\n  @@index([toArticleId])\n}\n\n// ============================================================================\n// CITATIONS (NOVO - Fact-checking sources)\n// ============================================================================\n\nmodel Citation {\n  id     String  @id @default(cuid())\n  url    String\n  title  String?\n  domain String? // Extraído da URL\n\n  articleId String\n  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)\n\n  // Metadados\n  order    Int     @default(0)\n  verified Boolean @default(false)\n\n  createdAt DateTime @default(now())\n\n  @@index([articleId])\n  @@index([domain])\n}\n\n// ============================================================================\n// CRYPTOCURRENCY MODEL (Mantido)\n// ============================================================================\n\nmodel Cryptocurrency {\n  id                       String    @id @default(cuid())\n  coingeckoId              String    @unique\n  symbol                   String\n  name                     String\n  currentPrice             Float?\n  marketCap                Float?\n  marketCapRank            Int?\n  totalVolume              Float?\n  high24h                  Float?\n  low24h                   Float?\n  priceChange24h           Float?\n  priceChangePercentage24h Float?\n  circulatingSupply        Float?\n  totalSupply              Float?\n  maxSupply                Float?\n  ath                      Float?\n  athDate                  DateTime?\n  atl                      Float?\n  atlDate                  DateTime?\n  description              String?\n  homepage                 String?\n  whitepaper               String?\n  blockchain               String?\n  socialLinks              String?\n  imageSmall               String?\n  imageLarge               String?\n  slug                     String?\n  lastUpdated              DateTime  @default(now())\n  createdAt                DateTime  @default(now())\n\n  @@index([symbol])\n  @@index([marketCapRank])\n}\n\n// ============================================================================\n// COPILOT MODELS (Mantidos)\n// ============================================================================\n\nmodel CopilotActivity {\n  id                   String    @id @default(cuid())\n  userId               String\n  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  action               String\n  parameters           String\n  result               String?\n  status               String\n  requiresConfirmation Boolean   @default(false)\n  confirmed            Boolean   @default(false)\n  confirmedAt          DateTime?\n  createdAt            DateTime  @default(now())\n\n  @@index([userId])\n  @@index([status])\n  @@index([createdAt])\n}\n\nmodel AutomationTask {\n  id          String    @id @default(cuid())\n  name        String\n  description String?\n  type        String\n  schedule    String?\n  enabled     Boolean   @default(true)\n  lastRun     DateTime?\n  nextRun     DateTime?\n  runCount    Int       @default(0)\n  config      String?\n  lastResult  String?\n  lastStatus  String?\n  lastError   String?\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n\n  @@index([name])\n  @@index([enabled])\n  @@index([nextRun])\n}\n\nmodel CopilotReport {\n  id               String   @id @default(cuid())\n  type             String\n  title            String\n  startDate        DateTime\n  endDate          DateTime\n  summary          String\n  data             String\n  sections         String\n  generatedBy      String\n  taskId           String?\n  articlesAnalyzed Int      @default(0)\n  alertsFound      Int      @default(0)\n  createdAt        DateTime @default(now())\n\n  @@index([type])\n  @@index([createdAt])\n  @@index([taskId])\n}\n\n// ============================================================================\n// RESOURCE MODEL (Mantido - será otimizado em Fase 2)\n// ============================================================================\n\nmodel Resource {\n  id                    String    @id @default(cuid())\n  slug                  String    @unique\n  name                  String\n  category              String\n  verified              Boolean   @default(true)\n  shortDescription      String\n  officialUrl           String\n  platforms             String\n  tags                  String\n  heroTitle             String\n  heroDescription       String\n  heroGradient          String\n  whyGoodTitle          String\n  whyGoodContent        String\n  features              String\n  howToStartTitle       String\n  howToStartSteps       String\n  pros                  String\n  cons                  String\n  faq                   String\n  securityTips          String\n  securityAudit         String?\n  securityAuditDate     DateTime?\n  auditedByCommunity    Boolean   @default(false)\n  toolConfig            String?\n  interactiveType       String?\n  showCompatibleWallets Boolean   @default(false)\n  relatedResources      String?\n  views                 Int       @default(0)\n  createdAt             DateTime  @default(now())\n  updatedAt             DateTime  @updatedAt\n  lastVerified          DateTime  @default(now())\n\n  @@index([slug])\n  @@index([category])\n  @@index([verified])\n  @@index([interactiveType])\n}\n\n// ============================================================================\n// FUTURE MODELS (Fase 2+)\n// Comentados para não gerar agora, mas documentados para referência\n// ============================================================================\n\n/**\n * // FASE 1: Security\n * model SecurityTip {\n * id          String    @id @default(cuid())\n * icon        String\n * title       String\n * description String    @db.Text\n * articleId   String\n * article     Article   @relation(fields: [articleId], references: [id], onDelete: Cascade)\n * order       Int       @default(0)\n * createdAt   DateTime  @default(now())\n * @@index([articleId])\n * }\n * // FASE 2: Audit Trail\n * model AuditLog {\n * id          String    @id @default(cuid())\n * userId      String?\n * user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)\n * action      String\n * entity      String\n * entityId    String\n * changes     String?   @db.Text\n * ipAddress   String?\n * userAgent   String?\n * articleId   String?\n * article     Article?  @relation(fields: [articleId], references: [id], onDelete: SetNull)\n * createdAt   DateTime  @default(now())\n * @@index([userId])\n * @@index([entity, entityId])\n * @@index([articleId])\n * @@index([createdAt])\n * }\n * // FASE 3: Gamification\n * model Badge {\n * id          String      @id @default(cuid())\n * slug        String      @unique\n * name        String\n * description String\n * icon        String\n * color       String\n * criteria    String      @db.Text\n * pointsRequired Int?\n * users       UserBadge[]\n * createdAt   DateTime    @default(now())\n * @@index([slug])\n * }\n * model UserBadge {\n * userId    String\n * user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n * badgeId   String\n * badge     Badge     @relation(fields: [badgeId], references: [id], onDelete: Cascade)\n * earnedAt  DateTime  @default(now())\n * @@id([userId, badgeId])\n * }\n * // FASE 5: Interactive Learning\n * model Quiz {\n * id          String        @id @default(cuid())\n * title       String\n * description String?\n * articleId   String        @unique\n * article     Article       @relation(fields: [articleId], references: [id], onDelete: Cascade)\n * passingScore Float        @default(70)\n * timeLimit    Int?\n * questions   QuizQuestion[]\n * totalAttempts Int         @default(0)\n * avgScore      Float?\n * createdAt   DateTime      @default(now())\n * updatedAt   DateTime      @updatedAt\n * @@index([articleId])\n * }\n */\n",
+  "inlineSchemaHash": "d29a5b7879964276b319aa0488775007942c520853f70781bb270ba2548d6f4b",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Account\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"provider\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"providerAccountId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"refresh_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"access_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires_at\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"token_type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"scope\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"id_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"session_state\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AccountToUser\"}],\"dbName\":null},\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sessionToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SessionToUser\"}],\"dbName\":null},\"VerificationToken\":{\"fields\":[{\"name\":\"identifier\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"emailVerified\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"points\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"badges\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accounts\",\"kind\":\"object\",\"type\":\"Account\",\"relationName\":\"AccountToUser\"},{\"name\":\"sessions\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUser\"},{\"name\":\"articles\",\"kind\":\"object\",\"type\":\"Article\",\"relationName\":\"ArticleToUser\"},{\"name\":\"copilotActivities\",\"kind\":\"object\",\"type\":\"CopilotActivity\",\"relationName\":\"CopilotActivityToUser\"},{\"name\":\"communityStories\",\"kind\":\"object\",\"type\":\"CommunityStory\",\"relationName\":\"CommunityStoryToUser\"},{\"name\":\"userProgress\",\"kind\":\"object\",\"type\":\"UserProgress\",\"relationName\":\"UserToUserProgress\"}],\"dbName\":null},\"Article\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"excerpt\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"published\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"authorId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"author\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ArticleToUser\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tags\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sentiment\",\"kind\":\"enum\",\"type\":\"Sentiment\"},{\"name\":\"factCheckScore\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"factCheckSources\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"factCheckDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"factCheckStatus\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"level\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"contentType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"readTime\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"warningLevel\",\"kind\":\"enum\",\"type\":\"WarningLevel\"},{\"name\":\"securityTips\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"courseSequence\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"relatedArticles\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"projectHighlight\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"coverImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"coverImageAlt\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"quizData\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Resource\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"shortDescription\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"officialUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"platforms\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tags\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"heroTitle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"heroDescription\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"heroGradient\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"whyGoodTitle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"whyGoodContent\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"features\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"howToStartTitle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"howToStartSteps\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"pros\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"cons\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"faq\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"securityTips\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"securityAudit\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"securityAuditDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"auditedByCommunity\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"toolConfig\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"interactiveType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"showCompatibleWallets\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"relatedResources\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"views\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"lastVerified\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Cryptocurrency\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"coingeckoId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"symbol\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"currentPrice\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"marketCap\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"marketCapRank\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"totalVolume\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"high24h\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"low24h\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"priceChange24h\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"priceChangePercentage24h\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"circulatingSupply\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"totalSupply\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"maxSupply\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"ath\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"athDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"atl\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"atlDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"homepage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"whitepaper\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"blockchain\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"socialLinks\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"imageSmall\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"imageLarge\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastUpdated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"CopilotActivity\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CopilotActivityToUser\"},{\"name\":\"action\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parameters\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"result\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"requiresConfirmation\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"confirmed\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"confirmedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"AutomationTask\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"schedule\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"enabled\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"lastRun\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"nextRun\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"runCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"config\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastResult\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastStatus\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastError\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"CopilotReport\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"startDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"summary\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"data\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sections\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"generatedBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"taskId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"articlesAnalyzed\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"alertsFound\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"CommunityStory\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"authorName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"authorAvatar\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CommunityStoryToUser\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"enum\",\"type\":\"StoryCategory\"},{\"name\":\"likes\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"featured\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"published\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"SocialProject\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"longDescription\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fundingGoal\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"currentFunding\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"currency\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"walletAddress\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"enum\",\"type\":\"ProjectCategory\"},{\"name\":\"location\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tags\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"featured\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"startDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"supporters\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"views\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"coverImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"gallery\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"organizer\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"organizerEmail\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"organizerPhone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"ProjectMap\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"projectId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"latitude\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"longitude\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"address\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"city\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"state\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"country\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"markerColor\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"markerIcon\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"UserProgress\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserProgress\"},{\"name\":\"articleSlug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"completed\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"progress\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"quizScore\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"quizAttempts\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"certificateIssued\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"certificateUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"startedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"completedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"lastAccessed\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Account\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"provider\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"providerAccountId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"refresh_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"access_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires_at\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"token_type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"scope\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"id_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"session_state\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AccountToUser\"}],\"dbName\":null},\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sessionToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SessionToUser\"}],\"dbName\":null},\"VerificationToken\":{\"fields\":[{\"name\":\"identifier\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"emailVerified\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"points\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deletedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"accounts\",\"kind\":\"object\",\"type\":\"Account\",\"relationName\":\"AccountToUser\"},{\"name\":\"sessions\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUser\"},{\"name\":\"articles\",\"kind\":\"object\",\"type\":\"Article\",\"relationName\":\"ArticleToUser\"},{\"name\":\"copilotActivities\",\"kind\":\"object\",\"type\":\"CopilotActivity\",\"relationName\":\"CopilotActivityToUser\"}],\"dbName\":null},\"Category\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parent\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryHierarchy\"},{\"name\":\"children\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryHierarchy\"},{\"name\":\"icon\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"color\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"articles\",\"kind\":\"object\",\"type\":\"Article\",\"relationName\":\"ArticleToCategory\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Tag\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"articles\",\"kind\":\"object\",\"type\":\"ArticleTag\",\"relationName\":\"ArticleTagToTag\"},{\"name\":\"usageCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Article\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"excerpt\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"ArticleType\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"ArticleStatus\"},{\"name\":\"readTime\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"viewCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"authorId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"author\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ArticleToUser\"},{\"name\":\"categoryId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"ArticleToCategory\"},{\"name\":\"tags\",\"kind\":\"object\",\"type\":\"ArticleTag\",\"relationName\":\"ArticleToArticleTag\"},{\"name\":\"relatedFrom\",\"kind\":\"object\",\"type\":\"ArticleRelation\",\"relationName\":\"ArticleFrom\"},{\"name\":\"relatedTo\",\"kind\":\"object\",\"type\":\"ArticleRelation\",\"relationName\":\"ArticleTo\"},{\"name\":\"sentiment\",\"kind\":\"enum\",\"type\":\"Sentiment\"},{\"name\":\"factCheckScore\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"factCheckDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"factCheckStatus\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"citations\",\"kind\":\"object\",\"type\":\"Citation\",\"relationName\":\"ArticleToCitation\"},{\"name\":\"level\",\"kind\":\"enum\",\"type\":\"Level\"},{\"name\":\"contentType\",\"kind\":\"enum\",\"type\":\"ContentType\"},{\"name\":\"warningLevel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"courseSequence\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"projectHighlight\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"coverImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"coverImageAlt\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"publishedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deletedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"ArticleTag\":{\"fields\":[{\"name\":\"articleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"article\",\"kind\":\"object\",\"type\":\"Article\",\"relationName\":\"ArticleToArticleTag\"},{\"name\":\"tagId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tag\",\"kind\":\"object\",\"type\":\"Tag\",\"relationName\":\"ArticleTagToTag\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"ArticleRelation\":{\"fields\":[{\"name\":\"fromArticleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fromArticle\",\"kind\":\"object\",\"type\":\"Article\",\"relationName\":\"ArticleFrom\"},{\"name\":\"toArticleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"toArticle\",\"kind\":\"object\",\"type\":\"Article\",\"relationName\":\"ArticleTo\"},{\"name\":\"relationType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Citation\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"domain\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"articleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"article\",\"kind\":\"object\",\"type\":\"Article\",\"relationName\":\"ArticleToCitation\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Cryptocurrency\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"coingeckoId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"symbol\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"currentPrice\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"marketCap\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"marketCapRank\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"totalVolume\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"high24h\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"low24h\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"priceChange24h\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"priceChangePercentage24h\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"circulatingSupply\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"totalSupply\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"maxSupply\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"ath\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"athDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"atl\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"atlDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"homepage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"whitepaper\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"blockchain\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"socialLinks\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"imageSmall\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"imageLarge\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastUpdated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"CopilotActivity\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CopilotActivityToUser\"},{\"name\":\"action\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parameters\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"result\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"requiresConfirmation\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"confirmed\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"confirmedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"AutomationTask\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"schedule\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"enabled\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"lastRun\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"nextRun\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"runCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"config\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastResult\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastStatus\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastError\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"CopilotReport\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"startDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"summary\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"data\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sections\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"generatedBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"taskId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"articlesAnalyzed\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"alertsFound\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Resource\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"shortDescription\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"officialUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"platforms\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tags\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"heroTitle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"heroDescription\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"heroGradient\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"whyGoodTitle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"whyGoodContent\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"features\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"howToStartTitle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"howToStartSteps\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"pros\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"cons\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"faq\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"securityTips\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"securityAudit\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"securityAuditDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"auditedByCommunity\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"toolConfig\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"interactiveType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"showCompatibleWallets\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"relatedResources\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"views\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"lastVerified\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

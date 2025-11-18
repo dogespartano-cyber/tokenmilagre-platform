@@ -77,7 +77,7 @@ export async function GET(request: NextRequest) {
         level: true,
         contentType: true,
         readTime: true,
-        published: true,
+        status: 'published', deletedAt: null,
         factCheckSources: true,
         coverImage: true,
         coverImageAlt: true,
