@@ -33,12 +33,12 @@
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query'
 import { articleKeys } from './query-keys'
 import type { ArticleQuery } from '@/lib/schemas/article-schemas'
-import type { ArticleListResult } from '@/lib/services/article-service'
+import type { PaginatedArticles } from '@/lib/services/article-service'
 
 /**
  * Fetches articles from API v2
  */
-async function fetchArticles(query: Partial<ArticleQuery>): Promise<ArticleListResult> {
+async function fetchArticles(query: Partial<ArticleQuery>): Promise<PaginatedArticles> {
   const params = new URLSearchParams()
 
   // Add query parameters
@@ -77,7 +77,7 @@ async function fetchArticles(query: Partial<ArticleQuery>): Promise<ArticleListR
  * Hook options
  */
 export interface UseArticlesOptions
-  extends Omit<UseQueryOptions<ArticleListResult>, 'queryKey' | 'queryFn'> {
+  extends Omit<UseQueryOptions<PaginatedArticles>, 'queryKey' | 'queryFn'> {
   /**
    * Query filters
    */
@@ -102,7 +102,7 @@ export function useArticles(options: UseArticlesOptions = {}) {
     ...query,
   }
 
-  return useQuery<ArticleListResult>({
+  return useQuery<PaginatedArticles>({
     queryKey: articleKeys.list(finalQuery),
     queryFn: () => fetchArticles(finalQuery),
     staleTime: 1000 * 60 * 5, // 5 minutes

@@ -38,7 +38,7 @@
 import { useMutation, useQueryClient, type UseMutationOptions } from '@tanstack/react-query'
 import { articleKeys } from './query-keys'
 import type { ArticleUpdateInput } from '@/lib/schemas/article-schemas'
-import type { ArticleWithRelations, ArticleListResult } from '@/lib/services/article-service'
+import type { ArticleWithRelations, PaginatedArticles } from '@/lib/services/article-service'
 
 /**
  * Update article mutation variables
@@ -118,7 +118,7 @@ export function useUpdateArticle(options: UseUpdateArticleOptions = {}) {
       const previousArticle = queryClient.getQueryData<ArticleWithRelations>(
         articleKeys.detail(id)
       )
-      const previousLists = queryClient.getQueriesData<ArticleListResult>({
+      const previousLists = queryClient.getQueriesData<PaginatedArticles>({
         queryKey: articleKeys.lists(),
       })
 
@@ -128,7 +128,7 @@ export function useUpdateArticle(options: UseUpdateArticleOptions = {}) {
           ...previousArticle,
           ...data,
           updatedAt: new Date(),
-        })
+        } as ArticleWithRelations)
       }
 
       // Optimistically update article in all lists
@@ -136,11 +136,11 @@ export function useUpdateArticle(options: UseUpdateArticleOptions = {}) {
         if (listData) {
           const updatedArticles = listData.articles.map((article) =>
             article.id === id
-              ? { ...article, ...data, updatedAt: new Date() }
+              ? ({ ...article, ...data, updatedAt: new Date() } as ArticleWithRelations)
               : article
           )
 
-          queryClient.setQueryData<ArticleListResult>(queryKey, {
+          queryClient.setQueryData<PaginatedArticles>(queryKey, {
             ...listData,
             articles: updatedArticles,
           })

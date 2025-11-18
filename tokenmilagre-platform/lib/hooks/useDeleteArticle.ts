@@ -34,7 +34,7 @@
 
 import { useMutation, useQueryClient, type UseMutationOptions } from '@tanstack/react-query'
 import { articleKeys } from './query-keys'
-import type { ArticleListResult } from '@/lib/services/article-service'
+import type { PaginatedArticles } from '@/lib/services/article-service'
 
 /**
  * Delete article response
@@ -101,7 +101,7 @@ export function useDeleteArticle(options: UseDeleteArticleOptions = {}) {
 
       // Snapshot previous values
       const previousArticle = queryClient.getQueryData(articleKeys.detail(id))
-      const previousLists = queryClient.getQueriesData<ArticleListResult>({
+      const previousLists = queryClient.getQueriesData<PaginatedArticles>({
         queryKey: articleKeys.lists(),
       })
 
@@ -112,7 +112,7 @@ export function useDeleteArticle(options: UseDeleteArticleOptions = {}) {
             (article) => article.id !== id
           )
 
-          queryClient.setQueryData<ArticleListResult>(queryKey, {
+          queryClient.setQueryData<PaginatedArticles>(queryKey, {
             ...listData,
             articles: filteredArticles,
             total: listData.total - 1,
