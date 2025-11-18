@@ -60,7 +60,7 @@ export async function GET(
     // Buscar artigos de notícias publicados
     const articles = await prisma.article.findMany({
       where: {
-        published: true,
+        status: 'published',
         type: 'news',
       },
       include: {

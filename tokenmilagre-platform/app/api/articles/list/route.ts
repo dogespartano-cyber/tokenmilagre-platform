@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const articles = await prisma.article.findMany({
       where: {
-        published: true
+        status: 'published'
       },
       select: {
         id: true,

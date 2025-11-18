@@ -218,7 +218,7 @@ Segurança em cripto não é opcional - é **essencial**. Dedique tempo para imp
       },
     ]),
     tags: JSON.stringify(['segurança', 'iniciante', 'wallet', '2fa', 'senha']),
-    published: true,
+    status: 'published',
   },
 
   {
@@ -546,7 +546,7 @@ Compartilhe este guia com amigos e familiares. Muitos golpes poderiam ser evitad
       },
     ]),
     tags: JSON.stringify(['segurança', 'fraudes', 'scam', 'phishing', 'proteção']),
-    published: true,
+    status: 'published',
     projectHighlight: false,
   },
 
@@ -937,7 +937,7 @@ Com as ferramentas certas e conhecimento fundamental, a comunidade pode:
       },
     ]),
     tags: JSON.stringify(['segurança', 'auditoria', 'smart-contracts', 'defi', 'verificação']),
-    published: true,
+    status: 'published',
     projectHighlight: false,
     relatedArticles: JSON.stringify(['fraudes-comuns-cripto-2024', 'protecao-digital-basica-cripto']),
   },

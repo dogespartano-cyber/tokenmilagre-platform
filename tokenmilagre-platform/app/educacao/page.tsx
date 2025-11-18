@@ -17,7 +17,7 @@ async function getEducationalArticles() {
   const articles = await prisma.article.findMany({
     where: {
       type: 'educational',
-      published: true,
+      status: 'published',
     },
     orderBy: {
       createdAt: 'desc',

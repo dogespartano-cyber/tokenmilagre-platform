@@ -15,7 +15,7 @@ export const dynamicParams = true;
 //   const articles = await prisma.article.findMany({
 //     where: {
 //       type: 'educational',
-//       published: true,
+//       status: 'published',
 //     },
 //     select: {
 //       slug: true,
@@ -50,7 +50,7 @@ async function getArticle(slug: string): Promise<EducationalArticle | null> {
     where: {
       slug: slug,
       type: 'educational',
-      published: true,
+      status: 'published',
     },
   });
 
@@ -76,7 +76,7 @@ async function getRelatedArticles(category: string, currentSlug: string): Promis
   const articles = await prisma.article.findMany({
     where: {
       type: 'educational',
-      published: true,
+      status: 'published',
       category: category,
       slug: {
         not: currentSlug,

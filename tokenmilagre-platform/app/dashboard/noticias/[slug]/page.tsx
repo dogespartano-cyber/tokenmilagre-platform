@@ -11,7 +11,7 @@ export const revalidate = 300;
 //   const articles = await prisma.article.findMany({
 //     where: {
 //       type: 'news',
-//       published: true,
+//       status: 'published',
 //     },
 //     select: {
 //       slug: true,
@@ -155,7 +155,7 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
     try {
       // Buscar todos os artigos direto do banco
       const articles = await prisma.article.findMany({
-        where: { published: true },
+        where: { status: 'published' },
         include: {
           author: {
             select: {

@@ -30,7 +30,7 @@ export async function GET(request: Request) {
     // Buscar artigos publicados do banco de dados
     const articles = await prisma.article.findMany({
       where: {
-        published: true,
+        status: 'published',
         ...(category && category !== 'all' ? {
           category: {
             equals: category.toLowerCase()

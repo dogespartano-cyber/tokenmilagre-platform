@@ -595,7 +595,7 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
           type: contentType, // GARANTIR que o tipo seja enviado
           tags: tagsToSend,
           factCheckSources: citationsToSend,
-          published: true
+          status: 'published'
         };
 
         // Campos específicos para recursos

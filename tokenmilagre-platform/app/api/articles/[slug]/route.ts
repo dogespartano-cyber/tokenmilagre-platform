@@ -41,12 +41,28 @@ export async function GET(
             email: true,
             role: true
           }
+        },
+        category: {
+          select: {
+            name: true,
+            slug: true
+          }
+        },
+        tags: {
+          include: {
+            tag: {
+              select: {
+                name: true
+              }
+            }
+          }
         }
       }
     });
 
     if (article) {
       // Retornar artigo do banco
+      const tagNames = article.tags.map(at => at.tag.name);
       const formattedArticle: NewsItem = {
         id: article.id,
         slug: article.slug,
@@ -57,9 +73,9 @@ export async function GET(
         source: '$MILAGRE Research',
         sources: ['$MILAGRE Research'],
         publishedAt: article.createdAt.toISOString(),
-        category: [article.category.charAt(0).toUpperCase() + article.category.slice(1)],
+        category: [article.category.name.charAt(0).toUpperCase() + article.category.name.slice(1)],
         sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
-        keywords: JSON.parse(article.tags || '[]'),
+        keywords: tagNames,
         factChecked: true,
         lastVerified: article.updatedAt.toISOString(),
       };
