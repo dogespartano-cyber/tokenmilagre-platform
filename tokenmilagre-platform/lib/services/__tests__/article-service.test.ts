@@ -54,11 +54,11 @@ describe('ArticleService', () => {
     title: 'Bitcoin Atinge US$ 100 mil em Marco Histórico',
     slug: 'bitcoin-atinge-us-100-mil',
     content: 'Lorem ipsum dolor sit amet. '.repeat(50), // >100 chars
-    type: 'NEWS' as const,
+    type: 'news' as const,
     categoryId: mockCategoryId,
     authorId: mockUserId,
     tagIds: [mockTagId],
-    status: 'DRAFT' as const,
+    status: 'draft' as const,
   }
 
   const mockArticle = {
@@ -297,11 +297,11 @@ describe('ArticleService', () => {
       prismaMock.article.count.mockResolvedValue(1)
       prismaMock.article.findMany.mockResolvedValue([mockArticle] as any)
 
-      await service.list({ page: 1, limit: 10, type: 'NEWS' })
+      await service.list({ page: 1, limit: 10, type: 'news' })
 
       expect(prismaMock.article.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
-          where: expect.objectContaining({ type: 'NEWS' }),
+          where: expect.objectContaining({ type: 'news' }),
         })
       )
     })
@@ -310,11 +310,11 @@ describe('ArticleService', () => {
       prismaMock.article.count.mockResolvedValue(1)
       prismaMock.article.findMany.mockResolvedValue([mockArticle] as any)
 
-      await service.list({ page: 1, limit: 10, status: 'PUBLISHED' })
+      await service.list({ page: 1, limit: 10, status: 'published' })
 
       expect(prismaMock.article.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
-          where: expect.objectContaining({ status: 'PUBLISHED' }),
+          where: expect.objectContaining({ status: 'published' }),
         })
       )
     })
@@ -565,7 +565,7 @@ describe('ArticleService', () => {
           where: { id: mockArticleId },
           data: expect.objectContaining({
             deletedAt: null,
-            status: 'DRAFT',
+            status: 'draft',
           }),
         })
       )
@@ -688,8 +688,8 @@ describe('ArticleService', () => {
 
       prismaMock.article.groupBy
         .mockResolvedValueOnce([
-          { type: 'NEWS', _count: 60 },
-          { type: 'EDUCATIONAL', _count: 40 },
+          { type: 'news', _count: 60 },
+          { type: 'educational', _count: 40 },
         ] as any)
         .mockResolvedValueOnce([
           { categoryId: 'cat-1', _count: 70 },
