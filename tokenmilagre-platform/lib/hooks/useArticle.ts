@@ -33,7 +33,9 @@
 
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query'
 import { articleKeys } from './query-keys'
-import type { ArticleWithRelations } from '@/lib/services/article-service'
+
+// TODO: Import from proper type when schema-v2 is migrated
+type ArticleWithRelations = any
 
 /**
  * Fetches article by ID from API v2

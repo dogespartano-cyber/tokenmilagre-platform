@@ -36,7 +36,7 @@
 
 import { useMutation, useQueryClient, type UseMutationOptions } from '@tanstack/react-query'
 import { articleKeys } from './query-keys'
-import type { BulkArticleOperation } from '@/lib/services/article-service'
+import type { BulkArticleOperation } from '@/lib/schemas/article-schemas'
 
 /**
  * Bulk operation response
@@ -91,7 +91,7 @@ export function useBulkOperation(options: UseBulkOperationOptions = {}) {
   return useMutation<BulkOperationResponse, Error, BulkArticleOperation>({
     mutationFn: bulkOperation,
 
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data) => {
       // Invalidate all affected article details
       data.articleIds.forEach((id) => {
         queryClient.invalidateQueries({ queryKey: articleKeys.detail(id) })
@@ -102,9 +102,6 @@ export function useBulkOperation(options: UseBulkOperationOptions = {}) {
 
       // Invalidate stats (counts changed)
       queryClient.invalidateQueries({ queryKey: articleKeys.stats() })
-
-      // Call user's onSuccess if provided
-      options.onSuccess?.(data, variables, context)
     },
 
     ...options,

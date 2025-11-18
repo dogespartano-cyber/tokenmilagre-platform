@@ -121,12 +121,12 @@ export class ArticleListPage {
 
   async getArticleTitle(index: number): Promise<string> {
     const titleLocator = this.articleCards.nth(index).locator('[data-testid="article-title"]')
-    return titleLocator.textContent() || ''
+    return (await titleLocator.textContent()) || ''
   }
 
   async getArticleStatus(index: number): Promise<string> {
     const statusLocator = this.articleCards.nth(index).locator('[data-testid="article-status"]')
-    return statusLocator.textContent() || ''
+    return (await statusLocator.textContent()) || ''
   }
 
   async clickCreateButton() {

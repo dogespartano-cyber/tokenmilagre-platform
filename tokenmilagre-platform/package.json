@@ -29,6 +29,8 @@
     "@prisma/client": "^6.19.0",
     "@sentry/nextjs": "^10.21.0",
     "@solana/web3.js": "^1.98.4",
+    "@tanstack/react-query": "^5.90.10",
+    "@tanstack/react-query-devtools": "^5.90.2",
     "@tanstack/react-table": "^8.21.3",
     "@token-icons/react": "^2.13.0",
     "@types/dompurify": "^3.0.5",

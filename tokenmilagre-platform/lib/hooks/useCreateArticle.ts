@@ -35,7 +35,10 @@
 
 import { useMutation, useQueryClient, type UseMutationOptions } from '@tanstack/react-query'
 import { articleKeys } from './query-keys'
-import type { ArticleCreateInput, ArticleWithRelations } from '@/lib/services/article-service'
+import type { ArticleCreateInput } from '@/lib/schemas/article-schemas'
+
+// TODO: Import from proper type when schema-v2 is migrated
+type ArticleWithRelations = any
 
 /**
  * Creates article via API v2
@@ -123,12 +126,9 @@ export function useCreateArticle(options: UseCreateArticleOptions = {}) {
       queryClient.invalidateQueries({ queryKey: articleKeys.stats() })
     },
 
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data) => {
       // Set the newly created article in cache
       queryClient.setQueryData(articleKeys.detail(data.id), data)
-
-      // Call user's onSuccess if provided
-      options.onSuccess?.(data, variables, context)
     },
 
     ...options,

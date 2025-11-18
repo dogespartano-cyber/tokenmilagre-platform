@@ -155,11 +155,11 @@ export class ArticleService {
           slug: validated.slug,
           content: sanitizedContent,
           excerpt: validated.excerpt,
-          coverImage: validated.coverImage as Prisma.InputJsonValue,
+          coverImage: validated.coverImage as any, // TODO: Fix when schema-v2 migrated
           type: validated.type,
-          status: validated.status,
+          status: validated.status as any, // TODO: Fix when schema-v2 migrated
           readTime,
-          seo: validated.seo as Prisma.InputJsonValue,
+          seo: validated.seo as any, // TODO: Fix when schema-v2 migrated
           publishedAt: validated.publishedAt,
           featuredUntil: validated.featuredUntil,
           categoryId: validated.categoryId,

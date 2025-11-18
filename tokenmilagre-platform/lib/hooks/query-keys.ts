@@ -17,7 +17,7 @@
  * ```
  */
 
-import type { ArticleQuery } from '@/lib/services/article-service'
+import type { ArticleQuery } from '@/lib/schemas/article-schemas'
 
 /**
  * Article query keys factory

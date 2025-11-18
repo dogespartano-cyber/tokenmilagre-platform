@@ -31,7 +31,9 @@
 
 import { useMutation, useQueryClient, type UseMutationOptions } from '@tanstack/react-query'
 import { articleKeys } from './query-keys'
-import type { ArticleWithRelations } from '@/lib/services/article-service'
+
+// TODO: Import from proper type when schema-v2 is migrated
+type ArticleWithRelations = any
 
 /**
  * Restores article via API v2
@@ -74,7 +76,7 @@ export function useRestoreArticle(options: UseRestoreArticleOptions = {}) {
   return useMutation<ArticleWithRelations, Error, string>({
     mutationFn: restoreArticle,
 
-    onSuccess: (data, id, context) => {
+    onSuccess: (data, id) => {
       // Set restored article in cache
       queryClient.setQueryData(articleKeys.detail(id), data)
 
@@ -83,9 +85,6 @@ export function useRestoreArticle(options: UseRestoreArticleOptions = {}) {
 
       // Invalidate stats (counts changed)
       queryClient.invalidateQueries({ queryKey: articleKeys.stats() })
-
-      // Call user's onSuccess if provided
-      options.onSuccess?.(data, id, context)
     },
 
     ...options,
