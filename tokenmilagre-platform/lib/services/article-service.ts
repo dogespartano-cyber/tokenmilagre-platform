@@ -192,7 +192,8 @@ export class ArticleService {
           authorId: validated.authorId,
           ...(validated.categoryId && { categoryId: validated.categoryId }),
           readTime: `${readTime} min`,
-          publishedAt: validated.publishedAt,
+          // TEMP: publishedAt não existe no DB
+          // publishedAt: validated.publishedAt,
           coverImage: validated.coverImage?.url,
           coverImageAlt: validated.coverImage?.alt,
           // Note: seo field not present in schema v2
@@ -471,7 +472,8 @@ export class ArticleService {
         ...(validated.categoryId && { categoryId: validated.categoryId }),
         ...(readTime && { readTime }),
         // Note: seo field not present in schema v2
-        ...(validated.publishedAt !== undefined && { publishedAt: validated.publishedAt }),
+        // TEMP: publishedAt não existe no DB
+        // ...(validated.publishedAt !== undefined && { publishedAt: validated.publishedAt }),
         updatedAt: new Date(),
       }
 
@@ -671,7 +673,8 @@ export class ArticleService {
           case 'publish':
             const publishResult = await tx.article.updateMany({
               where: { id: { in: operation.articleIds }, deletedAt: null },
-              data: { status: 'published', publishedAt: new Date() },
+              // TEMP: publishedAt não existe no DB
+              data: { status: 'published' /* , publishedAt: new Date() */ },
             })
             count = publishResult.count
             break
