@@ -215,12 +215,12 @@ model Article {
   coverImageAlt String?
 
   // Timestamps
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  // TEMP: publishedAt não existe no DB atual
-  // publishedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   deletedAt DateTime? // Soft delete
-  // @@index([publishedAt])
+
+  // Índices compostos para queries combinadas
 
   @@index([slug])
   @@index([authorId])
@@ -228,8 +228,6 @@ model Article {
   @@index([type])
   @@index([status])
   @@index([deletedAt])
-  // Índices compostos para queries combinadas
-  // @@index([type, status, publishedAt])
   @@index([type, categoryId, status])
   @@index([authorId, status])
   @@index([status, createdAt])

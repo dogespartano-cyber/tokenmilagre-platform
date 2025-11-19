@@ -84,7 +84,7 @@ export async function GET(
         url: `/dashboard/noticias/${article.slug}`,
         source: '$MILAGRE Research',
         sources: ['$MILAGRE Research'],
-        publishedAt: (article.publishedAt || article.createdAt).toISOString(),
+        publishedAt: article.createdAt.toISOString(),
         category: article.category ? [article.category.name] : ['Sem Categoria'],
         sentiment: 'neutral', // Valor padrão (campo removido do schema v2)
         keywords: article.tags.map((at) => at.tag.slug),
@@ -256,7 +256,7 @@ export async function PATCH(
     if (body.published !== undefined) {
       updateData.status = body.published ? 'published' : 'draft';
       if (body.published) {
-        updateData.publishedAt = new Date();
+
       }
     }
 

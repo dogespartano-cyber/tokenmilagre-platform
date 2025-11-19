@@ -16,9 +16,6 @@
     "db:studio": "npx prisma studio",
     "watch": "node scripts/watch-articles.js"
   },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
-  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",

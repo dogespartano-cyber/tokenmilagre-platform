@@ -156,22 +156,10 @@ export const articleCreateSchema = z
     seo: articleSEOSchema.optional(),
 
     // Publishing
-    publishedAt: z.date().optional(),
+
     featuredUntil: z.date().optional(),
   })
-  .refine(
-    (data) => {
-      // If status is published, publishedAt must be set
-      if (data.status === 'published' && !data.publishedAt) {
-        return false
-      }
-      return true
-    },
-    {
-      message: 'Artigos publicados devem ter data de publicação',
-      path: ['publishedAt'],
-    }
-  )
+
   .refine(
     (data) => {
       // If featuredUntil is set, it must be in the future
@@ -211,22 +199,10 @@ export const articleUpdateSchema = z
     seo: articleSEOSchema.optional(),
 
     // Publishing
-    publishedAt: z.date().optional().nullable(),
+
     featuredUntil: z.date().optional().nullable(),
   })
-  .refine(
-    (data) => {
-      // If status is being set to published, must have publishedAt
-      if (data.status === 'published' && data.publishedAt === null) {
-        return false
-      }
-      return true
-    },
-    {
-      message: 'Artigos publicados devem ter data de publicação',
-      path: ['publishedAt'],
-    }
-  )
+
 
 /**
  * Article query/filter schema
@@ -248,7 +224,7 @@ export const articleQuerySchema = z.object({
   search: z.string().max(200).optional(),
 
   // Sorting
-  sortBy: z.enum(['createdAt', 'publishedAt', 'updatedAt', 'title', 'readTime']).default('createdAt'),
+  sortBy: z.enum(['createdAt', 'updatedAt', 'title', 'readTime']).default('createdAt'),
   sortOrder: z.enum(['asc', 'desc']).default('desc'),
 
   // Flags

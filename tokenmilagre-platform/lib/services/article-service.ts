@@ -192,47 +192,46 @@ export class ArticleService {
           authorId: validated.authorId,
           ...(validated.categoryId && { categoryId: validated.categoryId }),
           readTime: `${readTime} min`,
-          // TEMP: publishedAt não existe no DB
-          // publishedAt: validated.publishedAt,
+
           coverImage: validated.coverImage?.url,
           coverImageAlt: validated.coverImage?.alt,
           // Note: seo field not present in schema v2
           // Create tags relationship
           ...(validated.tagIds && validated.tagIds.length > 0
             ? {
-                tags: {
-                  create: validated.tagIds.map((tagId) => ({
-                    tagId,
-                  })),
-                },
-              }
+              tags: {
+                create: validated.tagIds.map((tagId) => ({
+                  tagId,
+                })),
+              },
+            }
             : {}),
           // Create citations if provided
           ...(validated.citations && validated.citations.length > 0
             ? {
-                citations: {
-                  create: validated.citations.map((citation, index) => {
-                    const normalized = validationService.normalizeCitation(citation)
-                    return {
-                      url: normalized.url,
-                      title: normalized.title,
-                      domain: normalized.domain,
-                      order: citation.order ?? index,
-                      verified: citation.verified ?? false,
-                    }
-                  }),
-                },
-              }
+              citations: {
+                create: validated.citations.map((citation, index) => {
+                  const normalized = validationService.normalizeCitation(citation)
+                  return {
+                    url: normalized.url,
+                    title: normalized.title,
+                    domain: normalized.domain,
+                    order: citation.order ?? index,
+                    verified: citation.verified ?? false,
+                  }
+                }),
+              },
+            }
             : {}),
           // Create related articles if provided
           ...(validated.relatedArticleIds && validated.relatedArticleIds.length > 0
             ? {
-                relatedFrom: {
-                  create: validated.relatedArticleIds.map((relatedId) => ({
-                    toArticleId: relatedId,
-                  })),
-                },
-              }
+              relatedFrom: {
+                create: validated.relatedArticleIds.map((relatedId) => ({
+                  toArticleId: relatedId,
+                })),
+              },
+            }
             : {}),
         },
         include: {
@@ -472,8 +471,7 @@ export class ArticleService {
         ...(validated.categoryId && { categoryId: validated.categoryId }),
         ...(readTime && { readTime }),
         // Note: seo field not present in schema v2
-        // TEMP: publishedAt não existe no DB
-        // ...(validated.publishedAt !== undefined && { publishedAt: validated.publishedAt }),
+
         updatedAt: new Date(),
       }
 
@@ -673,8 +671,7 @@ export class ArticleService {
           case 'publish':
             const publishResult = await tx.article.updateMany({
               where: { id: { in: operation.articleIds }, deletedAt: null },
-              // TEMP: publishedAt não existe no DB
-              data: { status: 'published' /* , publishedAt: new Date() */ },
+              data: { status: 'published' },
             })
             count = publishResult.count
             break

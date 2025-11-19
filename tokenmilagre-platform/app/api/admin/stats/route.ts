@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
         where: {
           status: 'published',
           deletedAt: null,
-          publishedAt: {
+          updatedAt: {
             gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // Últimos 7 dias
           },
         },

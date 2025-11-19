@@ -184,7 +184,6 @@ export function usePublishArticle(options: UseUpdateArticleOptions = {}) {
         id,
         data: {
           status: 'published',
-          publishedAt: new Date(),
         },
       })
     },
@@ -193,7 +192,6 @@ export function usePublishArticle(options: UseUpdateArticleOptions = {}) {
         id,
         data: {
           status: 'published',
-          publishedAt: new Date(),
         },
       })
     },
