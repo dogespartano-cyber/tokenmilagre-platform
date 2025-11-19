@@ -240,7 +240,7 @@ export class PerplexityAdapter {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = '';
-      let totalTokens = 0;
+      const totalTokens = 0;
 
       try {
         while (true) {
