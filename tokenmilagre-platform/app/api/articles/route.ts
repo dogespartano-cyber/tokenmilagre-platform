@@ -11,17 +11,11 @@ export const dynamic = 'force-dynamic';
 // GET /api/articles - Listar artigos com paginação
 export async function GET(request: NextRequest) {
   try {
-    // Debug logging
-    console.log('[DEBUG] GET /api/articles called');
-    console.log('[DEBUG] DATABASE_URL configured:', !!process.env.DATABASE_URL);
-
     const searchParams = request.nextUrl.searchParams;
     const categorySlug = searchParams.get('category');
     const published = searchParams.get('published');
     const type = searchParams.get('type');
     const query = searchParams.get('query'); // Busca por texto
-
-    console.log('[DEBUG] Query params:', { type, categorySlug, published, query });
 
     // Paginação
     const page = parseInt(searchParams.get('page') || '1');
@@ -71,12 +65,9 @@ export async function GET(request: NextRequest) {
     }
 
     // Buscar total de artigos (para calcular hasMore)
-    console.log('[DEBUG] Counting articles with where:', JSON.stringify(where));
     const total = await prisma.article.count({ where });
-    console.log('[DEBUG] Total articles found:', total);
 
     // Buscar artigos com paginação
-    console.log('[DEBUG] Fetching articles...');
     const articles = await prisma.article.findMany({
       where,
       select: {
@@ -126,10 +117,8 @@ export async function GET(request: NextRequest) {
       skip,
       take: limit,
     });
-    console.log('[DEBUG] Articles fetched:', articles.length);
 
     // Transformar para formato compatível com NewsItem ou EducationItem (mantém compatibilidade de API)
-    console.log('[DEBUG] Formatting articles...');
     const formattedArticles = articles.map((article) => {
       const baseData = {
         id: article.id,
@@ -174,11 +163,9 @@ export async function GET(request: NextRequest) {
     });
 
     // Calcular metadados de paginação
-    console.log('[DEBUG] Formatted articles count:', formattedArticles.length);
     const totalPages = Math.ceil(total / limit);
     const hasMore = page < totalPages;
 
-    console.log('[DEBUG] Returning response...');
     return NextResponse.json({
       success: true,
       data: formattedArticles,
@@ -192,17 +179,9 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('[ERROR] Erro ao buscar artigos:', error);
-    console.error('[ERROR] Error name:', error instanceof Error ? error.name : 'Unknown');
-    console.error('[ERROR] Error message:', error instanceof Error ? error.message : 'Unknown');
-    console.error('[ERROR] Error stack:', error instanceof Error ? error.stack : 'No stack trace');
+    console.error('Erro ao buscar artigos:', error);
     return NextResponse.json(
-      {
-        success: false,
-        error: 'Erro ao buscar artigos',
-        details: error instanceof Error ? error.message : 'Unknown error',
-        stack: process.env.NODE_ENV !== 'production' ? (error instanceof Error ? error.stack : undefined) : undefined
-      },
+      { success: false, error: 'Erro ao buscar artigos' },
       { status: 500 }
     );
   }
