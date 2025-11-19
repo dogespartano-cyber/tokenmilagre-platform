@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
         readTime: true,
         coverImage: true,
         coverImageAlt: true,
-        publishedAt: true,
+        // publishedAt: true, // TEMP: Coluna não existe no DB
         createdAt: true,
         updatedAt: true,
         category: {
@@ -137,7 +137,7 @@ export async function GET(request: NextRequest) {
         title: article.title,
         summary: article.excerpt || '',
         content: article.content,
-        publishedAt: (article.publishedAt || article.createdAt).toISOString(),
+        publishedAt: article.createdAt.toISOString(), // TEMP: publishedAt não existe no DB
         author: article.author.name || article.author.email,
         coverImage: article.coverImage || undefined,
         coverImageAlt: article.coverImageAlt || undefined,
