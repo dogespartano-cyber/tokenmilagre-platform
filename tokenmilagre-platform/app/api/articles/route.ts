@@ -24,9 +24,9 @@ export async function GET(request: NextRequest) {
     // Filtrar por busca de texto (título, excerpt, conteúdo, tags)
     if (query) {
       where.OR = [
-        { title: { contains: query, mode: 'insensitive' } },
-        { excerpt: { contains: query, mode: 'insensitive' } },
-        { content: { contains: query, mode: 'insensitive' } },
+        { title: { contains: query } },
+        { excerpt: { contains: query } },
+        { content: { contains: query } },
         { tags: { contains: query } }
       ];
     }
