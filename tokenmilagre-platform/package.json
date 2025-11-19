@@ -8,13 +8,22 @@
     "start": "next start",
     "postinstall": "prisma generate",
     "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "type-check": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --coverage --maxWorkers=2",
     "db:seed": "tsx prisma/seed.ts",
     "db:push": "npx prisma db push",
     "db:studio": "npx prisma studio",
-    "watch": "node scripts/watch-articles.js"
+    "db:validate": "npx prisma validate",
+    "watch": "node scripts/watch-articles.js",
+    "check:schema": "tsx scripts/quality/check-schema-integrity.ts",
+    "check:all": "./scripts/quality/run-all-checks.sh",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "prepare": "husky install || true"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
