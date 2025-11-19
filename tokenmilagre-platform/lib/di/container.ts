@@ -26,6 +26,8 @@ import { container as tsyringeContainer } from 'tsyringe'
 import { LoggerService } from '@/lib/services/logger-service'
 import { ValidationService } from '@/lib/services/validation-service'
 import { ArticleService } from '@/lib/services/article-service'
+import { ResourceService } from '@/lib/services/resource-service'
+import { UserService } from '@/lib/services/user-service'
 
 /**
  * Service tokens for dependency injection
@@ -35,6 +37,8 @@ export const TOKENS = {
   LoggerService: 'LoggerService',
   ValidationService: 'ValidationService',
   ArticleService: 'ArticleService',
+  ResourceService: 'ResourceService',
+  UserService: 'UserService',
 } as const
 
 /**
@@ -52,10 +56,13 @@ export function initializeContainer(): void {
   tsyringeContainer.registerSingleton(TOKENS.ValidationService, ValidationService)
 
   // Register ArticleService as singleton
-  // Note: ArticleService depends on LoggerService and ValidationService,
-  // but we're using the global instances for now (logger, validationService)
-  // In the future, we can refactor to inject dependencies via constructor
   tsyringeContainer.registerSingleton(TOKENS.ArticleService, ArticleService)
+
+  // Register ResourceService as singleton
+  tsyringeContainer.registerSingleton(TOKENS.ResourceService, ResourceService)
+
+  // Register UserService as singleton
+  tsyringeContainer.registerSingleton(TOKENS.UserService, UserService)
 }
 
 /**
@@ -88,6 +95,20 @@ export class ServiceLocator {
    */
   static getArticle(): ArticleService {
     return container.resolve(TOKENS.ArticleService)
+  }
+
+  /**
+   * Gets ResourceService instance
+   */
+  static getResource(): ResourceService {
+    return container.resolve(TOKENS.ResourceService)
+  }
+
+  /**
+   * Gets UserService instance
+   */
+  static getUser(): UserService {
+    return container.resolve(TOKENS.UserService)
   }
 
   /**
