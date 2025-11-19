@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import fs from 'fs';
+import path from 'path';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,6 +16,15 @@ export async function GET() {
     // Test 3: Count articles
     const articleCount = await prisma.article.count();
 
+    // Test 4: Check schema file content
+    const schemaPath = path.join(process.cwd(), 'lib', 'generated', 'prisma', 'schema.prisma');
+    const schemaExists = fs.existsSync(schemaPath);
+    let hasPublishedAt = false;
+    if (schemaExists) {
+      const schemaContent = fs.readFileSync(schemaPath, 'utf-8');
+      hasPublishedAt = schemaContent.includes('publishedAt DateTime');
+    }
+
     return NextResponse.json({
       success: true,
       checks: {
@@ -21,6 +32,9 @@ export async function GET() {
         databaseConnection: 'OK',
         articleCount,
         prismaClientPath: require.resolve('@/lib/generated/prisma'),
+        schemaPath,
+        schemaExists,
+        schemaHasPublishedAt: hasPublishedAt,
       },
       timestamp: new Date().toISOString(),
     });
