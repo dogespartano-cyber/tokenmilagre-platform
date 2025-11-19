@@ -391,35 +391,6 @@ exports.Role = exports.$Enums.Role = {
   VIEWER: 'VIEWER'
 };
 
-exports.ArticleType = exports.$Enums.ArticleType = {
-  news: 'news',
-  educational: 'educational'
-};
-
-exports.ArticleStatus = exports.$Enums.ArticleStatus = {
-  draft: 'draft',
-  published: 'published',
-  archived: 'archived'
-};
-
-exports.Sentiment = exports.$Enums.Sentiment = {
-  positive: 'positive',
-  neutral: 'neutral',
-  negative: 'negative'
-};
-
-exports.Level = exports.$Enums.Level = {
-  iniciante: 'iniciante',
-  intermediario: 'intermediario',
-  avancado: 'avancado'
-};
-
-exports.ContentType = exports.$Enums.ContentType = {
-  artigo: 'artigo',
-  tutorial: 'tutorial',
-  curso: 'curso'
-};
-
 exports.StoryCategory = exports.$Enums.StoryCategory = {
   transformation: 'transformation',
   social_project: 'social_project',

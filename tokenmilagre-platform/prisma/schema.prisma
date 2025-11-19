@@ -196,8 +196,9 @@ model Article {
   content     String        @db.Text
 
   // Tipo e Status
-  type        ArticleType   @default(news)
-  status      ArticleStatus @default(draft)
+  // TEMP: Usando String ao invés de Enum devido incompatibilidade DB
+  type        String        @default("news")
+  status      String        @default("draft")
 
   // Metadados
   readTime    String?
@@ -219,7 +220,7 @@ model Article {
   relatedTo   ArticleRelation[] @relation("ArticleTo")
 
   // Campos específicos de NOTÍCIAS
-  sentiment   Sentiment?
+  sentiment   String?  // TEMP: Usando String ao invés de Enum
 
   // Fact-checking
   factCheckScore    Float?
@@ -228,8 +229,8 @@ model Article {
   citations         Citation[]
 
   // Campos específicos de EDUCACIONAIS
-  level       Level?
-  contentType ContentType?
+  level       String?  // TEMP: Usando String ao invés de Enum
+  contentType String?  // TEMP: Usando String ao invés de Enum
 
   // Segurança (Fase 1 - placeholder)
   warningLevel      String?

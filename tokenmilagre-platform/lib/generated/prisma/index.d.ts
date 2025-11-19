@@ -9401,18 +9401,18 @@ export namespace Prisma {
     title: string | null
     excerpt: string | null
     content: string | null
-    type: $Enums.ArticleType | null
-    status: $Enums.ArticleStatus | null
+    type: string | null
+    status: string | null
     readTime: string | null
     viewCount: number | null
     authorId: string | null
     categoryId: string | null
-    sentiment: $Enums.Sentiment | null
+    sentiment: string | null
     factCheckScore: number | null
     factCheckDate: Date | null
     factCheckStatus: string | null
-    level: $Enums.Level | null
-    contentType: $Enums.ContentType | null
+    level: string | null
+    contentType: string | null
     warningLevel: string | null
     courseSequence: number | null
     projectHighlight: boolean | null
@@ -9430,18 +9430,18 @@ export namespace Prisma {
     title: string | null
     excerpt: string | null
     content: string | null
-    type: $Enums.ArticleType | null
-    status: $Enums.ArticleStatus | null
+    type: string | null
+    status: string | null
     readTime: string | null
     viewCount: number | null
     authorId: string | null
     categoryId: string | null
-    sentiment: $Enums.Sentiment | null
+    sentiment: string | null
     factCheckScore: number | null
     factCheckDate: Date | null
     factCheckStatus: string | null
-    level: $Enums.Level | null
-    contentType: $Enums.ContentType | null
+    level: string | null
+    contentType: string | null
     warningLevel: string | null
     courseSequence: number | null
     projectHighlight: boolean | null
@@ -9676,18 +9676,18 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type: $Enums.ArticleType
-    status: $Enums.ArticleStatus
+    type: string
+    status: string
     readTime: string | null
     viewCount: number
     authorId: string
     categoryId: string | null
-    sentiment: $Enums.Sentiment | null
+    sentiment: string | null
     factCheckScore: number | null
     factCheckDate: Date | null
     factCheckStatus: string | null
-    level: $Enums.Level | null
-    contentType: $Enums.ContentType | null
+    level: string | null
+    contentType: string | null
     warningLevel: string | null
     courseSequence: number | null
     projectHighlight: boolean
@@ -9880,18 +9880,18 @@ export namespace Prisma {
       title: string
       excerpt: string
       content: string
-      type: $Enums.ArticleType
-      status: $Enums.ArticleStatus
+      type: string
+      status: string
       readTime: string | null
       viewCount: number
       authorId: string
       categoryId: string | null
-      sentiment: $Enums.Sentiment | null
+      sentiment: string | null
       factCheckScore: number | null
       factCheckDate: Date | null
       factCheckStatus: string | null
-      level: $Enums.Level | null
-      contentType: $Enums.ContentType | null
+      level: string | null
+      contentType: string | null
       warningLevel: string | null
       courseSequence: number | null
       projectHighlight: boolean
@@ -10335,18 +10335,18 @@ export namespace Prisma {
     readonly title: FieldRef<"Article", 'String'>
     readonly excerpt: FieldRef<"Article", 'String'>
     readonly content: FieldRef<"Article", 'String'>
-    readonly type: FieldRef<"Article", 'ArticleType'>
-    readonly status: FieldRef<"Article", 'ArticleStatus'>
+    readonly type: FieldRef<"Article", 'String'>
+    readonly status: FieldRef<"Article", 'String'>
     readonly readTime: FieldRef<"Article", 'String'>
     readonly viewCount: FieldRef<"Article", 'Int'>
     readonly authorId: FieldRef<"Article", 'String'>
     readonly categoryId: FieldRef<"Article", 'String'>
-    readonly sentiment: FieldRef<"Article", 'Sentiment'>
+    readonly sentiment: FieldRef<"Article", 'String'>
     readonly factCheckScore: FieldRef<"Article", 'Float'>
     readonly factCheckDate: FieldRef<"Article", 'DateTime'>
     readonly factCheckStatus: FieldRef<"Article", 'String'>
-    readonly level: FieldRef<"Article", 'Level'>
-    readonly contentType: FieldRef<"Article", 'ContentType'>
+    readonly level: FieldRef<"Article", 'String'>
+    readonly contentType: FieldRef<"Article", 'String'>
     readonly warningLevel: FieldRef<"Article", 'String'>
     readonly courseSequence: FieldRef<"Article", 'Int'>
     readonly projectHighlight: FieldRef<"Article", 'Boolean'>
@@ -21970,48 +21970,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'ArticleType'
-   */
-  export type EnumArticleTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ArticleType'>
-    
-
-
-  /**
-   * Reference to a field of type 'ArticleType[]'
-   */
-  export type ListEnumArticleTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ArticleType[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'ArticleStatus'
-   */
-  export type EnumArticleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ArticleStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'ArticleStatus[]'
-   */
-  export type ListEnumArticleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ArticleStatus[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Sentiment'
-   */
-  export type EnumSentimentFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Sentiment'>
-    
-
-
-  /**
-   * Reference to a field of type 'Sentiment[]'
-   */
-  export type ListEnumSentimentFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Sentiment[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -22022,34 +21980,6 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Level'
-   */
-  export type EnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Level'>
-    
-
-
-  /**
-   * Reference to a field of type 'Level[]'
-   */
-  export type ListEnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Level[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'ContentType'
-   */
-  export type EnumContentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentType'>
-    
-
-
-  /**
-   * Reference to a field of type 'ContentType[]'
-   */
-  export type ListEnumContentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentType[]'>
     
 
 
@@ -22526,18 +22456,18 @@ export namespace Prisma {
     title?: StringFilter<"Article"> | string
     excerpt?: StringFilter<"Article"> | string
     content?: StringFilter<"Article"> | string
-    type?: EnumArticleTypeFilter<"Article"> | $Enums.ArticleType
-    status?: EnumArticleStatusFilter<"Article"> | $Enums.ArticleStatus
+    type?: StringFilter<"Article"> | string
+    status?: StringFilter<"Article"> | string
     readTime?: StringNullableFilter<"Article"> | string | null
     viewCount?: IntFilter<"Article"> | number
     authorId?: StringFilter<"Article"> | string
     categoryId?: StringNullableFilter<"Article"> | string | null
-    sentiment?: EnumSentimentNullableFilter<"Article"> | $Enums.Sentiment | null
+    sentiment?: StringNullableFilter<"Article"> | string | null
     factCheckScore?: FloatNullableFilter<"Article"> | number | null
     factCheckDate?: DateTimeNullableFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableFilter<"Article"> | string | null
-    level?: EnumLevelNullableFilter<"Article"> | $Enums.Level | null
-    contentType?: EnumContentTypeNullableFilter<"Article"> | $Enums.ContentType | null
+    level?: StringNullableFilter<"Article"> | string | null
+    contentType?: StringNullableFilter<"Article"> | string | null
     warningLevel?: StringNullableFilter<"Article"> | string | null
     courseSequence?: IntNullableFilter<"Article"> | number | null
     projectHighlight?: BoolFilter<"Article"> | boolean
@@ -22599,18 +22529,18 @@ export namespace Prisma {
     title?: StringFilter<"Article"> | string
     excerpt?: StringFilter<"Article"> | string
     content?: StringFilter<"Article"> | string
-    type?: EnumArticleTypeFilter<"Article"> | $Enums.ArticleType
-    status?: EnumArticleStatusFilter<"Article"> | $Enums.ArticleStatus
+    type?: StringFilter<"Article"> | string
+    status?: StringFilter<"Article"> | string
     readTime?: StringNullableFilter<"Article"> | string | null
     viewCount?: IntFilter<"Article"> | number
     authorId?: StringFilter<"Article"> | string
     categoryId?: StringNullableFilter<"Article"> | string | null
-    sentiment?: EnumSentimentNullableFilter<"Article"> | $Enums.Sentiment | null
+    sentiment?: StringNullableFilter<"Article"> | string | null
     factCheckScore?: FloatNullableFilter<"Article"> | number | null
     factCheckDate?: DateTimeNullableFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableFilter<"Article"> | string | null
-    level?: EnumLevelNullableFilter<"Article"> | $Enums.Level | null
-    contentType?: EnumContentTypeNullableFilter<"Article"> | $Enums.ContentType | null
+    level?: StringNullableFilter<"Article"> | string | null
+    contentType?: StringNullableFilter<"Article"> | string | null
     warningLevel?: StringNullableFilter<"Article"> | string | null
     courseSequence?: IntNullableFilter<"Article"> | number | null
     projectHighlight?: BoolFilter<"Article"> | boolean
@@ -22671,18 +22601,18 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Article"> | string
     excerpt?: StringWithAggregatesFilter<"Article"> | string
     content?: StringWithAggregatesFilter<"Article"> | string
-    type?: EnumArticleTypeWithAggregatesFilter<"Article"> | $Enums.ArticleType
-    status?: EnumArticleStatusWithAggregatesFilter<"Article"> | $Enums.ArticleStatus
+    type?: StringWithAggregatesFilter<"Article"> | string
+    status?: StringWithAggregatesFilter<"Article"> | string
     readTime?: StringNullableWithAggregatesFilter<"Article"> | string | null
     viewCount?: IntWithAggregatesFilter<"Article"> | number
     authorId?: StringWithAggregatesFilter<"Article"> | string
     categoryId?: StringNullableWithAggregatesFilter<"Article"> | string | null
-    sentiment?: EnumSentimentNullableWithAggregatesFilter<"Article"> | $Enums.Sentiment | null
+    sentiment?: StringNullableWithAggregatesFilter<"Article"> | string | null
     factCheckScore?: FloatNullableWithAggregatesFilter<"Article"> | number | null
     factCheckDate?: DateTimeNullableWithAggregatesFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableWithAggregatesFilter<"Article"> | string | null
-    level?: EnumLevelNullableWithAggregatesFilter<"Article"> | $Enums.Level | null
-    contentType?: EnumContentTypeNullableWithAggregatesFilter<"Article"> | $Enums.ContentType | null
+    level?: StringNullableWithAggregatesFilter<"Article"> | string | null
+    contentType?: StringNullableWithAggregatesFilter<"Article"> | string | null
     warningLevel?: StringNullableWithAggregatesFilter<"Article"> | string | null
     courseSequence?: IntNullableWithAggregatesFilter<"Article"> | number | null
     projectHighlight?: BoolWithAggregatesFilter<"Article"> | boolean
@@ -24109,16 +24039,16 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -24142,18 +24072,18 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
     authorId: string
     categoryId?: string | null
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -24175,16 +24105,16 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -24208,18 +24138,18 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
     authorId?: StringFieldUpdateOperationsInput | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -24241,18 +24171,18 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
     authorId: string
     categoryId?: string | null
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -24270,16 +24200,16 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -24297,18 +24227,18 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
     authorId?: StringFieldUpdateOperationsInput | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -25914,27 +25844,6 @@ export namespace Prisma {
     usageCount?: SortOrder
   }
 
-  export type EnumArticleTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleType | EnumArticleTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleTypeFilter<$PrismaModel> | $Enums.ArticleType
-  }
-
-  export type EnumArticleStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleStatus | EnumArticleStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleStatusFilter<$PrismaModel> | $Enums.ArticleStatus
-  }
-
-  export type EnumSentimentNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Sentiment | EnumSentimentFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumSentimentNullableFilter<$PrismaModel> | $Enums.Sentiment | null
-  }
-
   export type FloatNullableFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -25944,20 +25853,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type EnumLevelNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumLevelNullableFilter<$PrismaModel> | $Enums.Level | null
-  }
-
-  export type EnumContentTypeNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumContentTypeNullableFilter<$PrismaModel> | $Enums.ContentType | null
   }
 
   export type BoolFilter<$PrismaModel = never> = {
@@ -26084,36 +25979,6 @@ export namespace Prisma {
     courseSequence?: SortOrder
   }
 
-  export type EnumArticleTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleType | EnumArticleTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleTypeWithAggregatesFilter<$PrismaModel> | $Enums.ArticleType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumArticleTypeFilter<$PrismaModel>
-    _max?: NestedEnumArticleTypeFilter<$PrismaModel>
-  }
-
-  export type EnumArticleStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleStatus | EnumArticleStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleStatusWithAggregatesFilter<$PrismaModel> | $Enums.ArticleStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumArticleStatusFilter<$PrismaModel>
-    _max?: NestedEnumArticleStatusFilter<$PrismaModel>
-  }
-
-  export type EnumSentimentNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Sentiment | EnumSentimentFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumSentimentNullableWithAggregatesFilter<$PrismaModel> | $Enums.Sentiment | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumSentimentNullableFilter<$PrismaModel>
-    _max?: NestedEnumSentimentNullableFilter<$PrismaModel>
-  }
-
   export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -26128,26 +25993,6 @@ export namespace Prisma {
     _sum?: NestedFloatNullableFilter<$PrismaModel>
     _min?: NestedFloatNullableFilter<$PrismaModel>
     _max?: NestedFloatNullableFilter<$PrismaModel>
-  }
-
-  export type EnumLevelNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumLevelNullableWithAggregatesFilter<$PrismaModel> | $Enums.Level | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumLevelNullableFilter<$PrismaModel>
-    _max?: NestedEnumLevelNullableFilter<$PrismaModel>
-  }
-
-  export type EnumContentTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumContentTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.ContentType | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumContentTypeNullableFilter<$PrismaModel>
-    _max?: NestedEnumContentTypeNullableFilter<$PrismaModel>
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -27234,32 +27079,12 @@ export namespace Prisma {
     connect?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
   }
 
-  export type EnumArticleTypeFieldUpdateOperationsInput = {
-    set?: $Enums.ArticleType
-  }
-
-  export type EnumArticleStatusFieldUpdateOperationsInput = {
-    set?: $Enums.ArticleStatus
-  }
-
-  export type NullableEnumSentimentFieldUpdateOperationsInput = {
-    set?: $Enums.Sentiment | null
-  }
-
   export type NullableFloatFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type NullableEnumLevelFieldUpdateOperationsInput = {
-    set?: $Enums.Level | null
-  }
-
-  export type NullableEnumContentTypeFieldUpdateOperationsInput = {
-    set?: $Enums.ContentType | null
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -27705,74 +27530,9 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedEnumArticleTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleType | EnumArticleTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleTypeFilter<$PrismaModel> | $Enums.ArticleType
-  }
-
-  export type NestedEnumArticleStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleStatus | EnumArticleStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleStatusFilter<$PrismaModel> | $Enums.ArticleStatus
-  }
-
-  export type NestedEnumSentimentNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Sentiment | EnumSentimentFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumSentimentNullableFilter<$PrismaModel> | $Enums.Sentiment | null
-  }
-
-  export type NestedEnumLevelNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumLevelNullableFilter<$PrismaModel> | $Enums.Level | null
-  }
-
-  export type NestedEnumContentTypeNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumContentTypeNullableFilter<$PrismaModel> | $Enums.ContentType | null
-  }
-
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedEnumArticleTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleType | EnumArticleTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleType[] | ListEnumArticleTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleTypeWithAggregatesFilter<$PrismaModel> | $Enums.ArticleType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumArticleTypeFilter<$PrismaModel>
-    _max?: NestedEnumArticleTypeFilter<$PrismaModel>
-  }
-
-  export type NestedEnumArticleStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ArticleStatus | EnumArticleStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ArticleStatus[] | ListEnumArticleStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumArticleStatusWithAggregatesFilter<$PrismaModel> | $Enums.ArticleStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumArticleStatusFilter<$PrismaModel>
-    _max?: NestedEnumArticleStatusFilter<$PrismaModel>
-  }
-
-  export type NestedEnumSentimentNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Sentiment | EnumSentimentFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Sentiment[] | ListEnumSentimentFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumSentimentNullableWithAggregatesFilter<$PrismaModel> | $Enums.Sentiment | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumSentimentNullableFilter<$PrismaModel>
-    _max?: NestedEnumSentimentNullableFilter<$PrismaModel>
   }
 
   export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -27789,26 +27549,6 @@ export namespace Prisma {
     _sum?: NestedFloatNullableFilter<$PrismaModel>
     _min?: NestedFloatNullableFilter<$PrismaModel>
     _max?: NestedFloatNullableFilter<$PrismaModel>
-  }
-
-  export type NestedEnumLevelNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumLevelNullableWithAggregatesFilter<$PrismaModel> | $Enums.Level | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumLevelNullableFilter<$PrismaModel>
-    _max?: NestedEnumLevelNullableFilter<$PrismaModel>
-  }
-
-  export type NestedEnumContentTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumContentTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.ContentType | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumContentTypeNullableFilter<$PrismaModel>
-    _max?: NestedEnumContentTypeNullableFilter<$PrismaModel>
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -28078,16 +27818,16 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -28110,17 +27850,17 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
     categoryId?: string | null
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -28307,18 +28047,18 @@ export namespace Prisma {
     title?: StringFilter<"Article"> | string
     excerpt?: StringFilter<"Article"> | string
     content?: StringFilter<"Article"> | string
-    type?: EnumArticleTypeFilter<"Article"> | $Enums.ArticleType
-    status?: EnumArticleStatusFilter<"Article"> | $Enums.ArticleStatus
+    type?: StringFilter<"Article"> | string
+    status?: StringFilter<"Article"> | string
     readTime?: StringNullableFilter<"Article"> | string | null
     viewCount?: IntFilter<"Article"> | number
     authorId?: StringFilter<"Article"> | string
     categoryId?: StringNullableFilter<"Article"> | string | null
-    sentiment?: EnumSentimentNullableFilter<"Article"> | $Enums.Sentiment | null
+    sentiment?: StringNullableFilter<"Article"> | string | null
     factCheckScore?: FloatNullableFilter<"Article"> | number | null
     factCheckDate?: DateTimeNullableFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableFilter<"Article"> | string | null
-    level?: EnumLevelNullableFilter<"Article"> | $Enums.Level | null
-    contentType?: EnumContentTypeNullableFilter<"Article"> | $Enums.ContentType | null
+    level?: StringNullableFilter<"Article"> | string | null
+    contentType?: StringNullableFilter<"Article"> | string | null
     warningLevel?: StringNullableFilter<"Article"> | string | null
     courseSequence?: IntNullableFilter<"Article"> | number | null
     projectHighlight?: BoolFilter<"Article"> | boolean
@@ -28479,16 +28219,16 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -28511,17 +28251,17 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
     authorId: string
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -29039,16 +28779,16 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -29071,18 +28811,18 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
     authorId: string
     categoryId?: string | null
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -29142,16 +28882,16 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -29174,18 +28914,18 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
     authorId?: StringFieldUpdateOperationsInput | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -29235,16 +28975,16 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -29267,18 +29007,18 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
     authorId: string
     categoryId?: string | null
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -29304,16 +29044,16 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -29336,18 +29076,18 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
     authorId: string
     categoryId?: string | null
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -29384,16 +29124,16 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -29416,18 +29156,18 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
     authorId?: StringFieldUpdateOperationsInput | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -29459,16 +29199,16 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -29491,18 +29231,18 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
     authorId?: StringFieldUpdateOperationsInput | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -29523,16 +29263,16 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -29555,18 +29295,18 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
     authorId: string
     categoryId?: string | null
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -29603,16 +29343,16 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -29635,18 +29375,18 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
     authorId?: StringFieldUpdateOperationsInput | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -29863,17 +29603,17 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
     categoryId?: string | null
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -29979,16 +29719,16 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -30011,17 +29751,17 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -30043,17 +29783,17 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -30168,17 +29908,17 @@ export namespace Prisma {
     title: string
     excerpt: string
     content: string
-    type?: $Enums.ArticleType
-    status?: $Enums.ArticleStatus
+    type?: string
+    status?: string
     readTime?: string | null
     viewCount?: number
     authorId: string
-    sentiment?: $Enums.Sentiment | null
+    sentiment?: string | null
     factCheckScore?: number | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
-    level?: $Enums.Level | null
-    contentType?: $Enums.ContentType | null
+    level?: string | null
+    contentType?: string | null
     warningLevel?: string | null
     courseSequence?: number | null
     projectHighlight?: boolean
@@ -30239,16 +29979,16 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -30271,17 +30011,17 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
     authorId?: StringFieldUpdateOperationsInput | string
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean
@@ -30303,17 +30043,17 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     excerpt?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    type?: EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
-    status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
     viewCount?: IntFieldUpdateOperationsInput | number
     authorId?: StringFieldUpdateOperationsInput | string
-    sentiment?: NullableEnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment | null
+    sentiment?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    contentType?: NullableEnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
     warningLevel?: NullableStringFieldUpdateOperationsInput | string | null
     courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
     projectHighlight?: BoolFieldUpdateOperationsInput | boolean

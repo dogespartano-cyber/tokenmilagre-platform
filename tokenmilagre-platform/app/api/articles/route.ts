@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
 
     // Filtrar por tipo (news ou educational)
     if (type) {
-      where.type = type as 'news' | 'educational';
+      where.type = type.toLowerCase();
     }
 
     // Filtrar por categoria (precisa buscar Category por slug)
