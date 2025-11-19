@@ -14,7 +14,6 @@ import { ServiceLocator } from '@/lib/di/container'
 import { successResponse, errorResponse } from '@/lib/helpers/response-helpers'
 import { requireEditor } from '@/lib/helpers/auth-helpers'
 import { articleQueryInputCurrent, articleCreateInputCurrent } from '@/lib/schemas/article-schemas'
-import type { ArticleWithRelations } from '@/lib/services/article-service'
 
 /**
  * GET /api/articles - List articles with pagination and filters

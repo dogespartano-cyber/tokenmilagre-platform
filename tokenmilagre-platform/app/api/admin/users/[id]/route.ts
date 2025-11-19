@@ -2,8 +2,7 @@ import { NextRequest } from 'next/server';
 import { requireAdmin } from '@/lib/helpers/auth-helpers';
 import { successResponse, errorResponse, notFoundResponse } from '@/lib/helpers/response-helpers';
 import { ServiceLocator } from '@/lib/di/container';
-import { userUpdateSchema, roleEnum } from '@/lib/schemas/user-schemas';
-import { PASSWORD_CONSTRAINTS } from '@/lib/constants/validation';
+import { userUpdateSchema } from '@/lib/schemas/user-schemas';
 
 /**
  * PATCH /api/admin/users/[id]
