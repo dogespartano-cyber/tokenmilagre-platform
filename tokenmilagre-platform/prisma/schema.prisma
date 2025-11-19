@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -374,7 +374,7 @@ model CommunityStory {
   user         User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   title        String
-  content      String        @db.Text
+  content      String        
   category     StoryCategory // transformation | social_project | achievement
 
   likes        Int           @default(0)
@@ -397,8 +397,8 @@ model SocialProject {
   id              String          @id @default(cuid())
   slug            String          @unique
   name            String
-  description     String          @db.Text
-  longDescription String?         @db.Text
+  description     String          
+  longDescription String?         
 
   // Financiamento
   fundingGoal     Float
