@@ -23,35 +23,6 @@ enum Role {
   VIEWER
 }
 
-enum ArticleType {
-  news
-  educational
-}
-
-enum ArticleStatus {
-  draft
-  published
-  archived
-}
-
-enum Sentiment {
-  positive
-  neutral
-  negative
-}
-
-enum Level {
-  iniciante
-  intermediario
-  avancado
-}
-
-enum ContentType {
-  artigo
-  tutorial
-  curso
-}
-
 enum StoryCategory {
   transformation
   social_project

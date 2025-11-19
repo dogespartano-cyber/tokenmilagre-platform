@@ -107,50 +107,6 @@ export namespace $Enums {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
-export const ArticleType: {
-  news: 'news',
-  educational: 'educational'
-};
-
-export type ArticleType = (typeof ArticleType)[keyof typeof ArticleType]
-
-
-export const ArticleStatus: {
-  draft: 'draft',
-  published: 'published',
-  archived: 'archived'
-};
-
-export type ArticleStatus = (typeof ArticleStatus)[keyof typeof ArticleStatus]
-
-
-export const Sentiment: {
-  positive: 'positive',
-  neutral: 'neutral',
-  negative: 'negative'
-};
-
-export type Sentiment = (typeof Sentiment)[keyof typeof Sentiment]
-
-
-export const Level: {
-  iniciante: 'iniciante',
-  intermediario: 'intermediario',
-  avancado: 'avancado'
-};
-
-export type Level = (typeof Level)[keyof typeof Level]
-
-
-export const ContentType: {
-  artigo: 'artigo',
-  tutorial: 'tutorial',
-  curso: 'curso'
-};
-
-export type ContentType = (typeof ContentType)[keyof typeof ContentType]
-
-
 export const StoryCategory: {
   transformation: 'transformation',
   social_project: 'social_project',
@@ -164,26 +120,6 @@ export type StoryCategory = (typeof StoryCategory)[keyof typeof StoryCategory]
 export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
-
-export type ArticleType = $Enums.ArticleType
-
-export const ArticleType: typeof $Enums.ArticleType
-
-export type ArticleStatus = $Enums.ArticleStatus
-
-export const ArticleStatus: typeof $Enums.ArticleStatus
-
-export type Sentiment = $Enums.Sentiment
-
-export const Sentiment: typeof $Enums.Sentiment
-
-export type Level = $Enums.Level
-
-export const Level: typeof $Enums.Level
-
-export type ContentType = $Enums.ContentType
-
-export const ContentType: typeof $Enums.ContentType
 
 export type StoryCategory = $Enums.StoryCategory
 
