@@ -246,7 +246,7 @@ model Article {
   // Timestamps
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  publishedAt DateTime?
+
   deletedAt   DateTime? // Soft delete
 
   @@index([slug])
@@ -255,10 +255,10 @@ model Article {
   @@index([type])
   @@index([status])
   @@index([deletedAt])
-  @@index([publishedAt])
+
 
   // Índices compostos para queries combinadas
-  @@index([type, status, publishedAt])
+
   @@index([type, categoryId, status])
   @@index([authorId, status])
   @@index([status, createdAt])

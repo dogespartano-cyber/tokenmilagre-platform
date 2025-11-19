@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
         readTime: true,
         coverImage: true,
         coverImageAlt: true,
-        publishedAt: true,
+
         createdAt: true,
         updatedAt: true,
         category: {
@@ -137,7 +137,7 @@ export async function GET(request: NextRequest) {
         title: article.title,
         summary: article.excerpt || '',
         content: article.content,
-        publishedAt: (article.publishedAt || article.createdAt).toISOString(),
+        publishedAt: article.createdAt.toISOString(),
         author: article.author.name || article.author.email,
         coverImage: article.coverImage || undefined,
         coverImageAlt: article.coverImageAlt || undefined,
@@ -336,7 +336,7 @@ export async function POST(request: NextRequest) {
         readTime: readTime ? parseInt(readTime) : undefined,
         coverImage: coverImageData,
         citations: citationsData,
-        publishedAt: published ? new Date() : undefined,
+
       },
       session.user.id
     );

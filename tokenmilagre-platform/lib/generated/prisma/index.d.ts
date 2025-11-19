@@ -9420,7 +9420,6 @@ export namespace Prisma {
     coverImageAlt: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    publishedAt: Date | null
     deletedAt: Date | null
   }
 
@@ -9449,7 +9448,6 @@ export namespace Prisma {
     coverImageAlt: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    publishedAt: Date | null
     deletedAt: Date | null
   }
 
@@ -9478,7 +9476,6 @@ export namespace Prisma {
     coverImageAlt: number
     createdAt: number
     updatedAt: number
-    publishedAt: number
     deletedAt: number
     _all: number
   }
@@ -9521,7 +9518,6 @@ export namespace Prisma {
     coverImageAlt?: true
     createdAt?: true
     updatedAt?: true
-    publishedAt?: true
     deletedAt?: true
   }
 
@@ -9550,7 +9546,6 @@ export namespace Prisma {
     coverImageAlt?: true
     createdAt?: true
     updatedAt?: true
-    publishedAt?: true
     deletedAt?: true
   }
 
@@ -9579,7 +9574,6 @@ export namespace Prisma {
     coverImageAlt?: true
     createdAt?: true
     updatedAt?: true
-    publishedAt?: true
     deletedAt?: true
     _all?: true
   }
@@ -9695,7 +9689,6 @@ export namespace Prisma {
     coverImageAlt: string | null
     createdAt: Date
     updatedAt: Date
-    publishedAt: Date | null
     deletedAt: Date | null
     _count: ArticleCountAggregateOutputType | null
     _avg: ArticleAvgAggregateOutputType | null
@@ -9743,7 +9736,6 @@ export namespace Prisma {
     coverImageAlt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    publishedAt?: boolean
     deletedAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Article$categoryArgs<ExtArgs>
@@ -9779,7 +9771,6 @@ export namespace Prisma {
     coverImageAlt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    publishedAt?: boolean
     deletedAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Article$categoryArgs<ExtArgs>
@@ -9810,7 +9801,6 @@ export namespace Prisma {
     coverImageAlt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    publishedAt?: boolean
     deletedAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Article$categoryArgs<ExtArgs>
@@ -9841,11 +9831,10 @@ export namespace Prisma {
     coverImageAlt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    publishedAt?: boolean
     deletedAt?: boolean
   }
 
-  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "excerpt" | "content" | "type" | "status" | "readTime" | "viewCount" | "authorId" | "categoryId" | "sentiment" | "factCheckScore" | "factCheckDate" | "factCheckStatus" | "level" | "contentType" | "warningLevel" | "courseSequence" | "projectHighlight" | "coverImage" | "coverImageAlt" | "createdAt" | "updatedAt" | "publishedAt" | "deletedAt", ExtArgs["result"]["article"]>
+  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "excerpt" | "content" | "type" | "status" | "readTime" | "viewCount" | "authorId" | "categoryId" | "sentiment" | "factCheckScore" | "factCheckDate" | "factCheckStatus" | "level" | "contentType" | "warningLevel" | "courseSequence" | "projectHighlight" | "coverImage" | "coverImageAlt" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["article"]>
   export type ArticleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Article$categoryArgs<ExtArgs>
@@ -9899,7 +9888,6 @@ export namespace Prisma {
       coverImageAlt: string | null
       createdAt: Date
       updatedAt: Date
-      publishedAt: Date | null
       deletedAt: Date | null
     }, ExtArgs["result"]["article"]>
     composites: {}
@@ -10354,7 +10342,6 @@ export namespace Prisma {
     readonly coverImageAlt: FieldRef<"Article", 'String'>
     readonly createdAt: FieldRef<"Article", 'DateTime'>
     readonly updatedAt: FieldRef<"Article", 'DateTime'>
-    readonly publishedAt: FieldRef<"Article", 'DateTime'>
     readonly deletedAt: FieldRef<"Article", 'DateTime'>
   }
     
@@ -21694,7 +21681,6 @@ export namespace Prisma {
     coverImageAlt: 'coverImageAlt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    publishedAt: 'publishedAt',
     deletedAt: 'deletedAt'
   };
 
@@ -22475,7 +22461,6 @@ export namespace Prisma {
     coverImageAlt?: StringNullableFilter<"Article"> | string | null
     createdAt?: DateTimeFilter<"Article"> | Date | string
     updatedAt?: DateTimeFilter<"Article"> | Date | string
-    publishedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
     deletedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
@@ -22510,7 +22495,6 @@ export namespace Prisma {
     coverImageAlt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    publishedAt?: SortOrderInput | SortOrder
     deletedAt?: SortOrderInput | SortOrder
     author?: UserOrderByWithRelationInput
     category?: CategoryOrderByWithRelationInput
@@ -22548,7 +22532,6 @@ export namespace Prisma {
     coverImageAlt?: StringNullableFilter<"Article"> | string | null
     createdAt?: DateTimeFilter<"Article"> | Date | string
     updatedAt?: DateTimeFilter<"Article"> | Date | string
-    publishedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
     deletedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
@@ -22583,7 +22566,6 @@ export namespace Prisma {
     coverImageAlt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    publishedAt?: SortOrderInput | SortOrder
     deletedAt?: SortOrderInput | SortOrder
     _count?: ArticleCountOrderByAggregateInput
     _avg?: ArticleAvgOrderByAggregateInput
@@ -22620,7 +22602,6 @@ export namespace Prisma {
     coverImageAlt?: StringNullableWithAggregatesFilter<"Article"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Article"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Article"> | Date | string
-    publishedAt?: DateTimeNullableWithAggregatesFilter<"Article"> | Date | string | null
     deletedAt?: DateTimeNullableWithAggregatesFilter<"Article"> | Date | string | null
   }
 
@@ -24056,7 +24037,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     author: UserCreateNestedOneWithoutArticlesInput
     category?: CategoryCreateNestedOneWithoutArticlesInput
@@ -24091,7 +24071,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     tags?: ArticleTagUncheckedCreateNestedManyWithoutArticleInput
     relatedFrom?: ArticleRelationUncheckedCreateNestedManyWithoutFromArticleInput
@@ -24122,7 +24101,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     author?: UserUpdateOneRequiredWithoutArticlesNestedInput
     category?: CategoryUpdateOneWithoutArticlesNestedInput
@@ -24157,7 +24135,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     tags?: ArticleTagUncheckedUpdateManyWithoutArticleNestedInput
     relatedFrom?: ArticleRelationUncheckedUpdateManyWithoutFromArticleNestedInput
@@ -24190,7 +24167,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
   }
 
@@ -24217,7 +24193,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
@@ -24246,7 +24221,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
@@ -25905,7 +25879,6 @@ export namespace Prisma {
     coverImageAlt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    publishedAt?: SortOrder
     deletedAt?: SortOrder
   }
 
@@ -25940,7 +25913,6 @@ export namespace Prisma {
     coverImageAlt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    publishedAt?: SortOrder
     deletedAt?: SortOrder
   }
 
@@ -25969,7 +25941,6 @@ export namespace Prisma {
     coverImageAlt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    publishedAt?: SortOrder
     deletedAt?: SortOrder
   }
 
@@ -27835,7 +27806,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     category?: CategoryCreateNestedOneWithoutArticlesInput
     tags?: ArticleTagCreateNestedManyWithoutArticleInput
@@ -27868,7 +27838,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     tags?: ArticleTagUncheckedCreateNestedManyWithoutArticleInput
     relatedFrom?: ArticleRelationUncheckedCreateNestedManyWithoutFromArticleInput
@@ -28066,7 +28035,6 @@ export namespace Prisma {
     coverImageAlt?: StringNullableFilter<"Article"> | string | null
     createdAt?: DateTimeFilter<"Article"> | Date | string
     updatedAt?: DateTimeFilter<"Article"> | Date | string
-    publishedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
     deletedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
   }
 
@@ -28236,7 +28204,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     author: UserCreateNestedOneWithoutArticlesInput
     tags?: ArticleTagCreateNestedManyWithoutArticleInput
@@ -28269,7 +28236,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     tags?: ArticleTagUncheckedCreateNestedManyWithoutArticleInput
     relatedFrom?: ArticleRelationUncheckedCreateNestedManyWithoutFromArticleInput
@@ -28796,7 +28762,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     author: UserCreateNestedOneWithoutArticlesInput
     category?: CategoryCreateNestedOneWithoutArticlesInput
@@ -28830,7 +28795,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     relatedFrom?: ArticleRelationUncheckedCreateNestedManyWithoutFromArticleInput
     relatedTo?: ArticleRelationUncheckedCreateNestedManyWithoutToArticleInput
@@ -28899,7 +28863,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     author?: UserUpdateOneRequiredWithoutArticlesNestedInput
     category?: CategoryUpdateOneWithoutArticlesNestedInput
@@ -28933,7 +28896,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     relatedFrom?: ArticleRelationUncheckedUpdateManyWithoutFromArticleNestedInput
     relatedTo?: ArticleRelationUncheckedUpdateManyWithoutToArticleNestedInput
@@ -28992,7 +28954,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     author: UserCreateNestedOneWithoutArticlesInput
     category?: CategoryCreateNestedOneWithoutArticlesInput
@@ -29026,7 +28987,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     tags?: ArticleTagUncheckedCreateNestedManyWithoutArticleInput
     relatedTo?: ArticleRelationUncheckedCreateNestedManyWithoutToArticleInput
@@ -29061,7 +29021,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     author: UserCreateNestedOneWithoutArticlesInput
     category?: CategoryCreateNestedOneWithoutArticlesInput
@@ -29095,7 +29054,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     tags?: ArticleTagUncheckedCreateNestedManyWithoutArticleInput
     relatedFrom?: ArticleRelationUncheckedCreateNestedManyWithoutFromArticleInput
@@ -29141,7 +29099,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     author?: UserUpdateOneRequiredWithoutArticlesNestedInput
     category?: CategoryUpdateOneWithoutArticlesNestedInput
@@ -29175,7 +29132,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     tags?: ArticleTagUncheckedUpdateManyWithoutArticleNestedInput
     relatedTo?: ArticleRelationUncheckedUpdateManyWithoutToArticleNestedInput
@@ -29216,7 +29172,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     author?: UserUpdateOneRequiredWithoutArticlesNestedInput
     category?: CategoryUpdateOneWithoutArticlesNestedInput
@@ -29250,7 +29205,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     tags?: ArticleTagUncheckedUpdateManyWithoutArticleNestedInput
     relatedFrom?: ArticleRelationUncheckedUpdateManyWithoutFromArticleNestedInput
@@ -29280,7 +29234,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     author: UserCreateNestedOneWithoutArticlesInput
     category?: CategoryCreateNestedOneWithoutArticlesInput
@@ -29314,7 +29267,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
     tags?: ArticleTagUncheckedCreateNestedManyWithoutArticleInput
     relatedFrom?: ArticleRelationUncheckedCreateNestedManyWithoutFromArticleInput
@@ -29360,7 +29312,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     author?: UserUpdateOneRequiredWithoutArticlesNestedInput
     category?: CategoryUpdateOneWithoutArticlesNestedInput
@@ -29394,7 +29345,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     tags?: ArticleTagUncheckedUpdateManyWithoutArticleNestedInput
     relatedFrom?: ArticleRelationUncheckedUpdateManyWithoutFromArticleNestedInput
@@ -29621,7 +29571,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
   }
 
@@ -29736,7 +29685,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     category?: CategoryUpdateOneWithoutArticlesNestedInput
     tags?: ArticleTagUpdateManyWithoutArticleNestedInput
@@ -29769,7 +29717,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     tags?: ArticleTagUncheckedUpdateManyWithoutArticleNestedInput
     relatedFrom?: ArticleRelationUncheckedUpdateManyWithoutFromArticleNestedInput
@@ -29801,7 +29748,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
@@ -29926,7 +29872,6 @@ export namespace Prisma {
     coverImageAlt?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    publishedAt?: Date | string | null
     deletedAt?: Date | string | null
   }
 
@@ -29996,7 +29941,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     author?: UserUpdateOneRequiredWithoutArticlesNestedInput
     tags?: ArticleTagUpdateManyWithoutArticleNestedInput
@@ -30029,7 +29973,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     tags?: ArticleTagUncheckedUpdateManyWithoutArticleNestedInput
     relatedFrom?: ArticleRelationUncheckedUpdateManyWithoutFromArticleNestedInput
@@ -30061,7 +30004,6 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 

@@ -211,7 +211,6 @@ exports.Prisma.ArticleScalarFieldEnum = {
   coverImageAlt: 'coverImageAlt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  publishedAt: 'publishedAt',
   deletedAt: 'deletedAt'
 };
 
