@@ -256,9 +256,6 @@ model Article {
   @@index([status])
   @@index([deletedAt])
 
-
-  // Índices compostos para queries combinadas
-
   @@index([type, categoryId, status])
   @@index([authorId, status])
   @@index([status, createdAt])
