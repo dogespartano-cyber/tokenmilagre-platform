@@ -66,7 +66,7 @@ export interface ResourceCreateInput {
   securityAuditDate?: Date
   auditedByCommunity?: boolean
   toolConfig?: any
-  interactiveType?: string
+  interactiveType?: string | null
   showCompatibleWallets?: boolean
   relatedResources?: string[]
 }
