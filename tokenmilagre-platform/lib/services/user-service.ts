@@ -96,8 +96,14 @@ export interface UserStats {
  * Handles all user CRUD operations with Clean Architecture patterns
  */
 export class UserService {
-  private logger = ServiceLocator.getLogger()
-  private validation = ServiceLocator.getValidation()
+  // Lazy initialization to avoid circular dependency
+  private get logger() {
+    return ServiceLocator.getLogger()
+  }
+
+  private get validation() {
+    return ServiceLocator.getValidation()
+  }
 
   /**
    * Create a new user

@@ -77,8 +77,14 @@ export interface BulkOperationResult {
  * Handles all article CRUD operations with Clean Architecture patterns
  */
 export class ArticleService {
-  private logger = ServiceLocator.getLogger()
-  private validation = ServiceLocator.getValidation()
+  // Lazy initialization to avoid circular dependency
+  private get logger() {
+    return ServiceLocator.getLogger()
+  }
+
+  private get validation() {
+    return ServiceLocator.getValidation()
+  }
 
   /**
    * Create a new article
