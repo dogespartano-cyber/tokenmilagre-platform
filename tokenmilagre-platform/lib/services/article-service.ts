@@ -25,10 +25,10 @@ import { Article, Prisma } from '@/lib/generated/prisma'
 import { ServiceLocator } from '@/lib/di/container'
 import { PAGINATION } from '@/lib/constants/pagination'
 import type {
-  ArticleQuery,
-  ArticleCreateInput,
-  ArticleUpdateInput,
-  BulkArticleOperation,
+  ArticleQueryCurrent as ArticleQuery,
+  ArticleCreateInputCurrent as ArticleCreateInput,
+  ArticleUpdateInputCurrent as ArticleUpdateInput,
+  BulkArticleOperationCurrent as BulkArticleOperation,
 } from '@/lib/schemas/article-schemas'
 
 /**
@@ -278,7 +278,7 @@ export class ArticleService {
       // Build orderBy
       const orderBy: Prisma.ArticleOrderByWithRelationInput = {}
       if (query.sortBy) {
-        orderBy[query.sortBy] = query.sortOrder || 'desc'
+        (orderBy as any)[query.sortBy] = query.sortOrder || 'desc'
       } else {
         orderBy.createdAt = 'desc'
       }

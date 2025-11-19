@@ -190,7 +190,7 @@ export const successResponseSchema = <T extends z.ZodType>(dataSchema: T) =>
 export const errorResponseSchema = z.object({
   success: z.literal(false),
   error: z.string(),
-  details: z.record(z.any()).optional(),
+  details: z.record(z.string(), z.any()).optional(),
   metadata: responseMetadataSchema.optional(),
 })
 

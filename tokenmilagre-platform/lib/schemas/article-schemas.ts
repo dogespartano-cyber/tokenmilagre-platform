@@ -143,7 +143,8 @@ export const articleCreateSchema = z
 
     // Optional fields
     excerpt: excerptSchema,
-    coverImage: coverImageSchema.optional(),
+    coverImage: z.string().url().optional(), // Simple URL string matching Prisma schema
+    coverImageAlt: z.string().min(10).max(200).optional(),
     status: articleStatusEnum.default('DRAFT'),
 
     // Relationships (by IDs)
@@ -152,7 +153,7 @@ export const articleCreateSchema = z
     citations: z.array(citationCreateSchema).max(20).optional(),
 
     // Metadata
-    readTime: z.number().int().min(1).max(120).optional(), // Will be auto-calculated if not provided
+    readTime: z.string().regex(/^\d+\s*min$/).optional(), // Format: "5 min", "10 min" - Will be auto-calculated if not provided
     seo: articleSEOSchema.optional(),
 
     // Publishing
@@ -196,7 +197,8 @@ export const articleUpdateSchema = z
     slug: slugSchema.optional(),
     content: contentSchema.optional(),
     excerpt: excerptSchema,
-    coverImage: coverImageSchema.optional().nullable(),
+    coverImage: z.string().url().optional().nullable(), // Simple URL string matching Prisma schema
+    coverImageAlt: z.string().min(10).max(200).optional().nullable(),
     type: articleTypeEnum.optional(),
     status: articleStatusEnum.optional(),
     categoryId: z.string().cuid().optional(),
@@ -207,7 +209,7 @@ export const articleUpdateSchema = z
     citations: z.array(citationCreateSchema).max(20).optional(),
 
     // Metadata
-    readTime: z.number().int().min(1).max(120).optional(),
+    readTime: z.string().regex(/^\d+\s*min$/).optional().nullable(), // Format: "5 min", "10 min"
     seo: articleSEOSchema.optional(),
 
     // Publishing
@@ -276,3 +278,81 @@ export type Citation = z.infer<typeof citationSchema>
 export type ArticleSEO = z.infer<typeof articleSEOSchema>
 export type ArticleType = z.infer<typeof articleTypeEnum>
 export type ArticleStatus = z.infer<typeof articleStatusEnum>
+
+/**
+ * ================================================================================
+ * CURRENT PRISMA SCHEMA COMPATIBLE TYPES
+ * ================================================================================
+ * The schemas below are compatible with the current Prisma schema (not schema-v2)
+ * Use these for ArticleService operations
+ */
+
+/**
+ * Current Article Create Input (compatible with current Prisma schema)
+ */
+export const articleCreateInputCurrent = z.object({
+  title: titleSchema,
+  slug: slugSchema,
+  content: contentSchema,
+  type: z.enum(['news', 'educational']).default('news'), // Lowercase to match current Prisma
+  excerpt: z.string().min(10).max(500).optional(),
+  published: z.boolean().default(false),
+  category: z.string().min(1).max(100), // String field, not ID
+  tags: z.array(z.string()).optional(), // Array of strings
+  sentiment: z.enum(['positive', 'neutral', 'negative']).default('neutral'),
+  level: z.enum(['iniciante', 'intermediario', 'avancado']).optional(),
+  contentType: z.string().max(50).optional(),
+  readTime: z.string().regex(/^\d+\s*min$/).optional(),
+  warningLevel: z.enum(['info', 'warning', 'critical']).optional(),
+  securityTips: z.array(z.string()).optional(),
+  coverImage: z.string().url().optional(),
+  coverImageAlt: z.string().min(10).max(200).optional(),
+  relatedArticles: z.array(z.string()).optional(), // Array of slugs
+  projectHighlight: z.boolean().default(false),
+  factCheckScore: z.number().min(0).max(100).optional(),
+  factCheckSources: z.array(z.string().url()).optional(),
+  factCheckDate: z.date().optional(),
+  factCheckStatus: z.string().max(50).optional(),
+})
+
+/**
+ * Current Article Update Input (compatible with current Prisma schema)
+ */
+export const articleUpdateInputCurrent = articleCreateInputCurrent.partial()
+
+/**
+ * Current Article Query Input (compatible with current Prisma schema)  
+ */
+export const articleQueryInputCurrent = z.object({
+  page: z.number().int().min(1).optional(),
+  limit: z.number().int().min(1).max(100).optional(),
+  published: z.boolean().optional(),
+  type: z.string().optional(),
+  category: z.string().optional(),
+  authorId: z.string().optional(),
+  search: z.string().optional(),
+  sentiment: z.enum(['positive', 'neutral', 'negative']).optional(),
+  level: z.string().optional(),
+  projectHighlight: z.boolean().optional(),
+  sortBy: z.string().optional(),
+  sortOrder: z.enum(['asc', 'desc']).optional(),
+})
+
+/**
+ * Bulk operation for current schema
+ */
+export const bulkArticleOperationCurrent = z.object({
+  articleIds: z.array(z.string()).min(1),
+  action: z.enum(['publish', 'unpublish', 'delete', 'updateCategory']),
+  data: z.object({
+    category: z.string().optional(),
+  }).optional(),
+})
+
+/**
+ * Export current schema types
+ */
+export type ArticleCreateInputCurrent = z.infer<typeof articleCreateInputCurrent>
+export type ArticleUpdateInputCurrent = z.infer<typeof articleUpdateInputCurrent>
+export type ArticleQueryCurrent = z.infer<typeof articleQueryInputCurrent>
+export type BulkArticleOperationCurrent = z.infer<typeof bulkArticleOperationCurrent>
