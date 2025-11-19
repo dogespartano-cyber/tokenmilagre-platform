@@ -313,6 +313,7 @@ export const articleCreateInputCurrent = z.object({
   factCheckSources: z.array(z.string().url()).optional(),
   factCheckDate: z.date().optional(),
   factCheckStatus: z.string().max(50).optional(),
+  authorId: z.string().optional(), // Optional - allows overriding author for AI-generated content
 })
 
 /**

@@ -124,7 +124,7 @@ export class ArticleService {
           type: data.type || 'news',
           excerpt: data.excerpt,
           published: data.published ?? false,
-          authorId: userId,
+          authorId: data.authorId || userId, // Allow override for AI-generated content
           category: data.category,
           tags: data.tags ? JSON.stringify(data.tags) : '[]',
           sentiment: data.sentiment || 'neutral',
