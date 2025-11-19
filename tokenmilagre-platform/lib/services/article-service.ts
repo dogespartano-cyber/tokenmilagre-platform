@@ -29,7 +29,7 @@
  */
 
 import { prisma } from '@/lib/prisma'
-import { Article, Prisma, ArticleStatus, ArticleType } from '@/lib/generated/prisma'
+import { Article, Prisma } from '@/lib/generated/prisma'
 import { logger } from './logger-service'
 import {
   NotFoundError,
@@ -96,13 +96,13 @@ export interface ArticleServiceOptions {
 /**
  * Converts status from schema format (UPPERCASE) to Prisma format (lowercase)
  */
-function normalizeStatus(status: string | undefined): ArticleStatus | undefined {
+function normalizeStatus(status: string | undefined): string | undefined {
   if (!status) return undefined
   const normalized = status.toLowerCase()
   // Map DELETED to archived since DELETED is not in the enum
   if (normalized === 'deleted') return 'archived'
   if (normalized === 'draft' || normalized === 'published' || normalized === 'archived') {
-    return normalized as ArticleStatus
+    return normalized
   }
   return undefined
 }
@@ -110,11 +110,11 @@ function normalizeStatus(status: string | undefined): ArticleStatus | undefined 
 /**
  * Converts type from schema format (UPPERCASE) to Prisma format (lowercase)
  */
-function normalizeType(type: string | undefined): ArticleType | undefined {
+function normalizeType(type: string | undefined): string | undefined {
   if (!type) return undefined
   const normalized = type.toLowerCase()
   if (normalized === 'news' || normalized === 'educational') {
-    return normalized as ArticleType
+    return normalized
   }
   // Map RESOURCE to news as fallback since RESOURCE is not in the enum
   if (normalized === 'resource') return 'news'
