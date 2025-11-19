@@ -451,20 +451,34 @@ Modo claro e escuro via CSS Variables:
 
 ## 🛠️ Scripts Utilitários
 
-### Verificação
+### 🔧 Automação (scripts/utils/)
+- **`lint-changed.sh`** - Lint/type-check apenas em arquivos alterados
+- **`backup-db.sh`** - Backup e restore automático de banco (local/staging)
+- **`check-env.sh`** - Sanity check de variáveis de ambiente obrigatórias
+
+### ✅ Qualidade (scripts/quality/)
+- **`run-all-checks.sh`** - Executa todos os checks de qualidade (lint, tests, build)
+- **`check-schema-integrity.ts`** - Valida integridade do schema do banco
+
+### 📋 Verificação
 - `check-article-content.js` - Valida conteúdo
 - `check-duplicates.js` - Verifica duplicatas
 - `check-educational.js` - Verifica artigos educacionais
 
-### Listagem
+### 📊 Listagem
 - `list-articles.js` - Lista todos os artigos
 - `list-users.js` - Lista usuários do sistema
 
-### Outros
+### 🔨 Outros
 - `count-articles.js` - Conta artigos por tipo
 - `delete-article.js` - Remove artigo do banco
 - `test-api-sentiment.js` - Testa API de sentimento
 - `watch-articles.js` - Watcher de mudanças
+
+### 📖 Documentação
+Ver documentação completa em:
+- **Scripts utilitários:** `scripts/utils/README.md`
+- **Scripts gerais:** `scripts/README.md`
 
 ## 🔗 Links Importantes
 

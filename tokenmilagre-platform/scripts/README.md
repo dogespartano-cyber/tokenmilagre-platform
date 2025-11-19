@@ -305,6 +305,8 @@ node scripts/publish-ethereum-upgrade.js
 
 ## 🔧 Comandos Úteis
 
+### Desenvolvimento
+
 ```bash
 # Gerar Prisma Client (se necessário)
 npx prisma generate
@@ -321,6 +323,39 @@ node scripts/helpers/generate-unique-slug.js meu-slug-teste
 # Atualizar data de artigo
 node scripts/update-article-date.js
 ```
+
+### Automação e Quality (Novos! 🆕)
+
+```bash
+# Lint apenas arquivos alterados
+npm run lint:changed
+
+# Backup do banco local
+npm run db:backup
+
+# Restore de backup
+npm run db:restore
+
+# Check variáveis de ambiente
+npm run check:env
+
+# Todos os quality checks
+npm run check:all
+
+# Quality checks rápidos (sem build)
+npm run check:all:fast
+
+# Audit de dependências
+./scripts/utils/audit-deps.sh audit
+
+# Check packages desatualizados
+./scripts/utils/audit-deps.sh outdated
+```
+
+### Documentação Completa
+
+- **Scripts de Automação:** `scripts/utils/README.md`
+- **Guia Completo:** `SCRIPTS_GUIDE.md` (na raiz do projeto)
 
 ## 📚 Mais Informações
 

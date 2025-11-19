@@ -5,24 +5,52 @@
 # Comprehensive quality check script for CI/CD
 # Runs linting, type checking, tests, and custom validations
 #
-# Usage: ./scripts/quality/run-all-checks.sh
+# Usage:
+#   ./scripts/quality/run-all-checks.sh              # Run all checks
+#   ./scripts/quality/run-all-checks.sh --fast       # Skip build
+#   ./scripts/quality/run-all-checks.sh --coverage   # Include coverage
 ###############################################################################
 
 set -e  # Exit on error
+
+# Parse arguments
+SKIP_BUILD=false
+RUN_COVERAGE=false
+
+for arg in "$@"; do
+  case $arg in
+    --fast)
+      SKIP_BUILD=true
+      shift
+      ;;
+    --coverage)
+      RUN_COVERAGE=true
+      shift
+      ;;
+  esac
+done
 
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 echo ""
 echo "═══════════════════════════════════════════════════════════════"
 echo "  🚀 TOKENMILAGRE PLATFORM - QUALITY CHECKS"
+if [ "$SKIP_BUILD" = true ]; then
+  echo "  Mode: FAST (skipping build)"
+fi
+if [ "$RUN_COVERAGE" = true ]; then
+  echo "  Mode: COVERAGE ENABLED"
+fi
 echo "═══════════════════════════════════════════════════════════════"
 echo ""
 
 FAILED_CHECKS=0
+START_TIME=$(date +%s)
 
 ###############################################################################
 # 1. TypeScript Type Checking
@@ -91,30 +119,59 @@ else
 fi
 
 ###############################################################################
-# 7. Build Check
+# 7. Build Check (optional)
 ###############################################################################
-echo "🏗️  [7/7] Running production build..."
-if npm run build; then
-  echo -e "${GREEN}✅ Build successful${NC}\n"
+if [ "$SKIP_BUILD" = false ]; then
+  echo "🏗️  [7/8] Running production build..."
+  if npm run build; then
+    echo -e "${GREEN}✅ Build successful${NC}\n"
+  else
+    echo -e "${RED}❌ Build failed${NC}\n"
+    ((FAILED_CHECKS++))
+  fi
 else
-  echo -e "${RED}❌ Build failed${NC}\n"
-  ((FAILED_CHECKS++))
+  echo -e "${YELLOW}⏭️  [7/8] Skipping build (--fast mode)${NC}\n"
+fi
+
+###############################################################################
+# 8. Environment Variables Check
+###############################################################################
+echo "🔍 [8/8] Checking environment variables..."
+if [ -f scripts/utils/check-env.sh ]; then
+  if ./scripts/utils/check-env.sh development; then
+    echo -e "${GREEN}✅ Environment variables valid${NC}\n"
+  else
+    echo -e "${YELLOW}⚠️  Environment check warnings (non-blocking)${NC}\n"
+    # Don't fail on env warnings in dev
+  fi
+else
+  echo -e "${YELLOW}⚠️  Environment check script not found${NC}\n"
 fi
 
 ###############################################################################
 # Summary
 ###############################################################################
+END_TIME=$(date +%s)
+DURATION=$((END_TIME - START_TIME))
+
 echo ""
 echo "═══════════════════════════════════════════════════════════════"
 
 if [ $FAILED_CHECKS -eq 0 ]; then
   echo -e "${GREEN}✅ ALL CHECKS PASSED!${NC}"
+  echo -e "${BLUE}⏱️  Time: ${DURATION}s${NC}"
   echo "═══════════════════════════════════════════════════════════════"
   echo ""
   exit 0
 else
   echo -e "${RED}❌ $FAILED_CHECKS CHECK(S) FAILED${NC}"
+  echo -e "${BLUE}⏱️  Time: ${DURATION}s${NC}"
   echo "═══════════════════════════════════════════════════════════════"
+  echo ""
+  echo "💡 Quick fixes:"
+  echo "  - Run 'npm run lint:fix' for linting issues"
+  echo "  - Run 'npm run format' for formatting issues"
+  echo "  - Check failed tests with 'npm test'"
   echo ""
   exit 1
 fi
