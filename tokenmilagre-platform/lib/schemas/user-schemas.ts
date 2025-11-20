@@ -79,6 +79,8 @@ export const userQuerySchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).default(12),
   role: roleEnum.optional(),
   search: z.string().optional(),
+  createdAfter: z.coerce.date().optional(),
+  createdBefore: z.coerce.date().optional(),
   sortBy: z.enum(['createdAt', 'updatedAt', 'email', 'name', 'role', 'points']).default('createdAt'),
   sortOrder: z.enum(['asc', 'desc']).default('desc'),
 })
