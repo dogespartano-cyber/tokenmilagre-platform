@@ -24,6 +24,7 @@ import { prisma } from '@/lib/prisma'
 import { Article, Prisma } from '@/lib/generated/prisma'
 import { ServiceLocator } from '@/lib/di/container'
 import { PAGINATION } from '@/lib/constants/pagination'
+import { NotFoundError, ConflictError, ValidationError } from './error-service'
 import type {
   ArticleQueryCurrent as ArticleQuery,
   ArticleCreateInputCurrent as ArticleCreateInput,
@@ -106,7 +107,7 @@ export class ArticleService {
       })
 
       if (existing) {
-        throw new Error(`Article with slug "${data.slug}" already exists`)
+        throw new ConflictError(`Article with slug "${data.slug}" already exists`)
       }
 
       // Auto-calculate readTime if not provided
@@ -356,7 +357,7 @@ export class ArticleService {
       })
 
       if (!existing) {
-        throw new Error(`Article with ID "${id}" not found`)
+        throw new NotFoundError(`Article with ID "${id}" not found`)
       }
 
       // If updating slug, check uniqueness
@@ -367,7 +368,7 @@ export class ArticleService {
         })
 
         if (slugExists) {
-          throw new Error(`Article with slug "${data.slug}" already exists`)
+          throw new ConflictError(`Article with slug "${data.slug}" already exists`)
         }
       }
 
@@ -447,7 +448,7 @@ export class ArticleService {
       })
 
       if (!article) {
-        throw new Error(`Article with ID "${id}" not found`)
+        throw new NotFoundError(`Article with ID "${id}" not found`)
       }
 
       await prisma.article.delete({
@@ -513,7 +514,7 @@ export class ArticleService {
 
         case 'updateCategory':
           if (!operation.data?.category) {
-            throw new Error('Category is required for updateCategory action')
+            throw new ValidationError('Category is required for updateCategory action')
           }
           result = await prisma.article.updateMany({
             where: { id: { in: articleIds } },
@@ -522,7 +523,7 @@ export class ArticleService {
           break
 
         default:
-          throw new Error(`Unknown bulk action: ${operation.action}`)
+          throw new ValidationError(`Unknown bulk action: ${operation.action}`)
       }
 
       this.logger.info('Bulk operation completed', {
