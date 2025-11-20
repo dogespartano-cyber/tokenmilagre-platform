@@ -690,31 +690,9 @@ export class ArticleService {
     tagIds?: string[]
     relatedArticleIds?: string[]
   }): Promise<void> {
-    // Verify category exists
-    if (data.categoryId) {
-      const category = await prisma.category.findUnique({
-        where: { id: data.categoryId },
-        select: { id: true },
-      })
-
-      if (!category) {
-        throw new NotFoundError(`Category with ID "${data.categoryId}" not found`)
-      }
-    }
-
-    // Verify tags exist
-    if (data.tagIds && data.tagIds.length > 0) {
-      const tags = await prisma.tag.findMany({
-        where: { id: { in: data.tagIds } },
-        select: { id: true },
-      })
-
-      if (tags.length !== data.tagIds.length) {
-        const foundIds = tags.map((t) => t.id)
-        const missingIds = data.tagIds.filter((id) => !foundIds.includes(id))
-        throw new NotFoundError(`Tags not found: ${missingIds.join(', ')}`)
-      }
-    }
+    // NOTE: Category and tags are stored as strings in the current schema,
+    // not as separate models. Validation is skipped for now.
+    // TODO: Implement proper validation when Category and Tag models are added to schema.
 
     // Verify related articles exist
     if (data.relatedArticleIds && data.relatedArticleIds.length > 0) {
