@@ -127,7 +127,9 @@ export class ArticleService {
           ? `${data.readTime} min`
           : data.readTime
       } else {
-        readTime = this.validation.calculateReadTime(data.content)
+        // calculateReadTime returns number, convert to "X min" format
+        const minutes = this.validation.calculateReadTime(data.content)
+        readTime = `${minutes} min`
       }
 
       // Sanitize content
@@ -434,7 +436,8 @@ export class ArticleService {
         updateData.content = this.validation.sanitizeHtml(data.content)
         // Auto-recalculate readTime when content changes (unless explicitly provided)
         if (data.readTime === undefined) {
-          updateData.readTime = this.validation.calculateReadTime(data.content)
+          const minutes = this.validation.calculateReadTime(data.content)
+          updateData.readTime = `${minutes} min`
         }
       }
       if (data.excerpt !== undefined) updateData.excerpt = data.excerpt
