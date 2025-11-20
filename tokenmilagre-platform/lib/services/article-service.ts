@@ -110,39 +110,74 @@ export class ArticleService {
         throw new ConflictError(`Article with slug "${data.slug}" already exists`)
       }
 
+      // Verify relationships if IDs are provided
+      if (data.categoryId || data.tagIds || data.relatedArticleIds) {
+        await this.verifyRelationships({
+          categoryId: data.categoryId,
+          tagIds: data.tagIds,
+          relatedArticleIds: data.relatedArticleIds,
+        })
+      }
+
       // Auto-calculate readTime if not provided
-      const readTime = data.readTime ?? this.calculateReadTime(data.content)
+      let readTime: number | string = data.readTime ?? this.validation.calculateReadTime(data.content)
+      // Ensure readTime is a number for database storage
+      if (typeof readTime === 'string') {
+        const match = readTime.match(/^(\d+)/)
+        readTime = match ? parseInt(match[1]) : this.validation.calculateReadTime(data.content)
+      }
 
       // Sanitize content
       const sanitizedContent = this.validation.sanitizeHtml(data.content)
 
-      // Create article
+      // Prepare tags array - use tagIds if provided, otherwise tags
+      const tagsArray = data.tagIds || data.tags || []
+
+      // Create article with proper Prisma types
+      const createData: any = {
+        title: data.title,
+        slug: data.slug,
+        content: sanitizedContent,
+        type: data.type || 'news',
+        excerpt: data.excerpt,
+        published: data.published ?? false,
+        authorId: data.authorId || userId,
+        category: data.category,
+        tags: JSON.stringify(tagsArray),
+        sentiment: data.sentiment || 'neutral',
+        level: data.level,
+        contentType: data.contentType,
+        readTime,
+        warningLevel: data.warningLevel,
+        securityTips: data.securityTips ? JSON.stringify(data.securityTips) : null,
+        coverImage: data.coverImage,
+        coverImageAlt: data.coverImageAlt,
+        relatedArticles: data.relatedArticles ? JSON.stringify(data.relatedArticles) : null,
+        projectHighlight: data.projectHighlight ?? false,
+        factCheckScore: data.factCheckScore,
+        factCheckSources: data.factCheckSources ? JSON.stringify(data.factCheckSources) : null,
+        factCheckDate: data.factCheckDate,
+        factCheckStatus: data.factCheckStatus,
+      }
+
+      // Add citations if provided
+      if (data.citations && data.citations.length > 0) {
+        createData.citations = {
+          create: data.citations.map((citation, index) => {
+            const normalized = this.validation.normalizeCitation(citation)
+            return {
+              url: normalized.url,
+              title: normalized.title,
+              domain: normalized.domain,
+              order: citation.order ?? index,
+              verified: citation.verified ?? false,
+            }
+          }),
+        }
+      }
+
       const article = await prisma.article.create({
-        data: {
-          title: data.title,
-          slug: data.slug,
-          content: sanitizedContent,
-          type: data.type || 'news',
-          excerpt: data.excerpt,
-          published: data.published ?? false,
-          authorId: data.authorId || userId, // Allow override for AI-generated content
-          category: data.category,
-          tags: data.tags ? JSON.stringify(data.tags) : '[]',
-          sentiment: data.sentiment || 'neutral',
-          level: data.level,
-          contentType: data.contentType,
-          readTime,
-          warningLevel: data.warningLevel,
-          securityTips: data.securityTips ? JSON.stringify(data.securityTips) : null,
-          coverImage: data.coverImage,
-          coverImageAlt: data.coverImageAlt,
-          relatedArticles: data.relatedArticles ? JSON.stringify(data.relatedArticles) : null,
-          projectHighlight: data.projectHighlight ?? false,
-          factCheckScore: data.factCheckScore,
-          factCheckSources: data.factCheckSources ? JSON.stringify(data.factCheckSources) : null,
-          factCheckDate: data.factCheckDate,
-          factCheckStatus: data.factCheckStatus,
-        },
+        data: createData,
         include: {
           author: {
             select: { id: true, name: true, email: true },
@@ -165,14 +200,19 @@ export class ArticleService {
    * Get article by ID
    *
    * @param id - Article ID
-   * @returns Article with author or null
+   * @param includeDeleted - Include soft-deleted articles
+   * @returns Article with author
+   * @throws NotFoundError if article not found
    */
-  async getById(id: string): Promise<ArticleWithRelations | null> {
+  async getById(id: string, includeDeleted: boolean = false): Promise<ArticleWithRelations> {
     this.logger.setContext({ operation: 'article.getById', id })
 
     try {
-      const article = await prisma.article.findUnique({
-        where: { id },
+      const article = await prisma.article.findFirst({
+        where: {
+          id,
+          ...(includeDeleted ? {} : { deletedAt: null }),
+        },
         include: {
           author: {
             select: { id: true, name: true, email: true },
@@ -180,11 +220,11 @@ export class ArticleService {
         },
       })
 
-      if (article) {
-        this.logger.info('Article found by ID', { id, slug: article.slug })
-      } else {
-        this.logger.warn('Article not found by ID', { id })
+      if (!article) {
+        throw new NotFoundError(`Article with ID "${id}" not found`)
       }
+
+      this.logger.info('Article found by ID', { id, slug: article.slug })
 
       return article
     } catch (error) {
@@ -199,14 +239,18 @@ export class ArticleService {
    * Get article by slug
    *
    * @param slug - Article slug
-   * @returns Article with author or null
+   * @returns Article with author
+   * @throws NotFoundError if article not found
    */
-  async getBySlug(slug: string): Promise<ArticleWithRelations | null> {
+  async getBySlug(slug: string): Promise<ArticleWithRelations> {
     this.logger.setContext({ operation: 'article.getBySlug', slug })
 
     try {
-      const article = await prisma.article.findUnique({
-        where: { slug },
+      const article = await prisma.article.findFirst({
+        where: {
+          slug,
+          deletedAt: null,
+        },
         include: {
           author: {
             select: { id: true, name: true, email: true },
@@ -214,11 +258,11 @@ export class ArticleService {
         },
       })
 
-      if (article) {
-        this.logger.info('Article found by slug', { id: article.id, slug })
-      } else {
-        this.logger.warn('Article not found by slug', { slug })
+      if (!article) {
+        throw new NotFoundError(`Article with slug "${slug}" not found`)
       }
+
+      this.logger.info('Article found by slug', { id: article.id, slug })
 
       return article
     } catch (error) {
@@ -252,6 +296,10 @@ export class ArticleService {
 
       if (query.type) {
         where.type = query.type
+      }
+
+      if ((query as any).status) {
+        (where as any).status = (query as any).status
       }
 
       if (query.category) {
@@ -350,14 +398,23 @@ export class ArticleService {
     try {
       this.logger.info('Updating article', { id, fields: Object.keys(data) })
 
-      // Check if article exists
-      const existing = await prisma.article.findUnique({
-        where: { id },
+      // Check if article exists (use findFirst to support deletedAt filter)
+      const existing = await prisma.article.findFirst({
+        where: { id, deletedAt: null },
         select: { id: true, slug: true },
       })
 
       if (!existing) {
         throw new NotFoundError(`Article with ID "${id}" not found`)
+      }
+
+      // Verify relationships if IDs are provided
+      if (data.categoryId || data.tagIds || data.relatedArticleIds) {
+        await this.verifyRelationships({
+          categoryId: data.categoryId,
+          tagIds: data.tagIds,
+          relatedArticleIds: data.relatedArticleIds,
+        })
       }
 
       // If updating slug, check uniqueness
@@ -379,12 +436,21 @@ export class ArticleService {
       if (data.slug !== undefined) updateData.slug = data.slug
       if (data.content !== undefined) {
         updateData.content = this.validation.sanitizeHtml(data.content)
+        // Auto-recalculate readTime when content changes (unless explicitly provided)
+        if (data.readTime === undefined) {
+          updateData.readTime = this.validation.calculateReadTime(data.content)
+        }
       }
       if (data.excerpt !== undefined) updateData.excerpt = data.excerpt
       if (data.type !== undefined) updateData.type = data.type
       if (data.published !== undefined) updateData.published = data.published
       if (data.category !== undefined) updateData.category = data.category
-      if (data.tags !== undefined) {
+      if (data.categoryId !== undefined) updateData.category = data.categoryId
+
+      // Handle tags update - support both JSON string array and relationship updates
+      if (data.tagIds !== undefined) {
+        updateData.tags = JSON.stringify(data.tagIds)
+      } else if (data.tags !== undefined) {
         updateData.tags = JSON.stringify(data.tags)
       }
       if (data.sentiment !== undefined) updateData.sentiment = data.sentiment
@@ -605,6 +671,59 @@ export class ArticleService {
       throw error
     } finally {
       this.logger.clearContext()
+    }
+  }
+
+  /**
+   * Verify that related entities exist
+   *
+   * @param data - Relationship IDs to verify
+   * @throws NotFoundError if any related entity does not exist
+   * @private
+   */
+  private async verifyRelationships(data: {
+    categoryId?: string
+    tagIds?: string[]
+    relatedArticleIds?: string[]
+  }): Promise<void> {
+    // Verify category exists
+    if (data.categoryId) {
+      const category = await prisma.category.findUnique({
+        where: { id: data.categoryId },
+        select: { id: true },
+      })
+
+      if (!category) {
+        throw new NotFoundError(`Category with ID "${data.categoryId}" not found`)
+      }
+    }
+
+    // Verify tags exist
+    if (data.tagIds && data.tagIds.length > 0) {
+      const tags = await prisma.tag.findMany({
+        where: { id: { in: data.tagIds } },
+        select: { id: true },
+      })
+
+      if (tags.length !== data.tagIds.length) {
+        const foundIds = tags.map((t) => t.id)
+        const missingIds = data.tagIds.filter((id) => !foundIds.includes(id))
+        throw new NotFoundError(`Tags not found: ${missingIds.join(', ')}`)
+      }
+    }
+
+    // Verify related articles exist
+    if (data.relatedArticleIds && data.relatedArticleIds.length > 0) {
+      const articles = await prisma.article.findMany({
+        where: { id: { in: data.relatedArticleIds }, deletedAt: null },
+        select: { id: true },
+      })
+
+      if (articles.length !== data.relatedArticleIds.length) {
+        const foundIds = articles.map((a) => a.id)
+        const missingIds = data.relatedArticleIds.filter((id) => !foundIds.includes(id))
+        throw new NotFoundError(`Related articles not found: ${missingIds.join(', ')}`)
+      }
     }
   }
 

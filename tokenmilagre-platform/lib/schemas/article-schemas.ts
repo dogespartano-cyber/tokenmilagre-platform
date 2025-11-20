@@ -297,12 +297,21 @@ export const articleCreateInputCurrent = z.object({
   type: z.enum(['news', 'educational']).default('news'), // Lowercase to match current Prisma
   excerpt: z.string().min(10).max(500).optional(),
   published: z.boolean().default(false),
-  category: z.string().min(1).max(100), // String field, not ID
+  category: z.string().min(1).max(100).optional(), // String field, not ID (made optional to support categoryId)
+  categoryId: z.string().cuid().optional(), // ID for relationship verification
   tags: z.array(z.string()).optional(), // Array of strings
+  tagIds: z.array(z.string().cuid()).optional(), // IDs for relationship verification
+  citations: z.array(z.object({
+    url: z.string().url(),
+    title: z.string(),
+    order: z.number().optional(),
+    verified: z.boolean().optional(),
+  })).optional(),
+  relatedArticleIds: z.array(z.string().cuid()).optional(), // IDs for relationship verification
   sentiment: z.enum(['positive', 'neutral', 'negative']).default('neutral'),
   level: z.enum(['iniciante', 'intermediario', 'avancado']).optional(),
   contentType: z.string().max(50).optional(),
-  readTime: z.string().regex(/^\d+\s*min$/).optional(),
+  readTime: z.union([z.string().regex(/^\d+\s*min$/), z.number()]).optional(), // Support both string and number
   warningLevel: z.enum(['info', 'warning', 'critical']).optional(),
   securityTips: z.array(z.string()).optional(),
   coverImage: z.string().url().optional(),
@@ -314,12 +323,23 @@ export const articleCreateInputCurrent = z.object({
   factCheckDate: z.date().optional(),
   factCheckStatus: z.string().max(50).optional(),
   authorId: z.string().optional(), // Optional - allows overriding author for AI-generated content
+  status: z.enum(['DRAFT', 'PUBLISHED', 'ARCHIVED']).optional(), // Add status support
 })
 
 /**
  * Current Article Update Input (compatible with current Prisma schema)
  */
-export const articleUpdateInputCurrent = articleCreateInputCurrent.partial()
+export const articleUpdateInputCurrent = articleCreateInputCurrent.partial().extend({
+  categoryId: z.string().cuid().optional(),
+  tagIds: z.array(z.string().cuid()).optional(),
+  citations: z.array(z.object({
+    url: z.string().url(),
+    title: z.string(),
+    order: z.number().optional(),
+    verified: z.boolean().optional(),
+  })).optional(),
+  relatedArticleIds: z.array(z.string().cuid()).optional(),
+})
 
 /**
  * Current Article Query Input (compatible with current Prisma schema)  

@@ -154,7 +154,7 @@ describe('ArticleService', () => {
       await expect(service.create(mockArticleData, mockUserId)).rejects.toThrow(ConflictError)
 
       expect(mockLogger.error).toHaveBeenCalledWith(
-        'Failed to create article',
+        'Error creating article',
         expect.any(Error),
         expect.any(Object)
       )
