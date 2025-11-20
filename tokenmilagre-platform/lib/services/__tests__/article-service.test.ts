@@ -1,15 +1,45 @@
 /**
  * Tests for ArticleService
- * Coverage target: >80% (aiming for 95%+)
+ * Coverage target: 99%+ (comprehensive edge case coverage)
  */
 
-// Mock Next.js and Prisma BEFORE imports
+// Create singleton mock logger BEFORE DI container mock
+const mockLogger = {
+  setContext: jest.fn(),
+  clearContext: jest.fn(),
+  debug: jest.fn(),
+  info: jest.fn(),
+  warn: jest.fn(),
+  error: jest.fn(),
+}
+
+// Create singleton mock validation
+const mockValidation = {
+  validate: jest.fn((schema, data) => data),
+  sanitizeHtml: jest.fn((html) => html.replace(/<script[^>]*>.*?<\/script>/gi, '')),
+  calculateReadTime: jest.fn(() => 2),
+  normalizeCitation: jest.fn((citation) => ({
+    ...citation,
+    domain: 'example.com',
+  })),
+}
+
+// Mock DI container BEFORE imports (return singleton instances)
+jest.mock('@/lib/di/container', () => ({
+  ServiceLocator: {
+    getLogger: jest.fn(() => mockLogger),
+    getValidation: jest.fn(() => mockValidation),
+  },
+}))
+
+// Mock Next.js BEFORE imports
 jest.mock('next/server', () => ({
   NextResponse: {
     json: jest.fn((body, init) => ({ body, status: init?.status || 200 })),
   },
 }))
 
+// Mock services (use inline objects to avoid hoisting issues)
 jest.mock('../logger-service', () => ({
   logger: {
     setContext: jest.fn(),
@@ -23,7 +53,7 @@ jest.mock('../logger-service', () => ({
 
 jest.mock('../validation-service', () => ({
   validationService: {
-    validate: jest.fn((schema, data) => data), // Pass through
+    validate: jest.fn((schema, data) => data),
     sanitizeHtml: jest.fn((html) => html.replace(/<script[^>]*>.*?<\/script>/gi, '')),
     calculateReadTime: jest.fn(() => 2),
     normalizeCitation: jest.fn((citation) => ({
@@ -40,7 +70,6 @@ import {
   ConflictError,
   ValidationError,
 } from '../error-service'
-import { logger } from '../logger-service'
 
 describe('ArticleService', () => {
   let service: ArticleService
@@ -113,7 +142,7 @@ describe('ArticleService', () => {
         })
       )
 
-      expect(logger.info).toHaveBeenCalledWith(
+      expect(mockLogger.info).toHaveBeenCalledWith(
         'Article created successfully',
         expect.objectContaining({ articleId: mockArticleId })
       )
@@ -124,7 +153,7 @@ describe('ArticleService', () => {
 
       await expect(service.create(mockArticleData, mockUserId)).rejects.toThrow(ConflictError)
 
-      expect(logger.error).toHaveBeenCalledWith(
+      expect(mockLogger.error).toHaveBeenCalledWith(
         'Failed to create article',
         expect.any(Error),
         expect.any(Object)
@@ -367,7 +396,7 @@ describe('ArticleService', () => {
         })
       )
 
-      expect(logger.info).toHaveBeenCalledWith(
+      expect(mockLogger.info).toHaveBeenCalledWith(
         'Article updated successfully',
         expect.any(Object)
       )
@@ -508,7 +537,7 @@ describe('ArticleService', () => {
         })
       )
 
-      expect(logger.info).toHaveBeenCalledWith(
+      expect(mockLogger.info).toHaveBeenCalledWith(
         'Article soft-deleted successfully',
         expect.any(Object)
       )
@@ -531,7 +560,7 @@ describe('ArticleService', () => {
         where: { id: mockArticleId },
       })
 
-      expect(logger.warn).toHaveBeenCalledWith(
+      expect(mockLogger.warn).toHaveBeenCalledWith(
         'Article permanently deleted',
         expect.any(Object)
       )
@@ -543,7 +572,7 @@ describe('ArticleService', () => {
 
       await expect(service.hardDelete(mockArticleId, mockUserId)).rejects.toThrow(error)
 
-      expect(logger.error).toHaveBeenCalledWith(
+      expect(mockLogger.error).toHaveBeenCalledWith(
         'Failed to permanently delete article',
         error,
         expect.objectContaining({ articleId: mockArticleId })
@@ -570,7 +599,7 @@ describe('ArticleService', () => {
         })
       )
 
-      expect(logger.info).toHaveBeenCalledWith(
+      expect(mockLogger.info).toHaveBeenCalledWith(
         'Article restored successfully',
         expect.any(Object)
       )
@@ -601,7 +630,7 @@ describe('ArticleService', () => {
 
       expect(count).toBe(3)
 
-      expect(logger.info).toHaveBeenCalledWith(
+      expect(mockLogger.info).toHaveBeenCalledWith(
         'Bulk operation completed',
         expect.objectContaining({ count: 3, operation: 'publish' })
       )
@@ -753,10 +782,10 @@ describe('ArticleService', () => {
 
       await service.create(mockArticleData, mockUserId)
 
-      expect(logger.setContext).toHaveBeenCalledWith(
+      expect(mockLogger.setContext).toHaveBeenCalledWith(
         expect.objectContaining({ operation: 'article.create' })
       )
-      expect(logger.clearContext).toHaveBeenCalled()
+      expect(mockLogger.clearContext).toHaveBeenCalled()
     })
 
     it('should clear context even on error', async () => {
@@ -764,7 +793,7 @@ describe('ArticleService', () => {
 
       await expect(service.create(mockArticleData, mockUserId)).rejects.toThrow()
 
-      expect(logger.clearContext).toHaveBeenCalled()
+      expect(mockLogger.clearContext).toHaveBeenCalled()
     })
   })
 })
