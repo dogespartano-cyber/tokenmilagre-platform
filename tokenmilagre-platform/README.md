@@ -218,9 +218,97 @@ model Article {
 
 O novo sistema segue **Clean Architecture** em 4 camadas:
 
+```mermaid
+graph TB
+    subgraph Presentation["🎨 Presentation Layer"]
+        API[API Routes<br/>/api/v2/articles]
+        Pages[Next.js Pages<br/>Server Components]
+        Components[Client Components<br/>React Query Hooks]
+    end
+
+    subgraph Application["⚙️ Application Layer"]
+        ArticleService[ArticleService<br/>CRUD + Bulk Operations]
+        ValidationService[ValidationService<br/>Zod Schemas]
+        ErrorService[ErrorService<br/>Error Handling]
+        LoggerService[LoggerService<br/>Structured Logging]
+    end
+
+    subgraph Domain["💼 Domain Layer"]
+        Schemas[Zod Schemas<br/>Business Rules]
+        Types[Type Definitions<br/>DTOs]
+    end
+
+    subgraph Infrastructure["🔧 Infrastructure Layer"]
+        Prisma[Prisma ORM<br/>Type-safe Queries]
+        DB[(PostgreSQL<br/>Database)]
+        External[External APIs<br/>Perplexity, Binance, Solana]
+        Monitoring[Monitoring<br/>Sentry]
+    end
+
+    API --> ArticleService
+    Pages --> ArticleService
+    Components --> API
+
+    ArticleService --> ValidationService
+    ArticleService --> ErrorService
+    ArticleService --> LoggerService
+    ArticleService --> Schemas
+
+    ValidationService --> Schemas
+    ErrorService --> LoggerService
+
+    ArticleService --> Prisma
+    Prisma --> DB
+    ArticleService --> External
+    ErrorService --> Monitoring
+
+    style Presentation fill:#e1f5ff
+    style Application fill:#fff4e6
+    style Domain fill:#f3e5f5
+    style Infrastructure fill:#e8f5e9
 ```
-Presentation → Application → Domain → Infrastructure
-(API Routes)   (Services)   (Schemas)  (Prisma + DB)
+
+### Dependency Injection (DI)
+
+O sistema utiliza **tsyringe** para injeção de dependências, garantindo singleton pattern e fácil testabilidade:
+
+```mermaid
+graph LR
+    subgraph DI["DI Container (tsyringe)"]
+        Container[Service Container<br/>Singleton Registry]
+    end
+
+    subgraph Services["Services"]
+        Logger[LoggerService]
+        Validation[ValidationService]
+        Error[ErrorService]
+        Article[ArticleService]
+    end
+
+    subgraph Consumers["Consumers"]
+        API[API Routes]
+        Components[Components]
+        Tests[Unit Tests]
+    end
+
+    ServiceLocator[ServiceLocator<br/>Facade Pattern] --> Container
+
+    Container -.register.-> Logger
+    Container -.register.-> Validation
+    Container -.register.-> Error
+    Container -.register.-> Article
+
+    Article -.inject.-> Logger
+    Article -.inject.-> Validation
+    Article -.inject.-> Error
+
+    API --> ServiceLocator
+    Components --> ServiceLocator
+    Tests --> ServiceLocator
+
+    style DI fill:#e3f2fd
+    style Services fill:#fff3e0
+    style Consumers fill:#f3e5f5
 ```
 
 ### Services Core
@@ -451,20 +539,34 @@ Modo claro e escuro via CSS Variables:
 
 ## 🛠️ Scripts Utilitários
 
-### Verificação
+### 🔧 Automação (scripts/utils/)
+- **`lint-changed.sh`** - Lint/type-check apenas em arquivos alterados
+- **`backup-db.sh`** - Backup e restore automático de banco (local/staging)
+- **`check-env.sh`** - Sanity check de variáveis de ambiente obrigatórias
+
+### ✅ Qualidade (scripts/quality/)
+- **`run-all-checks.sh`** - Executa todos os checks de qualidade (lint, tests, build)
+- **`check-schema-integrity.ts`** - Valida integridade do schema do banco
+
+### 📋 Verificação
 - `check-article-content.js` - Valida conteúdo
 - `check-duplicates.js` - Verifica duplicatas
 - `check-educational.js` - Verifica artigos educacionais
 
-### Listagem
+### 📊 Listagem
 - `list-articles.js` - Lista todos os artigos
 - `list-users.js` - Lista usuários do sistema
 
-### Outros
+### 🔨 Outros
 - `count-articles.js` - Conta artigos por tipo
 - `delete-article.js` - Remove artigo do banco
 - `test-api-sentiment.js` - Testa API de sentimento
 - `watch-articles.js` - Watcher de mudanças
+
+### 📖 Documentação
+Ver documentação completa em:
+- **Scripts utilitários:** `scripts/utils/README.md`
+- **Scripts gerais:** `scripts/README.md`
 
 ## 🔗 Links Importantes
 
