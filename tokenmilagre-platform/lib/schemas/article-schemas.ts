@@ -342,21 +342,21 @@ export const articleUpdateInputCurrent = articleCreateInputCurrent.partial().ext
 })
 
 /**
- * Current Article Query Input (compatible with current Prisma schema)  
+ * Current Article Query Input (compatible with current Prisma schema)
  */
 export const articleQueryInputCurrent = z.object({
-  page: z.number().int().min(1).optional(),
-  limit: z.number().int().min(1).max(100).optional(),
-  published: z.boolean().optional(),
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(100).default(12),
+  published: z.coerce.boolean().optional(),
   type: z.string().optional(),
   category: z.string().optional(),
   authorId: z.string().optional(),
   search: z.string().optional(),
   sentiment: z.enum(['positive', 'neutral', 'negative']).optional(),
   level: z.string().optional(),
-  projectHighlight: z.boolean().optional(),
-  sortBy: z.string().optional(),
-  sortOrder: z.enum(['asc', 'desc']).optional(),
+  projectHighlight: z.coerce.boolean().optional(),
+  sortBy: z.string().default('createdAt'),
+  sortOrder: z.enum(['asc', 'desc']).default('desc'),
 })
 
 /**

@@ -40,15 +40,15 @@ export async function GET(request: NextRequest) {
     // Parse and validate query parameters
     const searchParams = request.nextUrl.searchParams
     const rawQuery = {
-      page: searchParams.get('page'),
-      limit: searchParams.get('limit'),
-      category: searchParams.get('category'),
-      published: searchParams.get('published'),
-      type: searchParams.get('type'),
-      level: searchParams.get('level'),
-      search: searchParams.get('search') || searchParams.get('query'),
-      sortBy: searchParams.get('sortBy'),
-      sortOrder: searchParams.get('sortOrder'),
+      page: searchParams.get('page') || undefined,
+      limit: searchParams.get('limit') || undefined,
+      category: searchParams.get('category') || undefined,
+      published: searchParams.get('published') || undefined,
+      type: searchParams.get('type') || undefined,
+      level: searchParams.get('level') || undefined,
+      search: searchParams.get('search') || searchParams.get('query') || undefined,
+      sortBy: searchParams.get('sortBy') || undefined,
+      sortOrder: searchParams.get('sortOrder') || undefined,
     }
 
     const query = validation.validate(articleQueryInputCurrent, rawQuery)
