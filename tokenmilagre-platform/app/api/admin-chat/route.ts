@@ -1,34 +1,15 @@
-/**
- * Admin Chat API Route
- *
- * Handles AI-powered chat for admin/editor users with:
- * - Service layer integration (partial - Phase 2)
- * - Zod validation for request body
- * - Structured logging with context
- * - Auth helpers for role-based access (EDITOR/ADMIN)
- * - Rate limiting utility
- * - Perplexity AI streaming (preserved for Phase 3)
- * - Intent detection (preserved for Phase 3)
- * - Action handlers (preserved for Phase 3)
- *
- * @see docs/PHASE2_DEBT.md for Phase 3 migration plan
- */
-
-import { NextRequest, NextResponse } from 'next/server'
-import { ServiceLocator } from '@/lib/di/container'
-import { requireEditor } from '@/lib/helpers/auth-helpers'
-import { errorResponse } from '@/lib/helpers/response-helpers'
-import { chatRequestSchema } from '@/lib/schemas/chat-schemas'
-import { checkRateLimit } from '@/lib/utils/rate-limit'
+import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import {
   callPerplexityStreaming,
   parsePerplexityStream,
   type PerplexityMessage,
   type PerplexityRequestOptions
-} from '@/lib/perplexity-client'
-import { extractPageContext, formatArticleContext } from '@/lib/admin-chat-context'
-import { validateArticleContent } from '@/lib/content-validator'
-import { detectIntent } from '@/lib/intent-detector'
+} from '@/lib/perplexity-client';
+import { extractPageContext, formatArticleContext } from '@/lib/admin-chat-context';
+import { validateArticleContent } from '@/lib/content-validator';
+import { detectIntent } from '@/lib/intent-detector';
 
 /**
  * Decide configuração do modelo Perplexity baseado na intenção
@@ -72,15 +53,33 @@ function selectOptimalModel(
   return { model: 'sonar' };
 }
 
-// Rate limit configuration
-const RATE_LIMIT = 10 // 10 requests
-const RATE_LIMIT_WINDOW = 60 * 1000 // 1 minute
+// Rate limiting simples (em memória)
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT = 10; // 10 requests
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minuto
+
+function checkRateLimit(userId: string): boolean {
+  const now = Date.now();
+  const userLimit = rateLimitMap.get(userId);
+
+  if (!userLimit || now > userLimit.resetTime) {
+    rateLimitMap.set(userId, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    return true;
+  }
+
+  if (userLimit.count >= RATE_LIMIT) {
+    return false;
+  }
+
+  userLimit.count++;
+  return true;
+}
 
 interface AdminChatRequest {
-  messages: PerplexityMessage[]
-  pathname?: string
-  pageData?: Record<string, any>
-  model?: 'sonar' | 'sonar-pro'
+  messages: PerplexityMessage[];
+  pathname?: string;
+  pageData?: Record<string, any>;
+  model?: 'sonar' | 'sonar-pro';
 }
 
 /**
@@ -208,101 +207,90 @@ function processIntent(
 }
 
 /**
- * POST /api/admin-chat - AI-powered chat with Perplexity streaming
- *
- * Protected: ADMIN or EDITOR role
- * Rate Limited: 10 requests per minute per user
- *
- * Body params:
- * - messages: Array of chat messages (role + content)
- * - pathname: Optional current page path for context
- * - pageData: Optional page data for context enrichment
- * - model: Perplexity model (sonar/sonar-pro, default: sonar)
- *
- * Returns: Server-Sent Events (SSE) stream with AI responses
+ * POST /api/admin-chat
+ * Chat com IA usando Perplexity API (com streaming)
+ * Protegido: Apenas ADMIN e EDITOR
  */
 export async function POST(request: NextRequest) {
-  const startTime = Date.now()
-  const auth = await requireEditor(request)
-  if (!auth.success) return auth.response
-
-  const logger = ServiceLocator.getLogger()
-  logger.setContext({ endpoint: '/api/admin-chat', method: 'POST', userId: auth.user.id })
-
   try {
+    // Verificar autenticação
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+      return NextResponse.json(
+        { success: false, error: 'Não autenticado' },
+        { status: 401 }
+      );
+    }
+
+    // Verificar permissão de ADMIN ou EDITOR
+    if (session.user.role !== 'ADMIN' && session.user.role !== 'EDITOR') {
+      return NextResponse.json(
+        { success: false, error: 'Sem permissão. Apenas ADMIN e EDITOR.' },
+        { status: 403 }
+      );
+    }
+
     // Rate limiting
-    if (!checkRateLimit(auth.user.id, RATE_LIMIT, RATE_LIMIT_WINDOW)) {
-      logger.warn('Rate limit exceeded', {
-        userId: auth.user.id,
-        limit: RATE_LIMIT,
-        windowMs: RATE_LIMIT_WINDOW
-      })
+    if (!checkRateLimit(session.user.id)) {
       return NextResponse.json(
         { success: false, error: 'Limite de requisições excedido. Tente novamente em 1 minuto.' },
         { status: 429 }
-      )
+      );
     }
 
-    // Verify API key
-    const apiKey = process.env.PERPLEXITY_API_KEY
+    // Obter API key
+    const apiKey = process.env.PERPLEXITY_API_KEY;
+
     if (!apiKey) {
-      logger.error('Perplexity API key not configured')
       return NextResponse.json(
         { success: false, error: 'API key não configurada' },
         { status: 500 }
-      )
+      );
     }
 
-    // Parse and validate request body
-    const body = await request.json()
+    const body: AdminChatRequest = await request.json();
+    const { messages, pathname = '/dashboard', pageData, model = 'sonar' } = body;
 
-    const validation = ServiceLocator.getValidation()
-    const validated = validation.validate(chatRequestSchema, body)
+    // Validação
+    if (!messages || messages.length === 0) {
+      return NextResponse.json(
+        { success: false, error: 'Mensagens obrigatórias' },
+        { status: 400 }
+      );
+    }
 
-    const { messages, pathname = '/dashboard', pageData, model = 'sonar' } = validated
+    // Validar tamanho da última mensagem
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage.content.length > 4000) {
+      return NextResponse.json(
+        { success: false, error: 'Mensagem muito longa (máximo 4000 caracteres)' },
+        { status: 400 }
+      );
+    }
 
-    // Get last message for intent detection and logging
-    const lastMessage = messages[messages.length - 1]
-
-    logger.info('Chat request received', {
-      messageCount: messages.length,
-      lastMessageLength: lastMessage.content.length,
-      pathname,
-      model,
-      hasPageData: !!pageData
-    })
-
-    // Processar intenção em linguagem natural (preserved for Phase 3 - IntentService)
-    const intentResult = processIntent(lastMessage.content, pageData)
+    // Processar intenção em linguagem natural
+    const intentResult = processIntent(lastMessage.content, pageData);
 
     if (intentResult) {
       // Se for string, retornar diretamente (resposta pronta como validação)
       if (typeof intentResult === 'string') {
-        logger.info('Direct response from intent processing', {
-          intentType: 'validation',
-          responseLength: intentResult.length
-        })
         return NextResponse.json({
           success: true,
           content: intentResult,
           isDirectResponse: true
-        })
+        });
       }
 
-      // Se for ação especial, processar (preserved for Phase 3 - ActionService)
+      // Se for ação especial, processar
       if (typeof intentResult === 'object' && intentResult.action) {
-        logger.info('Action detected from intent', {
-          action: intentResult.action,
-          hasData: !!intentResult.data
-        })
-
         if (intentResult.action === 'generate-article') {
           // Retornar instrução para o frontend fazer a requisição
           return NextResponse.json({
             success: true,
             action: 'generate-article-request',
             data: intentResult.data
-          })
+          });
         }
 
         if (intentResult.action === 'publish-article') {
@@ -400,19 +388,11 @@ export async function POST(request: NextRequest) {
       ...validatedMessages
     ];
 
-    // 🎯 Selecionar modelo otimizado baseado no contexto (preserved for Phase 3)
-    const intent = detectIntent(lastMessage.content)
-    const modelConfig = selectOptimalModel(lastMessage.content, intent)
+    // 🎯 Selecionar modelo otimizado baseado no contexto
+    const intent = detectIntent(lastMessage.content);
+    const modelConfig = selectOptimalModel(lastMessage.content, intent);
 
-    logger.info('Calling Perplexity API', {
-      model: modelConfig.model,
-      searchRecency: modelConfig.search_recency_filter,
-      intentAction: intent.action,
-      intentConfidence: intent.confidence,
-      contextualizedMessageCount: contextualizedMessages.length
-    })
-
-    // Chamar Perplexity com streaming (preserved for Phase 3 - ChatService)
+    // Chamar Perplexity com streaming
     const stream = await callPerplexityStreaming(
       {
         model: modelConfig.model,
@@ -425,20 +405,10 @@ export async function POST(request: NextRequest) {
         return_citations: false // Desativa referências [1][2][3]
       },
       apiKey
-    )
+    );
 
     // Processar stream SSE
-    const parsedStream = parsePerplexityStream(stream)
-
-    const responseTime = Date.now() - startTime
-
-    logger.info('Perplexity stream initiated', {
-      responseTime,
-      userId: auth.user.id
-    })
-
-    // Note: Context is not cleared here because streaming response continues after return
-    // For SSE streams, context cleanup happens on connection close
+    const parsedStream = parsePerplexityStream(stream);
 
     // Retornar stream para o cliente
     return new Response(parsedStream, {
@@ -447,16 +417,17 @@ export async function POST(request: NextRequest) {
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive',
       },
-    })
+    });
 
   } catch (error) {
-    logger.error('Error in admin chat', error as Error, {
-      userId: auth.user.id,
-      endpoint: '/api/admin-chat'
-    })
+    console.error('Error in admin chat:', error);
 
-    logger.clearContext()
-
-    return errorResponse(error as Error)
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Erro ao processar chat'
+      },
+      { status: 500 }
+    );
   }
 }

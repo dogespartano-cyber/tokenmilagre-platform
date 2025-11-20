@@ -1,66 +1,51 @@
-/**
- * Generate Article API Route
- *
- * Generates article content using Perplexity API with:
- * - Service layer integration (ArticleService for validation)
- * - Auth helpers for role-based access (ADMIN/EDITOR only)
- * - Structured logging with context
- * - Standardized response format
- * - Zod validation for request parameters
- */
-
-import { NextRequest } from 'next/server'
-import { z } from 'zod'
-import { ServiceLocator } from '@/lib/di/container'
-import { successResponse, errorResponse } from '@/lib/helpers/response-helpers'
-import { requireEditor } from '@/lib/helpers/auth-helpers'
+import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import {
   processArticleContent,
   extractExcerpt,
   titleToSlug,
   calculateReadTime,
   extractTags
-} from '@/lib/article-processor'
-import { validateArticleContent, ValidationResult } from '@/lib/content-validator'
-import { callPerplexity } from '@/lib/perplexity-client'
+} from '@/lib/article-processor';
+import { validateArticleContent, ValidationResult } from '@/lib/content-validator';
+import { callPerplexity } from '@/lib/perplexity-client';
 
-// Request validation schema
-const generateArticleRequestSchema = z.object({
-  topic: z.string().min(3, 'Topic must be at least 3 characters').max(500, 'Topic too long'),
-  type: z.enum(['news', 'educational', 'resource']),
-  model: z.enum(['sonar', 'sonar-pro', 'sonar-base']).optional().default('sonar'),
-})
-
-type GenerateArticleRequest = z.infer<typeof generateArticleRequestSchema>
+// Types
+interface GenerateArticleRequest {
+  topic: string;
+  type: 'news' | 'educational' | 'resource';
+  model?: 'sonar' | 'sonar-pro' | 'sonar-base';
+}
 
 interface GenerateArticleResponse {
-  success: boolean
+  success: boolean;
   data?: {
-    title: string
-    slug: string
-    excerpt: string
-    content: string
-    category: string
-    level?: string
-    tags: string[]
-    readTime: string
-    sentiment?: 'positive' | 'neutral' | 'negative'
-    citations?: string[]
-  }
-  error?: string
+    title: string;
+    slug: string;
+    excerpt: string;
+    content: string;
+    category: string;
+    level?: string;
+    tags: string[];
+    readTime: string;
+    sentiment?: 'positive' | 'neutral' | 'negative';
+    citations?: string[]; // Array de URLs das fontes
+  };
+  error?: string;
   usage?: {
-    inputTokens: number
-    outputTokens: number
-    estimatedCost: number
-  }
-  validation?: ValidationResult
+    inputTokens: number;
+    outputTokens: number;
+    estimatedCost: number;
+  };
+  validation?: ValidationResult;
 }
 
 /**
  * Monta prompt para Perplexity seguindo regras da skill article-creation
  */
 function buildPrompt(params: GenerateArticleRequest): string {
-  const { topic, type } = params
+  const { topic, type } = params;
 
   if (type === 'news') {
     return `# SISTEMA: Jornalista Profissional de Criptomoedas
@@ -189,7 +174,7 @@ Inclua PELO MENOS 3-4 das seguintes métricas:
 - Comentários no JSON
 - Apenas o objeto JSON limpo começando com { e terminando com }
 
-**LEMBRE-SE**: O Perplexity adicionará automaticamente referências [1][2] nas citações. Não se preocupe com isso, apenas escreva o conteúdo naturalmente citando as fontes por nome no texto.`
+**LEMBRE-SE**: O Perplexity adicionará automaticamente referências [1][2] nas citações. Não se preocupe com isso, apenas escreva o conteúdo naturalmente citando as fontes por nome no texto.`;
   } else if (type === 'educational') {
     // Educational
     return `Você é um educador especializado em criptomoedas e blockchain.
@@ -261,7 +246,7 @@ Inclua PELO MENOS 3-4 das seguintes métricas:
 - Markdown code blocks (\`\`\`json)
 - Texto explicativo antes ou depois
 - Comentários no JSON
-- Apenas o objeto JSON limpo começando com { e terminando com }`
+- Apenas o objeto JSON limpo começando com { e terminando com }`;
   } else {
     // Resource
     return `Você é um especialista em recursos e ferramentas de criptomoedas e blockchain.
@@ -307,7 +292,7 @@ Inclua PELO MENOS 3-4 das seguintes métricas:
 {
   "name": "Nome do Recurso",
   "slug": "nome-do-recurso-em-slug",
-  "category": "wallets",
+  "category": "wallets", // Escolha a categoria apropriada
   "shortDescription": "Descrição curta",
   "officialUrl": "https://...",
   "platforms": ["Web", "iOS", "Android"],
@@ -353,7 +338,7 @@ Inclua PELO MENOS 3-4 das seguintes métricas:
 - Markdown code blocks (\`\`\`json)
 - Texto explicativo antes ou depois
 - Comentários no JSON
-- Apenas o objeto JSON limpo começando com { e terminando com }`
+- Apenas o objeto JSON limpo começando com { e terminando com }`;
   }
 }
 
@@ -363,42 +348,62 @@ Inclua PELO MENOS 3-4 das seguintes métricas:
  * Protegido: Apenas ADMIN e EDITOR
  */
 export async function POST(request: NextRequest) {
-  const auth = await requireEditor(request)
-  if (!auth.success) return auth.response
-
-  const logger = ServiceLocator.getLogger()
-  logger.setContext({ endpoint: '/api/generate-article', method: 'POST', userId: auth.user.id })
-
   try {
-    const validation = ServiceLocator.getValidation()
+    // Verificar autenticação
+    const session = await getServerSession(authOptions);
 
-    // Verificar API key do ambiente (segurança)
-    const apiKey = process.env.PERPLEXITY_API_KEY
-
-    if (!apiKey) {
-      logger.error('Perplexity API key not configured')
-      return errorResponse('API key não configurada no servidor', 500)
+    if (!session || !session.user) {
+      return NextResponse.json(
+        { success: false, error: 'Não autenticado' },
+        { status: 401 }
+      );
     }
 
-    // Parse e valida request body
-    const body = await request.json()
-    const params = validation.validate(generateArticleRequestSchema, body)
+    // Verificar permissão de ADMIN ou EDITOR
+    if (session.user.role !== 'ADMIN' && session.user.role !== 'EDITOR') {
+      return NextResponse.json(
+        { success: false, error: 'Sem permissão. Apenas ADMIN e EDITOR podem gerar artigos.' },
+        { status: 403 }
+      );
+    }
 
-    logger.info('Generating article', {
-      topic: params.topic.substring(0, 50),
-      type: params.type,
-      model: params.model
-    })
+    // Obter API key do ambiente (segurança)
+    const apiKey = process.env.PERPLEXITY_API_KEY;
+
+    if (!apiKey) {
+      return NextResponse.json(
+        { success: false, error: 'API key não configurada no servidor' },
+        { status: 500 }
+      );
+    }
+
+    const body: GenerateArticleRequest = await request.json();
+    const { topic, type, model = 'sonar' } = body;
+
+    // Validação
+    if (!topic || !type) {
+      return NextResponse.json(
+        { success: false, error: 'Parâmetros obrigatórios faltando (topic, type)' },
+        { status: 400 }
+      );
+    }
+
+    if (!['news', 'educational', 'resource'].includes(type)) {
+      return NextResponse.json(
+        { success: false, error: 'Tipo inválido. Use: news, educational ou resource' },
+        { status: 400 }
+      );
+    }
 
     // Monta prompt
-    const prompt = buildPrompt(params)
+    const prompt = buildPrompt(body);
 
-    // Determina modelo otimizado baseado no tipo de artigo
-    const perplexityModel: 'sonar' | 'sonar-pro' = params.model === 'sonar-pro' ? 'sonar-pro' : 'sonar'
-    let search_recency_filter: 'day' | 'week' | 'month' | undefined
+    // 🎯 Determina modelo otimizado baseado no tipo de artigo
+    let perplexityModel: 'sonar' | 'sonar-pro' = model === 'sonar-pro' ? 'sonar-pro' : 'sonar';
+    let search_recency_filter: 'day' | 'week' | 'month' | undefined;
 
-    if (params.type === 'news') {
-      search_recency_filter = 'day' // Notícias: apenas últimas 24h
+    if (type === 'news') {
+      search_recency_filter = 'day'; // Notícias: apenas últimas 24h
     }
 
     // Chama Perplexity API com otimizações
@@ -416,116 +421,105 @@ export async function POST(request: NextRequest) {
           }
         ],
         temperature: 0.7,
-        top_p: 0.9,
-        max_tokens: params.model === 'sonar-pro' ? 2000 : 1500,
-        search_recency_filter,
-        return_citations: true,
+        top_p: 0.9, // Melhora foco das respostas
+        max_tokens: model === 'sonar-pro' ? 2000 : 1500,
+        search_recency_filter, // Apenas para notícias
+        return_citations: true, // Habilita citações [1][2][3] com URLs
       },
       apiKey
-    )
+    );
 
     // Captura citations da resposta
-    const citations = perplexityData.citations || []
+    const citations = perplexityData.citations || [];
 
-    const generatedText = perplexityData.choices[0].message.content
+    const generatedText = perplexityData.choices[0].message.content;
 
     // Parse JSON gerado (com múltiplas estratégias)
-    let articleData
+    let articleData;
     try {
-      let cleanedText = generatedText.trim()
+      let cleanedText = generatedText.trim();
 
       // Estratégia 1: Remover markdown code blocks se existirem
       if (cleanedText.startsWith('```')) {
-        cleanedText = cleanedText.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim()
+        cleanedText = cleanedText.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
       }
 
       // Estratégia 2: Extrair apenas o JSON (do primeiro { ao último })
-      const firstBrace = cleanedText.indexOf('{')
-      const lastBrace = cleanedText.lastIndexOf('}')
+      const firstBrace = cleanedText.indexOf('{');
+      const lastBrace = cleanedText.lastIndexOf('}');
 
       if (firstBrace !== -1 && lastBrace !== -1) {
-        cleanedText = cleanedText.substring(firstBrace, lastBrace + 1)
+        cleanedText = cleanedText.substring(firstBrace, lastBrace + 1);
       }
 
       // Tentar parsear
-      articleData = JSON.parse(cleanedText)
+      articleData = JSON.parse(cleanedText);
     } catch (parseError) {
-      logger.error('Error parsing Perplexity response', parseError as Error, {
-        responsePreview: generatedText.substring(0, 200)
-      })
+      console.error('Erro ao parsear resposta do Perplexity:', parseError);
+      console.error('Resposta recebida:', generatedText.substring(0, 500)); // Log primeiros 500 chars
 
-      return errorResponse('Erro ao parsear resposta da API. A IA não retornou JSON válido.', 500)
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Erro ao parsear resposta da API. A IA não retornou JSON válido.',
+          debug: generatedText.substring(0, 200) // Retorna início da resposta para debug
+        },
+        { status: 500 }
+      );
     }
 
     // Calcula custo estimado (usado em todos os tipos)
-    const inputTokens = perplexityData.usage?.prompt_tokens || 0
-    const outputTokens = perplexityData.usage?.completion_tokens || 0
+    const inputTokens = perplexityData.usage?.prompt_tokens || 0;
+    const outputTokens = perplexityData.usage?.completion_tokens || 0;
 
     // Custos por modelo (por 1M tokens)
-    let inputCost: number
-    let outputCost: number
+    let inputCost: number;
+    let outputCost: number;
 
-    if (params.model === 'sonar-pro') {
-      inputCost = (inputTokens / 1000000) * 3
-      outputCost = (outputTokens / 1000000) * 15
-    } else if (params.model === 'sonar-base') {
-      inputCost = (inputTokens / 1000000) * 0.2
-      outputCost = (outputTokens / 1000000) * 0.2
+    if (model === 'sonar-pro') {
+      inputCost = (inputTokens / 1000000) * 3;
+      outputCost = (outputTokens / 1000000) * 15;
+    } else if (model === 'sonar-base') {
+      inputCost = (inputTokens / 1000000) * 0.2; // $0.20 por 1M tokens
+      outputCost = (outputTokens / 1000000) * 0.2;
     } else {
-      inputCost = (inputTokens / 1000000) * 1
-      outputCost = (outputTokens / 1000000) * 1
+      inputCost = (inputTokens / 1000000) * 1;
+      outputCost = (outputTokens / 1000000) * 1;
     }
 
-    const requestCost = 0.005 // Taxa de requisição
-    const estimatedCost = inputCost + outputCost + requestCost
+    const requestCost = 0.005; // Taxa de requisição
+    const estimatedCost = inputCost + outputCost + requestCost;
 
     // Para recursos, retornar estrutura diretamente sem processar
-    if (params.type === 'resource') {
-      logger.info('Resource generated successfully', {
-        name: articleData.name,
-        category: articleData.category,
-        inputTokens,
-        outputTokens,
-        cost: estimatedCost
-      })
-
-      return successResponse({
+    if (type === 'resource') {
+      return NextResponse.json({
+        success: true,
         data: {
-          ...articleData,
-          citations
+          ...articleData, // Retorna todo o JSON do resource
+          citations // Adiciona citations
         },
         usage: {
           inputTokens,
           outputTokens,
           estimatedCost: parseFloat(estimatedCost.toFixed(6))
         }
-      })
+      });
     }
 
     // Processa conteúdo seguindo regras da skill (apenas para news/educational)
-    const processedContent = processArticleContent(articleData.content, params.type)
+    const processedContent = processArticleContent(articleData.content, type);
 
     // Valida conteúdo processado
-    const validationResult = validateArticleContent(processedContent, params.type)
+    const validation = validateArticleContent(processedContent, type);
 
     // Extrai/gera metadados
-    const excerpt = params.type === 'news'
+    const excerpt = type === 'news'
       ? articleData.excerpt
-      : articleData.description || extractExcerpt(processedContent)
+      : articleData.description || extractExcerpt(processedContent);
 
-    const slug = titleToSlug(articleData.title)
-    const readTime = calculateReadTime(processedContent)
-    const tags = articleData.tags || extractTags(processedContent)
-
-    logger.info('Article generated successfully', {
-      title: articleData.title,
-      slug,
-      type: params.type,
-      inputTokens,
-      outputTokens,
-      cost: estimatedCost,
-      validationScore: validationResult.score
-    })
+    const slug = titleToSlug(articleData.title);
+    const readTime = calculateReadTime(processedContent);
+    const tags = articleData.tags || extractTags(processedContent);
 
     // Monta resposta
     const response: GenerateArticleResponse = {
@@ -535,27 +529,31 @@ export async function POST(request: NextRequest) {
         slug,
         excerpt,
         content: processedContent,
-        category: articleData.category,
-        level: params.type === 'educational' ? articleData.level : undefined,
+        category: articleData.category, // Categoria determinada pela IA
+        level: type === 'educational' ? articleData.level : undefined, // Nível determinado pela IA
         tags,
         readTime,
-        sentiment: params.type === 'news' ? articleData.sentiment : undefined,
-        citations,
+        sentiment: type === 'news' ? articleData.sentiment : undefined,
+        citations, // Adiciona citations da API Perplexity
       },
       usage: {
         inputTokens,
         outputTokens,
         estimatedCost: parseFloat(estimatedCost.toFixed(6))
       },
-      validation: validationResult
-    }
+      validation // Adiciona resultado da validação
+    };
 
-    return successResponse(response)
+    return NextResponse.json(response);
 
   } catch (error) {
-    logger.error('Error generating article', error as Error)
-    return errorResponse(error as Error)
-  } finally {
-    logger.clearContext()
+    console.error('Error generating article:', error);
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Erro ao gerar artigo'
+      },
+      { status: 500 }
+    );
   }
 }
