@@ -119,12 +119,15 @@ export class ArticleService {
         })
       }
 
-      // Auto-calculate readTime if not provided
-      let readTime: number | string = data.readTime ?? this.validation.calculateReadTime(data.content)
-      // Ensure readTime is a number for database storage
-      if (typeof readTime === 'string') {
-        const match = readTime.match(/^(\d+)/)
-        readTime = match ? parseInt(match[1]) : this.validation.calculateReadTime(data.content)
+      // Auto-calculate readTime if not provided (returns "X min" format)
+      let readTime: string
+      if (data.readTime) {
+        // Convert to string format if number provided
+        readTime = typeof data.readTime === 'number'
+          ? `${data.readTime} min`
+          : data.readTime
+      } else {
+        readTime = this.validation.calculateReadTime(data.content)
       }
 
       // Sanitize content
@@ -449,7 +452,12 @@ export class ArticleService {
       if (data.sentiment !== undefined) updateData.sentiment = data.sentiment
       if (data.level !== undefined) updateData.level = data.level
       if (data.contentType !== undefined) updateData.contentType = data.contentType
-      if (data.readTime !== undefined) updateData.readTime = data.readTime
+      if (data.readTime !== undefined) {
+        // Ensure readTime is in string format "X min"
+        updateData.readTime = typeof data.readTime === 'number'
+          ? `${data.readTime} min`
+          : data.readTime
+      }
       if (data.warningLevel !== undefined) updateData.warningLevel = data.warningLevel
       if (data.securityTips !== undefined) {
         updateData.securityTips = JSON.stringify(data.securityTips)
