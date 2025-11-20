@@ -5,6 +5,18 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
 // GET /api/articles - Listar artigos com paginação
+// Helper para parse seguro de JSON
+function safeJSONParse<T>(json: string | null | undefined, fallback: T): T {
+  if (!json) return fallback;
+  try {
+    return JSON.parse(json);
+  } catch (e) {
+    console.error('Erro ao fazer parse de JSON:', e);
+    return fallback;
+  }
+}
+
+// GET /api/articles - Listar artigos com paginação
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -100,16 +112,9 @@ export async function GET(request: NextRequest) {
     });
 
     // Transformar para formato compatível com NewsItem ou EducationItem
-    const formattedArticles = articles.map((article: any) => {
+    const formattedArticles = articles.map((article) => {
       // Parse citations from factCheckSources
-      let citations: string[] | undefined;
-      if (article.factCheckSources) {
-        try {
-          citations = JSON.parse(article.factCheckSources);
-        } catch {
-          citations = undefined;
-        }
-      }
+      const citations = safeJSONParse<string[]>(article.factCheckSources, []);
 
       const baseData = {
         id: article.id,
@@ -145,7 +150,7 @@ export async function GET(request: NextRequest) {
         sources: ['$MILAGRE Research'],
         category: [article.category.charAt(0).toUpperCase() + article.category.slice(1)],
         sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
-        keywords: JSON.parse(article.tags || '[]'),
+        keywords: safeJSONParse<string[]>(article.tags, []),
         factChecked: true,
         lastVerified: article.updatedAt.toISOString()
       };
@@ -154,6 +159,9 @@ export async function GET(request: NextRequest) {
     // Calcular metadados de paginação
     const totalPages = Math.ceil(total / limit);
     const hasMore = page < totalPages;
+
+    // Debug log
+    console.log(`[API] Articles fetched: ${formattedArticles.length} (Total: ${total})`);
 
     return NextResponse.json({
       success: true,

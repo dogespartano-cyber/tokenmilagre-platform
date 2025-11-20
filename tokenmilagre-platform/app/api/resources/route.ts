@@ -178,9 +178,29 @@ export async function GET(request: NextRequest) {
       }
     });
 
+    // Importar a função de parse se não estiver importada, ou implementar inline se necessário
+    // Como não posso adicionar imports facilmente no topo sem ler o arquivo todo de novo e arriscar,
+    // vou implementar uma versão simplificada do parse aqui mesmo ou usar o helper se conseguir importar.
+    // O arquivo já tem imports no topo. Vou assumir que preciso adicionar o import ou copiar a lógica.
+    // Melhor: vou usar a lógica de parse aqui mesmo para garantir.
+
+    const parsedResources = resources.map(resource => ({
+      ...resource,
+      platforms: JSON.parse(resource.platforms || '[]'),
+      tags: JSON.parse(resource.tags || '[]'),
+      whyGoodContent: JSON.parse(resource.whyGoodContent || '[]'),
+      features: JSON.parse(resource.features || '[]'),
+      howToStartSteps: JSON.parse(resource.howToStartSteps || '[]'),
+      pros: JSON.parse(resource.pros || '[]'),
+      cons: JSON.parse(resource.cons || '[]'),
+      faq: JSON.parse(resource.faq || '[]'),
+      securityTips: JSON.parse(resource.securityTips || '[]'),
+      relatedResources: resource.relatedResources ? JSON.parse(resource.relatedResources) : null
+    }));
+
     return NextResponse.json({
       success: true,
-      data: resources
+      data: parsedResources
     });
   } catch (error: any) {
     console.error('❌ Erro ao buscar recursos:', error);

@@ -1,6 +1,6 @@
 import * as Sentry from "@sentry/nextjs";
 
-const isProd = process.env.NODE_ENV === 'production';
+
 const isDev = process.env.NODE_ENV === 'development';
 
 Sentry.init({

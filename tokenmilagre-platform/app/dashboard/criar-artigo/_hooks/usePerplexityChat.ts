@@ -97,7 +97,7 @@ function detectJSON(text: string): ProcessedArticle | null {
   }
 
   // Estratégia 1: Markdown code blocks
-  let jsonMatch = text.match(/```json\n?([\s\S]*?)```/);
+  const jsonMatch = text.match(/```json\n?([\s\S]*?)```/);
   if (jsonMatch) {
     if (isDev) console.log('✅ JSON encontrado em markdown block');
     try {

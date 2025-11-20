@@ -399,7 +399,7 @@ export async function POST(request: NextRequest) {
     const prompt = buildPrompt(body);
 
     // 🎯 Determina modelo otimizado baseado no tipo de artigo
-    let perplexityModel: 'sonar' | 'sonar-pro' = model === 'sonar-pro' ? 'sonar-pro' : 'sonar';
+    const perplexityModel: 'sonar' | 'sonar-pro' = model === 'sonar-pro' ? 'sonar-pro' : 'sonar';
     let search_recency_filter: 'day' | 'week' | 'month' | undefined;
 
     if (type === 'news') {

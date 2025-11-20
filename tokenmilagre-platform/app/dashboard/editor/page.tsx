@@ -147,7 +147,7 @@ function EditorContent() {
         : `/api/articles/${slug}`;
 
       // Preparar dados para envio
-      let dataToSave = { ...editedItem };
+      const dataToSave = { ...editedItem };
 
       // Para artigos, garantir que tags seja string JSON
       if (type !== 'resource') {

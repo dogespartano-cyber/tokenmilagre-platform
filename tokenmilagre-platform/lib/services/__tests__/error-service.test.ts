@@ -424,7 +424,7 @@ describe('ErrorService', () => {
     })
 
     it('should work as type assertion', () => {
-      let value: string | null = 'test'
+      const value: string | null = 'test'
       assertExists(value, 'Value not found')
       // TypeScript should now know value is string, not string | null
       const length: number = value.length // This should not cause TS error

@@ -1,0 +1,563 @@
+// Prisma Schema Hybrid (v1 + v2 Additions)
+// Data: 2025-11-20
+// Status: TRANSITIONAL
+// Strategy: Expand and Contract (Additive changes only)
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma-hybrid"
+  engineType = "library"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ============================================================================
+// ENUMS (v1 + v2)
+// ============================================================================
+
+enum Role {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum Sentiment {
+  positive
+  neutral
+  negative
+}
+
+enum WarningLevel {
+  info
+  warning
+  critical
+}
+
+enum StoryCategory {
+  transformation
+  social_project
+  achievement
+}
+
+enum ProjectCategory {
+  donations
+  microcredit
+  education
+  infrastructure
+}
+
+// v2 Enums
+enum ArticleStatus {
+  draft
+  published
+  archived
+}
+
+enum Level {
+  iniciante
+  intermediario
+  avancado
+}
+
+enum ContentType {
+  artigo
+  tutorial
+  curso
+}
+
+// ============================================================================
+// NEXTAUTH MODELS (v1)
+// ============================================================================
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ============================================================================
+// APPLICATION MODELS (v1 + v2)
+// ============================================================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String
+  image         String?
+  role          Role      @default(VIEWER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Gamificação (FASE 3)
+  points        Int       @default(0)
+  badges        String?   // JSON array de badges conquistados
+
+  // Relações
+  accounts Account[]
+  sessions Session[]
+  articles Article[]
+  copilotActivities CopilotActivity[]
+  communityStories CommunityStory[]
+  userProgress UserProgress[]
+}
+
+model Article {
+  id                 String    @id @default(cuid())
+  title              String
+  slug               String    @unique
+  content            String    // Markdown content
+
+  // v1: Type as String
+  type               String    @default("news") 
+
+  // v1: Excerpt
+  excerpt            String?
+
+  // v1: Published Boolean (Deprecated in v2, kept for compatibility)
+  published          Boolean   @default(false)
+
+  // v2: Status Enum (New source of truth for visibility)
+  status             ArticleStatus? @default(draft) // Optional to avoid breaking existing rows if not backfilled immediately
+
+  authorId           String
+  author             User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  // v1: Category as String (Deprecated in v2)
+  category           String    // Slug único
+
+  // v2: Category Relation (New)
+  categoryId         String?
+  categoryRel        Category? @relation(fields: [categoryId], references: [id])
+
+  // v1: Tags as JSON String (Deprecated in v2)
+  tags               String    // JSON array
+
+  // v2: Tags Relation (New)
+  tagsRel            ArticleTag[]
+
+  // Campos específicos de NOTÍCIAS
+  sentiment          Sentiment @default(neutral)
+
+  // Fact-checking fields
+  factCheckScore     Float?
+  factCheckSources   String?
+  factCheckDate      DateTime?
+  factCheckStatus    String?
+  citations          Citation[] // v2: Structured citations
+
+  // Campos específicos de ARTIGOS EDUCACIONAIS
+  level              String?   // v1 uses string. v2 uses Enum Level. Keep string for now or add levelEnum?
+  // v2 Level Enum
+  levelEnum          Level?
+
+  contentType        String?   // v1 uses string.
+  // v2 ContentType Enum
+  contentTypeEnum    ContentType?
+
+  readTime           String?
+
+  // FASE 1 - Segurança
+  warningLevel       WarningLevel?
+  securityTips       String?
+
+  // FASE 2 - Cursos e Relacionamentos
+  courseSequence     Int?
+  relatedArticles    String?       // JSON array (v1)
+  relatedFrom        ArticleRelation[] @relation("ArticleFrom") // v2
+  relatedTo          ArticleRelation[] @relation("ArticleTo")   // v2
+
+  projectHighlight   Boolean       @default(false)
+
+  // Imagem de Capa
+  coverImage         String?
+  coverImageAlt      String?
+
+  // FASE 5 - Cursos Interativos
+  quizData           String?
+
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  
+  // v2 Fields
+  publishedAt        DateTime?
+  deletedAt          DateTime?
+  viewCount          Int       @default(0)
+
+  @@index([authorId])
+  @@index([published])
+  @@index([slug])
+  @@index([category])
+  @@index([type])
+  @@index([projectHighlight])
+  
+  // v2 Indexes
+  @@index([status])
+  @@index([categoryId])
+  @@index([deletedAt])
+}
+
+// ============================================================================
+// NEW MODELS FROM v2
+// ============================================================================
+
+model Category {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  description String?
+  type        String    // 'news' | 'educational' | 'resource'
+
+  parentId    String?
+  parent      Category? @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryHierarchy")
+
+  icon        String?
+  color       String?
+  order       Int       @default(0)
+
+  articles    Article[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([slug])
+  @@index([type])
+  @@index([parentId])
+}
+
+model Tag {
+  id          String      @id @default(cuid())
+  slug        String      @unique
+  name        String
+
+  articles    ArticleTag[]
+
+  usageCount  Int         @default(0)
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([slug])
+  @@index([usageCount])
+}
+
+model ArticleTag {
+  articleId   String
+  article     Article   @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  tagId       String
+  tag         Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime  @default(now())
+
+  @@id([articleId, tagId])
+  @@index([articleId])
+  @@index([tagId])
+}
+
+model ArticleRelation {
+  fromArticleId String
+  fromArticle   Article   @relation("ArticleFrom", fields: [fromArticleId], references: [id], onDelete: Cascade)
+
+  toArticleId   String
+  toArticle     Article   @relation("ArticleTo", fields: [toArticleId], references: [id], onDelete: Cascade)
+
+  relationType  String    @default("related")
+  order         Int?
+
+  createdAt     DateTime  @default(now())
+
+  @@id([fromArticleId, toArticleId])
+  @@index([fromArticleId])
+  @@index([toArticleId])
+}
+
+model Citation {
+  id          String    @id @default(cuid())
+  url         String
+  title       String?
+  domain      String?
+
+  articleId   String
+  article     Article   @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  order       Int       @default(0)
+  verified    Boolean   @default(false)
+
+  createdAt   DateTime  @default(now())
+
+  @@index([articleId])
+  @@index([domain])
+}
+
+// ============================================================================
+// EXISTING MODELS (Unchanged)
+// ============================================================================
+
+model Resource {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  category    String
+  verified    Boolean  @default(true)
+  shortDescription String
+  officialUrl      String
+  platforms        String
+  tags             String
+  heroTitle       String
+  heroDescription String
+  heroGradient    String
+  whyGoodTitle   String
+  whyGoodContent String
+  features String
+  howToStartTitle String
+  howToStartSteps String
+  pros  String
+  cons  String
+  faq String
+  securityTips String
+  securityAudit       String?
+  securityAuditDate   DateTime?
+  auditedByCommunity  Boolean   @default(false)
+  toolConfig         String?
+  interactiveType    String?
+  showCompatibleWallets Boolean @default(false)
+  relatedResources      String?
+  views         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  lastVerified  DateTime @default(now())
+
+  @@index([slug])
+  @@index([category])
+  @@index([verified])
+  @@index([interactiveType])
+}
+
+model Cryptocurrency {
+  id                String   @id @default(cuid())
+  coingeckoId       String   @unique
+  symbol            String
+  name              String
+  currentPrice      Float?
+  marketCap         Float?
+  marketCapRank     Int?
+  totalVolume       Float?
+  high24h           Float?
+  low24h            Float?
+  priceChange24h    Float?
+  priceChangePercentage24h Float?
+  circulatingSupply Float?
+  totalSupply       Float?
+  maxSupply         Float?
+  ath               Float?
+  athDate           DateTime?
+  atl               Float?
+  atlDate           DateTime?
+  description       String?
+  homepage          String?
+  whitepaper        String?
+  blockchain        String?
+  socialLinks       String?
+  imageSmall        String?
+  imageLarge        String?
+  slug              String?
+  lastUpdated       DateTime @default(now())
+  createdAt         DateTime @default(now())
+
+  @@index([symbol])
+  @@index([marketCapRank])
+}
+
+model CopilotActivity {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action      String
+  parameters  String
+  result      String?
+  status      String
+  requiresConfirmation Boolean @default(false)
+  confirmed            Boolean @default(false)
+  confirmedAt          DateTime?
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model AutomationTask {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  type        String
+  schedule    String?
+  enabled     Boolean  @default(true)
+  lastRun     DateTime?
+  nextRun     DateTime?
+  runCount    Int      @default(0)
+  config      String?
+  lastResult  String?
+  lastStatus  String?
+  lastError   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([name])
+  @@index([enabled])
+  @@index([nextRun])
+}
+
+model CopilotReport {
+  id          String   @id @default(cuid())
+  type        String
+  title       String
+  startDate   DateTime
+  endDate     DateTime
+  summary     String
+  data        String
+  sections    String
+  generatedBy String
+  taskId      String?
+  articlesAnalyzed Int @default(0)
+  alertsFound      Int @default(0)
+  createdAt   DateTime @default(now())
+
+  @@index([type])
+  @@index([createdAt])
+  @@index([taskId])
+}
+
+model CommunityStory {
+  id           String        @id @default(cuid())
+  slug         String        @unique
+  authorName   String
+  authorAvatar String?
+  userId       String?
+  user         User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  title        String
+  content      String        @db.Text
+  category     StoryCategory
+  likes        Int           @default(0)
+  verified     Boolean       @default(false)
+  featured     Boolean       @default(false)
+  published    Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([published])
+  @@index([featured])
+  @@index([userId])
+}
+
+model SocialProject {
+  id              String          @id @default(cuid())
+  slug            String          @unique
+  name            String
+  description     String          @db.Text
+  longDescription String?         @db.Text
+  fundingGoal     Float
+  currentFunding  Float           @default(0)
+  currency        String          @default("BRL")
+  walletAddress   String?
+  category        ProjectCategory
+  location        String?
+  tags            String?
+  verified        Boolean         @default(false)
+  active          Boolean         @default(true)
+  featured        Boolean         @default(false)
+  startDate       DateTime
+  endDate         DateTime?
+  supporters      Int             @default(0)
+  views           Int             @default(0)
+  coverImage      String?
+  gallery         String?
+  organizer       String
+  organizerEmail  String?
+  organizerPhone  String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([verified])
+  @@index([active])
+  @@index([featured])
+}
+
+model ProjectMap {
+  id              String   @id @default(cuid())
+  projectId       String   @unique
+  latitude        Float
+  longitude       Float
+  address         String?
+  city            String
+  state           String
+  country         String   @default("Brasil")
+  markerColor     String   @default("#8B5CF6")
+  markerIcon      String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([city])
+  @@index([state])
+}
+
+model UserProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  articleSlug String
+  completed   Boolean  @default(false)
+  progress    Int      @default(0)
+  quizScore   Float?
+  quizAttempts Int     @default(0)
+  certificateIssued Boolean @default(false)
+  certificateUrl    String?
+  startedAt   DateTime @default(now())
+  completedAt DateTime?
+  lastAccessed DateTime @default(now())
+
+  @@unique([userId, articleSlug])
+  @@index([userId])
+  @@index([articleSlug])
+  @@index([completed])
+}

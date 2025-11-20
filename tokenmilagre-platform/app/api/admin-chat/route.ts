@@ -362,7 +362,7 @@ export async function POST(request: NextRequest) {
 
     // Preparar mensagens com contexto
     // Garantir que todos os contents são strings válidas
-    let validatedMessages = messages.map(msg => ({
+    const validatedMessages = messages.map(msg => ({
       role: msg.role,
       content: String(msg.content || '') // Garantir que é string
     }));

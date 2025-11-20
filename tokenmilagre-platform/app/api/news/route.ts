@@ -22,6 +22,17 @@ interface NewsItem {
   lastVerified?: string;
 }
 
+// Helper para parse seguro de JSON
+function safeJSONParse<T>(json: string | null | undefined, fallback: T): T {
+  if (!json) return fallback;
+  try {
+    return JSON.parse(json);
+  } catch (e) {
+    console.error('Erro ao fazer parse de JSON:', e);
+    return fallback;
+  }
+}
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -59,11 +70,11 @@ export async function GET(request: Request) {
       content: article.content,
       url: `/dashboard/noticias/${article.slug}`,
       source: '$MILAGRE Research',
-      sources: article.factCheckSources ? JSON.parse(article.factCheckSources) : [],
+      sources: safeJSONParse<string[]>(article.factCheckSources, []),
       publishedAt: article.createdAt.toISOString(),
       category: [article.category.charAt(0).toUpperCase() + article.category.slice(1)],
       sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
-      keywords: JSON.parse(article.tags || '[]'),
+      keywords: safeJSONParse<string[]>(article.tags, []),
       factChecked: article.factCheckStatus === 'verified',
       lastVerified: article.updatedAt.toISOString()
     }));

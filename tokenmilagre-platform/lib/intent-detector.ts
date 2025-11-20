@@ -236,7 +236,7 @@ function detectArticleSubtype(message: string): 'news' | 'educational' | 'resour
  */
 function extractTopic(message: string): string | undefined {
   // Remove palavras de comando
-  let topic = message
+  const topic = message
     .replace(/^(cri(e|ar)|ger(e|ar)|escreva?|fa[çc]a)\s+/i, '')
     .replace(/^(uma?\s+)?(notícia|artigo|conte[uú]do|p[aá]gina|recurso)\s+(sobre|de|em)?\s*/i, '')
     .trim();
@@ -277,7 +277,7 @@ function extractSection(message: string): string | undefined {
  */
 function extractEditInstruction(message: string): string | undefined {
   // Remover palavras de comando no início
-  let instruction = message
+  const instruction = message
     .replace(/^(edit(e|ar)|modifiqu(e|ar)|alter(e|ar)|actualiz(e|ar)|corrij(a|ir)|consert(e|ar)|remov(a|er)|retir(e|ar))\s+/i, '')
     .replace(/^(o\s+|a\s+)?(artigo|not[ií]cia)\s+/i, '')
     .trim();

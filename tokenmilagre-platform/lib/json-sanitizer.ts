@@ -21,7 +21,7 @@ export function sanitizeJSON(jsonString: string): string {
  */
 export function extractJSON(text: string): string | null {
   // Estratégia 1: Markdown code blocks
-  let jsonMatch = text.match(/```json\n?([\s\S]*?)```/);
+  const jsonMatch = text.match(/```json\n?([\s\S]*?)```/);
   if (jsonMatch) {
     return jsonMatch[1];
   }
