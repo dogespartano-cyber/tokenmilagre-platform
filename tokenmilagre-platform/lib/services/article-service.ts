@@ -200,19 +200,15 @@ export class ArticleService {
    * Get article by ID
    *
    * @param id - Article ID
-   * @param includeDeleted - Include soft-deleted articles
    * @returns Article with author
    * @throws NotFoundError if article not found
    */
-  async getById(id: string, includeDeleted: boolean = false): Promise<ArticleWithRelations> {
+  async getById(id: string): Promise<ArticleWithRelations> {
     this.logger.setContext({ operation: 'article.getById', id })
 
     try {
-      const article = await prisma.article.findFirst({
-        where: {
-          id,
-          ...(includeDeleted ? {} : { deletedAt: null }),
-        },
+      const article = await prisma.article.findUnique({
+        where: { id },
         include: {
           author: {
             select: { id: true, name: true, email: true },
@@ -246,11 +242,8 @@ export class ArticleService {
     this.logger.setContext({ operation: 'article.getBySlug', slug })
 
     try {
-      const article = await prisma.article.findFirst({
-        where: {
-          slug,
-          deletedAt: null,
-        },
+      const article = await prisma.article.findUnique({
+        where: { slug },
         include: {
           author: {
             select: { id: true, name: true, email: true },
@@ -398,9 +391,9 @@ export class ArticleService {
     try {
       this.logger.info('Updating article', { id, fields: Object.keys(data) })
 
-      // Check if article exists (use findFirst to support deletedAt filter)
-      const existing = await prisma.article.findFirst({
-        where: { id, deletedAt: null },
+      // Check if article exists
+      const existing = await prisma.article.findUnique({
+        where: { id },
         select: { id: true, slug: true },
       })
 
@@ -715,7 +708,7 @@ export class ArticleService {
     // Verify related articles exist
     if (data.relatedArticleIds && data.relatedArticleIds.length > 0) {
       const articles = await prisma.article.findMany({
-        where: { id: { in: data.relatedArticleIds }, deletedAt: null },
+        where: { id: { in: data.relatedArticleIds } },
         select: { id: true },
       })
 
