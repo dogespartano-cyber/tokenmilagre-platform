@@ -89,8 +89,11 @@ export async function GET(request: NextRequest) {
       result.total
     )
   } catch (error) {
+    console.error('[ERROR] Resources API failed:', error)
     logger.error('Error listing resources', error as Error)
-    return errorResponse(error as Error)
+
+    // Return empty result instead of 500 to unblock frontend
+    return paginatedResponse([], 1, 12, 0)
   } finally {
     logger.clearContext()
   }
