@@ -61,42 +61,20 @@ export async function GET(request: NextRequest) {
     // Fetch resources using service layer
     const result = await resourceService.list(query)
 
-    console.log('[DEBUG] Resources fetched:', result.resources.length)
-    console.log('[DEBUG] First resource:', result.resources[0]?.slug)
-
-    // Parse JSON fields with detailed error handling
-    const parsedResources = [];
-    for (let idx = 0; idx < result.resources.length; idx++) {
-      const resource = result.resources[idx];
-      try {
-        console.log(`[DEBUG] Parsing resource ${idx}: ${resource.slug}`)
-        const parsed = {
-          ...resource,
-          platforms: safeJSONParse(resource.platforms, []),
-          tags: safeJSONParse(resource.tags, []),
-          whyGoodContent: safeJSONParse(resource.whyGoodContent, []),
-          features: safeJSONParse(resource.features, []),
-          howToStartSteps: safeJSONParse(resource.howToStartSteps, []),
-          pros: safeJSONParse(resource.pros, []),
-          cons: safeJSONParse(resource.cons, []),
-          faq: safeJSONParse(resource.faq, []),
-          securityTips: safeJSONParse(resource.securityTips, []),
-          relatedResources: resource.relatedResources ? safeJSONParse(resource.relatedResources, null) : null
-        };
-        parsedResources.push(parsed);
-      } catch (parseError) {
-        console.error(`[ERROR] Failed to parse resource ${idx} (${resource.slug}):`, parseError);
-        logger.error('Resource parse error', parseError as Error, {
-          resourceId: resource.id,
-          slug: resource.slug,
-          index: idx
-        });
-        // Skip this resource and continue
-        continue;
-      }
-    }
-
-    console.log('[DEBUG] Resources parsed successfully:', parsedResources.length)
+    // Parse JSON fields
+    const parsedResources = result.resources.map((resource) => ({
+      ...resource,
+      platforms: safeJSONParse(resource.platforms, []),
+      tags: safeJSONParse(resource.tags, []),
+      whyGoodContent: safeJSONParse(resource.whyGoodContent, []),
+      features: safeJSONParse(resource.features, []),
+      howToStartSteps: safeJSONParse(resource.howToStartSteps, []),
+      pros: safeJSONParse(resource.pros, []),
+      cons: safeJSONParse(resource.cons, []),
+      faq: safeJSONParse(resource.faq, []),
+      securityTips: safeJSONParse(resource.securityTips, []),
+      relatedResources: resource.relatedResources ? safeJSONParse(resource.relatedResources, null) : null
+    }))
 
     logger.info('Resources listed successfully', {
       count: parsedResources.length,
