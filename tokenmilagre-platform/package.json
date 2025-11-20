@@ -20,7 +20,7 @@
     "audit:report": "./scripts/utils/audit-deps.sh report",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "prepare": "husky install || true",
+    "prepare": "node -e \"process.env.CI ? process.exit(0) : require('child_process').exec('husky install', (e) => e && console.log(e))\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
