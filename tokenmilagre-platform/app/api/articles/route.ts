@@ -11,7 +11,7 @@
 
 import { NextRequest } from 'next/server'
 import { ServiceLocator } from '@/lib/di/container'
-import { successResponse, errorResponse } from '@/lib/helpers/response-helpers'
+import { paginatedResponse, successResponse, errorResponse } from '@/lib/helpers/response-helpers'
 import { requireEditor } from '@/lib/helpers/auth-helpers'
 import { articleQueryInputCurrent, articleCreateInputCurrent } from '@/lib/schemas/article-schemas'
 
@@ -124,17 +124,12 @@ export async function GET(request: NextRequest) {
       page: result.page,
     })
 
-    return successResponse({
-      data: formattedArticles,
-      pagination: {
-        page: result.page,
-        limit: result.limit,
-        total: result.total,
-        totalPages: result.totalPages,
-        hasMore: result.hasMore,
-        count: formattedArticles.length,
-      },
-    })
+    return paginatedResponse(
+      formattedArticles,
+      result.page,
+      result.limit,
+      result.total
+    )
   } catch (error) {
     logger.error('Error listing articles', error as Error)
     return errorResponse(error as Error)

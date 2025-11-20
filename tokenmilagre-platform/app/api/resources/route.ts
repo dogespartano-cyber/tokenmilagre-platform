@@ -11,7 +11,7 @@
 
 import { NextRequest } from 'next/server'
 import { ServiceLocator } from '@/lib/di/container'
-import { successResponse, errorResponse } from '@/lib/helpers/response-helpers'
+import { paginatedResponse, errorResponse } from '@/lib/helpers/response-helpers'
 import { requireEditor } from '@/lib/helpers/auth-helpers'
 import { resourceCreateSchema, resourceQuerySchema } from '@/lib/schemas/resource-schemas'
 
@@ -104,17 +104,12 @@ export async function GET(request: NextRequest) {
       page: result.page
     })
 
-    return successResponse({
-      data: parsedResources,
-      pagination: {
-        page: result.page,
-        limit: result.limit,
-        total: result.total,
-        totalPages: result.totalPages,
-        hasMore: result.hasMore,
-        count: parsedResources.length
-      }
-    })
+    return paginatedResponse(
+      parsedResources,
+      result.page,
+      result.limit,
+      result.total
+    )
   } catch (error) {
     logger.error('Error listing resources', error as Error)
     return errorResponse(error as Error)
