@@ -1,222 +1,109 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
-import bcrypt from 'bcryptjs';
+import { NextRequest } from 'next/server';
+import { requireAdmin } from '@/lib/helpers/auth-helpers';
+import { successResponse, errorResponse, notFoundResponse } from '@/lib/helpers/response-helpers';
+import { ServiceLocator } from '@/lib/di/container';
+import { userUpdateSchema } from '@/lib/schemas/user-schemas';
 
 /**
  * PATCH /api/admin/users/[id]
- * Atualiza usuário (role, nome, senha)
- * Protegido: Apenas ADMIN
+ * Updates user (role, name, password, etc.)
+ * Protected: ADMIN only
+ *
+ * @param id - User ID to update
+ * @returns Updated user (without password)
  */
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // 1. Authentication & Authorization
+  const auth = await requireAdmin(request);
+  if (!auth.success) return auth.response;
+
+  const { id } = await params;
+
+  // 2. Logging context
+  const logger = ServiceLocator.getLogger();
+  logger.setContext({ endpoint: `/api/admin/users/${id}`, method: 'PATCH', userId: auth.user.id });
+
   try {
-    const { id } = await params;
+    logger.info('Updating user', { targetUserId: id });
 
-    // Verificar autenticação
-    const session = await getServerSession(authOptions);
+    // 3. Get services
+    const userService = ServiceLocator.getUser();
+    const validation = ServiceLocator.getValidation();
 
-    if (!session || !session.user) {
-      return NextResponse.json(
-        { success: false, error: 'Não autenticado' },
-        { status: 401 }
-      );
-    }
-
-    // Verificar permissão de ADMIN
-    if (session.user.role !== 'ADMIN') {
-      return NextResponse.json(
-        { success: false, error: 'Sem permissão' },
-        { status: 403 }
-      );
-    }
-
-    // Verificar se usuário existe
-    const existingUser = await prisma.user.findUnique({
-      where: { id }
-    });
-
+    // 4. Check if user exists
+    const existingUser = await userService.getById(id);
     if (!existingUser) {
-      return NextResponse.json(
-        { success: false, error: 'Usuário não encontrado' },
-        { status: 404 }
-      );
+      return notFoundResponse('User', { id });
     }
 
-    // Parse body (UMA VEZ)
+    // 5. Parse and validate body
     const body = await request.json();
-    const { name, email, role, password } = body;
 
-    // Impedir que admin se remova como admin (última linha de defesa)
-    if (session.user.id === id) {
-      if (role && role !== 'ADMIN') {
-        return NextResponse.json(
-          { success: false, error: 'Você não pode alterar sua própria role' },
-          { status: 400 }
-        );
-      }
+    // Prevent admin from changing their own role
+    if (auth.user.id === id && body.role && body.role !== 'ADMIN') {
+      return errorResponse('You cannot change your own role', 400);
     }
 
-    // Validar role se fornecida
-    if (role && !['ADMIN', 'EDITOR', 'VIEWER'].includes(role)) {
-      return NextResponse.json(
-        { success: false, error: 'Role inválida' },
-        { status: 400 }
-      );
-    }
+    // Validate using Zod schema
+    const validated = validation.validate(userUpdateSchema, body);
 
-    // Se está alterando email, verificar se já existe
-    if (email && email !== existingUser.email) {
-      const emailExists = await prisma.user.findUnique({
-        where: { email }
-      });
+    // 6. Update user using service
+    const updatedUser = await userService.update(id, validated, auth.user.id);
 
-      if (emailExists) {
-        return NextResponse.json(
-          { success: false, error: 'Email já cadastrado' },
-          { status: 400 }
-        );
-      }
-    }
+    logger.info('User updated successfully', { targetUserId: id, email: updatedUser.email });
 
-    // Preparar dados de atualização
-    const updateData: any = {};
-
-    if (name !== undefined) updateData.name = name;
-    if (email !== undefined) updateData.email = email;
-    if (role !== undefined) updateData.role = role;
-
-    // Se senha foi fornecida, hash e atualizar
-    if (password) {
-      if (password.length < 6) {
-        return NextResponse.json(
-          { success: false, error: 'Senha deve ter pelo menos 6 caracteres' },
-          { status: 400 }
-        );
-      }
-      updateData.password = await bcrypt.hash(password, 10);
-    }
-
-    // Atualizar usuário
-    const updatedUser = await prisma.user.update({
-      where: { id },
-      data: updateData,
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        role: true,
-        image: true,
-        createdAt: true,
-        updatedAt: true
-      }
-    });
-
-    return NextResponse.json({
-      success: true,
-      data: updatedUser,
-      message: 'Usuário atualizado com sucesso'
-    });
+    // 7. Return standardized response
+    return successResponse(updatedUser);
   } catch (error) {
-    console.error('Error updating user:', error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : 'Erro ao atualizar usuário'
-      },
-      { status: 500 }
-    );
+    logger.error('Error updating user', error as Error, { targetUserId: id });
+    return errorResponse(error as Error);
+  } finally {
+    logger.clearContext();
   }
 }
 
 /**
  * DELETE /api/admin/users/[id]
- * Deleta usuário
- * Protegido: Apenas ADMIN
+ * Deletes user
+ * Protected: ADMIN only
+ *
+ * @param id - User ID to delete
+ * @returns Success message
  */
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // 1. Authentication & Authorization
+  const auth = await requireAdmin(request);
+  if (!auth.success) return auth.response;
+
+  const { id } = await params;
+
+  // 2. Logging context
+  const logger = ServiceLocator.getLogger();
+  logger.setContext({ endpoint: `/api/admin/users/${id}`, method: 'DELETE', userId: auth.user.id });
+
   try {
-    const { id } = await params;
+    logger.info('Deleting user', { targetUserId: id });
 
-    // Verificar autenticação
-    const session = await getServerSession(authOptions);
+    // 3. Get service
+    const userService = ServiceLocator.getUser();
 
-    if (!session || !session.user) {
-      return NextResponse.json(
-        { success: false, error: 'Não autenticado' },
-        { status: 401 }
-      );
-    }
+    // 4. Delete user using service (service handles all validations)
+    await userService.delete(id, auth.user.id);
 
-    // Verificar permissão de ADMIN
-    if (session.user.role !== 'ADMIN') {
-      return NextResponse.json(
-        { success: false, error: 'Sem permissão' },
-        { status: 403 }
-      );
-    }
+    logger.info('User deleted successfully', { targetUserId: id });
 
-    // Impedir que admin delete a si mesmo
-    if (session.user.id === id) {
-      return NextResponse.json(
-        { success: false, error: 'Você não pode deletar sua própria conta' },
-        { status: 400 }
-      );
-    }
-
-    // Verificar se usuário existe
-    const user = await prisma.user.findUnique({
-      where: { id },
-      include: {
-        _count: {
-          select: { articles: true }
-        }
-      }
-    });
-
-    if (!user) {
-      return NextResponse.json(
-        { success: false, error: 'Usuário não encontrado' },
-        { status: 404 }
-      );
-    }
-
-    // Avisar se usuário tem artigos (opcional - pode deletar em cascata ou impedir)
-    if (user._count.articles > 0) {
-      // Por segurança, vou impedir a deleção se tiver artigos
-      // Alternativa: deletar em cascata ou transferir artigos
-      return NextResponse.json(
-        {
-          success: false,
-          error: `Não é possível deletar usuário com ${user._count.articles} artigo(s) publicado(s). Delete os artigos primeiro.`
-        },
-        { status: 400 }
-      );
-    }
-
-    // Deletar usuário
-    await prisma.user.delete({
-      where: { id }
-    });
-
-    return NextResponse.json({
-      success: true,
-      message: 'Usuário deletado com sucesso'
-    });
+    // 5. Return standardized response
+    return successResponse({ message: 'User deleted successfully' });
   } catch (error) {
-    console.error('Error deleting user:', error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : 'Erro ao deletar usuário'
-      },
-      { status: 500 }
-    );
+    logger.error('Error deleting user', error as Error, { targetUserId: id });
+    return errorResponse(error as Error);
+  } finally {
+    logger.clearContext();
   }
 }
