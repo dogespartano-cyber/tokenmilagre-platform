@@ -428,7 +428,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Kasnen\\Desktop\\Claude\\Gemini\\tokenmilagre-platform\\tokenmilagre-platform\\lib\\generated\\prisma",
+      "value": "/home/user/tokenmilagre-platform/tokenmilagre-platform/lib/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -437,17 +437,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Kasnen\\Desktop\\Claude\\Gemini\\tokenmilagre-platform\\tokenmilagre-platform\\prisma\\schema.prisma",
+    "sourceFilePath": "/home/user/tokenmilagre-platform/tokenmilagre-platform/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../../prisma",
   "clientVersion": "6.19.0",

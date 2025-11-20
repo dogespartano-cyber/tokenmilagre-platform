@@ -1,10 +1,20 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { Prisma } from '@/lib/generated/prisma';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+/**
+ * Articles API Route
+ *
+ * Handles article listing (GET) and creation (POST) with:
+ * - Service layer integration (ArticleService)
+ * - Zod validation for all inputs
+ * - Structured logging with context
+ * - Standardized response format
+ * - Auth helpers for role-based access
+ */
 
-// GET /api/articles - Listar artigos com paginação
+import { NextRequest } from 'next/server'
+import { ServiceLocator } from '@/lib/di/container'
+import { successResponse, errorResponse } from '@/lib/helpers/response-helpers'
+import { requireEditor } from '@/lib/helpers/auth-helpers'
+import { articleQueryInputCurrent, articleCreateInputCurrent } from '@/lib/schemas/article-schemas'
+
 // Helper para parse seguro de JSON
 function safeJSONParse<T>(json: string | null | undefined, fallback: T): T {
   if (!json) return fallback;
@@ -16,103 +26,55 @@ function safeJSONParse<T>(json: string | null | undefined, fallback: T): T {
   }
 }
 
-// GET /api/articles - Listar artigos com paginação
+/**
+ * GET /api/articles - List articles with pagination and filters
+ *
+ * Query params:
+ * - page: Page number (default 1)
+ * - limit: Items per page (default 12, max 100)
+ * - category: Filter by category
+ * - published: Filter by published status (true/false/all)
+ * - type: Filter by type (news/educational)
+ * - level: Filter by level (iniciante/intermediario/avancado)
+ * - search/query: Text search across title, excerpt, content, tags
+ * - sortBy: Sort field (default: createdAt)
+ * - sortOrder: Sort direction (asc/desc, default: desc)
+ */
 export async function GET(request: NextRequest) {
+  const logger = ServiceLocator.getLogger()
+  logger.setContext({ endpoint: '/api/articles', method: 'GET' })
+
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const category = searchParams.get('category');
-    const published = searchParams.get('published');
-    const type = searchParams.get('type');
-    const level = searchParams.get('level');
-    const query = searchParams.get('query'); // Busca por texto
+    const validation = ServiceLocator.getValidation()
+    const articleService = ServiceLocator.getArticle()
 
-    // Paginação
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '12');
-    const skip = (page - 1) * limit;
-
-    const where: Prisma.ArticleWhereInput = {};
-
-    // Filtrar por busca de texto (título, excerpt, conteúdo, tags)
-    if (query) {
-      where.OR = [
-        { title: { contains: query, mode: 'insensitive' } },
-        { excerpt: { contains: query, mode: 'insensitive' } },
-        { content: { contains: query, mode: 'insensitive' } },
-        { tags: { contains: query } }
-      ];
+    // Parse and validate query parameters
+    const searchParams = request.nextUrl.searchParams
+    const rawQuery = {
+      page: searchParams.get('page') || undefined,
+      limit: searchParams.get('limit') || undefined,
+      category: searchParams.get('category') || undefined,
+      published: searchParams.get('published') || undefined,
+      type: searchParams.get('type') || undefined,
+      level: searchParams.get('level') || undefined,
+      search: searchParams.get('search') || searchParams.get('query') || undefined,
+      sortBy: searchParams.get('sortBy') || undefined,
+      sortOrder: searchParams.get('sortOrder') || undefined,
     }
 
-    // Filtrar por tipo (news ou educational)
-    if (type) {
-      where.type = type;
-    }
+    const query = validation.validate(articleQueryInputCurrent, rawQuery)
 
-    // Filtrar por categoria
-    if (category && category !== 'all') {
-      where.category = category;
-    }
+    logger.info('Listing articles', {
+      page: query.page,
+      limit: query.limit,
+      filters: { category: query.category, type: query.type, level: query.level }
+    })
 
-    // Filtrar por nível (para artigos educacionais)
-    if (level && level !== 'all') {
-      where.level = level;
-    }
+    // Fetch articles using service layer
+    const result = await articleService.list(query)
 
-    // Filtrar por publicados/rascunhos
-    if (published === 'all') {
-      // Não filtrar - mostrar todos
-    } else if (published === 'true') {
-      where.published = true;
-    } else if (published === 'false') {
-      where.published = false;
-    } else if (!published) {
-      // Por padrão, mostrar apenas publicados
-      where.published = true;
-    }
-
-    // Buscar total de artigos (para calcular hasMore)
-    const total = await prisma.article.count({ where });
-
-    // Buscar artigos com paginação
-    const articles = await prisma.article.findMany({
-      where,
-      select: {
-        id: true,
-        title: true,
-        slug: true,
-        content: true,
-        excerpt: true,
-        type: true,
-        category: true,
-        tags: true,
-        sentiment: true,
-        level: true,
-        contentType: true,
-        readTime: true,
-        published: true,
-        factCheckSources: true,
-        coverImage: true,
-        coverImageAlt: true,
-        createdAt: true,
-        updatedAt: true,
-        author: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            role: true
-          }
-        }
-      },
-      orderBy: {
-        createdAt: 'desc'
-      },
-      skip,
-      take: limit
-    });
-
-    // Transformar para formato compatível com NewsItem ou EducationItem
-    const formattedArticles = articles.map((article) => {
+    // Transform articles for API response
+    const formattedArticles = result.articles.map((article) => {
       // Parse citations from factCheckSources
       const citations = safeJSONParse<string[]>(article.factCheckSources, []);
 
@@ -123,13 +85,13 @@ export async function GET(request: NextRequest) {
         summary: article.excerpt || '',
         content: article.content,
         publishedAt: article.createdAt.toISOString(),
-        author: article.author.name || article.author.email,
-        citations, // Add citations to base data
+        author: article.author?.name || article.author?.email || 'Unknown',
+        citations,
         coverImage: article.coverImage || undefined,
-        coverImageAlt: article.coverImageAlt || undefined
-      };
+        coverImageAlt: article.coverImageAlt || undefined,
+      }
 
-      // Se for artigo educacional, incluir campos específicos
+      // Educational article format
       if (article.type === 'educational') {
         return {
           ...baseData,
@@ -137,11 +99,11 @@ export async function GET(request: NextRequest) {
           level: article.level || 'iniciante',
           contentType: article.contentType || 'Artigo',
           readTime: article.readTime || '5 min',
-          category: article.category
-        };
+          category: article.category,
+        }
       }
 
-      // Se for notícia, incluir campos específicos
+      // News article format
       return {
         ...baseData,
         type: article.type,
@@ -152,135 +114,91 @@ export async function GET(request: NextRequest) {
         sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
         keywords: safeJSONParse<string[]>(article.tags, []),
         factChecked: true,
-        lastVerified: article.updatedAt.toISOString()
-      };
-    });
+        lastVerified: article.updatedAt.toISOString(),
+      }
+    })
 
-    // Calcular metadados de paginação
-    const totalPages = Math.ceil(total / limit);
-    const hasMore = page < totalPages;
+    logger.info('Articles listed successfully', {
+      count: formattedArticles.length,
+      total: result.total,
+      page: result.page,
+    })
 
-    // Debug log
-    console.log(`[API] Articles fetched: ${formattedArticles.length} (Total: ${total})`);
-
-    return NextResponse.json({
-      success: true,
+    return successResponse({
       data: formattedArticles,
       pagination: {
-        page,
-        limit,
-        total,
-        totalPages,
-        hasMore,
-        count: formattedArticles.length
-      }
-    });
+        page: result.page,
+        limit: result.limit,
+        total: result.total,
+        totalPages: result.totalPages,
+        hasMore: result.hasMore,
+        count: formattedArticles.length,
+      },
+    })
   } catch (error) {
-    console.error('Erro ao buscar artigos:', error);
-    return NextResponse.json(
-      { success: false, error: 'Erro ao buscar artigos' },
-      { status: 500 }
-    );
+    logger.error('Error listing articles', error as Error)
+    return errorResponse(error as Error)
+  } finally {
+    logger.clearContext()
   }
 }
 
-// POST /api/articles - Criar novo artigo (autenticado)
+/**
+ * POST /api/articles - Create new article
+ *
+ * Requires: ADMIN or EDITOR role
+ *
+ * Body params:
+ * - title: Article title (required)
+ * - slug: URL-friendly slug (required)
+ * - content: Article content (required)
+ * - category: Article category (required)
+ * - excerpt: Short description
+ * - tags: Array of tags or JSON string
+ * - published: Publication status (default: false)
+ * - type: Article type (news/educational, default: news)
+ * - level: Education level (iniciante/intermediario/avancado)
+ * - sentiment: Sentiment (positive/neutral/negative, default: neutral)
+ * - readTime: Estimated read time (auto-calculated if not provided)
+ * - authorId: Override author (defaults to current user)
+ * - factCheckSources: Citations (JSON array of URLs)
+ * - coverImage: Cover image URL
+ * - coverImageAlt: Cover image alt text
+ */
 export async function POST(request: NextRequest) {
+  const auth = await requireEditor(request)
+  if (!auth.success) return auth.response
+
+  const logger = ServiceLocator.getLogger()
+  logger.setContext({ endpoint: '/api/articles', method: 'POST', userId: auth.user.id })
+
   try {
-    const session = await getServerSession(authOptions);
+    const validation = ServiceLocator.getValidation()
+    const articleService = ServiceLocator.getArticle()
 
-    if (!session || !session.user) {
-      return NextResponse.json(
-        { success: false, error: 'Não autenticado' },
-        { status: 401 }
-      );
-    }
+    // Parse and validate request body
+    const body = await request.json()
 
-    // Verificar se é ADMIN ou EDITOR
-    if (session.user.role !== 'ADMIN' && session.user.role !== 'EDITOR') {
-      return NextResponse.json(
-        { success: false, error: 'Sem permissão' },
-        { status: 403 }
-      );
-    }
+    logger.info('Creating article', { slug: body.slug, type: body.type })
 
-    const body = await request.json();
-    const {
-      title,
-      slug,
-      content,
-      excerpt,
-      category,
-      tags,
-      published,
-      type,
-      level,
-      sentiment,
-      readTime,
-      authorId, // Permite passar authorId explicitamente (para geração por IA)
-      factCheckSources, // Citations do Perplexity (JSON array de URLs)
-      coverImage,
-      coverImageAlt
-    } = body;
+    // Validate using Zod schema
+    const validated = validation.validate(articleCreateInputCurrent, body)
 
-    // Validação
-    if (!title || !slug || !content || !category) {
-      return NextResponse.json(
-        { success: false, error: 'Campos obrigatórios faltando' },
-        { status: 400 }
-      );
-    }
+    // Create article using service layer
+    // Service handles JSON stringification and authorId fallback
+    const article = await articleService.create(validated, auth.user.id)
 
-    // Verificar se slug já existe
-    const existing = await prisma.article.findUnique({
-      where: { slug }
-    });
+    logger.info('Article created successfully', {
+      articleId: article.id,
+      slug: article.slug,
+      published: article.published
+    })
 
-    if (existing) {
-      return NextResponse.json(
-        { success: false, error: 'Slug já existe' },
-        { status: 400 }
-      );
-    }
-
-    // Criar artigo
-    const article = await prisma.article.create({
-      data: {
-        title,
-        slug,
-        content,
-        excerpt: excerpt || '',
-        category,
-        tags: typeof tags === 'string' ? tags : JSON.stringify(tags || []),
-        published: published ?? false,
-        type: type || 'news',
-        level: level || null,
-        sentiment: sentiment || 'neutral',
-        readTime: readTime || null,
-        authorId: authorId || session.user.id, // Usa authorId passado ou do session
-        factCheckSources: factCheckSources || null, // Citations do Perplexity
-        coverImage: coverImage || null,
-        coverImageAlt: coverImageAlt || null
-      },
-      include: {
-        author: {
-          select: {
-            name: true,
-            email: true
-          }
-        }
-      }
-    });
-
-    return NextResponse.json({
-      success: true,
-      data: article
-    });
+    return successResponse(article)
   } catch (error) {
-    console.error('Erro ao criar artigo:', error);
-    return NextResponse.json(
-      { success: false, error: 'Erro ao criar artigo' },
-      { status: 500 }
-    );
+    logger.error('Error creating article', error as Error)
+    return errorResponse(error as Error)
+  } finally {
+    logger.clearContext()
   }
 }

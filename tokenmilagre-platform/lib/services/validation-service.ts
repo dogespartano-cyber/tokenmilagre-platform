@@ -30,7 +30,8 @@
  */
 
 import { z } from 'zod'
-import DOMPurify from 'isomorphic-dompurify'
+// Note: isomorphic-dompurify causes issues with Next.js server-side builds
+// Using basic sanitization instead. For client-side, use DOMPurify directly
 import { ValidationError } from './error-service'
 import { logger } from './logger-service'
 
@@ -152,33 +153,13 @@ export class ValidationService {
       return html
     }
 
-    const defaultOptions = {
-      ALLOWED_TAGS: [
-        'p',
-        'br',
-        'strong',
-        'em',
-        'u',
-        'h1',
-        'h2',
-        'h3',
-        'h4',
-        'h5',
-        'h6',
-        'ul',
-        'ol',
-        'li',
-        'a',
-        'blockquote',
-        'code',
-        'pre',
-        'img',
-      ],
-      ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id'],
-      ALLOW_DATA_ATTR: false,
-    }
-
-    return String(DOMPurify.sanitize(html, { ...defaultOptions, ...options }))
+    // Basic server-side sanitization (remove dangerous tags)
+    // For full sanitization, use DOMPurify on the client-side
+    return html
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+      .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+      .replace(/javascript:/gi, '')
+      .replace(/on\w+\s*=/gi, '') // Remove inline event handlers
   }
 
   /**

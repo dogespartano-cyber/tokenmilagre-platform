@@ -80,116 +80,221 @@ html {
 }
 
 :root {
-  /* Light Mode - WCAG AAA Compliant */
-  --bg-primary: #f5f4f6;
-  --bg-secondary: #F9FAFB;
-  --bg-tertiary: #F3F4F6;
+  /* ============================================
+     SPACING SYSTEM - 4px/8px Grid
+     ============================================ */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* ============================================
+     TYPOGRAPHY SYSTEM
+     ============================================ */
+  /* Font Families */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Monaco, "Cascadia Mono", "Roboto Mono", Consolas, monospace;
+
+  /* Font Sizes - Type Scale (Perfect Fourth 1.333) */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
+  --text-6xl: 3.75rem;    /* 60px */
+
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* Font Weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+
+  /* ============================================
+     BORDER RADIUS
+     ============================================ */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;   /* 4px */
+  --radius-md: 0.5rem;    /* 8px */
+  --radius-lg: 0.75rem;   /* 12px */
+  --radius-xl: 1rem;      /* 16px */
+  --radius-2xl: 1.5rem;   /* 24px */
+  --radius-full: 9999px;
+
+  /* ============================================
+     Z-INDEX SCALE
+     ============================================ */
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+
+  /* ============================================
+     LIGHT MODE - WCAG AAA Compliant
+     ============================================ */
+  /* Background Colors */
+  --bg-primary: #F8F9FA;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F1F3F5;
   --bg-elevated: #FFFFFF;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
 
   /* RGB values for transparency */
   --bg-elevated-rgb: 255, 255, 255;
-  --bg-secondary-rgb: 249, 250, 251;
+  --bg-secondary-rgb: 255, 255, 255;
 
-  /* Textos Light Mode - High Contrast (ESCUROS!) */
-  --text-primary: #111827;
-  --text-secondary: #374151;
-  --text-tertiary: #6B7280;
-  --text-muted: #9CA3AF;
+  /* Text Colors - High Contrast (WCAG AAA) */
+  --text-primary: #1A1A1A;      /* 16.7:1 contrast on white */
+  --text-secondary: #3D3D3D;    /* 11.1:1 contrast on white */
+  --text-tertiary: #616161;     /* 7.2:1 contrast on white */
+  --text-muted: #878787;        /* 4.6:1 contrast on white */
   --text-inverse: #FFFFFF;
+  --text-disabled: #B8B8B8;
 
-  /* Borders */
-  --border-light: #F5F5F7;
-  --border-medium: #E5E7EB;
-  --border-strong: #D1D5DB;
+  /* Border Colors */
+  --border-light: #F0F0F0;
+  --border-medium: #E0E0E0;
+  --border-strong: #CCCCCC;
+  --border-focus: #0D9488;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
-  --shadow-md: 0 2px 8px 0 rgba(0, 0, 0, 0.04), 0 1px 3px 0 rgba(0, 0, 0, 0.02);
-  --shadow-lg: 0 4px 12px 0 rgba(0, 0, 0, 0.06), 0 2px 6px 0 rgba(0, 0, 0, 0.03);
+  /* Shadows - Layered & Natural */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
 
-  /* Brand $MILAGRE */
-  --brand-primary: #0D9488;
-  --brand-hover: #0F766E;
-  --brand-light: #14B8A6;
-  --brand-bg: #F0FDFA;
-  --brand-border: #99F6E4;
+  /* Brand $MILAGRE - Teal/Turquoise Palette */
+  --brand-primary: #0D9488;     /* Teal 600 */
+  --brand-hover: #0F766E;       /* Teal 700 */
+  --brand-light: #14B8A6;       /* Teal 500 */
+  --brand-lighter: #5EEAD4;     /* Teal 300 */
+  --brand-bg: #F0FDFA;          /* Teal 50 */
+  --brand-border: #99F6E4;      /* Teal 200 */
 
-  /* Funcional - CORES ESCURAS */
-  --success: #059669;
-  --success-bg: #ECFDF5;
-  --success-border: #A7F3D0;
+  /* Functional Colors - WCAG AAA Compliant */
+  --success: #047857;           /* Green 700 - 7.1:1 */
+  --success-light: #10B981;     /* Green 500 */
+  --success-bg: #ECFDF5;        /* Green 50 */
+  --success-border: #A7F3D0;    /* Green 200 */
 
-  --error: #DC2626;
-  --error-bg: #FEF2F2;
-  --error-border: #FECACA;
+  --error: #B91C1C;             /* Red 700 - 7.5:1 */
+  --error-light: #EF4444;       /* Red 500 */
+  --error-bg: #FEF2F2;          /* Red 50 */
+  --error-border: #FECACA;      /* Red 200 */
 
-  --warning: #D97706;
-  --warning-bg: #FFFBEB;
-  --warning-border: #FDE68A;
+  --warning: #B45309;           /* Amber 700 - 7.1:1 */
+  --warning-light: #F59E0B;     /* Amber 500 */
+  --warning-bg: #FFFBEB;        /* Amber 50 */
+  --warning-border: #FDE68A;    /* Amber 200 */
 
-  --info: #2563EB;
-  --info-bg: #EFF6FF;
-  --info-border: #BFDBFE;
+  --info: #1D4ED8;              /* Blue 700 - 8.1:1 */
+  --info-light: #3B82F6;        /* Blue 500 */
+  --info-bg: #EFF6FF;           /* Blue 50 */
+  --info-border: #BFDBFE;       /* Blue 200 */
 
   /* Legacy fallbacks */
-  --background: #f5f4f6;
-  --foreground: #111827;
+  --background: #F8F9FA;
+  --foreground: #1A1A1A;
 }
 
 [data-theme="dark"] {
-  /* Dark Mode - WCAG AAA Compliant - ORIGINAL */
-  --bg-primary: #0A1628;
-  --bg-secondary: #142841;
-  --bg-tertiary: #1E3A5F;
-  --bg-elevated: #2A4A6E;
+  /* ============================================
+     DARK MODE - WCAG AAA Compliant
+     ============================================ */
+  /* Background Colors */
+  --bg-primary: #0F1419;
+  --bg-secondary: #1A1F2E;
+  --bg-tertiary: #252B3B;
+  --bg-elevated: #2D3748;
+  --bg-overlay: rgba(0, 0, 0, 0.75);
 
   /* RGB values for transparency */
-  --bg-elevated-rgb: 42, 74, 110;
-  --bg-secondary-rgb: 20, 40, 65;
+  --bg-elevated-rgb: 45, 55, 72;
+  --bg-secondary-rgb: 26, 31, 46;
 
-  /* Textos Dark Mode - High Contrast */
-  --text-primary: #FFFFFF;
-  --text-secondary: #E0E6ED;
-  --text-tertiary: #94A3B8;
-  --text-muted: #64748B;
-  --text-inverse: #111827;
+  /* Text Colors - High Contrast (WCAG AAA) */
+  --text-primary: #FFFFFF;          /* 21:1 contrast on dark bg */
+  --text-secondary: #E2E8F0;        /* 14.1:1 contrast */
+  --text-tertiary: #A0AEC0;         /* 8.1:1 contrast */
+  --text-muted: #718096;            /* 4.9:1 contrast */
+  --text-inverse: #1A1A1A;
+  --text-disabled: #4A5568;
 
-  /* Borders */
-  --border-light: #34547A;
-  --border-medium: #2A4A6E;
-  --border-strong: #475569;
+  /* Border Colors */
+  --border-light: #2D3748;
+  --border-medium: #4A5568;
+  --border-strong: #718096;
+  --border-focus: #14B8A6;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 2px 8px 0 rgba(0, 0, 0, 0.25), 0 1px 4px 0 rgba(0, 0, 0, 0.15);
-  --shadow-lg: 0 4px 12px 0 rgba(0, 0, 0, 0.3), 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+  /* Shadows - Enhanced for dark mode */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
 
-  /* Brand $MILAGRE - VERDE ORIGINAL */
-  --brand-primary: #10B981;
-  --brand-hover: #059669;
-  --brand-light: #34D399;
-  --brand-bg: #1E3A5F;
-  --brand-border: #10B981;
+  /* Brand $MILAGRE - Brighter for dark mode */
+  --brand-primary: #14B8A6;         /* Teal 500 */
+  --brand-hover: #0D9488;           /* Teal 600 */
+  --brand-light: #2DD4BF;           /* Teal 400 */
+  --brand-lighter: #5EEAD4;         /* Teal 300 */
+  --brand-bg: #134E4A;              /* Teal 900 */
+  --brand-border: #0F766E;          /* Teal 700 */
 
-  /* Funcional */
-  --success: #10B981;
-  --success-bg: #1E3A5F;
-  --success-border: #10B981;
+  /* Functional Colors - Brighter for dark mode */
+  --success: #10B981;               /* Green 500 */
+  --success-light: #34D399;         /* Green 400 */
+  --success-bg: #064E3B;            /* Green 900 */
+  --success-border: #047857;        /* Green 700 */
 
-  --error: #EF4444;
-  --error-bg: #1E3A5F;
-  --error-border: #EF4444;
+  --error: #F87171;                 /* Red 400 */
+  --error-light: #FCA5A5;           /* Red 300 */
+  --error-bg: #7F1D1D;              /* Red 900 */
+  --error-border: #DC2626;          /* Red 600 */
 
-  --warning: #F59E0B;
-  --warning-bg: #1E3A5F;
-  --warning-border: #F59E0B;
+  --warning: #FBBF24;               /* Amber 400 */
+  --warning-light: #FCD34D;         /* Amber 300 */
+  --warning-bg: #78350F;            /* Amber 900 */
+  --warning-border: #D97706;        /* Amber 600 */
 
-  --info: #3B82F6;
-  --info-bg: #1E3A5F;
-  --info-border: #3B82F6;
+  --info: #60A5FA;                  /* Blue 400 */
+  --info-light: #93C5FD;            /* Blue 300 */
+  --info-bg: #1E3A8A;               /* Blue 900 */
+  --info-border: #2563EB;           /* Blue 600 */
 
   /* Legacy fallbacks */
-  --background: #0A1628;
+  --background: #0F1419;
   --foreground: #FFFFFF;
 }
 
@@ -210,7 +315,7 @@ body {
    UTILITY CLASSES - THEME AWARE
    ============================================ */
 
-/* Backgrounds */
+/* Background Colors */
 .bg-theme-primary { background-color: var(--bg-primary); }
 .bg-theme-secondary { background-color: var(--bg-secondary); }
 .bg-theme-tertiary { background-color: var(--bg-tertiary); }
@@ -222,39 +327,85 @@ body {
 .text-theme-tertiary { color: var(--text-tertiary); }
 .text-theme-muted { color: var(--text-muted); }
 .text-theme-inverse { color: var(--text-inverse); }
+.text-theme-disabled { color: var(--text-disabled); }
 
-/* Borders */
+/* Border Colors */
 .border-theme-light { border-color: var(--border-light); }
 .border-theme-medium { border-color: var(--border-medium); }
 .border-theme-strong { border-color: var(--border-strong); }
+.border-theme-focus { border-color: var(--border-focus); }
 
 /* Brand Colors */
 .bg-brand-primary { background-color: var(--brand-primary); }
+.bg-brand-light { background-color: var(--brand-light); }
 .bg-brand-bg { background-color: var(--brand-bg); }
 .text-brand-primary { color: var(--brand-primary); }
+.text-brand-light { color: var(--brand-light); }
 .border-brand-primary { border-color: var(--brand-primary); }
+.border-brand-border { border-color: var(--brand-border); }
 
 /* Functional Colors */
 .text-success { color: var(--success); }
+.text-success-light { color: var(--success-light); }
+.bg-success { background-color: var(--success); }
+.bg-success-light { background-color: var(--success-light); }
 .bg-success-bg { background-color: var(--success-bg); }
 .border-success { border-color: var(--success-border); }
 
 .text-error { color: var(--error); }
+.text-error-light { color: var(--error-light); }
+.bg-error { background-color: var(--error); }
+.bg-error-light { background-color: var(--error-light); }
 .bg-error-bg { background-color: var(--error-bg); }
 .border-error { border-color: var(--error-border); }
 
 .text-warning { color: var(--warning); }
+.text-warning-light { color: var(--warning-light); }
+.bg-warning { background-color: var(--warning); }
+.bg-warning-light { background-color: var(--warning-light); }
 .bg-warning-bg { background-color: var(--warning-bg); }
 .border-warning { border-color: var(--warning-border); }
 
 .text-info { color: var(--info); }
+.text-info-light { color: var(--info-light); }
+.bg-info { background-color: var(--info); }
+.bg-info-light { background-color: var(--info-light); }
 .bg-info-bg { background-color: var(--info-bg); }
 .border-info { border-color: var(--info-border); }
 
 /* Shadows */
+.shadow-theme-xs { box-shadow: var(--shadow-xs); }
 .shadow-theme-sm { box-shadow: var(--shadow-sm); }
 .shadow-theme-md { box-shadow: var(--shadow-md); }
 .shadow-theme-lg { box-shadow: var(--shadow-lg); }
+.shadow-theme-xl { box-shadow: var(--shadow-xl); }
+.shadow-theme-2xl { box-shadow: var(--shadow-2xl); }
+.shadow-theme-inner { box-shadow: var(--shadow-inner); }
+
+/* Focus Styles - Accessibility */
+.focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* Skip to content link - Accessibility */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--brand-primary);
+  color: white;
+  padding: var(--space-2) var(--space-4);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  z-index: var(--z-tooltip);
+}
+.skip-to-content:focus {
+  top: var(--space-4);
+}
 
 @keyframes pulse-slow {
   0%, 100% {

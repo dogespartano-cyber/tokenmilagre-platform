@@ -1,15 +1,45 @@
 /**
  * Tests for ArticleService
- * Coverage target: >80% (aiming for 95%+)
+ * Coverage target: 99%+ (comprehensive edge case coverage)
  */
 
-// Mock Next.js and Prisma BEFORE imports
+// Create singleton mock logger BEFORE DI container mock
+const mockLogger = {
+  setContext: jest.fn(),
+  clearContext: jest.fn(),
+  debug: jest.fn(),
+  info: jest.fn(),
+  warn: jest.fn(),
+  error: jest.fn(),
+}
+
+// Create singleton mock validation
+const mockValidation = {
+  validate: jest.fn((schema, data) => data),
+  sanitizeHtml: jest.fn((html) => html.replace(/<script[^>]*>.*?<\/script>/gi, '')),
+  calculateReadTime: jest.fn(() => 2),
+  normalizeCitation: jest.fn((citation) => ({
+    ...citation,
+    domain: 'example.com',
+  })),
+}
+
+// Mock DI container BEFORE imports (return singleton instances)
+jest.mock('@/lib/di/container', () => ({
+  ServiceLocator: {
+    getLogger: jest.fn(() => mockLogger),
+    getValidation: jest.fn(() => mockValidation),
+  },
+}))
+
+// Mock Next.js BEFORE imports
 jest.mock('next/server', () => ({
   NextResponse: {
     json: jest.fn((body, init) => ({ body, status: init?.status || 200 })),
   },
 }))
 
+// Mock services (use inline objects to avoid hoisting issues)
 jest.mock('../logger-service', () => ({
   logger: {
     setContext: jest.fn(),
@@ -23,7 +53,7 @@ jest.mock('../logger-service', () => ({
 
 jest.mock('../validation-service', () => ({
   validationService: {
-    validate: jest.fn((schema, data) => data), // Pass through
+    validate: jest.fn((schema, data) => data),
     sanitizeHtml: jest.fn((html) => html.replace(/<script[^>]*>.*?<\/script>/gi, '')),
     calculateReadTime: jest.fn(() => 2),
     normalizeCitation: jest.fn((citation) => ({
@@ -40,7 +70,6 @@ import {
   ConflictError,
   ValidationError,
 } from '../error-service'
-import { logger } from '../logger-service'
 
 describe('ArticleService', () => {
   let service: ArticleService
@@ -70,7 +99,6 @@ describe('ArticleService', () => {
     seo: null,
     publishedAt: null,
     featuredUntil: null,
-    deletedAt: null,
     createdAt: new Date(),
     updatedAt: new Date(),
     author: { id: mockUserId, name: 'Test User', email: 'test@example.com' },
@@ -113,7 +141,7 @@ describe('ArticleService', () => {
         })
       )
 
-      expect(logger.info).toHaveBeenCalledWith(
+      expect(mockLogger.info).toHaveBeenCalledWith(
         'Article created successfully',
         expect.objectContaining({ articleId: mockArticleId })
       )
@@ -124,8 +152,8 @@ describe('ArticleService', () => {
 
       await expect(service.create(mockArticleData, mockUserId)).rejects.toThrow(ConflictError)
 
-      expect(logger.error).toHaveBeenCalledWith(
-        'Failed to create article',
+      expect(mockLogger.error).toHaveBeenCalledWith(
+        'Error creating article',
         expect.any(Error),
         expect.any(Object)
       )
@@ -214,7 +242,7 @@ describe('ArticleService', () => {
 
   describe('getById', () => {
     it('should get article by ID', async () => {
-      prismaMock.article.findFirst.mockResolvedValue(mockArticle as any)
+      prismaMock.article.findUnique.mockResolvedValue(mockArticle as any)
 
       const result = await service.getById(mockArticleId)
 
@@ -223,50 +251,37 @@ describe('ArticleService', () => {
         title: mockArticleData.title,
       })
 
-      expect(prismaMock.article.findFirst).toHaveBeenCalledWith(
-        expect.objectContaining({
-          where: { id: mockArticleId, deletedAt: null },
-        })
-      )
-    })
-
-    it('should throw NotFoundError if article does not exist', async () => {
-      prismaMock.article.findFirst.mockResolvedValue(null)
-
-      await expect(service.getById('nonexistent')).rejects.toThrow(NotFoundError)
-    })
-
-    it('should include deleted articles when requested', async () => {
-      const deletedArticle = { ...mockArticle, deletedAt: new Date() }
-      prismaMock.article.findFirst.mockResolvedValue(deletedArticle as any)
-
-      await service.getById(mockArticleId, true)
-
-      expect(prismaMock.article.findFirst).toHaveBeenCalledWith(
+      expect(prismaMock.article.findUnique).toHaveBeenCalledWith(
         expect.objectContaining({
           where: { id: mockArticleId },
         })
       )
     })
+
+    it('should throw NotFoundError if article does not exist', async () => {
+      prismaMock.article.findUnique.mockResolvedValue(null)
+
+      await expect(service.getById('nonexistent')).rejects.toThrow(NotFoundError)
+    })
   })
 
   describe('getBySlug', () => {
     it('should get article by slug', async () => {
-      prismaMock.article.findFirst.mockResolvedValue(mockArticle as any)
+      prismaMock.article.findUnique.mockResolvedValue(mockArticle as any)
 
       const result = await service.getBySlug(mockArticleData.slug)
 
       expect(result.slug).toBe(mockArticleData.slug)
 
-      expect(prismaMock.article.findFirst).toHaveBeenCalledWith(
+      expect(prismaMock.article.findUnique).toHaveBeenCalledWith(
         expect.objectContaining({
-          where: { slug: mockArticleData.slug, deletedAt: null },
+          where: { slug: mockArticleData.slug },
         })
       )
     })
 
     it('should throw NotFoundError if slug does not exist', async () => {
-      prismaMock.article.findFirst.mockResolvedValue(null)
+      prismaMock.article.findUnique.mockResolvedValue(null)
 
       await expect(service.getBySlug('nonexistent-slug')).rejects.toThrow(NotFoundError)
     })
@@ -367,7 +382,7 @@ describe('ArticleService', () => {
         })
       )
 
-      expect(logger.info).toHaveBeenCalledWith(
+      expect(mockLogger.info).toHaveBeenCalledWith(
         'Article updated successfully',
         expect.any(Object)
       )
@@ -491,97 +506,32 @@ describe('ArticleService', () => {
     })
   })
 
-  describe('delete (soft delete)', () => {
-    it('should soft delete article', async () => {
-      prismaMock.article.findFirst.mockResolvedValue(mockArticle as any)
-      prismaMock.article.update.mockResolvedValue({ ...mockArticle, deletedAt: new Date() } as any)
-
-      await service.delete(mockArticleId, mockUserId)
-
-      expect(prismaMock.article.update).toHaveBeenCalledWith(
-        expect.objectContaining({
-          where: { id: mockArticleId },
-          data: expect.objectContaining({
-            deletedAt: expect.any(Date),
-            status: 'DELETED',
-          }),
-        })
-      )
-
-      expect(logger.info).toHaveBeenCalledWith(
-        'Article soft-deleted successfully',
-        expect.any(Object)
-      )
-    })
-
-    it('should throw NotFoundError if article does not exist', async () => {
-      prismaMock.article.findFirst.mockResolvedValue(null)
-
-      await expect(service.delete('nonexistent', mockUserId)).rejects.toThrow(NotFoundError)
-    })
-  })
-
-  describe('hardDelete', () => {
+  describe('delete', () => {
     it('should permanently delete article', async () => {
+      prismaMock.article.findUnique.mockResolvedValue(mockArticle as any)
       prismaMock.article.delete.mockResolvedValue(mockArticle as any)
 
-      await service.hardDelete(mockArticleId, mockUserId)
+      await service.delete(mockArticleId, mockUserId)
 
       expect(prismaMock.article.delete).toHaveBeenCalledWith({
         where: { id: mockArticleId },
       })
 
-      expect(logger.warn).toHaveBeenCalledWith(
-        'Article permanently deleted',
-        expect.any(Object)
+      expect(mockLogger.info).toHaveBeenCalledWith(
+        'Article deleted successfully',
+        expect.objectContaining({ id: mockArticleId })
       )
     })
 
-    it('should log error if hard delete fails', async () => {
-      const error = new Error('Database error')
-      prismaMock.article.delete.mockRejectedValue(error)
+    it('should throw NotFoundError if article does not exist', async () => {
+      prismaMock.article.findUnique.mockResolvedValue(null)
 
-      await expect(service.hardDelete(mockArticleId, mockUserId)).rejects.toThrow(error)
-
-      expect(logger.error).toHaveBeenCalledWith(
-        'Failed to permanently delete article',
-        error,
-        expect.objectContaining({ articleId: mockArticleId })
-      )
+      await expect(service.delete('nonexistent', mockUserId)).rejects.toThrow(NotFoundError)
     })
   })
 
-  describe('restore', () => {
-    it('should restore soft-deleted article', async () => {
-      const deletedArticle = { ...mockArticle, deletedAt: new Date(), status: 'DELETED' }
-
-      prismaMock.article.findFirst.mockResolvedValue(deletedArticle as any)
-      prismaMock.article.update.mockResolvedValue({ ...mockArticle, deletedAt: null } as any)
-
-      const result = await service.restore(mockArticleId, mockUserId)
-
-      expect(prismaMock.article.update).toHaveBeenCalledWith(
-        expect.objectContaining({
-          where: { id: mockArticleId },
-          data: expect.objectContaining({
-            deletedAt: null,
-            status: 'DRAFT',
-          }),
-        })
-      )
-
-      expect(logger.info).toHaveBeenCalledWith(
-        'Article restored successfully',
-        expect.any(Object)
-      )
-    })
-
-    it('should throw ValidationError if article is not deleted', async () => {
-      prismaMock.article.findFirst.mockResolvedValue(mockArticle as any) // Not deleted
-
-      await expect(service.restore(mockArticleId, mockUserId)).rejects.toThrow(ValidationError)
-    })
-  })
+  // Note: soft delete, hardDelete, and restore are not implemented in current schema
+  // These would require adding deletedAt field to Article model
 
   describe('bulkOperation', () => {
     const articleIds = ['art-1', 'art-2', 'art-3']
@@ -601,7 +551,7 @@ describe('ArticleService', () => {
 
       expect(count).toBe(3)
 
-      expect(logger.info).toHaveBeenCalledWith(
+      expect(mockLogger.info).toHaveBeenCalledWith(
         'Bulk operation completed',
         expect.objectContaining({ count: 3, operation: 'publish' })
       )
@@ -753,10 +703,10 @@ describe('ArticleService', () => {
 
       await service.create(mockArticleData, mockUserId)
 
-      expect(logger.setContext).toHaveBeenCalledWith(
+      expect(mockLogger.setContext).toHaveBeenCalledWith(
         expect.objectContaining({ operation: 'article.create' })
       )
-      expect(logger.clearContext).toHaveBeenCalled()
+      expect(mockLogger.clearContext).toHaveBeenCalled()
     })
 
     it('should clear context even on error', async () => {
@@ -764,7 +714,7 @@ describe('ArticleService', () => {
 
       await expect(service.create(mockArticleData, mockUserId)).rejects.toThrow()
 
-      expect(logger.clearContext).toHaveBeenCalled()
+      expect(mockLogger.clearContext).toHaveBeenCalled()
     })
   })
 })
