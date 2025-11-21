@@ -122,7 +122,9 @@ export default function GerenciarArtigosPage() {
         throw new Error(resourcesData.error || 'Erro ao buscar recursos');
       }
 
-      setArticles(articlesData.data.data || []);
+      // FIX: paginatedResponse retorna { success, data: [...], pagination }
+      // Não data.data - isso estava causando array vazio para articles
+      setArticles(articlesData.data || []);
       setResources(resourcesData.data.map((r: any) => ({
         ...r,
         type: 'resource' as const

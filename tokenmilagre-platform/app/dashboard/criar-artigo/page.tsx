@@ -244,33 +244,32 @@ export default function CriarArtigoPage() {
     // STEP 1: Normalizar categoria com fallback (P0 - Blindar contra erros da IA)
     let articleToValidate = { ...generatedArticle };
 
-    if (selectedType === 'news' || selectedType === 'educational') {
-      // Aplicar fallback de categoria para News e Educational
-      const { category: normalizedCategory, hadFallback } = normalizeCategoryWithFallback(
-        generatedArticle.category,
-        selectedType
-      );
+    // Aplicar fallback de categoria para TODOS os tipos (News, Educational, Resource)
+    const { category: normalizedCategory, hadFallback } = normalizeCategoryWithFallback(
+      generatedArticle.category,
+      selectedType
+    );
 
-      articleToValidate.category = normalizedCategory;
+    articleToValidate.category = normalizedCategory;
 
-      // LOG: Informar se houve fallback
-      if (hadFallback) {
-        console.warn('⚠️ [FALLBACK] Categoria da IA normalizada:', {
-          original: generatedArticle.category || 'undefined',
-          normalizada: normalizedCategory,
-          tipo: selectedType
-        });
+    // LOG: Informar se houve fallback
+    if (hadFallback) {
+      const typeLabels = {
+        news: 'Notícia',
+        educational: 'Educacional',
+        resource: 'Recurso'
+      };
 
-        addMessage({
-          role: 'assistant',
-          content: `ℹ️ A categoria "${generatedArticle.category || 'não especificada'}" foi ajustada para "${normalizedCategory}" (categoria válida do sistema).`
-        });
-      }
-    } else if (selectedType === 'resource') {
-      // Normalizar categoria para recursos (apenas lowercase e trim)
-      if (generatedArticle.category) {
-        articleToValidate.category = generatedArticle.category.toLowerCase().trim();
-      }
+      console.warn('⚠️ [FALLBACK] Categoria da IA normalizada:', {
+        original: generatedArticle.category || 'undefined',
+        normalizada: normalizedCategory,
+        tipo: selectedType
+      });
+
+      addMessage({
+        role: 'assistant',
+        content: `ℹ️ A categoria "${generatedArticle.category || 'não especificada'}" foi ajustada para "${normalizedCategory}" (categoria válida para ${typeLabels[selectedType]}).`
+      });
     }
 
     // DEBUG: Log do artigo antes da validação

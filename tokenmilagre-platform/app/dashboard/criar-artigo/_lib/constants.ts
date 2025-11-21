@@ -382,16 +382,22 @@ const CATEGORY_FALLBACK_MAP: Record<string, { news: string; educational: string 
  * Se a categoria for inválida, retorna um fallback seguro baseado no tipo de artigo
  *
  * @param category - Categoria sugerida pela IA
- * @param type - Tipo de artigo (news ou educational)
+ * @param type - Tipo de artigo (news, educational ou resource)
  * @returns Categoria válida garantida + flag indicando se houve fallback
  */
 export function normalizeCategoryWithFallback(
   category: string | undefined,
-  type: 'news' | 'educational'
+  type: 'news' | 'educational' | 'resource'
 ): { category: string; hadFallback: boolean } {
   if (!category) {
+    // Fallback padrão por tipo
+    const defaultCategories = {
+      news: 'tecnologia',
+      educational: 'blockchain',
+      resource: 'tools'
+    };
     return {
-      category: type === 'news' ? 'tecnologia' : 'blockchain',
+      category: defaultCategories[type],
       hadFallback: true
     };
   }
@@ -403,20 +409,58 @@ export function normalizeCategoryWithFallback(
     return { category: normalized, hadFallback: false };
   }
 
-  // Tentar encontrar no mapa de fallback
+  // Para Resources: mapeamento específico
+  if (type === 'resource') {
+    // Mapeamento de categorias genéricas para Resources
+    const resourceFallbackMap: Record<string, string> = {
+      'carteira': 'wallets',
+      'carteiras': 'wallets',
+      'wallet': 'wallets',
+      'corretora': 'exchanges',
+      'corretoras': 'exchanges',
+      'exchange': 'exchanges',
+      'navegador': 'browsers',
+      'navegadores': 'browsers',
+      'browser': 'browsers',
+      'explorador': 'explorers',
+      'exploradores': 'explorers',
+      'explorer': 'explorers',
+      'blockchain-explorer': 'explorers',
+      'ferramenta': 'tools',
+      'ferramentas': 'tools',
+      'tool': 'tools',
+      'analytics': 'tools',
+      'portfolio': 'tools',
+      'tracker': 'tools'
+    };
+
+    const resourceCategory = resourceFallbackMap[normalized];
+    if (resourceCategory) {
+      return { category: resourceCategory, hadFallback: true };
+    }
+
+    // Fallback final para resources: 'tools'
+    return { category: 'tools', hadFallback: true };
+  }
+
+  // Para News/Educational: usar mapa existente
   const fallbackEntry = CATEGORY_FALLBACK_MAP[normalized];
   if (fallbackEntry) {
     return {
-      category: fallbackEntry[type],
+      category: fallbackEntry[type as 'news' | 'educational'],
       hadFallback: true
     };
   }
 
-  // Fallback final: categoria padrão segura
-  const defaultCategory = type === 'news' ? 'tecnologia' : 'blockchain';
+  // Fallback final por tipo
+  const defaultCategories = {
+    news: 'tecnologia',
+    educational: 'blockchain',
+    resource: 'tools'
+  };
 
   return {
-    category: defaultCategory,
+    category: defaultCategories[type],
     hadFallback: true
   };
 }

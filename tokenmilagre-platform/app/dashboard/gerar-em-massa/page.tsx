@@ -23,6 +23,7 @@ import AdminRoute from '@/components/AdminRoute';
 import { processArticleLocally, validateProcessedArticle } from '@/lib/article-processor-client';
 import { validateArticle } from '@/app/dashboard/criar-artigo/_lib/validation';
 import type { ArticleType } from '@/app/dashboard/criar-artigo/_lib/constants';
+import { normalizeCategoryWithFallback } from '@/app/dashboard/criar-artigo/_lib/constants';
 
 interface GeneratedArticle {
   id: string;
@@ -504,6 +505,22 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         console.warn(`⚠️ [${index + 1}] Validação client-side falhou:`, clientValidation.errors);
       }
 
+      // 4.5. NOVO: Aplicar fallback de categoria ANTES da validação Zod (P0 - Blindagem)
+      const { category: normalizedCategory, hadFallback } = normalizeCategoryWithFallback(
+        processedArticle.category,
+        article.type as ArticleType
+      );
+
+      processedArticle.category = normalizedCategory;
+
+      if (hadFallback) {
+        console.warn(`⚠️ [${index + 1}] Categoria normalizada:`, {
+          original: processedArticle.category,
+          normalizada: normalizedCategory,
+          tipo: article.type
+        });
+      }
+
       // 5. Validação Zod (MESMA LÓGICA de criar-artigo)
       const zodValidation = validateArticle(processedArticle, article.type as ArticleType);
       if (!zodValidation.success) {
@@ -560,27 +577,25 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         const article = selected[i];
         console.log(`💾 [${i + 1}/${selected.length}] Salvando: ${article.title || article.name}`);
 
-        // Normalizar categoria para recursos (apenas lowercase e trim)
-        // NOTA: Backend espera: wallets, exchanges, browsers, defi, explorers, tools (plural)
-        const articleToSave = contentType === 'resource' && article.category
-          ? {
-            ...article,
-            category: article.category
-              .toLowerCase()
-              .trim()
-              .replace(/\s+/g, '-')
-              .replace(/_/g, '-')
-              // Mapeamentos para garantir compatibilidade com backend
-              .replace(/^wallet$/, 'wallets')           // singular → plural
-              .replace(/^exchange$/, 'exchanges')       // singular → plural
-              .replace(/^browser$/, 'browsers')         // singular → plural
-              .replace(/^explorer$/, 'explorers')       // singular → plural
-              .replace(/^defi-protocol$/, 'defi')       // normalizar variação
-              .replace(/^analytics$/, 'tools')          // mapear para tools
-              .replace(/^portfolio-tracker$/, 'tools')  // mapear para tools
-              .replace(/^development-tools$/, 'tools')  // mapear para tools
-          }
-          : article;
+        // FIX: Aplicar fallback robusto de categoria para TODOS os tipos (P0)
+        // Substitui normalização manual por função centralizada
+        const { category: normalizedCategory, hadFallback } = normalizeCategoryWithFallback(
+          article.category,
+          contentType
+        );
+
+        const articleToSave = {
+          ...article,
+          category: normalizedCategory
+        };
+
+        if (hadFallback) {
+          console.warn(`⚠️ [${i + 1}] Categoria do artigo normalizada ao salvar:`, {
+            original: article.category,
+            normalizada: normalizedCategory,
+            tipo: contentType
+          });
+        }
 
         const apiEndpoint = contentType === 'resource' ? '/api/resources' : '/api/articles';
 
