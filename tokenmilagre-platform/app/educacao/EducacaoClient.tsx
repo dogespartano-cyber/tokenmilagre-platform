@@ -23,6 +23,10 @@ interface Resource {
 
 interface EducacaoClientProps {
   resources: Resource[];
+  stats: {
+    totalArticles: number;
+    totalCategories: number;
+  };
 }
 
 // Tipo para dados brutos da API (antes da transformação)
@@ -38,7 +42,7 @@ interface RawArticleData {
   keywords?: string[];
 }
 
-export default function EducacaoClient({ resources }: EducacaoClientProps) {
+export default function EducacaoClient({ resources, stats }: EducacaoClientProps) {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedLevel, setSelectedLevel] = useState('all');
@@ -163,14 +167,14 @@ export default function EducacaoClient({ resources }: EducacaoClientProps) {
               Conhecimento livre, acessível a todos.
             </p>
 
-            {/* Stats */}
+            {/* Stats - Valores estáticos do banco (não mudam com scroll) */}
             <div className="flex flex-wrap gap-8 pt-4">
               <div>
-                <div className="text-3xl font-bold text-brand-primary">{allResources.length}</div>
+                <div className="text-3xl font-bold text-brand-primary">{stats.totalArticles}</div>
                 <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Recursos</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-brand-primary">6</div>
+                <div className="text-3xl font-bold text-brand-primary">{stats.totalCategories}</div>
                 <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Categorias</div>
               </div>
               <div>

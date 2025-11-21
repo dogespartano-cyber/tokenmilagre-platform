@@ -45,8 +45,40 @@ async function getEducationalArticles() {
   }));
 }
 
-export default async function EducacaoPage() {
-  const resources = await getEducationalArticles();
+async function getEducationalStats() {
+  // Buscar estatísticas reais do banco (não muda com scroll)
+  const [totalArticles, categoriesData] = await Promise.all([
+    // Total de artigos educacionais publicados
+    prisma.article.count({
+      where: {
+        type: 'educational',
+        published: true,
+      },
+    }),
+    // Categorias únicas
+    prisma.article.findMany({
+      where: {
+        type: 'educational',
+        published: true,
+      },
+      select: {
+        category: true,
+      },
+      distinct: ['category'],
+    }),
+  ]);
 
-  return <EducacaoClient resources={resources} />;
+  return {
+    totalArticles,
+    totalCategories: categoriesData.length,
+  };
+}
+
+export default async function EducacaoPage() {
+  const [resources, stats] = await Promise.all([
+    getEducationalArticles(),
+    getEducationalStats(),
+  ]);
+
+  return <EducacaoClient resources={resources} stats={stats} />;
 }
