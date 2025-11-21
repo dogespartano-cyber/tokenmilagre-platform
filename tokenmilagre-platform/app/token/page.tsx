@@ -65,13 +65,7 @@ export default function TokenPage() {
         <div className="space-y-16">
           {/* Hero */}
           <div className="space-y-6">
-            <div className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold" style={{
-              backgroundColor: 'var(--bg-secondary)',
-              color: 'var(--brand-primary)'
-            }}>
-              <FontAwesomeIcon icon={faCoins} className="mr-2" />
-              Token $MILAGRE
-            </div>
+
 
             <h1 className="text-4xl md:text-5xl font-bold leading-tight font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
               Token Comunitário{' '}
@@ -92,9 +86,8 @@ export default function TokenPage() {
           <div className="flex gap-2 border-b" style={{ borderColor: 'var(--border-light)' }}>
             <button
               onClick={() => setActiveSection('info')}
-              className={`px-6 py-3 font-semibold transition-all ${
-                activeSection === 'info' ? 'border-b-2' : ''
-              }`}
+              className={`px-6 py-3 font-semibold transition-all ${activeSection === 'info' ? 'border-b-2' : ''
+                }`}
               style={{
                 borderColor: activeSection === 'info' ? 'var(--brand-primary)' : 'transparent',
                 color: activeSection === 'info' ? 'var(--brand-primary)' : 'var(--text-secondary)'
@@ -104,9 +97,8 @@ export default function TokenPage() {
             </button>
             <button
               onClick={() => setActiveSection('security')}
-              className={`px-6 py-3 font-semibold transition-all ${
-                activeSection === 'security' ? 'border-b-2' : ''
-              }`}
+              className={`px-6 py-3 font-semibold transition-all ${activeSection === 'security' ? 'border-b-2' : ''
+                }`}
               style={{
                 borderColor: activeSection === 'security' ? 'var(--brand-primary)' : 'transparent',
                 color: activeSection === 'security' ? 'var(--brand-primary)' : 'var(--text-secondary)'
@@ -116,9 +108,8 @@ export default function TokenPage() {
             </button>
             <button
               onClick={() => setActiveSection('buy')}
-              className={`px-6 py-3 font-semibold transition-all ${
-                activeSection === 'buy' ? 'border-b-2' : ''
-              }`}
+              className={`px-6 py-3 font-semibold transition-all ${activeSection === 'buy' ? 'border-b-2' : ''
+                }`}
               style={{
                 borderColor: activeSection === 'buy' ? 'var(--brand-primary)' : 'transparent',
                 color: activeSection === 'buy' ? 'var(--brand-primary)' : 'var(--text-secondary)'

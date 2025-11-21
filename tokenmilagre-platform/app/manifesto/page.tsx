@@ -84,465 +84,460 @@ export default function ManifestoPage() {
       <div className="py-8" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
         <div className="flex gap-8">
           <div className="flex-1 max-w-4xl space-y-16">
-          {/* Hero */}
-          <div className="space-y-6">
-            <div className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold" style={{
-              backgroundColor: 'var(--bg-secondary)',
-              color: 'var(--brand-primary)'
-            }}>
-              Manifesto Open Source • Versão 1.0
+            {/* Hero */}
+            <div className="space-y-6">
+
+
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                Nunca Estarás Sozinho ❤️
+              </h1>
+
+              <p className="text-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                Um movimento de apoio mútuo genuíno construído sobre os princípios do código aberto,
+                da colaboração peer-to-peer e da crença fundamental de que{' '}
+                <span className="font-bold" style={{ color: 'var(--brand-primary)' }}>juntos somos mais fortes</span>.
+              </p>
+
+              <div className="p-6 rounded-2xl border-2" style={{
+                backgroundColor: 'var(--bg-secondary)',
+                borderColor: 'var(--brand-primary)'
+              }}>
+                <div className="flex items-start gap-4">
+                  <div className="text-3xl">💡</div>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--text-primary)' }}>
+                      Do Only Good Everyday
+                    </h3>
+                    <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                      Inspirados pela filosofia das comunidades Linux e open source, onde o conhecimento é livre,
+                      a colaboração é incentivada e o mérito vem da contribuição real, criamos o $MILAGRE como um
+                      commons digital - um bem coletivo gerido pela comunidade, para a comunidade.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-3 pt-4">
+                <a
+                  href="https://discord.gg/xk4zrz8j"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
+                  style={{
+                    backgroundColor: '#5865F2',
+                    color: 'white'
+                  }}
+                >
+                  <FontAwesomeIcon icon={faDiscord} className="w-5 h-5" />
+                  Discord
+                </a>
+
+                <a
+                  href="https://t.me/+Bop_TVFc_mg3Njlh"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
+                  style={{
+                    backgroundColor: '#0088cc',
+                    color: 'white'
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
+                  Telegram
+                </a>
+              </div>
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-              Nunca Estarás Sozinho ❤️
-            </h1>
+            {/* Divider */}
+            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
-            <p className="text-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              Um movimento de apoio mútuo genuíno construído sobre os princípios do código aberto,
-              da colaboração peer-to-peer e da crença fundamental de que{' '}
-              <span className="font-bold" style={{ color: 'var(--brand-primary)' }}>juntos somos mais fortes</span>.
-            </p>
+            {/* Nossa Visão */}
+            <div className="space-y-8">
+              <h2 id="nossa-visao" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
+                Nossa Visão
+              </h2>
 
-            <div className="p-6 rounded-2xl border-2" style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--brand-primary)'
-            }}>
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">💡</div>
-                <div className="flex-1">
-                  <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--text-primary)' }}>
-                    Do Only Good Everyday
-                  </h3>
-                  <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                    Inspirados pela filosofia das comunidades Linux e open source, onde o conhecimento é livre,
-                    a colaboração é incentivada e o mérito vem da contribuição real, criamos o $MILAGRE como um
-                    commons digital - um bem coletivo gerido pela comunidade, para a comunidade.
+              <p className="text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                Visionamos um ecossistema descentralizado onde tecnologia blockchain serve como infraestrutura
+                para conexão humana genuína, onde holders não são apenas investidores, mas membros ativos de
+                uma comunidade que se apoia mutuamente.
+              </p>
+
+              <div className="grid sm:grid-cols-2 gap-6">
+                {[
+                  { title: 'Colaboração Supera Competição', desc: 'O valor real emerge quando pessoas compartilham conhecimento, recursos e experiências livremente' },
+                  { title: 'Transparência Constrói Confiança', desc: 'Abertura total sobre decisões, finanças e processos fortalece vínculos comunitários' },
+                  { title: 'Conhecimento Deve Ser Livre', desc: 'Educação e recursos devem estar acessíveis a todos, sem barreiras de entrada' },
+                  { title: 'Meritocracia por Contribuição', desc: 'Influência e reconhecimento vêm de ajudar ativamente, não apenas de acumular tokens' }
+                ].map((item, index) => (
+                  <div key={index} className="p-6 rounded-xl border" style={{
+                    backgroundColor: 'var(--bg-elevated)',
+                    borderColor: 'var(--border-light)'
+                  }}>
+                    <h3 className="font-bold mb-2" style={{ color: 'var(--brand-primary)' }}>{item.title}</h3>
+                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+            {/* Nossa Missão */}
+            <div className="space-y-8">
+              <h2 id="nossa-missao" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
+                Nossa Missão
+              </h2>
+
+              <p className="text-xl font-semibold" style={{ color: 'var(--brand-primary)' }}>
+                Construir o Maior Ecossistema de Apoio Mútuo Descentralizado do Mundo
+              </p>
+
+              <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+                Nossa missão é criar e sustentar uma comunidade global na blockchain Solana onde cada membro tem acesso a:
+              </p>
+
+              <div className="grid sm:grid-cols-3 gap-6">
+                <div className="p-6 rounded-xl border text-center" style={{
+                  backgroundColor: 'var(--bg-elevated)',
+                  borderColor: 'var(--border-light)'
+                }}>
+                  <div className="text-4xl mb-3">👼</div>
+                  <h3 className="font-bold mb-2" style={{ color: 'var(--brand-primary)' }}>Prosperidade Compartilhada</h3>
+                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    Orientação financeira, educação sobre blockchain/DeFi e oportunidades de crescimento econômico
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-xl border text-center" style={{
+                  backgroundColor: 'var(--bg-elevated)',
+                  borderColor: 'var(--border-light)'
+                }}>
+                  <div className="text-4xl mb-3">🧙</div>
+                  <h3 className="font-bold mb-2" style={{ color: 'var(--brand-primary)' }}>Sabedoria Coletiva</h3>
+                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    Mentorias peer-to-peer, workshops educacionais, biblioteca de conhecimento aberta
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-xl border text-center" style={{
+                  backgroundColor: 'var(--bg-elevated)',
+                  borderColor: 'var(--border-light)'
+                }}>
+                  <div className="text-4xl mb-3">💫</div>
+                  <h3 className="font-bold mb-2" style={{ color: 'var(--brand-primary)' }}>Esperança Constante</h3>
+                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    Suporte emocional, comunidade de apoio 24/7 e certeza de que sempre haverá alguém para ajudar
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3 pt-4">
-              <a
-                href="https://discord.gg/xk4zrz8j"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
-                style={{
-                  backgroundColor: '#5865F2',
-                  color: 'white'
-                }}
-              >
-                <FontAwesomeIcon icon={faDiscord} className="w-5 h-5" />
-                Discord
-              </a>
+            {/* Divider */}
+            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
-              <a
-                href="https://t.me/+Bop_TVFc_mg3Njlh"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
-                style={{
-                  backgroundColor: '#0088cc',
-                  color: 'white'
-                }}
-              >
-                <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
-                Telegram
-              </a>
+            {/* Valores Fundamentais */}
+            <div className="space-y-8">
+              <h2 id="valores-fundamentais" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
+                Nossos Valores Fundamentais
+              </h2>
+
+              <div className="space-y-6">
+                {[
+                  {
+                    title: '1. Transparência Radical',
+                    desc: 'Toda decisão, transação e processo é visível publicamente na blockchain e em nossas plataformas abertas.',
+                    items: ['Votações de governança públicas e auditáveis', 'Treasury comunitária com multisig transparente', 'Relatórios mensais publicados abertamente', 'Código-fonte disponível no GitHub']
+                  },
+                  {
+                    title: '2. Colaboração Aberta',
+                    desc: 'Seguindo o modelo open source, qualquer holder pode contribuir com código, ideias, conteúdo educacional ou suporte.',
+                    items: ['Repositórios GitHub públicos', 'Sistema de proposals aberto a todos', 'Wiki colaborativa construída coletivamente', 'Reconhecimento através de badges NFT']
+                  },
+                  {
+                    title: '3. Inclusão e Acessibilidade',
+                    desc: 'O $MILAGRE é para todos, independente de experiência técnica, quantidade de tokens ou background.',
+                    items: ['Tutoriais em múltiplos formatos', 'Suporte em português e outros idiomas', 'Onboarding estruturado para novos membros', 'Mentorias gratuitas disponíveis a todos']
+                  },
+                  {
+                    title: '4. Apoio Mútuo Genuíno',
+                    desc: 'Esta não é uma comunidade transacional - é um ecossistema onde membros genuinamente se preocupam uns com os outros.',
+                    items: ['Sistema de mentoria peer-to-peer', 'Canais de suporte emocional moderados', 'Fundo de emergência comunitário', 'Cultura "perguntar não tem custo"']
+                  }
+                ].map((valor, index) => (
+                  <div key={index} className="p-6 rounded-xl border" style={{
+                    backgroundColor: 'var(--bg-elevated)',
+                    borderColor: 'var(--border-light)'
+                  }}>
+                    <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--brand-primary)' }}>{valor.title}</h3>
+                    <p className="mb-4 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{valor.desc}</p>
+                    <div className="space-y-2">
+                      {valor.items.map((item, i) => (
+                        <div key={i} className="flex items-start gap-2">
+                          <span style={{ color: 'var(--brand-primary)' }}>✓</span>
+                          <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+            {/* Divider */}
+            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
-          {/* Nossa Visão */}
-          <div className="space-y-8">
-            <h2 id="nossa-visao" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
-              Nossa Visão
-            </h2>
+            {/* Nossos Três Guardiões */}
+            <div className="space-y-8">
+              <h2 id="tres-guardioes" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
+                Nossos Três Guardiões
+              </h2>
 
-            <p className="text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              Visionamos um ecossistema descentralizado onde tecnologia blockchain serve como infraestrutura
-              para conexão humana genuína, onde holders não são apenas investidores, mas membros ativos de
-              uma comunidade que se apoia mutuamente.
-            </p>
+              <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+                Representam não apenas símbolos, mas áreas funcionais da comunidade:
+              </p>
 
-            <div className="grid sm:grid-cols-2 gap-6">
-              {[
-                { title: 'Colaboração Supera Competição', desc: 'O valor real emerge quando pessoas compartilham conhecimento, recursos e experiências livremente' },
-                { title: 'Transparência Constrói Confiança', desc: 'Abertura total sobre decisões, finanças e processos fortalece vínculos comunitários' },
-                { title: 'Conhecimento Deve Ser Livre', desc: 'Educação e recursos devem estar acessíveis a todos, sem barreiras de entrada' },
-                { title: 'Meritocracia por Contribuição', desc: 'Influência e reconhecimento vêm de ajudar ativamente, não apenas de acumular tokens' }
-              ].map((item, index) => (
-                <div key={index} className="p-6 rounded-xl border" style={{
+              <div className="space-y-6">
+                <div className="p-6 rounded-xl border" style={{
                   backgroundColor: 'var(--bg-elevated)',
                   borderColor: 'var(--border-light)'
                 }}>
-                  <h3 className="font-bold mb-2" style={{ color: 'var(--brand-primary)' }}>{item.title}</h3>
-                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* Nossa Missão */}
-          <div className="space-y-8">
-            <h2 id="nossa-missao" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
-              Nossa Missão
-            </h2>
-
-            <p className="text-xl font-semibold" style={{ color: 'var(--brand-primary)' }}>
-              Construir o Maior Ecossistema de Apoio Mútuo Descentralizado do Mundo
-            </p>
-
-            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-              Nossa missão é criar e sustentar uma comunidade global na blockchain Solana onde cada membro tem acesso a:
-            </p>
-
-            <div className="grid sm:grid-cols-3 gap-6">
-              <div className="p-6 rounded-xl border text-center" style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)'
-              }}>
-                <div className="text-4xl mb-3">👼</div>
-                <h3 className="font-bold mb-2" style={{ color: 'var(--brand-primary)' }}>Prosperidade Compartilhada</h3>
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  Orientação financeira, educação sobre blockchain/DeFi e oportunidades de crescimento econômico
-                </p>
-              </div>
-
-              <div className="p-6 rounded-xl border text-center" style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)'
-              }}>
-                <div className="text-4xl mb-3">🧙</div>
-                <h3 className="font-bold mb-2" style={{ color: 'var(--brand-primary)' }}>Sabedoria Coletiva</h3>
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  Mentorias peer-to-peer, workshops educacionais, biblioteca de conhecimento aberta
-                </p>
-              </div>
-
-              <div className="p-6 rounded-xl border text-center" style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)'
-              }}>
-                <div className="text-4xl mb-3">💫</div>
-                <h3 className="font-bold mb-2" style={{ color: 'var(--brand-primary)' }}>Esperança Constante</h3>
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  Suporte emocional, comunidade de apoio 24/7 e certeza de que sempre haverá alguém para ajudar
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* Valores Fundamentais */}
-          <div className="space-y-8">
-            <h2 id="valores-fundamentais" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
-              Nossos Valores Fundamentais
-            </h2>
-
-            <div className="space-y-6">
-              {[
-                {
-                  title: '1. Transparência Radical',
-                  desc: 'Toda decisão, transação e processo é visível publicamente na blockchain e em nossas plataformas abertas.',
-                  items: ['Votações de governança públicas e auditáveis', 'Treasury comunitária com multisig transparente', 'Relatórios mensais publicados abertamente', 'Código-fonte disponível no GitHub']
-                },
-                {
-                  title: '2. Colaboração Aberta',
-                  desc: 'Seguindo o modelo open source, qualquer holder pode contribuir com código, ideias, conteúdo educacional ou suporte.',
-                  items: ['Repositórios GitHub públicos', 'Sistema de proposals aberto a todos', 'Wiki colaborativa construída coletivamente', 'Reconhecimento através de badges NFT']
-                },
-                {
-                  title: '3. Inclusão e Acessibilidade',
-                  desc: 'O $MILAGRE é para todos, independente de experiência técnica, quantidade de tokens ou background.',
-                  items: ['Tutoriais em múltiplos formatos', 'Suporte em português e outros idiomas', 'Onboarding estruturado para novos membros', 'Mentorias gratuitas disponíveis a todos']
-                },
-                {
-                  title: '4. Apoio Mútuo Genuíno',
-                  desc: 'Esta não é uma comunidade transacional - é um ecossistema onde membros genuinamente se preocupam uns com os outros.',
-                  items: ['Sistema de mentoria peer-to-peer', 'Canais de suporte emocional moderados', 'Fundo de emergência comunitário', 'Cultura "perguntar não tem custo"']
-                }
-              ].map((valor, index) => (
-                <div key={index} className="p-6 rounded-xl border" style={{
-                  backgroundColor: 'var(--bg-elevated)',
-                  borderColor: 'var(--border-light)'
-                }}>
-                  <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--brand-primary)' }}>{valor.title}</h3>
-                  <p className="mb-4 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{valor.desc}</p>
-                  <div className="space-y-2">
-                    {valor.items.map((item, i) => (
+                  <div className="flex items-center gap-4 mb-3">
+                    <div className="text-4xl">👼</div>
+                    <div>
+                      <h3 className="text-xl font-bold" style={{ color: 'var(--brand-primary)' }}>Guardiã da Prosperidade</h3>
+                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Empoderar holders com educação financeira</p>
+                    </div>
+                  </div>
+                  <div className="ml-14 space-y-2">
+                    {['Curadoria de conteúdo sobre DeFi e blockchain', 'Coordenação de grupos de estudo', 'Identificação de oportunidades no ecossistema Solana', 'Mentorias sobre planejamento financeiro'].map((item, i) => (
                       <div key={i} className="flex items-start gap-2">
-                        <span style={{ color: 'var(--brand-primary)' }}>✓</span>
+                        <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>•</span>
                         <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item}</span>
                       </div>
                     ))}
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
 
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* Nossos Três Guardiões */}
-          <div className="space-y-8">
-            <h2 id="tres-guardioes" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
-              Nossos Três Guardiões
-            </h2>
-
-            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-              Representam não apenas símbolos, mas áreas funcionais da comunidade:
-            </p>
-
-            <div className="space-y-6">
-              <div className="p-6 rounded-xl border" style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)'
-              }}>
-                <div className="flex items-center gap-4 mb-3">
-                  <div className="text-4xl">👼</div>
-                  <div>
-                    <h3 className="text-xl font-bold" style={{ color: 'var(--brand-primary)' }}>Guardiã da Prosperidade</h3>
-                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Empoderar holders com educação financeira</p>
+                <div className="p-6 rounded-xl border" style={{
+                  backgroundColor: 'var(--bg-elevated)',
+                  borderColor: 'var(--border-light)'
+                }}>
+                  <div className="flex items-center gap-4 mb-3">
+                    <div className="text-4xl">🧙</div>
+                    <div>
+                      <h3 className="text-xl font-bold" style={{ color: 'var(--brand-primary)' }}>Guardião da Sabedoria</h3>
+                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Cultivar conhecimento coletivo</p>
+                    </div>
+                  </div>
+                  <div className="ml-14 space-y-2">
+                    {['Manutenção da biblioteca de conhecimento', 'Organização de workshops e webinars', 'Facilitação de mentorias peer-to-peer', 'Documentação de casos de sucesso'].map((item, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>•</span>
+                        <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-                <div className="ml-14 space-y-2">
-                  {['Curadoria de conteúdo sobre DeFi e blockchain', 'Coordenação de grupos de estudo', 'Identificação de oportunidades no ecossistema Solana', 'Mentorias sobre planejamento financeiro'].map((item, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>•</span>
-                      <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
 
-              <div className="p-6 rounded-xl border" style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)'
-              }}>
-                <div className="flex items-center gap-4 mb-3">
-                  <div className="text-4xl">🧙</div>
-                  <div>
-                    <h3 className="text-xl font-bold" style={{ color: 'var(--brand-primary)' }}>Guardião da Sabedoria</h3>
-                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Cultivar conhecimento coletivo</p>
+                <div className="p-6 rounded-xl border" style={{
+                  backgroundColor: 'var(--bg-elevated)',
+                  borderColor: 'var(--border-light)'
+                }}>
+                  <div className="flex items-center gap-4 mb-3">
+                    <div className="text-4xl">💫</div>
+                    <div>
+                      <h3 className="text-xl font-bold" style={{ color: 'var(--brand-primary)' }}>Anjo da Esperança</h3>
+                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Prover suporte emocional</p>
+                    </div>
+                  </div>
+                  <div className="ml-14 space-y-2">
+                    {['Moderação empática de canais de suporte', 'Coordenação de grupos de apoio', 'Gestão do fundo de emergência', 'Celebração de vitórias e marcos'].map((item, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>•</span>
+                        <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-                <div className="ml-14 space-y-2">
-                  {['Manutenção da biblioteca de conhecimento', 'Organização de workshops e webinars', 'Facilitação de mentorias peer-to-peer', 'Documentação de casos de sucesso'].map((item, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>•</span>
-                      <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item}</span>
-                    </div>
-                  ))}
-                </div>
               </div>
+            </div>
 
-              <div className="p-6 rounded-xl border" style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)'
-              }}>
-                <div className="flex items-center gap-4 mb-3">
-                  <div className="text-4xl">💫</div>
-                  <div>
-                    <h3 className="text-xl font-bold" style={{ color: 'var(--brand-primary)' }}>Anjo da Esperança</h3>
-                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Prover suporte emocional</p>
+            {/* Divider */}
+            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+            {/* Princípios de Governança */}
+            <div className="space-y-8">
+              <h2 id="governanca" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
+                Princípios de Governança
+              </h2>
+
+              <p className="text-lg" style={{ color: 'var(--brand-primary)' }}>
+                Como Tomamos Decisões Coletivamente
+              </p>
+
+              <div className="space-y-4">
+                <div className="p-6 rounded-xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+                  <h3 className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>1. Do-ocracia (Quem Faz, Decide)</h3>
+                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    Membros que contribuem ativamente para áreas específicas ganham maior influência nessas áreas.
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+                  <h3 className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>2. Votação Híbrida</h3>
+                  <div className="space-y-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    <p>• Votação Quadrática para decisões que afetam toda comunidade</p>
+                    <p>• Votação por Delegação para representantes confiáveis</p>
+                    <p>• Votação Ponderada por Reputação baseada em contribuições passadas</p>
                   </div>
                 </div>
-                <div className="ml-14 space-y-2">
-                  {['Moderação empática de canais de suporte', 'Coordenação de grupos de apoio', 'Gestão do fundo de emergência', 'Celebração de vitórias e marcos'].map((item, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>•</span>
-                      <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item}</span>
-                    </div>
-                  ))}
+
+                <div className="p-6 rounded-xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+                  <h3 className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>3. Transparência Processual</h3>
+                  <div className="space-y-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    <p>1. Discussão Aberta (7 dias mínimo)</p>
+                    <p>2. Refinamento Colaborativo</p>
+                    <p>3. Votação Formal (quorum mínimo)</p>
+                    <p>4. Implementação Transparente</p>
+                    <p>5. Avaliação de Impacto</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+            {/* Divider */}
+            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
-          {/* Princípios de Governança */}
-          <div className="space-y-8">
-            <h2 id="governanca" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
-              Princípios de Governança
-            </h2>
+            {/* Roadmap */}
+            <div className="space-y-8">
+              <h2 id="roadmap" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
+                Roadmap de Longo Prazo
+              </h2>
 
-            <p className="text-lg" style={{ color: 'var(--brand-primary)' }}>
-              Como Tomamos Decisões Coletivamente
-            </p>
+              <div className="space-y-6">
+                <div className="border-l-4 pl-6" style={{ borderLeftColor: 'var(--brand-primary)' }}>
+                  <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--brand-primary)' }}>2025-2026: Fundação Sólida</h3>
+                  <div className="space-y-2" style={{ color: 'var(--text-secondary)' }}>
+                    <p>• Estabelecer governança DAO completa</p>
+                    <p>• Construir biblioteca educacional abrangente</p>
+                    <p>• Desenvolver sistema de mentoria robusto</p>
+                    <p>• Atingir 10.000 holders ativos</p>
+                    <p>• Lançar programa de grants comunitários</p>
+                  </div>
+                </div>
 
-            <div className="space-y-4">
+                <div className="border-l-4 pl-6" style={{ borderLeftColor: 'var(--brand-primary)' }}>
+                  <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--brand-primary)' }}>2027-2028: Expansão Sustentável</h3>
+                  <div className="space-y-2" style={{ color: 'var(--text-secondary)' }}>
+                    <p>• Criar subDAOs especializadas</p>
+                    <p>• Desenvolver marketplace de serviços</p>
+                    <p>• Implementar staking com recompensas por contribuição</p>
+                    <p>• Expandir para múltiplas blockchains</p>
+                    <p>• Parcerias com instituições educacionais</p>
+                  </div>
+                </div>
+
+                <div className="border-l-4 pl-6" style={{ borderLeftColor: 'var(--brand-primary)' }}>
+                  <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--brand-primary)' }}>2029-2030: Maturidade e Impacto Global</h3>
+                  <div className="space-y-2" style={{ color: 'var(--text-secondary)' }}>
+                    <p>• Referência em comunidades Web3 orientadas a valores</p>
+                    <p>• Influenciar padrões de governança descentralizada</p>
+                    <p>• Fundo de impacto social gerido pela comunidade</p>
+                    <p>• Sustentabilidade financeira completa</p>
+                    <p>• Modelo documentado para replicação global</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+            {/* Compromisso Open Source */}
+            <div className="space-y-8">
+              <h2 id="open-source" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
+                Compromisso com Open Source
+              </h2>
+
+              <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+                Inspirados pelos gigantes do open source como Linux, Mozilla e Wikipedia:
+              </p>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                {[
+                  { title: 'Liberar Código Abertamente', desc: 'Todo smart contract e ferramenta será código aberto' },
+                  { title: 'Documentar Extensivamente', desc: 'Documentação técnica completa e atualizada' },
+                  { title: 'Aceitar Contribuições', desc: 'Qualquer pessoa pode contribuir via pull requests' },
+                  { title: 'Compartilhar Aprendizados', desc: 'Post-mortems e lições para todo ecossistema' }
+                ].map((item, index) => (
+                  <div key={index} className="p-4 rounded-xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+                    <h3 className="font-bold mb-2" style={{ color: 'var(--brand-primary)' }}>{item.title}</h3>
+                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+            {/* CTA Final */}
+            <div className="space-y-6 py-8">
+              <h2 id="junte-se" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
+                Junte-se ao Movimento
+              </h2>
+
+              <p className="text-xl" style={{ color: 'var(--text-secondary)' }}>
+                O $MILAGRE não pertence a fundadores ou baleias - pertence a todos que contribuem para torná-lo real.
+              </p>
+
               <div className="p-6 rounded-xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                <h3 className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>1. Do-ocracia (Quem Faz, Decide)</h3>
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  Membros que contribuem ativamente para áreas específicas ganham maior influência nessas áreas.
-                </p>
-              </div>
-
-              <div className="p-6 rounded-xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                <h3 className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>2. Votação Híbrida</h3>
-                <div className="space-y-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  <p>• Votação Quadrática para decisões que afetam toda comunidade</p>
-                  <p>• Votação por Delegação para representantes confiáveis</p>
-                  <p>• Votação Ponderada por Reputação baseada em contribuições passadas</p>
-                </div>
-              </div>
-
-              <div className="p-6 rounded-xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                <h3 className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>3. Transparência Processual</h3>
-                <div className="space-y-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  <p>1. Discussão Aberta (7 dias mínimo)</p>
-                  <p>2. Refinamento Colaborativo</p>
-                  <p>3. Votação Formal (quorum mínimo)</p>
-                  <p>4. Implementação Transparente</p>
-                  <p>5. Avaliação de Impacto</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* Roadmap */}
-          <div className="space-y-8">
-            <h2 id="roadmap" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
-              Roadmap de Longo Prazo
-            </h2>
-
-            <div className="space-y-6">
-              <div className="border-l-4 pl-6" style={{ borderLeftColor: 'var(--brand-primary)' }}>
-                <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--brand-primary)' }}>2025-2026: Fundação Sólida</h3>
+                <p className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Se você acredita que:</p>
                 <div className="space-y-2" style={{ color: 'var(--text-secondary)' }}>
-                  <p>• Estabelecer governança DAO completa</p>
-                  <p>• Construir biblioteca educacional abrangente</p>
-                  <p>• Desenvolver sistema de mentoria robusto</p>
-                  <p>• Atingir 10.000 holders ativos</p>
-                  <p>• Lançar programa de grants comunitários</p>
+                  <p>✓ Colaboração é mais poderosa que competição</p>
+                  <p>✓ Conhecimento deve ser livre e acessível</p>
+                  <p>✓ Tecnologia deve servir humanidade</p>
+                  <p>✓ Ninguém deveria caminhar sozinho</p>
+                  <p>✓ Comunidades genuínas podem mudar vidas</p>
                 </div>
               </div>
 
-              <div className="border-l-4 pl-6" style={{ borderLeftColor: 'var(--brand-primary)' }}>
-                <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--brand-primary)' }}>2027-2028: Expansão Sustentável</h3>
-                <div className="space-y-2" style={{ color: 'var(--text-secondary)' }}>
-                  <p>• Criar subDAOs especializadas</p>
-                  <p>• Desenvolver marketplace de serviços</p>
-                  <p>• Implementar staking com recompensas por contribuição</p>
-                  <p>• Expandir para múltiplas blockchains</p>
-                  <p>• Parcerias com instituições educacionais</p>
-                </div>
-              </div>
+              <p className="text-2xl font-bold text-brand-primary">
+                Então você já é parte do $MILAGRE ❤️
+              </p>
 
-              <div className="border-l-4 pl-6" style={{ borderLeftColor: 'var(--brand-primary)' }}>
-                <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--brand-primary)' }}>2029-2030: Maturidade e Impacto Global</h3>
-                <div className="space-y-2" style={{ color: 'var(--text-secondary)' }}>
-                  <p>• Referência em comunidades Web3 orientadas a valores</p>
-                  <p>• Influenciar padrões de governança descentralizada</p>
-                  <p>• Fundo de impacto social gerido pela comunidade</p>
-                  <p>• Sustentabilidade financeira completa</p>
-                  <p>• Modelo documentado para replicação global</p>
-                </div>
-              </div>
-            </div>
-          </div>
+              <div className="flex flex-wrap gap-3 pt-4">
+                <a
+                  href="https://discord.gg/xk4zrz8j"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
+                  style={{
+                    backgroundColor: '#5865F2',
+                    color: 'white'
+                  }}
+                >
+                  <FontAwesomeIcon icon={faDiscord} className="w-5 h-5" />
+                  Discord
+                </a>
 
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* Compromisso Open Source */}
-          <div className="space-y-8">
-            <h2 id="open-source" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
-              Compromisso com Open Source
-            </h2>
-
-            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-              Inspirados pelos gigantes do open source como Linux, Mozilla e Wikipedia:
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              {[
-                { title: 'Liberar Código Abertamente', desc: 'Todo smart contract e ferramenta será código aberto' },
-                { title: 'Documentar Extensivamente', desc: 'Documentação técnica completa e atualizada' },
-                { title: 'Aceitar Contribuições', desc: 'Qualquer pessoa pode contribuir via pull requests' },
-                { title: 'Compartilhar Aprendizados', desc: 'Post-mortems e lições para todo ecossistema' }
-              ].map((item, index) => (
-                <div key={index} className="p-4 rounded-xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                  <h3 className="font-bold mb-2" style={{ color: 'var(--brand-primary)' }}>{item.title}</h3>
-                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* CTA Final */}
-          <div className="space-y-6 py-8">
-            <h2 id="junte-se" className="text-3xl font-bold font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
-              Junte-se ao Movimento
-            </h2>
-
-            <p className="text-xl" style={{ color: 'var(--text-secondary)' }}>
-              O $MILAGRE não pertence a fundadores ou baleias - pertence a todos que contribuem para torná-lo real.
-            </p>
-
-            <div className="p-6 rounded-xl" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-              <p className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Se você acredita que:</p>
-              <div className="space-y-2" style={{ color: 'var(--text-secondary)' }}>
-                <p>✓ Colaboração é mais poderosa que competição</p>
-                <p>✓ Conhecimento deve ser livre e acessível</p>
-                <p>✓ Tecnologia deve servir humanidade</p>
-                <p>✓ Ninguém deveria caminhar sozinho</p>
-                <p>✓ Comunidades genuínas podem mudar vidas</p>
+                <a
+                  href="https://t.me/+Bop_TVFc_mg3Njlh"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
+                  style={{
+                    backgroundColor: '#0088cc',
+                    color: 'white'
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
+                  Telegram
+                </a>
               </div>
             </div>
-
-            <p className="text-2xl font-bold text-brand-primary">
-              Então você já é parte do $MILAGRE ❤️
-            </p>
-
-            <div className="flex flex-wrap gap-3 pt-4">
-              <a
-                href="https://discord.gg/xk4zrz8j"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
-                style={{
-                  backgroundColor: '#5865F2',
-                  color: 'white'
-                }}
-              >
-                <FontAwesomeIcon icon={faDiscord} className="w-5 h-5" />
-                Discord
-              </a>
-
-              <a
-                href="https://t.me/+Bop_TVFc_mg3Njlh"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
-                style={{
-                  backgroundColor: '#0088cc',
-                  color: 'white'
-                }}
-              >
-                <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
-                Telegram
-              </a>
-            </div>
-          </div>
           </div>
 
           {/* Índice Lateral (Table of Contents) */}
@@ -556,11 +551,10 @@ export default function ManifestoPage() {
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className={`block w-full text-left text-sm py-2 px-3 rounded transition-all ${
-                      activeSection === item.id
+                    className={`block w-full text-left text-sm py-2 px-3 rounded transition-all ${activeSection === item.id
                         ? 'font-semibold'
                         : 'hover:opacity-80'
-                    }`}
+                      }`}
                     style={{
                       backgroundColor: activeSection === item.id ? 'var(--bg-secondary)' : 'transparent',
                       color: activeSection === item.id ? 'var(--brand-primary)' : 'var(--text-secondary)',
@@ -577,18 +571,18 @@ export default function ManifestoPage() {
 
         {/* Scroll to top button */}
         {showScrollTop && (
-            <button
-              onClick={scrollToTop}
-              className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
-              style={{
-                backgroundColor: 'var(--brand-primary)',
-                color: 'var(--text-inverse)'
-              }}
-              aria-label="Voltar ao topo"
-            >
-              <FontAwesomeIcon icon={faArrowUp} className="w-5 h-5" />
-            </button>
-          )}
+          <button
+            onClick={scrollToTop}
+            className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
+            style={{
+              backgroundColor: 'var(--brand-primary)',
+              color: 'var(--text-inverse)'
+            }}
+            aria-label="Voltar ao topo"
+          >
+            <FontAwesomeIcon icon={faArrowUp} className="w-5 h-5" />
+          </button>
+        )}
       </div>
     </>
   );

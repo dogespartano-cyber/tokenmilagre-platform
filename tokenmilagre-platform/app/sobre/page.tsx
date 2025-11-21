@@ -71,12 +71,7 @@ export default function SobrePage() {
         <div className="space-y-16">
           {/* Hero */}
           <div className="space-y-6">
-            <div className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold" style={{
-              backgroundColor: 'var(--bg-secondary)',
-              color: 'var(--brand-primary)'
-            }}>
-              Sobre nós
-            </div>
+
 
             <h1 className="text-4xl md:text-5xl font-bold leading-tight font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
               Somos uma comunidade global unida pela crença de que{' '}
