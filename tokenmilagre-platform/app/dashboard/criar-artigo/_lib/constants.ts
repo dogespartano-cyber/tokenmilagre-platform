@@ -321,3 +321,102 @@ export function isValidSentiment(sentiment: string): sentiment is Sentiment {
 export function isValidLevel(level: string): level is Level {
   return (LEVELS as unknown as string[]).indexOf(level) !== -1;
 }
+
+// ============================================================================
+// Category Normalization & Fallback
+// ============================================================================
+
+/**
+ * Mapeia categorias genéricas da IA para categorias válidas do sistema
+ * Usado para blindar contra erros de validação quando a IA sugere categorias inválidas
+ */
+const CATEGORY_FALLBACK_MAP: Record<string, { news: string; educational: string }> = {
+  // Economia e mercado
+  'economia': { news: 'bitcoin', educational: 'trading' },
+  'mercado': { news: 'bitcoin', educational: 'trading' },
+  'investimentos': { news: 'bitcoin', educational: 'trading' },
+  'financas': { news: 'defi', educational: 'defi' },
+
+  // Tecnologia
+  'tecnologia': { news: 'tecnologia', educational: 'blockchain' },
+  'tech': { news: 'tecnologia', educational: 'blockchain' },
+  'inovacao': { news: 'tecnologia', educational: 'blockchain' },
+
+  // Dicas e guias
+  'dicas': { news: 'adocao', educational: 'seguranca' },
+  'guias': { news: 'adocao', educational: 'wallets' },
+  'tutorial': { news: 'adocao', educational: 'desenvolvimento' },
+  'iniciantes': { news: 'adocao', educational: 'wallets' },
+
+  // Segurança
+  'seguranca': { news: 'regulacao', educational: 'seguranca' },
+  'protecao': { news: 'regulacao', educational: 'seguranca' },
+  'golpes': { news: 'regulacao', educational: 'seguranca' },
+  'scams': { news: 'regulacao', educational: 'seguranca' },
+
+  // Política e regulação
+  'politica': { news: 'politica', educational: 'blockchain' },
+  'regulacao': { news: 'regulacao', educational: 'blockchain' },
+  'governo': { news: 'politica', educational: 'blockchain' },
+
+  // Criptomoedas específicas
+  'btc': { news: 'bitcoin', educational: 'trading' },
+  'eth': { news: 'ethereum', educational: 'blockchain' },
+  'cripto': { news: 'altcoins', educational: 'trading' },
+  'criptomoedas': { news: 'altcoins', educational: 'trading' },
+  'moedas': { news: 'altcoins', educational: 'trading' },
+
+  // DeFi e NFTs
+  'defi': { news: 'defi', educational: 'defi' },
+  'nft': { news: 'nfts', educational: 'nfts' },
+  'nfts': { news: 'nfts', educational: 'nfts' },
+
+  // Análise
+  'analise': { news: 'bitcoin', educational: 'trading' },
+  'previsoes': { news: 'bitcoin', educational: 'trading' },
+  'tendencias': { news: 'altcoins', educational: 'trading' },
+};
+
+/**
+ * Normaliza categoria da IA para uma categoria válida do sistema
+ * Se a categoria for inválida, retorna um fallback seguro baseado no tipo de artigo
+ *
+ * @param category - Categoria sugerida pela IA
+ * @param type - Tipo de artigo (news ou educational)
+ * @returns Categoria válida garantida + flag indicando se houve fallback
+ */
+export function normalizeCategoryWithFallback(
+  category: string | undefined,
+  type: 'news' | 'educational'
+): { category: string; hadFallback: boolean } {
+  if (!category) {
+    return {
+      category: type === 'news' ? 'tecnologia' : 'blockchain',
+      hadFallback: true
+    };
+  }
+
+  const normalized = category.toLowerCase().trim();
+
+  // Verificar se já é uma categoria válida
+  if (isValidCategory(type, normalized)) {
+    return { category: normalized, hadFallback: false };
+  }
+
+  // Tentar encontrar no mapa de fallback
+  const fallbackEntry = CATEGORY_FALLBACK_MAP[normalized];
+  if (fallbackEntry) {
+    return {
+      category: fallbackEntry[type],
+      hadFallback: true
+    };
+  }
+
+  // Fallback final: categoria padrão segura
+  const defaultCategory = type === 'news' ? 'tecnologia' : 'blockchain';
+
+  return {
+    category: defaultCategory,
+    hadFallback: true
+  };
+}

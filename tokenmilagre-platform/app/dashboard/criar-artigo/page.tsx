@@ -19,7 +19,8 @@ import {
   API_ENDPOINTS,
   ANIMATION_DELAYS,
   getArticleRoute,
-  getApiEndpoint
+  getApiEndpoint,
+  normalizeCategoryWithFallback
 } from './_lib/constants';
 import { validateArticle } from './_lib/validation';
 
@@ -240,16 +241,37 @@ export default function CriarArtigoPage() {
   const handlePublish = async () => {
     if (!generatedArticle || !session?.user?.id || !selectedType) return;
 
-    // Normalizar categoria para recursos (apenas lowercase e trim)
-    // NOTA: Frontend constants.ts já está alinhado com backend (wallets, exchanges, etc)
-    const articleToValidate = selectedType === 'resource' && generatedArticle.category
-      ? {
-          ...generatedArticle,
-          category: generatedArticle.category
-            .toLowerCase()
-            .trim()
-        }
-      : generatedArticle;
+    // STEP 1: Normalizar categoria com fallback (P0 - Blindar contra erros da IA)
+    let articleToValidate = { ...generatedArticle };
+
+    if (selectedType === 'news' || selectedType === 'educational') {
+      // Aplicar fallback de categoria para News e Educational
+      const { category: normalizedCategory, hadFallback } = normalizeCategoryWithFallback(
+        generatedArticle.category,
+        selectedType
+      );
+
+      articleToValidate.category = normalizedCategory;
+
+      // LOG: Informar se houve fallback
+      if (hadFallback) {
+        console.warn('⚠️ [FALLBACK] Categoria da IA normalizada:', {
+          original: generatedArticle.category || 'undefined',
+          normalizada: normalizedCategory,
+          tipo: selectedType
+        });
+
+        addMessage({
+          role: 'assistant',
+          content: `ℹ️ A categoria "${generatedArticle.category || 'não especificada'}" foi ajustada para "${normalizedCategory}" (categoria válida do sistema).`
+        });
+      }
+    } else if (selectedType === 'resource') {
+      // Normalizar categoria para recursos (apenas lowercase e trim)
+      if (generatedArticle.category) {
+        articleToValidate.category = generatedArticle.category.toLowerCase().trim();
+      }
+    }
 
     // DEBUG: Log do artigo antes da validação
     if (isDev) {
@@ -261,7 +283,7 @@ export default function CriarArtigoPage() {
       });
     }
 
-    // Validar antes de publicar
+    // STEP 2: Validar antes de publicar
     const validation = validateArticle(articleToValidate, selectedType);
     if (!validation.success) {
       console.error('❌ Erros de validação:', validation.errors);
@@ -273,8 +295,8 @@ export default function CriarArtigoPage() {
       return;
     }
 
-    // Atualizar o artigo com a versão normalizada
-    if (selectedType === 'resource' && articleToValidate.category !== generatedArticle.category) {
+    // STEP 3: Atualizar o artigo com a versão normalizada
+    if (articleToValidate.category !== generatedArticle.category) {
       setGeneratedArticle(articleToValidate);
     }
 
