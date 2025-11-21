@@ -120,29 +120,43 @@ export default function RootLayoutNav({
 
           {/* Sidebar Navigation */}
           <nav className="flex-1 p-4 overflow-y-auto">
-            <div className="space-y-2">
-              {menuItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setSidebarOpen(false)}
-                  className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base transition-all duration-300 ${(item.href === '/' ? pathname === '/' : pathname.startsWith(item.href))
-                    ? 'shadow-theme-md'
-                    : 'hover:bg-opacity-50 hover:scale-105 hover:translate-x-2'
-                    }`}
-                  style={{
-                    backgroundColor: (item.href === '/' ? pathname === '/' : pathname.startsWith(item.href))
-                      ? 'var(--brand-primary)'
-                      : 'transparent',
-                    color: (item.href === '/' ? pathname === '/' : pathname.startsWith(item.href))
-                      ? 'var(--text-inverse)'
-                      : 'var(--text-primary)'
-                  }}
-                >
-                  <FontAwesomeIcon icon={item.icon} className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
-                  <span>{item.label}</span>
-                </Link>
-              ))}
+            <div className="space-y-3">
+              {menuItems.map((item) => {
+                const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setSidebarOpen(false)}
+                    className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base transition-all duration-300 relative overflow-hidden ${isActive
+                      ? 'text-brand-primary'
+                      : 'text-theme-primary hover:bg-opacity-50 hover:scale-105 hover:translate-x-2'
+                      }`}
+                    style={{
+                      backgroundColor: isActive
+                        ? 'rgba(var(--brand-primary-rgb), 0.1)' // Soft background
+                        : 'transparent',
+                      color: isActive
+                        ? 'var(--brand-primary)'
+                        : 'var(--text-primary)'
+                    }}
+                  >
+                    {/* Active Indicator */}
+                    {isActive && (
+                      <div
+                        className="absolute left-0 top-0 bottom-0 w-1 rounded-r-full"
+                        style={{ backgroundColor: 'var(--brand-primary)' }}
+                      />
+                    )}
+
+                    <FontAwesomeIcon
+                      icon={item.icon}
+                      className={`w-5 h-5 transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:rotate-12'}`}
+                    />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
             </div>
           </nav>
 
@@ -152,14 +166,17 @@ export default function RootLayoutNav({
               href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-center gap-2 w-full text-center px-6 py-3 rounded-xl transition-all duration-300 shadow-theme-md hover:shadow-theme-lg hover:scale-110 font-bold"
+              className="group flex items-center justify-center gap-2 w-full text-center px-6 py-3 rounded-xl transition-all duration-300 shadow-theme-md hover:shadow-theme-lg hover:scale-105 font-bold relative overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
                 color: 'white'
               }}
             >
-              <FontAwesomeIcon icon={faHeart} className="w-5 h-5 transition-transform duration-300 group-hover:scale-125 group-hover:animate-pulse" />
-              <span>Comprar $MILAGRE</span>
+              {/* Glow Effect */}
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 blur-md" />
+
+              <FontAwesomeIcon icon={faHeart} className="w-5 h-5 transition-transform duration-300 group-hover:scale-125 group-hover:animate-pulse relative z-10" />
+              <span className="relative z-10">Comprar $MILAGRE</span>
             </a>
           </div>
         </div>
@@ -224,7 +241,7 @@ export default function RootLayoutNav({
               </div>
 
               {/* Desktop Actions */}
-              <nav className="hidden lg:flex items-center gap-4">
+              <nav className="hidden lg:flex items-center gap-4 pl-6 border-l" style={{ borderColor: 'var(--border-medium)' }}>
                 <button
                   onClick={toggleTheme}
                   className="group flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
@@ -243,14 +260,17 @@ export default function RootLayoutNav({
                   href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 px-6 py-2 rounded-lg transition-all duration-300 shadow-theme-md hover:shadow-theme-lg hover:scale-110 font-bold"
+                  className="group flex items-center gap-2 px-6 py-2 rounded-lg transition-all duration-300 shadow-theme-md hover:shadow-theme-lg hover:scale-105 font-bold relative overflow-hidden"
                   style={{
                     background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
                     color: 'white'
                   }}
                 >
-                  <FontAwesomeIcon icon={faHeart} className="w-5 h-5 transition-transform duration-300 group-hover:scale-125 group-hover:animate-pulse" />
-                  <span>Comprar $MILAGRE</span>
+                  {/* Glow Effect */}
+                  <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 blur-md" />
+
+                  <FontAwesomeIcon icon={faHeart} className="w-5 h-5 transition-transform duration-300 group-hover:scale-125 group-hover:animate-pulse relative z-10" />
+                  <span className="relative z-10">Comprar $MILAGRE</span>
                 </a>
               </nav>
             </div>
