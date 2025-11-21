@@ -1,8 +1,5 @@
 #!/usr/bin/env node
 
-// Carregar variáveis de ambiente do .env
-require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
-
 const chokidar = require('chokidar');
 const fs = require('fs');
 const path = require('path');

@@ -3,13 +3,10 @@
  * Verifica se a API key tem permissão e quota para gerar imagens
  */
 
-const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '../.env') });
-
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 if (!GEMINI_API_KEY) {
-  console.error('❌ GEMINI_API_KEY não encontrada no .env');
+  console.error('❌ GEMINI_API_KEY não encontrada nas variáveis de ambiente');
   process.exit(1);
 }
 
