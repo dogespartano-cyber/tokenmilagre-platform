@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBitcoinSign } from '@fortawesome/free-solid-svg-icons';
 import { TokenETH, TokenXRP, TokenSOL, TokenBNB } from '@token-icons/react';
@@ -213,6 +214,17 @@ export default function NavbarCryptoTicker() {
         }
     };
 
+    const getCoinSlug = (id: string) => {
+        const slugMap: Record<string, string> = {
+            'bitcoin': 'bitcoin',
+            'ethereum': 'ethereum',
+            'ripple': 'xrp',
+            'binancecoin': 'bnb',
+            'solana': 'solana'
+        };
+        return slugMap[id] || id;
+    };
+
     if (loading && cryptoData.length === 0) {
         return (
             <div className="flex items-center justify-center gap-8 w-full animate-pulse">
@@ -234,7 +246,11 @@ export default function NavbarCryptoTicker() {
                 const priceDigits = priceStr.split('');
 
                 return (
-                    <div key={coin.id} className="flex items-center gap-3 shrink-0 group cursor-default transition-transform hover:scale-105">
+                    <Link
+                        key={coin.id}
+                        href={`/criptomoedas/${getCoinSlug(coin.id)}`}
+                        className="flex items-center gap-3 shrink-0 group cursor-pointer transition-transform hover:scale-105"
+                    >
                         <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 group-hover:border-white/20 transition-colors shadow-sm">
                             {getIcon(coin.symbol)}
                         </div>
@@ -256,7 +272,7 @@ export default function NavbarCryptoTicker() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 );
             })}
         </div>
