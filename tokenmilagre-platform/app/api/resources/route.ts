@@ -191,9 +191,32 @@ export async function POST(request: NextRequest) {
       message: 'Recurso criado com sucesso!'
     })
   } catch (error) {
-    logger.error('Error creating resource', error as Error)
+    logger.error('Error creating resource', error as Error, {
+      errorName: (error as any).name,
+      errorMessage: (error as any).message,
+      errorStack: (error as any).stack,
+      // @ts-ignore
+      errorDetails: (error as any).details,
+      // @ts-ignore - Zod errors have issues property
+      zodIssues: (error as any).issues,
+    })
 
     // Return detailed validation errors for debugging
+    // Check for Zod validation errors
+    if ((error as any).issues && Array.isArray((error as any).issues)) {
+      const zodErrors = (error as any).issues.map((issue: any) => ({
+        path: issue.path.join('.'),
+        message: issue.message,
+        code: issue.code
+      }))
+      return errorResponse(
+        'Validation failed: ' + zodErrors.map(e => `${e.path}: ${e.message}`).join('; '),
+        400,
+        { validationErrors: zodErrors }
+      )
+    }
+
+    // Check for ValidationError with details
     if ((error as any).name === 'ValidationError' && (error as any).details) {
       return errorResponse(error as Error, 400, (error as any).details)
     }

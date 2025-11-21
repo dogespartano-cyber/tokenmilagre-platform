@@ -206,17 +206,24 @@ export async function POST(request: NextRequest) {
     logger.error('Error creating article', error as Error, {
       errorName: (error as Error).name,
       errorMessage: (error as Error).message,
+      errorStack: (error as any).stack,
       // @ts-ignore - ValidationError has details property
-      errorDetails: error.details
+      errorDetails: (error as any).details,
+      // @ts-ignore - Zod errors have issues property
+      zodIssues: (error as any).issues,
     })
 
     // Return detailed validation errors for debugging
-    if ((error as any).name === 'ValidationError' && (error as any).details) {
-      return errorResponse(error as Error, 400, (error as any).details)
-    }
+    // Check for Zod validation errors
+    if ((error as any).issues && Array.isArray((error as any).issues)) {
+      const zodErrors = (error as any).issues.map((issue: any) => ({
+        path: issue.path.join('.'),
+        if((error as any).name === 'ValidationError' && (error as any).details) {
+        return errorResponse(error as Error, 400, (error as any).details)
+      }
 
     return errorResponse(error as Error)
-  } finally {
-    logger.clearContext()
+    } finally {
+      logger.clearContext()
+    }
   }
-}
