@@ -240,18 +240,14 @@ export default function CriarArtigoPage() {
   const handlePublish = async () => {
     if (!generatedArticle || !session?.user?.id || !selectedType) return;
 
-    // Normalizar categoria para recursos (lowercase com hífens)
+    // Normalizar categoria para recursos (apenas lowercase e trim)
+    // NOTA: Frontend constants.ts já está alinhado com backend (wallets, exchanges, etc)
     const articleToValidate = selectedType === 'resource' && generatedArticle.category
       ? {
           ...generatedArticle,
           category: generatedArticle.category
             .toLowerCase()
             .trim()
-            .replace(/\s+/g, '-')     // Espaços → hífens
-            .replace(/_/g, '-')       // Underscores → hífens
-            .replace(/s$/, '')        // Remove plural (wallets → wallet, exchanges → exchange)
-            .replace(/^defi$/, 'defi-protocol') // DeFi específico
-            .replace(/^tools?$/, 'analytics') // Normaliza "tools" ou "tool"
         }
       : generatedArticle;
 

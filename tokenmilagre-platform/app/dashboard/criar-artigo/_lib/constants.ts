@@ -63,17 +63,15 @@ export const EDUCATIONAL_CATEGORIES = [
   'exchanges'
 ] as const;
 
+// Alinhado com backend (lib/schemas/resource-schemas.ts)
+// Backend é a fonte da verdade - usar exatamente os mesmos valores
 export const RESOURCE_CATEGORIES = [
-  'exchange',
-  'wallet',
-  'defi-protocol',
-  'analytics',
-  'portfolio-tracker',
-  'news',
-  'education',
-  'development-tools',
-  'explorers',
-  'browsers'
+  'wallets',      // Carteiras cripto
+  'exchanges',    // Corretoras
+  'browsers',     // Navegadores Web3
+  'defi',         // Protocolos DeFi
+  'explorers',    // Exploradores de blockchain
+  'tools'         // Ferramentas (analytics, portfolio-tracker, development-tools)
 ] as const;
 
 export const CATEGORIES_BY_TYPE = {

@@ -560,9 +560,8 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         const article = selected[i];
         console.log(`💾 [${i + 1}/${selected.length}] Salvando: ${article.title || article.name}`);
 
-        // Normalizar categoria para recursos
-        // IMPORTANTE: Não remover 's' final porque categorias válidas podem terminar em 's'
-        // (ex: 'analytics', 'explorers', 'browsers')
+        // Normalizar categoria para recursos (apenas lowercase e trim)
+        // NOTA: Backend espera: wallets, exchanges, browsers, defi, explorers, tools (plural)
         const articleToSave = contentType === 'resource' && article.category
           ? {
             ...article,
@@ -571,11 +570,15 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
               .trim()
               .replace(/\s+/g, '-')
               .replace(/_/g, '-')
-              // Mapeamentos específicos
-              .replace(/^defi$/, 'defi-protocol')
-              .replace(/^tools?$/, 'development-tools')
-              .replace(/^wallet$/, 'wallet')
-              .replace(/^exchange$/, 'exchange')
+              // Mapeamentos para garantir compatibilidade com backend
+              .replace(/^wallet$/, 'wallets')           // singular → plural
+              .replace(/^exchange$/, 'exchanges')       // singular → plural
+              .replace(/^browser$/, 'browsers')         // singular → plural
+              .replace(/^explorer$/, 'explorers')       // singular → plural
+              .replace(/^defi-protocol$/, 'defi')       // normalizar variação
+              .replace(/^analytics$/, 'tools')          // mapear para tools
+              .replace(/^portfolio-tracker$/, 'tools')  // mapear para tools
+              .replace(/^development-tools$/, 'tools')  // mapear para tools
           }
           : article;
 
