@@ -192,6 +192,12 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     logger.error('Error creating resource', error as Error)
+
+    // Return detailed validation errors for debugging
+    if ((error as any).name === 'ValidationError' && (error as any).details) {
+      return errorResponse(error as Error, 400, (error as any).details)
+    }
+
     return errorResponse(error as Error)
   } finally {
     logger.clearContext()

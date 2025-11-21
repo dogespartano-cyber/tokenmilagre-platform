@@ -565,18 +565,18 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         // (ex: 'analytics', 'explorers', 'browsers')
         const articleToSave = contentType === 'resource' && article.category
           ? {
-              ...article,
-              category: article.category
-                .toLowerCase()
-                .trim()
-                .replace(/\s+/g, '-')
-                .replace(/_/g, '-')
-                // Mapeamentos específicos
-                .replace(/^defi$/, 'defi-protocol')
-                .replace(/^tools?$/, 'development-tools')
-                .replace(/^wallet$/, 'wallet')
-                .replace(/^exchange$/, 'exchange')
-            }
+            ...article,
+            category: article.category
+              .toLowerCase()
+              .trim()
+              .replace(/\s+/g, '-')
+              .replace(/_/g, '-')
+              // Mapeamentos específicos
+              .replace(/^defi$/, 'defi-protocol')
+              .replace(/^tools?$/, 'development-tools')
+              .replace(/^wallet$/, 'wallet')
+              .replace(/^exchange$/, 'exchange')
+          }
           : article;
 
         const apiEndpoint = contentType === 'resource' ? '/api/resources' : '/api/articles';
@@ -613,36 +613,9 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
 
         // Campos específicos para recursos
         if (contentType === 'resource') {
-          // Garantir que campos JSON sejam strings
-          if (payload.platforms && Array.isArray(payload.platforms)) {
-            payload.platforms = JSON.stringify(payload.platforms);
-          }
-          if (payload.whyGoodContent && Array.isArray(payload.whyGoodContent)) {
-            payload.whyGoodContent = JSON.stringify(payload.whyGoodContent);
-          }
-          if (payload.features && Array.isArray(payload.features)) {
-            payload.features = JSON.stringify(payload.features);
-          }
-          if (payload.howToStartSteps && Array.isArray(payload.howToStartSteps)) {
-            payload.howToStartSteps = JSON.stringify(payload.howToStartSteps);
-          }
-          if (payload.pros && Array.isArray(payload.pros)) {
-            payload.pros = JSON.stringify(payload.pros);
-          }
-          if (payload.cons && Array.isArray(payload.cons)) {
-            payload.cons = JSON.stringify(payload.cons);
-          }
-          if (payload.faq && Array.isArray(payload.faq)) {
-            payload.faq = JSON.stringify(payload.faq);
-          }
-          if (payload.securityTips && Array.isArray(payload.securityTips)) {
-            payload.securityTips = JSON.stringify(payload.securityTips);
-          }
-          if (payload.relatedResources) {
-            payload.relatedResources = Array.isArray(payload.relatedResources)
-              ? JSON.stringify(payload.relatedResources)
-              : payload.relatedResources;
-          }
+          // NOTA: Não stringificar campos JSON, pois o Zod schema espera arrays/objetos
+          // O Service layer cuidará da conversão para o banco se necessário
+
           // NOTA: Campo 'sources' foi removido porque a coluna não existe no banco Supabase
           // Citations são armazenadas em factCheckSources (apenas para artigos)
           payload.verified = true;

@@ -209,6 +209,12 @@ export async function POST(request: NextRequest) {
       // @ts-ignore - ValidationError has details property
       errorDetails: error.details
     })
+
+    // Return detailed validation errors for debugging
+    if ((error as any).name === 'ValidationError' && (error as any).details) {
+      return errorResponse(error as Error, 400, (error as any).details)
+    }
+
     return errorResponse(error as Error)
   } finally {
     logger.clearContext()
