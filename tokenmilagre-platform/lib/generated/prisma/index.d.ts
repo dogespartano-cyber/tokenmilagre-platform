@@ -39,6 +39,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Article = $Result.DefaultSelection<Prisma.$ArticlePayload>
 /**
+ * Model Citation
+ * 
+ */
+export type Citation = $Result.DefaultSelection<Prisma.$CitationPayload>
+/**
  * Model Resource
  * 
  */
@@ -322,6 +327,16 @@ export class PrismaClient<
     * ```
     */
   get article(): Prisma.ArticleDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.citation`: Exposes CRUD operations for the **Citation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Citations
+    * const citations = await prisma.citation.findMany()
+    * ```
+    */
+  get citation(): Prisma.CitationDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.resource`: Exposes CRUD operations for the **Resource** model.
@@ -858,6 +873,7 @@ export namespace Prisma {
     VerificationToken: 'VerificationToken',
     User: 'User',
     Article: 'Article',
+    Citation: 'Citation',
     Resource: 'Resource',
     Cryptocurrency: 'Cryptocurrency',
     CopilotActivity: 'CopilotActivity',
@@ -885,7 +901,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "session" | "verificationToken" | "user" | "article" | "resource" | "cryptocurrency" | "copilotActivity" | "automationTask" | "copilotReport" | "communityStory" | "socialProject" | "projectMap" | "userProgress"
+      modelProps: "account" | "session" | "verificationToken" | "user" | "article" | "citation" | "resource" | "cryptocurrency" | "copilotActivity" | "automationTask" | "copilotReport" | "communityStory" | "socialProject" | "projectMap" | "userProgress"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1256,6 +1272,80 @@ export namespace Prisma {
           count: {
             args: Prisma.ArticleCountArgs<ExtArgs>
             result: $Utils.Optional<ArticleCountAggregateOutputType> | number
+          }
+        }
+      }
+      Citation: {
+        payload: Prisma.$CitationPayload<ExtArgs>
+        fields: Prisma.CitationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CitationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CitationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CitationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CitationPayload>
+          }
+          findFirst: {
+            args: Prisma.CitationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CitationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CitationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CitationPayload>
+          }
+          findMany: {
+            args: Prisma.CitationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CitationPayload>[]
+          }
+          create: {
+            args: Prisma.CitationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CitationPayload>
+          }
+          createMany: {
+            args: Prisma.CitationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CitationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CitationPayload>[]
+          }
+          delete: {
+            args: Prisma.CitationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CitationPayload>
+          }
+          update: {
+            args: Prisma.CitationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CitationPayload>
+          }
+          deleteMany: {
+            args: Prisma.CitationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CitationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CitationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CitationPayload>[]
+          }
+          upsert: {
+            args: Prisma.CitationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CitationPayload>
+          }
+          aggregate: {
+            args: Prisma.CitationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCitation>
+          }
+          groupBy: {
+            args: Prisma.CitationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CitationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CitationCountArgs<ExtArgs>
+            result: $Utils.Optional<CitationCountAggregateOutputType> | number
           }
         }
       }
@@ -2026,6 +2116,7 @@ export namespace Prisma {
     verificationToken?: VerificationTokenOmit
     user?: UserOmit
     article?: ArticleOmit
+    citation?: CitationOmit
     resource?: ResourceOmit
     cryptocurrency?: CryptocurrencyOmit
     copilotActivity?: CopilotActivityOmit
@@ -2183,6 +2274,37 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountUserProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserProgressWhereInput
+  }
+
+
+  /**
+   * Count Type ArticleCountOutputType
+   */
+
+  export type ArticleCountOutputType = {
+    citations: number
+  }
+
+  export type ArticleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    citations?: boolean | ArticleCountOutputTypeCountCitationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ArticleCountOutputType without action
+   */
+  export type ArticleCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticleCountOutputType
+     */
+    select?: ArticleCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ArticleCountOutputType without action
+   */
+  export type ArticleCountOutputTypeCountCitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CitationWhereInput
   }
 
 
@@ -7096,6 +7218,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
+    citations?: boolean | Article$citationsArgs<ExtArgs>
+    _count?: boolean | ArticleCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["article"]>
 
   export type ArticleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7196,6 +7320,8 @@ export namespace Prisma {
   export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "type" | "excerpt" | "published" | "authorId" | "category" | "tags" | "sentiment" | "factCheckScore" | "factCheckSources" | "factCheckDate" | "factCheckStatus" | "level" | "contentType" | "readTime" | "warningLevel" | "securityTips" | "courseSequence" | "relatedArticles" | "projectHighlight" | "coverImage" | "coverImageAlt" | "quizData" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
   export type ArticleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
+    citations?: boolean | Article$citationsArgs<ExtArgs>
+    _count?: boolean | ArticleCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ArticleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
@@ -7208,6 +7334,7 @@ export namespace Prisma {
     name: "Article"
     objects: {
       author: Prisma.$UserPayload<ExtArgs>
+      citations: Prisma.$CitationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7633,6 +7760,7 @@ export namespace Prisma {
   export interface Prisma__ArticleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    citations<T extends Article$citationsArgs<ExtArgs> = {}>(args?: Subset<T, Article$citationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8086,6 +8214,30 @@ export namespace Prisma {
   }
 
   /**
+   * Article.citations
+   */
+  export type Article$citationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Citation
+     */
+    select?: CitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Citation
+     */
+    omit?: CitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CitationInclude<ExtArgs> | null
+    where?: CitationWhereInput
+    orderBy?: CitationOrderByWithRelationInput | CitationOrderByWithRelationInput[]
+    cursor?: CitationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CitationScalarFieldEnum | CitationScalarFieldEnum[]
+  }
+
+  /**
    * Article without action
    */
   export type ArticleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8101,6 +8253,1137 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ArticleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Citation
+   */
+
+  export type AggregateCitation = {
+    _count: CitationCountAggregateOutputType | null
+    _avg: CitationAvgAggregateOutputType | null
+    _sum: CitationSumAggregateOutputType | null
+    _min: CitationMinAggregateOutputType | null
+    _max: CitationMaxAggregateOutputType | null
+  }
+
+  export type CitationAvgAggregateOutputType = {
+    order: number | null
+  }
+
+  export type CitationSumAggregateOutputType = {
+    order: number | null
+  }
+
+  export type CitationMinAggregateOutputType = {
+    id: string | null
+    url: string | null
+    title: string | null
+    domain: string | null
+    articleId: string | null
+    order: number | null
+    verified: boolean | null
+    createdAt: Date | null
+  }
+
+  export type CitationMaxAggregateOutputType = {
+    id: string | null
+    url: string | null
+    title: string | null
+    domain: string | null
+    articleId: string | null
+    order: number | null
+    verified: boolean | null
+    createdAt: Date | null
+  }
+
+  export type CitationCountAggregateOutputType = {
+    id: number
+    url: number
+    title: number
+    domain: number
+    articleId: number
+    order: number
+    verified: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type CitationAvgAggregateInputType = {
+    order?: true
+  }
+
+  export type CitationSumAggregateInputType = {
+    order?: true
+  }
+
+  export type CitationMinAggregateInputType = {
+    id?: true
+    url?: true
+    title?: true
+    domain?: true
+    articleId?: true
+    order?: true
+    verified?: true
+    createdAt?: true
+  }
+
+  export type CitationMaxAggregateInputType = {
+    id?: true
+    url?: true
+    title?: true
+    domain?: true
+    articleId?: true
+    order?: true
+    verified?: true
+    createdAt?: true
+  }
+
+  export type CitationCountAggregateInputType = {
+    id?: true
+    url?: true
+    title?: true
+    domain?: true
+    articleId?: true
+    order?: true
+    verified?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type CitationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Citation to aggregate.
+     */
+    where?: CitationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Citations to fetch.
+     */
+    orderBy?: CitationOrderByWithRelationInput | CitationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CitationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Citations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Citations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Citations
+    **/
+    _count?: true | CitationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CitationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CitationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CitationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CitationMaxAggregateInputType
+  }
+
+  export type GetCitationAggregateType<T extends CitationAggregateArgs> = {
+        [P in keyof T & keyof AggregateCitation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCitation[P]>
+      : GetScalarType<T[P], AggregateCitation[P]>
+  }
+
+
+
+
+  export type CitationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CitationWhereInput
+    orderBy?: CitationOrderByWithAggregationInput | CitationOrderByWithAggregationInput[]
+    by: CitationScalarFieldEnum[] | CitationScalarFieldEnum
+    having?: CitationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CitationCountAggregateInputType | true
+    _avg?: CitationAvgAggregateInputType
+    _sum?: CitationSumAggregateInputType
+    _min?: CitationMinAggregateInputType
+    _max?: CitationMaxAggregateInputType
+  }
+
+  export type CitationGroupByOutputType = {
+    id: string
+    url: string
+    title: string | null
+    domain: string | null
+    articleId: string
+    order: number
+    verified: boolean
+    createdAt: Date
+    _count: CitationCountAggregateOutputType | null
+    _avg: CitationAvgAggregateOutputType | null
+    _sum: CitationSumAggregateOutputType | null
+    _min: CitationMinAggregateOutputType | null
+    _max: CitationMaxAggregateOutputType | null
+  }
+
+  type GetCitationGroupByPayload<T extends CitationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CitationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CitationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CitationGroupByOutputType[P]>
+            : GetScalarType<T[P], CitationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CitationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    url?: boolean
+    title?: boolean
+    domain?: boolean
+    articleId?: boolean
+    order?: boolean
+    verified?: boolean
+    createdAt?: boolean
+    article?: boolean | ArticleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["citation"]>
+
+  export type CitationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    url?: boolean
+    title?: boolean
+    domain?: boolean
+    articleId?: boolean
+    order?: boolean
+    verified?: boolean
+    createdAt?: boolean
+    article?: boolean | ArticleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["citation"]>
+
+  export type CitationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    url?: boolean
+    title?: boolean
+    domain?: boolean
+    articleId?: boolean
+    order?: boolean
+    verified?: boolean
+    createdAt?: boolean
+    article?: boolean | ArticleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["citation"]>
+
+  export type CitationSelectScalar = {
+    id?: boolean
+    url?: boolean
+    title?: boolean
+    domain?: boolean
+    articleId?: boolean
+    order?: boolean
+    verified?: boolean
+    createdAt?: boolean
+  }
+
+  export type CitationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "url" | "title" | "domain" | "articleId" | "order" | "verified" | "createdAt", ExtArgs["result"]["citation"]>
+  export type CitationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    article?: boolean | ArticleDefaultArgs<ExtArgs>
+  }
+  export type CitationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    article?: boolean | ArticleDefaultArgs<ExtArgs>
+  }
+  export type CitationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    article?: boolean | ArticleDefaultArgs<ExtArgs>
+  }
+
+  export type $CitationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Citation"
+    objects: {
+      article: Prisma.$ArticlePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      url: string
+      title: string | null
+      domain: string | null
+      articleId: string
+      order: number
+      verified: boolean
+      createdAt: Date
+    }, ExtArgs["result"]["citation"]>
+    composites: {}
+  }
+
+  type CitationGetPayload<S extends boolean | null | undefined | CitationDefaultArgs> = $Result.GetResult<Prisma.$CitationPayload, S>
+
+  type CitationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CitationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CitationCountAggregateInputType | true
+    }
+
+  export interface CitationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Citation'], meta: { name: 'Citation' } }
+    /**
+     * Find zero or one Citation that matches the filter.
+     * @param {CitationFindUniqueArgs} args - Arguments to find a Citation
+     * @example
+     * // Get one Citation
+     * const citation = await prisma.citation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CitationFindUniqueArgs>(args: SelectSubset<T, CitationFindUniqueArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Citation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CitationFindUniqueOrThrowArgs} args - Arguments to find a Citation
+     * @example
+     * // Get one Citation
+     * const citation = await prisma.citation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CitationFindUniqueOrThrowArgs>(args: SelectSubset<T, CitationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Citation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CitationFindFirstArgs} args - Arguments to find a Citation
+     * @example
+     * // Get one Citation
+     * const citation = await prisma.citation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CitationFindFirstArgs>(args?: SelectSubset<T, CitationFindFirstArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Citation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CitationFindFirstOrThrowArgs} args - Arguments to find a Citation
+     * @example
+     * // Get one Citation
+     * const citation = await prisma.citation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CitationFindFirstOrThrowArgs>(args?: SelectSubset<T, CitationFindFirstOrThrowArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Citations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CitationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Citations
+     * const citations = await prisma.citation.findMany()
+     * 
+     * // Get first 10 Citations
+     * const citations = await prisma.citation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const citationWithIdOnly = await prisma.citation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CitationFindManyArgs>(args?: SelectSubset<T, CitationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Citation.
+     * @param {CitationCreateArgs} args - Arguments to create a Citation.
+     * @example
+     * // Create one Citation
+     * const Citation = await prisma.citation.create({
+     *   data: {
+     *     // ... data to create a Citation
+     *   }
+     * })
+     * 
+     */
+    create<T extends CitationCreateArgs>(args: SelectSubset<T, CitationCreateArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Citations.
+     * @param {CitationCreateManyArgs} args - Arguments to create many Citations.
+     * @example
+     * // Create many Citations
+     * const citation = await prisma.citation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CitationCreateManyArgs>(args?: SelectSubset<T, CitationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Citations and returns the data saved in the database.
+     * @param {CitationCreateManyAndReturnArgs} args - Arguments to create many Citations.
+     * @example
+     * // Create many Citations
+     * const citation = await prisma.citation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Citations and only return the `id`
+     * const citationWithIdOnly = await prisma.citation.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CitationCreateManyAndReturnArgs>(args?: SelectSubset<T, CitationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Citation.
+     * @param {CitationDeleteArgs} args - Arguments to delete one Citation.
+     * @example
+     * // Delete one Citation
+     * const Citation = await prisma.citation.delete({
+     *   where: {
+     *     // ... filter to delete one Citation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CitationDeleteArgs>(args: SelectSubset<T, CitationDeleteArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Citation.
+     * @param {CitationUpdateArgs} args - Arguments to update one Citation.
+     * @example
+     * // Update one Citation
+     * const citation = await prisma.citation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CitationUpdateArgs>(args: SelectSubset<T, CitationUpdateArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Citations.
+     * @param {CitationDeleteManyArgs} args - Arguments to filter Citations to delete.
+     * @example
+     * // Delete a few Citations
+     * const { count } = await prisma.citation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CitationDeleteManyArgs>(args?: SelectSubset<T, CitationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Citations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CitationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Citations
+     * const citation = await prisma.citation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CitationUpdateManyArgs>(args: SelectSubset<T, CitationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Citations and returns the data updated in the database.
+     * @param {CitationUpdateManyAndReturnArgs} args - Arguments to update many Citations.
+     * @example
+     * // Update many Citations
+     * const citation = await prisma.citation.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Citations and only return the `id`
+     * const citationWithIdOnly = await prisma.citation.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CitationUpdateManyAndReturnArgs>(args: SelectSubset<T, CitationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Citation.
+     * @param {CitationUpsertArgs} args - Arguments to update or create a Citation.
+     * @example
+     * // Update or create a Citation
+     * const citation = await prisma.citation.upsert({
+     *   create: {
+     *     // ... data to create a Citation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Citation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CitationUpsertArgs>(args: SelectSubset<T, CitationUpsertArgs<ExtArgs>>): Prisma__CitationClient<$Result.GetResult<Prisma.$CitationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Citations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CitationCountArgs} args - Arguments to filter Citations to count.
+     * @example
+     * // Count the number of Citations
+     * const count = await prisma.citation.count({
+     *   where: {
+     *     // ... the filter for the Citations we want to count
+     *   }
+     * })
+    **/
+    count<T extends CitationCountArgs>(
+      args?: Subset<T, CitationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CitationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Citation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CitationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CitationAggregateArgs>(args: Subset<T, CitationAggregateArgs>): Prisma.PrismaPromise<GetCitationAggregateType<T>>
+
+    /**
+     * Group by Citation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CitationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CitationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CitationGroupByArgs['orderBy'] }
+        : { orderBy?: CitationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CitationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCitationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Citation model
+   */
+  readonly fields: CitationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Citation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CitationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    article<T extends ArticleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ArticleDefaultArgs<ExtArgs>>): Prisma__ArticleClient<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Citation model
+   */
+  interface CitationFieldRefs {
+    readonly id: FieldRef<"Citation", 'String'>
+    readonly url: FieldRef<"Citation", 'String'>
+    readonly title: FieldRef<"Citation", 'String'>
+    readonly domain: FieldRef<"Citation", 'String'>
+    readonly articleId: FieldRef<"Citation", 'String'>
+    readonly order: FieldRef<"Citation", 'Int'>
+    readonly verified: FieldRef<"Citation", 'Boolean'>
+    readonly createdAt: FieldRef<"Citation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Citation findUnique
+   */
+  export type CitationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Citation
+     */
+    select?: CitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Citation
+     */
+    omit?: CitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CitationInclude<ExtArgs> | null
+    /**
+     * Filter, which Citation to fetch.
+     */
+    where: CitationWhereUniqueInput
+  }
+
+  /**
+   * Citation findUniqueOrThrow
+   */
+  export type CitationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Citation
+     */
+    select?: CitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Citation
+     */
+    omit?: CitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CitationInclude<ExtArgs> | null
+    /**
+     * Filter, which Citation to fetch.
+     */
+    where: CitationWhereUniqueInput
+  }
+
+  /**
+   * Citation findFirst
+   */
+  export type CitationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Citation
+     */
+    select?: CitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Citation
+     */
+    omit?: CitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CitationInclude<ExtArgs> | null
+    /**
+     * Filter, which Citation to fetch.
+     */
+    where?: CitationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Citations to fetch.
+     */
+    orderBy?: CitationOrderByWithRelationInput | CitationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Citations.
+     */
+    cursor?: CitationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Citations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Citations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Citations.
+     */
+    distinct?: CitationScalarFieldEnum | CitationScalarFieldEnum[]
+  }
+
+  /**
+   * Citation findFirstOrThrow
+   */
+  export type CitationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Citation
+     */
+    select?: CitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Citation
+     */
+    omit?: CitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CitationInclude<ExtArgs> | null
+    /**
+     * Filter, which Citation to fetch.
+     */
+    where?: CitationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Citations to fetch.
+     */
+    orderBy?: CitationOrderByWithRelationInput | CitationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Citations.
+     */
+    cursor?: CitationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Citations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Citations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Citations.
+     */
+    distinct?: CitationScalarFieldEnum | CitationScalarFieldEnum[]
+  }
+
+  /**
+   * Citation findMany
+   */
+  export type CitationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Citation
+     */
+    select?: CitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Citation
+     */
+    omit?: CitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CitationInclude<ExtArgs> | null
+    /**
+     * Filter, which Citations to fetch.
+     */
+    where?: CitationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Citations to fetch.
+     */
+    orderBy?: CitationOrderByWithRelationInput | CitationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Citations.
+     */
+    cursor?: CitationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Citations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Citations.
+     */
+    skip?: number
+    distinct?: CitationScalarFieldEnum | CitationScalarFieldEnum[]
+  }
+
+  /**
+   * Citation create
+   */
+  export type CitationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Citation
+     */
+    select?: CitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Citation
+     */
+    omit?: CitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CitationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Citation.
+     */
+    data: XOR<CitationCreateInput, CitationUncheckedCreateInput>
+  }
+
+  /**
+   * Citation createMany
+   */
+  export type CitationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Citations.
+     */
+    data: CitationCreateManyInput | CitationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Citation createManyAndReturn
+   */
+  export type CitationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Citation
+     */
+    select?: CitationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Citation
+     */
+    omit?: CitationOmit<ExtArgs> | null
+    /**
+     * The data used to create many Citations.
+     */
+    data: CitationCreateManyInput | CitationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CitationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Citation update
+   */
+  export type CitationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Citation
+     */
+    select?: CitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Citation
+     */
+    omit?: CitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CitationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Citation.
+     */
+    data: XOR<CitationUpdateInput, CitationUncheckedUpdateInput>
+    /**
+     * Choose, which Citation to update.
+     */
+    where: CitationWhereUniqueInput
+  }
+
+  /**
+   * Citation updateMany
+   */
+  export type CitationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Citations.
+     */
+    data: XOR<CitationUpdateManyMutationInput, CitationUncheckedUpdateManyInput>
+    /**
+     * Filter which Citations to update
+     */
+    where?: CitationWhereInput
+    /**
+     * Limit how many Citations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Citation updateManyAndReturn
+   */
+  export type CitationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Citation
+     */
+    select?: CitationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Citation
+     */
+    omit?: CitationOmit<ExtArgs> | null
+    /**
+     * The data used to update Citations.
+     */
+    data: XOR<CitationUpdateManyMutationInput, CitationUncheckedUpdateManyInput>
+    /**
+     * Filter which Citations to update
+     */
+    where?: CitationWhereInput
+    /**
+     * Limit how many Citations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CitationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Citation upsert
+   */
+  export type CitationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Citation
+     */
+    select?: CitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Citation
+     */
+    omit?: CitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CitationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Citation to update in case it exists.
+     */
+    where: CitationWhereUniqueInput
+    /**
+     * In case the Citation found by the `where` argument doesn't exist, create a new Citation with this data.
+     */
+    create: XOR<CitationCreateInput, CitationUncheckedCreateInput>
+    /**
+     * In case the Citation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CitationUpdateInput, CitationUncheckedUpdateInput>
+  }
+
+  /**
+   * Citation delete
+   */
+  export type CitationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Citation
+     */
+    select?: CitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Citation
+     */
+    omit?: CitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CitationInclude<ExtArgs> | null
+    /**
+     * Filter which Citation to delete.
+     */
+    where: CitationWhereUniqueInput
+  }
+
+  /**
+   * Citation deleteMany
+   */
+  export type CitationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Citations to delete
+     */
+    where?: CitationWhereInput
+    /**
+     * Limit how many Citations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Citation without action
+   */
+  export type CitationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Citation
+     */
+    select?: CitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Citation
+     */
+    omit?: CitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CitationInclude<ExtArgs> | null
   }
 
 
@@ -19251,6 +20534,20 @@ export namespace Prisma {
   export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
 
 
+  export const CitationScalarFieldEnum: {
+    id: 'id',
+    url: 'url',
+    title: 'title',
+    domain: 'domain',
+    articleId: 'articleId',
+    order: 'order',
+    verified: 'verified',
+    createdAt: 'createdAt'
+  };
+
+  export type CitationScalarFieldEnum = (typeof CitationScalarFieldEnum)[keyof typeof CitationScalarFieldEnum]
+
+
   export const ResourceScalarFieldEnum: {
     id: 'id',
     slug: 'slug',
@@ -19954,6 +21251,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Article"> | Date | string
     updatedAt?: DateTimeFilter<"Article"> | Date | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    citations?: CitationListRelationFilter
   }
 
   export type ArticleOrderByWithRelationInput = {
@@ -19986,6 +21284,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     author?: UserOrderByWithRelationInput
+    citations?: CitationOrderByRelationAggregateInput
   }
 
   export type ArticleWhereUniqueInput = Prisma.AtLeast<{
@@ -20021,6 +21320,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Article"> | Date | string
     updatedAt?: DateTimeFilter<"Article"> | Date | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    citations?: CitationListRelationFilter
   }, "id" | "slug">
 
   export type ArticleOrderByWithAggregationInput = {
@@ -20091,6 +21391,78 @@ export namespace Prisma {
     quizData?: StringNullableWithAggregatesFilter<"Article"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Article"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Article"> | Date | string
+  }
+
+  export type CitationWhereInput = {
+    AND?: CitationWhereInput | CitationWhereInput[]
+    OR?: CitationWhereInput[]
+    NOT?: CitationWhereInput | CitationWhereInput[]
+    id?: StringFilter<"Citation"> | string
+    url?: StringFilter<"Citation"> | string
+    title?: StringNullableFilter<"Citation"> | string | null
+    domain?: StringNullableFilter<"Citation"> | string | null
+    articleId?: StringFilter<"Citation"> | string
+    order?: IntFilter<"Citation"> | number
+    verified?: BoolFilter<"Citation"> | boolean
+    createdAt?: DateTimeFilter<"Citation"> | Date | string
+    article?: XOR<ArticleScalarRelationFilter, ArticleWhereInput>
+  }
+
+  export type CitationOrderByWithRelationInput = {
+    id?: SortOrder
+    url?: SortOrder
+    title?: SortOrderInput | SortOrder
+    domain?: SortOrderInput | SortOrder
+    articleId?: SortOrder
+    order?: SortOrder
+    verified?: SortOrder
+    createdAt?: SortOrder
+    article?: ArticleOrderByWithRelationInput
+  }
+
+  export type CitationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CitationWhereInput | CitationWhereInput[]
+    OR?: CitationWhereInput[]
+    NOT?: CitationWhereInput | CitationWhereInput[]
+    url?: StringFilter<"Citation"> | string
+    title?: StringNullableFilter<"Citation"> | string | null
+    domain?: StringNullableFilter<"Citation"> | string | null
+    articleId?: StringFilter<"Citation"> | string
+    order?: IntFilter<"Citation"> | number
+    verified?: BoolFilter<"Citation"> | boolean
+    createdAt?: DateTimeFilter<"Citation"> | Date | string
+    article?: XOR<ArticleScalarRelationFilter, ArticleWhereInput>
+  }, "id">
+
+  export type CitationOrderByWithAggregationInput = {
+    id?: SortOrder
+    url?: SortOrder
+    title?: SortOrderInput | SortOrder
+    domain?: SortOrderInput | SortOrder
+    articleId?: SortOrder
+    order?: SortOrder
+    verified?: SortOrder
+    createdAt?: SortOrder
+    _count?: CitationCountOrderByAggregateInput
+    _avg?: CitationAvgOrderByAggregateInput
+    _max?: CitationMaxOrderByAggregateInput
+    _min?: CitationMinOrderByAggregateInput
+    _sum?: CitationSumOrderByAggregateInput
+  }
+
+  export type CitationScalarWhereWithAggregatesInput = {
+    AND?: CitationScalarWhereWithAggregatesInput | CitationScalarWhereWithAggregatesInput[]
+    OR?: CitationScalarWhereWithAggregatesInput[]
+    NOT?: CitationScalarWhereWithAggregatesInput | CitationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Citation"> | string
+    url?: StringWithAggregatesFilter<"Citation"> | string
+    title?: StringNullableWithAggregatesFilter<"Citation"> | string | null
+    domain?: StringNullableWithAggregatesFilter<"Citation"> | string | null
+    articleId?: StringWithAggregatesFilter<"Citation"> | string
+    order?: IntWithAggregatesFilter<"Citation"> | number
+    verified?: BoolWithAggregatesFilter<"Citation"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Citation"> | Date | string
   }
 
   export type ResourceWhereInput = {
@@ -21522,6 +22894,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     author: UserCreateNestedOneWithoutArticlesInput
+    citations?: CitationCreateNestedManyWithoutArticleInput
   }
 
   export type ArticleUncheckedCreateInput = {
@@ -21553,6 +22926,7 @@ export namespace Prisma {
     quizData?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    citations?: CitationUncheckedCreateNestedManyWithoutArticleInput
   }
 
   export type ArticleUpdateInput = {
@@ -21584,6 +22958,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutArticlesNestedInput
+    citations?: CitationUpdateManyWithoutArticleNestedInput
   }
 
   export type ArticleUncheckedUpdateInput = {
@@ -21615,6 +22990,7 @@ export namespace Prisma {
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    citations?: CitationUncheckedUpdateManyWithoutArticleNestedInput
   }
 
   export type ArticleCreateManyInput = {
@@ -21707,6 +23083,82 @@ export namespace Prisma {
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CitationCreateInput = {
+    id?: string
+    url: string
+    title?: string | null
+    domain?: string | null
+    order?: number
+    verified?: boolean
+    createdAt?: Date | string
+    article: ArticleCreateNestedOneWithoutCitationsInput
+  }
+
+  export type CitationUncheckedCreateInput = {
+    id?: string
+    url: string
+    title?: string | null
+    domain?: string | null
+    articleId: string
+    order?: number
+    verified?: boolean
+    createdAt?: Date | string
+  }
+
+  export type CitationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    domain?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    article?: ArticleUpdateOneRequiredWithoutCitationsNestedInput
+  }
+
+  export type CitationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    domain?: NullableStringFieldUpdateOperationsInput | string | null
+    articleId?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CitationCreateManyInput = {
+    id?: string
+    url: string
+    title?: string | null
+    domain?: string | null
+    articleId: string
+    order?: number
+    verified?: boolean
+    createdAt?: Date | string
+  }
+
+  export type CitationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    domain?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CitationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    domain?: NullableStringFieldUpdateOperationsInput | string | null
+    articleId?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ResourceCreateInput = {
@@ -23475,6 +24927,16 @@ export namespace Prisma {
     not?: NestedEnumWarningLevelNullableFilter<$PrismaModel> | $Enums.WarningLevel | null
   }
 
+  export type CitationListRelationFilter = {
+    every?: CitationWhereInput
+    some?: CitationWhereInput
+    none?: CitationWhereInput
+  }
+
+  export type CitationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ArticleCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
@@ -23620,6 +25082,52 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumWarningLevelNullableFilter<$PrismaModel>
     _max?: NestedEnumWarningLevelNullableFilter<$PrismaModel>
+  }
+
+  export type ArticleScalarRelationFilter = {
+    is?: ArticleWhereInput
+    isNot?: ArticleWhereInput
+  }
+
+  export type CitationCountOrderByAggregateInput = {
+    id?: SortOrder
+    url?: SortOrder
+    title?: SortOrder
+    domain?: SortOrder
+    articleId?: SortOrder
+    order?: SortOrder
+    verified?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CitationAvgOrderByAggregateInput = {
+    order?: SortOrder
+  }
+
+  export type CitationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    url?: SortOrder
+    title?: SortOrder
+    domain?: SortOrder
+    articleId?: SortOrder
+    order?: SortOrder
+    verified?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CitationMinOrderByAggregateInput = {
+    id?: SortOrder
+    url?: SortOrder
+    title?: SortOrder
+    domain?: SortOrder
+    articleId?: SortOrder
+    order?: SortOrder
+    verified?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CitationSumOrderByAggregateInput = {
+    order?: SortOrder
   }
 
   export type ResourceCountOrderByAggregateInput = {
@@ -24687,6 +26195,20 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type CitationCreateNestedManyWithoutArticleInput = {
+    create?: XOR<CitationCreateWithoutArticleInput, CitationUncheckedCreateWithoutArticleInput> | CitationCreateWithoutArticleInput[] | CitationUncheckedCreateWithoutArticleInput[]
+    connectOrCreate?: CitationCreateOrConnectWithoutArticleInput | CitationCreateOrConnectWithoutArticleInput[]
+    createMany?: CitationCreateManyArticleInputEnvelope
+    connect?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
+  }
+
+  export type CitationUncheckedCreateNestedManyWithoutArticleInput = {
+    create?: XOR<CitationCreateWithoutArticleInput, CitationUncheckedCreateWithoutArticleInput> | CitationCreateWithoutArticleInput[] | CitationUncheckedCreateWithoutArticleInput[]
+    connectOrCreate?: CitationCreateOrConnectWithoutArticleInput | CitationCreateOrConnectWithoutArticleInput[]
+    createMany?: CitationCreateManyArticleInputEnvelope
+    connect?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
+  }
+
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
   }
@@ -24713,6 +26235,48 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutArticlesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutArticlesInput, UserUpdateWithoutArticlesInput>, UserUncheckedUpdateWithoutArticlesInput>
+  }
+
+  export type CitationUpdateManyWithoutArticleNestedInput = {
+    create?: XOR<CitationCreateWithoutArticleInput, CitationUncheckedCreateWithoutArticleInput> | CitationCreateWithoutArticleInput[] | CitationUncheckedCreateWithoutArticleInput[]
+    connectOrCreate?: CitationCreateOrConnectWithoutArticleInput | CitationCreateOrConnectWithoutArticleInput[]
+    upsert?: CitationUpsertWithWhereUniqueWithoutArticleInput | CitationUpsertWithWhereUniqueWithoutArticleInput[]
+    createMany?: CitationCreateManyArticleInputEnvelope
+    set?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
+    disconnect?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
+    delete?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
+    connect?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
+    update?: CitationUpdateWithWhereUniqueWithoutArticleInput | CitationUpdateWithWhereUniqueWithoutArticleInput[]
+    updateMany?: CitationUpdateManyWithWhereWithoutArticleInput | CitationUpdateManyWithWhereWithoutArticleInput[]
+    deleteMany?: CitationScalarWhereInput | CitationScalarWhereInput[]
+  }
+
+  export type CitationUncheckedUpdateManyWithoutArticleNestedInput = {
+    create?: XOR<CitationCreateWithoutArticleInput, CitationUncheckedCreateWithoutArticleInput> | CitationCreateWithoutArticleInput[] | CitationUncheckedCreateWithoutArticleInput[]
+    connectOrCreate?: CitationCreateOrConnectWithoutArticleInput | CitationCreateOrConnectWithoutArticleInput[]
+    upsert?: CitationUpsertWithWhereUniqueWithoutArticleInput | CitationUpsertWithWhereUniqueWithoutArticleInput[]
+    createMany?: CitationCreateManyArticleInputEnvelope
+    set?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
+    disconnect?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
+    delete?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
+    connect?: CitationWhereUniqueInput | CitationWhereUniqueInput[]
+    update?: CitationUpdateWithWhereUniqueWithoutArticleInput | CitationUpdateWithWhereUniqueWithoutArticleInput[]
+    updateMany?: CitationUpdateManyWithWhereWithoutArticleInput | CitationUpdateManyWithWhereWithoutArticleInput[]
+    deleteMany?: CitationScalarWhereInput | CitationScalarWhereInput[]
+  }
+
+  export type ArticleCreateNestedOneWithoutCitationsInput = {
+    create?: XOR<ArticleCreateWithoutCitationsInput, ArticleUncheckedCreateWithoutCitationsInput>
+    connectOrCreate?: ArticleCreateOrConnectWithoutCitationsInput
+    connect?: ArticleWhereUniqueInput
+  }
+
+  export type ArticleUpdateOneRequiredWithoutCitationsNestedInput = {
+    create?: XOR<ArticleCreateWithoutCitationsInput, ArticleUncheckedCreateWithoutCitationsInput>
+    connectOrCreate?: ArticleCreateOrConnectWithoutCitationsInput
+    upsert?: ArticleUpsertWithoutCitationsInput
+    connect?: ArticleWhereUniqueInput
+    update?: XOR<XOR<ArticleUpdateToOneWithWhereWithoutCitationsInput, ArticleUpdateWithoutCitationsInput>, ArticleUncheckedUpdateWithoutCitationsInput>
   }
 
   export type UserCreateNestedOneWithoutCopilotActivitiesInput = {
@@ -25365,6 +26929,7 @@ export namespace Prisma {
     quizData?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    citations?: CitationCreateNestedManyWithoutArticleInput
   }
 
   export type ArticleUncheckedCreateWithoutAuthorInput = {
@@ -25395,6 +26960,7 @@ export namespace Prisma {
     quizData?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    citations?: CitationUncheckedCreateNestedManyWithoutArticleInput
   }
 
   export type ArticleCreateOrConnectWithoutAuthorInput = {
@@ -25776,6 +27342,36 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutArticlesInput, UserUncheckedCreateWithoutArticlesInput>
   }
 
+  export type CitationCreateWithoutArticleInput = {
+    id?: string
+    url: string
+    title?: string | null
+    domain?: string | null
+    order?: number
+    verified?: boolean
+    createdAt?: Date | string
+  }
+
+  export type CitationUncheckedCreateWithoutArticleInput = {
+    id?: string
+    url: string
+    title?: string | null
+    domain?: string | null
+    order?: number
+    verified?: boolean
+    createdAt?: Date | string
+  }
+
+  export type CitationCreateOrConnectWithoutArticleInput = {
+    where: CitationWhereUniqueInput
+    create: XOR<CitationCreateWithoutArticleInput, CitationUncheckedCreateWithoutArticleInput>
+  }
+
+  export type CitationCreateManyArticleInputEnvelope = {
+    data: CitationCreateManyArticleInput | CitationCreateManyArticleInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutArticlesInput = {
     update: XOR<UserUpdateWithoutArticlesInput, UserUncheckedUpdateWithoutArticlesInput>
     create: XOR<UserCreateWithoutArticlesInput, UserUncheckedCreateWithoutArticlesInput>
@@ -25823,6 +27419,176 @@ export namespace Prisma {
     copilotActivities?: CopilotActivityUncheckedUpdateManyWithoutUserNestedInput
     communityStories?: CommunityStoryUncheckedUpdateManyWithoutUserNestedInput
     userProgress?: UserProgressUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type CitationUpsertWithWhereUniqueWithoutArticleInput = {
+    where: CitationWhereUniqueInput
+    update: XOR<CitationUpdateWithoutArticleInput, CitationUncheckedUpdateWithoutArticleInput>
+    create: XOR<CitationCreateWithoutArticleInput, CitationUncheckedCreateWithoutArticleInput>
+  }
+
+  export type CitationUpdateWithWhereUniqueWithoutArticleInput = {
+    where: CitationWhereUniqueInput
+    data: XOR<CitationUpdateWithoutArticleInput, CitationUncheckedUpdateWithoutArticleInput>
+  }
+
+  export type CitationUpdateManyWithWhereWithoutArticleInput = {
+    where: CitationScalarWhereInput
+    data: XOR<CitationUpdateManyMutationInput, CitationUncheckedUpdateManyWithoutArticleInput>
+  }
+
+  export type CitationScalarWhereInput = {
+    AND?: CitationScalarWhereInput | CitationScalarWhereInput[]
+    OR?: CitationScalarWhereInput[]
+    NOT?: CitationScalarWhereInput | CitationScalarWhereInput[]
+    id?: StringFilter<"Citation"> | string
+    url?: StringFilter<"Citation"> | string
+    title?: StringNullableFilter<"Citation"> | string | null
+    domain?: StringNullableFilter<"Citation"> | string | null
+    articleId?: StringFilter<"Citation"> | string
+    order?: IntFilter<"Citation"> | number
+    verified?: BoolFilter<"Citation"> | boolean
+    createdAt?: DateTimeFilter<"Citation"> | Date | string
+  }
+
+  export type ArticleCreateWithoutCitationsInput = {
+    id?: string
+    title: string
+    slug: string
+    content: string
+    type?: string
+    excerpt?: string | null
+    published?: boolean
+    category: string
+    tags: string
+    sentiment?: $Enums.Sentiment
+    factCheckScore?: number | null
+    factCheckSources?: string | null
+    factCheckDate?: Date | string | null
+    factCheckStatus?: string | null
+    level?: string | null
+    contentType?: string | null
+    readTime?: string | null
+    warningLevel?: $Enums.WarningLevel | null
+    securityTips?: string | null
+    courseSequence?: number | null
+    relatedArticles?: string | null
+    projectHighlight?: boolean
+    coverImage?: string | null
+    coverImageAlt?: string | null
+    quizData?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    author: UserCreateNestedOneWithoutArticlesInput
+  }
+
+  export type ArticleUncheckedCreateWithoutCitationsInput = {
+    id?: string
+    title: string
+    slug: string
+    content: string
+    type?: string
+    excerpt?: string | null
+    published?: boolean
+    authorId: string
+    category: string
+    tags: string
+    sentiment?: $Enums.Sentiment
+    factCheckScore?: number | null
+    factCheckSources?: string | null
+    factCheckDate?: Date | string | null
+    factCheckStatus?: string | null
+    level?: string | null
+    contentType?: string | null
+    readTime?: string | null
+    warningLevel?: $Enums.WarningLevel | null
+    securityTips?: string | null
+    courseSequence?: number | null
+    relatedArticles?: string | null
+    projectHighlight?: boolean
+    coverImage?: string | null
+    coverImageAlt?: string | null
+    quizData?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ArticleCreateOrConnectWithoutCitationsInput = {
+    where: ArticleWhereUniqueInput
+    create: XOR<ArticleCreateWithoutCitationsInput, ArticleUncheckedCreateWithoutCitationsInput>
+  }
+
+  export type ArticleUpsertWithoutCitationsInput = {
+    update: XOR<ArticleUpdateWithoutCitationsInput, ArticleUncheckedUpdateWithoutCitationsInput>
+    create: XOR<ArticleCreateWithoutCitationsInput, ArticleUncheckedCreateWithoutCitationsInput>
+    where?: ArticleWhereInput
+  }
+
+  export type ArticleUpdateToOneWithWhereWithoutCitationsInput = {
+    where?: ArticleWhereInput
+    data: XOR<ArticleUpdateWithoutCitationsInput, ArticleUncheckedUpdateWithoutCitationsInput>
+  }
+
+  export type ArticleUpdateWithoutCitationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    excerpt?: NullableStringFieldUpdateOperationsInput | string | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: StringFieldUpdateOperationsInput | string
+    sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
+    factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
+    factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
+    readTime?: NullableStringFieldUpdateOperationsInput | string | null
+    warningLevel?: NullableEnumWarningLevelFieldUpdateOperationsInput | $Enums.WarningLevel | null
+    securityTips?: NullableStringFieldUpdateOperationsInput | string | null
+    courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
+    relatedArticles?: NullableStringFieldUpdateOperationsInput | string | null
+    projectHighlight?: BoolFieldUpdateOperationsInput | boolean
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
+    quizData?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: UserUpdateOneRequiredWithoutArticlesNestedInput
+  }
+
+  export type ArticleUncheckedUpdateWithoutCitationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    excerpt?: NullableStringFieldUpdateOperationsInput | string | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    authorId?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: StringFieldUpdateOperationsInput | string
+    sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
+    factCheckScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
+    factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableStringFieldUpdateOperationsInput | string | null
+    contentType?: NullableStringFieldUpdateOperationsInput | string | null
+    readTime?: NullableStringFieldUpdateOperationsInput | string | null
+    warningLevel?: NullableEnumWarningLevelFieldUpdateOperationsInput | $Enums.WarningLevel | null
+    securityTips?: NullableStringFieldUpdateOperationsInput | string | null
+    courseSequence?: NullableIntFieldUpdateOperationsInput | number | null
+    relatedArticles?: NullableStringFieldUpdateOperationsInput | string | null
+    projectHighlight?: BoolFieldUpdateOperationsInput | boolean
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
+    quizData?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateWithoutCopilotActivitiesInput = {
@@ -26281,6 +28047,7 @@ export namespace Prisma {
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    citations?: CitationUpdateManyWithoutArticleNestedInput
   }
 
   export type ArticleUncheckedUpdateWithoutAuthorInput = {
@@ -26311,6 +28078,7 @@ export namespace Prisma {
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    citations?: CitationUncheckedUpdateManyWithoutArticleNestedInput
   }
 
   export type ArticleUncheckedUpdateManyWithoutAuthorInput = {
@@ -26467,6 +28235,46 @@ export namespace Prisma {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastAccessed?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CitationCreateManyArticleInput = {
+    id?: string
+    url: string
+    title?: string | null
+    domain?: string | null
+    order?: number
+    verified?: boolean
+    createdAt?: Date | string
+  }
+
+  export type CitationUpdateWithoutArticleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    domain?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CitationUncheckedUpdateWithoutArticleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    domain?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CitationUncheckedUpdateManyWithoutArticleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    domain?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: IntFieldUpdateOperationsInput | number
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

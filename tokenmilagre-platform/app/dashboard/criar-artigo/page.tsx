@@ -285,12 +285,24 @@ export default function CriarArtigoPage() {
     try {
       const apiEndpoint = getApiEndpoint(selectedType);
 
+      // Tags: convert to array if string (remove JSON.stringify)
       const tagsToSend = typeof articleToValidate.tags === 'string'
-        ? articleToValidate.tags
-        : JSON.stringify(articleToValidate.tags || []);
+        ? [articleToValidate.tags]
+        : (articleToValidate.tags || []);
 
+      // Citations: transform URL strings to citation objects
       const citationsToSend = articleToValidate.citations && articleToValidate.citations.length > 0
-        ? JSON.stringify(articleToValidate.citations)
+        ? articleToValidate.citations.map((url: string, index: number) => ({
+            url,
+            title: url, // Use URL as title placeholder
+            order: index,
+            verified: false
+          }))
+        : undefined;
+
+      // FactCheckSources: keep as URL string array (no JSON.stringify)
+      const factCheckSourcesToSend = articleToValidate.citations && articleToValidate.citations.length > 0
+        ? articleToValidate.citations
         : undefined;
 
       const response = await fetch(apiEndpoint, {
@@ -301,7 +313,8 @@ export default function CriarArtigoPage() {
           published: selectedType !== 'resource' ? true : undefined,
           authorId: selectedType !== 'resource' ? session.user.id : undefined,
           tags: tagsToSend,
-          factCheckSources: selectedType !== 'resource' ? citationsToSend : undefined
+          citations: selectedType !== 'resource' ? citationsToSend : undefined,
+          factCheckSources: selectedType !== 'resource' ? factCheckSourcesToSend : undefined
         })
       });
 

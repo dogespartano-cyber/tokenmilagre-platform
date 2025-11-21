@@ -194,6 +194,17 @@ exports.Prisma.ArticleScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CitationScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  title: 'title',
+  domain: 'domain',
+  articleId: 'articleId',
+  order: 'order',
+  verified: 'verified',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.ResourceScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
@@ -435,6 +446,7 @@ exports.Prisma.ModelName = {
   VerificationToken: 'VerificationToken',
   User: 'User',
   Article: 'Article',
+  Citation: 'Citation',
   Resource: 'Resource',
   Cryptocurrency: 'Cryptocurrency',
   CopilotActivity: 'CopilotActivity',

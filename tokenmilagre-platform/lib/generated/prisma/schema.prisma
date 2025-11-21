@@ -161,12 +161,30 @@ model Article {
   createdAt DateTime @default(now()) // API: publishedAt
   updatedAt DateTime @updatedAt // API: lastVerified
 
+  // Relations
+  citations Citation[]
+
   @@index([authorId])
   @@index([published])
   @@index([slug])
   @@index([category])
   @@index([type])
   @@index([projectHighlight])
+}
+
+model Citation {
+  id        String   @id @default(cuid())
+  url       String
+  title     String?
+  domain    String?
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  order     Int      @default(0)
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([articleId])
+  @@index([domain])
 }
 
 model Resource {
