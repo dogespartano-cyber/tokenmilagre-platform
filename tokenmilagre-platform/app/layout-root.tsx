@@ -141,16 +141,13 @@ export default function RootLayoutNav({
                         : 'var(--text-primary)'
                     }}
                   >
-                    {/* Shine Effect - Added as requested */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
-
-                    {/* Active Indicator */}
-                    {isActive && (
-                      <div
-                        className="absolute left-0 top-0 bottom-0 w-1 rounded-r-full"
-                        style={{ backgroundColor: 'var(--brand-primary)' }}
-                      />
-                    )}
+                    {/* Shine Effect - Green in Light Mode, White in Dark Mode */}
+                    <div
+                      className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"
+                      style={{
+                        background: `linear-gradient(90deg, transparent, ${theme === 'light' ? 'rgba(var(--brand-primary-rgb), 0.5)' : 'rgba(255,255,255,0.2)'}, transparent)`
+                      }}
+                    />
 
                     <FontAwesomeIcon
                       icon={item.icon}
