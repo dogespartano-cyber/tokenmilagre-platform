@@ -155,7 +155,10 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
     try {
       // Buscar todos os artigos direto do banco
       const articles = await prisma.article.findMany({
-        where: { published: true },
+        where: {
+          published: true,
+          type: 'news'
+        },
         include: {
           author: {
             select: {
