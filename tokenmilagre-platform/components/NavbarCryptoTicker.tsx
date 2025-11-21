@@ -230,26 +230,40 @@ export default function NavbarCryptoTicker() {
                 // Formatar preço
                 const priceStr = coin.currentPrice < 10
                     ? `$${coin.currentPrice.toFixed(2)}`
-                    < div className = "flex flex-col justify-center" >
-                        <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{coin.symbol}</span>
-                            <div
-                                className="flex items-center text-lg font-bold font-mono leading-none"
-                                style={{ color: 'var(--text-primary)', letterSpacing: '0.02em' }}
-                            >
-                                {priceDigits.map((digit, index) => (
-                                    <RollingDigit
-                                        key={`${coin.id}-${index}-${digit}`}
-                                        digit={digit}
-                                        isInitialLoad={isInitialLoad}
-                                    />
-                                ))}
+                    : `$${Math.round(coin.currentPrice).toLocaleString('en-US')}`;
+
+                const priceDigits = priceStr.split('');
+
+                return (
+                    <Link
+                        key={coin.id}
+                        href={`/criptomoedas/${coin.id}`}
+                        className="flex items-center gap-3 shrink-0 group cursor-pointer transition-transform hover:scale-105"
+                    >
+                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 group-hover:border-white/20 transition-colors shadow-sm">
+                            {getIcon(coin.symbol)}
+                        </div>
+
+                        <div className="flex flex-col justify-center">
+                            <div className="flex items-center gap-2">
+                                <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{coin.symbol}</span>
+                                <div
+                                    className="flex items-center text-lg font-bold font-mono leading-none"
+                                    style={{ color: 'var(--text-primary)', letterSpacing: '0.02em' }}
+                                >
+                                    {priceDigits.map((digit, index) => (
+                                        <RollingDigit
+                                            key={`${coin.id}-${index}-${digit}`}
+                                            digit={digit}
+                                            isInitialLoad={isInitialLoad}
+                                        />
+                                    ))}
+                                </div>
                             </div>
                         </div>
-                        </div>
-                    </Link >
+                    </Link>
                 );
-})}
-        </div >
+            })}
+        </div>
     );
 }
