@@ -32,8 +32,8 @@ function RollingDigit({ digit, isInitialLoad }: RollingDigitProps) {
         className="inline-block text-center"
         style={{
           width: digit === '$' ? '0.6em' : '0.4em',
-          height: '1.2em',
-          lineHeight: '1.2em',
+          height: '1.5em',
+          lineHeight: '1.5em',
         }}
       >
         {digit}
@@ -62,11 +62,9 @@ function RollingDigit({ digit, isInitialLoad }: RollingDigitProps) {
 
       <style jsx>{`
         .rolling-digit-container {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
+          display: inline-block;
           width: 0.6em;
-          height: 1.2em;
+          height: 1.5em;
           overflow: hidden;
           position: relative;
           vertical-align: middle;
@@ -81,8 +79,11 @@ function RollingDigit({ digit, isInitialLoad }: RollingDigitProps) {
 
         .rolling-digit-number {
           display: block;
-          height: 1.2em;
-          line-height: 1.2em;
+          height: 1.5em;
+          line-height: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       `}</style>
     </span>
