@@ -581,19 +581,32 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
 
         const apiEndpoint = contentType === 'resource' ? '/api/resources' : '/api/articles';
 
-        const tagsToSend = typeof articleToSave.tags === 'string'
-          ? articleToSave.tags
-          : JSON.stringify(articleToSave.tags || []);
+        // Normalizar tags: garantir que seja array de strings
+        let tagsToSend: string[] = [];
+        if (typeof articleToSave.tags === 'string') {
+          try {
+            tagsToSend = JSON.parse(articleToSave.tags);
+          } catch {
+            tagsToSend = [articleToSave.tags]; // Se não for JSON válido, usar como array de 1 item
+          }
+        } else if (Array.isArray(articleToSave.tags)) {
+          tagsToSend = articleToSave.tags;
+        }
 
-        const citationsToSend = articleToSave.citations && articleToSave.citations.length > 0
-          ? JSON.stringify(articleToSave.citations)
-          : undefined;
+        // Normalizar citations: garantir que seja array de strings (URLs)
+        let citationsToSend: string[] | undefined = undefined;
+        if (articleToSave.citations && articleToSave.citations.length > 0) {
+          // citations já é array de objetos {url, title}, extrair apenas URLs
+          citationsToSend = articleToSave.citations.map((c: any) =>
+            typeof c === 'string' ? c : c.url
+          );
+        }
 
         // Criar payload com tipo flexível para aceitar conversões
         const payload: any = {
           ...articleToSave,
           type: contentType, // GARANTIR que o tipo seja enviado
-          tags: tagsToSend,
+          tags: tagsToSend.length > 0 ? tagsToSend : undefined,
           factCheckSources: citationsToSend,
           published: true
         };

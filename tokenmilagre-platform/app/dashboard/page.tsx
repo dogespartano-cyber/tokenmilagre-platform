@@ -59,14 +59,22 @@ export default function AdminDashboardPage() {
         throw new Error(data.error || 'Erro ao buscar estatísticas');
       }
 
-      setStats({
-        totalArticles: data.data.articles.total,
-        totalNews: data.data.articles.byType.news || 0,
-        totalEducational: data.data.articles.byType.educational || 0,
-        totalUsers: data.data.users.total,
-        publishedThisWeek: data.data.articles.publishedThisWeek,
-        educationalByLevel: data.data.articles.educationalByLevel
-      });
+      // Map API response to expected component structure
+      const apiData = data.data;
+      const mappedStats: AdminStats = {
+        totalArticles: apiData.articles.total,
+        totalNews: apiData.articles.byType?.news || 0,
+        totalEducational: apiData.articles.byType?.educational || 0,
+        totalUsers: apiData.users.total,
+        publishedThisWeek: apiData.articles.publishedThisWeek,
+        educationalByLevel: apiData.articles.educationalByLevel || {
+          iniciante: 0,
+          intermediario: 0,
+          avancado: 0,
+        },
+      };
+
+      setStats(mappedStats);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro desconhecido');
     } finally {

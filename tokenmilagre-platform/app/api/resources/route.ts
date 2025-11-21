@@ -51,7 +51,11 @@ export async function GET(request: NextRequest) {
       verified: searchParams.get('verified') || undefined,
     }
 
+    console.log('[DEBUG] Raw query params:', rawQuery)
+
     const query = validation.validate(resourceQuerySchema, rawQuery)
+
+    console.log('[DEBUG] Validated query:', query)
 
     logger.info('Listing resources', {
       category: query.category,
@@ -59,7 +63,13 @@ export async function GET(request: NextRequest) {
     })
 
     // Fetch resources using service layer
+    console.log('[DEBUG] Calling resourceService.list()...')
     const result = await resourceService.list(query)
+    console.log('[DEBUG] Result from service:', {
+      total: result.total,
+      count: result.resources.length,
+      page: result.page
+    })
 
     // Parse JSON fields
     const parsedResources = result.resources.map((resource) => ({
@@ -90,7 +100,25 @@ export async function GET(request: NextRequest) {
     )
   } catch (error) {
     console.error('[ERROR] Resources API failed:', error)
+    console.error('[ERROR] Full error details:', {
+      name: (error as Error).name,
+      message: (error as Error).message,
+      stack: (error as Error).stack
+    })
     logger.error('Error listing resources', error as Error)
+
+    // Check if it's a Prisma error (table doesn't exist)
+    if (error instanceof Error && error.message.includes('does not exist')) {
+      console.error('[CRITICAL] ============================================')
+      console.error('[CRITICAL] Resource table does not exist in database!')
+      console.error('[CRITICAL] ============================================')
+      console.error('[SOLUTION 1] Run migration: npx prisma migrate deploy')
+      console.error('[SOLUTION 2] Run: npx prisma db push')
+      console.error('[SOLUTION 3] Run manual SQL: psql $DATABASE_URL < prisma/manual-migration-resource-table.sql')
+      console.error('[FILE] See: prisma/migrations/20251121000000_add_resource_table/migration.sql')
+      console.error('[MANUAL SQL] See: prisma/manual-migration-resource-table.sql')
+      console.error('============================================')
+    }
 
     // Return empty result instead of 500 to unblock frontend
     return paginatedResponse([], 1, 12, 0)

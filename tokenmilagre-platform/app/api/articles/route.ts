@@ -174,7 +174,19 @@ export async function POST(request: NextRequest) {
     // Parse and validate request body
     const body = await request.json()
 
-    logger.info('Creating article', { slug: body.slug, type: body.type })
+    logger.info('Creating article - Request body received', {
+      title: body.title,
+      slug: body.slug,
+      type: body.type,
+      category: body.category,
+      categoryId: body.categoryId,
+      hasContent: !!body.content,
+      contentLength: body.content?.length,
+      hasTags: !!body.tags,
+      tags: body.tags,
+      published: body.published,
+      excerpt: body.excerpt?.substring(0, 50)
+    })
 
     // Validate using Zod schema
     const validated = validation.validate(articleCreateInputCurrent, body)
@@ -191,7 +203,12 @@ export async function POST(request: NextRequest) {
 
     return successResponse(article)
   } catch (error) {
-    logger.error('Error creating article', error as Error)
+    logger.error('Error creating article', error as Error, {
+      errorName: (error as Error).name,
+      errorMessage: (error as Error).message,
+      // @ts-ignore - ValidationError has details property
+      errorDetails: error.details
+    })
     return errorResponse(error as Error)
   } finally {
     logger.clearContext()

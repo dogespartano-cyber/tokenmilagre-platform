@@ -13,7 +13,7 @@
 import { NextRequest } from 'next/server'
 import { ServiceLocator } from '@/lib/di/container'
 import { requireEditor } from '@/lib/helpers/auth-helpers'
-import { successResponse, errorResponse } from '@/lib/helpers/response-helpers'
+import { paginatedResponse, errorResponse } from '@/lib/helpers/response-helpers'
 import { z } from 'zod'
 
 /**
@@ -116,17 +116,12 @@ export async function GET(request: NextRequest) {
       page: result.page
     })
 
-    return successResponse({
-      data: formattedArticles,
-      pagination: {
-        page: result.page,
-        limit: result.limit,
-        total: result.total,
-        totalPages: result.totalPages,
-        hasMore: result.hasMore,
-        count: formattedArticles.length
-      }
-    })
+    return paginatedResponse(
+      formattedArticles,
+      result.page,
+      result.limit,
+      result.total
+    )
   } catch (error) {
     logger.error('Error listing articles (admin)', error as Error)
     return errorResponse(error as Error)
