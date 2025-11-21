@@ -47,8 +47,8 @@ export async function GET(request: NextRequest) {
     // Parse and validate query parameters
     const searchParams = request.nextUrl.searchParams
     const rawQuery = {
-      category: searchParams.get('category'),
-      verified: searchParams.get('verified'),
+      category: searchParams.get('category') || undefined,
+      verified: searchParams.get('verified') || undefined,
     }
 
     const query = validation.validate(resourceQuerySchema, rawQuery)

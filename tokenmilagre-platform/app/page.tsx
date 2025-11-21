@@ -57,6 +57,7 @@ export default function HomePage() {
   const [resources, setResources] = useState<ResourceItem[]>([]);
   const [dailyAnalysis, setDailyAnalysis] = useState<NewsItem | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadingResources, setLoadingResources] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
@@ -204,6 +205,7 @@ export default function HomePage() {
 
   const fetchResources = async () => {
     try {
+      setLoadingResources(true);
       // Buscar recursos reais da API ao invés de hardcoded
       const response = await fetch('/api/resources?verified=true');
       const data = await response.json();
@@ -227,6 +229,8 @@ export default function HomePage() {
     } catch (error) {
       console.error('Erro ao buscar recursos:', error);
       setResources([]);
+    } finally {
+      setLoadingResources(false);
     }
   };
 
@@ -379,9 +383,9 @@ export default function HomePage() {
                 <div
                   className="backdrop-blur-lg rounded-2xl p-4 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
                   style={{
-                  background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                  borderColor: 'var(--border-light)'
-                }}>
+                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                    borderColor: 'var(--border-light)'
+                  }}>
                   <div className="mb-2">
                     <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Capitalização Total</p>
                   </div>
@@ -400,9 +404,9 @@ export default function HomePage() {
                 <div
                   className="backdrop-blur-lg rounded-2xl p-4 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
                   style={{
-                  background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                  borderColor: 'var(--border-light)'
-                }}>
+                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                    borderColor: 'var(--border-light)'
+                  }}>
                   <div className="mb-2">
                     <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Volume 24h</p>
                   </div>
@@ -416,9 +420,9 @@ export default function HomePage() {
                 <div
                   className="backdrop-blur-lg rounded-2xl p-4 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
                   style={{
-                  background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                  borderColor: 'var(--border-light)'
-                }}>
+                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                    borderColor: 'var(--border-light)'
+                  }}>
                   <div className="mb-2">
                     <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>BTC</p>
                   </div>
@@ -440,9 +444,9 @@ export default function HomePage() {
                 <div
                   className="backdrop-blur-lg rounded-2xl p-4 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
                   style={{
-                  background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                  borderColor: 'var(--border-light)'
-                }}>
+                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                    borderColor: 'var(--border-light)'
+                  }}>
                   <div className="mb-2">
                     <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>ETH</p>
                   </div>
@@ -467,9 +471,9 @@ export default function HomePage() {
                 <div
                   className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
                   style={{
-                  background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                  borderColor: 'var(--border-light)'
-                }}>
+                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                    borderColor: 'var(--border-light)'
+                  }}>
                   <div className="mb-2">
                     <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Capitalização Total</p>
                   </div>
@@ -488,9 +492,9 @@ export default function HomePage() {
                 <div
                   className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
                   style={{
-                  background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                  borderColor: 'var(--border-light)'
-                }}>
+                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                    borderColor: 'var(--border-light)'
+                  }}>
                   <div className="mb-2">
                     <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Volume 24h</p>
                   </div>
@@ -504,9 +508,9 @@ export default function HomePage() {
                 <div
                   className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
                   style={{
-                  background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                  borderColor: 'var(--border-light)'
-                }}>
+                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                    borderColor: 'var(--border-light)'
+                  }}>
                   <div className="mb-2">
                     <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Dominância BTC</p>
                   </div>
@@ -528,9 +532,9 @@ export default function HomePage() {
                 <div
                   className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
                   style={{
-                  background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                  borderColor: 'var(--border-light)'
-                }}>
+                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                    borderColor: 'var(--border-light)'
+                  }}>
                   <div className="mb-2">
                     <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Dominância ETH</p>
                   </div>
@@ -642,7 +646,7 @@ export default function HomePage() {
                       </div>
                       <p className="text-sm font-bold capitalize" style={{ color: 'var(--text-primary)' }}>
                         {dailyAnalysis.sentiment === 'positive' ? 'Positivo' :
-                         dailyAnalysis.sentiment === 'negative' ? 'Negativo' : 'Neutro'}
+                          dailyAnalysis.sentiment === 'negative' ? 'Negativo' : 'Neutro'}
                       </p>
                     </div>
                   </div>
@@ -794,271 +798,275 @@ export default function HomePage() {
 
             {/* Últimas Notícias */}
             <div className="space-y-6">
-                {/* Título Últimas Notícias */}
-                <div>
-                  <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                    Últimas Notícias
-                  </h3>
-                </div>
+              {/* Título Últimas Notícias */}
+              <div>
+                <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                  Últimas Notícias
+                </h3>
+              </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {news.length > 0 ? (
-                      news.map((item, idx) => (
-                        <Link
-                          key={idx}
-                          href={`/dashboard/noticias/${item.slug || item.id}`}
-                          className="block rounded-2xl p-4 border shadow-md transition-all duration-500 ease-out hover:shadow-lg hover:-translate-y-1"
-                          style={{
-                            background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                            borderColor: 'var(--border-light)'
-                          }}
-                        >
-                          <div>
-                            {/* Header da notícia */}
-                            <div className="flex items-center gap-2 mb-3">
-                              <span className="text-lg flex-shrink-0">{getSentimentIcon(item.sentiment)}</span>
-                              <span className="px-2 py-1 rounded-lg text-xs font-bold uppercase" style={{
-                                backgroundColor: 'var(--bg-primary)',
-                                color: 'var(--brand-primary)'
-                              }}>
-                                {item.category[0]}
-                              </span>
-                              <span className="text-xs ml-auto font-medium" style={{ color: 'var(--text-muted)' }}>{getTimeAgo(item.publishedAt)}</span>
-                            </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {news.length > 0 ? (
+                  news.map((item, idx) => (
+                    <Link
+                      key={idx}
+                      href={`/dashboard/noticias/${item.slug || item.id}`}
+                      className="block rounded-2xl p-4 border shadow-md transition-all duration-500 ease-out hover:shadow-lg hover:-translate-y-1"
+                      style={{
+                        background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                        borderColor: 'var(--border-light)'
+                      }}
+                    >
+                      <div>
+                        {/* Header da notícia */}
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="text-lg flex-shrink-0">{getSentimentIcon(item.sentiment)}</span>
+                          <span className="px-2 py-1 rounded-lg text-xs font-bold uppercase" style={{
+                            backgroundColor: 'var(--bg-primary)',
+                            color: 'var(--brand-primary)'
+                          }}>
+                            {item.category[0]}
+                          </span>
+                          <span className="text-xs ml-auto font-medium" style={{ color: 'var(--text-muted)' }}>{getTimeAgo(item.publishedAt)}</span>
+                        </div>
 
-                            {/* Título */}
-                            <h4 className="font-bold text-base mb-2 line-clamp-2" style={{ color: 'var(--text-primary)' }}>
-                              {item.title}
-                            </h4>
+                        {/* Título */}
+                        <h4 className="font-bold text-base mb-2 line-clamp-2" style={{ color: 'var(--text-primary)' }}>
+                          {item.title}
+                        </h4>
 
-                            {/* Resumo */}
-                            <p className="text-sm line-clamp-2 mb-3" style={{ color: 'var(--text-tertiary)' }}>
-                              {item.summary}
-                            </p>
+                        {/* Resumo */}
+                        <p className="text-sm line-clamp-2 mb-3" style={{ color: 'var(--text-tertiary)' }}>
+                          {item.summary}
+                        </p>
 
-                            {/* Footer - Ler mais */}
-                            <div className="flex items-center gap-2 text-sm font-bold" style={{ color: 'var(--brand-primary)' }}>
-                              <span>Ler artigo completo</span>
-                              <span className="group-hover/item:translate-x-1 transition-transform duration-300">→</span>
-                            </div>
-                          </div>
-                        </Link>
-                      ))
-                    ) : (
-                      <div className="text-center py-8">
-                        <div className="text-5xl mb-3 animate-pulse">📰</div>
-                        <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>Carregando notícias...</p>
+                        {/* Footer - Ler mais */}
+                        <div className="flex items-center gap-2 text-sm font-bold" style={{ color: 'var(--brand-primary)' }}>
+                          <span>Ler artigo completo</span>
+                          <span className="group-hover/item:translate-x-1 transition-transform duration-300">→</span>
+                        </div>
                       </div>
-                    )}
+                    </Link>
+                  ))
+                ) : (
+                  <div className="text-center py-8">
+                    <div className="text-5xl mb-3 animate-pulse">📰</div>
+                    <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>Carregando notícias...</p>
                   </div>
+                )}
+              </div>
 
-                {/* Ver todas */}
-                <Link
-                  href="/dashboard/noticias"
-                  className="inline-block py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-                    color: 'var(--text-inverse)'
-                  }}
-                >
-                  Ver todas as notícias →
-                </Link>
+              {/* Ver todas */}
+              <Link
+                href="/dashboard/noticias"
+                className="inline-block py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                style={{
+                  background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+                  color: 'var(--text-inverse)'
+                }}
+              >
+                Ver todas as notícias →
+              </Link>
             </div>
 
             {/* Educação - 4 Cards */}
             <div className="space-y-6 mt-20">
-                <div>
-                  <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                    Aprenda sobre Cripto
-                  </h3>
-                </div>
+              <div>
+                <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                  Aprenda sobre Cripto
+                </h3>
+              </div>
 
-                {/* Grid de 4 Cards */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {education.length > 0 ? (
-                    education.slice(0, 4).map((resource) => (
-                      <Link
-                        key={resource.id}
-                        href={`/educacao/${resource.slug}`}
-                        className="group relative rounded-2xl p-6 overflow-hidden border shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer block"
+              {/* Grid de 4 Cards */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {education.length > 0 ? (
+                  education.slice(0, 4).map((resource) => (
+                    <Link
+                      key={resource.id}
+                      href={`/educacao/${resource.slug}`}
+                      className="group relative rounded-2xl p-6 overflow-hidden border shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer block"
+                      style={{
+                        background: `linear-gradient(135deg, ${getLevelGradient(resource.level)}, var(--bg-elevated))`,
+                        borderColor: 'var(--border-light)'
+                      }}
+                    >
+                      {/* Glow sutil no topo no hover */}
+                      <div
+                        className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                         style={{
-                          background: `linear-gradient(135deg, ${getLevelGradient(resource.level)}, var(--bg-elevated))`,
-                          borderColor: 'var(--border-light)'
+                          background: `linear-gradient(90deg, transparent, ${getLevelColor(resource.level)}, transparent)`,
+                          boxShadow: `0 0 20px ${getLevelColor(resource.level)}40`
                         }}
-                      >
-                        {/* Glow sutil no topo no hover */}
-                        <div
-                          className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                          style={{
-                            background: `linear-gradient(90deg, transparent, ${getLevelColor(resource.level)}, transparent)`,
-                            boxShadow: `0 0 20px ${getLevelColor(resource.level)}40`
-                          }}
-                        />
+                      />
 
-                        {/* Content wrapper */}
-                        <div className="relative flex flex-col h-full">
-                          {/* Header do Card */}
-                          <div className="flex items-start justify-between mb-4">
-                            {/* Badge de Nível com ícone */}
-                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg backdrop-blur-sm" style={{
-                              backgroundColor: `${getLevelColor(resource.level)}15`,
-                              border: `1px solid ${getLevelColor(resource.level)}30`
+                      {/* Content wrapper */}
+                      <div className="relative flex flex-col h-full">
+                        {/* Header do Card */}
+                        <div className="flex items-start justify-between mb-4">
+                          {/* Badge de Nível com ícone */}
+                          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg backdrop-blur-sm" style={{
+                            backgroundColor: `${getLevelColor(resource.level)}15`,
+                            border: `1px solid ${getLevelColor(resource.level)}30`
+                          }}>
+                            <FontAwesomeIcon
+                              icon={getLevelIcon(resource.level)}
+                              className="w-3.5 h-3.5"
+                              style={{ color: getLevelColor(resource.level) }}
+                            />
+                            <span className="text-xs font-bold uppercase tracking-wide" style={{
+                              color: getLevelColor(resource.level)
                             }}>
-                              <FontAwesomeIcon
-                                icon={getLevelIcon(resource.level)}
-                                className="w-3.5 h-3.5"
-                                style={{ color: getLevelColor(resource.level) }}
-                              />
-                              <span className="text-xs font-bold uppercase tracking-wide" style={{
-                                color: getLevelColor(resource.level)
-                              }}>
-                                {resource.level === 'iniciante' ? 'Iniciante' : resource.level === 'intermediario' ? 'Intermediário' : resource.level === 'avancado' ? 'Avançado' : 'Geral'}
-                              </span>
-                            </div>
-
-                            {/* Tempo de leitura */}
-                            <span className="text-xs font-medium px-2.5 py-1 rounded-md backdrop-blur-sm flex items-center gap-1.5" style={{
-                              backgroundColor: 'var(--bg-secondary)',
-                              color: 'var(--text-tertiary)'
-                            }}>
-                              <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
-                              {resource.readTime || '5 min'}
+                              {resource.level === 'iniciante' ? 'Iniciante' : resource.level === 'intermediario' ? 'Intermediário' : resource.level === 'avancado' ? 'Avançado' : 'Geral'}
                             </span>
                           </div>
 
-                          {/* Título */}
-                          <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-brand-primary transition-colors min-h-[3.5rem]" style={{ color: 'var(--text-primary)' }}>
-                            {resource.title}
-                          </h3>
+                          {/* Tempo de leitura */}
+                          <span className="text-xs font-medium px-2.5 py-1 rounded-md backdrop-blur-sm flex items-center gap-1.5" style={{
+                            backgroundColor: 'var(--bg-secondary)',
+                            color: 'var(--text-tertiary)'
+                          }}>
+                            <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
+                            {resource.readTime || '5 min'}
+                          </span>
+                        </div>
 
-                          {/* Descrição */}
-                          <p className="text-sm mb-4 line-clamp-3 leading-relaxed opacity-90 min-h-[4.5rem]" style={{ color: 'var(--text-secondary)' }}>
-                            {resource.summary}
-                          </p>
+                        {/* Título */}
+                        <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-brand-primary transition-colors min-h-[3.5rem]" style={{ color: 'var(--text-primary)' }}>
+                          {resource.title}
+                        </h3>
 
-                          {/* Spacer to push footer to bottom */}
-                          <div className="flex-grow"></div>
+                        {/* Descrição */}
+                        <p className="text-sm mb-4 line-clamp-3 leading-relaxed opacity-90 min-h-[4.5rem]" style={{ color: 'var(--text-secondary)' }}>
+                          {resource.summary}
+                        </p>
 
-                          {/* Footer */}
-                          <div className="pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
-                            <div className="flex items-center justify-end">
-                              {/* CTA com seta animada */}
-                              <div className="flex items-center gap-2 text-sm font-bold group-hover:gap-3 transition-all" style={{ color: 'var(--text-primary)' }}>
-                                Ler artigo
-                                <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                              </div>
+                        {/* Spacer to push footer to bottom */}
+                        <div className="flex-grow"></div>
+
+                        {/* Footer */}
+                        <div className="pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                          <div className="flex items-center justify-end">
+                            {/* CTA com seta animada */}
+                            <div className="flex items-center gap-2 text-sm font-bold group-hover:gap-3 transition-all" style={{ color: 'var(--text-primary)' }}>
+                              Ler artigo
+                              <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                             </div>
                           </div>
                         </div>
-                      </Link>
-                    ))
-                  ) : (
-                    <div className="col-span-full text-center py-12">
-                      <div className="text-5xl mb-3 animate-pulse">📚</div>
-                      <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>Carregando artigos educacionais...</p>
-                    </div>
-                  )}
-                </div>
+                      </div>
+                    </Link>
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-12">
+                    <div className="text-5xl mb-3 animate-pulse">📚</div>
+                    <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>Carregando artigos educacionais...</p>
+                  </div>
+                )}
+              </div>
 
-                {/* Ver todos */}
+              {/* Ver todos */}
+              <Link
+                href="/educacao"
+                className="inline-flex items-center gap-2 py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                style={{
+                  background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+                  color: 'var(--text-inverse)'
+                }}
+              >
+                <span>Ver todos os artigos</span>
+                <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* Recursos */}
+            <div className="space-y-6 mt-20">
+              {/* Header */}
+              <div>
+                <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] mb-3" style={{ color: 'var(--text-primary)' }}>
+                  Ferramentas Essenciais
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                  Plataformas confiáveis utilizadas por milhões de usuários globalmente
+                </p>
+              </div>
+
+              {/* Grid de Recursos em Destaque */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {resources.length > 0 ? (
+                  resources.map((resource, idx) => (
+                    <Link
+                      key={idx}
+                      href={resource.url}
+                      className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                      style={{
+                        background: resource.gradient,
+                        minHeight: '180px'
+                      }}
+                    >
+                      {/* Overlay escuro sutil */}
+                      <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
+
+                      {/* Conteúdo */}
+                      <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                        <div>
+                          {/* Badge categoria */}
+                          <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
+                            {resource.category}
+                          </div>
+
+                          {/* Nome */}
+                          <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                            {resource.name}
+                          </h4>
+
+                          {/* Descrição */}
+                          <p className="text-sm opacity-90 mb-3">
+                            {resource.description}
+                          </p>
+                        </div>
+
+                        {/* Footer */}
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1">
+                            {resource.verified && (
+                              <FontAwesomeIcon icon={faCheckCircle} className="w-4 h-4" />
+                            )}
+                            <span className="text-xs font-semibold opacity-90">{resource.stats}</span>
+                          </div>
+
+                          {/* Ícone seta */}
+                          <FontAwesomeIcon icon={faArrowRight} className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                    </Link>
+                  ))
+                ) : loadingResources ? (
+                  <div className="col-span-full text-center py-12">
+                    <div className="inline-block animate-pulse px-6 py-3 rounded-lg" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+                      <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>Carregando recursos...</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="col-span-full text-center py-12">
+                    <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>Nenhum recurso encontrado no momento.</p>
+                  </div>
+                )}
+              </div>
+
+              {/* CTA Final */}
+              <div>
                 <Link
-                  href="/educacao"
+                  href="/recursos"
                   className="inline-flex items-center gap-2 py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
                   style={{
                     background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
                     color: 'var(--text-inverse)'
                   }}
                 >
-                  <span>Ver todos os artigos</span>
+                  Ver todos
                   <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
                 </Link>
-            </div>
-
-            {/* Recursos */}
-            <div className="space-y-6 mt-20">
-                {/* Header */}
-                <div>
-                  <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] mb-3" style={{ color: 'var(--text-primary)' }}>
-                    Ferramentas Essenciais
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                    Plataformas confiáveis utilizadas por milhões de usuários globalmente
-                  </p>
-                </div>
-
-                {/* Grid de Recursos em Destaque */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {resources.length > 0 ? (
-                    resources.map((resource, idx) => (
-                      <Link
-                        key={idx}
-                        href={resource.url}
-                        className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                        style={{
-                          background: resource.gradient,
-                          minHeight: '180px'
-                        }}
-                      >
-                        {/* Overlay escuro sutil */}
-                        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
-
-                        {/* Conteúdo */}
-                        <div className="relative z-10 h-full flex flex-col justify-between text-white">
-                          <div>
-                            {/* Badge categoria */}
-                            <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
-                              {resource.category}
-                            </div>
-
-                            {/* Nome */}
-                            <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
-                              {resource.name}
-                            </h4>
-
-                            {/* Descrição */}
-                            <p className="text-sm opacity-90 mb-3">
-                              {resource.description}
-                            </p>
-                          </div>
-
-                          {/* Footer */}
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-1">
-                              {resource.verified && (
-                                <FontAwesomeIcon icon={faCheckCircle} className="w-4 h-4" />
-                              )}
-                              <span className="text-xs font-semibold opacity-90">{resource.stats}</span>
-                            </div>
-
-                            {/* Ícone seta */}
-                            <FontAwesomeIcon icon={faArrowRight} className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                          </div>
-                        </div>
-                      </Link>
-                    ))
-                  ) : (
-                    <div className="col-span-full text-center py-12">
-                      <div className="inline-block animate-pulse px-6 py-3 rounded-lg" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                        <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>Carregando recursos...</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* CTA Final */}
-                <div>
-                  <Link
-                    href="/recursos"
-                    className="inline-flex items-center gap-2 py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                    style={{
-                      background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-                      color: 'var(--text-inverse)'
-                    }}
-                  >
-                    Ver todos
-                    <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
-                  </Link>
-                </div>
+              </div>
             </div>
 
             {/* Gráfico Bitcoin */}

@@ -103,7 +103,7 @@ export default function GerenciarUsuariosPage() {
         throw new Error(data.error || 'Erro ao buscar usuários');
       }
 
-      setUsers(data.data);
+      setUsers(data.data.data || []);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro desconhecido');
     } finally {

@@ -284,6 +284,11 @@ export class UserService {
           orderBy,
           skip,
           take: limit,
+          include: {
+            _count: {
+              select: { articles: true },
+            },
+          },
         }),
         prisma.user.count({ where }),
       ])

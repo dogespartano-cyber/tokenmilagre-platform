@@ -95,7 +95,7 @@ export default function GerenciarArtigosPage() {
     isOpen: false,
     title: '',
     message: '',
-    onConfirm: () => {}
+    onConfirm: () => { }
   });
 
   useEffect(() => {
@@ -122,7 +122,7 @@ export default function GerenciarArtigosPage() {
         throw new Error(resourcesData.error || 'Erro ao buscar recursos');
       }
 
-      setArticles(articlesData.data);
+      setArticles(articlesData.data.data || []);
       setResources(resourcesData.data.map((r: any) => ({
         ...r,
         type: 'resource' as const
@@ -576,8 +576,8 @@ export default function GerenciarArtigosPage() {
                                   itemIsResource
                                     ? `/recursos/${item.slug}`
                                     : item.type === 'news'
-                                    ? `/dashboard/noticias/${item.slug}`
-                                    : `/educacao/${item.slug}`
+                                      ? `/dashboard/noticias/${item.slug}`
+                                      : `/educacao/${item.slug}`
                                 }
                                 className="p-2 rounded-lg transition-all hover:scale-110"
                                 style={{
