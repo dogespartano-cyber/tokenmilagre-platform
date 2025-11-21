@@ -410,6 +410,17 @@ const resource = await prisma.resource.upsert({
    - **Fix**: Add `@@index([field])` to schema
    - **Fix**: Run `EXPLAIN ANALYZE` on slow queries
 
+5. **"Table does not exist" error**: Missing migration
+   - **Symptom**: Home page showing "Carregando recursos..." infinitely
+   - **Error**: `relation "Resource" does not exist`
+   - **Cause**: Schema defines model but table was never created via migration
+   - **Fix Option 1**: Run `npx prisma migrate deploy` (recommended)
+   - **Fix Option 2**: Run `npx prisma db push` (development)
+   - **Fix Option 3**: Execute `prisma/manual-migration-resource-table.sql` manually
+   - **Documentation**: See `RESOURCE_TABLE_FIX.md` for detailed steps
+   - **Bugfix Date**: 2025-11-21
+   - **Session**: claude/skill-review-verification-01Vc8iNrX4QCpWqQXpU2faRa
+
 **For detailed troubleshooting**: See skill [`troubleshooting`](../../audit/troubleshooting/SKILL.md)
 
 ---
