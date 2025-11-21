@@ -176,311 +176,304 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
       <div className="py-8">
         <div className="flex gap-8" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
           <div className="flex-1 max-w-4xl space-y-8">
-          {/* Voltar */}
-          <button
-            onClick={() => router.push('/educacao')}
-            className="inline-flex items-center gap-2 text-sm font-semibold transition-colors hover:opacity-80"
-            style={{ color: 'var(--brand-primary)' }}
-          >
-            <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
-            Voltar para Educação
-          </button>
+            {/* Voltar */}
 
-          {/* Header do Artigo */}
-          <div className="space-y-6">
-            {/* Meta info */}
-            <div className="flex flex-wrap items-center gap-3">
-              <span
-                className="px-3 py-1 rounded-lg text-sm font-semibold"
-                style={{
-                  backgroundColor: getLevelColor(article.level),
-                  color: 'white'
-                }}
-              >
-                {getLevelLabel(article.level)}
-              </span>
-              <span
-                className="px-3 py-1 rounded-lg text-sm font-semibold"
-                style={{
-                  backgroundColor: 'var(--bg-secondary)',
-                  color: 'var(--text-primary)'
-                }}
-              >
-                {article.type}
-              </span>
-              <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
-                📖 {article.readTime} de leitura
-              </span>
-            </div>
 
-            {/* Título */}
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-              {article.title}
-            </h1>
-
-            {/* Descrição */}
-            <p className="text-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              {article.description}
-            </p>
-
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2">
-              {article.tags.map((tag, index) => (
+            {/* Header do Artigo */}
+            <div className="space-y-6">
+              {/* Meta info */}
+              <div className="flex flex-wrap items-center gap-3">
                 <span
-                  key={index}
-                  className="px-3 py-1 rounded-lg text-sm"
+                  className="px-3 py-1 rounded-lg text-sm font-semibold"
                   style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    color: 'var(--text-tertiary)'
+                    backgroundColor: getLevelColor(article.level),
+                    color: 'white'
                   }}
                 >
-                  #{tag}
+                  {getLevelLabel(article.level)}
                 </span>
-              ))}
-            </div>
-          </div>
+                <span
+                  className="px-3 py-1 rounded-lg text-sm font-semibold"
+                  style={{
+                    backgroundColor: 'var(--bg-secondary)',
+                    color: 'var(--text-primary)'
+                  }}
+                >
+                  {article.type}
+                </span>
+                <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                  📖 {article.readTime} de leitura
+                </span>
+              </div>
 
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+              {/* Título */}
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                {article.title}
+              </h1>
 
-          {/* Conteúdo do Artigo */}
-          <article
-            className="prose prose-lg max-w-none"
-            style={{
-              color: 'var(--text-primary)',
-            }}
-          >
-            <ReactMarkdown
-              components={{
-                h1: ({ children }) => (
-                  <h1 className="text-3xl font-bold mt-8 mb-4 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                    {children}
-                  </h1>
-                ),
-                h2: ({ children }) => {
-                  const text = String(children);
-                  const id = slugify(text);
-                  return (
-                    <h2 id={id} className="text-2xl font-bold mt-8 mb-4 font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
-                      {children}
-                    </h2>
-                  );
-                },
-                h3: ({ children }) => {
-                  const text = String(children);
-                  const id = slugify(text);
-                  return (
-                    <h3 id={id} className="text-xl font-bold mt-6 mb-3 font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
-                      {children}
-                    </h3>
-                  );
-                },
-                p: ({ children }) => (
-                  <p className="mb-4 leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                    {children}
-                  </p>
-                ),
-                ul: ({ children }) => (
-                  <ul className="mb-4 space-y-2 list-disc list-inside" style={{ color: 'var(--text-primary)' }}>
-                    {children}
-                  </ul>
-                ),
-                ol: ({ children }) => (
-                  <ol className="mb-4 space-y-2 list-decimal list-inside" style={{ color: 'var(--text-primary)' }}>
-                    {children}
-                  </ol>
-                ),
-                li: ({ children }) => (
-                  <li className="ml-4" style={{ color: 'var(--text-primary)' }}>
-                    {children}
-                  </li>
-                ),
-                strong: ({ children }) => (
-                  <strong className="font-bold" style={{ color: 'var(--text-primary)' }}>
-                    {children}
-                  </strong>
-                ),
-                code: ({ children }) => (
-                  <code
-                    className="px-2 py-1 rounded text-sm font-mono"
+              {/* Descrição */}
+              <p className="text-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                {article.description}
+              </p>
+
+              {/* Tags */}
+              <div className="flex flex-wrap gap-2">
+                {article.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 rounded-lg text-sm"
                     style={{
                       backgroundColor: 'var(--bg-secondary)',
-                      color: 'var(--brand-primary)'
+                      color: 'var(--text-tertiary)'
                     }}
                   >
-                    {children}
-                  </code>
-                ),
-                blockquote: ({ children }) => (
-                  <blockquote
-                    className="pl-4 border-l-4 italic my-4"
-                    style={{
-                      borderColor: 'var(--brand-primary)',
-                      color: 'var(--text-secondary)'
-                    }}
-                  >
-                    {children}
-                  </blockquote>
-                ),
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+            {/* Conteúdo do Artigo */}
+            <article
+              className="prose prose-lg max-w-none"
+              style={{
+                color: 'var(--text-primary)',
               }}
             >
-              {article.content}
-            </ReactMarkdown>
-          </article>
-
-          {/* Fontes e Referências */}
-          {article.factCheckSources && (() => {
-            try {
-              const sources: string[] = JSON.parse(article.factCheckSources);
-              if (sources.length > 0) {
-                return (
-                  <>
-                    <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-                    <div className="space-y-4">
-                      <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                        📚 Fontes e Referências
+              <ReactMarkdown
+                components={{
+                  h1: ({ children }) => (
+                    <h1 className="text-3xl font-bold mt-8 mb-4 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                      {children}
+                    </h1>
+                  ),
+                  h2: ({ children }) => {
+                    const text = String(children);
+                    const id = slugify(text);
+                    return (
+                      <h2 id={id} className="text-2xl font-bold mt-8 mb-4 font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
+                        {children}
+                      </h2>
+                    );
+                  },
+                  h3: ({ children }) => {
+                    const text = String(children);
+                    const id = slugify(text);
+                    return (
+                      <h3 id={id} className="text-xl font-bold mt-6 mb-3 font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
+                        {children}
                       </h3>
-                      <ol className="space-y-2">
-                        {sources.map((url, index) => {
-                          try {
-                            const domain = new URL(url).hostname.replace(/^www\./, '');
-                            return (
-                              <li key={index} className="text-sm flex gap-2">
-                                <span className="font-semibold" style={{ color: 'var(--brand-primary)' }}>
-                                  [{index + 1}]
-                                </span>
-                                <a
-                                  href={url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="hover:underline"
-                                  style={{ color: 'var(--text-secondary)' }}
-                                >
-                                  {domain}
-                                </a>
-                              </li>
-                            );
-                          } catch {
-                            return (
-                              <li key={index} className="text-sm flex gap-2">
-                                <span className="font-semibold" style={{ color: 'var(--brand-primary)' }}>
-                                  [{index + 1}]
-                                </span>
-                                <a
-                                  href={url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="hover:underline"
-                                  style={{ color: 'var(--text-secondary)' }}
-                                >
-                                  {url}
-                                </a>
-                              </li>
-                            );
-                          }
-                        })}
-                      </ol>
-                    </div>
-                  </>
-                );
-              }
-            } catch (err) {
-              console.error('Error parsing factCheckSources:', err);
-            }
-            return null;
-          })()}
-
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* Compartilhar */}
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-              Compartilhe este artigo
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(currentUrl)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
-                style={{ backgroundColor: '#1DA1F2', color: 'white' }}
-              >
-                <FontAwesomeIcon icon={faXTwitter} className="w-5 h-5" />
-                Twitter
-              </a>
-              <a
-                href={`https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(article.title)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
-                style={{ backgroundColor: '#0088cc', color: 'white' }}
-              >
-                <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
-                Telegram
-              </a>
-              <a
-                href={`https://wa.me/?text=${encodeURIComponent(article.title + ' ' + currentUrl)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
-                style={{ backgroundColor: '#25D366', color: 'white' }}
-              >
-                <FontAwesomeIcon icon={faWhatsapp} className="w-5 h-5" />
-                WhatsApp
-              </a>
-            </div>
-          </div>
-
-          {/* Artigos Relacionados */}
-          {relatedArticles.length > 0 && (
-            <>
-              <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-              <div className="space-y-6">
-                <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                  Artigos Relacionados
-                </h3>
-                <div className="grid gap-4">
-                  {relatedArticles.map((related) => (
-                    <Link
-                      key={related.id}
-                      href={`/educacao/${related.slug}`}
-                      className="p-4 rounded-xl border transition-all hover:shadow-lg"
+                    );
+                  },
+                  p: ({ children }) => (
+                    <p className="mb-4 leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                      {children}
+                    </p>
+                  ),
+                  ul: ({ children }) => (
+                    <ul className="mb-4 space-y-2 list-disc list-inside" style={{ color: 'var(--text-primary)' }}>
+                      {children}
+                    </ul>
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="mb-4 space-y-2 list-decimal list-inside" style={{ color: 'var(--text-primary)' }}>
+                      {children}
+                    </ol>
+                  ),
+                  li: ({ children }) => (
+                    <li className="ml-4" style={{ color: 'var(--text-primary)' }}>
+                      {children}
+                    </li>
+                  ),
+                  strong: ({ children }) => (
+                    <strong className="font-bold" style={{ color: 'var(--text-primary)' }}>
+                      {children}
+                    </strong>
+                  ),
+                  code: ({ children }) => (
+                    <code
+                      className="px-2 py-1 rounded text-sm font-mono"
                       style={{
                         backgroundColor: 'var(--bg-secondary)',
-                        borderColor: 'var(--border-light)'
+                        color: 'var(--brand-primary)'
                       }}
                     >
-                      <div className="flex items-start gap-3">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <span
-                              className="px-2 py-0.5 rounded text-xs font-semibold"
-                              style={{
-                                backgroundColor: getLevelColor(related.level),
-                                color: 'white'
-                              }}
-                            >
-                              {getLevelLabel(related.level)}
-                            </span>
-                            <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-                              📖 {related.readTime}
-                            </span>
-                          </div>
-                          <h4 className="font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
-                            {related.title}
-                          </h4>
-                          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                            {related.description}
-                          </p>
-                        </div>
+                      {children}
+                    </code>
+                  ),
+                  blockquote: ({ children }) => (
+                    <blockquote
+                      className="pl-4 border-l-4 italic my-4"
+                      style={{
+                        borderColor: 'var(--brand-primary)',
+                        color: 'var(--text-secondary)'
+                      }}
+                    >
+                      {children}
+                    </blockquote>
+                  ),
+                }}
+              >
+                {article.content}
+              </ReactMarkdown>
+            </article>
+
+            {/* Fontes e Referências */}
+            {article.factCheckSources && (() => {
+              try {
+                const sources: string[] = JSON.parse(article.factCheckSources);
+                if (sources.length > 0) {
+                  return (
+                    <>
+                      <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+                      <div className="space-y-4">
+                        <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                          📚 Fontes e Referências
+                        </h3>
+                        <ol className="space-y-2">
+                          {sources.map((url, index) => {
+                            try {
+                              const domain = new URL(url).hostname.replace(/^www\./, '');
+                              return (
+                                <li key={index} className="text-sm flex gap-2">
+                                  <span className="font-semibold" style={{ color: 'var(--brand-primary)' }}>
+                                    [{index + 1}]
+                                  </span>
+                                  <a
+                                    href={url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:underline"
+                                    style={{ color: 'var(--text-secondary)' }}
+                                  >
+                                    {domain}
+                                  </a>
+                                </li>
+                              );
+                            } catch {
+                              return (
+                                <li key={index} className="text-sm flex gap-2">
+                                  <span className="font-semibold" style={{ color: 'var(--brand-primary)' }}>
+                                    [{index + 1}]
+                                  </span>
+                                  <a
+                                    href={url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:underline"
+                                    style={{ color: 'var(--text-secondary)' }}
+                                  >
+                                    {url}
+                                  </a>
+                                </li>
+                              );
+                            }
+                          })}
+                        </ol>
                       </div>
-                    </Link>
-                  ))}
-                </div>
+                    </>
+                  );
+                }
+              } catch (err) {
+                console.error('Error parsing factCheckSources:', err);
+              }
+              return null;
+            })()}
+
+            {/* Divider */}
+            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+            {/* Compartilhar */}
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                Compartilhe este artigo
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(currentUrl)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
+                  style={{ backgroundColor: '#1DA1F2', color: 'white' }}
+                >
+                  <FontAwesomeIcon icon={faXTwitter} className="w-5 h-5" />
+                  Twitter
+                </a>
+                <a
+                  href={`https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(article.title)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
+                  style={{ backgroundColor: '#0088cc', color: 'white' }}
+                >
+                  <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
+                  Telegram
+                </a>
+                <a
+                  href={`https://wa.me/?text=${encodeURIComponent(article.title + ' ' + currentUrl)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
+                  style={{ backgroundColor: '#25D366', color: 'white' }}
+                >
+                  <FontAwesomeIcon icon={faWhatsapp} className="w-5 h-5" />
+                  WhatsApp
+                </a>
               </div>
-            </>
-          )}
+            </div>
+
+            {/* Artigos Relacionados */}
+            {relatedArticles.length > 0 && (
+              <>
+                <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+                <div className="space-y-6">
+                  <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                    Artigos Relacionados
+                  </h3>
+                  <div className="grid gap-4">
+                    {relatedArticles.map((related) => (
+                      <Link
+                        key={related.id}
+                        href={`/educacao/${related.slug}`}
+                        className="p-4 rounded-xl border transition-all hover:shadow-lg"
+                        style={{
+                          backgroundColor: 'var(--bg-secondary)',
+                          borderColor: 'var(--border-light)'
+                        }}
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span
+                                className="px-2 py-0.5 rounded text-xs font-semibold"
+                                style={{
+                                  backgroundColor: getLevelColor(related.level),
+                                  color: 'white'
+                                }}
+                              >
+                                {getLevelLabel(related.level)}
+                              </span>
+                              <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+                                📖 {related.readTime}
+                              </span>
+                            </div>
+                            <h4 className="font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
+                              {related.title}
+                            </h4>
+                            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                              {related.description}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Índice Lateral (Table of Contents) */}
@@ -495,11 +488,10 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                     <button
                       key={item.id}
                       onClick={() => scrollToSection(item.id)}
-                      className={`block w-full text-left text-sm py-2 px-3 rounded transition-all ${
-                        activeSection === item.id
+                      className={`block w-full text-left text-sm py-2 px-3 rounded transition-all ${activeSection === item.id
                           ? 'font-semibold'
                           : 'hover:opacity-80'
-                      }`}
+                        }`}
                       style={{
                         backgroundColor: activeSection === item.id ? 'var(--bg-secondary)' : 'transparent',
                         color: activeSection === item.id ? 'var(--brand-primary)' : 'var(--text-secondary)',

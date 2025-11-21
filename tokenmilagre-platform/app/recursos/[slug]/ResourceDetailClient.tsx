@@ -29,18 +29,7 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
         <div className="flex gap-8" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
           <div className="flex-1 max-w-4xl space-y-8">
             {/* Botão Voltar */}
-            <button
-              onClick={() => router.push('/recursos')}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:opacity-90 hover:scale-105"
-              style={{
-                backgroundColor: 'var(--bg-secondary)',
-                color: 'var(--text-primary)'
-              }}
-              aria-label="Voltar para a página de recursos"
-            >
-              <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
-              Voltar para Recursos
-            </button>
+
 
             {/* Header */}
             <ResourceHeader resource={resource} />

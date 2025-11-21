@@ -277,14 +277,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
         <div className="flex gap-8" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
           <div className="flex-1 max-w-4xl space-y-8">
             {/* Voltar */}
-            <button
-              onClick={() => router.push('/dashboard/noticias')}
-              className="inline-flex items-center gap-2 text-sm font-semibold transition-colors hover:opacity-80"
-              style={{ color: 'var(--brand-primary)' }}
-            >
-              <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
-              Voltar para Notícias
-            </button>
+
 
             {/* Imagem de Capa (se existir) */}
             {(article as any).coverImage && (
@@ -588,9 +581,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                       <button
                         key={idx}
                         onClick={() => scrollToSection(item.id)}
-                        className={`block text-sm text-left transition-all hover:pl-2 py-1 w-full ${
-                          activeSection === item.id ? 'pl-2 font-semibold' : ''
-                        }`}
+                        className={`block text-sm text-left transition-all hover:pl-2 py-1 w-full ${activeSection === item.id ? 'pl-2 font-semibold' : ''
+                          }`}
                         style={{
                           color: activeSection === item.id ? 'var(--brand-primary)' : 'var(--text-secondary)',
                           wordBreak: 'break-word',

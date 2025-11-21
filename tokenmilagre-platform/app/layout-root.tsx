@@ -12,7 +12,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import DashboardHeader from '@/app/components/DashboardHeader';
 import UserDropdown from '@/components/UserDropdown';
-import BtcPriceWidget from '@/components/BtcPriceWidget';
+import NavbarCryptoTicker from '@/components/NavbarCryptoTicker';
 
 const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
   ssr: false,
@@ -83,12 +83,11 @@ export default function RootLayoutNav({
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed top-0 left-0 h-full w-72 z-50 transform transition-transform duration-300 ease-in-out ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      } lg:translate-x-0 shadow-2xl`} style={{
-        backgroundColor: 'var(--bg-elevated)',
-        borderRight: '1px solid var(--border-medium)'
-      }}>
+      <aside className={`fixed top-0 left-0 h-full w-72 z-50 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } lg:translate-x-0 shadow-2xl`} style={{
+          backgroundColor: 'var(--bg-elevated)',
+          borderRight: '1px solid var(--border-medium)'
+        }}>
         <div className="flex flex-col h-full">
           {/* Sidebar Header */}
           <div className="p-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
@@ -121,22 +120,16 @@ export default function RootLayoutNav({
 
           {/* Sidebar Navigation */}
           <nav className="flex-1 p-4 overflow-y-auto">
-            {/* Bitcoin Price Widget */}
-            <div className="mb-4">
-              <BtcPriceWidget />
-            </div>
-
             <div className="space-y-2">
               {menuItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setSidebarOpen(false)}
-                  className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base transition-all duration-300 ${
-                    (item.href === '/' ? pathname === '/' : pathname.startsWith(item.href))
-                      ? 'shadow-theme-md'
-                      : 'hover:bg-opacity-50 hover:scale-105 hover:translate-x-2'
-                  }`}
+                  className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base transition-all duration-300 ${(item.href === '/' ? pathname === '/' : pathname.startsWith(item.href))
+                    ? 'shadow-theme-md'
+                    : 'hover:bg-opacity-50 hover:scale-105 hover:translate-x-2'
+                    }`}
                   style={{
                     backgroundColor: (item.href === '/' ? pathname === '/' : pathname.startsWith(item.href))
                       ? 'var(--brand-primary)'
@@ -225,46 +218,51 @@ export default function RootLayoutNav({
                 </button>
               </div>
 
-            {/* Breadcrumbs - Desktop */}
-            <div className="hidden lg:flex items-center">
-              <Breadcrumbs inline={true} />
-            </div>
+              {/* Crypto Ticker - Desktop */}
+              <div className="hidden lg:flex flex-1 w-full mx-6 justify-center overflow-hidden">
+                <NavbarCryptoTicker />
+              </div>
 
-            {/* Desktop Actions */}
-            <nav className="hidden lg:flex items-center gap-4">
-              <button
-                onClick={toggleTheme}
-                className="group flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
-                style={{
-                  backgroundColor: 'var(--bg-secondary)',
-                  color: 'var(--text-primary)'
-                }}
-              >
-                <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
-                <span className="text-sm font-semibold">{theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}</span>
-              </button>
+              {/* Desktop Actions */}
+              <nav className="hidden lg:flex items-center gap-4">
+                <button
+                  onClick={toggleTheme}
+                  className="group flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
+                  style={{
+                    backgroundColor: 'var(--bg-secondary)',
+                    color: 'var(--text-primary)'
+                  }}
+                >
+                  <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
+                  <span className="text-sm font-semibold">{theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}</span>
+                </button>
 
-              <UserDropdown />
+                <UserDropdown />
 
-              <a
-                href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-2 px-6 py-2 rounded-lg transition-all duration-300 shadow-theme-md hover:shadow-theme-lg hover:scale-110 font-bold"
-                style={{
-                  background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-                  color: 'white'
-                }}
-              >
-                <FontAwesomeIcon icon={faHeart} className="w-5 h-5 transition-transform duration-300 group-hover:scale-125 group-hover:animate-pulse" />
-                <span>Comprar $MILAGRE</span>
-              </a>
-            </nav>
+                <a
+                  href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-2 px-6 py-2 rounded-lg transition-all duration-300 shadow-theme-md hover:shadow-theme-lg hover:scale-110 font-bold"
+                  style={{
+                    background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+                    color: 'white'
+                  }}
+                >
+                  <FontAwesomeIcon icon={faHeart} className="w-5 h-5 transition-transform duration-300 group-hover:scale-125 group-hover:animate-pulse" />
+                  <span>Comprar $MILAGRE</span>
+                </a>
+              </nav>
             </div>
           </div>
         </header>
 
         <main className="flex-1">
+          {/* Breadcrumbs - Moved to Main Content */}
+          <div className="container mx-auto px-4 mt-4">
+            <Breadcrumbs inline={true} />
+          </div>
+
           {/* Renderizar DashboardHeader apenas nas páginas configuradas */}
           {headerConfig && (
             <div className="container mx-auto px-4 py-8">
@@ -297,21 +295,21 @@ export default function RootLayoutNav({
         </main>
 
         {/* Footer */}
-          <footer className="border-t mt-12" style={{
-            backgroundColor: 'var(--bg-elevated)',
-            borderColor: 'var(--border-medium)'
-          }}>
-            <div className="container mx-auto px-4 py-8">
-              <div className="space-y-4">
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  $MILAGRE é um projeto comunitário criado para conectar pessoas através de apoio mútuo e esperança.
-                </p>
-                <p className="text-sm font-semibold" style={{ color: 'var(--text-tertiary)' }}>
-                  © 2025 $MILAGRE Community
-                </p>
-              </div>
+        <footer className="border-t mt-12" style={{
+          backgroundColor: 'var(--bg-elevated)',
+          borderColor: 'var(--border-medium)'
+        }}>
+          <div className="container mx-auto px-4 py-8">
+            <div className="space-y-4">
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                $MILAGRE é um projeto comunitário criado para conectar pessoas através de apoio mútuo e esperança.
+              </p>
+              <p className="text-sm font-semibold" style={{ color: 'var(--text-tertiary)' }}>
+                © 2025 $MILAGRE Community
+              </p>
             </div>
-          </footer>
+          </div>
+        </footer>
       </div>
     </div>
   );

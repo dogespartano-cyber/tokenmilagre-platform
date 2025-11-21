@@ -916,10 +916,9 @@ export default function HomePage() {
               {/* Ver todas */}
               <Link
                 href="/dashboard/noticias"
-                className="inline-block py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                className="inline-block py-2 px-4 font-semibold text-sm transition-colors duration-200 hover:text-[var(--brand-primary)]"
                 style={{
-                  background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-                  color: 'var(--text-inverse)'
+                  color: 'var(--text-secondary)'
                 }}
               >
                 Ver todas as notícias →
@@ -1024,10 +1023,9 @@ export default function HomePage() {
               {/* Ver todos */}
               <Link
                 href="/educacao"
-                className="inline-flex items-center gap-2 py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                className="inline-flex items-center gap-2 py-2 px-4 font-semibold text-sm transition-colors duration-200 hover:text-[var(--brand-primary)]"
                 style={{
-                  background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-                  color: 'var(--text-inverse)'
+                  color: 'var(--text-secondary)'
                 }}
               >
                 <span>Ver todos os artigos</span>
@@ -1114,10 +1112,9 @@ export default function HomePage() {
               <div>
                 <Link
                   href="/recursos"
-                  className="inline-flex items-center gap-2 py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  className="inline-flex items-center gap-2 py-2 px-4 font-semibold text-sm transition-colors duration-200 hover:text-[var(--brand-primary)]"
                   style={{
-                    background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-                    color: 'var(--text-inverse)'
+                    color: 'var(--text-secondary)'
                   }}
                 >
                   Ver todos

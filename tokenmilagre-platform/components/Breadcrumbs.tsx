@@ -128,7 +128,11 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
     return (
       <>
         {generateBreadcrumbSchema(homeSchema)}
-        <nav className={inline ? 'animate-fade-in' : 'mb-6 animate-fade-in'} aria-label="Breadcrumb">
+        <nav
+          className={inline ? 'animate-fade-in' : 'mb-6 animate-fade-in'}
+          aria-label="Breadcrumb"
+          style={{ visibility: 'hidden' }}
+        >
           <ol className="flex items-center gap-2 flex-wrap">
             <li>
               <span
@@ -218,14 +222,13 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
           <li>
             <Link
               href="/"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all hover:scale-105 hover:shadow-md"
+              className="flex items-center gap-2 px-1 py-1 transition-colors duration-200 hover:text-[var(--brand-primary)]"
               style={{
-                color: 'var(--text-secondary)',
-                backgroundColor: 'var(--bg-secondary)'
+                color: 'var(--text-secondary)'
               }}
             >
               <FontAwesomeIcon icon={faHome} className="w-4 h-4" />
-              <span className="text-sm font-semibold">Início</span>
+              <span className="text-sm font-medium">Início</span>
             </Link>
           </li>
 
@@ -238,10 +241,9 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
               />
               {index === breadcrumbItems.length - 1 ? (
                 <span
-                  className="px-3 py-1.5 rounded-lg text-sm font-semibold shadow-md"
+                  className="px-1 py-1 text-sm font-semibold"
                   style={{
-                    backgroundColor: 'var(--brand-primary)',
-                    color: 'var(--text-inverse)'
+                    color: 'var(--text-primary)'
                   }}
                   aria-current="page"
                 >
@@ -253,10 +255,9 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
               ) : (
                 <Link
                   href={item.href}
-                  className="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all hover:scale-105 hover:shadow-md"
+                  className="px-1 py-1 text-sm font-medium transition-colors duration-200 hover:text-[var(--brand-primary)]"
                   style={{
-                    color: 'var(--text-secondary)',
-                    backgroundColor: 'var(--bg-secondary)'
+                    color: 'var(--text-secondary)'
                   }}
                 >
                   {item.label}
@@ -269,3 +270,4 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
     </>
   );
 }
+
