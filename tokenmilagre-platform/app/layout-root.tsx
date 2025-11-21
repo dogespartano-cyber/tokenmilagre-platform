@@ -129,31 +129,34 @@ export default function RootLayoutNav({
                     href={item.href}
                     onClick={() => setSidebarOpen(false)}
                     className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base transition-all duration-300 relative overflow-hidden ${isActive
-                      ? 'text-brand-primary'
+                      ? 'text-brand-primary shadow-theme-sm'
                       : 'text-theme-primary hover:bg-white/5 hover:translate-x-1'
                       }`}
                     style={{
-                      background: isActive
-                        ? 'linear-gradient(90deg, rgba(var(--brand-primary-rgb), 0.15) 0%, rgba(var(--brand-primary-rgb), 0.02) 100%)' // Angelical Gradient
+                      backgroundColor: isActive
+                        ? 'rgba(var(--brand-primary-rgb), 0.1)' // Soft button background
                         : 'transparent',
                       color: isActive
                         ? 'var(--brand-primary)'
                         : 'var(--text-primary)'
                     }}
                   >
-                    {/* Angelical Active Indicator - Soft Glow Bar */}
+                    {/* Shine Effect - Added as requested */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
+
+                    {/* Active Indicator */}
                     {isActive && (
                       <div
-                        className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 rounded-r-full shadow-[0_0_10px_var(--brand-primary)]"
+                        className="absolute left-0 top-0 bottom-0 w-1 rounded-r-full"
                         style={{ backgroundColor: 'var(--brand-primary)' }}
                       />
                     )}
 
                     <FontAwesomeIcon
                       icon={item.icon}
-                      className={`w-5 h-5 transition-transform duration-300 ${isActive ? 'scale-110 drop-shadow-[0_0_5px_rgba(var(--brand-primary-rgb),0.5)]' : 'group-hover:rotate-12'}`}
+                      className={`w-5 h-5 transition-transform duration-300 relative z-10 ${isActive ? 'scale-110' : 'group-hover:rotate-12'}`}
                     />
-                    <span className={isActive ? 'drop-shadow-[0_0_1px_rgba(var(--brand-primary-rgb),0.3)]' : ''}>{item.label}</span>
+                    <span className="relative z-10">{item.label}</span>
                   </Link>
                 );
               })}
