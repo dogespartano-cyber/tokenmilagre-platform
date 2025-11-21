@@ -25,10 +25,17 @@ function RollingDigit({ digit, isInitialLoad }: RollingDigitProps) {
     prevDigitRef.current = digit;
   }, [digit]);
 
-  // Se for símbolo ($ ou ,), renderizar estático
+  // Se for símbolo ($ ou ,), renderizar estático com mesma altura dos números
   if (digit === '$' || digit === ',') {
     return (
-      <span className="inline-block" style={{ width: digit === '$' ? '0.6em' : '0.4em' }}>
+      <span
+        className="inline-block text-center"
+        style={{
+          width: digit === '$' ? '0.6em' : '0.4em',
+          height: '1.2em',
+          lineHeight: '1.2em',
+        }}
+      >
         {digit}
       </span>
     );
@@ -55,12 +62,14 @@ function RollingDigit({ digit, isInitialLoad }: RollingDigitProps) {
 
       <style jsx>{`
         .rolling-digit-container {
-          display: inline-block;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           width: 0.6em;
           height: 1.2em;
           overflow: hidden;
           position: relative;
-          text-align: center;
+          vertical-align: middle;
         }
 
         .rolling-digit-strip {
@@ -202,7 +211,7 @@ export default function BtcPriceWidget() {
       {/* Price with Odometer Animation */}
       <div className="flex-1 min-w-0">
         <div
-          className="text-xl font-bold font-mono"
+          className="flex items-center text-xl font-bold font-mono leading-none"
           style={{ color: 'var(--text-primary)', letterSpacing: '0.02em' }}
         >
           {priceDigits.map((digit, index) => (
