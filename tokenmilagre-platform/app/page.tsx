@@ -666,7 +666,7 @@ export default function HomePage() {
                         border: '1px solid var(--border-light)'
                       }}>
                       <div className="flex items-center gap-1.5 mb-1">
-                        <span className="text-sm">{getSentimentIcon(dailyAnalysis.sentiment)}</span>
+                        <span className="text-sm"><FontAwesomeIcon icon={getSentimentIcon(dailyAnalysis.sentiment)} /></span>
                         <span className="text-xs font-bold" style={{ color: 'var(--text-tertiary)' }}>
                           Mercado
                         </span>
