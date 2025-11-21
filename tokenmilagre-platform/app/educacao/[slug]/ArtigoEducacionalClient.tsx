@@ -489,8 +489,8 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                       key={item.id}
                       onClick={() => scrollToSection(item.id)}
                       className={`block w-full text-left text-sm py-2 px-3 rounded transition-all ${activeSection === item.id
-                          ? 'font-semibold'
-                          : 'hover:opacity-80'
+                        ? 'font-semibold'
+                        : 'hover:opacity-80'
                         }`}
                       style={{
                         backgroundColor: activeSection === item.id ? 'var(--bg-secondary)' : 'transparent',
