@@ -210,7 +210,7 @@ export async function POST(request: NextRequest) {
         code: issue.code
       }))
       return errorResponse(
-        'Validation failed: ' + zodErrors.map(e => `${e.path}: ${e.message}`).join('; '),
+        'Validation failed: ' + zodErrors.map((e: any) => `${e.path}: ${e.message}`).join('; '),
         400,
         { validationErrors: zodErrors }
       )

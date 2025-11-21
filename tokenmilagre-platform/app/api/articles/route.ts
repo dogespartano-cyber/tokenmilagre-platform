@@ -218,12 +218,23 @@ export async function POST(request: NextRequest) {
     if ((error as any).issues && Array.isArray((error as any).issues)) {
       const zodErrors = (error as any).issues.map((issue: any) => ({
         path: issue.path.join('.'),
-        if((error as any).name === 'ValidationError' && (error as any).details) {
-        return errorResponse(error as Error, 400, (error as any).details)
-      }
+        message: issue.message,
+        code: issue.code
+      }))
+      return errorResponse(
+        'Validation failed: ' + zodErrors.map((e: any) => `${e.path}: ${e.message}`).join('; '),
+        400,
+        { validationErrors: zodErrors }
+      )
+    }
+
+    // Check for ValidationError with details
+    if ((error as any).name === 'ValidationError' && (error as any).details) {
+      return errorResponse(error as Error, 400, (error as any).details)
+    }
 
     return errorResponse(error as Error)
-    } finally {
-      logger.clearContext()
-    }
+  } finally {
+    logger.clearContext()
   }
+}
