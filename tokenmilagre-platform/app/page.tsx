@@ -155,7 +155,7 @@ export default function HomePage() {
           .sort((a: NewsItem, b: NewsItem) =>
             new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
           )
-          .slice(0, 6);
+          .slice(0, 4);
         setNews(sortedNews);
         // Salvar no cache
         sessionStorage.setItem(CACHE_KEY, JSON.stringify(sortedNews));
@@ -347,9 +347,36 @@ export default function HomePage() {
 
   const getSentimentIcon = (sentiment: string) => {
     switch (sentiment) {
-      case 'positive': return '🟢';
-      case 'negative': return '🔴';
-      default: return '🟡';
+      case 'positive': return faArrowUp;
+      case 'negative': return faArrowRight; // Using arrow right for neutral/negative distinction if needed, but let's stick to the requested logic
+      default: return faCheckCircle;
+    }
+  };
+
+  // Helper: Cor do sentimento
+  const getSentimentColor = (sentiment: string) => {
+    switch (sentiment) {
+      case 'positive': return '#10B981'; // Emerald 500
+      case 'negative': return '#EF4444'; // Red 500
+      default: return '#F59E0B'; // Amber 500
+    }
+  };
+
+  // Helper: Gradiente do sentimento
+  const getSentimentGradient = (sentiment: string) => {
+    switch (sentiment) {
+      case 'positive': return 'rgba(16, 185, 129, 0.08)'; // Emerald 500 with 8% opacity
+      case 'negative': return 'rgba(239, 68, 68, 0.08)'; // Red 500 with 8% opacity
+      default: return 'rgba(245, 158, 11, 0.08)'; // Amber 500 with 8% opacity
+    }
+  };
+
+  // Helper: Texto do sentimento
+  const getSentimentLabel = (sentiment: string) => {
+    switch (sentiment) {
+      case 'positive': return 'Positivo';
+      case 'negative': return 'Negativo';
+      default: return 'Neutro';
     }
   };
 
@@ -805,51 +832,81 @@ export default function HomePage() {
                 </h3>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {news.length > 0 ? (
                   news.map((item, idx) => (
                     <Link
                       key={idx}
                       href={`/dashboard/noticias/${item.slug || item.id}`}
-                      className="block rounded-2xl p-4 border shadow-md transition-all duration-500 ease-out hover:shadow-lg hover:-translate-y-1"
+                      className="group relative rounded-2xl p-6 overflow-hidden border shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer block"
                       style={{
-                        background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
+                        background: `linear-gradient(135deg, ${getSentimentGradient(item.sentiment)}, var(--bg-elevated))`,
                         borderColor: 'var(--border-light)'
                       }}
                     >
-                      <div>
-                        {/* Header da notícia */}
-                        <div className="flex items-center gap-2 mb-3">
-                          <span className="text-lg flex-shrink-0">{getSentimentIcon(item.sentiment)}</span>
-                          <span className="px-2 py-1 rounded-lg text-xs font-bold uppercase" style={{
-                            backgroundColor: 'var(--bg-primary)',
-                            color: 'var(--brand-primary)'
+                      {/* Glow sutil no topo no hover */}
+                      <div
+                        className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        style={{
+                          background: `linear-gradient(90deg, transparent, ${getSentimentColor(item.sentiment)}, transparent)`,
+                          boxShadow: `0 0 20px ${getSentimentColor(item.sentiment)}40`
+                        }}
+                      />
+
+                      {/* Content wrapper */}
+                      <div className="relative flex flex-col h-full">
+                        {/* Header do Card */}
+                        <div className="flex items-start justify-between mb-4">
+                          {/* Badge de Sentimento com ícone */}
+                          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg backdrop-blur-sm" style={{
+                            backgroundColor: `${getSentimentColor(item.sentiment)}15`,
+                            border: `1px solid ${getSentimentColor(item.sentiment)}30`
                           }}>
-                            {item.category[0]}
+                            <span className="text-xs font-bold uppercase tracking-wide" style={{
+                              color: getSentimentColor(item.sentiment) // Usando a cor direta para o texto também
+                            }}>
+                              {getSentimentLabel(item.sentiment)}
+                            </span>
+                          </div>
+
+                          {/* Tempo de publicação */}
+                          <span className="text-xs font-medium px-2.5 py-1 rounded-md backdrop-blur-sm flex items-center gap-1.5" style={{
+                            backgroundColor: 'var(--bg-secondary)',
+                            color: 'var(--text-tertiary)'
+                          }}>
+                            <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
+                            {getTimeAgo(item.publishedAt)}
                           </span>
-                          <span className="text-xs ml-auto font-medium" style={{ color: 'var(--text-muted)' }}>{getTimeAgo(item.publishedAt)}</span>
                         </div>
 
                         {/* Título */}
-                        <h4 className="font-bold text-base mb-2 line-clamp-2" style={{ color: 'var(--text-primary)' }}>
+                        <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-brand-primary transition-colors min-h-[3.5rem]" style={{ color: 'var(--text-primary)' }}>
                           {item.title}
-                        </h4>
+                        </h3>
 
                         {/* Resumo */}
-                        <p className="text-sm line-clamp-2 mb-3" style={{ color: 'var(--text-tertiary)' }}>
+                        <p className="text-sm mb-4 line-clamp-3 leading-relaxed opacity-90 min-h-[4.5rem]" style={{ color: 'var(--text-secondary)' }}>
                           {item.summary}
                         </p>
 
-                        {/* Footer - Ler mais */}
-                        <div className="flex items-center gap-2 text-sm font-bold" style={{ color: 'var(--brand-primary)' }}>
-                          <span>Ler artigo completo</span>
-                          <span className="group-hover/item:translate-x-1 transition-transform duration-300">→</span>
+                        {/* Spacer to push footer to bottom */}
+                        <div className="flex-grow"></div>
+
+                        {/* Footer */}
+                        <div className="pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                          <div className="flex items-center justify-end">
+                            {/* CTA com seta animada */}
+                            <div className="flex items-center gap-2 text-sm font-bold group-hover:gap-3 transition-all" style={{ color: 'var(--text-primary)' }}>
+                              Ler artigo
+                              <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </Link>
                   ))
                 ) : (
-                  <div className="text-center py-8">
+                  <div className="col-span-full text-center py-12">
                     <div className="text-5xl mb-3 animate-pulse">📰</div>
                     <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>Carregando notícias...</p>
                   </div>
