@@ -12,7 +12,8 @@ import {
   faChartLine,
   faCheckCircle,
   faSeedling,
-  faGlobe
+  faGlobe,
+  faTrophy
 } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
@@ -22,7 +23,7 @@ export default function TokenPage() {
 
   useEffect(() => {
     setIsVisible(true);
-    // Ocultar breadcrumb e seu container nesta página
+    // Ocultar breadcrumb nesta página
     const breadcrumbContainer = document.querySelector('main > div.container');
     if (breadcrumbContainer) {
       (breadcrumbContainer as HTMLElement).style.display = 'none';
@@ -64,24 +65,45 @@ export default function TokenPage() {
           font-family: 'Inter', sans-serif;
         }
 
-        .btn-hover-effect {
+        /* Glassmorphism Card */
+        .glass-card {
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+          transform: translateY(-8px) scale(1.02);
+          box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.15);
+          background: rgba(255, 255, 255, 0.15);
+          border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        [data-theme="dark"] .glass-card {
+          background: rgba(18, 18, 18, 0.4);
+          border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="dark"] .glass-card:hover {
+          background: rgba(18, 18, 18, 0.6);
+          border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Button Hover Effect */
+        .btn-hover {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .btn-hover-effect:hover {
+        .btn-hover:hover {
           transform: translateY(-2px);
           box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+          filter: brightness(1.1);
         }
 
-        .card-hover {
-          transition: all 0.4s ease;
-        }
-
-        .card-hover:hover {
-          transform: translateY(-8px);
-          box-shadow: var(--shadow-xl);
-        }
-
+        /* Animated Logo */
         @keyframes spin-slow {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
@@ -99,25 +121,54 @@ export default function TokenPage() {
         .animate-spin-reverse {
           animation: spin-reverse 20s linear infinite;
         }
+
+        /* Gradient Text */
+        .gradient-text {
+          background: linear-gradient(135deg, #4caf50, #ffb703, #fb8500);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        /* Roadmap Timeline */
+        .timeline-item {
+          position: relative;
+        }
+
+        .timeline-item::before {
+          content: '';
+          position: absolute;
+          left: 32px;
+          top: 64px;
+          bottom: -32px;
+          width: 2px;
+          background: linear-gradient(180deg, #4caf50, #ffb703, #fb8500);
+        }
+
+        .timeline-item:last-child::before {
+          display: none;
+        }
       `}</style>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ backgroundColor: 'transparent' }}>
-        <div className={`relative z-10 max-w-6xl mx-auto px-6 py-20 text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <section className="relative min-h-screen flex items-center justify-center" style={{ backgroundColor: 'transparent' }}>
+        <div className={`max-w-6xl mx-auto px-6 py-20 text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
 
           {/* Animated Logo */}
           <div className="flex justify-center mb-12">
             <div className="relative w-40 h-40 md:w-48 md:h-48">
               {/* Animated rings */}
               <div className="absolute inset-0 animate-spin-slow">
-                <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-amber-400"></div>
+                <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-40" style={{ borderColor: '#ffb703' }}></div>
               </div>
               <div className="absolute inset-3 animate-spin-reverse">
-                <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-purple-500"></div>
+                <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-40" style={{ borderColor: '#6a0572' }}></div>
               </div>
 
               {/* Glow effect */}
-              <div className="absolute inset-0 blur-2xl animate-pulse opacity-40 bg-gradient-to-r from-amber-400 to-purple-600"></div>
+              <div className="absolute inset-0 blur-2xl animate-pulse opacity-30" style={{
+                background: 'linear-gradient(135deg, #4caf50, #ffb703, #fb8500)'
+              }}></div>
 
               {/* Image */}
               <div className="relative z-10 transform hover:scale-105 transition-all duration-700">
@@ -136,7 +187,7 @@ export default function TokenPage() {
           {/* Hero Title */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
             Construa seu futuro financeiro com{' '}
-            <span className="bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="gradient-text">
               $MILAGRE
             </span>
           </h1>
@@ -152,7 +203,10 @@ export default function TokenPage() {
               href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-hover-effect px-10 py-5 rounded-full font-inter font-semibold text-lg text-white shadow-lg flex items-center gap-3 bg-gradient-to-r from-orange-500 to-amber-400"
+              className="btn-hover px-10 py-5 rounded-full font-inter font-semibold text-lg text-white shadow-lg flex items-center gap-3"
+              style={{
+                background: 'linear-gradient(135deg, #fb8500, #ffb703)'
+              }}
             >
               <span>Comprar agora</span>
               <FontAwesomeIcon icon={faRocket} className="w-5 h-5" />
@@ -161,7 +215,12 @@ export default function TokenPage() {
             {/* Secondary CTA */}
             <button
               onClick={() => document.getElementById('saiba-mais')?.scrollIntoView({ behavior: 'smooth' })}
-              className="btn-hover-effect px-10 py-5 rounded-full font-inter font-semibold text-lg shadow-lg border-2 border-teal-600 text-teal-600 bg-transparent"
+              className="btn-hover px-10 py-5 rounded-full font-inter font-semibold text-lg shadow-lg border-2"
+              style={{
+                borderColor: '#4caf50',
+                color: '#4caf50',
+                backgroundColor: 'transparent'
+              }}
             >
               Saiba mais
             </button>
@@ -170,15 +229,15 @@ export default function TokenPage() {
           {/* Trust Indicators */}
           <div className="mt-16 flex flex-wrap justify-center gap-8 text-sm font-inter" style={{ color: 'var(--text-secondary)' }}>
             <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5 text-green-500" />
+              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" style={{ color: '#4caf50' }} />
               <span>100% Transparente</span>
             </div>
             <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5 text-green-500" />
+              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" style={{ color: '#4caf50' }} />
               <span>Código Aberto</span>
             </div>
             <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5 text-green-500" />
+              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" style={{ color: '#4caf50' }} />
               <span>Comunidade Ativa</span>
             </div>
           </div>
@@ -204,31 +263,27 @@ export default function TokenPage() {
                 icon: faLeaf,
                 title: 'Crescimento Orgânico',
                 description: 'Sem hype artificial. Construímos valor real através de educação, utilidade e engajamento genuíno da comunidade.',
-                bgGradient: 'linear-gradient(135deg, #4caf50, #45a049)'
+                color: '#4caf50'
               },
               {
                 icon: faUsers,
                 title: 'Comunidade Alinhada',
                 description: 'Holders que acreditam na visão de longo prazo. Uma comunidade de aprendizes e investidores conscientes.',
-                bgGradient: 'linear-gradient(135deg, #6a0572, #8b1a9e)'
+                color: '#6a0572'
               },
               {
                 icon: faShieldAlt,
                 title: 'Transparência Radical',
                 description: 'Código aberto, decisões públicas, métricas verificáveis. Confiança construída através da clareza total.',
-                bgGradient: 'linear-gradient(135deg, #003f5c, #005a82)'
+                color: '#003f5c'
               }
             ].map((pillar, index) => (
-              <div key={index} className="card-hover rounded-3xl p-8 border" style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)',
-                boxShadow: 'var(--shadow-lg)'
-              }}>
+              <div key={index} className="glass-card rounded-3xl p-8">
 
                 {/* Icon */}
                 <div
                   className="inline-flex w-16 h-16 rounded-2xl items-center justify-center mb-6 shadow-md"
-                  style={{ background: pillar.bgGradient }}
+                  style={{ backgroundColor: pillar.color }}
                 >
                   <FontAwesomeIcon icon={pillar.icon} className="w-8 h-8 text-white" />
                 </div>
@@ -261,18 +316,14 @@ export default function TokenPage() {
             </p>
           </div>
 
-          <div className="rounded-3xl p-12 md:p-16 border" style={{
-            backgroundColor: 'var(--bg-elevated)',
-            borderColor: 'var(--border-light)',
-            boxShadow: 'var(--shadow-xl)'
-          }}>
+          <div className="glass-card rounded-3xl p-12 md:p-16">
 
             {/* Supply */}
             <div className="text-center mb-16">
               <p className="text-sm font-inter font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--text-secondary)' }}>
                 Supply Total
               </p>
-              <p className="text-7xl md:text-8xl font-montserrat font-bold mb-4 bg-gradient-to-r from-purple-600 to-teal-600 bg-clip-text text-transparent">
+              <p className="text-7xl md:text-8xl font-montserrat font-bold mb-4 gradient-text">
                 1B
               </p>
               <p className="text-lg font-inter" style={{ color: 'var(--text-secondary)' }}>
@@ -282,8 +333,8 @@ export default function TokenPage() {
 
             {/* Distribution */}
             <div className="mb-16">
-              <div className="flex flex-col md:flex-row items-center justify-between p-8 rounded-2xl shadow-md bg-gradient-to-r from-green-500/10 to-purple-600/10">
-                <div>
+              <div className="glass-card rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="flex-1">
                   <p className="text-xl font-montserrat font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
                     Liquidez Inicial
                   </p>
@@ -291,30 +342,28 @@ export default function TokenPage() {
                     100% disponível na bonding curve
                   </p>
                 </div>
-                <p className="text-5xl font-montserrat font-bold mt-4 md:mt-0 text-green-500">
+                <p className="text-5xl font-montserrat font-bold" style={{ color: '#4caf50' }}>
                   100%
                 </p>
               </div>
             </div>
 
             {/* Tech Info */}
-            <div className="pt-12 border-t" style={{ borderColor: 'var(--border-light)' }}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                {[
-                  { label: 'Blockchain', value: 'Solana', color: 'text-purple-600' },
-                  { label: 'Padrão', value: 'SPL Token', color: 'text-teal-600' },
-                  { label: 'Velocidade', value: '< 1 segundo', color: 'text-green-500' }
-                ].map((stat, index) => (
-                  <div key={index}>
-                    <p className="text-sm font-inter font-semibold uppercase tracking-wide mb-3" style={{ color: 'var(--text-secondary)' }}>
-                      {stat.label}
-                    </p>
-                    <p className={`text-2xl font-montserrat font-bold ${stat.color}`}>
-                      {stat.value}
-                    </p>
-                  </div>
-                ))}
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+              {[
+                { label: 'Blockchain', value: 'Solana', color: '#6a0572' },
+                { label: 'Padrão', value: 'SPL Token', color: '#003f5c' },
+                { label: 'Velocidade', value: '< 1 segundo', color: '#4caf50' }
+              ].map((stat, index) => (
+                <div key={index}>
+                  <p className="text-sm font-inter font-semibold uppercase tracking-wide mb-3" style={{ color: 'var(--text-secondary)' }}>
+                    {stat.label}
+                  </p>
+                  <p className="text-2xl font-montserrat font-bold" style={{ color: stat.color }}>
+                    {stat.value}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -333,82 +382,86 @@ export default function TokenPage() {
             </p>
           </div>
 
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 transform md:-translate-x-1/2 bg-gradient-to-b from-green-500 via-purple-600 to-teal-600"></div>
-
-            <div className="space-y-16">
-              {[
-                {
-                  phase: 'Fase 1',
-                  title: 'Fundação',
-                  description: 'Lançamento do token, formação da comunidade inicial e desenvolvimento da plataforma educacional.',
-                  icon: faSeedling,
-                  status: 'current',
-                  bgGradient: 'linear-gradient(135deg, #4caf50, #45a049)'
-                },
-                {
-                  phase: 'Fase 2',
-                  title: 'Expansão Sustentável',
-                  description: 'Graduação na Raydium, parcerias com educadores, lançamento do programa Learn-to-Earn.',
-                  icon: faChartLine,
-                  status: 'upcoming',
-                  bgGradient: 'linear-gradient(135deg, #6a0572, #8b1a9e)'
-                },
-                {
-                  phase: 'Fase 3',
-                  title: 'Ecossistema Global',
-                  description: 'Governança descentralizada, produtos DeFi educativos e expansão global da comunidade.',
-                  icon: faGlobe,
-                  status: 'future',
-                  bgGradient: 'linear-gradient(135deg, #003f5c, #005a82)'
-                }
-              ].map((phase, index) => (
-                <div key={index} className="relative pl-24 md:pl-0">
-
-                  {/* Icon */}
-                  <div
-                    className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-16 h-16 rounded-2xl flex items-center justify-center shadow-xl z-10"
-                    style={{ background: phase.bgGradient }}
-                  >
-                    <FontAwesomeIcon icon={phase.icon} className="w-8 h-8 text-white" />
-                  </div>
-
-                  {/* Content */}
-                  <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:ml-auto md:pl-12' : 'md:pr-12'}`}>
-                    <div className="rounded-2xl p-8 border card-hover" style={{
-                      backgroundColor: 'var(--bg-elevated)',
-                      borderColor: 'var(--border-light)',
-                      boxShadow: 'var(--shadow-lg)'
-                    }}>
-                      <div className="flex items-start justify-between mb-4">
-                        <p className="text-sm font-inter font-semibold uppercase tracking-wide text-teal-600">
-                          {phase.phase}
-                        </p>
-                        {phase.status === 'current' && (
-                          <span className="px-3 py-1 rounded-full text-xs font-inter font-semibold bg-green-500/15 text-green-500 border border-green-500">
-                            Em Andamento
-                          </span>
-                        )}
-                      </div>
-                      <h3 className="text-2xl font-montserrat font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
-                        {phase.title}
-                      </h3>
-                      <p className="font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                        {phase.description}
-                      </p>
-                    </div>
-                  </div>
+          <div className="space-y-8">
+            {[
+              {
+                phase: 'Fase 1',
+                title: 'Fundação',
+                description: 'Lançamento do token, formação da comunidade inicial e desenvolvimento da plataforma educacional.',
+                icon: faSeedling,
+                status: 'current',
+                color: '#4caf50'
+              },
+              {
+                phase: 'Fase 2',
+                title: 'Expansão Sustentável',
+                description: 'Graduação na Raydium, parcerias com educadores, lançamento do programa Learn-to-Earn.',
+                icon: faChartLine,
+                status: 'upcoming',
+                color: '#ffb703'
+              },
+              {
+                phase: 'Fase 3',
+                title: 'Ecossistema Global',
+                description: 'Governança descentralizada, produtos DeFi educativos e expansão global da comunidade.',
+                icon: faGlobe,
+                status: 'future',
+                color: '#6a0572'
+              }
+            ].map((phase, index) => (
+              <div key={index} className="timeline-item flex gap-6">
+                {/* Icon */}
+                <div
+                  className="flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg z-10"
+                  style={{ backgroundColor: phase.color }}
+                >
+                  <FontAwesomeIcon icon={phase.icon} className="w-8 h-8 text-white" />
                 </div>
-              ))}
-            </div>
+
+                {/* Content */}
+                <div className="flex-1 glass-card rounded-2xl p-8">
+                  <div className="flex items-start justify-between mb-4">
+                    <p className="text-sm font-inter font-semibold uppercase tracking-wide" style={{ color: phase.color }}>
+                      {phase.phase}
+                    </p>
+                    {phase.status === 'current' && (
+                      <span className="px-3 py-1 rounded-full text-xs font-inter font-semibold border" style={{
+                        backgroundColor: 'rgba(76, 175, 80, 0.15)',
+                        color: '#4caf50',
+                        borderColor: '#4caf50'
+                      }}>
+                        Em Andamento
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-2xl font-montserrat font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
+                    {phase.title}
+                  </h3>
+                  <p className="font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    {phase.description}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Faça Parte da Jornada - Final CTA */}
-      <section className="relative py-32 overflow-hidden bg-gradient-to-br from-teal-900 via-purple-900 to-slate-900">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <section className="relative py-32 overflow-hidden" style={{
+        background: 'linear-gradient(135deg, #003f5c, #6a0572, #fb8500)'
+      }}>
+
+        {/* Decorative Glow */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-10 right-10 w-80 h-80 rounded-full blur-3xl animate-pulse" style={{ backgroundColor: '#ffb703' }}></div>
+          <div className="absolute bottom-10 left-10 w-96 h-96 rounded-full blur-3xl animate-pulse" style={{
+            backgroundColor: '#4caf50',
+            animationDelay: '1s'
+          }}></div>
+        </div>
+
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
 
           <h2 className="text-4xl md:text-6xl font-montserrat font-bold text-white mb-8">
             Faça Parte da Jornada
@@ -424,7 +477,8 @@ export default function TokenPage() {
               href="https://discord.gg/xk4zrz8j"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-hover-effect flex items-center gap-3 px-10 py-5 bg-white rounded-full font-inter font-semibold text-lg shadow-xl text-purple-700"
+              className="btn-hover flex items-center gap-3 px-10 py-5 bg-white rounded-full font-inter font-semibold text-lg shadow-xl"
+              style={{ color: '#6a0572' }}
             >
               <FontAwesomeIcon icon={faDiscord} className="w-6 h-6" />
               <span>Entrar no Discord</span>
@@ -434,7 +488,7 @@ export default function TokenPage() {
               href="https://t.me/+Bop_TVFc_mg3Njlh"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-hover-effect flex items-center gap-3 px-10 py-5 rounded-full font-inter font-semibold text-lg shadow-xl text-white border-2 border-white bg-transparent"
+              className="btn-hover flex items-center gap-3 px-10 py-5 rounded-full font-inter font-semibold text-lg shadow-xl text-white border-2 border-white bg-transparent"
             >
               <FontAwesomeIcon icon={faTelegram} className="w-6 h-6" />
               <span>Entrar no Telegram</span>
@@ -442,16 +496,21 @@ export default function TokenPage() {
           </div>
 
           {/* Contract Address Card */}
-          <div className="max-w-2xl mx-auto bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-10 shadow-2xl">
+          <div className="max-w-2xl mx-auto glass-card rounded-3xl p-10">
             <p className="text-white/70 text-sm font-inter font-semibold uppercase tracking-widest mb-4">
               Endereço do Contrato
             </p>
-            <code className="block text-white font-mono text-sm md:text-base mb-6 break-all px-6 py-4 bg-black/20 rounded-xl">
+            <code className="block text-white font-mono text-sm md:text-base mb-6 break-all px-6 py-4 rounded-xl" style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.3)'
+            }}>
               {TOKEN_ADDRESS}
             </code>
             <button
               onClick={copyToClipboard}
-              className="btn-hover-effect inline-flex items-center gap-2 px-8 py-3 rounded-full font-inter font-semibold shadow-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white"
+              className="btn-hover inline-flex items-center gap-2 px-8 py-3 rounded-full font-inter font-semibold shadow-lg text-white"
+              style={{
+                background: 'linear-gradient(135deg, #ffb703, #fb8500)'
+              }}
             >
               <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" />
               <span>Copiar Endereço</span>
