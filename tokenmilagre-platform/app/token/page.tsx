@@ -102,15 +102,7 @@ export default function TokenPage() {
       `}</style>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
-
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden opacity-10">
-          <div className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl bg-purple-600"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl bg-teal-600"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-3xl bg-green-500"></div>
-        </div>
-
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ backgroundColor: 'transparent' }}>
         <div className={`relative z-10 max-w-6xl mx-auto px-6 py-20 text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
 
           {/* Animated Logo */}
@@ -194,16 +186,8 @@ export default function TokenPage() {
       </section>
 
       {/* Por que $MILAGRE? Section */}
-      <section id="saiba-mais" className="relative py-24 overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
-
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden opacity-10">
-          <div className="absolute top-20 right-10 w-72 h-72 rounded-full blur-3xl bg-green-500"></div>
-          <div className="absolute bottom-20 left-10 w-96 h-96 rounded-full blur-3xl bg-purple-600"></div>
-          <div className="absolute top-1/2 left-1/3 w-64 h-64 rounded-full blur-3xl bg-teal-600"></div>
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <section id="saiba-mais" className="relative py-24" style={{ backgroundColor: 'transparent' }}>
+        <div className="max-w-7xl mx-auto px-6">
 
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
@@ -265,16 +249,8 @@ export default function TokenPage() {
       </section>
 
       {/* Tokenomics Section */}
-      <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden opacity-10">
-          <div className="absolute top-40 left-20 w-80 h-80 rounded-full blur-3xl bg-teal-600"></div>
-          <div className="absolute bottom-40 right-20 w-72 h-72 rounded-full blur-3xl bg-amber-400"></div>
-          <div className="absolute top-1/3 right-1/3 w-64 h-64 rounded-full blur-3xl bg-purple-600"></div>
-        </div>
-
-        <div className="relative z-10 max-w-5xl mx-auto px-6">
+      <section className="relative py-24" style={{ backgroundColor: 'transparent' }}>
+        <div className="max-w-5xl mx-auto px-6">
 
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
@@ -345,16 +321,8 @@ export default function TokenPage() {
       </section>
 
       {/* A Jornada à Frente - Roadmap */}
-      <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
-
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden opacity-10">
-          <div className="absolute top-32 left-10 w-96 h-96 rounded-full blur-3xl bg-purple-600"></div>
-          <div className="absolute bottom-32 right-10 w-80 h-80 rounded-full blur-3xl bg-teal-600"></div>
-          <div className="absolute top-2/3 left-1/2 w-72 h-72 rounded-full blur-3xl bg-green-500"></div>
-        </div>
-
-        <div className="relative z-10 max-w-6xl mx-auto px-6">
+      <section className="relative py-24" style={{ backgroundColor: 'transparent' }}>
+        <div className="max-w-6xl mx-auto px-6">
 
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
@@ -440,15 +408,7 @@ export default function TokenPage() {
 
       {/* Faça Parte da Jornada - Final CTA */}
       <section className="relative py-32 overflow-hidden bg-gradient-to-br from-teal-900 via-purple-900 to-slate-900">
-
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden opacity-15">
-          <div className="absolute top-10 right-10 w-80 h-80 rounded-full blur-3xl bg-amber-400 animate-pulse"></div>
-          <div className="absolute bottom-10 left-10 w-96 h-96 rounded-full blur-3xl bg-orange-500 animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full blur-3xl bg-teal-400 animate-pulse" style={{ animationDelay: '2s' }}></div>
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-4xl mx-auto px-6 text-center">
 
           <h2 className="text-4xl md:text-6xl font-montserrat font-bold text-white mb-8">
             Faça Parte da Jornada

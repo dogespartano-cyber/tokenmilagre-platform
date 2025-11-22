@@ -13,6 +13,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import DashboardHeader from '@/app/components/DashboardHeader';
 import UserDropdown from '@/components/UserDropdown';
 import NavbarCryptoTicker from '@/components/NavbarCryptoTicker';
+import AnimatedBackground from '@/components/AnimatedBackground';
 
 const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
   ssr: false,
@@ -277,15 +278,20 @@ export default function RootLayoutNav({
           </div>
         </header >
 
-        <main className="flex-1">
+        <main className="flex-1 relative">
+          {/* Animated Background - Global */}
+          <div className="fixed inset-0 z-0 pointer-events-none">
+            <AnimatedBackground variant="hero" opacity={0.08} />
+          </div>
+
           {/* Breadcrumbs - Moved to Main Content */}
-          <div className="container mx-auto px-4 mt-4">
+          <div className="container mx-auto px-4 mt-4 relative z-10">
             <Breadcrumbs inline={true} />
           </div>
 
           {/* Renderizar DashboardHeader apenas nas páginas configuradas */}
           {headerConfig && (
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-8 relative z-10">
               <DashboardHeader
                 title={headerConfig.title}
                 description={headerConfig.description}
@@ -295,7 +301,7 @@ export default function RootLayoutNav({
 
           {/* Ticker Tape - Sempre montado para evitar recarregamento */}
           <div
-            className="container mx-auto px-4"
+            className="container mx-auto px-4 relative z-10"
             style={{
               display: headerConfig ? 'block' : 'none',
             }}
@@ -311,7 +317,9 @@ export default function RootLayoutNav({
             </div>
           </div>
 
-          {children}
+          <div className="relative z-10">
+            {children}
+          </div>
         </main>
 
         {/* Footer */}
