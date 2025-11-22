@@ -80,46 +80,6 @@ export default function RootLayoutNav({
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
-      )}
-
-      {/* Sidebar */}
-      <aside className={`fixed top-0 left-0 h-full w-72 z-50 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 shadow-2xl`} style={{
-          backgroundColor: 'var(--bg-elevated)',
-                    < span className="relative z-10">{item.label}</span>
-    </Link>
-  );
-})}
-            </div >
-          </nav >
-
-  {/* Sidebar Footer - CTA */ }
-  < div className = "p-6 border-t" style = {{ borderColor: 'rgba(255, 255, 255, 0.05)' }}>
-    <a
-      href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex items-center justify-center gap-2 w-full text-center px-6 py-3.5 rounded-xl transition-all duration-300 shadow-[0_4px_20px_rgba(var(--brand-primary-rgb),0.3)] hover:shadow-[0_4px_25px_rgba(var(--brand-primary-rgb),0.5)] hover:scale-[1.02] font-bold relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-        color: 'white'
-      }}
-    >
-      {/* Angelical Shine Effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
-
-      <FontAwesomeIcon icon={faHeart} className="w-5 h-5 transition-transform duration-300 group-hover:scale-125 group-hover:animate-pulse relative z-10" />
-      <span className="relative z-10">Comprar $MILAGRE</span>
-    </a>
-          </div >
-        </div >
-      </aside >
-
-  {/* Main Content Wrapper */ }
-  < div className = "min-h-screen flex flex-col lg:ml-72" >
-    {/* Header - Fixed Height for Alignment */ }
-    < header className = "sticky top-0 z-30 backdrop-blur-xl border-b h-[88px] flex items-center" style = {{
-  backgroundColor: 'rgba(var(--bg-elevated-rgb), 0.8)', // More transparency for glass effect
     borderColor: 'rgba(255, 255, 255, 0.05)'
 }}>
   <div className="container mx-auto px-6 h-full">
@@ -247,21 +207,21 @@ export default function RootLayoutNav({
   </main>
 
 {/* Footer */ }
-<footer className="border-t mt-12" style={{
-  backgroundColor: 'var(--bg-elevated)',
-  borderColor: 'var(--border-medium)'
-}}>
-  <div className="container mx-auto px-4 py-8">
-    <div className="space-y-4">
-      <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-        $MILAGRE é um projeto comunitário criado para conectar pessoas através de apoio mútuo e esperança.
-      </p>
-      <p className="text-sm font-semibold" style={{ color: 'var(--text-tertiary)' }}>
-        © 2025 $MILAGRE Community
-      </p>
+  <footer className="border-t mt-12" style={{
+    backgroundColor: 'var(--bg-elevated)',
+    borderColor: 'var(--border-medium)'
+  }}>
+    <div className="container mx-auto px-4 py-8">
+      <div className="space-y-4">
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+          $MILAGRE é um projeto comunitário criado para conectar pessoas através de apoio mútuo e esperança.
+        </p>
+        <p className="text-sm font-semibold" style={{ color: 'var(--text-tertiary)' }}>
+          © 2025 $MILAGRE Community
+        </p>
+      </div>
     </div>
-  </div>
-</footer>
+  </footer>
       </div >
     </div >
   );
