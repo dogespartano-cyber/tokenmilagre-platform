@@ -6,12 +6,15 @@ import Script from 'next/script';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faLeaf,
-  faLock,
   faUsers,
+  faShieldAlt,
+  faRocket,
   faChartLine,
   faCheckCircle,
-  faShieldAlt,
-  faInfinity
+  faArrowRight,
+  faSeedling,
+  faHandshake,
+  faGlobe
 } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
@@ -36,43 +39,104 @@ export default function TokenPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           "name": "$MILAGRE - Token de Educação Financeira Descentralizada",
-          "description": "Um token construído para o longo prazo. Transparência, comunidade e valor sustentável.",
+          "description": "Construa seu futuro financeiro com transparência, comunidade e crescimento sustentável.",
           "url": "https://tokenmilagre.xyz/token"
         })}
       </Script>
 
-      {/* Hero Section - Ultra Sereno */}
-      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-teal-50/30 to-blue-50/20 relative overflow-hidden">
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600&display=swap');
 
-        {/* Subtle animated background orbs */}
-        <div className="absolute inset-0 overflow-hidden opacity-20">
-          <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-teal-200 to-transparent rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-blue-200 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        :root {
+          --color-petrol: #003f5c;
+          --color-purple: #6a0572;
+          --color-green: #4caf50;
+          --color-gold: #ffb703;
+          --color-orange: #fb8500;
+          --color-bg-light: #f9f9f9;
+          --color-bg-white: #ffffff;
+          --color-text-dark: #1a1a1a;
+          --color-text-gray: #4a5568;
+        }
+
+        .font-montserrat {
+          font-family: 'Montserrat', sans-serif;
+        }
+
+        .font-inter {
+          font-family: 'Inter', sans-serif;
+        }
+
+        .btn-hover-effect {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-hover-effect:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-hover {
+          transition: all 0.4s ease;
+        }
+
+        .card-hover:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+
+        @keyframes spin-reverse {
+          from { transform: rotate(360deg); }
+          to { transform: rotate(0deg); }
+        }
+
+        .animate-spin-slow {
+          animation: spin-slow 25s linear infinite;
+        }
+
+        .animate-spin-reverse {
+          animation: spin-reverse 20s linear infinite;
+        }
+      `}</style>
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ backgroundColor: 'var(--color-bg-light)' }}>
+
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden opacity-10">
+          <div className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl" style={{ backgroundColor: 'var(--color-purple)' }}></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: 'var(--color-petrol)' }}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-3xl" style={{ backgroundColor: 'var(--color-green)' }}></div>
         </div>
 
-        <div className={`relative z-10 max-w-4xl mx-auto px-6 text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`relative z-10 max-w-6xl mx-auto px-6 py-20 text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
 
-          {/* Animated Logo (from login page) */}
-          <div className="flex justify-center mb-16">
-            <div className="relative w-48 h-48 md:w-56 md:h-56">
+          {/* Animated Logo */}
+          <div className="flex justify-center mb-12">
+            <div className="relative w-40 h-40 md:w-48 md:h-48">
               {/* Animated rings */}
               <div className="absolute inset-0 animate-spin-slow">
-                <div className="absolute inset-0 rounded-full border-2 border-dashed border-teal-400/40"></div>
+                <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30" style={{ borderColor: 'var(--color-gold)' }}></div>
               </div>
               <div className="absolute inset-3 animate-spin-reverse">
-                <div className="absolute inset-0 rounded-full border-2 border-dashed border-blue-400/30"></div>
+                <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30" style={{ borderColor: 'var(--color-purple)' }}></div>
               </div>
 
               {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-teal-300/30 via-blue-300/30 to-amber-300/20 blur-3xl animate-pulse"></div>
+              <div className="absolute inset-0 blur-2xl animate-pulse opacity-40" style={{ background: `linear-gradient(135deg, var(--color-gold), var(--color-purple))` }}></div>
 
               {/* Image */}
               <div className="relative z-10 transform hover:scale-105 transition-all duration-700">
                 <Image
                   src="/images/TOKEN-MILAGRE-Hero.webp"
                   alt="$MILAGRE Token"
-                  width={224}
-                  height={224}
+                  width={192}
+                  height={192}
                   className="drop-shadow-2xl rounded-full"
                   priority
                 />
@@ -80,212 +144,190 @@ export default function TokenPage() {
             </div>
           </div>
 
-          {/* Hero Text */}
-          <h1 className="text-6xl md:text-7xl font-light mb-8 text-slate-900 font-[family-name:var(--font-poppins)] tracking-tight">
-            $MILAGRE
+          {/* Hero Title */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold mb-6" style={{ color: 'var(--color-petrol)' }}>
+            Construa seu futuro financeiro com $MILAGRE
           </h1>
 
-          <p className="text-2xl md:text-3xl text-slate-700 font-light mb-6 max-w-3xl mx-auto leading-relaxed">
-            Construído para quem pensa no amanhã
+          <p className="text-lg md:text-xl font-inter mb-12 max-w-3xl mx-auto" style={{ color: 'var(--color-text-gray)' }}>
+            Token de educação financeira descentralizada. Transparente, sustentável e projetado para crescimento de longo prazo.
           </p>
 
-          <p className="text-base md:text-lg text-slate-500 mb-16 max-w-2xl mx-auto leading-relaxed">
-            Um token de educação financeira descentralizada. Transparente, sustentável e projetado para crescimento duradouro.
-          </p>
-
-          {/* Subtle CTA */}
+          {/* CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            {/* Primary CTA */}
             <a
               href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group px-10 py-4 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-500 hover:to-blue-500 text-white rounded-full font-normal text-lg transition-all shadow-lg hover:shadow-xl flex items-center gap-3"
+              className="btn-hover-effect px-10 py-5 rounded-full font-inter font-semibold text-lg text-white shadow-lg flex items-center gap-3"
+              style={{ background: `linear-gradient(135deg, var(--color-orange), var(--color-gold))` }}
             >
-              <span>Explorar Token</span>
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
+              <span>Comprar agora</span>
+              <FontAwesomeIcon icon={faRocket} className="w-5 h-5" />
             </a>
+
+            {/* Secondary CTA */}
+            <button
+              onClick={() => document.getElementById('saiba-mais')?.scrollIntoView({ behavior: 'smooth' })}
+              className="btn-hover-effect px-10 py-5 rounded-full font-inter font-semibold text-lg shadow-lg border-2"
+              style={{
+                borderColor: 'var(--color-petrol)',
+                color: 'var(--color-petrol)',
+                backgroundColor: 'transparent'
+              }}
+            >
+              Saiba mais
+            </button>
+          </div>
+
+          {/* Trust Indicators */}
+          <div className="mt-16 flex flex-wrap justify-center gap-8 text-sm font-inter" style={{ color: 'var(--color-text-gray)' }}>
+            <div className="flex items-center gap-2">
+              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" style={{ color: 'var(--color-green)' }} />
+              <span>100% Transparente</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" style={{ color: 'var(--color-green)' }} />
+              <span>Código Aberto</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" style={{ color: 'var(--color-green)' }} />
+              <span>Comunidade Ativa</span>
+            </div>
           </div>
         </div>
-
-        <style jsx>{`
-          @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-          }
-          @keyframes spin-reverse {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
-          }
-          .animate-spin-slow {
-            animation: spin-slow 25s linear infinite;
-          }
-          .animate-spin-reverse {
-            animation: spin-reverse 20s linear infinite;
-          }
-        `}</style>
       </section>
 
-      {/* 3 Pilares - Proposta de Valor */}
-      <section className="py-32 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
+      {/* Por que $MILAGRE? Section */}
+      <section id="saiba-mais" className="py-24" style={{ backgroundColor: 'var(--color-bg-white)' }}>
+        <div className="max-w-7xl mx-auto px-6">
 
-          <div className="text-center mb-24">
-            <h2 className="text-4xl md:text-5xl font-light text-slate-900 mb-6 font-[family-name:var(--font-poppins)]">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--color-petrol)' }}>
               Por que $MILAGRE?
             </h2>
-            <p className="text-slate-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--color-text-gray)' }}>
               Três pilares que sustentam nossa filosofia de crescimento sustentável
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-12">
+          <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 icon: faLeaf,
                 title: 'Crescimento Orgânico',
                 description: 'Sem hype artificial. Construímos valor real através de educação, utilidade e engajamento genuíno da comunidade.',
-                gradient: 'from-teal-500 to-emerald-500'
+                color: 'var(--color-green)',
+                bgGradient: 'linear-gradient(135deg, #4caf50, #45a049)'
               },
               {
                 icon: faUsers,
                 title: 'Comunidade Alinhada',
                 description: 'Holders que acreditam na visão de longo prazo. Uma comunidade de aprendizes e investidores conscientes.',
-                gradient: 'from-blue-500 to-indigo-500'
+                color: 'var(--color-purple)',
+                bgGradient: 'linear-gradient(135deg, #6a0572, #8b1a9e)'
               },
               {
                 icon: faShieldAlt,
                 title: 'Transparência Radical',
                 description: 'Código aberto, decisões públicas, métricas verificáveis. Confiança construída através da clareza total.',
-                gradient: 'from-amber-500 to-orange-500'
+                color: 'var(--color-petrol)',
+                bgGradient: 'linear-gradient(135deg, #003f5c, #005a82)'
               }
             ].map((pillar, index) => (
-              <div key={index} className="group">
-                <div className="bg-slate-50 border border-slate-200 rounded-3xl p-10 hover:shadow-2xl hover:border-teal-300 transition-all duration-500">
+              <div key={index} className="card-hover bg-white rounded-3xl p-8 shadow-lg border" style={{ borderColor: '#e5e7eb' }}>
 
-                  {/* Icon */}
-                  <div className={`inline-flex w-16 h-16 rounded-2xl bg-gradient-to-br ${pillar.gradient} p-4 mb-8 group-hover:scale-110 transition-transform shadow-lg`}>
-                    <FontAwesomeIcon icon={pillar.icon} className="w-full h-full text-white" />
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-2xl font-normal text-slate-900 mb-4 font-[family-name:var(--font-poppins)]">
-                    {pillar.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-slate-600 leading-relaxed">
-                    {pillar.description}
-                  </p>
+                {/* Icon */}
+                <div
+                  className="inline-flex w-16 h-16 rounded-2xl items-center justify-center mb-6 shadow-md"
+                  style={{ background: pillar.bgGradient }}
+                >
+                  <FontAwesomeIcon icon={pillar.icon} className="w-8 h-8 text-white" />
                 </div>
+
+                {/* Title */}
+                <h3 className="text-2xl font-montserrat font-bold mb-4" style={{ color: 'var(--color-text-dark)' }}>
+                  {pillar.title}
+                </h3>
+
+                {/* Description */}
+                <p className="font-inter leading-relaxed" style={{ color: 'var(--color-text-gray)' }}>
+                  {pillar.description}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Por que Segurar? - Seção Exclusiva */}
-      <section className="py-32 bg-gradient-to-br from-slate-900 via-teal-900/90 to-slate-900 text-white">
+      {/* Tokenomics Section */}
+      <section className="py-24" style={{ backgroundColor: 'var(--color-bg-light)' }}>
         <div className="max-w-5xl mx-auto px-6">
 
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-teal-500/20 mb-8">
-              <FontAwesomeIcon icon={faInfinity} className="w-10 h-10 text-teal-400" />
-            </div>
-            <h2 className="text-4xl md:text-5xl font-light mb-6 font-[family-name:var(--font-poppins)]">
-              Por que segurar a longo prazo?
-            </h2>
-            <p className="text-slate-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-              $MILAGRE não é sobre ganhos rápidos. É sobre construir algo que dure.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              {
-                icon: faChartLine,
-                title: 'Valor Acumulado',
-                description: 'Quanto mais você aprende e participa, mais você ganha. Recompensas por educação financeira contínua.'
-              },
-              {
-                icon: faLock,
-                title: 'Escassez Intencional',
-                description: 'Supply fixo de 1 bilhão. Sem inflação, sem diluição. Seu token mantém valor ao longo do tempo.'
-              },
-              {
-                icon: faUsers,
-                title: 'Governança Futura',
-                description: 'Holders de longo prazo terão voz ativa nas decisões do ecossistema através da DAO comunitária.'
-              },
-              {
-                icon: faCheckCircle,
-                title: 'Recompensas Exclusivas',
-                description: 'Acesso antecipado a novos produtos, conteúdo premium e eventos exclusivos para holders fiéis.'
-              }
-            ].map((benefit, index) => (
-              <div key={index} className="flex gap-6 p-8 bg-white/5 backdrop-blur border border-white/10 rounded-2xl hover:bg-white/10 transition-all">
-                <div className="flex-shrink-0">
-                  <div className="w-14 h-14 rounded-xl bg-teal-500/20 flex items-center justify-center">
-                    <FontAwesomeIcon icon={benefit.icon} className="w-7 h-7 text-teal-400" />
-                  </div>
-                </div>
-                <div>
-                  <h3 className="text-xl font-normal mb-3 font-[family-name:var(--font-poppins)]">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-slate-300 leading-relaxed">
-                    {benefit.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Tokenomics - Ultra Minimalista */}
-      <section className="py-32 bg-slate-50">
-        <div className="max-w-4xl mx-auto px-6">
-
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-light text-slate-900 mb-6 font-[family-name:var(--font-poppins)]">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--color-petrol)' }}>
               Tokenomics Simples
             </h2>
-            <p className="text-slate-600 text-lg md:text-xl">
+            <p className="text-lg md:text-xl font-inter" style={{ color: 'var(--color-text-gray)' }}>
               Sem complicações. Distribuição justa e transparente.
             </p>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-12 md:p-16 shadow-xl">
+          <div className="bg-white rounded-3xl p-12 md:p-16 shadow-xl border" style={{ borderColor: '#e5e7eb' }}>
 
             {/* Supply */}
             <div className="text-center mb-16">
-              <p className="text-slate-500 text-sm uppercase tracking-widest mb-4">Supply Total</p>
-              <p className="text-7xl md:text-8xl font-extralight text-slate-900 mb-4">1B</p>
-              <p className="text-slate-600 text-lg">Um bilhão de tokens. Imutável.</p>
+              <p className="text-sm font-inter font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--color-text-gray)' }}>
+                Supply Total
+              </p>
+              <p className="text-7xl md:text-8xl font-montserrat font-bold mb-4" style={{
+                background: `linear-gradient(135deg, var(--color-purple), var(--color-petrol))`,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}>
+                1B
+              </p>
+              <p className="text-lg font-inter" style={{ color: 'var(--color-text-gray)' }}>
+                Um bilhão de tokens. Imutável.
+              </p>
             </div>
 
             {/* Distribution */}
             <div className="mb-16">
-              <div className="flex items-center justify-between p-8 bg-gradient-to-r from-teal-50 to-blue-50 rounded-2xl border border-teal-200">
+              <div className="flex flex-col md:flex-row items-center justify-between p-8 rounded-2xl shadow-md" style={{
+                background: `linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(106, 5, 114, 0.1))`
+              }}>
                 <div>
-                  <p className="text-slate-900 font-medium text-xl mb-2">Liquidez Inicial</p>
-                  <p className="text-slate-600">100% disponível na bonding curve</p>
+                  <p className="text-xl font-montserrat font-bold mb-2" style={{ color: 'var(--color-text-dark)' }}>
+                    Liquidez Inicial
+                  </p>
+                  <p className="font-inter" style={{ color: 'var(--color-text-gray)' }}>
+                    100% disponível na bonding curve
+                  </p>
                 </div>
-                <p className="text-5xl font-light text-teal-600">100%</p>
+                <p className="text-5xl font-montserrat font-bold mt-4 md:mt-0" style={{ color: 'var(--color-green)' }}>
+                  100%
+                </p>
               </div>
             </div>
 
             {/* Tech Info */}
-            <div className="pt-12 border-t border-slate-200">
+            <div className="pt-12 border-t" style={{ borderColor: '#e5e7eb' }}>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 {[
-                  { label: 'Blockchain', value: 'Solana', color: 'text-purple-600' },
-                  { label: 'Padrão', value: 'SPL Token', color: 'text-blue-600' },
-                  { label: 'Velocidade', value: '< 1 segundo', color: 'text-teal-600' }
+                  { label: 'Blockchain', value: 'Solana', color: 'var(--color-purple)' },
+                  { label: 'Padrão', value: 'SPL Token', color: 'var(--color-petrol)' },
+                  { label: 'Velocidade', value: '< 1 segundo', color: 'var(--color-green)' }
                 ].map((stat, index) => (
                   <div key={index}>
-                    <p className="text-slate-500 text-sm mb-3 uppercase tracking-wide">{stat.label}</p>
-                    <p className={`text-2xl font-normal ${stat.color}`}>{stat.value}</p>
+                    <p className="text-sm font-inter font-semibold uppercase tracking-wide mb-3" style={{ color: 'var(--color-text-gray)' }}>
+                      {stat.label}
+                    </p>
+                    <p className="text-2xl font-montserrat font-bold" style={{ color: stat.color }}>
+                      {stat.value}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -294,76 +336,89 @@ export default function TokenPage() {
         </div>
       </section>
 
-      {/* Roadmap/Vision - Foco no Futuro */}
-      <section className="py-32 bg-white">
-        <div className="max-w-5xl mx-auto px-6">
+      {/* A Jornada à Frente - Roadmap */}
+      <section className="py-24" style={{ backgroundColor: 'var(--color-bg-white)' }}>
+        <div className="max-w-6xl mx-auto px-6">
 
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-light text-slate-900 mb-6 font-[family-name:var(--font-poppins)]">
+            <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--color-petrol)' }}>
               A Jornada à Frente
             </h2>
-            <p className="text-slate-600 text-lg md:text-xl max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--color-text-gray)' }}>
               Não estamos construindo um token. Estamos construindo um movimento de educação financeira.
             </p>
           </div>
 
           <div className="relative">
             {/* Timeline line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-400 via-blue-400 to-slate-300"></div>
+            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 transform md:-translate-x-1/2" style={{
+              background: `linear-gradient(180deg, var(--color-green), var(--color-purple), var(--color-petrol))`
+            }}></div>
 
-            <div className="space-y-12">
+            <div className="space-y-16">
               {[
                 {
-                  phase: 'Fase 1: Fundação',
-                  title: 'Construção da Base',
+                  phase: 'Fase 1',
+                  title: 'Fundação',
                   description: 'Lançamento do token, formação da comunidade inicial e desenvolvimento da plataforma educacional.',
+                  icon: faSeedling,
                   status: 'current',
-                  color: 'teal'
+                  color: 'var(--color-green)',
+                  bgGradient: 'linear-gradient(135deg, #4caf50, #45a049)'
                 },
                 {
-                  phase: 'Fase 2: Crescimento',
+                  phase: 'Fase 2',
                   title: 'Expansão Sustentável',
                   description: 'Graduação na Raydium, parcerias com educadores, lançamento do programa Learn-to-Earn.',
+                  icon: faChartLine,
                   status: 'upcoming',
-                  color: 'blue'
+                  color: 'var(--color-purple)',
+                  bgGradient: 'linear-gradient(135deg, #6a0572, #8b1a9e)'
                 },
                 {
-                  phase: 'Fase 3: Ecossistema',
-                  title: 'DAO & Governança',
+                  phase: 'Fase 3',
+                  title: 'Ecossistema Global',
                   description: 'Governança descentralizada, produtos DeFi educativos e expansão global da comunidade.',
+                  icon: faGlobe,
                   status: 'future',
-                  color: 'indigo'
+                  color: 'var(--color-petrol)',
+                  bgGradient: 'linear-gradient(135deg, #003f5c, #005a82)'
                 }
               ].map((phase, index) => (
-                <div key={index} className="relative pl-24">
-                  {/* Dot */}
-                  <div className={`absolute left-6 w-5 h-5 rounded-full ${
-                    phase.status === 'current' ? 'bg-teal-500 ring-4 ring-teal-100' :
-                    phase.status === 'upcoming' ? 'bg-blue-500 ring-4 ring-blue-100' :
-                    'bg-slate-300 ring-4 ring-slate-100'
-                  }`}></div>
+                <div key={index} className="relative pl-24 md:pl-0">
 
-                  <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-all">
-                    <div className="flex items-start justify-between mb-4">
-                      <p className={`text-sm font-medium uppercase tracking-wide ${
-                        phase.status === 'current' ? 'text-teal-600' :
-                        phase.status === 'upcoming' ? 'text-blue-600' :
-                        'text-slate-500'
-                      }`}>
-                        {phase.phase}
+                  {/* Icon */}
+                  <div
+                    className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-16 h-16 rounded-2xl flex items-center justify-center shadow-xl z-10"
+                    style={{ background: phase.bgGradient }}
+                  >
+                    <FontAwesomeIcon icon={phase.icon} className="w-8 h-8 text-white" />
+                  </div>
+
+                  {/* Content */}
+                  <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:ml-auto md:pl-12' : 'md:pr-12'}`}>
+                    <div className="bg-white rounded-2xl p-8 shadow-lg border card-hover" style={{ borderColor: '#e5e7eb' }}>
+                      <div className="flex items-start justify-between mb-4">
+                        <p className="text-sm font-inter font-semibold uppercase tracking-wide" style={{ color: phase.color }}>
+                          {phase.phase}
+                        </p>
+                        {phase.status === 'current' && (
+                          <span className="px-3 py-1 rounded-full text-xs font-inter font-semibold" style={{
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            color: 'var(--color-green)',
+                            border: '1px solid var(--color-green)'
+                          }}>
+                            Em Andamento
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="text-2xl font-montserrat font-bold mb-3" style={{ color: 'var(--color-text-dark)' }}>
+                        {phase.title}
+                      </h3>
+                      <p className="font-inter leading-relaxed" style={{ color: 'var(--color-text-gray)' }}>
+                        {phase.description}
                       </p>
-                      {phase.status === 'current' && (
-                        <span className="px-3 py-1 bg-teal-100 text-teal-700 text-xs font-medium rounded-full border border-teal-300">
-                          Em Andamento
-                        </span>
-                      )}
                     </div>
-                    <h3 className="text-2xl font-normal text-slate-900 mb-3 font-[family-name:var(--font-poppins)]">
-                      {phase.title}
-                    </h3>
-                    <p className="text-slate-600 leading-relaxed">
-                      {phase.description}
-                    </p>
                   </div>
                 </div>
               ))}
@@ -372,15 +427,24 @@ export default function TokenPage() {
         </div>
       </section>
 
-      {/* Final CTA - Comunidade */}
-      <section className="py-32 bg-gradient-to-br from-slate-50 to-teal-50/30">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      {/* Faça Parte da Jornada - Final CTA */}
+      <section className="py-32 relative overflow-hidden" style={{
+        background: `linear-gradient(135deg, var(--color-petrol), var(--color-purple))`
+      }}>
 
-          <h2 className="text-4xl md:text-5xl font-light text-slate-900 mb-8 font-[family-name:var(--font-poppins)]">
+        {/* Decorative elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 right-10 w-64 h-64 rounded-full blur-3xl" style={{ backgroundColor: 'var(--color-gold)' }}></div>
+          <div className="absolute bottom-10 left-10 w-80 h-80 rounded-full blur-3xl" style={{ backgroundColor: 'var(--color-orange)' }}></div>
+        </div>
+
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+
+          <h2 className="text-4xl md:text-6xl font-montserrat font-bold text-white mb-8">
             Faça Parte da Jornada
           </h2>
 
-          <p className="text-xl md:text-2xl text-slate-700 mb-16 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-white/90 mb-16 max-w-3xl mx-auto font-inter">
             Junte-se a uma comunidade que valoriza educação, transparência e crescimento de longo prazo.
           </p>
 
@@ -390,7 +454,8 @@ export default function TokenPage() {
               href="https://discord.gg/xk4zrz8j"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-10 py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-normal text-lg transition-all shadow-lg hover:shadow-xl"
+              className="btn-hover-effect flex items-center gap-3 px-10 py-5 bg-white rounded-full font-inter font-semibold text-lg shadow-xl"
+              style={{ color: 'var(--color-purple)' }}
             >
               <FontAwesomeIcon icon={faDiscord} className="w-6 h-6" />
               <span>Entrar no Discord</span>
@@ -400,7 +465,8 @@ export default function TokenPage() {
               href="https://t.me/+Bop_TVFc_mg3Njlh"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-normal text-lg transition-all shadow-lg hover:shadow-xl"
+              className="btn-hover-effect flex items-center gap-3 px-10 py-5 rounded-full font-inter font-semibold text-lg shadow-xl text-white border-2 border-white"
+              style={{ backgroundColor: 'transparent' }}
             >
               <FontAwesomeIcon icon={faTelegram} className="w-6 h-6" />
               <span>Entrar no Telegram</span>
@@ -408,14 +474,17 @@ export default function TokenPage() {
           </div>
 
           {/* Contract Address Card */}
-          <div className="max-w-2xl mx-auto bg-white border border-slate-200 rounded-3xl p-10 shadow-xl">
-            <p className="text-slate-500 text-sm mb-4 uppercase tracking-widest">Endereço do Contrato</p>
-            <code className="block text-slate-900 font-mono text-sm md:text-base mb-6 break-all px-6 py-4 bg-slate-50 rounded-xl">
+          <div className="max-w-2xl mx-auto bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-10 shadow-2xl">
+            <p className="text-white/70 text-sm font-inter font-semibold uppercase tracking-widest mb-4">
+              Endereço do Contrato
+            </p>
+            <code className="block text-white font-mono text-sm md:text-base mb-6 break-all px-6 py-4 bg-black/20 rounded-xl">
               {TOKEN_ADDRESS}
             </code>
             <button
               onClick={copyToClipboard}
-              className="inline-flex items-center gap-2 text-teal-600 hover:text-teal-700 font-medium transition-colors"
+              className="btn-hover-effect inline-flex items-center gap-2 px-8 py-3 rounded-full font-inter font-semibold shadow-lg"
+              style={{ background: `linear-gradient(135deg, var(--color-gold), var(--color-orange))`, color: 'white' }}
             >
               <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" />
               <span>Copiar Endereço</span>
@@ -423,7 +492,7 @@ export default function TokenPage() {
           </div>
 
           {/* Disclaimer */}
-          <p className="text-slate-500 text-sm mt-16 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white/60 text-sm mt-16 max-w-2xl mx-auto leading-relaxed font-inter">
             Criptomoedas envolvem riscos. Este não é um conselho financeiro. Faça sua própria pesquisa (DYOR) e invista apenas o que você pode perder. $MILAGRE é um projeto educacional.
           </p>
         </div>
