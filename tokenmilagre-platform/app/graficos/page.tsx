@@ -63,194 +63,159 @@ export default function GraficosPage() {
 
           {/* Caminho do Dinheiro - Explicação */}
           <div className="space-y-6">
-            <div className="text-center space-y-3">
+            <div className="space-y-3">
               <h1 className="text-4xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: "var(--text-primary)" }}>
                 Caminho do Dinheiro
               </h1>
-              <p className="text-xl leading-relaxed max-w-3xl mx-auto" style={{ color: "var(--text-secondary)" }}>
+              <p className="text-xl leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                 Do macro ao micro: acompanhe o fluxo de capital global através dos mercados
+              </p>
+              <p className="text-sm italic" style={{ color: "var(--text-secondary)" }}>
+                Cada etapa representa um degrau de risco e descentralização. Conheça seu perfil antes de investir.
               </p>
             </div>
 
-            {/* Flow Chart */}
-            <div className="backdrop-blur-xl rounded-2xl p-6 md:p-8 border-2 shadow-2xl" style={{
-              backgroundColor: 'var(--bg-elevated)',
-              borderColor: 'var(--border-medium)'
-            }}>
-              {/* Desktop: Horizontal Flow */}
-              <div className="hidden md:flex items-center justify-between gap-4">
-                {/* Step 1: S&P 500 */}
-                <div className="flex-1 text-center space-y-2">
-                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
-                    background: 'linear-gradient(135deg, #1e40af, #3b82f6)',
-                    color: 'white'
-                  }}>
-                    <FontAwesomeIcon icon={faChartLine} />
-                  </div>
-                  <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
-                    S&P 500
-                  </h3>
-                  <span className="inline-block px-2 py-1 text-xs rounded-full font-semibold" style={{
-                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                    color: '#3b82f6'
-                  }}>
-                    Baixo Risco
-                  </span>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                    Capital global
-                  </p>
+            {/* Desktop: Horizontal Flow */}
+            <div className="hidden md:flex items-center justify-start gap-4">
+              {/* Step 1: S&P 500 */}
+              <div className="flex-1 text-center space-y-2">
+                <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
+                  background: 'linear-gradient(135deg, #1e40af, #3b82f6)',
+                  color: 'white'
+                }}>
+                  <FontAwesomeIcon icon={faChartLine} />
                 </div>
-
-                <FontAwesomeIcon icon={faArrowRight} className="text-2xl flex-shrink-0" style={{ color: "var(--text-secondary)" }} />
-
-                {/* Step 2: Cripto Agregado */}
-                <div className="flex-1 text-center space-y-2">
-                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
-                    background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
-                    color: 'white'
-                  }}>
-                    <FontAwesomeIcon icon={faGlobe} />
-                  </div>
-                  <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
-                    Cripto Agregado
-                  </h3>
-                  <span className="inline-block px-2 py-1 text-xs rounded-full font-semibold" style={{
-                    backgroundColor: 'rgba(167, 139, 250, 0.2)',
-                    color: '#a78bfa'
-                  }}>
-                    Risco Moderado
-                  </span>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                    Diversificação
-                  </p>
-                </div>
-
-                <FontAwesomeIcon icon={faArrowRight} className="text-2xl flex-shrink-0" style={{ color: "var(--text-secondary)" }} />
-
-                {/* Step 3: Bitcoin */}
-                <div className="flex-1 text-center space-y-2">
-                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
-                    background: 'linear-gradient(135deg, #f59e0b, #fbbf24)',
-                    color: 'white'
-                  }}>
-                    <FontAwesomeIcon icon={faBitcoin} />
-                  </div>
-                  <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
-                    Bitcoin
-                  </h3>
-                  <span className="inline-block px-2 py-1 text-xs rounded-full font-semibold" style={{
-                    backgroundColor: 'rgba(251, 191, 36, 0.2)',
-                    color: '#fbbf24'
-                  }}>
-                    Risco Médio
-                  </span>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                    Porta de entrada
-                  </p>
-                </div>
-
-                <FontAwesomeIcon icon={faArrowRight} className="text-2xl flex-shrink-0" style={{ color: "var(--text-secondary)" }} />
-
-                {/* Step 4: Ethereum */}
-                <div className="flex-1 text-center space-y-2">
-                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
-                    background: 'linear-gradient(135deg, #f97316, #fb923c)',
-                    color: 'white'
-                  }}>
-                    <FontAwesomeIcon icon={faEthereum} />
-                  </div>
-                  <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
-                    Ethereum
-                  </h3>
-                  <span className="inline-block px-2 py-1 text-xs rounded-full font-semibold" style={{
-                    backgroundColor: 'rgba(251, 146, 60, 0.2)',
-                    color: '#fb923c'
-                  }}>
-                    Risco Elevado
-                  </span>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                    Inovação
-                  </p>
-                </div>
-
-                <FontAwesomeIcon icon={faArrowRight} className="text-2xl flex-shrink-0" style={{ color: "var(--text-secondary)" }} />
-
-                {/* Step 5: Altcoins */}
-                <div className="flex-1 text-center space-y-2">
-                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
-                    background: 'linear-gradient(135deg, #dc2626, #ef4444)',
-                    color: 'white'
-                  }}>
-                    <FontAwesomeIcon icon={faCoins} />
-                  </div>
-                  <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
-                    Altcoins
-                  </h3>
-                  <span className="inline-block px-2 py-1 text-xs rounded-full font-semibold" style={{
-                    backgroundColor: 'rgba(239, 68, 68, 0.2)',
-                    color: '#ef4444'
-                  }}>
-                    Alto Risco
-                  </span>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                    Alto retorno
-                  </p>
-                </div>
-              </div>
-
-              {/* Mobile: Vertical Flow */}
-              <div className="md:hidden space-y-4">
-                {[
-                  { icon: faChartLine, title: 'S&P 500', risk: 'Baixo Risco', desc: 'Capital global', gradient: 'linear-gradient(135deg, #1e40af, #3b82f6)', badgeBg: 'rgba(59, 130, 246, 0.2)', badgeColor: '#3b82f6' },
-                  { icon: faGlobe, title: 'Cripto Agregado', risk: 'Risco Moderado', desc: 'Diversificação', gradient: 'linear-gradient(135deg, #7c3aed, #a78bfa)', badgeBg: 'rgba(167, 139, 250, 0.2)', badgeColor: '#a78bfa' },
-                  { icon: faBitcoin, title: 'Bitcoin', risk: 'Risco Médio', desc: 'Porta de entrada', gradient: 'linear-gradient(135deg, #f59e0b, #fbbf24)', badgeBg: 'rgba(251, 191, 36, 0.2)', badgeColor: '#fbbf24' },
-                  { icon: faEthereum, title: 'Ethereum', risk: 'Risco Elevado', desc: 'Inovação', gradient: 'linear-gradient(135deg, #f97316, #fb923c)', badgeBg: 'rgba(251, 146, 60, 0.2)', badgeColor: '#fb923c' },
-                  { icon: faCoins, title: 'Altcoins', risk: 'Alto Risco', desc: 'Alto retorno', gradient: 'linear-gradient(135deg, #dc2626, #ef4444)', badgeBg: 'rgba(239, 68, 68, 0.2)', badgeColor: '#ef4444' }
-                ].map((step, idx) => (
-                  <div key={idx}>
-                    <div className="flex items-center gap-4 p-4 rounded-xl" style={{
-                      backgroundColor: 'var(--bg-card)',
-                      borderLeft: `4px solid transparent`,
-                      borderImage: step.gradient + ' 1'
-                    }}>
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0" style={{
-                        background: step.gradient,
-                        color: 'white'
-                      }}>
-                        <FontAwesomeIcon icon={step.icon} />
-                      </div>
-                      <div className="flex-1 space-y-1">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="font-bold" style={{ color: "var(--text-primary)" }}>
-                            {step.title}
-                          </h3>
-                          <span className="px-2 py-0.5 text-xs rounded-full font-semibold" style={{
-                            backgroundColor: step.badgeBg,
-                            color: step.badgeColor
-                          }}>
-                            {step.risk}
-                          </span>
-                        </div>
-                        <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                          {step.desc}
-                        </p>
-                      </div>
-                    </div>
-                    {idx < 4 && (
-                      <div className="flex justify-center py-2">
-                        <FontAwesomeIcon icon={faArrowRight} className="text-xl rotate-90" style={{ color: "var(--text-secondary)" }} />
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Footer Note */}
-              <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: 'var(--border-light)' }}>
-                <p className="text-sm italic" style={{ color: "var(--text-secondary)" }}>
-                  Cada etapa representa um degrau de risco e descentralização. Conheça seu perfil antes de investir.
+                <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
+                  S&P 500
+                </h3>
+                <span className="inline-block px-2 py-1 text-xs rounded-full font-semibold" style={{
+                  backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                  color: '#3b82f6'
+                }}>
+                  Baixo Risco
+                </span>
+                <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  Capital global
                 </p>
               </div>
+
+              <FontAwesomeIcon icon={faArrowRight} className="text-2xl flex-shrink-0" style={{ color: "var(--text-secondary)" }} />
+
+              {/* Step 2: Bitcoin */}
+              <div className="flex-1 text-center space-y-2">
+                <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
+                  background: 'linear-gradient(135deg, #f59e0b, #fbbf24)',
+                  color: 'white'
+                }}>
+                  <FontAwesomeIcon icon={faBitcoin} />
+                </div>
+                <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
+                  Bitcoin
+                </h3>
+                <span className="inline-block px-2 py-1 text-xs rounded-full font-semibold" style={{
+                  backgroundColor: 'rgba(251, 191, 36, 0.2)',
+                  color: '#fbbf24'
+                }}>
+                  Risco Médio
+                </span>
+                <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  Porta de entrada
+                </p>
+              </div>
+
+              <FontAwesomeIcon icon={faArrowRight} className="text-2xl flex-shrink-0" style={{ color: "var(--text-secondary)" }} />
+
+              {/* Step 3: Ethereum */}
+              <div className="flex-1 text-center space-y-2">
+                <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
+                  background: 'linear-gradient(135deg, #f97316, #fb923c)',
+                  color: 'white'
+                }}>
+                  <FontAwesomeIcon icon={faEthereum} />
+                </div>
+                <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
+                  Ethereum
+                </h3>
+                <span className="inline-block px-2 py-1 text-xs rounded-full font-semibold" style={{
+                  backgroundColor: 'rgba(251, 146, 60, 0.2)',
+                  color: '#fb923c'
+                }}>
+                  Risco Elevado
+                </span>
+                <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  Inovação
+                </p>
+              </div>
+
+              <FontAwesomeIcon icon={faArrowRight} className="text-2xl flex-shrink-0" style={{ color: "var(--text-secondary)" }} />
+
+              {/* Step 4: Altcoins */}
+              <div className="flex-1 text-center space-y-2">
+                <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
+                  background: 'linear-gradient(135deg, #dc2626, #ef4444)',
+                  color: 'white'
+                }}>
+                  <FontAwesomeIcon icon={faCoins} />
+                </div>
+                <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
+                  Altcoins
+                </h3>
+                <span className="inline-block px-2 py-1 text-xs rounded-full font-semibold" style={{
+                  backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                  color: '#ef4444'
+                }}>
+                  Alto Risco
+                </span>
+                <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  Alto retorno
+                </p>
+              </div>
+            </div>
+
+            {/* Mobile: Vertical Flow */}
+            <div className="md:hidden space-y-4">
+              {[
+                { icon: faChartLine, title: 'S&P 500', risk: 'Baixo Risco', desc: 'Capital global', gradient: 'linear-gradient(135deg, #1e40af, #3b82f6)', badgeBg: 'rgba(59, 130, 246, 0.2)', badgeColor: '#3b82f6' },
+                { icon: faBitcoin, title: 'Bitcoin', risk: 'Risco Médio', desc: 'Porta de entrada', gradient: 'linear-gradient(135deg, #f59e0b, #fbbf24)', badgeBg: 'rgba(251, 191, 36, 0.2)', badgeColor: '#fbbf24' },
+                { icon: faEthereum, title: 'Ethereum', risk: 'Risco Elevado', desc: 'Inovação', gradient: 'linear-gradient(135deg, #f97316, #fb923c)', badgeBg: 'rgba(251, 146, 60, 0.2)', badgeColor: '#fb923c' },
+                { icon: faCoins, title: 'Altcoins', risk: 'Alto Risco', desc: 'Alto retorno', gradient: 'linear-gradient(135deg, #dc2626, #ef4444)', badgeBg: 'rgba(239, 68, 68, 0.2)', badgeColor: '#ef4444' }
+              ].map((step, idx) => (
+                <div key={idx}>
+                  <div className="flex items-center gap-4 p-4 rounded-xl" style={{
+                    backgroundColor: 'var(--bg-card)',
+                    borderLeft: `4px solid transparent`,
+                    borderImage: step.gradient + ' 1'
+                  }}>
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0" style={{
+                      background: step.gradient,
+                      color: 'white'
+                    }}>
+                      <FontAwesomeIcon icon={step.icon} />
+                    </div>
+                    <div className="flex-1 space-y-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="font-bold" style={{ color: "var(--text-primary)" }}>
+                          {step.title}
+                        </h3>
+                        <span className="px-2 py-0.5 text-xs rounded-full font-semibold" style={{
+                          backgroundColor: step.badgeBg,
+                          color: step.badgeColor
+                        }}>
+                          {step.risk}
+                        </span>
+                      </div>
+                      <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                        {step.desc}
+                      </p>
+                    </div>
+                  </div>
+                  {idx < 3 && (
+                    <div className="flex justify-center py-2">
+                      <FontAwesomeIcon icon={faArrowRight} className="text-xl rotate-90" style={{ color: "var(--text-secondary)" }} />
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
 
