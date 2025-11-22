@@ -61,7 +61,24 @@ export default function GraficosPage() {
           {/* Main Content */}
           <div className="space-y-12">
 
-          {/* Crypto Bubbles - Visualização Interativa */}
+          {/* 1. Macro: Mapa de Calor S&P 500 */}
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
+                Mapa de Calor - S&P 500
+              </h2>
+              <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                Visualize o desempenho das principais ações dos EUA - onde está a maior parte do capital global
+              </p>
+            </div>
+
+            <StockHeatmapWidget />
+          </div>
+
+          {/* Divider */}
+          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+          {/* 2. Mercado Cripto Agregado: Crypto Bubbles */}
           <div className="space-y-6">
             {/* SEO only - hidden visually */}
             <div className="sr-only">
@@ -95,87 +112,14 @@ export default function GraficosPage() {
           {/* Divider */}
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
-          {/* Análise de Mercado Cripto */}
-          <div className="space-y-8">
-            {/* Bitcoin - Análise Completa */}
-            <div className="space-y-4">
-              <AdvancedChart symbol="BTCUSDT" name="Bitcoin (BTC/USDT)" />
-            </div>
-
-            {/* Ethereum e Solana - 2 Colunas */}
-            <div className="grid lg:grid-cols-2 gap-6">
-              {/* Ethereum */}
-              <div>
-                <AdvancedChart symbol="ETHUSDT" name="Ethereum (ETH/USDT)" />
-              </div>
-
-              {/* Solana */}
-              <div>
-                <AdvancedChart symbol="SOLUSDT" name="Solana (SOL/USDT)" />
-              </div>
-            </div>
-
-            {/* Análise Técnica Avançada */}
-            <div className="space-y-4">
-              <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
-                {/* Análise Técnica BTC */}
-                <div>
-                  <h4 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
-                    <TokenBTC size={24} variant="branded" />
-                    Bitcoin - Sentimento
-                  </h4>
-                  <TechnicalAnalysisWidget symbol="BINANCE:BTCUSDT" />
-                </div>
-
-                {/* Análise Técnica ETH */}
-                <div>
-                  <h4 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
-                    <TokenETH size={24} variant="branded" />
-                    Ethereum - Sentimento
-                  </h4>
-                  <TechnicalAnalysisWidget symbol="BINANCE:ETHUSDT" />
-                </div>
-
-                {/* Análise Técnica SOL */}
-                <div>
-                  <h4 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
-                    <TokenSOL size={24} variant="branded" />
-                    Solana - Sentimento
-                  </h4>
-                  <TechnicalAnalysisWidget symbol="BINANCE:SOLUSDT" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* Mapa de Calor S&P 500 */}
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
-                Mapa de Calor - S&P 500
-              </h2>
-              <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                Visualize o desempenho das principais ações dos EUA em tempo real
-              </p>
-            </div>
-
-            <StockHeatmapWidget />
-          </div>
-
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* Mapa de Calor Cripto */}
+          {/* 3. Mercado Cripto Agregado: Mapa de Calor */}
           <div className="space-y-6">
             <div>
               <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
                 Mapa de Calor de Criptomoedas
               </h2>
               <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                Visualize o desempenho do mercado cripto em tempo real
+                Entrada de investidores buscando diversificação no mercado cripto
               </p>
             </div>
 
@@ -185,13 +129,94 @@ export default function GraficosPage() {
           {/* Divider */}
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
-          {/* ETFs de Bitcoin e Ethereum */}
+          {/* 4. BTC: Porta de Entrada e Reserva de Valor */}
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
+                Bitcoin - Porta de Entrada e Reserva de Valor
+              </h2>
+              <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                A principal criptomoeda e porta de entrada para o mercado cripto
+              </p>
+            </div>
+
+            <AdvancedChart symbol="BTCUSDT" name="Bitcoin (BTC/USDT)" />
+
+            <div className="grid md:grid-cols-1 gap-6">
+              <div>
+                <h4 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+                  <TokenBTC size={24} variant="branded" />
+                  Bitcoin - Sentimento do Mercado
+                </h4>
+                <TechnicalAnalysisWidget symbol="BINANCE:BTCUSDT" />
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+          {/* 5. ETH: Inovação e Contratos Inteligentes */}
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
+                Ethereum - Inovação e Contratos Inteligentes
+              </h2>
+              <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                Plataforma líder em contratos inteligentes e aplicações descentralizadas
+              </p>
+            </div>
+
+            <AdvancedChart symbol="ETHUSDT" name="Ethereum (ETH/USDT)" />
+
+            <div className="grid md:grid-cols-1 gap-6">
+              <div>
+                <h4 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+                  <TokenETH size={24} variant="branded" />
+                  Ethereum - Sentimento do Mercado
+                </h4>
+                <TechnicalAnalysisWidget symbol="BINANCE:ETHUSDT" />
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+          {/* 6. SOL: Alto Risco/Retorno */}
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
+                Solana - Projetos de Alto Risco/Retorno
+              </h2>
+              <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                Blockchain de alta performance para aplicações descentralizadas
+              </p>
+            </div>
+
+            <AdvancedChart symbol="SOLUSDT" name="Solana (SOL/USDT)" />
+
+            <div className="grid md:grid-cols-1 gap-6">
+              <div>
+                <h4 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+                  <TokenSOL size={24} variant="branded" />
+                  Solana - Sentimento do Mercado
+                </h4>
+                <TechnicalAnalysisWidget symbol="BINANCE:SOLUSDT" />
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+          {/* 7. ETFs de Bitcoin e Ethereum */}
           <ETFMetricsSection />
 
           {/* Divider */}
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
-          {/* Token $MILAGRE CTA */}
+          {/* 8. Token $MILAGRE CTA */}
           <div className="space-y-6">
             <div>
               <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: 'var(--text-primary)' }}>
