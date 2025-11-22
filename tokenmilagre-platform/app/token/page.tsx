@@ -11,9 +11,7 @@ import {
   faRocket,
   faChartLine,
   faCheckCircle,
-  faArrowRight,
   faSeedling,
-  faHandshake,
   faGlobe
 } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
@@ -24,6 +22,17 @@ export default function TokenPage() {
 
   useEffect(() => {
     setIsVisible(true);
+    // Ocultar breadcrumb nesta página
+    const breadcrumb = document.querySelector('nav[aria-label="Breadcrumb"]');
+    if (breadcrumb) {
+      (breadcrumb as HTMLElement).style.display = 'none';
+    }
+    return () => {
+      const breadcrumb = document.querySelector('nav[aria-label="Breadcrumb"]');
+      if (breadcrumb) {
+        (breadcrumb as HTMLElement).style.display = '';
+      }
+    };
   }, []);
 
   const copyToClipboard = () => {
@@ -46,57 +55,6 @@ export default function TokenPage() {
 
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600&display=swap');
-
-        :root {
-          /* Cores principais - não mudam */
-          --color-petrol: #003f5c;
-          --color-purple: #6a0572;
-          --color-green: #4caf50;
-          --color-gold: #ffb703;
-          --color-orange: #fb8500;
-
-          /* Cores adaptativas - modo claro */
-          --color-bg-primary: #f9f9f9;
-          --color-bg-secondary: #ffffff;
-          --color-bg-elevated: #ffffff;
-          --color-text-primary: #1a1a1a;
-          --color-text-secondary: #4a5568;
-          --color-border: #e5e7eb;
-          --color-border-hover: #d1d5db;
-
-          /* Gradientes de fundo */
-          --bg-gradient-hero: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
-          --bg-gradient-cta: linear-gradient(135deg, #003f5c 0%, #6a0572 100%);
-
-          /* Sombras */
-          --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-          --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-          --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-          --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Modo escuro */
-        @media (prefers-color-scheme: dark) {
-          :root {
-            --color-bg-primary: #121212;
-            --color-bg-secondary: #1a1a1a;
-            --color-bg-elevated: #242424;
-            --color-text-primary: #f5f5f5;
-            --color-text-secondary: #b0b0b0;
-            --color-border: #333333;
-            --color-border-hover: #444444;
-
-            /* Gradientes ajustados para dark */
-            --bg-gradient-hero: linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
-            --bg-gradient-cta: linear-gradient(135deg, #004d73 0%, #7d0a86 100%);
-
-            /* Sombras mais sutis no dark */
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
-          }
-        }
 
         .font-montserrat {
           font-family: 'Montserrat', sans-serif;
@@ -144,13 +102,13 @@ export default function TokenPage() {
       `}</style>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
 
         {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden opacity-10 dark:opacity-5">
-          <div className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl" style={{ backgroundColor: 'var(--color-purple)' }}></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: 'var(--color-petrol)' }}></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-3xl" style={{ backgroundColor: 'var(--color-green)' }}></div>
+        <div className="absolute inset-0 overflow-hidden opacity-10">
+          <div className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl bg-purple-600"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl bg-teal-600"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-3xl bg-green-500"></div>
         </div>
 
         <div className={`relative z-10 max-w-6xl mx-auto px-6 py-20 text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -160,14 +118,14 @@ export default function TokenPage() {
             <div className="relative w-40 h-40 md:w-48 md:h-48">
               {/* Animated rings */}
               <div className="absolute inset-0 animate-spin-slow">
-                <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 dark:opacity-40" style={{ borderColor: 'var(--color-gold)' }}></div>
+                <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-amber-400"></div>
               </div>
               <div className="absolute inset-3 animate-spin-reverse">
-                <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 dark:opacity-40" style={{ borderColor: 'var(--color-purple)' }}></div>
+                <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-purple-500"></div>
               </div>
 
               {/* Glow effect */}
-              <div className="absolute inset-0 blur-2xl animate-pulse opacity-40 dark:opacity-30" style={{ background: `linear-gradient(135deg, var(--color-gold), var(--color-purple))` }}></div>
+              <div className="absolute inset-0 blur-2xl animate-pulse opacity-40 bg-gradient-to-r from-amber-400 to-purple-600"></div>
 
               {/* Image */}
               <div className="relative z-10 transform hover:scale-105 transition-all duration-700">
@@ -184,19 +142,14 @@ export default function TokenPage() {
           </div>
 
           {/* Hero Title */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold mb-6" style={{ color: 'var(--color-text-primary)' }}>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
             Construa seu futuro financeiro com{' '}
-            <span style={{
-              background: `linear-gradient(135deg, var(--color-petrol), var(--color-purple))`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
-            }}>
+            <span className="bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
               $MILAGRE
             </span>
           </h1>
 
-          <p className="text-lg md:text-xl font-inter mb-12 max-w-3xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
+          <p className="text-lg md:text-xl font-inter mb-12 max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
             Token de educação financeira descentralizada. Transparente, sustentável e projetado para crescimento de longo prazo.
           </p>
 
@@ -207,8 +160,7 @@ export default function TokenPage() {
               href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-hover-effect px-10 py-5 rounded-full font-inter font-semibold text-lg text-white shadow-lg flex items-center gap-3"
-              style={{ background: `linear-gradient(135deg, var(--color-orange), var(--color-gold))` }}
+              className="btn-hover-effect px-10 py-5 rounded-full font-inter font-semibold text-lg text-white shadow-lg flex items-center gap-3 bg-gradient-to-r from-orange-500 to-amber-400"
             >
               <span>Comprar agora</span>
               <FontAwesomeIcon icon={faRocket} className="w-5 h-5" />
@@ -217,29 +169,24 @@ export default function TokenPage() {
             {/* Secondary CTA */}
             <button
               onClick={() => document.getElementById('saiba-mais')?.scrollIntoView({ behavior: 'smooth' })}
-              className="btn-hover-effect px-10 py-5 rounded-full font-inter font-semibold text-lg shadow-lg border-2"
-              style={{
-                borderColor: 'var(--color-petrol)',
-                color: 'var(--color-petrol)',
-                backgroundColor: 'transparent'
-              }}
+              className="btn-hover-effect px-10 py-5 rounded-full font-inter font-semibold text-lg shadow-lg border-2 border-teal-600 text-teal-600 bg-transparent"
             >
               Saiba mais
             </button>
           </div>
 
           {/* Trust Indicators */}
-          <div className="mt-16 flex flex-wrap justify-center gap-8 text-sm font-inter" style={{ color: 'var(--color-text-secondary)' }}>
+          <div className="mt-16 flex flex-wrap justify-center gap-8 text-sm font-inter" style={{ color: 'var(--text-secondary)' }}>
             <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" style={{ color: 'var(--color-green)' }} />
+              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5 text-green-500" />
               <span>100% Transparente</span>
             </div>
             <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" style={{ color: 'var(--color-green)' }} />
+              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5 text-green-500" />
               <span>Código Aberto</span>
             </div>
             <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" style={{ color: 'var(--color-green)' }} />
+              <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5 text-green-500" />
               <span>Comunidade Ativa</span>
             </div>
           </div>
@@ -247,14 +194,14 @@ export default function TokenPage() {
       </section>
 
       {/* Por que $MILAGRE? Section */}
-      <section id="saiba-mais" className="py-24" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
+      <section id="saiba-mais" className="py-24" style={{ backgroundColor: 'var(--bg-secondary)' }}>
         <div className="max-w-7xl mx-auto px-6">
 
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--color-text-primary)' }}>
+            <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
               Por que $MILAGRE?
             </h2>
-            <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
+            <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
               Três pilares que sustentam nossa filosofia de crescimento sustentável
             </p>
           </div>
@@ -265,27 +212,24 @@ export default function TokenPage() {
                 icon: faLeaf,
                 title: 'Crescimento Orgânico',
                 description: 'Sem hype artificial. Construímos valor real através de educação, utilidade e engajamento genuíno da comunidade.',
-                color: 'var(--color-green)',
                 bgGradient: 'linear-gradient(135deg, #4caf50, #45a049)'
               },
               {
                 icon: faUsers,
                 title: 'Comunidade Alinhada',
                 description: 'Holders que acreditam na visão de longo prazo. Uma comunidade de aprendizes e investidores conscientes.',
-                color: 'var(--color-purple)',
                 bgGradient: 'linear-gradient(135deg, #6a0572, #8b1a9e)'
               },
               {
                 icon: faShieldAlt,
                 title: 'Transparência Radical',
                 description: 'Código aberto, decisões públicas, métricas verificáveis. Confiança construída através da clareza total.',
-                color: 'var(--color-petrol)',
                 bgGradient: 'linear-gradient(135deg, #003f5c, #005a82)'
               }
             ].map((pillar, index) => (
               <div key={index} className="card-hover rounded-3xl p-8 border" style={{
-                backgroundColor: 'var(--color-bg-elevated)',
-                borderColor: 'var(--color-border)',
+                backgroundColor: 'var(--bg-elevated)',
+                borderColor: 'var(--border-light)',
                 boxShadow: 'var(--shadow-lg)'
               }}>
 
@@ -298,12 +242,12 @@ export default function TokenPage() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-2xl font-montserrat font-bold mb-4" style={{ color: 'var(--color-text-primary)' }}>
+                <h3 className="text-2xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                   {pillar.title}
                 </h3>
 
                 {/* Description */}
-                <p className="font-inter leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
+                <p className="font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   {pillar.description}
                 </p>
               </div>
@@ -313,74 +257,67 @@ export default function TokenPage() {
       </section>
 
       {/* Tokenomics Section */}
-      <section className="py-24" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
+      <section className="py-24" style={{ backgroundColor: 'var(--bg-primary)' }}>
         <div className="max-w-5xl mx-auto px-6">
 
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--color-text-primary)' }}>
+            <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
               Tokenomics Simples
             </h2>
-            <p className="text-lg md:text-xl font-inter" style={{ color: 'var(--color-text-secondary)' }}>
+            <p className="text-lg md:text-xl font-inter" style={{ color: 'var(--text-secondary)' }}>
               Sem complicações. Distribuição justa e transparente.
             </p>
           </div>
 
           <div className="rounded-3xl p-12 md:p-16 border" style={{
-            backgroundColor: 'var(--color-bg-elevated)',
-            borderColor: 'var(--color-border)',
+            backgroundColor: 'var(--bg-elevated)',
+            borderColor: 'var(--border-light)',
             boxShadow: 'var(--shadow-xl)'
           }}>
 
             {/* Supply */}
             <div className="text-center mb-16">
-              <p className="text-sm font-inter font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--color-text-secondary)' }}>
+              <p className="text-sm font-inter font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--text-secondary)' }}>
                 Supply Total
               </p>
-              <p className="text-7xl md:text-8xl font-montserrat font-bold mb-4" style={{
-                background: `linear-gradient(135deg, var(--color-purple), var(--color-petrol))`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}>
+              <p className="text-7xl md:text-8xl font-montserrat font-bold mb-4 bg-gradient-to-r from-purple-600 to-teal-600 bg-clip-text text-transparent">
                 1B
               </p>
-              <p className="text-lg font-inter" style={{ color: 'var(--color-text-secondary)' }}>
+              <p className="text-lg font-inter" style={{ color: 'var(--text-secondary)' }}>
                 Um bilhão de tokens. Imutável.
               </p>
             </div>
 
             {/* Distribution */}
             <div className="mb-16">
-              <div className="flex flex-col md:flex-row items-center justify-between p-8 rounded-2xl shadow-md" style={{
-                background: `linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(106, 5, 114, 0.1))`
-              }}>
+              <div className="flex flex-col md:flex-row items-center justify-between p-8 rounded-2xl shadow-md bg-gradient-to-r from-green-500/10 to-purple-600/10">
                 <div>
-                  <p className="text-xl font-montserrat font-bold mb-2" style={{ color: 'var(--color-text-primary)' }}>
+                  <p className="text-xl font-montserrat font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
                     Liquidez Inicial
                   </p>
-                  <p className="font-inter" style={{ color: 'var(--color-text-secondary)' }}>
+                  <p className="font-inter" style={{ color: 'var(--text-secondary)' }}>
                     100% disponível na bonding curve
                   </p>
                 </div>
-                <p className="text-5xl font-montserrat font-bold mt-4 md:mt-0" style={{ color: 'var(--color-green)' }}>
+                <p className="text-5xl font-montserrat font-bold mt-4 md:mt-0 text-green-500">
                   100%
                 </p>
               </div>
             </div>
 
             {/* Tech Info */}
-            <div className="pt-12 border-t" style={{ borderColor: 'var(--color-border)' }}>
+            <div className="pt-12 border-t" style={{ borderColor: 'var(--border-light)' }}>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 {[
-                  { label: 'Blockchain', value: 'Solana', color: 'var(--color-purple)' },
-                  { label: 'Padrão', value: 'SPL Token', color: 'var(--color-petrol)' },
-                  { label: 'Velocidade', value: '< 1 segundo', color: 'var(--color-green)' }
+                  { label: 'Blockchain', value: 'Solana', color: 'text-purple-600' },
+                  { label: 'Padrão', value: 'SPL Token', color: 'text-teal-600' },
+                  { label: 'Velocidade', value: '< 1 segundo', color: 'text-green-500' }
                 ].map((stat, index) => (
                   <div key={index}>
-                    <p className="text-sm font-inter font-semibold uppercase tracking-wide mb-3" style={{ color: 'var(--color-text-secondary)' }}>
+                    <p className="text-sm font-inter font-semibold uppercase tracking-wide mb-3" style={{ color: 'var(--text-secondary)' }}>
                       {stat.label}
                     </p>
-                    <p className="text-2xl font-montserrat font-bold" style={{ color: stat.color }}>
+                    <p className={`text-2xl font-montserrat font-bold ${stat.color}`}>
                       {stat.value}
                     </p>
                   </div>
@@ -392,23 +329,21 @@ export default function TokenPage() {
       </section>
 
       {/* A Jornada à Frente - Roadmap */}
-      <section className="py-24" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
+      <section className="py-24" style={{ backgroundColor: 'var(--bg-secondary)' }}>
         <div className="max-w-6xl mx-auto px-6">
 
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--color-text-primary)' }}>
+            <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
               A Jornada à Frente
             </h2>
-            <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
+            <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
               Não estamos construindo um token. Estamos construindo um movimento de educação financeira.
             </p>
           </div>
 
           <div className="relative">
             {/* Timeline line */}
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 transform md:-translate-x-1/2" style={{
-              background: `linear-gradient(180deg, var(--color-green), var(--color-purple), var(--color-petrol))`
-            }}></div>
+            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 transform md:-translate-x-1/2 bg-gradient-to-b from-green-500 via-purple-600 to-teal-600"></div>
 
             <div className="space-y-16">
               {[
@@ -418,7 +353,6 @@ export default function TokenPage() {
                   description: 'Lançamento do token, formação da comunidade inicial e desenvolvimento da plataforma educacional.',
                   icon: faSeedling,
                   status: 'current',
-                  color: 'var(--color-green)',
                   bgGradient: 'linear-gradient(135deg, #4caf50, #45a049)'
                 },
                 {
@@ -427,7 +361,6 @@ export default function TokenPage() {
                   description: 'Graduação na Raydium, parcerias com educadores, lançamento do programa Learn-to-Earn.',
                   icon: faChartLine,
                   status: 'upcoming',
-                  color: 'var(--color-purple)',
                   bgGradient: 'linear-gradient(135deg, #6a0572, #8b1a9e)'
                 },
                 {
@@ -436,7 +369,6 @@ export default function TokenPage() {
                   description: 'Governança descentralizada, produtos DeFi educativos e expansão global da comunidade.',
                   icon: faGlobe,
                   status: 'future',
-                  color: 'var(--color-petrol)',
                   bgGradient: 'linear-gradient(135deg, #003f5c, #005a82)'
                 }
               ].map((phase, index) => (
@@ -453,28 +385,24 @@ export default function TokenPage() {
                   {/* Content */}
                   <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:ml-auto md:pl-12' : 'md:pr-12'}`}>
                     <div className="rounded-2xl p-8 border card-hover" style={{
-                      backgroundColor: 'var(--color-bg-elevated)',
-                      borderColor: 'var(--color-border)',
+                      backgroundColor: 'var(--bg-elevated)',
+                      borderColor: 'var(--border-light)',
                       boxShadow: 'var(--shadow-lg)'
                     }}>
                       <div className="flex items-start justify-between mb-4">
-                        <p className="text-sm font-inter font-semibold uppercase tracking-wide" style={{ color: phase.color }}>
+                        <p className="text-sm font-inter font-semibold uppercase tracking-wide text-teal-600">
                           {phase.phase}
                         </p>
                         {phase.status === 'current' && (
-                          <span className="px-3 py-1 rounded-full text-xs font-inter font-semibold" style={{
-                            backgroundColor: 'rgba(76, 175, 80, 0.15)',
-                            color: 'var(--color-green)',
-                            border: '1px solid var(--color-green)'
-                          }}>
+                          <span className="px-3 py-1 rounded-full text-xs font-inter font-semibold bg-green-500/15 text-green-500 border border-green-500">
                             Em Andamento
                           </span>
                         )}
                       </div>
-                      <h3 className="text-2xl font-montserrat font-bold mb-3" style={{ color: 'var(--color-text-primary)' }}>
+                      <h3 className="text-2xl font-montserrat font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
                         {phase.title}
                       </h3>
-                      <p className="font-inter leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
+                      <p className="font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                         {phase.description}
                       </p>
                     </div>
@@ -487,14 +415,12 @@ export default function TokenPage() {
       </section>
 
       {/* Faça Parte da Jornada - Final CTA */}
-      <section className="py-32 relative overflow-hidden" style={{
-        background: 'var(--bg-gradient-cta)'
-      }}>
+      <section className="py-32 relative overflow-hidden bg-gradient-to-r from-teal-900 to-purple-900">
 
         {/* Decorative elements */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 right-10 w-64 h-64 rounded-full blur-3xl" style={{ backgroundColor: 'var(--color-gold)' }}></div>
-          <div className="absolute bottom-10 left-10 w-80 h-80 rounded-full blur-3xl" style={{ backgroundColor: 'var(--color-orange)' }}></div>
+          <div className="absolute top-10 right-10 w-64 h-64 rounded-full blur-3xl bg-amber-400"></div>
+          <div className="absolute bottom-10 left-10 w-80 h-80 rounded-full blur-3xl bg-orange-500"></div>
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
@@ -513,8 +439,7 @@ export default function TokenPage() {
               href="https://discord.gg/xk4zrz8j"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-hover-effect flex items-center gap-3 px-10 py-5 bg-white rounded-full font-inter font-semibold text-lg shadow-xl"
-              style={{ color: 'var(--color-purple)' }}
+              className="btn-hover-effect flex items-center gap-3 px-10 py-5 bg-white rounded-full font-inter font-semibold text-lg shadow-xl text-purple-700"
             >
               <FontAwesomeIcon icon={faDiscord} className="w-6 h-6" />
               <span>Entrar no Discord</span>
@@ -524,8 +449,7 @@ export default function TokenPage() {
               href="https://t.me/+Bop_TVFc_mg3Njlh"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-hover-effect flex items-center gap-3 px-10 py-5 rounded-full font-inter font-semibold text-lg shadow-xl text-white border-2 border-white"
-              style={{ backgroundColor: 'transparent' }}
+              className="btn-hover-effect flex items-center gap-3 px-10 py-5 rounded-full font-inter font-semibold text-lg shadow-xl text-white border-2 border-white bg-transparent"
             >
               <FontAwesomeIcon icon={faTelegram} className="w-6 h-6" />
               <span>Entrar no Telegram</span>
@@ -542,8 +466,7 @@ export default function TokenPage() {
             </code>
             <button
               onClick={copyToClipboard}
-              className="btn-hover-effect inline-flex items-center gap-2 px-8 py-3 rounded-full font-inter font-semibold shadow-lg"
-              style={{ background: `linear-gradient(135deg, var(--color-gold), var(--color-orange))`, color: 'white' }}
+              className="btn-hover-effect inline-flex items-center gap-2 px-8 py-3 rounded-full font-inter font-semibold shadow-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white"
             >
               <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5" />
               <span>Copiar Endereço</span>
