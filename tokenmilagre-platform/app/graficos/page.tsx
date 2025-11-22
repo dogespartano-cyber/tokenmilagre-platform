@@ -61,7 +61,24 @@ export default function GraficosPage() {
           {/* Main Content */}
           <div className="space-y-12">
 
-          {/* Caminho do Dinheiro - Explicação */}
+          {/* 1. Macro: Mapa de Calor S&P 500 */}
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
+                Mapa de Calor - S&P 500
+              </h2>
+              <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                Visualize o desempenho das principais ações dos EUA - onde está a maior parte do capital global
+              </p>
+            </div>
+
+            <StockHeatmapWidget />
+          </div>
+
+          {/* Divider */}
+          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+
+          {/* 2. Caminho do Dinheiro - Explicação */}
           <div className="space-y-6">
             <div className="space-y-3">
               <h1 className="text-4xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: "var(--text-primary)" }}>
@@ -69,9 +86,6 @@ export default function GraficosPage() {
               </h1>
               <p className="text-xl leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                 Do macro ao micro: acompanhe o fluxo de capital global através dos mercados
-              </p>
-              <p className="text-sm italic" style={{ color: "var(--text-secondary)" }}>
-                Cada etapa representa um degrau de risco e descentralização. Conheça seu perfil antes de investir.
               </p>
             </div>
 
@@ -222,24 +236,24 @@ export default function GraficosPage() {
           {/* Divider */}
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
-          {/* 1. Macro: Mapa de Calor S&P 500 */}
+          {/* 3. Mercado Cripto Agregado: Mapa de Calor */}
           <div className="space-y-6">
             <div>
               <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
-                Mapa de Calor - S&P 500
+                Mapa de Calor de Criptomoedas
               </h2>
               <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                Visualize o desempenho das principais ações dos EUA - onde está a maior parte do capital global
+                Entrada de investidores buscando diversificação no mercado cripto
               </p>
             </div>
 
-            <StockHeatmapWidget />
+            <CryptoHeatmapWidget />
           </div>
 
           {/* Divider */}
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
-          {/* 2. Mercado Cripto Agregado: Crypto Bubbles */}
+          {/* 4. Mercado Cripto Agregado: Crypto Bubbles */}
           <div className="space-y-6">
             {/* SEO only - hidden visually */}
             <div className="sr-only">
@@ -273,24 +287,7 @@ export default function GraficosPage() {
           {/* Divider */}
           <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
-          {/* 3. Mercado Cripto Agregado: Mapa de Calor */}
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
-                Mapa de Calor de Criptomoedas
-              </h2>
-              <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                Entrada de investidores buscando diversificação no mercado cripto
-              </p>
-            </div>
-
-            <CryptoHeatmapWidget />
-          </div>
-
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* 4. Análise de Mercado Cripto: BTC, ETH, SOL */}
+          {/* 5. Análise de Mercado Cripto: BTC, ETH, SOL */}
           <div className="space-y-8">
             {/* Bitcoin - Análise Completa */}
             <div className="space-y-4">
