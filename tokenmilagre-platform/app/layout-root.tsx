@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -20,6 +20,11 @@ const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), 
 });
 
 const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
+
+interface FearGreedData {
+  value: string;
+  value_classification: string;
+}
 
 // Configuração do DashboardHeader por pathname
 const dashboardHeaderConfig: Record<string, { title: string; description: string }> = {
@@ -55,7 +60,75 @@ export default function RootLayoutNav({
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const { data: session } = useSession();
+  const [fearGreed, setFearGreed] = useState<FearGreedData | null>(null);
+  const [gaugeValue, setGaugeValue] = useState(0);
 
+  // Buscar Fear & Greed Index
+  useEffect(() => {
+    const CACHE_KEY = 'fear_greed_index';
+
+    // Carregar do cache imediatamente
+    const cached = sessionStorage.getItem(CACHE_KEY);
+    if (cached) {
+      try {
+        const cachedData = JSON.parse(cached);
+        setFearGreed(cachedData);
+      } catch (error) {
+        console.error('Erro ao carregar cache:', error);
+      }
+    }
+
+    // Buscar dados atualizados em background
+    const fetchFearGreed = async () => {
+      try {
+        const response = await fetch('/api/fear-greed');
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setFearGreed(result.data);
+          sessionStorage.setItem(CACHE_KEY, JSON.stringify(result.data));
+        }
+      } catch (error) {
+        console.error('Erro ao buscar Fear & Greed Index:', error);
+      }
+    };
+
+    fetchFearGreed();
+  }, []);
+
+  // Animação do ponteiro do velocímetro
+  useEffect(() => {
+    if (fearGreed) {
+      const targetValue = parseInt(fearGreed.value);
+      const duration = 2500;
+      const steps = 60;
+      const stepDuration = duration / steps;
+
+      let currentStep = 0;
+      setGaugeValue(0);
+
+      const easeOutCubic = (t: number): number => {
+        return 1 - Math.pow(1 - t, 3);
+      };
+
+      const animate = () => {
+        currentStep++;
+        const progress = currentStep / steps;
+        const easedProgress = easeOutCubic(progress);
+        const newValue = Math.floor(easedProgress * targetValue);
+
+        setGaugeValue(newValue);
+
+        if (currentStep < steps) {
+          setTimeout(animate, stepDuration);
+        } else {
+          setGaugeValue(targetValue);
+        }
+      };
+
+      animate();
+    }
+  }, [fearGreed, pathname]);
 
   // Verificar se deve mostrar o DashboardHeader
   const headerConfig = dashboardHeaderConfig[pathname];
@@ -237,13 +310,193 @@ export default function RootLayoutNav({
                 </button>
               </div>
 
-              {/* Crypto Ticker - Desktop */}
-              <div className="hidden lg:flex flex-1 w-full mx-8 justify-center overflow-hidden">
-                <NavbarCryptoTicker />
+              {/* Fear & Greed Velocímetro + Crypto Ticker - Desktop */}
+              <div className="hidden lg:flex flex-1 w-full mx-8 items-center gap-8 justify-center overflow-hidden">
+                {/* Velocímetro Fear & Greed - Versão Compacta */}
+                {fearGreed && (
+                  <div
+                    className="flex items-center shrink-0 mr-12 relative"
+                    style={{ marginLeft: '-8px', marginRight: '-8px' }}
+                  >
+                    <div
+                      className="relative flex items-center justify-center group cursor-pointer"
+                      style={{ width: '120px', height: '90px', marginTop: '-28px' }}
+                      title="Fear & Greed - Sentimento de mercado"
+                    >
+                      <svg viewBox="20 -25 140 140" className="w-full h-full" style={{ overflow: 'visible' }}>
+                        <defs>
+                          {/* Gradiente arco-íris */}
+                          <linearGradient id="rainbowGradientNavbar" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor="#DC2626" />
+                            <stop offset="20%" stopColor="#EA580C" />
+                            <stop offset="40%" stopColor="#F59E0B" />
+                            <stop offset="60%" stopColor="#84CC16" />
+                            <stop offset="80%" stopColor="#22C55E" />
+                            <stop offset="100%" stopColor="#10B981" />
+                          </linearGradient>
+
+                          {/* Filtros */}
+                          <filter id="softShadowNavbar" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+                            <feOffset dx="0" dy="1" result="offsetblur"/>
+                            <feComponentTransfer>
+                              <feFuncA type="linear" slope="0.3"/>
+                            </feComponentTransfer>
+                            <feMerge>
+                              <feMergeNode/>
+                              <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                          </filter>
+
+                          <filter id="intensiveGlowNavbar" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                            <feMerge>
+                              <feMergeNode in="coloredBlur"/>
+                              <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                          </filter>
+                        </defs>
+
+                        {/* Arco de fundo */}
+                        <path
+                          d="M 30 100 A 60 60 0 0 1 150 100"
+                          fill="none"
+                          stroke="var(--border-medium)"
+                          strokeWidth="16"
+                          strokeLinecap="butt"
+                          opacity="0.2"
+                        />
+
+                        {/* Arco colorido */}
+                        <path
+                          d="M 30 100 A 60 60 0 0 1 150 100"
+                          fill="none"
+                          stroke="url(#rainbowGradientNavbar)"
+                          strokeWidth="16"
+                          strokeLinecap="butt"
+                          filter="url(#intensiveGlowNavbar)"
+                        />
+
+                        {/* Marcações principais */}
+                        {[
+                          { value: 0, label: '0', color: '#DC2626' },
+                          { value: 25, label: '25', color: '#F59E0B' },
+                          { value: 50, label: '50', color: '#84CC16' },
+                          { value: 75, label: '75', color: '#22C55E' },
+                          { value: 100, label: '100', color: '#10B981' }
+                        ].map((mark, idx) => {
+                          const angle = -180 + (mark.value * 1.8);
+                          const radian = (angle * Math.PI) / 180;
+                          const innerRadius = 52;
+                          const outerRadius = 58;
+                          const labelRadius = 70;
+
+                          const x1 = 90 + innerRadius * Math.cos(radian);
+                          const y1 = 100 + innerRadius * Math.sin(radian);
+                          const x2 = 90 + outerRadius * Math.cos(radian);
+                          const y2 = 100 + outerRadius * Math.sin(radian);
+                          const labelX = 90 + labelRadius * Math.cos(radian);
+                          const labelY = 100 + labelRadius * Math.sin(radian);
+
+                          return (
+                            <g key={idx}>
+                              <line
+                                x1={x1}
+                                y1={y1}
+                                x2={x2}
+                                y2={y2}
+                                stroke={mark.color}
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                              />
+                              <text
+                                x={labelX}
+                                y={labelY}
+                                fill="var(--text-primary)"
+                                fontSize="10"
+                                fontWeight="700"
+                                textAnchor="middle"
+                                dominantBaseline="middle"
+                              >
+                                {mark.label}
+                              </text>
+                            </g>
+                          );
+                        })}
+
+                        {/* Ponteiro */}
+                        <g
+                          style={{
+                            transform: `rotate(${(gaugeValue * 1.8) - 90}deg)`,
+                            transformOrigin: '90px 100px',
+                            transition: 'transform 0.05s linear'
+                          }}
+                        >
+                          <path
+                            d="M 90 100 L 87 97 L 88 50 L 90 47 L 92 50 L 93 97 Z"
+                            fill="#000000"
+                            opacity="0.15"
+                            transform="translate(1, 2)"
+                          />
+                          <path
+                            d="M 90 100 L 87 97 L 88 50 L 90 47 L 92 50 L 93 97 Z"
+                            fill={
+                              gaugeValue <= 20 ? '#DC2626' :
+                              gaugeValue <= 40 ? '#F59E0B' :
+                              gaugeValue <= 60 ? '#84CC16' :
+                              gaugeValue <= 80 ? '#22C55E' : '#10B981'
+                            }
+                            filter="url(#softShadowNavbar)"
+                          />
+                        </g>
+
+                        {/* Base do ponteiro */}
+                        <circle
+                          cx="90"
+                          cy="100"
+                          r="10"
+                          fill="var(--bg-elevated)"
+                          stroke="var(--border-medium)"
+                          strokeWidth="1.5"
+                        />
+                        <circle
+                          cx="90"
+                          cy="100"
+                          r="6"
+                          fill={
+                            gaugeValue <= 20 ? '#DC2626' :
+                            gaugeValue <= 40 ? '#F59E0B' :
+                            gaugeValue <= 60 ? '#84CC16' :
+                            gaugeValue <= 80 ? '#22C55E' : '#10B981'
+                          }
+                          filter="url(#intensiveGlowNavbar)"
+                        />
+
+                        {/* Valor numérico */}
+                        <text
+                          x="90"
+                          y="80"
+                          fill="var(--text-primary)"
+                          fontSize="20"
+                          fontWeight="900"
+                          textAnchor="middle"
+                          dominantBaseline="middle"
+                        >
+                          {gaugeValue}
+                        </text>
+                      </svg>
+                    </div>
+                  </div>
+                )}
+
+                {/* Crypto Ticker */}
+                <div className="flex-1 overflow-hidden">
+                  <NavbarCryptoTicker />
+                </div>
               </div>
 
               {/* Desktop Actions */}
-              <nav className="hidden lg:flex items-center gap-6 pl-8 border-l h-10 my-auto" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
+              <nav className="hidden lg:flex items-center gap-6 pl-8 h-10 my-auto">
                 <button
                   onClick={toggleTheme}
                   className="group flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-white/5"
@@ -254,8 +507,6 @@ export default function RootLayoutNav({
                   <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
                   <span className="text-sm font-semibold">{theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}</span>
                 </button>
-
-                <UserDropdown />
 
                 <a
                   href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
@@ -271,7 +522,7 @@ export default function RootLayoutNav({
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
 
                   <FontAwesomeIcon icon={faHeart} className="w-5 h-5 transition-transform duration-300 group-hover:scale-125 group-hover:animate-pulse relative z-10" />
-                  <span className="relative z-10">Comprar $MILAGRE</span>
+                  <span className="relative z-10">$MILAGRE</span>
                 </a>
               </nav>
             </div>
@@ -301,7 +552,7 @@ export default function RootLayoutNav({
 
           {/* Ticker Tape - Sempre montado para evitar recarregamento */}
           <div
-            className="container mx-auto px-4 relative z-10"
+            className="container mx-auto px-4 mb-8 relative z-10"
             style={{
               display: headerConfig ? 'block' : 'none',
             }}

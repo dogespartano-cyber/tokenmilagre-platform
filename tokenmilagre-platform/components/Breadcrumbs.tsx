@@ -121,7 +121,7 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
   // Geração automática baseada no pathname
   const pathSegments = pathname.split('/').filter(Boolean);
 
-  // Se estiver na home, mostrar apenas "Início" como ativo
+  // Se estiver na home, mostrar apenas "Início" no estilo padrão
   if (pathSegments.length === 0) {
     const homeSchema = [{ label: 'Início', href: '/' }];
 
@@ -131,21 +131,20 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
         <nav
           className={inline ? 'animate-fade-in' : 'mb-6 animate-fade-in'}
           aria-label="Breadcrumb"
-          style={{ visibility: 'hidden' }}
         >
           <ol className="flex items-center gap-2 flex-wrap">
             <li>
-              <span
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg shadow-md text-sm font-semibold"
+              <Link
+                href="/"
+                className="flex items-center gap-2 px-1 py-1 transition-colors duration-200 hover:text-[var(--brand-primary)]"
                 style={{
-                  backgroundColor: 'var(--brand-primary)',
-                  color: 'var(--text-inverse)'
+                  color: 'var(--text-secondary)'
                 }}
                 aria-current="page"
               >
                 <FontAwesomeIcon icon={faHome} className="w-4 h-4" />
-                <span>Início</span>
-              </span>
+                <span className="text-sm font-medium">Início</span>
+              </Link>
             </li>
           </ol>
         </nav>
