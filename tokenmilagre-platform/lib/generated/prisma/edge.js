@@ -440,7 +440,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Kasnen\\Desktop\\Claude\\tokenmilagre-platform\\lib\\generated\\prisma",
+      "value": "C:\\Users\\Kasnen\\Desktop\\Claude\\Gemini\\tokenmilagre-platform\\tokenmilagre-platform\\lib\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -454,7 +454,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Kasnen\\Desktop\\Claude\\tokenmilagre-platform\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Kasnen\\Desktop\\Claude\\Gemini\\tokenmilagre-platform\\tokenmilagre-platform\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

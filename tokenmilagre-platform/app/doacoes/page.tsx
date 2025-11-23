@@ -4,79 +4,98 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowUp,
+  faCopy,
+  faCheckCircle,
+  faHeart
+} from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
 export default function DoacoesPage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [copiedAddress, setCopiedAddress] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
 
   const donationMethods = [
     {
-      image: '/images/TOKEN-MILAGRE-Hero.webp',
+      image: '/images/method-milagre.webp',
       title: '$MILAGRE Token',
       description: 'Apoie com nosso token nativo',
       address: '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump',
       network: 'Solana SPL',
-      imageSize: 80
+      imageSize: 220,
+      color: '#4caf50', // Green
+      gradient: 'linear-gradient(135deg, #4caf50, #81c784)'
     },
     {
-      image: '/images/Solana_logo1.webp',
+      image: '/images/method-solana.webp',
       title: 'Solana (SOL)',
       description: 'Rápido, seguro e com taxas baixíssimas',
       address: 'Em breve',
       network: 'Solana Mainnet',
-      imageSize: 80
+      imageSize: 220,
+      color: '#2196f3', // Blue
+      gradient: 'linear-gradient(135deg, #2196f3, #64b5f6)'
     }
   ];
 
   const impactAreas = [
     {
-      icon: '🎓',
       title: 'Educação Gratuita',
-      description: 'Manutenção da plataforma educacional, criação de novos conteúdos, tutoriais e materiais didáticos para toda a comunidade.',
-      percentage: '40%'
+      description: 'Manutenção da plataforma, criação de novos conteúdos e tutoriais.',
+      percentage: '40%',
+      color: '#4caf50', // Green
+      image: '/images/impact-education.webp'
     },
     {
-      icon: '💻',
       title: 'Desenvolvimento',
-      description: 'Melhorias na plataforma, novas funcionalidades, segurança e infraestrutura para manter tudo funcionando perfeitamente.',
-      percentage: '30%'
+      description: 'Melhorias de segurança, novas features e infraestrutura.',
+      percentage: '30%',
+      color: '#2196f3', // Blue
+      image: '/images/impact-dev.webp'
     },
     {
-      icon: '🤝',
       title: 'Apoio Comunitário',
-      description: 'Programas de suporte a membros, eventos, meetups e iniciativas que fortalecem nossa rede de apoio mútuo.',
-      percentage: '20%'
+      description: 'Eventos, suporte a membros e iniciativas de ajuda mútua.',
+      percentage: '20%',
+      color: '#ff9800', // Orange
+      image: '/images/impact-community.webp'
     },
     {
-      icon: '🌱',
       title: 'Crescimento',
-      description: 'Marketing ético, parcerias estratégicas e expansão da comunidade para alcançar mais pessoas que precisam de apoio.',
-      percentage: '10%'
+      description: 'Marketing ético e expansão para alcançar mais pessoas.',
+      percentage: '10%',
+      color: '#0D9488', // Teal
+      image: '/images/impact-growth.webp'
     }
   ];
 
   const whyDonate = [
     {
       title: '100% Transparente',
-      description: 'Todas as doações e gastos são registrados publicamente na blockchain. Você pode verificar cada transação.'
+      description: 'Todas as doações e gastos são registrados publicamente na blockchain.',
+      color: '#4caf50'
     },
     {
       title: 'Sem Intermediários',
-      description: 'Sua doação vai diretamente para a comunidade. Sem bancos, sem taxas abusivas, sem burocracia.'
+      description: 'Sua doação vai diretamente para a comunidade. Sem bancos ou taxas abusivas.',
+      color: '#ffc107'
     },
     {
       title: 'Impacto Real',
-      description: 'Cada centavo é investido em recursos que beneficiam milhares de pessoas. Você vê o resultado do seu apoio.'
+      description: 'Cada centavo é investido em recursos que beneficiam milhares de pessoas.',
+      color: '#f44336'
     },
     {
       title: 'Comunidade Ativa',
-      description: 'Não somos uma organização anônima. Somos pessoas reais, trabalhando todos os dias para fazer a diferença.'
+      description: 'Somos pessoas reais, trabalhando todos os dias para fazer a diferença.',
+      color: '#2196f3'
     }
   ];
 
   const copyToClipboard = (text: string, label: string) => {
+    if (text === 'Em breve') return;
     navigator.clipboard.writeText(text);
     setCopiedAddress(label);
     setTimeout(() => setCopiedAddress(''), 2000);
@@ -87,6 +106,7 @@ export default function DoacoesPage() {
   };
 
   useEffect(() => {
+    setIsVisible(true);
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 400);
     };
@@ -107,335 +127,302 @@ export default function DoacoesPage() {
         })}
       </Script>
 
-      <div className="py-8 max-w-4xl" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
-        <div className="space-y-16">
-          {/* Hero */}
-          <div className="space-y-6">
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600&display=swap');
 
+        .font-montserrat {
+          font-family: 'Montserrat', sans-serif;
+        }
 
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-              Juntos, construímos um futuro onde{' '}
-              <span className="text-brand-primary">ninguém caminha sozinho</span>
-            </h1>
+        .font-inter {
+          font-family: 'Inter', sans-serif;
+        }
 
-            <p className="text-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              Sua doação mantém nossa plataforma educacional gratuita, apoia o desenvolvimento comunitário
-              e ajuda milhares de pessoas a aprenderem sobre blockchain e criptomoedas.
-            </p>
+        /* Glassmorphism Card - Theme Aware */
+        .glass-card {
+          background: rgba(255, 255, 255, 0.8); /* Light mode default */
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid rgba(0, 0, 0, 0.05);
+          box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-            <div className="p-6 rounded-2xl border-2" style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--brand-primary)'
-            }}>
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">💝</div>
-                <div className="flex-1">
-                  <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--text-primary)' }}>
-                    Por que sua doação é importante?
-                  </h3>
-                  <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                    O $MILAGRE é um projeto 100% comunitário e sem fins lucrativos. Não temos investidores,
-                    não cobramos mensalidades e não vendemos seus dados. Dependemos exclusivamente do apoio
-                    de pessoas que acreditam em nossa missão de democratizar o acesso à educação em blockchain.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+        .glass-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.1);
+          background: rgba(255, 255, 255, 0.95);
+          border-color: rgba(0, 0, 0, 0.1);
+        }
 
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+        /* Dark Mode Overrides */
+        [data-theme="dark"] .glass-card {
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        }
 
-          {/* Como sua doação ajuda */}
-          <div className="space-y-8">
-            <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-              Como Sua Doação é Utilizada
-            </h2>
+        [data-theme="dark"] .glass-card:hover {
+          background: rgba(255, 255, 255, 0.06);
+          border-color: rgba(255, 255, 255, 0.15);
+          box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.3);
+        }
 
-            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-              Somos completamente transparentes sobre como cada centavo é investido na comunidade:
-            </p>
+        /* Floating Animation */
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+          100% { transform: translateY(0px); }
+        }
 
-            <div className="grid sm:grid-cols-2 gap-6">
-              {impactAreas.map((area, index) => (
-                <div key={index} className="p-6 rounded-xl border" style={{
-                  backgroundColor: 'var(--bg-elevated)',
-                  borderColor: 'var(--border-light)'
-                }}>
-                  <div className="flex items-start gap-4">
-                    <div className="text-3xl">{area.icon}</div>
-                    <div className="flex-1 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
-                          {area.title}
-                        </h3>
-                        <span className="text-sm font-bold px-2 py-1 rounded" style={{
-                          backgroundColor: 'var(--bg-secondary)',
-                          color: 'var(--brand-primary)'
-                        }}>
-                          {area.percentage}
-                        </span>
-                      </div>
-                      <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                        {area.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
 
-            <div className="p-4 rounded-lg border" style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border-light)'
-            }}>
-              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                <strong style={{ color: 'var(--text-primary)' }}>Transparência Total:</strong> Todos os gastos
-                são documentados e discutidos com a comunidade. Você pode acompanhar o uso dos recursos
-                em nosso Discord e através das transações públicas na blockchain.
-              </p>
-            </div>
-          </div>
+        /* Gradient Text */
+        .gradient-text {
+          background: linear-gradient(135deg, #4caf50, #ffb703, #fb8500);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+      `}</style>
 
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* Por que confiar em nós */}
-          <div className="space-y-8">
-            <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-              Por Que Confiar em Nós?
-            </h2>
-
-            <div className="grid sm:grid-cols-2 gap-6">
-              {whyDonate.map((reason, index) => (
-                <div key={index} className="space-y-3">
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{
-                    backgroundColor: 'var(--bg-secondary)'
-                  }}>
-                    {index === 0 ? '🔍' : index === 1 ? '⚡' : index === 2 ? '🎯' : '👥'}
-                  </div>
-                  <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                    {reason.title}
-                  </h3>
-                  <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                    {reason.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* Métodos de Doação */}
-          <div className="space-y-8">
-            <div>
-              <h2 className="text-3xl font-bold mb-2 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                Métodos de Doação
-              </h2>
-              <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-                Escolha a forma que preferir para apoiar nossa comunidade:
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6">
-              {donationMethods.map((method, index) => (
-                <div key={index} className="p-6 rounded-xl border" style={{
-                  backgroundColor: 'var(--bg-elevated)',
-                  borderColor: 'var(--border-light)'
-                }}>
-                  <div className="flex flex-col items-center text-center">
-                    <div className="flex items-center justify-center mb-2" style={{
-                      width: `${method.imageSize}px`,
-                      height: `${method.imageSize}px`
-                    }}>
-                      <Image
-                        src={method.image}
-                        alt={method.title}
-                        width={method.imageSize}
-                        height={method.imageSize}
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-
-                    <div className="mb-4">
-                      <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
-                        {method.title}
-                      </h3>
-                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                        {method.description}
-                      </p>
-                    </div>
-
-                    {method.address !== 'Em breve' ? (
-                      <div className="w-full">
-                        <div className="flex flex-col gap-2">
-                          <code className="px-3 py-2 rounded text-xs font-mono break-all" style={{
-                            backgroundColor: 'var(--bg-secondary)',
-                            color: 'var(--text-primary)'
-                          }}>
-                            {method.address}
-                          </code>
-                          <button
-                            onClick={() => copyToClipboard(method.address, method.title)}
-                            className="w-full px-4 py-2 rounded font-semibold text-sm transition-all hover:opacity-80"
-                            style={{
-                              backgroundColor: 'var(--brand-primary)',
-                              color: 'var(--text-inverse)'
-                            }}
-                          >
-                            {copiedAddress === method.title ? '✓ Copiado!' : 'Copiar Endereço'}
-                          </button>
-                        </div>
-                        <p className="text-xs mt-2" style={{ color: 'var(--text-tertiary)' }}>
-                          Rede: {method.network}
-                        </p>
-                      </div>
-                    ) : (
-                      <div className="w-full px-3 py-2 rounded text-sm" style={{
-                        backgroundColor: 'var(--bg-secondary)',
-                        color: 'var(--text-tertiary)'
-                      }}>
-                        Endereço em breve
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="p-6 rounded-xl border-2" style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--brand-primary)'
-            }}>
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">⚠️</div>
-                <div className="flex-1">
-                  <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--text-primary)' }}>
-                    Importante: Segurança em Primeiro Lugar
-                  </h3>
-                  <ul className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
-                    <li>• Verifique sempre o endereço antes de enviar (use nosso site oficial)</li>
-                    <li>• Confira a rede correta (Solana Mainnet para SOL e tokens SPL)</li>
-                    <li>• Nunca compartilhe suas chaves privadas ou seeds com ninguém</li>
-                    <li>• Em caso de dúvidas, consulte nossa comunidade no Discord ou Telegram</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* Outras formas de ajudar */}
-          <div className="space-y-8">
-            <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-              Outras Formas de Ajudar
-            </h2>
-
-            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-              Não pode doar agora? Existem outras formas valiosas de apoiar nossa comunidade:
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-6">
-              <div className="space-y-3">
-                <div className="text-3xl">📣</div>
-                <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Divulgue</h3>
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  Compartilhe nosso conteúdo educacional e ajude mais pessoas a aprenderem sobre blockchain
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                <div className="text-3xl">✍️</div>
-                <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Contribua</h3>
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  Escreva artigos, crie tutoriais ou traduza conteúdo para outros idiomas
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                <div className="text-3xl">💬</div>
-                <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Participe</h3>
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  Seja ativo na comunidade, tire dúvidas e ajude outros membros
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                <div className="text-3xl">🐛</div>
-                <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Reporte Bugs</h3>
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  Encontrou algum problema? Nos ajude a melhorar reportando bugs e sugerindo melhorias
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-          {/* CTA Final */}
-          <div className="space-y-6 py-8">
-            <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-              Cada Doação Faz a Diferença
-            </h2>
-            <p className="text-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              Não importa o valor - cada contribuição nos ajuda a continuar oferecendo educação
-              gratuita e de qualidade para milhares de pessoas ao redor do mundo.
-            </p>
-            <p className="text-2xl font-bold text-brand-primary">
-              Obrigado por fazer parte desta família! 💚
-            </p>
-
-            <div className="flex flex-wrap gap-3 pt-4">
-              <a
-                href="https://discord.gg/xk4zrz8j"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
-                style={{
-                  backgroundColor: '#5865F2',
-                  color: 'white'
-                }}
-              >
-                <FontAwesomeIcon icon={faDiscord} className="w-5 h-5" />
-                Discord
-              </a>
-
-              <a
-                href="https://t.me/+Bop_TVFc_mg3Njlh"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
-                style={{
-                  backgroundColor: '#0088cc',
-                  color: 'white'
-                }}
-              >
-                <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
-                Telegram
-              </a>
-            </div>
-          </div>
-
-          {/* Scroll to top button */}
-          {showScrollTop && (
-            <button
-              onClick={scrollToTop}
-              className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
-              style={{
-                backgroundColor: 'var(--brand-primary)',
-                color: 'var(--text-inverse)'
-              }}
-              aria-label="Voltar ao topo"
-            >
-              <FontAwesomeIcon icon={faArrowUp} className="w-5 h-5" />
-            </button>
-          )}
+      <div className="min-h-screen relative overflow-hidden bg-[var(--bg-primary)] transition-colors duration-300">
+        {/* Background Elements - Theme Aware */}
+        <div className="fixed inset-0 pointer-events-none z-0">
+          <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-green-500/5 rounded-full blur-[120px] animate-pulse"></div>
+          <div className="absolute bottom-[-10%] left-[-10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
+
+        <div className={`relative z-10 max-w-7xl mx-auto px-6 py-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+
+          {/* Hero Section - Split Layout */}
+          <section className="flex flex-col-reverse lg:flex-row items-center gap-12 mb-32 min-h-[80vh]">
+            {/* Left: Content */}
+            <div className="flex-1 text-center lg:text-left space-y-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border-light)] backdrop-blur-sm">
+                <FontAwesomeIcon icon={faHeart} className="text-red-500 animate-pulse" />
+                <span className="text-sm font-inter text-[var(--text-secondary)]">Apoie nossa causa</span>
+              </div>
+
+              <h1 className="text-5xl lg:text-7xl font-montserrat font-bold leading-tight text-[var(--text-primary)]">
+                Construindo <br />
+                <span className="gradient-text">Esperança</span> <br />
+                Juntos
+              </h1>
+
+              <p className="text-xl font-inter leading-relaxed text-[var(--text-secondary)] max-w-xl mx-auto lg:mx-0">
+                Sua doação é o combustível que mantém nossa plataforma educacional gratuita e acessível para todos.
+                <span className="font-semibold text-[var(--text-primary)]"> Ninguém caminha sozinho.</span>
+              </p>
+
+              <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
+                <button
+                  onClick={() => document.getElementById('donation-methods')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="px-8 py-4 rounded-full bg-green-600 hover:bg-green-500 text-white font-bold font-montserrat transition-all shadow-lg hover:shadow-green-500/20"
+                >
+                  Fazer uma Doação
+                </button>
+                <a
+                  href="https://discord.gg/xk4zrz8j"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-8 py-4 rounded-full bg-[var(--bg-tertiary)] hover:bg-[var(--bg-secondary)] border border-[var(--border-light)] text-[var(--text-primary)] font-bold font-montserrat transition-all backdrop-blur-sm"
+                >
+                  Juntar-se à Comunidade
+                </a>
+              </div>
+            </div>
+
+            {/* Right: Hero Image (Floating) */}
+            <div className="flex-1 relative w-full h-[500px] lg:h-[700px]">
+              <div className="absolute inset-0 animate-float rounded-[21px] overflow-hidden">
+                <Image
+                  src="/images/donations-hero-v2.webp"
+                  alt="Doações Hero"
+                  fill
+                  className="object-contain drop-shadow-2xl rounded-[21px]"
+                  priority
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "/images/Token-MILAGRE-2.webp";
+                  }}
+                />
+              </div>
+              {/* Decorative glow behind image */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-green-500/20 to-blue-500/20 blur-[100px] -z-10 rounded-full"></div>
+            </div>
+          </section>
+
+          {/* Donation Methods - Large Showcase Cards */}
+          <section id="donation-methods" className="mb-32 scroll-mt-20">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-6 text-[var(--text-primary)]">
+                Escolha Como Apoiar
+              </h2>
+              <p className="text-xl text-[var(--text-secondary)] max-w-2xl mx-auto">
+                Aceitamos contribuições diretas via Blockchain para garantir transparência total.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {donationMethods.map((method, index) => (
+                <div key={index} className="glass-card p-10 rounded-[21px] relative overflow-hidden group text-center">
+                  {/* Background Glow */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[80px] opacity-20 group-hover:opacity-30 transition-opacity" style={{ backgroundColor: method.color }}></div>
+
+                  {/* Large Token Image */}
+                  <div className="relative h-64 w-full mb-8 animate-float rounded-[21px] overflow-hidden" style={{ animationDelay: `${index * 0.5}s` }}>
+                    <Image
+                      src={method.image}
+                      alt={method.title}
+                      fill
+                      className="object-contain drop-shadow-2xl rounded-[21px]"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        if (method.image.includes('method-milagre')) {
+                          target.src = "/images/TOKEN-MILAGRE-Hero.webp";
+                        } else if (method.image.includes('method-solana')) {
+                          target.src = "/images/Solana_logo1.webp";
+                        }
+                      }}
+                    />
+                  </div>
+
+                  <h3 className="text-3xl font-montserrat font-bold mb-3 text-[var(--text-primary)]">
+                    {method.title}
+                  </h3>
+                  <p className="text-lg text-[var(--text-secondary)] mb-8">
+                    {method.description}
+                  </p>
+
+                  {/* Address Box */}
+                  <div className="bg-[var(--bg-tertiary)] rounded-[21px] p-6 backdrop-blur-md border border-[var(--border-light)] group-hover:border-[var(--border-medium)] transition-colors">
+                    <p className="text-xs text-[var(--text-tertiary)] uppercase tracking-widest mb-2">Endereço da Carteira ({method.network})</p>
+                    <code className="block text-sm md:text-base font-mono break-all mb-4 text-green-600 dark:text-green-400">
+                      {method.address}
+                    </code>
+                    <button
+                      onClick={() => copyToClipboard(method.address, method.title)}
+                      disabled={method.address === 'Em breve'}
+                      className={`w-full py-4 rounded-[16px] font-bold text-sm transition-all flex items-center justify-center gap-3 ${method.address === 'Em breve' ? 'opacity-50 cursor-not-allowed bg-gray-200 dark:bg-gray-800 text-[var(--text-muted)]' : 'bg-[var(--bg-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] shadow-sm'
+                        }`}
+                    >
+                      {copiedAddress === method.title ? (
+                        <>
+                          <FontAwesomeIcon icon={faCheckCircle} className="text-green-600" />
+                          Endereço Copiado!
+                        </>
+                      ) : (
+                        <>
+                          <FontAwesomeIcon icon={faCopy} />
+                          {method.address === 'Em breve' ? 'Em Breve' : 'Copiar Endereço'}
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Impact Areas - Visual Grid */}
+          <section className="mb-32">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-6 text-[var(--text-primary)]">
+                Seu Impacto Visualizado
+              </h2>
+              <p className="text-xl text-[var(--text-secondary)] max-w-2xl mx-auto">
+                Para onde vai cada recurso investido na comunidade.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {impactAreas.map((area, index) => (
+                <div key={index} className="glass-card p-6 rounded-[21px] group hover:border-opacity-50 transition-all">
+                  {/* Top Half: Image - Now fully rounded with padding */}
+                  <div className="relative h-64 w-full mb-6 rounded-[21px] overflow-hidden shadow-lg">
+                    <Image
+                      src={area.image}
+                      alt={area.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 rounded-[21px]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)]/80 to-transparent"></div>
+
+                    {/* Percentage Badge */}
+                    <div className="absolute top-4 right-4 px-4 py-2 rounded-full backdrop-blur-md border border-[var(--border-light)] shadow-lg bg-[var(--bg-elevated)]/90">
+                      <span className="font-bold font-montserrat text-[var(--text-primary)]">{area.percentage}</span>
+                    </div>
+                  </div>
+
+                  {/* Bottom Half: Content */}
+                  <div className="px-2">
+                    <h3 className="text-2xl font-montserrat font-bold mb-3 text-[var(--text-primary)]">
+                      {area.title}
+                    </h3>
+                    <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
+                      {area.description}
+                    </p>
+
+                    {/* Progress Bar */}
+                    <div className="w-full h-2 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-1000 ease-out"
+                        style={{
+                          width: isVisible ? area.percentage : '0%',
+                          backgroundColor: area.color,
+                          boxShadow: `0 0 10px ${area.color}`
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Trust Indicators */}
+          <section className="mb-32">
+            <div className="glass-card p-12 rounded-[21px] text-center relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-blue-500/10"></div>
+
+              <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-12 relative z-10 text-[var(--text-primary)]">
+                Por Que Confiar?
+              </h2>
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+                {whyDonate.map((reason, index) => (
+                  <div key={index} className="text-center group">
+                    <div className="w-4 h-4 mx-auto rounded-full mb-6 transition-all duration-300 group-hover:scale-150" style={{ backgroundColor: reason.color, boxShadow: `0 0 20px ${reason.color}` }}></div>
+                    <h3 className="text-lg font-montserrat font-bold mb-3 text-[var(--text-primary)]">
+                      {reason.title}
+                    </h3>
+                    <p className="text-sm font-inter text-[var(--text-secondary)] leading-relaxed">
+                      {reason.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+        {/* Scroll to top button */}
+        <button
+          onClick={scrollToTop}
+          className={`fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all duration-500 hover:scale-110 ${showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+            }`}
+          style={{
+            background: 'linear-gradient(135deg, #4caf50, #2e7d32)',
+            color: 'white'
+          }}
+          aria-label="Voltar ao topo"
+        >
+          <FontAwesomeIcon icon={faArrowUp} className="w-6 h-6" />
+        </button>
       </div>
     </>
   );
