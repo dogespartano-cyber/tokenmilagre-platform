@@ -56,6 +56,47 @@ function Press-Enter {
 
 # --- Funcoes de Gerenciamento do Servidor ---
 
+function Test-Environment {
+    $errors = @()
+
+    # Verificar se o diretorio do projeto existe
+    if (-not (Test-Path $Global:ProjectDir)) {
+        $errors += "Diretorio do projeto nao encontrado: $Global:ProjectDir"
+    }
+
+    # Verificar se git esta instalado
+    try {
+        $gitVersion = git --version 2>$null
+        if (-not $gitVersion) {
+            $errors += "Git nao esta instalado ou nao esta no PATH"
+        }
+    }
+    catch {
+        $errors += "Git nao esta instalado ou nao esta no PATH"
+    }
+
+    # Verificar se npm esta instalado
+    try {
+        $npmVersion = npm --version 2>$null
+        if (-not $npmVersion) {
+            $errors += "NPM nao esta instalado ou nao esta no PATH"
+        }
+    }
+    catch {
+        $errors += "NPM nao esta instalado ou nao esta no PATH"
+    }
+
+    # Verificar se o diretorio e um repositorio git
+    if (Test-Path $Global:ProjectDir) {
+        $gitDir = Join-Path $Global:ProjectDir ".git"
+        if (-not (Test-Path $gitDir)) {
+            $errors += "Diretorio do projeto nao e um repositorio Git"
+        }
+    }
+
+    return $errors
+}
+
 function Get-BuildInfo {
     Push-Location $Global:ProjectDir -ErrorAction SilentlyContinue
 
@@ -136,8 +177,13 @@ function Get-ServerProcess {
                   Select-Object -First 1
 
     if ($connection) {
+        # Validar se o OwningProcess é válido (maior que 0)
+        if ($connection.OwningProcess -le 0) {
+            return $null
+        }
+
         $proc = Get-Process -Id $connection.OwningProcess -ErrorAction SilentlyContinue
-        if ($proc) {
+        if ($proc -and $proc.Id -gt 0) {
             # Adicionar informacao de health check
             $cpuPercent = [math]::Round($proc.CPU, 2)
 
@@ -272,11 +318,25 @@ function Sync-Preview {
         Write-Host ""
     }
 
+    # Validar se o diretorio existe
+    if (-not (Test-Path $Global:ProjectDir)) {
+        Print-Error "Diretorio do projeto nao encontrado: $Global:ProjectDir"
+        if (-not $Quiet) { Press-Enter }
+        return $false
+    }
+
     Print-Info "Entrando no diretorio do projeto..."
     Set-Location $Global:ProjectDir
 
     Print-Info "Buscando branches preview do remoto..."
     git fetch origin --prune 2>$null
+
+    if ($LASTEXITCODE -ne 0) {
+        Print-Error "Falha ao buscar branches do remoto"
+        Print-Warning "Verifique sua conexao de rede ou configuracao do Git"
+        if (-not $Quiet) { Press-Enter }
+        return $false
+    }
 
     # Encontrar branch preview mais recente
     $latestPreview = git for-each-ref --sort=-committerdate refs/remotes/origin/claude/ --format='%(refname:short)' |
@@ -363,11 +423,25 @@ function Promote-ToProduction {
     Write-Host "  =========================================================" -ForegroundColor DarkGreen
     Write-Host ""
 
+    # Validar se o diretorio existe
+    if (-not (Test-Path $Global:ProjectDir)) {
+        Print-Error "Diretorio do projeto nao encontrado: $Global:ProjectDir"
+        Press-Enter
+        return
+    }
+
     Print-Info "Entrando no diretorio do projeto..."
     Set-Location $Global:ProjectDir
 
     Print-Info "Buscando atualizacoes do remoto..."
     git fetch origin --prune 2>$null
+
+    if ($LASTEXITCODE -ne 0) {
+        Print-Error "Falha ao buscar atualizacoes do remoto"
+        Print-Warning "Verifique sua conexao de rede ou configuracao do Git"
+        Press-Enter
+        return
+    }
 
     # Encontrar branch preview mais recente
     $latestPreview = git for-each-ref --sort=-committerdate refs/remotes/origin/claude/ --format='%(refname:short)' |
@@ -417,8 +491,31 @@ function Promote-ToProduction {
     }
 
     Write-Host ""
+
+    # Verificar se há mudanças locais antes do checkout
+    $gitStatusOutput = git status --porcelain 2>$null
+    $hasLocalChanges = -not [string]::IsNullOrWhiteSpace($gitStatusOutput)
+
+    if ($hasLocalChanges) {
+        $changedFiles = ($gitStatusOutput | Measure-Object -Line).Lines
+        Print-Warning "Mudancas locais detectadas ($changedFiles arquivos)"
+        Print-Error "Nao e possivel promover para producao com mudancas nao commitadas"
+        Print-Info "Opcoes:"
+        Print-Info "1. git stash    - Guardar mudancas temporariamente"
+        Print-Info "2. git commit   - Commitar as mudancas"
+        Print-Info "3. git reset    - Descartar mudancas"
+        Press-Enter
+        return
+    }
+
     Print-Info "Fazendo checkout para main..."
     git checkout main 2>$null
+
+    if ($LASTEXITCODE -ne 0) {
+        Print-Error "Falha ao fazer checkout para main"
+        Press-Enter
+        return
+    }
 
     Print-Info "Atualizando main..."
     git pull origin main 2>$null
@@ -503,9 +600,23 @@ function Start-Server {
     # Se modo preview, sincronizar primeiro
     if ($Mode -eq "preview") {
         Write-Host "  =========================================================" -ForegroundColor Cyan
-        Sync-Preview -Quiet
+        $syncResult = Sync-Preview -Quiet
         Write-Host "  =========================================================" -ForegroundColor Cyan
         Write-Host ""
+
+        # Se o sync falhou, não continuar
+        if (-not $syncResult) {
+            Print-Error "Falha ao sincronizar preview"
+            Press-Enter
+            return
+        }
+    }
+
+    # Validar se o diretorio existe
+    if (-not (Test-Path $Global:ProjectDir)) {
+        Print-Error "Diretorio do projeto nao encontrado: $Global:ProjectDir"
+        Press-Enter
+        return
     }
 
     Print-Info "Entrando no diretorio do projeto..."
@@ -558,14 +669,32 @@ function Stop-Server {
     Write-Host ""
 
     $procInfo = Get-ServerProcess
-    if (-not $procInfo) {
+    if (-not $procInfo -or $procInfo.Id -le 0) {
         Print-Warning "Servidor ja esta offline"
+
+        # Limpar jobs orfaos mesmo se nao houver processo
+        if ($Global:ServerJobId) {
+            Print-Info "Limpando job em background..."
+            Stop-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue
+            Remove-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue -Force
+            $Global:ServerJobId = $null
+        }
+
         Press-Enter
         return
     }
 
     Print-Info "Parando processo (PID: $($procInfo.Id))..."
     Stop-Process -Id $procInfo.Id -Force -ErrorAction SilentlyContinue
+
+    # Parar o job em background se existir
+    if ($Global:ServerJobId) {
+        Print-Info "Parando job em background (Job ID: $Global:ServerJobId)..."
+        Stop-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue
+        Remove-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue -Force
+        $Global:ServerJobId = $null
+    }
+
     Start-Sleep -Seconds 2
 
     $procInfo = Get-ServerProcess
@@ -586,8 +715,18 @@ function Kill-Server {
     Write-Host ""
 
     $procInfo = Get-ServerProcess
-    if (-not $procInfo) {
+    if (-not $procInfo -or $procInfo.Id -le 0) {
         Print-Warning "Nenhum processo na porta $Global:Port"
+
+        # Limpar jobs orfaos mesmo se nao houver processo
+        if ($Global:ServerJobId) {
+            Print-Info "Limpando job em background orfao..."
+            Stop-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue
+            Remove-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue -Force
+            $Global:ServerJobId = $null
+            Print-Success "Job removido"
+        }
+
         Press-Enter
         return
     }
@@ -598,7 +737,16 @@ function Kill-Server {
     if ($confirm -match '^[Ss]$') {
         Write-Host ""
         Print-Info "Executando kill -9 $($procInfo.Id)..."
-        Stop-Process -Id $procInfo.Id -Force
+        Stop-Process -Id $procInfo.Id -Force -ErrorAction SilentlyContinue
+
+        # Parar o job em background se existir
+        if ($Global:ServerJobId) {
+            Print-Info "Parando job em background (Job ID: $Global:ServerJobId)..."
+            Stop-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue
+            Remove-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue -Force
+            $Global:ServerJobId = $null
+        }
+
         Start-Sleep -Seconds 1
 
         $procInfo = Get-ServerProcess
@@ -623,17 +771,25 @@ function Restart-Server {
     Write-Host ""
 
     $procInfo = Get-ServerProcess
-    if ($procInfo) {
+    if ($procInfo -and $procInfo.Id -gt 0) {
         Print-Info "Parando servidor atual..."
         Stop-Process -Id $procInfo.Id -Force -ErrorAction SilentlyContinue
         Start-Sleep -Seconds 2
     }
 
+    # Parar job anterior se existir
+    if ($Global:ServerJobId) {
+        Print-Info "Parando job anterior (Job ID: $Global:ServerJobId)..."
+        Stop-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue
+        Remove-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue -Force
+        $Global:ServerJobId = $null
+    }
+
     # Verificar se parou
     $procInfo = Get-ServerProcess
-    if ($procInfo) {
+    if ($procInfo -and $procInfo.Id -gt 0) {
         Print-Warning "Processo ainda rodando, forcando..."
-        Stop-Process -Id $procInfo.Id -Force
+        Stop-Process -Id $procInfo.Id -Force -ErrorAction SilentlyContinue
         Start-Sleep -Seconds 1
     }
 
@@ -704,65 +860,6 @@ function View-Logs {
     Get-Content -Path $Global:LogFile -Wait -Tail 50
 }
 
-function View-CoverLogs {
-    Print-Header
-    Write-Host "  =========================================================" -ForegroundColor DarkGreen
-    Write-Host "           COVER IMAGE LOGS - REAL-TIME                     " -ForegroundColor Magenta
-    Write-Host "  =========================================================" -ForegroundColor DarkGreen
-    Write-Host ""
-
-    $procInfo = Get-ServerProcess
-    if (-not $procInfo) {
-        Print-Error "Servidor nao esta rodando"
-        Press-Enter
-        return
-    }
-
-    if (-not (Test-Path $Global:LogFile)) {
-        Print-Error "Arquivo de log nao encontrado: $Global:LogFile"
-        Print-Info "Reinicie o servidor para criar o arquivo de log"
-        Press-Enter
-        return
-    }
-
-    Print-Info "PID do servidor: $($procInfo.Id)"
-    Print-Info "Arquivo de log: $Global:LogFile"
-    Write-Host ""
-    Print-Warning "Filtrando logs relacionados a geracao de capas"
-    Print-Info "Palavras-chave: generateCoverImage, saveCoverImage, Geracao de Imagem"
-    Write-Host "  =========================================================" -ForegroundColor Cyan
-    Write-Host ""
-    Start-Sleep -Seconds 1
-
-    # Filtrar e colorir logs de geracao de capas
-    Get-Content -Path $Global:LogFile -Wait -Tail 100 |
-        Where-Object {
-            $_ -match "generateCoverImage|saveCoverImage|Geração de Imagem|Geracao de Imagem|INÍCIO - Geração|FIM - Geração|estimateImageSize"
-        } |
-        ForEach-Object {
-            $line = $_
-
-            # Colorir baseado no conteudo
-            if ($line -match "\[generateCoverImage\]") {
-                Write-Host $line -ForegroundColor Magenta
-            }
-            elseif ($line -match "\[saveCoverImage\]") {
-                Write-Host $line -ForegroundColor Cyan
-            }
-            elseif ($line -match "OK") {
-                Write-Host $line -ForegroundColor Green
-            }
-            elseif ($line -match "ERR|ERROR|Error") {
-                Write-Host $line -ForegroundColor Red
-            }
-            elseif ($line -match "INÍCIO|FIM") {
-                Write-Host $line -ForegroundColor Yellow
-            }
-            else {
-                Write-Host $line
-            }
-        }
-}
 
 function Clean-Processes {
     Print-Header
@@ -842,42 +939,41 @@ function Show-MainMenu {
 
     # Mostrar status breve
     $procInfo = Get-ServerProcess
-    $statusIcon = "OFFLINE"
-    $statusText = "Server stopped"
+    $statusIcon = "DESLIGADO"
+    $statusText = "Servidor parado"
     $statusColor = "Red"
 
     if ($procInfo) {
         $statusIcon = "ONLINE"
-        $statusText = "PID: $($procInfo.Id) | Port: $Global:Port"
+        $statusText = "PID: $($procInfo.Id) | Porta: $Global:Port"
         $statusColor = "Green"
     }
 
     Write-Host "  =========================================================" -ForegroundColor DarkGray
-    Write-Host "                    SYSTEM STATUS                           " -ForegroundColor White
+    Write-Host "                    STATUS DO SISTEMA                       " -ForegroundColor White
     Write-Host "  =========================================================" -ForegroundColor DarkGray
-    Write-Host "  Next.js Server: " -NoNewline
+    Write-Host "  Servidor Next.js: " -NoNewline
     Write-Host $statusIcon -ForegroundColor $statusColor -NoNewline
     Write-Host " - $statusText" -ForegroundColor $statusColor
     Write-Host "  =========================================================" -ForegroundColor DarkGray
     Write-Host ""
     Write-Host "  =========================================================" -ForegroundColor DarkGreen
-    Write-Host "                      MAIN MENU                             " -ForegroundColor Green
+    Write-Host "                      MENU PRINCIPAL                        " -ForegroundColor Green
     Write-Host "  =========================================================" -ForegroundColor DarkGreen
     Write-Host ""
-    Write-Host "   (1)  Start Server                Launch development server" -ForegroundColor Green
-    Write-Host "   (2)  Stop Server                 Graceful shutdown" -ForegroundColor Green
-    Write-Host "   (3)  Restart Server              Stop and start server" -ForegroundColor Green
-    Write-Host "   (4)  View Status                 Show detailed status" -ForegroundColor Green
-    Write-Host "   (5)  Kill Server                 Force termination" -ForegroundColor Red
+    Write-Host "   (1)  Iniciar Servidor            Inicia servidor de desenvolvimento" -ForegroundColor Green
+    Write-Host "   (2)  Parar Servidor              Desligamento gracioso" -ForegroundColor Green
+    Write-Host "   (3)  Reiniciar Servidor          Para e inicia o servidor" -ForegroundColor Green
+    Write-Host "   (4)  Ver Status                  Mostra status detalhado" -ForegroundColor Green
+    Write-Host "   (5)  Forcar Parada               Terminacao forcada" -ForegroundColor Red
     Write-Host ""
-    Write-Host "   (6)  View Logs                   Real-time server logs" -ForegroundColor Cyan
-    Write-Host "   (7)  Clean Node Processes        Remove zombie processes" -ForegroundColor Magenta
-    Write-Host "   (8)  View Cover Logs             Image generation logs" -ForegroundColor Magenta
+    Write-Host "   (6)  Ver Logs                    Logs do servidor em tempo real" -ForegroundColor Cyan
+    Write-Host "   (7)  Limpar Processos Node       Remove processos zumbi" -ForegroundColor Magenta
     Write-Host ""
-    Write-Host "   (9)  Sync and Start Preview      Latest preview branch" -ForegroundColor Yellow
-    Write-Host "   (10) Promote Preview to Prod     Deploy to production" -ForegroundColor Green
+    Write-Host "   (9)  Sincronizar e Iniciar       Ultima branch preview" -ForegroundColor Yellow
+    Write-Host "   (10) Promover para Producao      Deploy para producao" -ForegroundColor Green
     Write-Host ""
-    Write-Host "   (0)  Exit                        Close server manager" -ForegroundColor DarkGray
+    Write-Host "   (0)  Sair                        Fecha o gerenciador" -ForegroundColor DarkGray
     Write-Host ""
     Write-Host "  =========================================================" -ForegroundColor DarkGreen
     Write-Host ""
@@ -889,7 +985,7 @@ function Main-Loop {
     while ($true) {
         Show-MainMenu
         Write-Host "  [>>>] " -ForegroundColor DarkGreen -NoNewline
-        Write-Host "Select option (0-10): " -ForegroundColor Green -NoNewline
+        Write-Host "Selecione uma opcao (0-10): " -ForegroundColor Green -NoNewline
         $option = Read-Host
 
         switch ($option) {
@@ -900,15 +996,23 @@ function Main-Loop {
             "5" { Kill-Server }
             "6" { View-Logs }
             "7" { Clean-Processes }
-            "8" { View-CoverLogs }
             "9" {
                 # Para servidor se estiver rodando
                 $procInfo = Get-ServerProcess
-                if ($procInfo) {
+                if ($procInfo -and $procInfo.Id -gt 0) {
                     Print-Info "Parando servidor atual..."
-                    Stop-Process -Id $procInfo.Id -Force
+                    Stop-Process -Id $procInfo.Id -Force -ErrorAction SilentlyContinue
                     Start-Sleep -Seconds 2
                 }
+
+                # Parar job se existir
+                if ($Global:ServerJobId) {
+                    Print-Info "Parando job anterior..."
+                    Stop-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue
+                    Remove-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue -Force
+                    $Global:ServerJobId = $null
+                }
+
                 # Sincronizar e iniciar em modo preview
                 Start-Server -Mode "preview"
             }
@@ -916,33 +1020,48 @@ function Main-Loop {
             "0" {
                 Print-Header
                 Write-Host "  =========================================================" -ForegroundColor DarkGreen
-                Write-Host "                        EXIT                               " -ForegroundColor DarkGray
+                Write-Host "                        SAIR                               " -ForegroundColor DarkGray
                 Write-Host "  =========================================================" -ForegroundColor DarkGreen
                 Write-Host ""
-                Write-Host "  Closing Server Manager..." -ForegroundColor Green
+                Write-Host "  Fechando Gerenciador de Servidor..." -ForegroundColor Green
                 Write-Host ""
 
                 $procInfo = Get-ServerProcess
-                if ($procInfo) {
-                    $stopConfirm = Read-Host "  Server is running. Stop it? [s/N]"
+                if ($procInfo -and $procInfo.Id -gt 0) {
+                    $stopConfirm = Read-Host "  Servidor esta rodando. Deseja para-lo? [s/N]"
                     if ($stopConfirm -match '^[Ss]$') {
                         Write-Host ""
-                        Print-Info "Stopping server..."
-                        Stop-Process -Id $procInfo.Id -Force
+                        Print-Info "Parando servidor..."
+                        Stop-Process -Id $procInfo.Id -Force -ErrorAction SilentlyContinue
+
+                        # Parar job se existir
+                        if ($Global:ServerJobId) {
+                            Print-Info "Parando job em background..."
+                            Stop-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue
+                            Remove-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue -Force
+                            $Global:ServerJobId = $null
+                        }
+
                         Start-Sleep -Seconds 1
-                        Print-Success "Server stopped"
+                        Print-Success "Servidor parado"
                     }
+                } elseif ($Global:ServerJobId) {
+                    # Limpar job orfao mesmo sem processo
+                    Print-Info "Limpando job em background orfao..."
+                    Stop-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue
+                    Remove-Job -Id $Global:ServerJobId -ErrorAction SilentlyContinue -Force
+                    $Global:ServerJobId = $null
                 }
 
                 Write-Host ""
-                Print-Success "Goodbye!"
+                Print-Success "Ate logo!"
                 Write-Host ""
                 Write-Host "  =========================================================" -ForegroundColor DarkGreen
                 Write-Host ""
                 exit
             }
             default {
-                Print-Error "Invalid option"
+                Print-Error "Opcao invalida"
                 Start-Sleep -Seconds 1
             }
         }
@@ -964,7 +1083,6 @@ function Show-Usage {
     Write-Host "  status           - Mostrar status do servidor"
     Write-Host "  kill             - Matar servidor forcadamente"
     Write-Host "  logs             - Ver logs do servidor (tempo real)"
-    Write-Host "  cover-logs       - Ver logs de geracao de capas (tempo real)"
     Write-Host "  clean            - Limpar processos Node.js"
     Write-Host "  menu             - Abrir menu interativo (padrao)"
     Write-Host ""
@@ -983,6 +1101,33 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     Write-Warning "Algumas funcoes podem requerer privilegios de administrador"
     Write-Warning "Execute como administrador para funcionalidade completa"
     Start-Sleep -Seconds 2
+}
+
+# Validar ambiente antes de iniciar
+$envErrors = Test-Environment
+if ($envErrors.Count -gt 0) {
+    Write-Host ""
+    Write-Host "=========================================================" -ForegroundColor Red
+    Write-Host "  ERRO: Problemas detectados no ambiente" -ForegroundColor Red
+    Write-Host "=========================================================" -ForegroundColor Red
+    Write-Host ""
+
+    foreach ($error in $envErrors) {
+        Write-Host "  [X] $error" -ForegroundColor Red
+    }
+
+    Write-Host ""
+    Write-Host "=========================================================" -ForegroundColor Red
+    Write-Host ""
+
+    # Perguntar se deseja continuar mesmo assim
+    $continue = Read-Host "Deseja continuar mesmo assim? [s/N]"
+    if ($continue -notmatch '^[Ss]$') {
+        Write-Host ""
+        Write-Host "Encerrando..." -ForegroundColor Yellow
+        exit 1
+    }
+    Write-Host ""
 }
 
 # Processar argumentos de linha de comando
@@ -1026,10 +1171,6 @@ if ($args.Count -gt 0) {
         }
         "logs" {
             View-Logs
-            exit 0
-        }
-        "cover-logs" {
-            View-CoverLogs
             exit 0
         }
         "clean" {
