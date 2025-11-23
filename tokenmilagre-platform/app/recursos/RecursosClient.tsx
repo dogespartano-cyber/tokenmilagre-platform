@@ -8,7 +8,7 @@ import { SEARCH_DEBOUNCE_MS } from '@/lib/constants';
 import ResourceFilters from './components/ResourceFilters';
 import ResourceGrid from './components/ResourceGrid';
 import SecurityTips from './components/SecurityTips';
-import ScrollToTop from './components/ScrollToTop';
+
 
 interface RecursosClientProps {
   resources: Resource[];
@@ -119,8 +119,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
         {/* Dicas de Segurança */}
         <SecurityTips />
 
-        {/* Scroll to top button */}
-        <ScrollToTop />
+
       </div>
     </div>
   );

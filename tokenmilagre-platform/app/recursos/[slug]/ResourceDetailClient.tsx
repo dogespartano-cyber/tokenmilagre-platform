@@ -13,7 +13,7 @@ import ProsAndCons from './components/ProsAndCons';
 import ResourceFAQ from './components/ResourceFAQ';
 import ResourceSecurityTips from './components/ResourceSecurityTips';
 import RelatedResources from './components/RelatedResources';
-import ScrollToTop from '../components/ScrollToTop';
+
 
 interface ResourceDetailClientProps {
   resource: Resource;
@@ -82,8 +82,7 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
         </div>
       </div>
 
-      {/* Scroll to top button - Reused component */}
-      <ScrollToTop />
+
     </>
   );
 }

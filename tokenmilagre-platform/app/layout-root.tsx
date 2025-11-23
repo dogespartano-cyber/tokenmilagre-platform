@@ -14,6 +14,7 @@ import DashboardHeader from '@/app/components/DashboardHeader';
 import UserDropdown from '@/components/UserDropdown';
 import NavbarCryptoTicker from '@/components/NavbarCryptoTicker';
 import AnimatedBackground from '@/components/AnimatedBackground';
+import ScrollToTop from '@/app/components/ScrollToTop';
 
 const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
   ssr: false,
@@ -237,10 +238,8 @@ export default function RootLayoutNav({
           {/* Sidebar Footer - CTA */}
           < div className="p-6 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.05)' }
           }>
-            <a
-              href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/token"
               className="group flex items-center justify-center gap-2 w-full text-center px-6 py-3.5 rounded-xl transition-all duration-300 shadow-[0_4px_20px_rgba(var(--brand-primary-rgb),0.3)] hover:shadow-[0_4px_25px_rgba(var(--brand-primary-rgb),0.5)] hover:scale-[1.02] font-bold relative overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
@@ -252,7 +251,7 @@ export default function RootLayoutNav({
 
               <FontAwesomeIcon icon={faHeart} className="w-5 h-5 transition-transform duration-300 group-hover:scale-125 group-hover:animate-pulse relative z-10" />
               <span className="relative z-10">Comprar $MILAGRE</span>
-            </a>
+            </Link>
           </div >
         </div >
       </aside >
@@ -337,22 +336,22 @@ export default function RootLayoutNav({
 
                           {/* Filtros */}
                           <filter id="softShadowNavbar" x="-50%" y="-50%" width="200%" height="200%">
-                            <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
-                            <feOffset dx="0" dy="1" result="offsetblur"/>
+                            <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
+                            <feOffset dx="0" dy="1" result="offsetblur" />
                             <feComponentTransfer>
-                              <feFuncA type="linear" slope="0.3"/>
+                              <feFuncA type="linear" slope="0.3" />
                             </feComponentTransfer>
                             <feMerge>
-                              <feMergeNode/>
-                              <feMergeNode in="SourceGraphic"/>
+                              <feMergeNode />
+                              <feMergeNode in="SourceGraphic" />
                             </feMerge>
                           </filter>
 
                           <filter id="intensiveGlowNavbar" x="-50%" y="-50%" width="200%" height="200%">
-                            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                            <feGaussianBlur stdDeviation="2" result="coloredBlur" />
                             <feMerge>
-                              <feMergeNode in="coloredBlur"/>
-                              <feMergeNode in="SourceGraphic"/>
+                              <feMergeNode in="coloredBlur" />
+                              <feMergeNode in="SourceGraphic" />
                             </feMerge>
                           </filter>
                         </defs>
@@ -442,9 +441,9 @@ export default function RootLayoutNav({
                             d="M 90 100 L 87 97 L 88 50 L 90 47 L 92 50 L 93 97 Z"
                             fill={
                               gaugeValue <= 20 ? '#DC2626' :
-                              gaugeValue <= 40 ? '#F59E0B' :
-                              gaugeValue <= 60 ? '#84CC16' :
-                              gaugeValue <= 80 ? '#22C55E' : '#10B981'
+                                gaugeValue <= 40 ? '#F59E0B' :
+                                  gaugeValue <= 60 ? '#84CC16' :
+                                    gaugeValue <= 80 ? '#22C55E' : '#10B981'
                             }
                             filter="url(#softShadowNavbar)"
                           />
@@ -465,9 +464,9 @@ export default function RootLayoutNav({
                           r="6"
                           fill={
                             gaugeValue <= 20 ? '#DC2626' :
-                            gaugeValue <= 40 ? '#F59E0B' :
-                            gaugeValue <= 60 ? '#84CC16' :
-                            gaugeValue <= 80 ? '#22C55E' : '#10B981'
+                              gaugeValue <= 40 ? '#F59E0B' :
+                                gaugeValue <= 60 ? '#84CC16' :
+                                  gaugeValue <= 80 ? '#22C55E' : '#10B981'
                           }
                           filter="url(#intensiveGlowNavbar)"
                         />
@@ -508,10 +507,8 @@ export default function RootLayoutNav({
                   <span className="text-sm font-semibold">{theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}</span>
                 </button>
 
-                <a
-                  href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/token"
                   className="group flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(var(--brand-primary-rgb),0.3)] hover:shadow-[0_0_25px_rgba(var(--brand-primary-rgb),0.5)] hover:scale-105 font-bold relative overflow-hidden"
                   style={{
                     background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
@@ -523,7 +520,7 @@ export default function RootLayoutNav({
 
                   <FontAwesomeIcon icon={faHeart} className="w-5 h-5 transition-transform duration-300 group-hover:scale-125 group-hover:animate-pulse relative z-10" />
                   <span className="relative z-10">$MILAGRE</span>
-                </a>
+                </Link>
               </nav>
             </div>
           </div>
@@ -589,6 +586,9 @@ export default function RootLayoutNav({
             </div>
           </div>
         </footer>
+
+        {/* Global Scroll to Top Button */}
+        <ScrollToTop />
       </div >
     </div >
   );

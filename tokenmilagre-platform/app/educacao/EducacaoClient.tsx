@@ -43,7 +43,7 @@ interface RawArticleData {
 }
 
 export default function EducacaoClient({ resources, stats }: EducacaoClientProps) {
-  const [showScrollTop, setShowScrollTop] = useState(false);
+
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedLevel, setSelectedLevel] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -107,9 +107,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
     return searchMatch;
   });
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+
 
   const clearAllFilters = () => {
     setSearchTerm('');
@@ -125,13 +123,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
     return count;
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
 
   return (
     <>
@@ -378,8 +370,8 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
                     className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 ${selectedCategory === cat.id
-                        ? 'shadow-md'
-                        : 'hover:opacity-80'
+                      ? 'shadow-md'
+                      : 'hover:opacity-80'
                       }`}
                     style={{
                       backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
@@ -401,8 +393,8 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                     key={level.id}
                     onClick={() => setSelectedLevel(level.id)}
                     className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 ${selectedLevel === level.id
-                        ? 'shadow-md'
-                        : 'hover:opacity-80'
+                      ? 'shadow-md'
+                      : 'hover:opacity-80'
                       }`}
                     style={{
                       backgroundColor: selectedLevel === level.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
@@ -610,20 +602,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
             </div>
           </div>
 
-          {/* Scroll to top button */}
-          {showScrollTop && (
-            <button
-              onClick={scrollToTop}
-              className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
-              style={{
-                backgroundColor: 'var(--brand-primary)',
-                color: 'var(--text-inverse)'
-              }}
-              aria-label="Voltar ao topo"
-            >
-              <FontAwesomeIcon icon={faArrowUp} className="w-5 h-5" />
-            </button>
-          )}
+
         </div>
       </div>
     </>

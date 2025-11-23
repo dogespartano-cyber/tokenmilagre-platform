@@ -58,7 +58,6 @@ export default function HomePage() {
   const [dailyAnalysis, setDailyAnalysis] = useState<NewsItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadingResources, setLoadingResources] = useState(true);
-  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     fetchMarketData();
@@ -79,18 +78,7 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Scroll to top button
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const fetchMarketData = async () => {
     const CACHE_KEY = 'home_market_data';
@@ -1140,21 +1128,6 @@ export default function HomePage() {
         )}
       </div>
 
-      {/* Scroll to top button */}
-      {showScrollTop && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 border-2"
-          style={{
-            background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-            borderColor: 'var(--brand-primary)',
-            color: 'var(--text-inverse)'
-          }}
-          aria-label="Voltar ao topo"
-        >
-          <FontAwesomeIcon icon={faArrowUp} className="w-6 h-6" />
-        </button>
-      )}
     </>
   );
 }

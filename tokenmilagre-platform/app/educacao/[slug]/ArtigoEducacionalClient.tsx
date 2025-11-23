@@ -40,7 +40,7 @@ interface TableOfContentsItem {
 export default function ArtigoEducacionalClient({ article, relatedArticles = [] }: ArtigoEducacionalClientProps) {
   const router = useRouter();
   const [readingProgress, setReadingProgress] = useState(0);
-  const [showScrollTop, setShowScrollTop] = useState(false);
+
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
   const [activeSection, setActiveSection] = useState<string>('');
   const [currentUrl, setCurrentUrl] = useState<string>('');
@@ -55,9 +55,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
     }
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -111,7 +109,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
       const scrollTop = window.scrollY;
       const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
       setReadingProgress(Math.min(scrollPercent, 100));
-      setShowScrollTop(window.scrollY > 400);
+
 
       // Encontra a seção ativa
       const headingElements = tableOfContents.map(item => ({
@@ -507,20 +505,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
           )}
         </div>
 
-        {/* Scroll to top button */}
-        {showScrollTop && (
-          <button
-            onClick={scrollToTop}
-            className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
-            style={{
-              backgroundColor: 'var(--brand-primary)',
-              color: 'var(--text-inverse)'
-            }}
-            aria-label="Voltar ao topo"
-          >
-            <FontAwesomeIcon icon={faArrowUp} className="w-5 h-5" />
-          </button>
-        )}
+
       </div>
     </>
   );

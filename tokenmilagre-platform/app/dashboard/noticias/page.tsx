@@ -25,7 +25,7 @@ interface NewsItem {
 
 // Helper functions for card styling (baseado em sentimento)
 const getSentimentGradient = (sentiment: 'positive' | 'neutral' | 'negative') => {
-  switch(sentiment) {
+  switch (sentiment) {
     case 'positive': return 'rgba(34, 197, 94, 0.08)';  // Verde
     case 'negative': return 'rgba(239, 68, 68, 0.08)';  // Vermelho
     case 'neutral': return 'rgba(234, 179, 8, 0.08)';   // Amarelo
@@ -34,7 +34,7 @@ const getSentimentGradient = (sentiment: 'positive' | 'neutral' | 'negative') =>
 };
 
 const getSentimentColor = (sentiment: 'positive' | 'neutral' | 'negative') => {
-  switch(sentiment) {
+  switch (sentiment) {
     case 'positive': return '#22c55e';
     case 'negative': return '#ef4444';
     case 'neutral': return '#eab308';
@@ -43,7 +43,7 @@ const getSentimentColor = (sentiment: 'positive' | 'neutral' | 'negative') => {
 };
 
 const getSentimentIcon = (sentiment: 'positive' | 'neutral' | 'negative') => {
-  switch(sentiment) {
+  switch (sentiment) {
     case 'positive': return '🟢';
     case 'negative': return '🔴';
     case 'neutral': return '🟡';
@@ -52,7 +52,7 @@ const getSentimentIcon = (sentiment: 'positive' | 'neutral' | 'negative') => {
 };
 
 const getSentimentLabel = (sentiment: 'positive' | 'neutral' | 'negative') => {
-  switch(sentiment) {
+  switch (sentiment) {
     case 'positive': return 'Positivo';
     case 'negative': return 'Negativo';
     case 'neutral': return 'Neutro';
@@ -66,7 +66,7 @@ export default function NoticiasPage() {
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [showScrollTop, setShowScrollTop] = useState(false);
+
   const [selectedSentiment, setSelectedSentiment] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'alphabetical'>('newest');
 
@@ -192,17 +192,7 @@ export default function NoticiasPage() {
     setFilteredNews(filtered);
   }, [searchTerm, news, selectedSentiment, sortBy]);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const getTimeAgo = (date: string) => {
     const now = new Date();
@@ -292,11 +282,10 @@ export default function NoticiasPage() {
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 ${
-                    selectedCategory === cat.id
+                  className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 ${selectedCategory === cat.id
                       ? 'shadow-md'
                       : 'hover:opacity-80'
-                  }`}
+                    }`}
                   style={{
                     backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
                     color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
@@ -364,16 +353,14 @@ export default function NoticiasPage() {
                 <div
                   className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
-                    background: `linear-gradient(90deg, transparent, ${
-                      item.sentiment === 'positive' ? '#22c55e' :
-                      item.sentiment === 'negative' ? '#ef4444' :
-                      '#eab308'
-                    }, transparent)`,
-                    boxShadow: `0 0 20px ${
-                      item.sentiment === 'positive' ? '#22c55e' :
-                      item.sentiment === 'negative' ? '#ef4444' :
-                      '#eab308'
-                    }40`
+                    background: `linear-gradient(90deg, transparent, ${item.sentiment === 'positive' ? '#22c55e' :
+                        item.sentiment === 'negative' ? '#ef4444' :
+                          '#eab308'
+                      }, transparent)`,
+                    boxShadow: `0 0 20px ${item.sentiment === 'positive' ? '#22c55e' :
+                        item.sentiment === 'negative' ? '#ef4444' :
+                          '#eab308'
+                      }40`
                   }}
                 />
 
@@ -390,15 +377,13 @@ export default function NoticiasPage() {
                   <div className="flex items-center gap-3 mb-6">
                     {/* Badge de Sentimento - Compacto */}
                     <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm" style={{
-                      background: `linear-gradient(135deg, ${
-                        item.sentiment === 'positive' ? '#22c55e' :
-                        item.sentiment === 'negative' ? '#ef4444' :
-                        '#eab308'
-                      }, ${
-                        item.sentiment === 'positive' ? '#16a34a' :
-                        item.sentiment === 'negative' ? '#dc2626' :
-                        '#d97706'
-                      })`,
+                      background: `linear-gradient(135deg, ${item.sentiment === 'positive' ? '#22c55e' :
+                          item.sentiment === 'negative' ? '#ef4444' :
+                            '#eab308'
+                        }, ${item.sentiment === 'positive' ? '#16a34a' :
+                          item.sentiment === 'negative' ? '#dc2626' :
+                            '#d97706'
+                        })`,
                       color: 'white'
                     }}>
                       <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></div>
@@ -460,8 +445,8 @@ export default function NoticiasPage() {
                   }}>
                     <div className="flex items-center gap-2 text-sm font-bold" style={{
                       color: item.sentiment === 'positive' ? '#22c55e' :
-                             item.sentiment === 'negative' ? '#ef4444' :
-                             '#eab308'
+                        item.sentiment === 'negative' ? '#ef4444' :
+                          '#eab308'
                     }}>
                       <span>Ler Notícia Completa</span>
                       <FontAwesomeIcon icon={faArrowRight} className="w-5 h-5" />
@@ -486,21 +471,7 @@ export default function NoticiasPage() {
           </div>
         )}
 
-        {/* Scroll to top button */}
-        {showScrollTop && (
-          <button
-            onClick={scrollToTop}
-            className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 border-2"
-            style={{
-              background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-              borderColor: 'var(--brand-primary)',
-              color: 'var(--text-inverse)'
-            }}
-            aria-label="Voltar ao topo"
-          >
-            <FontAwesomeIcon icon={faArrowUp} className="w-6 h-6" />
-          </button>
-        )}
+
       </div>
     </div>
   );

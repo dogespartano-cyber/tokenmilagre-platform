@@ -20,19 +20,8 @@ import {
 import { faGithub, faTwitter, faTelegram, faDiscord } from '@fortawesome/free-brands-svg-icons';
 
 export default function EquipePage() {
-  const [showScrollTop, setShowScrollTop] = useState(false);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const roles = [
     {
@@ -556,20 +545,6 @@ export default function EquipePage() {
             </p>
           </div>
 
-          {/* Scroll to top button */}
-          {showScrollTop && (
-            <button
-              onClick={scrollToTop}
-              className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
-              style={{
-                backgroundColor: 'var(--brand-primary)',
-                color: 'var(--text-inverse)'
-              }}
-              aria-label="Voltar ao topo"
-            >
-              <FontAwesomeIcon icon={faArrowUp} className="w-5 h-5" />
-            </button>
-          )}
         </div>
       </div>
     </>
