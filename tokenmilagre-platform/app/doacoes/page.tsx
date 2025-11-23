@@ -201,6 +201,17 @@ export default function DoacoesPage() {
           -webkit-text-fill-color: transparent;
           background-clip: text;
         }
+
+        /* Spinning Animations */
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+
+        @keyframes spin-reverse {
+          from { transform: rotate(360deg); }
+          to { transform: rotate(0deg); }
+        }
       `}</style>
 
       <div className="min-h-screen relative overflow-hidden bg-[var(--bg-secondary)] transition-colors duration-300">
@@ -215,12 +226,42 @@ export default function DoacoesPage() {
 
           {/* Header Section */}
           <div className="text-center mb-20 pt-10">
+            {/* Animated Logo with Floating Effect */}
+            <div className="flex justify-center mb-8 mt-12">
+              <div className="relative w-60 h-60 md:w-72 md:h-72 animate-float">
+                {/* Animated rings */}
+                <div className="absolute inset-0" style={{ animation: 'spin-slow 25s linear infinite' }}>
+                  <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-green-500"></div>
+                </div>
+                <div className="absolute inset-3" style={{ animation: 'spin-reverse 20s linear infinite' }}>
+                  <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-teal-500"></div>
+                </div>
+
+                {/* Glow effect */}
+                <div className="absolute inset-0 blur-2xl animate-pulse opacity-20" style={{
+                  background: 'linear-gradient(135deg, #93c5fd, #bfdbfe, #dbeafe)'
+                }}></div>
+
+                {/* Image */}
+                <div className="relative z-10 flex items-center justify-center h-full transform hover:scale-105 transition-all duration-700">
+                  <Image
+                    src="/images/TOKEN-MILAGRE-Hero.webp"
+                    alt="$MILAGRE"
+                    width={288}
+                    height={288}
+                    className="drop-shadow-2xl"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
+
             <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full glass-panel mb-6">
               <FontAwesomeIcon icon={faHeart} className="text-red-500 animate-pulse" />
               <span className="text-sm font-bold text-[var(--text-secondary)] tracking-wide uppercase">Faça a Diferença</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-montserrat font-black mb-6 text-[var(--text-primary)] tracking-tight">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold leading-tight mb-6 text-[var(--text-primary)] tracking-tight">
               Apoie o <span className="gradient-text">$MILAGRE</span>
             </h1>
 

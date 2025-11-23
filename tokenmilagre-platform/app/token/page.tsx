@@ -190,26 +190,26 @@ export default function TokenPage() {
             <div className="flex justify-center mb-8 mt-12">
               <div className="relative w-60 h-60 md:w-72 md:h-72 animate-float">
                 {/* Animated rings */}
-                <div className="absolute inset-0 animate-spin-slow">
+                <div className="absolute inset-0" style={{ animation: 'spin-slow 25s linear infinite' }}>
                   <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-green-500"></div>
                 </div>
-                <div className="absolute inset-3 animate-spin-reverse">
+                <div className="absolute inset-3" style={{ animation: 'spin-reverse 20s linear infinite' }}>
                   <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-teal-500"></div>
                 </div>
 
-                {/* Glow effect - NO PURPLE */}
-                <div className="absolute inset-0 blur-2xl animate-pulse opacity-30" style={{
-                  background: 'linear-gradient(135deg, #0d9488, #22c55e, #3b82f6)'
+                {/* Glow effect */}
+                <div className="absolute inset-0 blur-2xl animate-pulse opacity-20" style={{
+                  background: 'linear-gradient(135deg, #93c5fd, #bfdbfe, #dbeafe)'
                 }}></div>
 
                 {/* Image */}
                 <div className="relative z-10 flex items-center justify-center h-full transform hover:scale-105 transition-all duration-700">
                   <Image
                     src="/images/TOKEN-MILAGRE-Hero.webp"
-                    alt="$MILAGRE Token"
+                    alt="$MILAGRE"
                     width={288}
                     height={288}
-                    className="drop-shadow-2xl rounded-full"
+                    className="drop-shadow-2xl"
                     priority
                   />
                 </div>

@@ -277,16 +277,16 @@ export default function SobrePage() {
             <div className="flex justify-center mb-8 mt-12">
               <div className="relative w-60 h-60 md:w-72 md:h-72 animate-float">
                 {/* Animated rings */}
-                <div className="absolute inset-0 animate-spin-slow">
+                <div className="absolute inset-0" style={{ animation: 'spin-slow 25s linear infinite' }}>
                   <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-green-500"></div>
                 </div>
-                <div className="absolute inset-3 animate-spin-reverse">
+                <div className="absolute inset-3" style={{ animation: 'spin-reverse 20s linear infinite' }}>
                   <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-teal-500"></div>
                 </div>
 
-                {/* Glow effect - NO PURPLE */}
-                <div className="absolute inset-0 blur-2xl animate-pulse opacity-30" style={{
-                  background: 'linear-gradient(135deg, #0d9488, #22c55e, #3b82f6)'
+                {/* Glow effect */}
+                <div className="absolute inset-0 blur-2xl animate-pulse opacity-20" style={{
+                  background: 'linear-gradient(135deg, #93c5fd, #bfdbfe, #dbeafe)'
                 }}></div>
 
                 {/* Image */}
@@ -296,7 +296,7 @@ export default function SobrePage() {
                     alt="$MILAGRE"
                     width={288}
                     height={288}
-                    className="drop-shadow-2xl rounded-full"
+                    className="drop-shadow-2xl"
                     priority
                   />
                 </div>
@@ -550,64 +550,7 @@ export default function SobrePage() {
             </div>
           </section>
 
-          {/* Por Que Somos Anônimos */}
-          <section className="relative py-12">
-            <div className="glass-panel p-8 md:p-12 rounded-3xl">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
-                  <FontAwesomeIcon icon={faShieldHalved} className="mr-3 text-teal-600" />
-                  Por Que Muitos Membros São Anônimos?
-                </h2>
-              </div>
 
-              <p className="text-lg md:text-xl font-inter leading-relaxed mb-8 text-center text-gray-700 dark:text-[var(--text-secondary)]">
-                No espaço cripto, <strong className="text-gray-900 dark:text-[var(--text-primary)]">anonimato é comum e legítimo</strong>.
-                Muitos dos maiores projetos foram criados por desenvolvedores anônimos (Bitcoin, por exemplo).
-              </p>
-
-              <div className="grid md:grid-cols-3 gap-6">
-                {[
-                  {
-                    title: 'Segurança Pessoal',
-                    description: 'Evita exposição desnecessária a riscos de segurança (doxxing, ataques direcionados).',
-                    icon: faShieldHalved
-                  },
-                  {
-                    title: 'Foco no Projeto',
-                    description: 'O que importa é a qualidade do código e das contribuições, não quem você é.',
-                    icon: faCode
-                  },
-                  {
-                    title: 'Descentralização Real',
-                    description: 'Sem "CEO" ou "fundador famoso", o projeto pertence verdadeiramente à comunidade.',
-                    icon: faGlobe
-                  }
-                ].map((item, index) => (
-                  <div key={index} className="neumorphic-card p-6 text-center">
-                    <div className="w-12 h-12 mx-auto mb-4 rounded-xl flex items-center justify-center bg-gradient-to-r from-teal-600 to-blue-600 shadow-lg">
-                      <FontAwesomeIcon icon={item.icon} className="text-white" />
-                    </div>
-                    <h3 className="font-montserrat font-bold mb-2 text-gray-900 dark:text-[var(--text-primary)]">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm font-inter text-gray-700 dark:text-[var(--text-secondary)]">
-                      {item.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-8 p-6 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-center">
-                <p className="font-inter">
-                  <strong className="text-teal-600">💡 Mas você pode verificar tudo:</strong>{' '}
-                  <span className="text-gray-700 dark:text-[var(--text-secondary)]">
-                    Todo o código está no GitHub. Todas as contribuições são públicas. Você não precisa confiar
-                    em ninguém - apenas audite o código.
-                  </span>
-                </p>
-              </div>
-            </div>
-          </section>
 
           {/* Nossos Princípios */}
           <section className="relative py-12">
@@ -625,7 +568,7 @@ export default function SobrePage() {
               {principles.map((principle, index) => (
                 <div key={index} className="neumorphic-card p-8">
                   <div className="flex items-start gap-6">
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-teal-600 to-blue-600 shadow-lg neumorphic-button">
+                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg neumorphic-button" style={{ background: 'linear-gradient(135deg, #0d9488, #2563eb)' }}>
                       <FontAwesomeIcon icon={principle.icon} className="text-2xl text-white" />
                     </div>
                     <div className="flex-1">

@@ -236,7 +236,7 @@ export default function ManifestoPage() {
                 </div>
               </div>
 
-              <h1 className="text-4xl md:text-6xl font-montserrat font-bold leading-tight text-gray-900 dark:text-[var(--text-primary)] drop-shadow-lg">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold leading-tight text-gray-900 dark:text-[var(--text-primary)] drop-shadow-lg">
                 Nunca Estarás <br />
                 <span className="gradient-text">Sozinho</span>
               </h1>
