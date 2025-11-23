@@ -448,26 +448,14 @@ export default function TokenPage() {
       </section>
 
       {/* Faça Parte da Jornada - Final CTA */}
-      <section className="relative py-32 overflow-hidden" style={{
-        background: 'linear-gradient(135deg, #003f5c, #6a0572, #fb8500)'
-      }}>
+      <section className="relative py-32" style={{ backgroundColor: 'transparent' }}>
+        <div className="max-w-4xl mx-auto px-6 text-center">
 
-        {/* Decorative Glow */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-10 right-10 w-80 h-80 rounded-full blur-3xl animate-pulse" style={{ backgroundColor: '#ffb703' }}></div>
-          <div className="absolute bottom-10 left-10 w-96 h-96 rounded-full blur-3xl animate-pulse" style={{
-            backgroundColor: '#4caf50',
-            animationDelay: '1s'
-          }}></div>
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-
-          <h2 className="text-4xl md:text-6xl font-montserrat font-bold text-white mb-8">
+          <h2 className="text-4xl md:text-6xl font-montserrat font-bold mb-8" style={{ color: 'var(--text-primary)' }}>
             Faça Parte da Jornada
           </h2>
 
-          <p className="text-xl md:text-2xl text-white/90 mb-16 max-w-3xl mx-auto font-inter">
+          <p className="text-xl md:text-2xl mb-16 max-w-3xl mx-auto font-inter" style={{ color: 'var(--text-secondary)' }}>
             Junte-se a uma comunidade que valoriza educação, transparência e crescimento de longo prazo.
           </p>
 
@@ -477,8 +465,8 @@ export default function TokenPage() {
               href="https://discord.gg/xk4zrz8j"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-hover flex items-center gap-3 px-10 py-5 bg-white rounded-full font-inter font-semibold text-lg shadow-xl"
-              style={{ color: '#6a0572' }}
+              className="btn-hover flex items-center gap-3 px-10 py-5 rounded-full font-inter font-semibold text-lg shadow-xl text-white"
+              style={{ background: 'linear-gradient(135deg, #4caf50, #22B286)' }}
             >
               <FontAwesomeIcon icon={faDiscord} className="w-6 h-6" />
               <span>Entrar no Discord</span>
@@ -488,7 +476,12 @@ export default function TokenPage() {
               href="https://t.me/+Bop_TVFc_mg3Njlh"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-hover flex items-center gap-3 px-10 py-5 rounded-full font-inter font-semibold text-lg shadow-xl text-white border-2 border-white bg-transparent"
+              className="btn-hover flex items-center gap-3 px-10 py-5 rounded-full font-inter font-semibold text-lg shadow-xl border-2"
+              style={{
+                borderColor: '#4caf50',
+                color: '#4caf50',
+                backgroundColor: 'transparent'
+              }}
             >
               <FontAwesomeIcon icon={faTelegram} className="w-6 h-6" />
               <span>Entrar no Telegram</span>
@@ -497,11 +490,13 @@ export default function TokenPage() {
 
           {/* Contract Address Card */}
           <div className="max-w-2xl mx-auto glass-card rounded-3xl p-10">
-            <p className="text-white/70 text-sm font-inter font-semibold uppercase tracking-widest mb-4">
+            <p className="text-sm font-inter font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--text-tertiary)' }}>
               Endereço do Contrato
             </p>
-            <code className="block text-white font-mono text-sm md:text-base mb-6 break-all px-6 py-4 rounded-xl" style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.3)'
+            <code className="block font-mono text-sm md:text-base mb-6 break-all px-6 py-4 rounded-xl" style={{
+              backgroundColor: 'var(--bg-elevated)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border-medium)'
             }}>
               {TOKEN_ADDRESS}
             </code>
@@ -518,7 +513,7 @@ export default function TokenPage() {
           </div>
 
           {/* Disclaimer */}
-          <p className="text-white/60 text-sm mt-16 max-w-2xl mx-auto leading-relaxed font-inter">
+          <p className="text-sm mt-16 max-w-2xl mx-auto leading-relaxed font-inter" style={{ color: 'var(--text-tertiary)' }}>
             Criptomoedas envolvem riscos. Este não é um conselho financeiro. Faça sua própria pesquisa (DYOR) e invista apenas o que você pode perder. $MILAGRE é um projeto educacional.
           </p>
         </div>
