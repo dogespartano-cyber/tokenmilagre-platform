@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { Resource } from '@/lib/resources';
-import { getCategoryGradient, getCategoryLabel } from '@/lib/category-helpers';
+import { getCategoryLabel } from '@/lib/category-helpers';
 
 interface ResourceHeaderProps {
   resource: Resource;
@@ -48,8 +48,11 @@ export default function ResourceHeader({ resource }: ResourceHeaderProps) {
           href={resource.officialUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white transition-all hover:scale-105 hover:shadow-xl"
-          style={{ background: getCategoryGradient(resource.category) }}
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all hover:scale-105 hover:shadow-xl"
+          style={{
+            backgroundColor: 'var(--brand-primary)',
+            color: 'var(--text-inverse)'
+          }}
           aria-label={`Acessar site oficial de ${resource.name}`}
         >
           Acessar site oficial

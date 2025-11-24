@@ -24,60 +24,21 @@ export type ResourceCategory =
 /**
  * Get category gradient (for backgrounds and buttons)
  * Used for: Card backgrounds with subtle gradients
- * CORES MAXIMAMENTE DISTINTAS - distribuídas pelo círculo cromático
+ * COR NEUTRA para todas as categorias
  */
 export function getCategoryGradient(category: string): string {
-  const gradients: Record<string, string> = {
-    // List view gradients (subtle, 8% opacity) - cada categoria BEM distinta
-    'wallet': 'rgba(255, 107, 0, 0.08)',           // 🟠 Laranja forte
-    'exchange': 'rgba(255, 193, 7, 0.08)',         // 🟡 Âmbar/Amarelo-ouro
-    'defi-protocol': 'rgba(233, 30, 99, 0.08)',    // 💗 Magenta
-    'explorers': 'rgba(33, 150, 243, 0.08)',       // 🔵 Azul royal
-    'browsers': 'rgba(156, 39, 176, 0.08)',        // 🟣 Roxo profundo
-    'analytics': 'rgba(0, 200, 83, 0.08)',         // 🟢 Verde esmeralda
-    'portfolio-tracker': 'rgba(0, 188, 212, 0.08)', // 🌊 Ciano puro
-    'development-tools': 'rgba(96, 125, 139, 0.08)', // ⚫ Cinza-azulado
-    'news': 'rgba(244, 67, 54, 0.08)',             // 🔴 Vermelho vivo
-    'education': 'rgba(205, 220, 57, 0.08)',       // 🟨 Verde-lima/Amarelo-esverdeado
-
-    // Detail view gradients (solid, for buttons)
-    'wallets': 'linear-gradient(135deg, #FF6B00 0%, #E65100 100%)', // Laranja
-    'exchanges': 'linear-gradient(135deg, #FFC107 0%, #FFA000 100%)', // Amarelo-ouro
-    'defi': 'linear-gradient(135deg, #E91E63 0%, #C2185B 100%)', // Magenta
-    'tools': 'linear-gradient(135deg, #00C853 0%, #00A844 100%)', // Verde
-  };
-
-  return gradients[category] || 'rgba(99, 102, 241, 0.05)'; // Roxo padrão
+  // Cor neutra única para todas as categorias
+  return 'rgba(100, 116, 139, 0.06)';
 }
 
 /**
  * Get solid category color (for badges, borders, text)
  * Used for: Category badges, icons, accent colors
- * ESQUEMA DE CORES MAXIMAMENTE DISTINTAS
- * Distribuição pelo círculo cromático para máxima diferenciação visual
+ * COR NEUTRA para todas as categorias
  */
 export function getCategoryColor(category: string): string {
-  const colors: Record<string, string> = {
-    // Cores primárias - maximamente distintas entre si
-    'wallet': '#FF6B00',          // 🟠 Laranja forte (0° + offset)
-    'exchange': '#FFC107',        // � Âmbar/Amarelo-ouro (45°)
-    'defi-protocol': '#E91E63',   // 💗 Magenta (330°)
-    'explorers': '#2196F3',       // 🔵 Azul royal (210°)
-    'browsers': '#9C27B0',        // 🟣 Roxo profundo (270°)
-    'analytics': '#00C853',       // 🟢 Verde esmeralda (140°)
-    'portfolio-tracker': '#00BCD4', // 🌊 Ciano puro (180°)
-    'development-tools': '#607D8B', // ⚫ Cinza-azulado (neutro)
-    'news': '#F44336',            // 🔴 Vermelho vivo (0°)
-    'education': '#CDDC39',       // � Verde-lima (70°)
-
-    // Detail view (aliases)
-    'wallets': '#FF6B00',         // 🟠 Laranja
-    'exchanges': '#FFC107',       // � Âmbar
-    'defi': '#E91E63',            // 💗 Magenta
-    'tools': '#607D8B',           // ⚫ Cinza
-  };
-
-  return colors[category] || '#6366F1'; // Roxo padrão
+  // Cor neutra única para todas as categorias
+  return '#64748B'; // Slate 500
 }
 
 /**
