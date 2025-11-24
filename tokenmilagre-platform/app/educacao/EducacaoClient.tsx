@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faArrowRight, faSearch, faTimes, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/utils/level-helpers';
 import { getCategoryIcon } from '@/lib/utils/category-helpers';
+import DashboardHeader from '@/app/components/DashboardHeader';
 
 interface Resource {
   id: string;
@@ -140,36 +141,11 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
       <div className="container mx-auto px-4 py-8">
         <div className="space-y-16">
-          {/* Hero */}
-          <div className="space-y-6 max-w-3xl">
-
-
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-              Aprenda, Cresça e{' '}
-              <span className="text-brand-primary">Compartilhe Conhecimento</span>
-            </h1>
-
-            <p className="text-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              Artigos e tutoriais gratuitos criados e curados pela comunidade $MILAGRE.
-              Conhecimento livre, acessível a todos.
-            </p>
-
-            {/* Stats - Valores estáticos do banco (não mudam com scroll) */}
-            <div className="flex flex-wrap gap-8 pt-4">
-              <div>
-                <div className="text-3xl font-bold text-brand-primary">{stats.totalArticles}</div>
-                <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Recursos</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-brand-primary">{stats.totalCategories}</div>
-                <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Categorias</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-brand-primary">100%</div>
-                <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Gratuito</div>
-              </div>
-            </div>
-          </div>
+          {/* Header with Discord/Telegram Buttons */}
+          <DashboardHeader
+            title="Educação Cripto"
+            description="Artigos e tutoriais gratuitos criados pela comunidade $MILAGRE. Conhecimento livre para todos."
+          />
 
           {/* Cards Principais em Destaque */}
           <div className="space-y-6">
@@ -404,13 +380,6 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                     {level.label}
                   </button>
                 ))}
-              </div>
-
-              {/* Contador */}
-              <div className="ml-auto">
-                <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
-                  {filteredResources.length} {filteredResources.length === 1 ? 'recurso' : 'recursos'}
-                </p>
               </div>
             </div>
           </div>

@@ -88,11 +88,10 @@ export default function ResourceFilters({
             <button
               key={cat.id}
               onClick={() => onCategoryChange(cat.id)}
-              className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${
-                selectedCategory === cat.id
+              className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${selectedCategory === cat.id
                   ? 'shadow-md'
                   : 'hover:opacity-80'
-              }`}
+                }`}
               style={{
                 backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
                 color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
@@ -103,16 +102,6 @@ export default function ResourceFilters({
               {cat.label}
             </button>
           ))}
-        </div>
-
-        {/* Separador */}
-        <div className="h-8 w-px" style={{ backgroundColor: 'var(--border-light)' }}></div>
-
-        {/* Contador */}
-        <div className="ml-auto" role="status" aria-live="polite">
-          <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
-            {totalResults} {totalResults === 1 ? 'recurso' : 'recursos'}
-          </p>
         </div>
       </div>
     </div>

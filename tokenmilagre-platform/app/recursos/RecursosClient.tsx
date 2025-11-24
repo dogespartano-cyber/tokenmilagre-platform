@@ -8,6 +8,7 @@ import { SEARCH_DEBOUNCE_MS } from '@/lib/constants';
 import ResourceFilters from './components/ResourceFilters';
 import ResourceGrid from './components/ResourceGrid';
 import SecurityTips from './components/SecurityTips';
+import DashboardHeader from '@/app/components/DashboardHeader';
 
 
 interface RecursosClientProps {
@@ -61,38 +62,11 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="space-y-16">
-        {/* Hero */}
-        <div className="space-y-6 max-w-3xl">
-
-
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-            Acesse com Segurança os{' '}
-            <span className="text-brand-primary">Links Oficiais Verificados</span>
-          </h1>
-
-          <p className="text-xl leading-relaxed max-w-3xl" style={{ color: 'var(--text-secondary)' }}>
-            Wallets, exchanges e ferramentas essenciais com links oficiais verificados pela comunidade $MILAGRE.
-            Proteja-se contra sites falsos e golpes.
-          </p>
-
-          {/* Alerta de Segurança */}
-          <div className="p-4 rounded-xl border-2" style={{
-            backgroundColor: 'var(--bg-secondary)',
-            borderColor: '#f59e0b'
-          }}>
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">⚠️</span>
-              <div>
-                <p className="font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
-                  Sempre Verifique a URL
-                </p>
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  Golpistas criam sites falsos para roubar suas informações. Sempre confirme que você está no site oficial antes de conectar sua carteira ou inserir dados pessoais.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Header with Discord/Telegram Buttons */}
+        <DashboardHeader
+          title="Recursos Verificados"
+          description="Ferramentas essenciais com links oficiais verificados pela comunidade $MILAGRE. Acesse com segurança."
+        />
 
         {/* Busca e Filtros */}
         <ResourceFilters
