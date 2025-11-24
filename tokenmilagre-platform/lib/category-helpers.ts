@@ -24,51 +24,57 @@ export type ResourceCategory =
 /**
  * Get category gradient (for backgrounds and buttons)
  * Used for: Card backgrounds with subtle gradients
+ * CORES MAXIMAMENTE DISTINTAS - distribuídas pelo círculo cromático
  */
 export function getCategoryGradient(category: string): string {
   const gradients: Record<string, string> = {
-    // List view gradients (subtle, 8% opacity)
-    'wallet': 'rgba(246, 133, 27, 0.08)',          // Laranja (MetaMask) 8%
-    'exchange': 'rgba(243, 186, 47, 0.08)',        // Dourado (Binance) 8%
-    'defi-protocol': 'rgba(255, 0, 122, 0.08)',    // Rosa (Uniswap) 8%
-    'explorers': 'rgba(59, 130, 246, 0.08)',       // Azul 8%
-    'browsers': 'rgba(139, 92, 246, 0.08)',        // Roxo-azul 8%
-    'analytics': 'rgba(16, 185, 129, 0.08)',       // Verde 8%
-    'portfolio-tracker': 'rgba(236, 72, 153, 0.08)', // Rosa-vivo 8%
-    'development-tools': 'rgba(156, 163, 175, 0.08)', // Cinza 8%
-    'news': 'rgba(239, 68, 68, 0.08)',             // Vermelho 8%
-    'education': 'rgba(34, 197, 94, 0.08)',        // Verde-educação 8%
+    // List view gradients (subtle, 8% opacity) - cada categoria BEM distinta
+    'wallet': 'rgba(255, 107, 0, 0.08)',           // 🟠 Laranja forte
+    'exchange': 'rgba(255, 193, 7, 0.08)',         // 🟡 Âmbar/Amarelo-ouro
+    'defi-protocol': 'rgba(233, 30, 99, 0.08)',    // 💗 Magenta
+    'explorers': 'rgba(33, 150, 243, 0.08)',       // 🔵 Azul royal
+    'browsers': 'rgba(156, 39, 176, 0.08)',        // 🟣 Roxo profundo
+    'analytics': 'rgba(0, 200, 83, 0.08)',         // 🟢 Verde esmeralda
+    'portfolio-tracker': 'rgba(0, 188, 212, 0.08)', // 🌊 Ciano puro
+    'development-tools': 'rgba(96, 125, 139, 0.08)', // ⚫ Cinza-azulado
+    'news': 'rgba(244, 67, 54, 0.08)',             // 🔴 Vermelho vivo
+    'education': 'rgba(205, 220, 57, 0.08)',       // 🟨 Verde-lima/Amarelo-esverdeado
 
     // Detail view gradients (solid, for buttons)
-    'wallets': 'linear-gradient(135deg, #F6851B 0%, #E2761B 100%)', // Laranja (MetaMask)
-    'exchanges': 'linear-gradient(135deg, #F3BA2F 0%, #EAA42D 100%)', // Dourado (Binance)
-    'defi': 'linear-gradient(135deg, #FF007A 0%, #E6006E 100%)', // Rosa (Uniswap)
-    'tools': 'linear-gradient(135deg, #10B981 0%, #059669 100%)', // Verde
+    'wallets': 'linear-gradient(135deg, #FF6B00 0%, #E65100 100%)', // Laranja
+    'exchanges': 'linear-gradient(135deg, #FFC107 0%, #FFA000 100%)', // Amarelo-ouro
+    'defi': 'linear-gradient(135deg, #E91E63 0%, #C2185B 100%)', // Magenta
+    'tools': 'linear-gradient(135deg, #00C853 0%, #00A844 100%)', // Verde
   };
 
-  return gradients[category] || 'rgba(99, 102, 241, 0.05)'; // Roxo padrão 5%
+  return gradients[category] || 'rgba(99, 102, 241, 0.05)'; // Roxo padrão
 }
 
 /**
  * Get solid category color (for badges, borders, text)
  * Used for: Category badges, icons, accent colors
+ * ESQUEMA DE CORES MAXIMAMENTE DISTINTAS
+ * Distribuição pelo círculo cromático para máxima diferenciação visual
  */
 export function getCategoryColor(category: string): string {
   const colors: Record<string, string> = {
-    'wallet': '#F6851B',          // Laranja (MetaMask)
-    'wallets': '#8B5CF6',         // Roxo (detail view)
-    'exchange': '#F3BA2F',        // Dourado (Binance)
-    'exchanges': '#3B82F6',       // Azul (detail view)
-    'defi-protocol': '#FF007A',   // Rosa (Uniswap)
-    'defi': '#FF007A',            // Rosa
-    'explorers': '#3B82F6',       // Azul
-    'browsers': '#8B5CF6',        // Roxo-azul
-    'analytics': '#10B981',       // Verde
-    'portfolio-tracker': '#EC4899', // Rosa-vivo
-    'development-tools': '#9CA3AF', // Cinza
-    'tools': '#6B7280',           // Cinza (detail view)
-    'news': '#EF4444',            // Vermelho
-    'education': '#22C55E',       // Verde-educação
+    // Cores primárias - maximamente distintas entre si
+    'wallet': '#FF6B00',          // 🟠 Laranja forte (0° + offset)
+    'exchange': '#FFC107',        // � Âmbar/Amarelo-ouro (45°)
+    'defi-protocol': '#E91E63',   // 💗 Magenta (330°)
+    'explorers': '#2196F3',       // 🔵 Azul royal (210°)
+    'browsers': '#9C27B0',        // 🟣 Roxo profundo (270°)
+    'analytics': '#00C853',       // 🟢 Verde esmeralda (140°)
+    'portfolio-tracker': '#00BCD4', // 🌊 Ciano puro (180°)
+    'development-tools': '#607D8B', // ⚫ Cinza-azulado (neutro)
+    'news': '#F44336',            // 🔴 Vermelho vivo (0°)
+    'education': '#CDDC39',       // � Verde-lima (70°)
+
+    // Detail view (aliases)
+    'wallets': '#FF6B00',         // 🟠 Laranja
+    'exchanges': '#FFC107',       // � Âmbar
+    'defi': '#E91E63',            // 💗 Magenta
+    'tools': '#607D8B',           // ⚫ Cinza
   };
 
   return colors[category] || '#6366F1'; // Roxo padrão
