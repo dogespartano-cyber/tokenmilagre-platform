@@ -1,6 +1,7 @@
 import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { Resource } from '@/lib/resources';
-import { getCategoryGradient } from '@/lib/category-helpers';
 
 interface RelatedResourcesProps {
   relatedResources: Resource[];
@@ -11,29 +12,27 @@ export default function RelatedResources({ relatedResources }: RelatedResourcesP
 
   return (
     <>
-      {/* Divider */}
-      <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
-      <section className="space-y-6">
-        <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+      <section className="space-y-8">
+        <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
+          <FontAwesomeIcon icon={faLightbulb} className="text-2xl text-[var(--brand-primary)]" />
           Você Também Pode Gostar
         </h2>
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-3 gap-6">
           {relatedResources.map((relatedResource) => (
             <Link
               key={relatedResource.slug}
               href={`/recursos/${relatedResource.slug}`}
-              className="group p-5 rounded-xl border transition-all hover:shadow-lg hover:-translate-y-1"
+              className="group p-6 rounded-2xl border transition-all hover:shadow-lg hover:-translate-y-1 block h-full"
               style={{
                 backgroundColor: 'var(--bg-secondary)',
                 borderColor: 'var(--border-light)'
               }}
               aria-label={`Ver detalhes de ${relatedResource.name}`}
             >
-              <div className="space-y-3">
+              <div className="space-y-4 h-full flex flex-col">
                 <div className="flex items-center justify-between">
                   <span
-                    className="px-2 py-1 rounded text-xs font-bold"
+                    className="px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wide"
                     style={{
                       backgroundColor: 'var(--bg-elevated)',
                       color: 'var(--text-tertiary)'
@@ -42,12 +41,15 @@ export default function RelatedResources({ relatedResources }: RelatedResourcesP
                     {relatedResource.category === 'browsers' ? 'Navegador' : relatedResource.category}
                   </span>
                   <div
-                    className="w-6 h-6 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-transform"
-                    style={{ background: getCategoryGradient(relatedResource.category) }}
+                    className="w-8 h-8 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-transform"
+                    style={{
+                      backgroundColor: 'var(--bg-elevated)',
+                      color: 'var(--text-secondary)'
+                    }}
                     aria-hidden="true"
                   >
                     <svg
-                      className="w-3.5 h-3.5 text-white"
+                      className="w-4 h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -56,12 +58,14 @@ export default function RelatedResources({ relatedResources }: RelatedResourcesP
                     </svg>
                   </div>
                 </div>
-                <h3 className="text-lg font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                  {relatedResource.name}
-                </h3>
-                <p className="text-sm line-clamp-2" style={{ color: 'var(--text-secondary)' }}>
-                  {relatedResource.shortDescription}
-                </p>
+                <div>
+                  <h3 className="text-lg font-bold mb-2 font-[family-name:var(--font-poppins)] group-hover:text-[var(--brand-primary)] transition-colors" style={{ color: 'var(--text-primary)' }}>
+                    {relatedResource.name}
+                  </h3>
+                  <p className="text-sm line-clamp-2 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    {relatedResource.shortDescription}
+                  </p>
+                </div>
               </div>
             </Link>
           ))}

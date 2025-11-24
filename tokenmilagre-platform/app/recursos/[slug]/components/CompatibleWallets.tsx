@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlug, faBriefcase, faLock, faFire, faThLarge } from '@fortawesome/free-solid-svg-icons';
 import { Resource } from '@/lib/resources';
 
 interface CompatibleWalletsProps {
@@ -11,66 +13,68 @@ export default function CompatibleWallets({ resourceName, showCompatibleWallets 
 
   return (
     <>
-      {/* Divider */}
-      <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
       <section className="space-y-6">
-        <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+        <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
+          <FontAwesomeIcon icon={faPlug} className="text-2xl text-[var(--brand-primary)]" />
           Wallets Compatíveis
         </h2>
-        <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+        <p className="leading-relaxed text-lg" style={{ color: 'var(--text-secondary)' }}>
           Você pode usar essas wallets populares como extensões no {resourceName}:
         </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Link
             href="/recursos?search=wallet"
-            className="p-4 rounded-xl border transition-all hover:shadow-md hover:scale-105 text-center"
+            className="p-4 rounded-xl border transition-all hover:shadow-lg hover:-translate-y-1 text-center group"
             style={{
               backgroundColor: 'var(--bg-secondary)',
               borderColor: 'var(--border-light)'
             }}
             aria-label="Ver todas as wallets disponíveis"
           >
-            <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>
+            <FontAwesomeIcon icon={faBriefcase} className="text-2xl mb-2 block mx-auto group-hover:scale-110 transition-transform text-[var(--brand-primary)]" />
+            <h3 className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>
               Ver Wallets
             </h3>
           </Link>
           <Link
             href="/recursos?search=hardware"
-            className="p-4 rounded-xl border transition-all hover:shadow-md hover:scale-105 text-center"
+            className="p-4 rounded-xl border transition-all hover:shadow-lg hover:-translate-y-1 text-center group"
             style={{
               backgroundColor: 'var(--bg-secondary)',
               borderColor: 'var(--border-light)'
             }}
             aria-label="Ver cold wallets (hardware wallets)"
           >
-            <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>
+            <FontAwesomeIcon icon={faLock} className="text-2xl mb-2 block mx-auto group-hover:scale-110 transition-transform text-[var(--brand-primary)]" />
+            <h3 className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>
               Cold Wallets
             </h3>
           </Link>
           <Link
             href="/recursos?search=hot"
-            className="p-4 rounded-xl border transition-all hover:shadow-md hover:scale-105 text-center"
+            className="p-4 rounded-xl border transition-all hover:shadow-lg hover:-translate-y-1 text-center group"
             style={{
               backgroundColor: 'var(--bg-secondary)',
               borderColor: 'var(--border-light)'
             }}
             aria-label="Ver hot wallets (software wallets)"
           >
-            <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>
+            <FontAwesomeIcon icon={faFire} className="text-2xl mb-2 block mx-auto group-hover:scale-110 transition-transform text-[var(--brand-primary)]" />
+            <h3 className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>
               Hot Wallets
             </h3>
           </Link>
           <Link
             href="/recursos"
-            className="p-4 rounded-xl border transition-all hover:shadow-md hover:scale-105 text-center"
+            className="p-4 rounded-xl border transition-all hover:shadow-lg hover:-translate-y-1 text-center group"
             style={{
               backgroundColor: 'var(--bg-secondary)',
               borderColor: 'var(--border-light)'
             }}
             aria-label="Ver todos os recursos verificados"
           >
-            <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>
+            <FontAwesomeIcon icon={faThLarge} className="text-2xl mb-2 block mx-auto group-hover:scale-110 transition-transform text-[var(--brand-primary)]" />
+            <h3 className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>
               Todos Recursos
             </h3>
           </Link>

@@ -25,23 +25,14 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
 
   return (
     <>
-      <div className="py-8">
-        <div className="flex gap-8" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
-          <div className="flex-1 max-w-4xl space-y-8">
-            {/* Botão Voltar */}
-
-
+      <div className="py-12 animate-in fade-in duration-500">
+        <div className="flex gap-8 px-4 md:px-8 lg:pl-[55px]">
+          <div className="flex-1 max-w-5xl space-y-16">
             {/* Header */}
             <ResourceHeader resource={resource} />
 
-            {/* Divider */}
-            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
             {/* Por que é bom */}
             <WhyGoodSection whyGood={resource.whyGood} />
-
-            {/* Divider */}
-            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
             {/* Recursos Principais */}
             <ResourceFeatures features={resource.features} />
@@ -52,26 +43,14 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
               showCompatibleWallets={resource.showCompatibleWallets}
             />
 
-            {/* Divider */}
-            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
             {/* Como Começar */}
             <HowToStart howToStart={resource.howToStart} />
-
-            {/* Divider */}
-            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
             {/* Prós e Contras */}
             <ProsAndCons prosAndCons={resource.prosAndCons} />
 
-            {/* Divider */}
-            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
             {/* FAQ */}
             <ResourceFAQ faq={resource.faq} />
-
-            {/* Divider */}
-            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
             {/* Dicas de Segurança */}
             <ResourceSecurityTips securityTips={resource.securityTips} />

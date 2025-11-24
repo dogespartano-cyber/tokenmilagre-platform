@@ -225,14 +225,17 @@ export default function HomePage() {
   // Helper: Gradiente baseado na categoria
   const getResourceGradient = (category: string) => {
     const gradients: { [key: string]: string } = {
-      wallet: 'linear-gradient(135deg, #F6851B 0%, #E2761B 100%)',
-      exchange: 'linear-gradient(135deg, #F3BA2F 0%, #EAA42D 100%)',
-      'defi-protocol': 'linear-gradient(135deg, #FF007A 0%, #E6006E 100%)',
-      browsers: 'linear-gradient(135deg, #AB9FF2 0%, #9388E5 100%)',
-      analytics: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      explorers: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+      wallet: 'linear-gradient(135deg, #F6851B 0%, #E2761B 100%)', // Orange
+      exchange: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)', // Blue
+      'defi-protocol': 'linear-gradient(135deg, #EC4899 0%, #DB2777 100%)', // Pink
+      browsers: 'linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)', // Purple
+      analytics: 'linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)', // Indigo
+      explorers: 'linear-gradient(135deg, #10B981 0%, #059669 100%)', // Emerald
+      'development-tools': 'linear-gradient(135deg, #64748B 0%, #475569 100%)', // Slate
+      tools: 'linear-gradient(135deg, #64748B 0%, #475569 100%)', // Slate
+      'portfolio-tracker': 'linear-gradient(135deg, #06B6D4 0%, #0891B2 100%)', // Cyan
     };
-    return gradients[category] || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+    return gradients[category] || 'linear-gradient(135deg, #64748B 0%, #475569 100%)'; // Slate default
   };
 
   // Helper: Stats baseado na categoria
@@ -244,6 +247,9 @@ export default function HomePage() {
       browsers: 'Web3',
       analytics: 'Analytics',
       explorers: 'Explorer',
+      'development-tools': 'Dev',
+      tools: 'Tools',
+      'portfolio-tracker': 'Portfolio',
     };
     return stats[category] || 'Verificado';
   };
@@ -727,7 +733,7 @@ export default function HomePage() {
                   href="/recursos?search=exchange"
                   className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
                   style={{
-                    background: 'linear-gradient(135deg, #F3BA2F 0%, #EAA42D 100%)',
+                    background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
                     minHeight: '180px'
                   }}
                 >
@@ -785,7 +791,7 @@ export default function HomePage() {
                   href="/dashboard/noticias"
                   className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
                   style={{
-                    background: 'linear-gradient(135deg, #F7931A 0%, #E67E22 100%)',
+                    background: 'linear-gradient(135deg, #EF4444 0%, #B91C1C 100%)',
                     minHeight: '180px'
                   }}
                 >

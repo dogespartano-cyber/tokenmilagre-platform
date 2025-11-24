@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Resource } from '@/lib/resources';
 
 interface WhyGoodSectionProps {
@@ -6,19 +8,30 @@ interface WhyGoodSectionProps {
 
 export default function WhyGoodSection({ whyGood }: WhyGoodSectionProps) {
   return (
-    <section className="space-y-4">
-      <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+    <section className="space-y-6">
+      <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
+        <FontAwesomeIcon icon={faStar} className="text-2xl text-[var(--brand-primary)]" />
         {whyGood.title}
       </h2>
-      {whyGood.content.map((paragraph, index) => (
-        <p
-          key={index}
-          className="leading-relaxed"
-          style={{ color: 'var(--text-primary)' }}
-        >
-          {paragraph}
-        </p>
-      ))}
+      <div
+        className="p-8 rounded-2xl border backdrop-blur-sm"
+        style={{
+          backgroundColor: 'var(--bg-secondary)',
+          borderColor: 'var(--border-light)'
+        }}
+      >
+        <div className="space-y-4">
+          {whyGood.content.map((paragraph, index) => (
+            <p
+              key={index}
+              className="leading-relaxed text-lg"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

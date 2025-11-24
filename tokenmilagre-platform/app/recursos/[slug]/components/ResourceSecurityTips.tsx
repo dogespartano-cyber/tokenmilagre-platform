@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 import { Resource } from '@/lib/resources';
 
 interface ResourceSecurityTipsProps {
@@ -8,31 +8,35 @@ interface ResourceSecurityTipsProps {
 
 export default function ResourceSecurityTips({ securityTips }: ResourceSecurityTipsProps) {
   return (
-    <section className="space-y-6">
-      <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+    <section className="space-y-8">
+      <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
+        <FontAwesomeIcon icon={faShieldAlt} className="text-2xl text-[var(--brand-primary)]" />
         Dicas de Segurança
       </h2>
-      <div className="space-y-3">
+      <div className="grid md:grid-cols-2 gap-6">
         {securityTips.map((tip, index) => (
           <div
             key={index}
-            className="p-5 rounded-xl"
-            style={{ backgroundColor: 'var(--bg-secondary)' }}
+            className="p-6 rounded-2xl border transition-all hover:shadow-md"
+            style={{
+              backgroundColor: 'var(--bg-secondary)',
+              borderColor: 'var(--border-light)'
+            }}
           >
-            <h3 className="font-bold mb-1 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+            <h3 className="text-lg font-bold mb-3 flex items-center gap-3 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
               <div
-                className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+                className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{
-                  backgroundColor: 'var(--brand-primary)',
-                  color: 'var(--text-inverse)'
+                  backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                  color: '#10B981'
                 }}
                 aria-hidden="true"
               >
-                <FontAwesomeIcon icon={faChevronRight} className="w-2.5 h-2.5" />
+                <FontAwesomeIcon icon={faChevronRight} className="w-3.5 h-3.5" />
               </div>
               {tip.title}
             </h3>
-            <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            <p className="leading-relaxed pl-[44px]" style={{ color: 'var(--text-secondary)' }}>
               {tip.description}
             </p>
           </div>
