@@ -26,17 +26,6 @@ export default function TokenPage() {
 
   useEffect(() => {
     setIsVisible(true);
-    // Ocultar breadcrumb nesta página
-    const breadcrumbContainer = document.querySelector('main > div.container');
-    if (breadcrumbContainer) {
-      (breadcrumbContainer as HTMLElement).style.display = 'none';
-    }
-    return () => {
-      const breadcrumbContainer = document.querySelector('main > div.container');
-      if (breadcrumbContainer) {
-        (breadcrumbContainer as HTMLElement).style.display = '';
-      }
-    };
   }, []);
 
   const copyToClipboard = () => {
@@ -216,14 +205,14 @@ export default function TokenPage() {
               </div>
             </div>
 
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold leading-tight text-gray-900 dark:text-[var(--text-primary)] drop-shadow-lg">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold leading-tight drop-shadow-lg" style={{ color: 'var(--text-primary)' }}>
               Construa seu futuro financeiro com{' '}
               <span className="gradient-text">
                 $MILAGRE
               </span>
             </h1>
 
-            <p className="text-xl md:text-2xl font-inter leading-relaxed max-w-3xl mx-auto text-gray-700 dark:text-[var(--text-secondary)]">
+            <p className="text-xl md:text-2xl font-inter leading-relaxed max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
               Token de educação financeira descentralizada. Transparente, sustentável e projetado para crescimento de longo prazo.
             </p>
 
@@ -250,7 +239,7 @@ export default function TokenPage() {
             </div>
 
             {/* Trust Indicators */}
-            <div className="mt-16 flex flex-wrap justify-center gap-8 text-sm font-inter text-gray-700 dark:text-[var(--text-secondary)]">
+            <div className="mt-16 flex flex-wrap justify-center gap-8 text-sm font-inter" style={{ color: 'var(--text-secondary)' }}>
               <div className="flex items-center gap-2">
                 <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5 text-green-500" />
                 <span>100% Transparente</span>
@@ -269,10 +258,10 @@ export default function TokenPage() {
           {/* Por que $MILAGRE? Section */}
           <section id="saiba-mais" className="relative py-12">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                 Por que $MILAGRE?
               </h2>
-              <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto text-gray-700 dark:text-[var(--text-secondary)]">
+              <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                 Três pilares que sustentam nossa filosofia de crescimento sustentável
               </p>
             </div>
@@ -308,12 +297,12 @@ export default function TokenPage() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-2xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+                  <h3 className="text-2xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                     {pillar.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="font-inter leading-relaxed text-gray-700 dark:text-[var(--text-secondary)]">
+                  <p className="font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                     {pillar.description}
                   </p>
                 </div>
@@ -325,7 +314,7 @@ export default function TokenPage() {
           <section className="relative py-12">
             <div className="glass-panel p-8 md:p-12 rounded-3xl">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+                <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                   Tokenomics Simples
                 </h2>
                 <p className="text-lg md:text-xl font-inter text-gray-700 dark:text-[var(--text-secondary)]">
@@ -334,13 +323,13 @@ export default function TokenPage() {
               </div>
 
               <div className="text-center mb-16">
-                <p className="text-sm font-inter font-semibold uppercase tracking-widest mb-4 text-gray-700 dark:text-[var(--text-secondary)]">
+                <p className="text-sm font-inter font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--text-secondary)' }}>
                   Supply Total
                 </p>
                 <p className="text-7xl md:text-8xl font-montserrat font-bold mb-4 gradient-text">
                   1B
                 </p>
-                <p className="text-lg font-inter text-gray-700 dark:text-[var(--text-secondary)]">
+                <p className="text-lg font-inter" style={{ color: 'var(--text-secondary)' }}>
                   Um bilhão de tokens. Imutável.
                 </p>
               </div>
@@ -348,10 +337,10 @@ export default function TokenPage() {
               <div className="mb-16">
                 <div className="neumorphic-card p-8 flex flex-col md:flex-row items-center justify-between gap-6">
                   <div className="flex-1">
-                    <p className="text-xl font-montserrat font-bold mb-2 text-gray-900 dark:text-[var(--text-primary)]">
+                    <p className="text-xl font-montserrat font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
                       Liquidez Inicial
                     </p>
-                    <p className="font-inter text-gray-700 dark:text-[var(--text-secondary)]">
+                    <p className="font-inter" style={{ color: 'var(--text-secondary)' }}>
                       100% disponível na bonding curve
                     </p>
                   </div>
@@ -368,7 +357,7 @@ export default function TokenPage() {
                   { label: 'Velocidade', value: '< 1 segundo', color: '#4caf50' }
                 ].map((stat, index) => (
                   <div key={index}>
-                    <p className="text-sm font-inter font-semibold uppercase tracking-wide mb-3 text-gray-700 dark:text-[var(--text-secondary)]">
+                    <p className="text-sm font-inter font-semibold uppercase tracking-wide mb-3" style={{ color: 'var(--text-secondary)' }}>
                       {stat.label}
                     </p>
                     <p className="text-2xl font-montserrat font-bold" style={{ color: stat.color }}>
@@ -383,10 +372,10 @@ export default function TokenPage() {
           {/* A Jornada à Frente - Roadmap */}
           <section className="relative py-12">
             <div className="text-center mb-20">
-              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                 A Jornada à Frente
               </h2>
-              <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto text-gray-700 dark:text-[var(--text-secondary)]">
+              <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                 Não estamos construindo um token. Estamos construindo um movimento de educação financeira.
               </p>
             </div>
@@ -446,7 +435,7 @@ export default function TokenPage() {
                     <h3 className="text-2xl font-montserrat font-bold mb-3 text-gray-900 dark:text-[var(--text-primary)]">
                       {phase.title}
                     </h3>
-                    <p className="font-inter leading-relaxed text-gray-700 dark:text-[var(--text-secondary)]">
+                    <p className="font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                       {phase.description}
                     </p>
                   </div>
@@ -459,10 +448,10 @@ export default function TokenPage() {
           <section className="relative py-12">
             <div className="glass-panel p-8 md:p-12 rounded-3xl">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+                <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                   Como Comprar Milagre
                 </h2>
-                <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto text-gray-700 dark:text-[var(--text-secondary)]">
+                <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                   Guia passo a passo para adquirir seus tokens
                 </p>
               </div>
@@ -498,10 +487,10 @@ export default function TokenPage() {
                     <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 neumorphic-button text-2xl" style={{ color: item.color }}>
                       <FontAwesomeIcon icon={item.icon} />
                     </div>
-                    <h3 className="text-xl font-montserrat font-bold mb-3 text-gray-900 dark:text-[var(--text-primary)]">
+                    <h3 className="text-xl font-montserrat font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
                       {item.title}
                     </h3>
-                    <p className="font-inter text-sm text-gray-700 dark:text-[var(--text-secondary)]">
+                    <p className="font-inter text-sm" style={{ color: 'var(--text-secondary)' }}>
                       {item.desc}
                     </p>
                   </div>
@@ -526,11 +515,11 @@ export default function TokenPage() {
           <section className="relative py-24 mt-12">
             <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
 
-              <h2 className="text-4xl md:text-6xl font-montserrat font-bold mb-8 text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-4xl md:text-6xl font-montserrat font-bold mb-8" style={{ color: 'var(--text-primary)' }}>
                 Faça Parte da Jornada
               </h2>
 
-              <p className="text-xl md:text-2xl mb-16 max-w-3xl mx-auto font-inter text-gray-700 dark:text-[var(--text-secondary)]">
+              <p className="text-xl md:text-2xl mb-16 max-w-3xl mx-auto font-inter" style={{ color: 'var(--text-secondary)' }}>
                 Junte-se a uma comunidade que valoriza educação, transparência e crescimento de longo prazo.
               </p>
 
@@ -559,10 +548,10 @@ export default function TokenPage() {
 
               {/* Contract Address Card */}
               <div className="max-w-2xl mx-auto neumorphic-card p-10">
-                <p className="text-sm font-inter font-semibold uppercase tracking-widest mb-4 text-gray-700 dark:text-[var(--text-secondary)]">
+                <p className="text-sm font-inter font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--text-secondary)' }}>
                   Endereço do Contrato
                 </p>
-                <code className="block font-mono text-sm md:text-base mb-6 break-all px-6 py-4 rounded-xl bg-gray-100 dark:bg-black/30 text-gray-900 dark:text-[var(--text-primary)] border border-gray-200 dark:border-white/20">
+                <code className="block font-mono text-sm md:text-base mb-6 break-all px-6 py-4 rounded-xl bg-gray-100 dark:bg-black/30 border border-gray-200 dark:border-white/20" style={{ color: 'var(--text-primary)' }}>
                   {TOKEN_ADDRESS}
                 </code>
                 <button
@@ -575,7 +564,7 @@ export default function TokenPage() {
               </div>
 
               {/* Disclaimer */}
-              <p className="text-sm mt-16 max-w-2xl mx-auto leading-relaxed font-inter text-gray-500 dark:text-[var(--text-tertiary)]">
+              <p className="text-sm mt-16 max-w-2xl mx-auto leading-relaxed font-inter" style={{ color: 'var(--text-tertiary)' }}>
                 Criptomoedas envolvem riscos. Este não é um conselho financeiro. Faça sua própria pesquisa (DYOR) e invista apenas o que você pode perder. $MILAGRE é um projeto educacional.
               </p>
             </div>

@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 // Fonts disabled for offline build
 // import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+config.autoAddCss = false;
+
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import SessionProvider from "@/components/SessionProvider";
 import RootLayoutNav from "./layout-root";

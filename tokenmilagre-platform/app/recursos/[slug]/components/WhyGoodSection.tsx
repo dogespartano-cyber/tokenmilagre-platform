@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { Resource } from '@/lib/resources';
 
 interface WhyGoodSectionProps {
@@ -10,7 +10,7 @@ export default function WhyGoodSection({ whyGood }: WhyGoodSectionProps) {
   return (
     <section className="space-y-6">
       <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
-        <FontAwesomeIcon icon={faStar} className="text-2xl text-[var(--brand-primary)]" />
+        <FontAwesomeIcon icon={faCheckCircle} className="text-2xl text-[var(--brand-primary)]" />
         {whyGood.title}
       </h2>
       <div

@@ -30,17 +30,6 @@ export default function SobrePage() {
 
   useEffect(() => {
     setIsVisible(true);
-    // Ocultar breadcrumb nesta página
-    const breadcrumbContainer = document.querySelector('main > div.container');
-    if (breadcrumbContainer) {
-      (breadcrumbContainer as HTMLElement).style.display = 'none';
-    }
-    return () => {
-      const breadcrumbContainer = document.querySelector('main > div.container');
-      if (breadcrumbContainer) {
-        (breadcrumbContainer as HTMLElement).style.display = '';
-      }
-    };
   }, []);
 
   const coreValues = [
@@ -303,14 +292,14 @@ export default function SobrePage() {
               </div>
             </div>
 
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold leading-tight text-gray-900 dark:text-[var(--text-primary)] drop-shadow-lg">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold leading-tight drop-shadow-lg" style={{ color: 'var(--text-primary)' }}>
               Somos uma comunidade global unida pela crença de que{' '}
               <span className="gradient-text">
                 juntos somos mais fortes
               </span>
             </h1>
 
-            <p className="text-xl md:text-2xl font-inter leading-relaxed max-w-3xl mx-auto text-gray-700 dark:text-[var(--text-secondary)]">
+            <p className="text-xl md:text-2xl font-inter leading-relaxed max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
               Uma rede descentralizada de apoio mútuo, educação livre e transformação real na blockchain Solana.
             </p>
 
@@ -319,7 +308,7 @@ export default function SobrePage() {
                 href="https://discord.gg/xk4zrz8j"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="neumorphic-button flex items-center gap-3 px-10 py-5 rounded-full font-inter font-bold text-gray-900 dark:text-[var(--text-primary)] hover:text-white hover:bg-[#5865F2] shadow-xl text-lg transition-colors"
+                className="neumorphic-button flex items-center gap-3 px-10 py-5 rounded-full font-inter font-bold hover:text-white hover:bg-[#5865F2] shadow-xl text-lg transition-colors" style={{ color: 'var(--text-primary)' }}
               >
                 <FontAwesomeIcon icon={faDiscord} className="w-6 h-6" />
                 <span>Discord</span>
@@ -329,7 +318,7 @@ export default function SobrePage() {
                 href="https://t.me/+Bop_TVFc_mg3Njlh"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="neumorphic-button flex items-center gap-3 px-10 py-5 rounded-full font-inter font-bold text-gray-900 dark:text-[var(--text-primary)] hover:text-white hover:bg-[#0088cc] shadow-xl text-lg transition-colors"
+                className="neumorphic-button flex items-center gap-3 px-10 py-5 rounded-full font-inter font-bold hover:text-white hover:bg-[#0088cc] shadow-xl text-lg transition-colors" style={{ color: 'var(--text-primary)' }}
               >
                 <FontAwesomeIcon icon={faTelegram} className="w-6 h-6" />
                 <span>Telegram</span>
@@ -341,24 +330,24 @@ export default function SobrePage() {
           <section className="relative py-12">
             <div className="glass-panel p-8 md:p-12 rounded-3xl">
               <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+                <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                   Nossa Missão
                 </h2>
-                <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto text-gray-700 dark:text-[var(--text-secondary)]">
+                <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                   Construir uma comunidade onde ninguém caminha sozinho
                 </p>
               </div>
 
-              <div className="space-y-6 text-lg font-inter leading-relaxed text-gray-700 dark:text-[var(--text-secondary)]">
+              <div className="space-y-6 text-lg font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                 <p>
                   A comunidade <strong className="gradient-text">$MILAGRE</strong> nasceu de uma visão simples:{' '}
-                  <strong className="text-gray-900 dark:text-[var(--text-primary)]">ninguém deveria caminhar sozinho</strong> em sua jornada de crescimento.
+                  <strong style={{ color: 'var(--text-primary)' }}>ninguém deveria caminhar sozinho</strong> em sua jornada de crescimento.
                 </p>
 
                 <p>
                   Somos uma rede descentralizada construída na blockchain Solana, onde tecnologia encontra humanidade.
-                  Acreditamos que <strong className="text-gray-900 dark:text-[var(--text-primary)]">colaboração supera competição</strong> e que{' '}
-                  <strong className="text-gray-900 dark:text-[var(--text-primary)]">conhecimento deve ser livre</strong>.
+                  Acreditamos que <strong style={{ color: 'var(--text-primary)' }}>colaboração supera competição</strong> e que{' '}
+                  <strong style={{ color: 'var(--text-primary)' }}>conhecimento deve ser livre</strong>.
                 </p>
 
                 <div className="pl-6 border-l-4 border-green-500 py-4 rounded-r-lg bg-green-500/5">
@@ -376,10 +365,10 @@ export default function SobrePage() {
           {/* Nossos Valores */}
           <section className="relative py-12">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                 Nossos Valores
               </h2>
-              <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto text-gray-700 dark:text-[var(--text-secondary)]">
+              <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                 Quatro pilares que guiam nossa comunidade
               </p>
             </div>
@@ -401,7 +390,7 @@ export default function SobrePage() {
                   </h3>
 
                   {/* Description */}
-                  <p className="font-inter leading-relaxed text-sm text-gray-700 dark:text-[var(--text-secondary)]">
+                  <p className="font-inter leading-relaxed text-sm" style={{ color: 'var(--text-secondary)' }}>
                     {value.description}
                   </p>
                 </div>
@@ -413,10 +402,10 @@ export default function SobrePage() {
           <section className="relative py-12">
             <div className="glass-panel p-8 md:p-12 rounded-3xl">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+                <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                   Nossa Jornada
                 </h2>
-                <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto text-gray-700 dark:text-[var(--text-secondary)]">
+                <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                   De uma ideia simples a uma comunidade global
                 </p>
               </div>
@@ -470,10 +459,10 @@ export default function SobrePage() {
                       {/* Content */}
                       <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:ml-auto md:pl-12' : 'md:pr-12'}`}>
                         <div className="neumorphic-card p-8">
-                          <h3 className="text-xl font-montserrat font-bold mb-3 text-gray-900 dark:text-[var(--text-primary)]">
+                          <h3 className="text-xl font-montserrat font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
                             {phase.title}
                           </h3>
-                          <p className="font-inter leading-relaxed text-sm text-gray-700 dark:text-[var(--text-secondary)]">
+                          <p className="font-inter leading-relaxed text-sm" style={{ color: 'var(--text-secondary)' }}>
                             {phase.description}
                           </p>
                         </div>
@@ -488,10 +477,10 @@ export default function SobrePage() {
           {/* Como a Comunidade se Organiza */}
           <section className="relative py-12">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                 Como a Comunidade se Organiza
               </h2>
-              <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto text-gray-700 dark:text-[var(--text-secondary)]">
+              <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                 Uma estrutura descentralizada e aberta
               </p>
             </div>
@@ -508,12 +497,12 @@ export default function SobrePage() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-2xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+                  <h3 className="text-2xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                     {role.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="font-inter mb-6 text-gray-700 dark:text-[var(--text-secondary)]">
+                  <p className="font-inter mb-6" style={{ color: 'var(--text-secondary)' }}>
                     {role.description}
                   </p>
 
@@ -522,7 +511,7 @@ export default function SobrePage() {
                     {role.activities.map((activity, i) => (
                       <div key={i} className="flex items-start gap-2">
                         <span className="text-green-500 mt-1">•</span>
-                        <span className="text-sm font-inter text-gray-700 dark:text-[var(--text-secondary)]">
+                        <span className="text-sm font-inter" style={{ color: 'var(--text-secondary)' }}>
                           {activity}
                         </span>
                       </div>
@@ -537,10 +526,10 @@ export default function SobrePage() {
               <div className="flex items-start gap-6">
                 <div className="text-5xl">🤝</div>
                 <div className="flex-1">
-                  <h3 className="text-2xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+                  <h3 className="text-2xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                     Todos Podem Contribuir
                   </h3>
-                  <p className="text-lg font-inter leading-relaxed text-gray-700 dark:text-[var(--text-secondary)]">
+                  <p className="text-lg font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                     Não há "processo de contratação". Se você tem uma habilidade útil e quer contribuir,
                     simplesmente comece. Abra um PR no GitHub, escreva um artigo, ajude no Discord.
                     <strong className="text-green-500"> A comunidade reconhece quem agrega valor.</strong>
@@ -555,11 +544,11 @@ export default function SobrePage() {
           {/* Nossos Princípios */}
           <section className="relative py-12">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                 <FontAwesomeIcon icon={faLightbulb} className="mr-3 text-amber-400" />
                 Nossos Princípios de Governança
               </h2>
-              <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto text-gray-700 dark:text-[var(--text-secondary)]">
+              <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                 Como tomamos decisões e conduzimos o projeto
               </p>
             </div>
@@ -575,7 +564,7 @@ export default function SobrePage() {
                       <h3 className="text-2xl font-montserrat font-bold mb-3 text-gray-900 dark:text-[var(--text-primary)]">
                         {principle.title}
                       </h3>
-                      <p className="font-inter leading-relaxed text-gray-700 dark:text-[var(--text-secondary)]">
+                      <p className="font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                         {principle.description}
                       </p>
                     </div>
@@ -589,10 +578,10 @@ export default function SobrePage() {
           <section className="relative py-12">
             <div className="glass-panel p-8 md:p-12 rounded-3xl">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+                <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                   Onde Nos Encontrar
                 </h2>
-                <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto text-gray-700 dark:text-[var(--text-secondary)]">
+                <p className="text-lg md:text-xl font-inter max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                   Junte-se à nossa comunidade global
                 </p>
               </div>
@@ -642,11 +631,11 @@ export default function SobrePage() {
                       <FontAwesomeIcon icon={link.icon} className="text-3xl" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-2xl font-montserrat font-bold flex items-center gap-2 text-gray-900 dark:text-[var(--text-primary)]">
+                      <h3 className="text-2xl font-montserrat font-bold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                         {link.name}
                         <span className="text-sm opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                       </h3>
-                      <p className="font-inter text-gray-700 dark:text-[var(--text-secondary)]">
+                      <p className="font-inter" style={{ color: 'var(--text-secondary)' }}>
                         {link.description}
                       </p>
                     </div>
@@ -659,11 +648,11 @@ export default function SobrePage() {
           {/* CTA Final - NO BACKGROUND */}
           <section className="relative py-24 mt-12">
             <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-              <h2 className="text-4xl md:text-6xl font-montserrat font-bold text-gray-900 dark:text-[var(--text-primary)] mb-8">
+              <h2 className="text-4xl md:text-6xl font-montserrat font-bold mb-8" style={{ color: 'var(--text-primary)' }}>
                 Faça Parte da Família $MILAGRE
               </h2>
 
-              <p className="text-xl md:text-2xl text-gray-700 dark:text-[var(--text-secondary)] mb-16 max-w-3xl mx-auto font-inter">
+              <p className="text-xl md:text-2xl mb-16 max-w-3xl mx-auto font-inter" style={{ color: 'var(--text-secondary)' }}>
                 Junte-se a uma comunidade global de pessoas que acreditam que juntos podemos criar milagres.
               </p>
 

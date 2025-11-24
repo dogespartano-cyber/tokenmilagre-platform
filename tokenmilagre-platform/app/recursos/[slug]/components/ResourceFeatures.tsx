@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRocket } from '@fortawesome/free-solid-svg-icons';
+import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { Resource } from '@/lib/resources';
 
 interface ResourceFeaturesProps {
@@ -10,7 +10,7 @@ export default function ResourceFeatures({ features }: ResourceFeaturesProps) {
   return (
     <section className="space-y-8">
       <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
-        <FontAwesomeIcon icon={faRocket} className="text-2xl text-[var(--brand-primary)]" />
+        <FontAwesomeIcon icon={faLayerGroup} className="text-2xl text-[var(--brand-primary)]" />
         Recursos Principais
       </h2>
       <div className="grid md:grid-cols-2 gap-6">

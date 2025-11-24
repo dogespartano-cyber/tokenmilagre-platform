@@ -236,22 +236,22 @@ export default function ManifestoPage() {
                 </div>
               </div>
 
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold leading-tight text-gray-900 dark:text-[var(--text-primary)] drop-shadow-lg">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold leading-tight drop-shadow-lg" style={{ color: 'var(--text-primary)' }}>
                 Nunca Estarás <br />
                 <span className="gradient-text">Sozinho</span>
               </h1>
 
-              <p className="text-xl md:text-2xl font-inter leading-relaxed max-w-3xl mx-auto text-gray-700 dark:text-[var(--text-secondary)]">
+              <p className="text-xl md:text-2xl font-inter leading-relaxed max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                 Um movimento de apoio mútuo genuíno construído sobre os princípios do código aberto,
                 da colaboração peer-to-peer e da crença fundamental de que{' '}
                 <span className="font-bold text-green-500">juntos somos mais fortes</span>.
               </p>
 
               <div className="glass-panel p-8 rounded-3xl border-l-4 border-l-green-500">
-                <h3 className="font-montserrat font-bold text-xl mb-3 text-gray-900 dark:text-[var(--text-primary)]">
+                <h3 className="font-montserrat font-bold text-xl mb-3" style={{ color: 'var(--text-primary)' }}>
                   Do Only Good Everyday
                 </h3>
-                <p className="font-inter leading-relaxed text-gray-700 dark:text-[var(--text-secondary)]">
+                <p className="font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   Inspirados pela filosofia das comunidades Linux e open source, onde o conhecimento é livre,
                   a colaboração é incentivada e o mérito vem da contribuição real, criamos o $MILAGRE como um
                   commons digital - um bem coletivo gerido pela comunidade, para a comunidade.
@@ -263,7 +263,8 @@ export default function ManifestoPage() {
                   href="https://discord.gg/xk4zrz8j"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="neumorphic-button flex items-center gap-3 px-8 py-4 rounded-full font-inter font-semibold text-gray-900 dark:text-[var(--text-primary)] hover:text-white hover:bg-[#5865F2] transition-colors"
+                  className="neumorphic-button flex items-center gap-3 px-8 py-4 rounded-full font-inter font-semibold hover:text-white hover:bg-[#5865F2] transition-colors"
+                  style={{ color: 'var(--text-primary)' }}
                 >
                   <FontAwesomeIcon icon={faDiscord} className="w-6 h-6" />
                   <span>Entrar no Discord</span>
@@ -273,7 +274,8 @@ export default function ManifestoPage() {
                   href="https://t.me/+Bop_TVFc_mg3Njlh"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="neumorphic-button flex items-center gap-3 px-8 py-4 rounded-full font-inter font-semibold text-gray-900 dark:text-[var(--text-primary)] hover:text-white hover:bg-[#0088cc] transition-colors"
+                  className="neumorphic-button flex items-center gap-3 px-8 py-4 rounded-full font-inter font-semibold hover:text-white hover:bg-[#0088cc] transition-colors"
+                  style={{ color: 'var(--text-primary)' }}
                 >
                   <FontAwesomeIcon icon={faTelegram} className="w-6 h-6" />
                   <span>Entrar no Telegram</span>
@@ -283,12 +285,12 @@ export default function ManifestoPage() {
 
             {/* Nossa Visão */}
             <section id="nossa-visao" className="scroll-mt-32 space-y-8">
-              <h2 className="text-3xl md:text-4xl font-montserrat font-bold text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-3xl md:text-4xl font-montserrat font-bold" style={{ color: 'var(--text-primary)' }}>
                 Nossa Visão
               </h2>
 
               <div className="glass-panel p-8 rounded-3xl">
-                <p className="text-lg font-inter leading-relaxed mb-8 text-gray-700 dark:text-[var(--text-secondary)]">
+                <p className="text-lg font-inter leading-relaxed mb-8" style={{ color: 'var(--text-secondary)' }}>
                   Visionamos um ecossistema descentralizado onde tecnologia blockchain serve como infraestrutura
                   para conexão humana genuína, onde holders não são apenas investidores, mas membros ativos de
                   uma comunidade que se apoia mutuamente.
@@ -306,9 +308,9 @@ export default function ManifestoPage() {
                         <div className="w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md" style={{ backgroundColor: item.color }}>
                           <FontAwesomeIcon icon={item.icon} className="w-5 h-5" />
                         </div>
-                        <h3 className="font-montserrat font-bold text-gray-900 dark:text-[var(--text-primary)]">{item.title}</h3>
+                        <h3 className="font-montserrat font-bold" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
                       </div>
-                      <p className="text-sm font-inter text-gray-700 dark:text-[var(--text-secondary)]">{item.desc}</p>
+                      <p className="text-sm font-inter" style={{ color: 'var(--text-secondary)' }}>{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -317,7 +319,7 @@ export default function ManifestoPage() {
 
             {/* Nossa Missão */}
             <section id="nossa-missao" className="scroll-mt-32 space-y-8">
-              <h2 className="text-3xl md:text-4xl font-montserrat font-bold text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-3xl md:text-4xl font-montserrat font-bold" style={{ color: 'var(--text-primary)' }}>
                 Nossa Missão
               </h2>
 
@@ -364,7 +366,7 @@ export default function ManifestoPage() {
 
             {/* Valores Fundamentais */}
             <section id="valores-fundamentais" className="scroll-mt-32 space-y-8">
-              <h2 className="text-3xl md:text-4xl font-montserrat font-bold text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-3xl md:text-4xl font-montserrat font-bold" style={{ color: 'var(--text-primary)' }}>
                 Valores Fundamentais
               </h2>
 
@@ -401,13 +403,13 @@ export default function ManifestoPage() {
                         <span className="text-2xl font-bold text-white">{index + 1}</span>
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-2xl font-montserrat font-bold mb-3 text-gray-900 dark:text-[var(--text-primary)]">{valor.title}</h3>
-                        <p className="text-lg font-inter mb-6 text-gray-700 dark:text-[var(--text-secondary)]">{valor.desc}</p>
+                        <h3 className="text-2xl font-montserrat font-bold mb-3" style={{ color: 'var(--text-primary)' }}>{valor.title}</h3>
+                        <p className="text-lg font-inter mb-6" style={{ color: 'var(--text-secondary)' }}>{valor.desc}</p>
                         <div className="grid sm:grid-cols-2 gap-3">
                           {valor.items.map((item, i) => (
                             <div key={i} className="flex items-center gap-3">
                               <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                              <span className="text-sm font-inter text-gray-700 dark:text-[var(--text-secondary)]">{item}</span>
+                              <span className="text-sm font-inter" style={{ color: 'var(--text-secondary)' }}>{item}</span>
                             </div>
                           ))}
                         </div>
@@ -420,7 +422,7 @@ export default function ManifestoPage() {
 
             {/* Nossos Três Guardiões */}
             <section id="tres-guardioes" className="scroll-mt-32 space-y-8">
-              <h2 className="text-3xl md:text-4xl font-montserrat font-bold text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-3xl md:text-4xl font-montserrat font-bold" style={{ color: 'var(--text-primary)' }}>
                 Nossos Três Guardiões
               </h2>
 
@@ -463,13 +465,13 @@ export default function ManifestoPage() {
                     </div>
 
                     <div className="p-6 flex flex-col flex-1">
-                      <p className="text-sm text-center mb-6 font-inter opacity-80 text-gray-700 dark:text-[var(--text-secondary)]">{guardian.subtitle}</p>
+                      <p className="text-sm text-center mb-6 font-inter opacity-80" style={{ color: 'var(--text-secondary)' }}>{guardian.subtitle}</p>
 
                       <div className="space-y-3 mt-auto">
                         {guardian.items.map((item, i) => (
                           <div key={i} className="flex items-center gap-3 p-2 rounded-lg bg-white/5">
                             <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: guardian.color }}></div>
-                            <span className="text-sm font-inter text-gray-700 dark:text-[var(--text-secondary)]">{item}</span>
+                            <span className="text-sm font-inter" style={{ color: 'var(--text-secondary)' }}>{item}</span>
                           </div>
                         ))}
                       </div>
@@ -481,7 +483,7 @@ export default function ManifestoPage() {
 
             {/* Governança */}
             <section id="governanca" className="scroll-mt-32 space-y-8">
-              <h2 className="text-3xl md:text-4xl font-montserrat font-bold text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-3xl md:text-4xl font-montserrat font-bold" style={{ color: 'var(--text-primary)' }}>
                 Princípios de Governança
               </h2>
 
@@ -505,22 +507,22 @@ export default function ManifestoPage() {
                     <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center text-green-600 dark:text-green-400">
                       <FontAwesomeIcon icon={faUsers} className="w-6 h-6" />
                     </div>
-                    <h3 className="font-montserrat font-bold mb-2 text-xl text-gray-900 dark:text-[var(--text-primary)]">Do-ocracia</h3>
-                    <p className="text-sm font-inter text-gray-700 dark:text-[var(--text-secondary)]">Quem faz, decide. Influência baseada em contribuição ativa.</p>
+                    <h3 className="font-montserrat font-bold mb-2 text-xl" style={{ color: 'var(--text-primary)' }}>Do-ocracia</h3>
+                    <p className="text-sm font-inter" style={{ color: 'var(--text-secondary)' }}>Quem faz, decide. Influência baseada em contribuição ativa.</p>
                   </div>
                   <div className="neumorphic-card p-6 text-center">
                     <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-400">
                       <FontAwesomeIcon icon={faBalanceScale} className="w-6 h-6" />
                     </div>
-                    <h3 className="font-montserrat font-bold mb-2 text-xl text-gray-900 dark:text-[var(--text-primary)]">Votação Híbrida</h3>
-                    <p className="text-sm font-inter text-gray-700 dark:text-[var(--text-secondary)]">Quadrática para decisões gerais, ponderada por reputação para técnicas.</p>
+                    <h3 className="font-montserrat font-bold mb-2 text-xl" style={{ color: 'var(--text-primary)' }}>Votação Híbrida</h3>
+                    <p className="text-sm font-inter" style={{ color: 'var(--text-secondary)' }}>Quadrática para decisões gerais, ponderada por reputação para técnicas.</p>
                   </div>
                   <div className="neumorphic-card p-6 text-center">
                     <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center text-purple-600 dark:text-purple-400">
                       <FontAwesomeIcon icon={faLightbulb} className="w-6 h-6" />
                     </div>
-                    <h3 className="font-montserrat font-bold mb-2 text-xl text-gray-900 dark:text-[var(--text-primary)]">Transparência</h3>
-                    <p className="text-sm font-inter text-gray-700 dark:text-[var(--text-secondary)]">Discussão aberta, refinamento colaborativo e execução pública.</p>
+                    <h3 className="font-montserrat font-bold mb-2 text-xl" style={{ color: 'var(--text-primary)' }}>Transparência</h3>
+                    <p className="text-sm font-inter" style={{ color: 'var(--text-secondary)' }}>Discussão aberta, refinamento colaborativo e execução pública.</p>
                   </div>
                 </div>
               </div>
@@ -528,7 +530,7 @@ export default function ManifestoPage() {
 
             {/* Roadmap */}
             <section id="roadmap" className="scroll-mt-32 space-y-8">
-              <h2 className="text-3xl md:text-4xl font-montserrat font-bold text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-3xl md:text-4xl font-montserrat font-bold" style={{ color: 'var(--text-primary)' }}>
                 Roadmap de Longo Prazo
               </h2>
 
@@ -545,13 +547,13 @@ export default function ManifestoPage() {
                         <span className="inline-block px-4 py-1 rounded-full text-sm font-bold mb-2" style={{ backgroundColor: `${phase.color}20`, color: phase.color }}>
                           {phase.year}
                         </span>
-                        <h3 className="text-xl font-montserrat font-bold text-gray-900 dark:text-[var(--text-primary)]">{phase.title}</h3>
+                        <h3 className="text-xl font-montserrat font-bold" style={{ color: 'var(--text-primary)' }}>{phase.title}</h3>
                       </div>
                       <div className="flex-1 grid sm:grid-cols-2 gap-3">
                         {phase.items.map((item, i) => (
                           <div key={i} className="flex items-center gap-2">
                             <div className="w-2 h-2 rounded-full" style={{ backgroundColor: phase.color }}></div>
-                            <span className="text-sm font-inter text-gray-700 dark:text-[var(--text-secondary)]">{item}</span>
+                            <span className="text-sm font-inter" style={{ color: 'var(--text-secondary)' }}>{item}</span>
                           </div>
                         ))}
                       </div>
@@ -563,7 +565,7 @@ export default function ManifestoPage() {
 
             {/* Open Source */}
             <section id="open-source" className="scroll-mt-32 space-y-8">
-              <h2 className="text-3xl md:text-4xl font-montserrat font-bold text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-3xl md:text-4xl font-montserrat font-bold" style={{ color: 'var(--text-primary)' }}>
                 Compromisso Open Source
               </h2>
 
@@ -573,16 +575,16 @@ export default function ManifestoPage() {
                     <FontAwesomeIcon icon={faGithub} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-lg font-inter leading-relaxed mb-6 text-gray-700 dark:text-[var(--text-secondary)]">
+                    <p className="text-lg font-inter leading-relaxed mb-6" style={{ color: 'var(--text-secondary)' }}>
                       Inspirados pelos gigantes do open source como Linux, Mozilla e Wikipedia.
                       Todo smart contract, ferramenta e conteúdo educacional é livre.
                     </p>
                     <div className="grid sm:grid-cols-2 gap-4">
-                      <div className="flex items-center gap-3 text-gray-700 dark:text-[var(--text-secondary)]">
+                      <div className="flex items-center gap-3" style={{ color: 'var(--text-secondary)' }}>
                         <div className="w-2 h-2 rounded-full bg-green-400"></div>
                         <span>Código 100% Auditável</span>
                       </div>
-                      <div className="flex items-center gap-3 text-gray-700 dark:text-[var(--text-secondary)]">
+                      <div className="flex items-center gap-3" style={{ color: 'var(--text-secondary)' }}>
                         <div className="w-2 h-2 rounded-full bg-blue-400"></div>
                         <span>Contribuição Livre</span>
                       </div>
@@ -594,21 +596,21 @@ export default function ManifestoPage() {
 
             {/* Junte-se */}
             <section id="junte-se" className="scroll-mt-32 py-12 text-center">
-              <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-8 text-gray-900 dark:text-[var(--text-primary)]">
+              <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-8" style={{ color: 'var(--text-primary)' }}>
                 Junte-se ao Movimento
               </h2>
 
-              <p className="text-xl font-inter mb-12 max-w-2xl mx-auto text-gray-700 dark:text-[var(--text-secondary)]">
+              <p className="text-xl font-inter mb-12 max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
                 O $MILAGRE não pertence a fundadores ou baleias - pertence a todos que contribuem para torná-lo real.
               </p>
 
               <div className="glass-panel p-8 rounded-3xl max-w-3xl mx-auto mb-12 text-left">
-                <p className="font-montserrat font-bold text-lg mb-6 text-center text-gray-900 dark:text-[var(--text-primary)]">Se você acredita que:</p>
+                <p className="font-montserrat font-bold text-lg mb-6 text-center" style={{ color: 'var(--text-primary)' }}>Se você acredita que:</p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {['Colaboração > Competição', 'Conhecimento deve ser livre', 'Tecnologia deve servir à humanidade', 'Ninguém deve caminhar sozinho'].map((item, i) => (
                     <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
                       <FontAwesomeIcon icon={faCheckCircle} className="text-green-500" />
-                      <span className="font-inter text-gray-700 dark:text-[var(--text-secondary)]">{item}</span>
+                      <span className="font-inter" style={{ color: 'var(--text-secondary)' }}>{item}</span>
                     </div>
                   ))}
                 </div>
@@ -623,7 +625,8 @@ export default function ManifestoPage() {
                   href="https://discord.gg/xk4zrz8j"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="neumorphic-button flex items-center gap-3 px-10 py-5 rounded-full font-inter font-bold text-gray-900 dark:text-[var(--text-primary)] hover:text-white hover:bg-[#5865F2] shadow-xl text-lg transition-colors"
+                  className="neumorphic-button flex items-center gap-3 px-10 py-5 rounded-full font-inter font-bold hover:text-white hover:bg-[#5865F2] shadow-xl text-lg transition-colors"
+                  style={{ color: 'var(--text-primary)' }}
                 >
                   <FontAwesomeIcon icon={faDiscord} className="w-6 h-6" />
                   <span>Entrar no Discord</span>
@@ -633,7 +636,8 @@ export default function ManifestoPage() {
                   href="https://t.me/+Bop_TVFc_mg3Njlh"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="neumorphic-button flex items-center gap-3 px-10 py-5 rounded-full font-inter font-bold text-gray-900 dark:text-[var(--text-primary)] hover:text-white hover:bg-[#0088cc] shadow-xl text-lg transition-colors"
+                  className="neumorphic-button flex items-center gap-3 px-10 py-5 rounded-full font-inter font-bold hover:text-white hover:bg-[#0088cc] shadow-xl text-lg transition-colors"
+                  style={{ color: 'var(--text-primary)' }}
                 >
                   <FontAwesomeIcon icon={faTelegram} className="w-6 h-6" />
                   <span>Entrar no Telegram</span>
