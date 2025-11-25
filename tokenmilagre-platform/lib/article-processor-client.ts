@@ -86,12 +86,23 @@ export function generateSlug(title: string, addDate: boolean = false): string {
 
   // 🔧 FIX: Usa timestamp para garantir unicidade, não apenas data
   if (addDate) {
-    const timestamp = Date.now().toString(36); // Base-36 para ficar menor
+    const timestamp = Date.now().toString(36); // Base-36 ~10 chars
+    const timestampLength = timestamp.length + 1; // +1 para o hífen
+    const maxBaseSlugLength = 100 - timestampLength; // Reservar espaço para timestamp
+
+    // Truncar slug base para caber com timestamp
+    if (slug.length > maxBaseSlugLength) {
+      slug = slug.substring(0, maxBaseSlugLength);
+    }
+
     slug = `${slug}-${timestamp}`;
+  } else {
+    // Truncar para 100 caracteres (limite do banco)
+    slug = slug.substring(0, 100);
   }
 
-  // Truncar para 100 caracteres (limite do banco)
-  return slug.substring(0, 100);
+  // 🔧 Remover hífens no final (caso truncamento corte no meio de uma palavra)
+  return slug.replace(/-+$/g, '');
 }
 
 /**
