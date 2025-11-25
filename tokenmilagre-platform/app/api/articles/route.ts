@@ -203,6 +203,19 @@ export async function POST(request: NextRequest) {
 
     return successResponse(article)
   } catch (error) {
+    // 🐛 ENHANCED LOGGING - Log full error details to server console
+    console.error('❌ [POST /api/articles] Error creating article:', {
+      errorName: (error as Error).name,
+      errorMessage: (error as Error).message,
+      errorStack: (error as any).stack,
+      // ValidationError details
+      errorDetails: (error as any).details,
+      // Zod errors
+      zodIssues: (error as any).issues,
+      // Full error object for debugging
+      fullError: JSON.stringify(error, Object.getOwnPropertyNames(error), 2)
+    });
+
     logger.error('Error creating article', error as Error, {
       errorName: (error as Error).name,
       errorMessage: (error as Error).message,
@@ -228,9 +241,14 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Check for ValidationError with details
+    // Check for ValidationError with details (from ValidationService)
     if ((error as any).name === 'ValidationError' && (error as any).details) {
-      return errorResponse(error as Error, 400, (error as any).details)
+      console.error('❌ [ValidationError] Details:', (error as any).details);
+      return errorResponse(
+        error as Error,
+        400,
+        (error as any).details
+      )
     }
 
     return errorResponse(error as Error)

@@ -84,14 +84,14 @@ export function generateSlug(title: string, addDate: boolean = false): string {
     .replace(/-+/g, '-') // Remove hífens duplicados
     .replace(/^-+|-+$/g, ''); // Remove hífens do início/fim
 
-  // Adiciona data se solicitado (formato YYYYMMDD)
+  // 🔧 FIX: Usa timestamp para garantir unicidade, não apenas data
   if (addDate) {
-    const date = new Date();
-    const dateStr = date.toISOString().split('T')[0].replace(/-/g, '');
-    slug = `${slug}-${dateStr}`;
+    const timestamp = Date.now().toString(36); // Base-36 para ficar menor
+    slug = `${slug}-${timestamp}`;
   }
 
-  return slug;
+  // Truncar para 100 caracteres (limite do banco)
+  return slug.substring(0, 100);
 }
 
 /**

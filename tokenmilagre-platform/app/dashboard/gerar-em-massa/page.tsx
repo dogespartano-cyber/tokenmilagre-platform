@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faRobot,
@@ -24,6 +24,7 @@ import { processArticleLocally, validateProcessedArticle } from '@/lib/article-p
 import { validateArticle } from '@/app/dashboard/criar-artigo/_lib/validation';
 import type { ArticleType } from '@/app/dashboard/criar-artigo/_lib/constants';
 import { normalizeCategoryWithFallback } from '@/app/dashboard/criar-artigo/_lib/constants';
+import { DraftStorageService } from '@/lib/draft-storage';
 
 interface GeneratedArticle {
   id: string;
@@ -68,6 +69,52 @@ export default function GerarEmMassaPage() {
   const [totalSteps, setTotalSteps] = useState(0);
   const [foundTopics, setFoundTopics] = useState<string[]>([]);
   const [selectedTopics, setSelectedTopics] = useState<Set<number>>(new Set());
+  const [hasDrafts, setHasDrafts] = useState(false);
+
+  // 🔄 RECUPERAR rascunhos ao carregar página ou trocar tipo
+  useEffect(() => {
+    const drafts = DraftStorageService.getDraftsByType(contentType);
+    setHasDrafts(drafts.length > 0);
+
+    if (drafts.length > 0 && articles.length === 0) {
+      const shouldRecover = confirm(
+        `🔄 Encontrados ${drafts.length} rascunho(s) salvos de ${contentType}.\n\nDeseja recuperá-los? Isso vai economizar chamadas à API.`
+      );
+
+      if (shouldRecover) {
+        const recovered: GeneratedArticle[] = drafts.map(draft => {
+          const article = {
+            id: draft.id,
+            type: draft.type,
+            ...draft.data,
+            selected: true,
+            status: 'success' as const,
+            error: draft.error
+          };
+
+          // 🔧 REGENERAR slug para usar novo formato (timestamp em vez de data)
+          if (article.title) {
+            const timestamp = Date.now().toString(36);
+            const baseSlug = article.title
+              .toLowerCase()
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .replace(/[^\w\s-]/g, '')
+              .replace(/\s+/g, '-')
+              .replace(/-+/g, '-')
+              .replace(/^-+|-+$/g, '');
+            article.slug = `${baseSlug}-${timestamp}`.substring(0, 100);
+            console.log(`🔧 Slug regenerado: ${article.slug}`);
+          }
+
+          return article;
+        });
+
+        setArticles(recovered);
+        console.log(`✅ ${recovered.length} rascunhos recuperados`);
+      }
+    }
+  }, [contentType]); // Executar ao trocar tipo de conteúdo
 
   /**
    * Busca tópicos relevantes e atuais em tempo real via Perplexity
@@ -535,6 +582,12 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         citations: data.citations?.length || 0
       });
 
+      // 💾 SALVAR RASCUNHO após geração bem-sucedida (ANTES de tentar salvar no banco)
+      DraftStorageService.saveDraft(
+        { ...processedArticle, citations: data.citations || [] },
+        article.type
+      );
+
       // 6. Atualizar artigo com dados validados
       setArticles(prev => prev.map(a =>
         a.id === article.id ? {
@@ -549,6 +602,10 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
 
     } catch (error: any) {
       console.error(`❌ [${index + 1}] Erro ao gerar artigo:`, error);
+
+      // 💾 SALVAR RASCUNHO com erro para debugging posterior
+      DraftStorageService.saveDraft(article, article.type, error.message);
+
       setArticles(prev => prev.map(a =>
         a.id === article.id ? {
           ...a,
@@ -559,9 +616,6 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
     }
   };
 
-  /**
-   * Salva artigos selecionados (MESMA LÓGICA de criar-artigo)
-   */
   const saveSelectedArticles = async () => {
     const selected = articles.filter(a => a.selected && a.status === 'success');
 
@@ -571,6 +625,7 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
     }
 
     setIsGenerating(true);
+    const successfulSlugs: string[] = []; // 📝 Rastrear artigos salvos com sucesso
 
     try {
       for (let i = 0; i < selected.length; i++) {
@@ -672,6 +727,17 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
 
         const result = await response.json();
         console.log(`✅ [${i + 1}] Salvo com sucesso:`, result);
+
+        // 📝 Adicionar slug à lista de bem-sucedidos
+        if (article.slug) {
+          successfulSlugs.push(article.slug);
+        }
+      }
+
+      // 🗑️ LIMPAR rascunhos bem-sucedidos do localStorage
+      if (successfulSlugs.length > 0) {
+        DraftStorageService.clearSuccessful(successfulSlugs);
+        console.log(`🗑️ ${successfulSlugs.length} rascunho(s) removido(s) do cache`);
       }
 
       alert(`✅ ${selected.length} artigo(s) salvos com sucesso!`);
@@ -680,10 +746,11 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
       setArticles([]);
       setCurrentStep(0);
       setTotalSteps(0);
+      setHasDrafts(false); // Atualizar estado de rascunhos
 
     } catch (error: any) {
       console.error('❌ Erro detalhado ao salvar:', error);
-      alert(`❌ Erro ao salvar artigos: ${error.message}`);
+      alert(`❌ Erro ao salvar artigos: ${error.message}\n\n💾 Rascunhos foram mantidos no cache. Você pode tentar novamente.`);
     } finally {
       setIsGenerating(false);
     }
