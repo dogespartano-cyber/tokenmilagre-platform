@@ -20,7 +20,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import AdminRoute from '@/components/AdminRoute';
-import { processArticleLocally, validateProcessedArticle } from '@/lib/article-processor-client';
+import { processArticleLocally, validateProcessedArticle, generateSlug } from '@/lib/article-processor-client';
 import { validateArticle } from '@/app/dashboard/criar-artigo/_lib/validation';
 import type { ArticleType } from '@/app/dashboard/criar-artigo/_lib/constants';
 import { normalizeCategoryWithFallback } from '@/app/dashboard/criar-artigo/_lib/constants';
@@ -94,16 +94,8 @@ export default function GerarEmMassaPage() {
 
           // 🔧 REGENERAR slug para usar novo formato (timestamp em vez de data)
           if (article.title) {
-            const timestamp = Date.now().toString(36);
-            const baseSlug = article.title
-              .toLowerCase()
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .replace(/[^\w\s-]/g, '')
-              .replace(/\s+/g, '-')
-              .replace(/-+/g, '-')
-              .replace(/^-+|-+$/g, '');
-            article.slug = `${baseSlug}-${timestamp}`.substring(0, 100);
+            // Usa a função centralizada que já tem a correção para não deixar hífen no final
+            article.slug = generateSlug(article.title, true);
             console.log(`🔧 Slug regenerado: ${article.slug}`);
           }
 
