@@ -25,8 +25,10 @@ const slugSchema = z.string()
   .regex(VALIDATION_RULES.slug.pattern, 'Slug deve conter apenas letras minúsculas, números e hífens');
 
 const tagsSchema = z.array(z.string())
-  .min(VALIDATION_RULES.tags.min, `Mínimo de ${VALIDATION_RULES.tags.min} tags`)
-  .max(VALIDATION_RULES.tags.max, `Máximo de ${VALIDATION_RULES.tags.max} tags`);
+  .transform(tags => tags.slice(0, VALIDATION_RULES.tags.max)) // 🔧 Truncar para máximo automaticamente
+  .refine(tags => tags.length >= VALIDATION_RULES.tags.min, {
+    message: `Mínimo de ${VALIDATION_RULES.tags.min} tags`
+  });
 
 // Citations são sempre strings (URLs) vindas do Perplexity
 const citationsSchema = z.array(z.string().url('URL de citação inválida'));
