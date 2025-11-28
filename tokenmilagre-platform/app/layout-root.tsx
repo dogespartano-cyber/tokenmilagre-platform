@@ -233,25 +233,6 @@ export default function RootLayoutNav({
               })}
             </div>
           </nav >
-
-          {/* Sidebar Footer - CTA */}
-          < div className="p-6 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.05)' }
-          }>
-            <Link
-              href="/token"
-              className="group flex items-center justify-center gap-2 w-full text-center px-6 py-3.5 rounded-xl transition-all duration-300 shadow-[0_4px_20px_rgba(var(--brand-primary-rgb),0.3)] hover:shadow-[0_4px_25px_rgba(var(--brand-primary-rgb),0.5)] hover:scale-[1.02] font-bold relative overflow-hidden"
-              style={{
-                background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-                color: 'white'
-              }}
-            >
-              {/* Angelical Shine Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
-
-              <FontAwesomeIcon icon={faHeart} className="w-5 h-5 transition-transform duration-300 group-hover:scale-125 group-hover:animate-pulse relative z-10" />
-              <span className="relative z-10">Comprar $MILAGRE</span>
-            </Link>
-          </div >
         </div >
       </aside >
 
