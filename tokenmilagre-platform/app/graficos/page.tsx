@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faChartLine, faGlobe, faCoins, faArrowRight, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp, faChartLine, faGlobe, faCoins, faArrowRight, faShieldAlt, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram, faBitcoin, faEthereum } from '@fortawesome/free-brands-svg-icons';
 import { TokenBTC, TokenETH, TokenSOL } from '@token-icons/react';
 
@@ -79,142 +79,161 @@ export default function GraficosPage() {
               </div>
 
               {/* Desktop: Horizontal Flow */}
-              <div className="hidden md:flex items-center justify-start gap-4">
+              <div className="hidden md:flex items-center justify-start gap-8">
                 {/* Step 1: S&P 500 */}
-                <div className="flex-1 text-center space-y-2">
-                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
+                <div className="flex-1 max-w-[240px] text-center space-y-3 p-6 rounded-2xl border-2 transition-all hover:scale-105" style={{
+                  backgroundColor: 'var(--bg-card)',
+                  borderColor: 'var(--border-light)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+                }}>
+                  <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-3xl" style={{
                     background: 'linear-gradient(135deg, #1e40af, #3b82f6)',
-                    color: 'white'
+                    color: 'white',
+                    boxShadow: '0 6px 16px rgba(59, 130, 246, 0.4)'
                   }}>
                     <FontAwesomeIcon icon={faChartLine} />
                   </div>
-                  <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
+                  <h3 className="font-bold text-xl" style={{ color: "var(--text-primary)" }}>
                     S&P 500
                   </h3>
-                  <span className="inline-block px-2 py-1 text-xs rounded-full font-semibold" style={{
+                  <span className="inline-block px-3 py-1.5 text-xs rounded-full font-semibold" style={{
                     backgroundColor: 'rgba(59, 130, 246, 0.2)',
                     color: '#3b82f6'
                   }}>
                     Baixo Risco
                   </span>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                     Capital global
                   </p>
                 </div>
 
-                <FontAwesomeIcon icon={faArrowRight} className="text-2xl flex-shrink-0" style={{ color: "var(--text-secondary)" }} />
+                <FontAwesomeIcon icon={faArrowRight} className="text-3xl flex-shrink-0" style={{ color: "var(--text-secondary)", opacity: 0.5 }} />
 
                 {/* Step 2: Bitcoin */}
-                <div className="flex-1 text-center space-y-2">
-                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
+                <div className="flex-1 max-w-[240px] text-center space-y-3 p-6 rounded-2xl border-2 transition-all hover:scale-105" style={{
+                  backgroundColor: 'var(--bg-card)',
+                  borderColor: 'var(--border-light)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+                }}>
+                  <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-3xl" style={{
                     background: 'linear-gradient(135deg, #f59e0b, #fbbf24)',
-                    color: 'white'
+                    color: 'white',
+                    boxShadow: '0 6px 16px rgba(251, 191, 36, 0.4)'
                   }}>
                     <FontAwesomeIcon icon={faBitcoin} />
                   </div>
-                  <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
+                  <h3 className="font-bold text-xl" style={{ color: "var(--text-primary)" }}>
                     Bitcoin
                   </h3>
-                  <span className="inline-block px-2 py-1 text-xs rounded-full font-semibold" style={{
+                  <span className="inline-block px-3 py-1.5 text-xs rounded-full font-semibold" style={{
                     backgroundColor: 'rgba(251, 191, 36, 0.2)',
                     color: '#fbbf24'
                   }}>
                     Risco Médio
                   </span>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                     Porta de entrada
                   </p>
                 </div>
 
-                <FontAwesomeIcon icon={faArrowRight} className="text-2xl flex-shrink-0" style={{ color: "var(--text-secondary)" }} />
+                <FontAwesomeIcon icon={faArrowRight} className="text-3xl flex-shrink-0" style={{ color: "var(--text-secondary)", opacity: 0.5 }} />
 
                 {/* Step 3: Ethereum */}
-                <div className="flex-1 text-center space-y-2">
-                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
+                <div className="flex-1 max-w-[240px] text-center space-y-3 p-6 rounded-2xl border-2 transition-all hover:scale-105" style={{
+                  backgroundColor: 'var(--bg-card)',
+                  borderColor: 'var(--border-light)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+                }}>
+                  <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-3xl" style={{
                     background: 'linear-gradient(135deg, #f97316, #fb923c)',
-                    color: 'white'
+                    color: 'white',
+                    boxShadow: '0 6px 16px rgba(251, 146, 60, 0.4)'
                   }}>
                     <FontAwesomeIcon icon={faEthereum} />
                   </div>
-                  <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
+                  <h3 className="font-bold text-xl" style={{ color: "var(--text-primary)" }}>
                     Ethereum
                   </h3>
-                  <span className="inline-block px-2 py-1 text-xs rounded-full font-semibold" style={{
+                  <span className="inline-block px-3 py-1.5 text-xs rounded-full font-semibold" style={{
                     backgroundColor: 'rgba(251, 146, 60, 0.2)',
                     color: '#fb923c'
                   }}>
                     Risco Elevado
                   </span>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                     Inovação
                   </p>
                 </div>
 
-                <FontAwesomeIcon icon={faArrowRight} className="text-2xl flex-shrink-0" style={{ color: "var(--text-secondary)" }} />
+                <FontAwesomeIcon icon={faArrowRight} className="text-3xl flex-shrink-0" style={{ color: "var(--text-secondary)", opacity: 0.5 }} />
 
                 {/* Step 4: Altcoins */}
-                <div className="flex-1 text-center space-y-2">
-                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
+                <div className="flex-1 max-w-[240px] text-center space-y-3 p-6 rounded-2xl border-2 transition-all hover:scale-105" style={{
+                  backgroundColor: 'var(--bg-card)',
+                  borderColor: 'var(--border-light)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+                }}>
+                  <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-3xl" style={{
                     background: 'linear-gradient(135deg, #dc2626, #ef4444)',
-                    color: 'white'
+                    color: 'white',
+                    boxShadow: '0 6px 16px rgba(239, 68, 68, 0.4)'
                   }}>
                     <FontAwesomeIcon icon={faCoins} />
                   </div>
-                  <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
+                  <h3 className="font-bold text-xl" style={{ color: "var(--text-primary)" }}>
                     Altcoins
                   </h3>
-                  <span className="inline-block px-2 py-1 text-xs rounded-full font-semibold" style={{
+                  <span className="inline-block px-3 py-1.5 text-xs rounded-full font-semibold" style={{
                     backgroundColor: 'rgba(239, 68, 68, 0.2)',
                     color: '#ef4444'
                   }}>
                     Alto Risco
                   </span>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                     Alto retorno
                   </p>
                 </div>
               </div>
 
               {/* Mobile: Vertical Flow */}
-              <div className="md:hidden space-y-4">
+              <div className="md:hidden space-y-6">
                 {[
-                  { icon: faChartLine, title: 'S&P 500', risk: 'Baixo Risco', desc: 'Capital global', gradient: 'linear-gradient(135deg, #1e40af, #3b82f6)', badgeBg: 'rgba(59, 130, 246, 0.2)', badgeColor: '#3b82f6' },
-                  { icon: faBitcoin, title: 'Bitcoin', risk: 'Risco Médio', desc: 'Porta de entrada', gradient: 'linear-gradient(135deg, #f59e0b, #fbbf24)', badgeBg: 'rgba(251, 191, 36, 0.2)', badgeColor: '#fbbf24' },
-                  { icon: faEthereum, title: 'Ethereum', risk: 'Risco Elevado', desc: 'Inovação', gradient: 'linear-gradient(135deg, #f97316, #fb923c)', badgeBg: 'rgba(251, 146, 60, 0.2)', badgeColor: '#fb923c' },
-                  { icon: faCoins, title: 'Altcoins', risk: 'Alto Risco', desc: 'Alto retorno', gradient: 'linear-gradient(135deg, #dc2626, #ef4444)', badgeBg: 'rgba(239, 68, 68, 0.2)', badgeColor: '#ef4444' }
+                  { icon: faChartLine, title: 'S&P 500', risk: 'Baixo Risco', desc: 'Capital global', gradient: 'linear-gradient(135deg, #1e40af, #3b82f6)', badgeBg: 'rgba(59, 130, 246, 0.2)', badgeColor: '#3b82f6', shadowColor: 'rgba(59, 130, 246, 0.4)' },
+                  { icon: faBitcoin, title: 'Bitcoin', risk: 'Risco Médio', desc: 'Porta de entrada', gradient: 'linear-gradient(135deg, #f59e0b, #fbbf24)', badgeBg: 'rgba(251, 191, 36, 0.2)', badgeColor: '#fbbf24', shadowColor: 'rgba(251, 191, 36, 0.4)' },
+                  { icon: faEthereum, title: 'Ethereum', risk: 'Risco Elevado', desc: 'Inovação', gradient: 'linear-gradient(135deg, #f97316, #fb923c)', badgeBg: 'rgba(251, 146, 60, 0.2)', badgeColor: '#fb923c', shadowColor: 'rgba(251, 146, 60, 0.4)' },
+                  { icon: faCoins, title: 'Altcoins', risk: 'Alto Risco', desc: 'Alto retorno', gradient: 'linear-gradient(135deg, #dc2626, #ef4444)', badgeBg: 'rgba(239, 68, 68, 0.2)', badgeColor: '#ef4444', shadowColor: 'rgba(239, 68, 68, 0.4)' }
                 ].map((step, idx) => (
                   <div key={idx}>
-                    <div className="flex items-center gap-4 p-4 rounded-xl" style={{
+                    <div className="flex items-center gap-5 p-5 rounded-2xl border-2" style={{
                       backgroundColor: 'var(--bg-card)',
-                      borderLeft: `4px solid transparent`,
-                      borderImage: step.gradient + ' 1'
+                      borderColor: 'var(--border-light)',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
                     }}>
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0" style={{
+                      <div className="w-16 h-16 rounded-full flex items-center justify-center text-2xl flex-shrink-0" style={{
                         background: step.gradient,
-                        color: 'white'
+                        color: 'white',
+                        boxShadow: `0 6px 16px ${step.shadowColor}`
                       }}>
                         <FontAwesomeIcon icon={step.icon} />
                       </div>
-                      <div className="flex-1 space-y-1">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="font-bold" style={{ color: "var(--text-primary)" }}>
-                            {step.title}
-                          </h3>
-                          <span className="px-2 py-0.5 text-xs rounded-full font-semibold" style={{
-                            backgroundColor: step.badgeBg,
-                            color: step.badgeColor
-                          }}>
-                            {step.risk}
-                          </span>
-                        </div>
-                        <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                      <div className="flex-1 space-y-2">
+                        <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
+                          {step.title}
+                        </h3>
+                        <span className="inline-block px-3 py-1 text-xs rounded-full font-semibold" style={{
+                          backgroundColor: step.badgeBg,
+                          color: step.badgeColor
+                        }}>
+                          {step.risk}
+                        </span>
+                        <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                           {step.desc}
                         </p>
                       </div>
                     </div>
                     {idx < 3 && (
-                      <div className="flex justify-center py-2">
-                        <FontAwesomeIcon icon={faArrowRight} className="text-xl rotate-90" style={{ color: "var(--text-secondary)" }} />
+                      <div className="flex justify-center py-3">
+                        <FontAwesomeIcon icon={faArrowRight} className="text-2xl rotate-90" style={{ color: "var(--text-secondary)", opacity: 0.5 }} />
                       </div>
                     )}
                   </div>
@@ -249,104 +268,165 @@ export default function GraficosPage() {
                   Fluxo de Capital no Mercado Cripto
                 </h2>
                 <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                  Dentro do mercado cripto, o capital segue um padrão: lucros realizados no Bitcoin são alocados em Ethereum, que por sua vez são diversificados em altcoins de menor capitalização e maior potencial de retorno. Este ciclo se repete a cada movimento de alta do mercado.
+                  Dentro do mercado cripto, o capital segue um padrão: lucros realizados no Bitcoin são alocados em Ethereum, que por sua vez são diversificados em altcoins de menor capitalização e maior potencial de retorno. Os lucros das altcoins de alto risco retornam para BTC e Stablecoins, aguardando novas oportunidades. Este ciclo se repete a cada movimento de alta do mercado.
                 </p>
               </div>
 
               {/* Desktop: Horizontal Flow */}
-              <div className="hidden md:flex items-center justify-center gap-6">
+              <div className="hidden md:flex items-center justify-start gap-8 flex-wrap">
                 {/* BTC */}
-                <div className="flex-1 text-center space-y-2 max-w-[200px]">
-                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
+                <div className="flex-1 min-w-[220px] max-w-[260px] text-center space-y-3 p-6 rounded-2xl border-2 transition-all hover:scale-105" style={{
+                  backgroundColor: 'var(--bg-card)',
+                  borderColor: 'var(--border-light)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+                }}>
+                  <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-3xl" style={{
                     background: 'linear-gradient(135deg, #f59e0b, #fbbf24)',
                     color: 'white',
-                    boxShadow: '0 4px 12px rgba(251, 191, 36, 0.3)'
+                    boxShadow: '0 6px 16px rgba(251, 191, 36, 0.4)'
                   }}>
                     <FontAwesomeIcon icon={faBitcoin} />
                   </div>
-                  <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
+                  <h3 className="font-bold text-xl" style={{ color: "var(--text-primary)" }}>
                     Bitcoin
                   </h3>
-                  <span className="inline-block px-3 py-1 text-xs rounded-full font-semibold" style={{
+                  <span className="inline-block px-3 py-1.5 text-xs rounded-full font-semibold" style={{
                     backgroundColor: 'rgba(251, 191, 36, 0.2)',
                     color: '#fbbf24'
                   }}>
                     Reserva de Valor
                   </span>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                     Lucros realizados
                   </p>
                 </div>
 
-                <div className="flex flex-col items-center gap-1">
-                  <FontAwesomeIcon icon={faArrowRight} className="text-2xl" style={{ color: "var(--text-secondary)" }} />
-                  <span className="text-xs font-semibold px-2 py-1 rounded" style={{
+                <div className="flex flex-col items-center gap-2">
+                  <FontAwesomeIcon icon={faArrowRight} className="text-3xl" style={{ color: "var(--text-secondary)", opacity: 0.5 }} />
+                  <span className="text-xs font-semibold px-3 py-1.5 rounded-lg" style={{
                     color: '#22c55e',
-                    backgroundColor: 'rgba(34, 197, 94, 0.1)'
+                    backgroundColor: 'rgba(34, 197, 94, 0.15)',
+                    border: '1px solid rgba(34, 197, 94, 0.3)'
                   }}>
                     Rotação
                   </span>
                 </div>
 
                 {/* ETH */}
-                <div className="flex-1 text-center space-y-2 max-w-[200px]">
-                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
+                <div className="flex-1 min-w-[220px] max-w-[260px] text-center space-y-3 p-6 rounded-2xl border-2 transition-all hover:scale-105" style={{
+                  backgroundColor: 'var(--bg-card)',
+                  borderColor: 'var(--border-light)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+                }}>
+                  <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-3xl" style={{
                     background: 'linear-gradient(135deg, #6366f1, #818cf8)',
                     color: 'white',
-                    boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)'
+                    boxShadow: '0 6px 16px rgba(99, 102, 241, 0.4)'
                   }}>
                     <FontAwesomeIcon icon={faEthereum} />
                   </div>
-                  <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
+                  <h3 className="font-bold text-xl" style={{ color: "var(--text-primary)" }}>
                     Ethereum
                   </h3>
-                  <span className="inline-block px-3 py-1 text-xs rounded-full font-semibold" style={{
+                  <span className="inline-block px-3 py-1.5 text-xs rounded-full font-semibold" style={{
                     backgroundColor: 'rgba(99, 102, 241, 0.2)',
                     color: '#818cf8'
                   }}>
                     DeFi & NFTs
                   </span>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                     Ecossistema consolidado
                   </p>
                 </div>
 
-                <div className="flex flex-col items-center gap-1">
-                  <FontAwesomeIcon icon={faArrowRight} className="text-2xl" style={{ color: "var(--text-secondary)" }} />
-                  <span className="text-xs font-semibold px-2 py-1 rounded" style={{
+                <div className="flex flex-col items-center gap-2">
+                  <FontAwesomeIcon icon={faArrowRight} className="text-3xl" style={{ color: "var(--text-secondary)", opacity: 0.5 }} />
+                  <span className="text-xs font-semibold px-3 py-1.5 rounded-lg" style={{
                     color: '#22c55e',
-                    backgroundColor: 'rgba(34, 197, 94, 0.1)'
+                    backgroundColor: 'rgba(34, 197, 94, 0.15)',
+                    border: '1px solid rgba(34, 197, 94, 0.3)'
                   }}>
                     Diversificação
                   </span>
                 </div>
 
                 {/* Altcoins */}
-                <div className="flex-1 text-center space-y-2 max-w-[200px]">
-                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl" style={{
+                <div className="flex-1 min-w-[220px] max-w-[260px] text-center space-y-3 p-6 rounded-2xl border-2 transition-all hover:scale-105" style={{
+                  backgroundColor: 'var(--bg-card)',
+                  borderColor: 'var(--border-light)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+                }}>
+                  <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-3xl" style={{
                     background: 'linear-gradient(135deg, #dc2626, #ef4444)',
                     color: 'white',
-                    boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)'
+                    boxShadow: '0 6px 16px rgba(239, 68, 68, 0.4)'
                   }}>
                     <FontAwesomeIcon icon={faCoins} />
                   </div>
-                  <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
+                  <h3 className="font-bold text-xl" style={{ color: "var(--text-primary)" }}>
                     Altcoins
                   </h3>
-                  <span className="inline-block px-3 py-1 text-xs rounded-full font-semibold" style={{
+                  <span className="inline-block px-3 py-1.5 text-xs rounded-full font-semibold" style={{
                     backgroundColor: 'rgba(239, 68, 68, 0.2)',
                     color: '#ef4444'
                   }}>
                     Alto Risco/Retorno
                   </span>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                     Oportunidades emergentes
+                  </p>
+                </div>
+
+                <div className="flex flex-col items-center gap-2">
+                  <FontAwesomeIcon icon={faArrowRight} className="text-3xl" style={{ color: "var(--text-secondary)", opacity: 0.5 }} />
+                  <span className="text-xs font-semibold px-3 py-1.5 rounded-lg" style={{
+                    color: '#f59e0b',
+                    backgroundColor: 'rgba(245, 158, 11, 0.15)',
+                    border: '1px solid rgba(245, 158, 11, 0.3)'
+                  }}>
+                    Lucros
+                  </span>
+                </div>
+
+                {/* BTC + Stablecoin */}
+                <div className="flex-1 min-w-[220px] max-w-[260px] text-center space-y-3 p-6 rounded-2xl border-2 transition-all hover:scale-105" style={{
+                  backgroundColor: 'var(--bg-card)',
+                  borderColor: 'var(--border-light)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+                }}>
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center text-2xl" style={{
+                      background: 'linear-gradient(135deg, #f59e0b, #fbbf24)',
+                      color: 'white',
+                      boxShadow: '0 4px 12px rgba(251, 191, 36, 0.4)'
+                    }}>
+                      <FontAwesomeIcon icon={faBitcoin} />
+                    </div>
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center text-2xl" style={{
+                      background: 'linear-gradient(135deg, #10b981, #34d399)',
+                      color: 'white',
+                      boxShadow: '0 4px 12px rgba(52, 211, 153, 0.4)'
+                    }}>
+                      <FontAwesomeIcon icon={faDollarSign} />
+                    </div>
+                  </div>
+                  <h3 className="font-bold text-xl" style={{ color: "var(--text-primary)" }}>
+                    BTC + Stables
+                  </h3>
+                  <span className="inline-block px-3 py-1.5 text-xs rounded-full font-semibold" style={{
+                    backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                    color: '#10b981'
+                  }}>
+                    Segurança
+                  </span>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                    Aguardando oportunidades
                   </p>
                 </div>
               </div>
 
               {/* Mobile: Vertical Flow */}
-              <div className="md:hidden space-y-4">
+              <div className="md:hidden space-y-6">
                 {[
                   {
                     icon: faBitcoin,
@@ -356,7 +436,10 @@ export default function GraficosPage() {
                     gradient: 'linear-gradient(135deg, #f59e0b, #fbbf24)',
                     badgeBg: 'rgba(251, 191, 36, 0.2)',
                     badgeColor: '#fbbf24',
-                    arrow: 'Rotação'
+                    shadowColor: 'rgba(251, 191, 36, 0.4)',
+                    arrow: 'Rotação',
+                    arrowColor: '#22c55e',
+                    arrowBg: 'rgba(34, 197, 94, 0.15)'
                   },
                   {
                     icon: faEthereum,
@@ -366,7 +449,10 @@ export default function GraficosPage() {
                     gradient: 'linear-gradient(135deg, #6366f1, #818cf8)',
                     badgeBg: 'rgba(99, 102, 241, 0.2)',
                     badgeColor: '#818cf8',
-                    arrow: 'Diversificação'
+                    shadowColor: 'rgba(99, 102, 241, 0.4)',
+                    arrow: 'Diversificação',
+                    arrowColor: '#22c55e',
+                    arrowBg: 'rgba(34, 197, 94, 0.15)'
                   },
                   {
                     icon: faCoins,
@@ -375,46 +461,61 @@ export default function GraficosPage() {
                     desc: 'Oportunidades emergentes',
                     gradient: 'linear-gradient(135deg, #dc2626, #ef4444)',
                     badgeBg: 'rgba(239, 68, 68, 0.2)',
-                    badgeColor: '#ef4444'
+                    badgeColor: '#ef4444',
+                    shadowColor: 'rgba(239, 68, 68, 0.4)',
+                    arrow: 'Lucros',
+                    arrowColor: '#f59e0b',
+                    arrowBg: 'rgba(245, 158, 11, 0.15)'
+                  },
+                  {
+                    icon: faDollarSign,
+                    title: 'BTC + Stables',
+                    badge: 'Segurança',
+                    desc: 'Aguardando oportunidades',
+                    gradient: 'linear-gradient(135deg, #10b981, #34d399)',
+                    badgeBg: 'rgba(16, 185, 129, 0.2)',
+                    badgeColor: '#10b981',
+                    shadowColor: 'rgba(52, 211, 153, 0.4)'
                   }
                 ].map((step, idx) => (
                   <div key={idx}>
-                    <div className="flex items-center gap-4 p-4 rounded-xl" style={{
+                    <div className="flex items-center gap-5 p-5 rounded-2xl border-2" style={{
                       backgroundColor: 'var(--bg-card)',
-                      borderLeft: `4px solid transparent`,
-                      borderImage: step.gradient + ' 1',
-                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
+                      borderColor: 'var(--border-light)',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
                     }}>
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0" style={{
+                      <div className="w-16 h-16 rounded-full flex items-center justify-center text-2xl flex-shrink-0" style={{
                         background: step.gradient,
-                        color: 'white'
+                        color: 'white',
+                        boxShadow: `0 6px 16px ${step.shadowColor}`
                       }}>
                         <FontAwesomeIcon icon={step.icon} />
                       </div>
 
-                      <div className="flex-1">
-                        <h3 className="font-bold text-base mb-1" style={{ color: "var(--text-primary)" }}>
+                      <div className="flex-1 space-y-2">
+                        <h3 className="font-bold text-lg" style={{ color: "var(--text-primary)" }}>
                           {step.title}
                         </h3>
-                        <span className="inline-block px-2 py-0.5 text-xs rounded-full font-semibold mb-1" style={{
+                        <span className="inline-block px-3 py-1 text-xs rounded-full font-semibold" style={{
                           backgroundColor: step.badgeBg,
                           color: step.badgeColor
                         }}>
                           {step.badge}
                         </span>
-                        <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                        <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                           {step.desc}
                         </p>
                       </div>
                     </div>
 
                     {step.arrow && (
-                      <div className="flex items-center justify-center py-2">
-                        <div className="flex flex-col items-center gap-1">
-                          <FontAwesomeIcon icon={faArrowRight} className="text-xl rotate-90" style={{ color: "var(--text-secondary)" }} />
-                          <span className="text-xs font-semibold px-2 py-1 rounded" style={{
-                            color: '#22c55e',
-                            backgroundColor: 'rgba(34, 197, 94, 0.1)'
+                      <div className="flex items-center justify-center py-3">
+                        <div className="flex flex-col items-center gap-2">
+                          <FontAwesomeIcon icon={faArrowRight} className="text-2xl rotate-90" style={{ color: "var(--text-secondary)", opacity: 0.5 }} />
+                          <span className="text-xs font-semibold px-3 py-1.5 rounded-lg" style={{
+                            color: step.arrowColor,
+                            backgroundColor: step.arrowBg,
+                            border: `1px solid ${step.arrowColor}33`
                           }}>
                             {step.arrow}
                           </span>
