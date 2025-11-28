@@ -223,7 +223,7 @@ export default function TokenPage() {
                 href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="neumorphic-button px-10 py-5 rounded-full font-inter font-semibold text-lg text-gray-900 dark:text-[var(--text-primary)] hover:text-white hover:bg-[#0d9488] shadow-xl flex items-center gap-3 transition-colors"
+                className="px-10 py-5 rounded-full font-inter font-semibold text-lg text-white bg-[#0d9488] hover:bg-[#0f766e] shadow-xl flex items-center gap-3 transition-all"
               >
                 <span>Comprar agora</span>
                 <FontAwesomeIcon icon={faRocket} className="w-5 h-5" />
@@ -238,21 +238,6 @@ export default function TokenPage() {
               </button>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="mt-16 flex flex-wrap justify-center gap-8 text-sm font-inter" style={{ color: 'var(--text-secondary)' }}>
-              <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5 text-green-500" />
-                <span>100% Transparente</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5 text-green-500" />
-                <span>Código Aberto</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faCheckCircle} className="w-5 h-5 text-green-500" />
-                <span>Comunidade Ativa</span>
-              </div>
-            </div>
           </section>
 
           {/* Por que $MILAGRE? Section */}
@@ -315,7 +300,7 @@ export default function TokenPage() {
             <div className="glass-panel p-8 md:p-12 rounded-3xl">
               <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-                  Tokenomics Simples
+                  Pré Venda do Token
                 </h2>
                 <p className="text-lg md:text-xl font-inter text-gray-700 dark:text-[var(--text-secondary)]">
                   Sem complicações. Distribuição justa e transparente.
@@ -502,7 +487,7 @@ export default function TokenPage() {
                   href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="neumorphic-button inline-flex items-center gap-3 px-10 py-5 rounded-full font-inter font-bold text-gray-900 dark:text-[var(--text-primary)] hover:text-white hover:bg-[#0d9488] shadow-xl text-lg transition-colors"
+                  className="inline-flex items-center gap-3 px-10 py-5 rounded-full font-inter font-bold text-white bg-[#0d9488] hover:bg-[#0f766e] shadow-xl text-lg transition-all"
                 >
                   <span>Comprar no Pump.fun</span>
                   <FontAwesomeIcon icon={faRocket} className="w-5 h-5" />
