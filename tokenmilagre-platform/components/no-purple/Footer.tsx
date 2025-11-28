@@ -31,7 +31,6 @@ export default function Footer() {
       { label: 'GitHub', href: '#', external: true },
     ],
     legal: [
-      { label: 'Manifesto', href: '/manifesto' },
       { label: 'Segurança', href: '/seguranca/verificador-url' },
       { label: 'Doações', href: '/doacoes' },
     ],
@@ -345,11 +344,7 @@ export default function Footer() {
             </p>
 
             <p className="footer-disclaimer">
-              Criptomoedas envolvem riscos. Este não é um conselho financeiro.{' '}
-              <a href="/manifesto" className="footer-disclaimer-link">
-                Leia nosso manifesto
-              </a>
-              .
+              Criptomoedas envolvem riscos. Este não é um conselho financeiro.
             </p>
           </div>
         </div>

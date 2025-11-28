@@ -143,7 +143,6 @@ export default function RootLayoutNav({
     { href: '/recursos', label: 'Recursos', icon: faStore },
     { href: '/sobre', label: 'Sobre', icon: faInfoCircle },
     { href: '/token', label: 'Token', icon: faCoins },
-    { href: '/manifesto', label: 'Manifesto', icon: faBook },
     { href: '/doacoes', label: 'Doações', icon: faHeart },
   ];
 

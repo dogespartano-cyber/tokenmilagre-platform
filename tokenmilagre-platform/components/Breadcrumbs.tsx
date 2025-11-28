@@ -47,7 +47,6 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
     'noticias': 'Notícias',
     'sobre': 'Sobre',
     'token': 'Token',
-    'manifesto': 'Manifesto',
     'mercado': 'Mercado',
     'criptomoedas': 'Criptomoedas',
     'graficos': 'Gráficos',
