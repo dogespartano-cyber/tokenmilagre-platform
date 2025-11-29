@@ -225,7 +225,7 @@ export default function NoticiasPage() {
 
       <div>
 
-        {/* Modal de Filtros (Redesign Harmonioso) */}
+        {/* Modal de Filtros (Redesign Harmonioso - Variáveis Isoladas) */}
         {showFilters && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <div
@@ -233,22 +233,22 @@ export default function NoticiasPage() {
               onClick={() => setShowFilters(false)}
             />
 
-            <div className="relative w-full max-w-4xl bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto animate-scale-in flex flex-col border border-gray-200 dark:border-gray-800">
+            <div className="relative w-full max-w-4xl bg-[var(--bg-modal)] rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto animate-scale-in flex flex-col border border-[var(--border-modal)]">
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-800">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Filtrar Notícias</h2>
+              <div className="flex items-center justify-between p-6 border-b border-[var(--border-modal)]">
+                <h2 className="text-2xl font-bold text-[var(--text-modal)]">Filtrar Notícias</h2>
                 <div className="flex items-center gap-3">
                   {getActiveFiltersCount() > 0 && (
                     <button
                       onClick={clearAllFilters}
-                      className="text-sm font-bold text-red-500 hover:text-red-600 px-3 py-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                      className="text-sm font-bold text-red-500 hover:text-red-600 px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors"
                     >
                       Limpar Filtros
                     </button>
                   )}
                   <button
                     onClick={() => setShowFilters(false)}
-                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                    className="p-2 rounded-lg hover:bg-[var(--bg-modal-hover)] text-[var(--text-modal-muted)] hover:text-[var(--text-modal)] transition-colors"
                   >
                     <FontAwesomeIcon icon={faTimes} className="w-6 h-6" />
                   </button>
@@ -259,23 +259,23 @@ export default function NoticiasPage() {
 
                 {/* Busca (Full Width) */}
                 <div className="space-y-3">
-                  <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Buscar</label>
+                  <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Buscar</label>
                   <div className="relative">
                     <input
                       type="text"
                       placeholder="Pesquisar por palavras-chave, tokens ou temas..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-all placeholder-gray-400 dark:placeholder-gray-500"
+                      className="w-full pl-12 pr-4 py-4 rounded-xl bg-[var(--bg-modal-input)] border border-[var(--border-modal)] text-[var(--text-modal)] text-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-all placeholder-[var(--text-modal-muted)]"
                     />
                     <FontAwesomeIcon
                       icon={faSearch}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-lg"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-modal-muted)] text-lg"
                     />
                     {searchTerm && (
                       <button
                         onClick={() => setSearchTerm('')}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-modal-muted)] hover:text-[var(--text-modal)]"
                       >
                         <FontAwesomeIcon icon={faTimes} />
                       </button>
@@ -287,15 +287,15 @@ export default function NoticiasPage() {
 
                   {/* Coluna Esquerda: Categorias (2/3 width) */}
                   <div className="lg:col-span-2 space-y-4">
-                    <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Categorias</label>
+                    <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Categorias</label>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                       {categories.map((cat) => (
                         <button
                           key={cat.id}
                           onClick={() => setSelectedCategory(cat.id)}
                           className={`flex items-center justify-center px-4 py-2.5 rounded-xl transition-all duration-200 border ${selectedCategory === cat.id
-                              ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-md'
-                              : 'bg-gray-50 dark:bg-gray-800 border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-md'
+                            : 'bg-[var(--bg-modal-input)] border-transparent text-[var(--text-modal-muted)] hover:bg-[var(--bg-modal-hover)]'
                             }`}
                         >
                           <span className="font-medium text-sm">{cat.label}</span>
@@ -309,12 +309,12 @@ export default function NoticiasPage() {
 
                     {/* Ordenação */}
                     <div className="space-y-3">
-                      <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Ordenação</label>
+                      <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Ordenação</label>
                       <div className="relative">
                         <select
                           value={sortBy}
                           onChange={(e) => setSortBy(e.target.value as any)}
-                          className="w-full appearance-none px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] cursor-pointer"
+                          className="w-full appearance-none px-4 py-3 rounded-xl bg-[var(--bg-modal-input)] border border-[var(--border-modal)] text-[var(--text-modal)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] cursor-pointer"
                         >
                           <option value="newest">Mais Recentes</option>
                           <option value="oldest">Mais Antigas</option>
@@ -322,21 +322,21 @@ export default function NoticiasPage() {
                         </select>
                         <FontAwesomeIcon
                           icon={faSortAmountDown}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none"
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-modal-muted)] pointer-events-none"
                         />
                       </div>
                     </div>
 
                     {/* Sentimento */}
                     <div className="space-y-3">
-                      <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Sentimento</label>
+                      <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Sentimento</label>
                       <div className="flex flex-col gap-2">
                         <div className="grid grid-cols-3 gap-2">
                           <button
                             onClick={() => setSelectedSentiment(selectedSentiment === 'positive' ? 'all' : 'positive')}
                             className={`px-2 py-2.5 rounded-lg text-sm font-bold transition-all border ${selectedSentiment === 'positive'
-                                ? 'bg-emerald-500 text-white border-emerald-500 shadow-md'
-                                : 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border-transparent hover:bg-emerald-100 dark:hover:bg-emerald-900/30'
+                              ? 'bg-emerald-500 text-white border-emerald-500 shadow-md'
+                              : 'bg-emerald-50 text-emerald-600 border-transparent hover:bg-emerald-100'
                               }`}
                           >
                             Positivo
@@ -344,8 +344,8 @@ export default function NoticiasPage() {
                           <button
                             onClick={() => setSelectedSentiment(selectedSentiment === 'neutral' ? 'all' : 'neutral')}
                             className={`px-2 py-2.5 rounded-lg text-sm font-bold transition-all border ${selectedSentiment === 'neutral'
-                                ? 'bg-amber-500 text-white border-amber-500 shadow-md'
-                                : 'bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 border-transparent hover:bg-amber-100 dark:hover:bg-amber-900/30'
+                              ? 'bg-amber-500 text-white border-amber-500 shadow-md'
+                              : 'bg-amber-50 text-amber-600 border-transparent hover:bg-amber-100'
                               }`}
                           >
                             Neutro
@@ -353,8 +353,8 @@ export default function NoticiasPage() {
                           <button
                             onClick={() => setSelectedSentiment(selectedSentiment === 'negative' ? 'all' : 'negative')}
                             className={`px-2 py-2.5 rounded-lg text-sm font-bold transition-all border ${selectedSentiment === 'negative'
-                                ? 'bg-red-500 text-white border-red-500 shadow-md'
-                                : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 border-transparent hover:bg-red-100 dark:hover:bg-red-900/30'
+                              ? 'bg-red-500 text-white border-red-500 shadow-md'
+                              : 'bg-red-50 text-red-600 border-transparent hover:bg-red-100'
                               }`}
                           >
                             Negativo

@@ -291,6 +291,19 @@ html {
   /* Legacy fallbacks */
   --background: #F8F9FA;
   --foreground: #1A1A1A;
+
+  /* Modal Specific Variables - Isolated */
+  --bg-modal: #FFFFFF;
+  --text-modal: #111827;
+  /* gray-900 */
+  --text-modal-muted: #6B7280;
+  /* gray-500 */
+  --border-modal: #E5E7EB;
+  /* gray-200 */
+  --bg-modal-input: #F9FAFB;
+  /* gray-50 */
+  --bg-modal-hover: #F3F4F6;
+  /* gray-100 */
 }
 
 [data-theme="dark"] {
@@ -389,6 +402,19 @@ html {
   /* Legacy fallbacks */
   --background: #0F1419;
   --foreground: #FFFFFF;
+
+  /* Modal Specific Variables - Isolated (Dark) */
+  --bg-modal: #111827;
+  /* gray-900 */
+  --text-modal: #FFFFFF;
+  --text-modal-muted: #9CA3AF;
+  /* gray-400 */
+  --border-modal: #1F2937;
+  /* gray-800 */
+  --bg-modal-input: #1F2937;
+  /* gray-800 */
+  --bg-modal-hover: #374151;
+  /* gray-700 */
 }
 
 @theme inline {
