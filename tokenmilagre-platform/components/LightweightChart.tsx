@@ -69,24 +69,8 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
       wickDownColor: '#dc2626',  // Vermelho médio
     });
 
-    // Série de volume (histograma)
-    const volumeSeries = chart.addSeries(HistogramSeries, {
-      color: '#9ca3af',
-      priceFormat: {
-        type: 'volume',
-      },
-      priceScaleId: '',
-    });
-
-    volumeSeries.priceScale().applyOptions({
-      scaleMargins: {
-        top: 0.8, // Volume ocupa 20% inferior
-        bottom: 0,
-      },
-    });
-
     // Buscar dados da Binance
-    fetchBinanceData(symbol, timeframe, candlestickSeries, volumeSeries);
+    fetchBinanceData(symbol, timeframe, candlestickSeries);
 
     // Responsivo
     const handleResize = () => {
@@ -108,8 +92,7 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
   const fetchBinanceData = async (
     symbol: string,
     timeframe: Timeframe,
-    candlestickSeries: ISeriesApi<'Candlestick'>,
-    volumeSeries: ISeriesApi<'Histogram'>
+    candlestickSeries: ISeriesApi<'Candlestick'>
   ) => {
     try {
       // Mapear timeframe para intervalo da Binance
@@ -143,19 +126,7 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
         close: parseFloat(candle[4] as string),
       }));
 
-      // Formatar dados de volume
-      const volumeData = data.map((candle) => {
-        const close = parseFloat(candle[4] as string);
-        const open = parseFloat(candle[1] as string);
-        return {
-          time: ((candle[0] as number) / 1000) as Time,
-          value: parseFloat(candle[5] as string), // Volume
-          color: close >= open ? '#22c55e80' : '#ef444480', // Verde/vermelho vibrante com transparência
-        };
-      });
-
       candlestickSeries.setData(formattedData);
-      volumeSeries.setData(volumeData);
 
       // Atualizar preço atual (último candle)
       if (formattedData.length > 0) {
@@ -189,9 +160,8 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
               <button
                 key={tf}
                 onClick={() => setTimeframe(tf)}
-                className={`px-3 py-1 rounded text-sm font-medium transition-all ${
-                  timeframe === tf ? 'shadow-sm' : ''
-                }`}
+                className={`px-3 py-1 rounded text-sm font-medium transition-all ${timeframe === tf ? 'shadow-sm' : ''
+                  }`}
                 style={timeframe === tf ? {
                   backgroundColor: 'var(--brand-bg)',
                   color: 'var(--text-primary)'
