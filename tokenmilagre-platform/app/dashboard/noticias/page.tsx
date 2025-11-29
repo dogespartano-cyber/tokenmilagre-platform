@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTimes, faClock, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTimes, faClock, faArrowRight, faFilter, faSortAmountDown } from '@fortawesome/free-solid-svg-icons';
 
 interface NewsItem {
   id: string;
@@ -23,43 +23,6 @@ interface NewsItem {
   lastVerified?: string;
 }
 
-// Helper functions for card styling (baseado em sentimento)
-const getSentimentGradient = (sentiment: 'positive' | 'neutral' | 'negative') => {
-  switch (sentiment) {
-    case 'positive': return 'rgba(34, 197, 94, 0.08)';  // Verde
-    case 'negative': return 'rgba(239, 68, 68, 0.08)';  // Vermelho
-    case 'neutral': return 'rgba(234, 179, 8, 0.08)';   // Amarelo
-    default: return 'rgba(100, 116, 139, 0.05)';
-  }
-};
-
-const getSentimentColor = (sentiment: 'positive' | 'neutral' | 'negative') => {
-  switch (sentiment) {
-    case 'positive': return '#22c55e';
-    case 'negative': return '#ef4444';
-    case 'neutral': return '#eab308';
-    default: return '#64748b';
-  }
-};
-
-const getSentimentIcon = (sentiment: 'positive' | 'neutral' | 'negative') => {
-  switch (sentiment) {
-    case 'positive': return '🟢';
-    case 'negative': return '🔴';
-    case 'neutral': return '🟡';
-    default: return '⚪';
-  }
-};
-
-const getSentimentLabel = (sentiment: 'positive' | 'neutral' | 'negative') => {
-  switch (sentiment) {
-    case 'positive': return 'Positivo';
-    case 'negative': return 'Negativo';
-    case 'neutral': return 'Neutro';
-    default: return 'Neutro';
-  }
-};
-
 export default function NoticiasPage() {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [filteredNews, setFilteredNews] = useState<NewsItem[]>([]);
@@ -74,6 +37,9 @@ export default function NoticiasPage() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+  // Estado para sidebar/drawer (agora unificado para desktop e mobile)
+  const [showFilters, setShowFilters] = useState(false);
 
   // Capturar parâmetro de busca da URL
   useEffect(() => {
@@ -192,8 +158,6 @@ export default function NoticiasPage() {
     setFilteredNews(filtered);
   }, [searchTerm, news, selectedSentiment, sortBy]);
 
-
-
   const getTimeAgo = (date: string) => {
     const now = new Date();
     const published = new Date(date);
@@ -208,6 +172,7 @@ export default function NoticiasPage() {
 
   const handleTagClick = (tag: string) => {
     setSearchTerm(tag);
+    setShowFilters(true); // Abrir filtros para mostrar que a busca foi aplicada
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -217,6 +182,18 @@ export default function NoticiasPage() {
     setSelectedSentiment('all');
     setSortBy('newest');
   };
+
+  // Bloquear scroll do body quando filtros estiverem abertos
+  useEffect(() => {
+    if (showFilters) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showFilters]);
 
   const getActiveFiltersCount = () => {
     let count = 0;
@@ -228,249 +205,254 @@ export default function NoticiasPage() {
   };
 
   return (
-    <div className="container mx-auto px-4">
-      <div className="space-y-8">
-        {/* Busca e Filtros */}
-        <div className="space-y-6">
-          {/* Campo de Busca + Botão Limpar */}
-          <div className="flex items-center gap-3 max-w-2xl">
-            <div className="relative flex-1">
-              <input
-                type="text"
-                placeholder="Buscar notícias por título, resumo ou palavra-chave..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-3 pl-12 rounded-xl border-2 transition-all focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                style={{
-                  backgroundColor: 'var(--bg-secondary)',
-                  borderColor: 'var(--border-medium)',
-                  color: 'var(--text-primary)'
-                }}
-              />
-              <FontAwesomeIcon
-                icon={faSearch}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5"
-                style={{ color: 'var(--text-tertiary)' }}
-              />
-              {searchTerm && (
+    <div className="container mx-auto px-4 py-8 relative">
+      {/* Header com Título e Botão de Filtros */}
+      {/* Header com Botão de Filtros */}
+      <div className="flex items-center justify-end mb-8">
+        <button
+          onClick={() => setShowFilters(true)}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl glass-card text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-all hover:scale-105 active:scale-95"
+        >
+          <FontAwesomeIcon icon={faFilter} />
+          <span className="font-semibold">Filtros</span>
+          {getActiveFiltersCount() > 0 && (
+            <span className="flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full bg-[var(--brand-primary)] text-white ml-1">
+              {getActiveFiltersCount()}
+            </span>
+          )}
+        </button>
+      </div>
+
+      <div>
+
+        {/* Modal de Filtros (Horizontal Redesign) */}
+        {showFilters && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <div
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in"
+              onClick={() => setShowFilters(false)}
+            />
+
+            <div className="relative w-full max-w-4xl bg-[var(--bg-elevated)] rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto border border-[var(--border-light)] animate-scale-in flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-[var(--border-light)]">
+                <h2 className="text-2xl font-bold text-[var(--text-primary)]">Filtrar Notícias</h2>
                 <button
-                  onClick={() => setSearchTerm('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                  aria-label="Limpar busca"
+                  onClick={() => setShowFilters(false)}
+                  className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors"
                 >
-                  <FontAwesomeIcon icon={faTimes} className="w-5 h-5" />
+                  <FontAwesomeIcon icon={faTimes} className="w-6 h-6" />
                 </button>
-              )}
-            </div>
+              </div>
 
-            {getActiveFiltersCount() > 0 && (
-              <button
-                onClick={clearAllFilters}
-                className="px-4 py-3 rounded-xl font-semibold transition-all hover:opacity-80 whitespace-nowrap"
-                style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--brand-primary)' }}
-              >
-                Limpar filtros
-              </button>
-            )}
-          </div>
+              <div className="p-6 space-y-8">
 
-          {/* Filtros */}
-          <div className="flex flex-wrap items-center gap-4">
-            {/* Categorias */}
-            <div className="flex flex-wrap gap-2">
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 ${selectedCategory === cat.id
-                      ? 'shadow-md'
-                      : 'hover:opacity-80'
-                    }`}
-                  style={{
-                    backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
-                    color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
-                  }}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Divider */}
-            <div className="h-8 w-px" style={{ backgroundColor: 'var(--border-light)' }}></div>
-
-            {/* Select Ordenar/Sentimento */}
-            <select
-              value={`${sortBy}-${selectedSentiment}`}
-              onChange={(e) => {
-                const [sort, sentiment] = e.target.value.split('-');
-                setSortBy(sort as typeof sortBy);
-                setSelectedSentiment(sentiment);
-              }}
-              className="px-4 py-2 rounded-lg border-2 transition-all focus:outline-none focus:ring-2 focus:ring-brand-primary font-medium cursor-pointer"
-              style={{
-                backgroundColor: 'var(--bg-secondary)',
-                borderColor: 'var(--border-medium)',
-                color: 'var(--text-primary)'
-              }}
-            >
-              <optgroup label="Ordenação">
-                <option value="newest-all">Mais Recentes</option>
-                <option value="oldest-all">Mais Antigas</option>
-                <option value="alphabetical-all">Alfabética (A-Z)</option>
-              </optgroup>
-              <optgroup label="Sentimento">
-                <option value="newest-positive">Positivo</option>
-                <option value="newest-neutral">Neutro</option>
-                <option value="newest-negative">Negativo</option>
-              </optgroup>
-            </select>
-
-            {/* Contador */}
-            <div className="ml-auto">
-              <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
-                {filteredNews.length} {filteredNews.length === 1 ? 'notícia' : 'notícias'}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* News Grid */}
-        {!loading && (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredNews.map((item, index) => (
-              <Link
-                key={index}
-                href={`/dashboard/noticias/${item.slug || item.id}`}
-                className="group block rounded-3xl p-8 border-2 shadow-lg relative overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                style={{
-                  background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                  borderColor: 'var(--border-light)',
-                  minHeight: '380px'
-                }}
-              >
-                {/* Glow sutil no topo no hover - Efeito Neon */}
-                <div
-                  className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{
-                    background: `linear-gradient(90deg, transparent, ${item.sentiment === 'positive' ? '#22c55e' :
-                        item.sentiment === 'negative' ? '#ef4444' :
-                          '#eab308'
-                      }, transparent)`,
-                    boxShadow: `0 0 20px ${item.sentiment === 'positive' ? '#22c55e' :
-                        item.sentiment === 'negative' ? '#ef4444' :
-                          '#eab308'
-                      }40`
-                  }}
-                />
-
-                {/* Número decorativo do índice */}
-                <div className="absolute -top-4 -right-4 text-9xl font-black opacity-5 select-none" style={{
-                  color: item.sentiment === 'positive' ? '#22c55e' : item.sentiment === 'negative' ? '#ef4444' : '#eab308'
-                }}>
-                  {index + 1}
+                {/* Busca (Full Width) */}
+                <div className="space-y-3">
+                  <label className="text-sm font-bold text-[var(--text-secondary)] uppercase tracking-wider">Buscar</label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Pesquisar por palavras-chave, tokens ou temas..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full pl-12 pr-4 py-4 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-light)] text-[var(--text-primary)] text-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-all placeholder-[var(--text-muted)]"
+                    />
+                    <FontAwesomeIcon
+                      icon={faSearch}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] text-lg"
+                    />
+                    {searchTerm && (
+                      <button
+                        onClick={() => setSearchTerm('')}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
+                      >
+                        <FontAwesomeIcon icon={faTimes} />
+                      </button>
+                    )}
+                  </div>
                 </div>
 
-                {/* Conteúdo */}
-                <div className="relative z-10 h-full flex flex-col">
-                  {/* Header - Sentimento e Badges em linha */}
-                  <div className="flex items-center gap-3 mb-6">
-                    {/* Badge de Sentimento - Compacto */}
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm" style={{
-                      background: `linear-gradient(135deg, ${item.sentiment === 'positive' ? '#22c55e' :
-                          item.sentiment === 'negative' ? '#ef4444' :
-                            '#eab308'
-                        }, ${item.sentiment === 'positive' ? '#16a34a' :
-                          item.sentiment === 'negative' ? '#dc2626' :
-                            '#d97706'
-                        })`,
-                      color: 'white'
-                    }}>
-                      <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></div>
-                      <span className="uppercase tracking-wide">
-                        {item.sentiment === 'positive' ? 'Positivo' : item.sentiment === 'negative' ? 'Negativo' : 'Neutro'}
-                      </span>
-                    </div>
+                <div className="grid lg:grid-cols-3 gap-8">
 
-                    {/* Tempo - Compacto */}
-                    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold ml-auto" style={{
-                      backgroundColor: 'var(--bg-secondary)',
-                      color: 'var(--text-secondary)'
-                    }}>
-                      <FontAwesomeIcon icon={faClock} className="w-3.5 h-3.5" />
-                      {getTimeAgo(item.publishedAt)}
+                  {/* Coluna Esquerda: Categorias (2/3 width) */}
+                  <div className="lg:col-span-2 space-y-4">
+                    <label className="text-sm font-bold text-[var(--text-secondary)] uppercase tracking-wider">Categorias</label>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {categories.map((cat) => (
+                        <button
+                          key={cat.id}
+                          onClick={() => setSelectedCategory(cat.id)}
+                          className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 border ${selectedCategory === cat.id
+                            ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-lg shadow-[var(--brand-primary)]/20'
+                            : 'bg-[var(--bg-tertiary)] border-transparent text-[var(--text-secondary)] hover:bg-[var(--bg-primary)] hover:border-[var(--border-light)]'
+                            }`}
+                        >
+                          <span className="text-xl">{cat.icon}</span>
+                          <span className="font-medium">{cat.label}</span>
+                        </button>
+                      ))}
                     </div>
                   </div>
 
-                  {/* Título - Grande e Destacado */}
-                  <h3 className="font-black text-2xl mb-4 leading-tight line-clamp-2" style={{ color: 'var(--text-primary)' }}>
-                    {item.title}
-                  </h3>
+                  {/* Coluna Direita: Filtros (1/3 width) */}
+                  <div className="space-y-6">
 
-                  {/* Resumo - Maior e mais legível */}
-                  <p className="text-base leading-relaxed mb-4 line-clamp-3 flex-grow" style={{ color: 'var(--text-secondary)' }}>
-                    {item.summary}
-                  </p>
-
-                  {/* Keywords - Clicáveis */}
-                  {(item.keywords || []).length > 0 && (
-                    <div className="mb-4">
-                      <div className="flex flex-wrap gap-2">
-                        {(item.keywords || []).slice(0, 3).map((keyword, idx) => (
-                          <button
-                            key={idx}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              handleTagClick(keyword);
-                            }}
-                            className="px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all hover:scale-105 hover:shadow-md cursor-pointer"
-                            style={{
-                              backgroundColor: 'var(--bg-secondary)',
-                              borderColor: 'var(--border-light)',
-                              color: 'var(--text-tertiary)'
-                            }}
-                            title={`🔍 Buscar por: ${keyword}`}
-                          >
-                            #{keyword}
-                          </button>
-                        ))}
+                    {/* Ordenação */}
+                    <div className="space-y-3">
+                      <label className="text-sm font-bold text-[var(--text-secondary)] uppercase tracking-wider">Ordenação</label>
+                      <div className="relative">
+                        <select
+                          value={sortBy}
+                          onChange={(e) => setSortBy(e.target.value as any)}
+                          className="w-full appearance-none px-4 py-3 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-light)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] cursor-pointer"
+                        >
+                          <option value="newest">Mais Recentes</option>
+                          <option value="oldest">Mais Antigas</option>
+                          <option value="alphabetical">Alfabética (A-Z)</option>
+                        </select>
+                        <FontAwesomeIcon
+                          icon={faSortAmountDown}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] pointer-events-none"
+                        />
                       </div>
                     </div>
-                  )}
 
-                  {/* CTA - Botão de Ação */}
-                  <div className="flex items-center pt-6 border-t-2" style={{
-                    borderColor: 'var(--border-light)'
-                  }}>
-                    <div className="flex items-center gap-2 text-sm font-bold" style={{
-                      color: item.sentiment === 'positive' ? '#22c55e' :
-                        item.sentiment === 'negative' ? '#ef4444' :
-                          '#eab308'
-                    }}>
-                      <span>Ler Notícia Completa</span>
-                      <FontAwesomeIcon icon={faArrowRight} className="w-5 h-5" />
+                    {/* Sentimento */}
+                    <div className="space-y-3">
+                      <label className="text-sm font-bold text-[var(--text-secondary)] uppercase tracking-wider">Sentimento</label>
+                      <div className="flex flex-col gap-2">
+                        {/* Botão 'Todos' removido conforme solicitado */}
+                        <div className="grid grid-cols-3 gap-2">
+                          <button
+                            onClick={() => setSelectedSentiment(selectedSentiment === 'positive' ? 'all' : 'positive')}
+                            className={`px-2 py-2.5 rounded-lg text-sm font-bold transition-all border ${selectedSentiment === 'positive'
+                              ? 'bg-emerald-500 text-white border-emerald-500 shadow-lg shadow-emerald-500/20'
+                              : 'bg-emerald-500/10 text-emerald-500 border-transparent hover:bg-emerald-500/20'
+                              }`}
+                          >
+                            Positivo
+                          </button>
+                          <button
+                            onClick={() => setSelectedSentiment(selectedSentiment === 'neutral' ? 'all' : 'neutral')}
+                            className={`px-2 py-2.5 rounded-lg text-sm font-bold transition-all border ${selectedSentiment === 'neutral'
+                              ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20'
+                              : 'bg-amber-500/10 text-amber-500 border-transparent hover:bg-amber-500/20'
+                              }`}
+                          >
+                            Neutro
+                          </button>
+                          <button
+                            onClick={() => setSelectedSentiment(selectedSentiment === 'negative' ? 'all' : 'negative')}
+                            className={`px-2 py-2.5 rounded-lg text-sm font-bold transition-all border ${selectedSentiment === 'negative'
+                              ? 'bg-red-500 text-white border-red-500 shadow-lg shadow-red-500/20'
+                              : 'bg-red-500/10 text-red-500 border-transparent hover:bg-red-500/20'
+                              }`}
+                          >
+                            Negativo
+                          </button>
+                        </div>
+                      </div>
                     </div>
+
                   </div>
                 </div>
-              </Link>
-            ))}
 
-            {/* Elemento sentinela para infinite scroll */}
-            <div ref={sentinelRef} className="col-span-full h-1" />
-
-            {/* Loader minimalista */}
-            {(isLoadingMore || loading || filteredNews.length === 0) && (
-              <div className="col-span-full flex justify-center py-12">
-                <div className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin" style={{
-                  borderColor: 'var(--border-medium)',
-                  borderTopColor: 'var(--brand-primary)'
-                }} />
               </div>
-            )}
+
+              {/* Footer */}
+              {getActiveFiltersCount() > 0 && (
+                <div className="p-6 border-t border-[var(--border-light)] flex justify-end gap-4 bg-[var(--bg-tertiary)]/30 rounded-b-2xl">
+                  <button
+                    onClick={clearAllFilters}
+                    className="w-full sm:w-auto px-8 py-3 rounded-xl bg-[var(--bg-tertiary)] text-[var(--text-primary)] font-bold border border-[var(--border-light)] hover:bg-[var(--bg-elevated)] hover:border-red-500/50 hover:text-red-500 transition-all shadow-sm"
+                  >
+                    Limpar Filtros
+                  </button>
+                </div>
+              )}
+
+            </div>
           </div>
         )}
 
+        {/* Main Content - Grid de 3 Colunas */}
+        <main>
+          {!loading && filteredNews.length === 0 ? (
+            <div className="text-center py-20 glass-card rounded-2xl">
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-xl font-bold mb-2 text-[var(--text-primary)]">Nenhuma notícia encontrada</h3>
+              <p className="text-[var(--text-secondary)] mb-6">Tente ajustar seus filtros ou buscar por outro termo.</p>
+              <button
+                onClick={clearAllFilters}
+                className="px-6 py-2 rounded-lg bg-[var(--brand-primary)] text-white font-semibold hover:opacity-90 transition-opacity"
+              >
+                Limpar Filtros
+              </button>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredNews.map((item, index) => (
+                <Link
+                  key={index}
+                  href={`/dashboard/noticias/${item.slug || item.id}`}
+                  className="glass-card group flex flex-col rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div className="p-6 flex flex-col h-full">
+                    {/* Header: Categoria e Data */}
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)] uppercase tracking-wider">
+                        {item.category[0]}
+                      </span>
+                      <span className="text-xs font-medium text-[var(--text-tertiary)] flex items-center gap-1.5">
+                        <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
+                        {getTimeAgo(item.publishedAt)}
+                      </span>
+                    </div>
+
+                    {/* Título */}
+                    <h3 className="text-xl font-bold mb-3 leading-tight text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2">
+                      {item.title}
+                    </h3>
+
+                    {/* Resumo */}
+                    <p className="text-sm text-[var(--text-secondary)] mb-4 line-clamp-3 flex-grow leading-relaxed">
+                      {item.summary}
+                    </p>
+
+                    {/* Footer: Tags e Sentimento */}
+                    <div className="mt-auto pt-4 border-t border-[var(--border-light)] flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-md ${item.sentiment === 'positive' ? 'text-emerald-500 bg-emerald-500/10' :
+                          item.sentiment === 'negative' ? 'text-red-500 bg-red-500/10' :
+                            'text-amber-500 bg-amber-500/10'
+                          }`}>
+                          <div className={`w-1.5 h-1.5 rounded-full ${item.sentiment === 'positive' ? 'bg-emerald-500' :
+                            item.sentiment === 'negative' ? 'bg-red-500' :
+                              'bg-amber-500'
+                            }`} />
+                          {item.sentiment === 'positive' ? 'Positivo' : item.sentiment === 'negative' ? 'Negativo' : 'Neutro'}
+                        </div>
+                      </div>
+
+                      <span className="text-[var(--brand-primary)] opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0 duration-300">
+                        <FontAwesomeIcon icon={faArrowRight} />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+
+              {/* Loader Infinite Scroll */}
+              <div ref={sentinelRef} className="col-span-full h-4" />
+              {(isLoadingMore || loading) && (
+                <div className="col-span-full flex justify-center py-8">
+                  <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin border-[var(--brand-primary)]" />
+                </div>
+              )}
+            </div>
+          )}
+        </main>
 
       </div>
     </div>
