@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faArrowRight, faCheckCircle, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faArrowRight, faCheckCircle, faArrowUp, faChartLine, faShieldAlt, faGraduationCap, faNewspaper } from '@fortawesome/free-solid-svg-icons';
 import { TokenBTC, TokenETH } from '@token-icons/react';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/utils/level-helpers';
 
@@ -58,6 +58,7 @@ export default function HomePage() {
   const [dailyAnalysis, setDailyAnalysis] = useState<NewsItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadingResources, setLoadingResources] = useState(true);
+  const [chartSymbol, setChartSymbol] = useState('BTCUSDT');
 
   useEffect(() => {
     fetchMarketData();
@@ -387,26 +388,32 @@ export default function HomePage() {
   };
 
   return (
-    <>
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen relative overflow-hidden bg-[var(--bg-primary)] transition-colors duration-300">
+      {/* Background Orbs */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] animate-pulse-slow"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-teal-500/10 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-[40%] left-[40%] w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '4s' }}></div>
+      </div>
+
+      <div className="container mx-auto px-4 py-8 relative z-10">
         {loading ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4 animate-pulse">📊</div>
             <p className="text-xl" style={{ color: 'var(--text-primary)' }}>Carregando dados do mercado...</p>
           </div>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-12">
+
+            {/* Header Section */}
+
+
             {/* Visão Geral do Mercado + Velocímetro Integrado */}
             <div className="space-y-6">
               {/* Mobile/Tablet: Cards em Grid 2x2 */}
               <div className="lg:hidden grid grid-cols-2 gap-4">
                 {/* Capitalização Total */}
-                <div
-                  className="backdrop-blur-lg rounded-2xl p-4 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                    borderColor: 'var(--border-light)'
-                  }}>
+                <div className="glass-card rounded-2xl p-4">
                   <div className="mb-2">
                     <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Capitalização Total</p>
                   </div>
@@ -422,12 +429,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Volume 24h */}
-                <div
-                  className="backdrop-blur-lg rounded-2xl p-4 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                    borderColor: 'var(--border-light)'
-                  }}>
+                <div className="glass-card rounded-2xl p-4">
                   <div className="mb-2">
                     <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Volume 24h</p>
                   </div>
@@ -438,19 +440,14 @@ export default function HomePage() {
                 </div>
 
                 {/* Dominância BTC */}
-                <div
-                  className="backdrop-blur-lg rounded-2xl p-4 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                    borderColor: 'var(--border-light)'
-                  }}>
+                <div className="glass-card rounded-2xl p-4">
                   <div className="mb-2">
                     <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>BTC</p>
                   </div>
                   <p className="font-bold text-xl mb-1" style={{ color: 'var(--text-primary)' }}>
                     {marketData && marketData.btcDominance.toFixed(2)}%
                   </p>
-                  <div className="w-full rounded-full h-1.5 mt-1" style={{ backgroundColor: 'var(--border-medium)' }}>
+                  <div className="w-full rounded-full h-1.5 mt-1 bg-[var(--bg-tertiary)]">
                     <div
                       className="h-full rounded-full transition-all duration-500"
                       style={{
@@ -462,19 +459,14 @@ export default function HomePage() {
                 </div>
 
                 {/* Dominância ETH */}
-                <div
-                  className="backdrop-blur-lg rounded-2xl p-4 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                    borderColor: 'var(--border-light)'
-                  }}>
+                <div className="glass-card rounded-2xl p-4">
                   <div className="mb-2">
                     <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>ETH</p>
                   </div>
                   <p className="font-bold text-xl mb-1" style={{ color: 'var(--text-primary)' }}>
                     {marketData && marketData.ethDominance.toFixed(2)}%
                   </p>
-                  <div className="w-full rounded-full h-1.5 mt-1" style={{ backgroundColor: 'var(--border-medium)' }}>
+                  <div className="w-full rounded-full h-1.5 mt-1 bg-[var(--bg-tertiary)]">
                     <div
                       className="h-full rounded-full transition-all duration-500"
                       style={{
@@ -489,12 +481,7 @@ export default function HomePage() {
               {/* Desktop: Cards em 1 Linha Horizontal */}
               <div className="hidden lg:grid lg:grid-cols-4 gap-6">
                 {/* Capitalização Total */}
-                <div
-                  className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                    borderColor: 'var(--border-light)'
-                  }}>
+                <div className="glass-card rounded-2xl p-6">
                   <div className="mb-2">
                     <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Capitalização Total</p>
                   </div>
@@ -510,12 +497,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Volume 24h */}
-                <div
-                  className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                    borderColor: 'var(--border-light)'
-                  }}>
+                <div className="glass-card rounded-2xl p-6">
                   <div className="mb-2">
                     <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Volume 24h</p>
                   </div>
@@ -526,19 +508,14 @@ export default function HomePage() {
                 </div>
 
                 {/* Dominância BTC */}
-                <div
-                  className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                    borderColor: 'var(--border-light)'
-                  }}>
+                <div className="glass-card rounded-2xl p-6">
                   <div className="mb-2">
                     <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Dominância BTC</p>
                   </div>
                   <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
                     {marketData && marketData.btcDominance.toFixed(2)}%
                   </p>
-                  <div className="w-full rounded-full h-2 mt-2" style={{ backgroundColor: 'var(--border-medium)' }}>
+                  <div className="w-full rounded-full h-2 mt-2 bg-[var(--bg-tertiary)]">
                     <div
                       className="h-full rounded-full transition-all duration-500"
                       style={{
@@ -550,19 +527,14 @@ export default function HomePage() {
                 </div>
 
                 {/* Dominância ETH */}
-                <div
-                  className="backdrop-blur-lg rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                    borderColor: 'var(--border-light)'
-                  }}>
+                <div className="glass-card rounded-2xl p-6">
                   <div className="mb-2">
                     <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Dominância ETH</p>
                   </div>
                   <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
                     {marketData && marketData.ethDominance.toFixed(2)}%
                   </p>
-                  <div className="w-full rounded-full h-2 mt-2" style={{ backgroundColor: 'var(--border-medium)' }}>
+                  <div className="w-full rounded-full h-2 mt-2 bg-[var(--bg-tertiary)]">
                     <div
                       className="h-full rounded-full transition-all duration-500"
                       style={{
@@ -577,11 +549,7 @@ export default function HomePage() {
 
             {/* Análise do Dia - Simple Card */}
             {dailyAnalysis && (
-              <div className="rounded-2xl p-6 border shadow-md hover:shadow-lg hover:-translate-y-1 transition-all"
-                style={{
-                  background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-                  borderColor: 'var(--border-light)'
-                }}>
+              <div className="glass-card rounded-2xl p-6 border-l-4 border-teal-500">
 
                 {/* Header */}
                 <div className="flex items-center justify-between mb-4">
@@ -603,7 +571,7 @@ export default function HomePage() {
 
                 {/* Título da Análise */}
                 <Link href={`/dashboard/noticias/${dailyAnalysis.slug || dailyAnalysis.id}`}>
-                  <h4 className="text-xl font-bold mb-3 line-clamp-2 hover:text-brand-primary transition-colors cursor-pointer"
+                  <h4 className="text-xl font-bold mb-3 line-clamp-2 hover:text-teal-500 transition-colors cursor-pointer"
                     style={{ color: 'var(--text-primary)' }}>
                     {dailyAnalysis.title}
                   </h4>
@@ -618,11 +586,7 @@ export default function HomePage() {
                 {marketData && (
                   <div className="grid grid-cols-3 gap-3 mb-4">
                     {/* BTC */}
-                    <div className="p-3 rounded-lg"
-                      style={{
-                        backgroundColor: 'var(--bg-elevated)',
-                        border: '1px solid var(--border-light)'
-                      }}>
+                    <div className="p-3 rounded-lg bg-[var(--bg-primary)]/50 backdrop-blur-sm border border-[var(--border-light)]">
                       <div className="flex items-center gap-1.5 mb-1">
                         <TokenBTC size={16} variant="branded" />
                         <span className="text-xs font-bold" style={{ color: 'var(--text-tertiary)' }}>
@@ -637,11 +601,7 @@ export default function HomePage() {
                     </div>
 
                     {/* ETH */}
-                    <div className="p-3 rounded-lg"
-                      style={{
-                        backgroundColor: 'var(--bg-elevated)',
-                        border: '1px solid var(--border-light)'
-                      }}>
+                    <div className="p-3 rounded-lg bg-[var(--bg-primary)]/50 backdrop-blur-sm border border-[var(--border-light)]">
                       <div className="flex items-center gap-1.5 mb-1">
                         <TokenETH size={16} variant="branded" />
                         <span className="text-xs font-bold" style={{ color: 'var(--text-tertiary)' }}>
@@ -654,11 +614,7 @@ export default function HomePage() {
                     </div>
 
                     {/* Sentimento */}
-                    <div className="p-3 rounded-lg"
-                      style={{
-                        backgroundColor: 'var(--bg-elevated)',
-                        border: '1px solid var(--border-light)'
-                      }}>
+                    <div className="p-3 rounded-lg bg-[var(--bg-primary)]/50 backdrop-blur-sm border border-[var(--border-light)]">
                       <div className="flex items-center gap-1.5 mb-1">
                         <span className="text-sm"><FontAwesomeIcon icon={getSentimentIcon(dailyAnalysis.sentiment)} /></span>
                         <span className="text-xs font-bold" style={{ color: 'var(--text-tertiary)' }}>
@@ -676,11 +632,8 @@ export default function HomePage() {
                 {/* CTA */}
                 <Link
                   href={`/dashboard/noticias/${dailyAnalysis.slug || dailyAnalysis.id}`}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm transition-all hover:opacity-80"
-                  style={{
-                    backgroundColor: 'var(--brand-primary)',
-                    color: 'var(--text-inverse)'
-                  }}>
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm transition-all hover:opacity-80 bg-gradient-to-r from-teal-500 to-teal-600 text-white shadow-lg hover:shadow-teal-500/30"
+                >
                   <span>Ler Análise Completa</span>
                   <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
                 </Link>
@@ -702,27 +655,24 @@ export default function HomePage() {
                 {/* Card 1: Gráficos Avançados */}
                 <Link
                   href="/graficos"
-                  className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                  style={{
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    minHeight: '180px'
-                  }}
+                  className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
                 >
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
-                  <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/20 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+
+                  <div className="relative z-10 h-full flex flex-col justify-between">
                     <div>
-                      <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
-                        Análise
+                      <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-purple-500/10 text-purple-500 mb-4">
+                        <FontAwesomeIcon icon={faChartLine} />
                       </div>
-                      <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                      <h4 className="text-xl font-bold mb-2 text-[var(--text-primary)]">
                         Gráficos Avançados
                       </h4>
-                      <p className="text-sm opacity-90 mb-3">
+                      <p className="text-sm text-[var(--text-secondary)] mb-3">
                         Análise técnica profissional em tempo real
                       </p>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold opacity-90">TradingView</span>
+                    <div className="flex items-center justify-between text-purple-500 text-sm font-semibold">
+                      <span>TradingView</span>
                       <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
@@ -731,27 +681,24 @@ export default function HomePage() {
                 {/* Card 2: Exchanges Verificadas */}
                 <Link
                   href="/recursos?search=exchange"
-                  className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                  style={{
-                    background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
-                    minHeight: '180px'
-                  }}
+                  className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
                 >
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
-                  <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/20 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+
+                  <div className="relative z-10 h-full flex flex-col justify-between">
                     <div>
-                      <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
-                        Segurança
+                      <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500/10 text-blue-500 mb-4">
+                        <FontAwesomeIcon icon={faShieldAlt} />
                       </div>
-                      <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                      <h4 className="text-xl font-bold mb-2 text-[var(--text-primary)]">
                         Exchanges Verificadas
                       </h4>
-                      <p className="text-sm opacity-90 mb-3">
+                      <p className="text-sm text-[var(--text-secondary)] mb-3">
                         Links oficiais de plataformas confiáveis
                       </p>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold opacity-90">Links seguros</span>
+                    <div className="flex items-center justify-between text-blue-500 text-sm font-semibold">
+                      <span>Links seguros</span>
                       <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
@@ -760,27 +707,24 @@ export default function HomePage() {
                 {/* Card 3: Como Investir */}
                 <Link
                   href="/educacao"
-                  className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                  style={{
-                    background: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
-                    minHeight: '180px'
-                  }}
+                  className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
                 >
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
-                  <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/20 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+
+                  <div className="relative z-10 h-full flex flex-col justify-between">
                     <div>
-                      <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
-                        Educação
+                      <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-green-500/10 text-green-500 mb-4">
+                        <FontAwesomeIcon icon={faGraduationCap} />
                       </div>
-                      <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                      <h4 className="text-xl font-bold mb-2 text-[var(--text-primary)]">
                         Como Investir
                       </h4>
-                      <p className="text-sm opacity-90 mb-3">
+                      <p className="text-sm text-[var(--text-secondary)] mb-3">
                         Guia completo para começar a investir
                       </p>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold opacity-90">Intermediário</span>
+                    <div className="flex items-center justify-between text-green-500 text-sm font-semibold">
+                      <span>Intermediário</span>
                       <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
@@ -789,27 +733,24 @@ export default function HomePage() {
                 {/* Card 4: Notícias do Mercado */}
                 <Link
                   href="/dashboard/noticias"
-                  className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                  style={{
-                    background: 'linear-gradient(135deg, #EF4444 0%, #B91C1C 100%)',
-                    minHeight: '180px'
-                  }}
+                  className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
                 >
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
-                  <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/20 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+
+                  <div className="relative z-10 h-full flex flex-col justify-between">
                     <div>
-                      <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
-                        Atualizado
+                      <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-red-500/10 text-red-500 mb-4">
+                        <FontAwesomeIcon icon={faNewspaper} />
                       </div>
-                      <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                      <h4 className="text-xl font-bold mb-2 text-[var(--text-primary)]">
                         Notícias do Mercado
                       </h4>
-                      <p className="text-sm opacity-90 mb-3">
-                        Últimas atualizações do mundo cripto
+                      <p className="text-sm text-[var(--text-secondary)] mb-3">
+                        Fique por dentro do que move o mercado
                       </p>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold opacity-90">Tempo real</span>
+                    <div className="flex items-center justify-between text-red-500 text-sm font-semibold">
+                      <span>Em tempo real</span>
                       <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
@@ -819,321 +760,114 @@ export default function HomePage() {
 
             {/* Últimas Notícias */}
             <div className="space-y-6">
-              {/* Título Últimas Notícias */}
-              <div>
-                <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                   Últimas Notícias
-                </h3>
-              </div>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {news.length > 0 ? (
-                  news.map((item, idx) => (
-                    <Link
-                      key={idx}
-                      href={`/dashboard/noticias/${item.slug || item.id}`}
-                      className="group relative rounded-2xl p-6 overflow-hidden border shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer block"
-                      style={{
-                        background: `linear-gradient(135deg, ${getSentimentGradient(item.sentiment)}, var(--bg-elevated))`,
-                        borderColor: 'var(--border-light)'
-                      }}
-                    >
-                      {/* Glow sutil no topo no hover */}
-                      <div
-                        className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        style={{
-                          background: `linear-gradient(90deg, transparent, ${getSentimentColor(item.sentiment)}, transparent)`,
-                          boxShadow: `0 0 20px ${getSentimentColor(item.sentiment)}40`
-                        }}
-                      />
-
-                      {/* Content wrapper */}
-                      <div className="relative flex flex-col h-full">
-                        {/* Header do Card */}
-                        <div className="flex items-start justify-between mb-4">
-                          {/* Badge de Sentimento com ícone */}
-                          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg backdrop-blur-sm" style={{
-                            backgroundColor: `${getSentimentColor(item.sentiment)}15`,
-                            border: `1px solid ${getSentimentColor(item.sentiment)}30`
-                          }}>
-                            <span className="text-xs font-bold uppercase tracking-wide" style={{
-                              color: getSentimentColor(item.sentiment) // Usando a cor direta para o texto também
-                            }}>
-                              {getSentimentLabel(item.sentiment)}
-                            </span>
-                          </div>
-
-                          {/* Tempo de publicação */}
-                          <span className="text-xs font-medium px-2.5 py-1 rounded-md backdrop-blur-sm flex items-center gap-1.5" style={{
-                            backgroundColor: 'var(--bg-secondary)',
-                            color: 'var(--text-tertiary)'
-                          }}>
-                            <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
-                            {getTimeAgo(item.publishedAt)}
-                          </span>
-                        </div>
-
-                        {/* Título */}
-                        <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-brand-primary transition-colors min-h-[3.5rem]" style={{ color: 'var(--text-primary)' }}>
-                          {item.title}
-                        </h3>
-
-                        {/* Resumo */}
-                        <p className="text-sm mb-4 line-clamp-3 leading-relaxed opacity-90 min-h-[4.5rem]" style={{ color: 'var(--text-secondary)' }}>
-                          {item.summary}
-                        </p>
-
-                        {/* Spacer to push footer to bottom */}
-                        <div className="flex-grow"></div>
-
-                        {/* Footer */}
-                        <div className="pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
-                          <div className="flex items-center justify-end">
-                            {/* CTA com seta animada */}
-                            <div className="flex items-center gap-2 text-sm font-bold group-hover:gap-3 transition-all" style={{ color: 'var(--text-primary)' }}>
-                              Ler artigo
-                              <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ))
-                ) : (
-                  <div className="col-span-full text-center py-12">
-                    <div className="text-5xl mb-3 animate-pulse">📰</div>
-                    <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>Carregando notícias...</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Ver todas */}
-              <Link
-                href="/dashboard/noticias"
-                className="inline-block py-2 px-4 font-semibold text-sm transition-colors duration-200 hover:text-[var(--brand-primary)]"
-                style={{
-                  color: 'var(--text-secondary)'
-                }}
-              >
-                Ver todas as notícias →
-              </Link>
-            </div>
-
-            {/* Educação - 4 Cards */}
-            <div className="space-y-6 mt-20">
-              <div>
-                <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                  Aprenda sobre Cripto
-                </h3>
-              </div>
-
-              {/* Grid de 4 Cards */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {education.length > 0 ? (
-                  education.slice(0, 4).map((resource) => (
-                    <Link
-                      key={resource.id}
-                      href={`/educacao/${resource.slug}`}
-                      className="group relative rounded-2xl p-6 overflow-hidden border shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer block"
-                      style={{
-                        background: `linear-gradient(135deg, ${getLevelGradient(resource.level)}, var(--bg-elevated))`,
-                        borderColor: 'var(--border-light)'
-                      }}
-                    >
-                      {/* Glow sutil no topo no hover */}
-                      <div
-                        className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        style={{
-                          background: `linear-gradient(90deg, transparent, ${getLevelColor(resource.level)}, transparent)`,
-                          boxShadow: `0 0 20px ${getLevelColor(resource.level)}40`
-                        }}
-                      />
-
-                      {/* Content wrapper */}
-                      <div className="relative flex flex-col h-full">
-                        {/* Header do Card */}
-                        <div className="flex items-start justify-between mb-4">
-                          {/* Badge de Nível com ícone */}
-                          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg backdrop-blur-sm" style={{
-                            backgroundColor: `${getLevelColor(resource.level)}15`,
-                            border: `1px solid ${getLevelColor(resource.level)}30`
-                          }}>
-                            <FontAwesomeIcon
-                              icon={getLevelIcon(resource.level)}
-                              className="w-3.5 h-3.5"
-                              style={{ color: getLevelColor(resource.level) }}
-                            />
-                            <span className="text-xs font-bold uppercase tracking-wide" style={{
-                              color: getLevelColor(resource.level)
-                            }}>
-                              {resource.level === 'iniciante' ? 'Iniciante' : resource.level === 'intermediario' ? 'Intermediário' : resource.level === 'avancado' ? 'Avançado' : 'Geral'}
-                            </span>
-                          </div>
-
-                          {/* Tempo de leitura */}
-                          <span className="text-xs font-medium px-2.5 py-1 rounded-md backdrop-blur-sm flex items-center gap-1.5" style={{
-                            backgroundColor: 'var(--bg-secondary)',
-                            color: 'var(--text-tertiary)'
-                          }}>
-                            <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
-                            {resource.readTime || '5 min'}
-                          </span>
-                        </div>
-
-                        {/* Título */}
-                        <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-brand-primary transition-colors min-h-[3.5rem]" style={{ color: 'var(--text-primary)' }}>
-                          {resource.title}
-                        </h3>
-
-                        {/* Descrição */}
-                        <p className="text-sm mb-4 line-clamp-3 leading-relaxed opacity-90 min-h-[4.5rem]" style={{ color: 'var(--text-secondary)' }}>
-                          {resource.summary}
-                        </p>
-
-                        {/* Spacer to push footer to bottom */}
-                        <div className="flex-grow"></div>
-
-                        {/* Footer */}
-                        <div className="pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
-                          <div className="flex items-center justify-end">
-                            {/* CTA com seta animada */}
-                            <div className="flex items-center gap-2 text-sm font-bold group-hover:gap-3 transition-all" style={{ color: 'var(--text-primary)' }}>
-                              Ler artigo
-                              <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ))
-                ) : (
-                  <div className="col-span-full text-center py-12">
-                    <div className="text-5xl mb-3 animate-pulse">📚</div>
-                    <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>Carregando artigos educacionais...</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Ver todos */}
-              <Link
-                href="/educacao"
-                className="inline-flex items-center gap-2 py-2 px-4 font-semibold text-sm transition-colors duration-200 hover:text-[var(--brand-primary)]"
-                style={{
-                  color: 'var(--text-secondary)'
-                }}
-              >
-                <span>Ver todos os artigos</span>
-                <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
-              </Link>
-            </div>
-
-            {/* Recursos */}
-            <div className="space-y-6 mt-20">
-              {/* Header */}
-              <div>
-                <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] mb-3" style={{ color: 'var(--text-primary)' }}>
-                  Ferramentas Essenciais
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  Plataformas confiáveis utilizadas por milhões de usuários globalmente
-                </p>
-              </div>
-
-              {/* Grid de Recursos em Destaque */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {resources.length > 0 ? (
-                  resources.map((resource, idx) => (
-                    <Link
-                      key={idx}
-                      href={resource.url}
-                      className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                      style={{
-                        background: resource.gradient,
-                        minHeight: '180px'
-                      }}
-                    >
-                      {/* Overlay escuro sutil */}
-                      <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
-
-                      {/* Conteúdo */}
-                      <div className="relative z-10 h-full flex flex-col justify-between text-white">
-                        <div>
-                          {/* Badge categoria */}
-                          <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
-                            {resource.category}
-                          </div>
-
-                          {/* Nome */}
-                          <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
-                            {resource.name}
-                          </h4>
-
-                          {/* Descrição */}
-                          <p className="text-sm opacity-90 mb-3">
-                            {resource.description}
-                          </p>
-                        </div>
-
-                        {/* Footer */}
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1">
-                            {resource.verified && (
-                              <FontAwesomeIcon icon={faCheckCircle} className="w-4 h-4" />
-                            )}
-                            <span className="text-xs font-semibold opacity-90">{resource.stats}</span>
-                          </div>
-
-                          {/* Ícone seta */}
-                          <FontAwesomeIcon icon={faArrowRight} className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </div>
-                    </Link>
-                  ))
-                ) : loadingResources ? (
-                  <div className="col-span-full text-center py-12">
-                    <div className="inline-block animate-pulse px-6 py-3 rounded-lg" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                      <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>Carregando recursos...</p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="col-span-full text-center py-12">
-                    <p className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>Nenhum recurso encontrado no momento.</p>
-                  </div>
-                )}
-              </div>
-
-              {/* CTA Final */}
-              <div>
-                <Link
-                  href="/recursos"
-                  className="inline-flex items-center gap-2 py-2 px-4 font-semibold text-sm transition-colors duration-200 hover:text-[var(--brand-primary)]"
-                  style={{
-                    color: 'var(--text-secondary)'
-                  }}
-                >
-                  Ver todos
-                  <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
+                </h2>
+                <Link href="/dashboard/noticias" className="text-sm font-semibold hover:underline" style={{ color: 'var(--brand-primary)' }}>
+                  Ver todas
                 </Link>
               </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                {news.map((item) => (
+                  <Link key={item.id} href={`/dashboard/noticias/${item.slug || item.id}`} className="glass-card rounded-2xl p-6 hover:-translate-y-1 transition-transform">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs font-bold px-2 py-1 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)]">
+                        {item.category[0]}
+                      </span>
+                      <span className="text-xs text-[var(--text-tertiary)]">
+                        {getTimeAgo(item.publishedAt)}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-bold mb-2 line-clamp-2 text-[var(--text-primary)]">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-[var(--text-secondary)] line-clamp-2 mb-4">
+                      {item.summary}
+                    </p>
+                    <div className="flex items-center gap-2 text-xs font-semibold">
+                      <span className="flex items-center gap-1" style={{ color: getSentimentColor(item.sentiment) }}>
+                        <FontAwesomeIcon icon={getSentimentIcon(item.sentiment)} />
+                        {getSentimentLabel(item.sentiment)}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
 
-            {/* Gráfico Bitcoin */}
-            <div className="space-y-6 mt-20">
-              <div>
-                <h3 className="text-3xl font-bold font-[family-name:var(--font-poppins)] mb-2" style={{ color: "var(--text-primary)" }}>
-                  Bitcoin - Gráfico ao Vivo
-                </h3>
-                <p style={{ color: "var(--text-tertiary)" }}>
-                  Acompanhe a cotação do Bitcoin em tempo real
-                </p>
+            {/* Aprenda sobre Cripto */}
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                  Aprenda sobre Cripto
+                </h2>
+                <Link href="/educacao" className="text-sm font-semibold hover:underline" style={{ color: 'var(--brand-primary)' }}>
+                  Ver todos
+                </Link>
               </div>
-              <LightweightChart symbol="BTCUSDT" name="Bitcoin (BTC/USDT)" />
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {education.map((item) => (
+                  <Link key={item.id} href={`/educacao/${item.slug}`} className="glass-card rounded-2xl p-6 hover:-translate-y-1 transition-transform">
+                    <div className="mb-4">
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-3`} style={{ background: getLevelGradient(item.level) }}>
+                        <FontAwesomeIcon icon={getLevelIcon(item.level)} className="text-white" />
+                      </div>
+                    </div>
+                    <h3 className="text-lg font-bold mb-2 line-clamp-2 text-[var(--text-primary)]">
+                      {item.title}
+                    </h3>
+                    <div className="flex items-center gap-4 text-xs text-[var(--text-tertiary)]">
+                      <span className="flex items-center gap-1">
+                        <FontAwesomeIcon icon={faClock} />
+                        {item.readTime}
+                      </span>
+                      <span style={{ color: getLevelColor(item.level) }}>
+                        {item.level}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Gráfico de Preços */}
+            <div className="glass-card rounded-2xl p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                  Gráfico de Preços
+                </h2>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setChartSymbol('BTCUSDT')}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${chartSymbol === 'BTCUSDT' ? 'bg-orange-500 text-white' : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)]'}`}
+                  >
+                    BTC
+                  </button>
+                  <button
+                    onClick={() => setChartSymbol('ETHUSDT')}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${chartSymbol === 'ETHUSDT' ? 'bg-blue-500 text-white' : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)]'}`}
+                  >
+                    ETH
+                  </button>
+                  <button
+                    onClick={() => setChartSymbol('SOLUSDT')}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${chartSymbol === 'SOLUSDT' ? 'bg-purple-500 text-white' : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)]'}`}
+                  >
+                    SOL
+                  </button>
+                </div>
+              </div>
+              <div className="h-[400px] w-full">
+                <LightweightChart symbol={chartSymbol} />
+              </div>
             </div>
 
           </div>
         )}
       </div>
-
-    </>
+    </div>
   );
 }

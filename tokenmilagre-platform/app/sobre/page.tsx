@@ -33,7 +33,7 @@ export default function SobrePage() {
           "@type": "Organization",
           "name": "Token Milagre",
           "url": "https://tokenmilagre.xyz/sobre",
-          "description": "Educação cripto - Proteção contra golpes - Comunidade de apoio mútuo",
+          "description": "Token Milagre: Um movimento de educação cripto e proteção contra golpes. Transparência radical e comunidade blindada.",
           "foundingDate": "2024-10",
           "sameAs": [
             "https://x.com/TokenMilagre",
@@ -88,12 +88,12 @@ export default function SobrePage() {
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight text-[var(--text-primary)] drop-shadow-sm">
               A Verdade Sobre <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-blue-500">
-                Este Projeto
+                O Nosso Movimento
               </span>
             </h1>
 
             <p className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed font-light">
-              Sem hype. Sem promessas falsas. Apenas educação e comunidade.
+              Não somos apenas mais um token. Somos a resposta contra a opacidade do mercado.
             </p>
           </section>
 
@@ -108,26 +108,37 @@ export default function SobrePage() {
                     <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">
                       O que NÃO somos
                     </h2>
-                    <p className="text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed">
-                      O Token Milagre não é uma startup com equipe de 50 pessoas. Não temos investidores de venture capital.
-                      Não prometemos retornos de 1000x.
-                    </p>
+                    <ul className="space-y-3 text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed">
+                      <li className="flex items-center gap-3">
+                        <FontAwesomeIcon icon={faExclamationTriangle} className="text-red-500/70" />
+                        <span>Não somos uma "Gema" de 100x.</span>
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <FontAwesomeIcon icon={faExclamationTriangle} className="text-red-500/70" />
+                        <span>Não temos "Insiders" ou "Whales".</span>
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <FontAwesomeIcon icon={faExclamationTriangle} className="text-red-500/70" />
+                        <span>Não vendemos sonhos impossíveis.</span>
+                      </li>
+                    </ul>
                   </div>
-                  <div className="w-px h-32 bg-gradient-to-b from-transparent via-[var(--border-medium)] to-transparent hidden md:block"></div>
+                  <div className="w-px h-48 bg-gradient-to-b from-transparent via-[var(--border-medium)] to-transparent hidden md:block"></div>
                   <div className="flex-1 space-y-6">
                     <h2 className="text-3xl md:text-4xl font-bold text-teal-500">
                       O que SOMOS
                     </h2>
                     <p className="text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed">
-                      Somos um projeto de uma pessoa — um desenvolvedor que já viu gente demais
-                      perder dinheiro em golpes cripto e decidiu fazer algo a respeito.
+                      Somos um <strong>escudo</strong>. Um projeto nascido da frustração de ver pessoas comuns perderem dinheiro.
+                      Somos a <strong>educação</strong> que ninguém quer te dar de graça.
+                      Somos a <strong>transparência</strong> que falta na blockchain.
                     </p>
                   </div>
                 </div>
 
                 <div className="pt-8 border-t border-[var(--border-light)] text-center">
-                  <p className="text-xl md:text-2xl font-medium text-[var(--text-primary)]">
-                    "Honestidade é mais valiosa que hype."
+                  <p className="text-xl md:text-2xl font-medium text-[var(--text-primary)] italic">
+                    "Em um mundo de promessas vazias, a verdade é o ativo mais valioso."
                   </p>
                 </div>
               </div>
@@ -138,36 +149,36 @@ export default function SobrePage() {
           <section className="mb-32">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
-                O Que Fazemos
+                Nossa Missão
               </h2>
-              <p className="text-xl text-[var(--text-secondary)]">De verdade, sem enrolação.</p>
+              <p className="text-xl text-[var(--text-secondary)]">Três pilares inegociáveis.</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
                   icon: faBookOpen,
-                  title: 'Educação Cripto',
-                  description: 'Recursos definitivos em português sobre blockchain e criptomoedas. Tutoriais sobre wallets, tokens, DeFi, análise de projetos — tudo verificado, tudo gratuito.',
+                  title: 'Educação Libertadora',
+                  description: 'Conhecimento não deve ser caro. Nossos guias e tutoriais transformam iniciantes em investidores conscientes e protegidos.',
                   color: 'text-blue-500',
                   bg: 'bg-blue-500/10'
                 },
                 {
                   icon: faShieldHalved,
-                  title: 'Proteção Contra Golpes',
-                  description: 'Identificamos padrões suspeitos, alertamos sobre projetos de risco e ensinamos como reconhecer red flags antes de investir.',
+                  title: 'Segurança Ativa',
+                  description: 'Monitoramos e expomos golpes. Ensinamos você a ler contratos, verificar liquidez e identificar red flags antes que seja tarde.',
                   color: 'text-green-500',
                   bg: 'bg-green-500/10'
                 },
                 {
                   icon: faUsers,
-                  title: 'Comunidade',
-                  description: 'Um espaço no Discord e Telegram onde iniciantes podem fazer perguntas sem julgamento, e onde membros mais experientes ajudam voluntariamente.',
+                  title: 'Comunidade Real',
+                  description: 'Sem bots. Sem spam. Apenas pessoas reais se ajudando a navegar no ecossistema Solana com segurança e ética.',
                   color: 'text-teal-500',
                   bg: 'bg-teal-500/10'
                 }
               ].map((item, index) => (
-                <div key={index} className="glass-card p-10 rounded-3xl flex flex-col items-start group">
+                <div key={index} className="glass-card p-10 rounded-3xl flex flex-col items-start group hover:border-[var(--brand-primary)] transition-colors">
                   <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 ${item.bg} ${item.color} text-3xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
                     <FontAwesomeIcon icon={item.icon} />
                   </div>
@@ -191,9 +202,9 @@ export default function SobrePage() {
                   <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-teal-500/20 rounded-full blur-3xl"></div>
                   <h3 className="text-3xl font-bold mb-6 text-[var(--text-primary)]">Por Que "Milagre"?</h3>
                   <div className="space-y-4 text-[var(--text-secondary)] text-lg">
-                    <p>Não porque prometemos milagres financeiros. O oposto.</p>
-                    <p className="font-semibold text-teal-500">O milagre é oferecer valor real sem agendas ocultas.</p>
-                    <p>Num mercado cheio de influenciadores pagos e projetos anônimos, honestidade é o milagre.</p>
+                    <p>Muitos esperam um milagre financeiro para mudar de vida.</p>
+                    <p className="font-semibold text-teal-500">Nós acreditamos que o verdadeiro milagre é a honestidade.</p>
+                    <p>Num mercado "selvagem", encontrar um porto seguro onde a intenção é genuinamente ajudar... isso sim é um milagre.</p>
                   </div>
                 </div>
               </div>
@@ -202,7 +213,7 @@ export default function SobrePage() {
                   Transparência <br /> Radical
                 </h2>
                 <p className="text-xl text-[var(--text-secondary)]">
-                  Nossa única moeda de troca é a confiança.
+                  Nossa única moeda de troca é a confiança. Tudo é aberto, auditável e feito para a comunidade.
                 </p>
               </div>
             </section>
@@ -214,23 +225,23 @@ export default function SobrePage() {
                   O Token <br /> <span className="text-amber-500">$MILAGRE</span>
                 </h2>
                 <p className="text-xl text-[var(--text-secondary)]">
-                  Um símbolo de pertencimento, não de enriquecimento.
+                  Um símbolo de pertencimento a este movimento.
                 </p>
               </div>
               <div>
                 <div className="glass p-10 rounded-3xl border-l-4 border-amber-500">
                   <div className="space-y-6 text-[var(--text-secondary)] text-lg">
                     <p>
-                      Sim, existe um token SPL na Solana. <strong className="text-[var(--text-primary)]">Não, ele não vai te fazer rico.</strong>
+                      Sim, existe um token. <strong className="text-[var(--text-primary)]">Mas ele é um meio, não o fim.</strong>
                     </p>
                     <p>
-                      Serve apenas como forma de identificar membros da comunidade.
+                      Ele serve para identificar quem apoia a causa da educação financeira e proteção contra golpes.
                     </p>
                     <div className="bg-red-500/10 border border-red-500/20 p-6 rounded-xl flex gap-4 items-start">
                       <FontAwesomeIcon icon={faExclamationTriangle} className="text-red-500 text-2xl mt-1" />
                       <div>
-                        <p className="font-bold text-red-500 mb-1">Não é investimento.</p>
-                        <p className="text-sm">Se você comprar esperando moon, vai se frustrar.</p>
+                        <p className="font-bold text-red-500 mb-1">Aviso Importante</p>
+                        <p className="text-sm">Não compre esperando enriquecimento rápido. Compre se você acredita na missão.</p>
                       </div>
                     </div>
                   </div>
@@ -245,13 +256,13 @@ export default function SobrePage() {
 
               <div className="grid md:grid-cols-2 gap-16">
                 <div>
-                  <h3 className="text-3xl font-bold mb-8 text-[var(--text-primary)]">Como vamos nos sustentar</h3>
+                  <h3 className="text-3xl font-bold mb-8 text-[var(--text-primary)]">Sustentabilidade do Projeto</h3>
                   <ul className="space-y-4">
                     {[
-                      'Links afiliados para exchanges confiáveis',
-                      'Newsletter com sponsors éticos',
-                      'Funcionalidades futuras do token',
-                      'Cursos avançados (o básico sempre será grátis)'
+                      'Doações da comunidade',
+                      'Links afiliados éticos (exchanges seguras)',
+                      'Parcerias transparentes',
+                      'Produtos educacionais avançados'
                     ].map((item, i) => (
                       <li key={i} className="flex items-center gap-4 text-[var(--text-secondary)]">
                         <FontAwesomeIcon icon={faCheckCircle} className="text-green-500" />
@@ -267,7 +278,7 @@ export default function SobrePage() {
                     Open Source
                   </h3>
                   <p className="text-[var(--text-secondary)] mb-8 text-lg">
-                    Nosso código é aberto. Qualquer pessoa pode auditar e verificar que não fazemos nada obscuro.
+                    A confiança se conquista com código, não com palavras. Nossa plataforma é 100% código aberto.
                   </p>
                   <a
                     href="https://github.com/dogespartano-cyber/tokenmilagre-platform"
@@ -287,7 +298,7 @@ export default function SobrePage() {
           {/* Community CTA */}
           <section className="text-center pb-12">
             <h2 className="text-4xl md:text-6xl font-bold mb-12 text-[var(--text-primary)]">
-              Junte-se à nós
+              Junte-se ao Movimento
             </h2>
 
             <div className="flex flex-wrap justify-center gap-6">

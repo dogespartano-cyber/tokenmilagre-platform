@@ -26,7 +26,7 @@ export default function DoacoesPage() {
     {
       image: '/images/method-milagre.webp',
       title: '$MILAGRE Token',
-      description: 'Fortaleça a economia do nosso ecossistema.',
+      description: 'Apoie comprando e segurando o token da comunidade.',
       address: '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump',
       network: 'Solana SPL',
       color: 'text-green-500',
@@ -35,7 +35,7 @@ export default function DoacoesPage() {
     {
       image: '/images/method-solana.webp',
       title: 'Solana (SOL)',
-      description: 'Contribuição direta para infraestrutura e taxas.',
+      description: 'Contribuição direta para custos de servidor e desenvolvimento.',
       address: 'Em breve',
       network: 'Solana Mainnet',
       color: 'text-blue-500',
@@ -45,29 +45,29 @@ export default function DoacoesPage() {
 
   const impactAreas = [
     {
-      title: 'Conteúdo Gratuito',
-      description: 'Produção de guias, vídeos e alertas contra golpes para todos.',
+      title: 'Educação Gratuita',
+      description: 'Produção de guias anti-golpe e tutoriais de segurança.',
       percentage: '40%',
       color: '#4caf50', // Green
       icon: faChartPie
     },
     {
-      title: 'Ferramentas',
-      description: 'Desenvolvimento de bots e sistemas de análise de risco.',
+      title: 'Tecnologia',
+      description: 'Desenvolvimento de ferramentas de análise de risco.',
       percentage: '30%',
       color: '#2196f3', // Blue
       icon: faShieldAlt
     },
     {
-      title: 'Fundo Comunitário',
-      description: 'Recursos para ajudar membros e financiar iniciativas votadas.',
+      title: 'Fundo de Reserva',
+      description: 'Proteção contra volatilidade e emergências.',
       percentage: '20%',
       color: '#ff9800', // Orange
       icon: faHeart
     },
     {
-      title: 'Operacional',
-      description: 'Servidores, domínios e custos básicos de manutenção.',
+      title: 'Infraestrutura',
+      description: 'Manutenção de servidores e APIs.',
       percentage: '10%',
       color: '#0D9488', // Teal
       icon: faArrowUp
@@ -76,26 +76,26 @@ export default function DoacoesPage() {
 
   const whyDonate = [
     {
-      title: 'Transparência Radical',
-      description: 'Diferente de "projetos" opacos, aqui você sabe exatamente para onde vai cada centavo.',
+      title: 'Independência Total',
+      description: 'Sua doação garante que não precisamos vender nossa opinião para patrocinadores.',
       color: 'text-green-500',
       icon: faGlobe
     },
     {
-      title: 'Independência Real',
-      description: 'Não aceitamos dinheiro de exchanges ou projetos duvidosos para falar bem deles.',
+      title: 'Combate a Golpes',
+      description: 'Financiamos investigações e alertas que salvam o dinheiro da comunidade.',
       color: 'text-amber-500',
       icon: faShieldAlt
     },
     {
-      title: 'Educação Primeiro',
-      description: 'Seu apoio garante que o conhecimento continue gratuito e acessível a quem precisa.',
+      title: 'Acesso Universal',
+      description: 'Mantemos o conteúdo gratuito para que a educação chegue a quem mais precisa.',
       color: 'text-blue-500',
       icon: faRocket
     },
     {
-      title: 'Construção Coletiva',
-      description: 'Este não é o projeto de um dono só. É um movimento construído por todos nós.',
+      title: 'Transparência',
+      description: 'Prestamos contas de cada centavo recebido e investido no projeto.',
       color: 'text-purple-500',
       icon: faHandshake
     }
@@ -119,8 +119,8 @@ export default function DoacoesPage() {
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "name": "Apoie o Milagre - Transparência e Educação",
-          "description": "Contribua para manter a educação cripto gratuita e independente.",
+          "name": "Contribua com o Token Milagre",
+          "description": "Ajude a manter a educação cripto gratuita e independente. Sua contribuição fortalece nossa luta contra golpes.",
           "url": "https://tokenmilagre.xyz/doacoes"
         })}
       </Script>
@@ -169,16 +169,16 @@ export default function DoacoesPage() {
 
             <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-teal-500/10 border border-teal-500/20 mb-6">
               <FontAwesomeIcon icon={faHandshake} className="text-teal-500 animate-pulse" />
-              <span className="text-sm font-bold text-teal-500 tracking-wide uppercase">Comunidade & Sustentabilidade</span>
+              <span className="text-sm font-bold text-teal-500 tracking-wide uppercase">Sustentabilidade & Independência</span>
             </div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 text-[var(--text-primary)] tracking-tight">
-              Mantenha o <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500">Milagre Vivo</span>
+              Sustente a <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500">Educação Cripto</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed font-light">
-              Não temos investidores bilionários. Temos você. <br />
-              Ajude a manter nossa independência e a qualidade do conteúdo.
+              Para sermos imparciais, precisamos ser independentes. <br />
+              Sua contribuição garante que a verdade continue sendo dita.
             </p>
           </div>
 
@@ -254,10 +254,10 @@ export default function DoacoesPage() {
           <div className="mb-32">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
-                Destino dos Recursos
+                Impacto Real
               </h2>
               <p className="text-xl text-[var(--text-secondary)] max-w-2xl mx-auto">
-                Transparência total sobre como cada doação é utilizada.
+                Para onde vai sua contribuição?
               </p>
             </div>
 

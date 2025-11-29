@@ -42,8 +42,8 @@ export default function TokenPage() {
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "name": "$MILAGRE - Mais que um Token",
-          "description": "O token que financia a educação financeira e protege a comunidade contra golpes.",
+          "name": "$MILAGRE Token - Apoie a Educação Cripto",
+          "description": "O token $MILAGRE não é investimento, é um símbolo de apoio à educação financeira e proteção contra golpes na Web3.",
           "url": "https://tokenmilagre.xyz/token"
         })}
       </Script>
@@ -91,14 +91,16 @@ export default function TokenPage() {
             </div>
 
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight text-[var(--text-primary)] drop-shadow-sm">
-              Um Símbolo de <br />
+              Mais que um Token <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-teal-500">
-                Pertencimento
+                Uma Causa
               </span>
             </h1>
 
             <p className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed font-light">
-              O token $MILAGRE não é uma promessa de riqueza fácil. É o combustível de uma revolução na educação financeira.
+              O $MILAGRE é o combustível para manter nossa educação gratuita e independente.
+              <br className="hidden md:block" />
+              <span className="text-sm font-bold text-amber-500 uppercase tracking-widest mt-2 block">Não é uma recomendação de investimento</span>
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
@@ -108,15 +110,15 @@ export default function TokenPage() {
                 rel="noopener noreferrer"
                 className="px-10 py-5 rounded-full font-bold text-lg text-white bg-gradient-to-r from-teal-500 to-green-500 hover:from-teal-600 hover:to-green-600 shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex items-center gap-3"
               >
-                <span>Adquirir $MILAGRE</span>
-                <FontAwesomeIcon icon={faRocket} className="w-5 h-5" />
+                <span>Apoiar o Projeto</span>
+                <FontAwesomeIcon icon={faHandshake} className="w-5 h-5" />
               </a>
 
               <button
                 onClick={() => document.getElementById('saiba-mais')?.scrollIntoView({ behavior: 'smooth' })}
                 className="px-10 py-5 rounded-full font-bold text-lg text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-medium)] hover:border-[var(--brand-primary)] shadow-lg hover:shadow-xl hover:scale-105 transition-all"
               >
-                Entenda o Token
+                Entenda a Utilidade
               </button>
             </div>
           </section>
@@ -125,36 +127,36 @@ export default function TokenPage() {
           <section id="saiba-mais" className="mb-32">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
-                Por que ter $MILAGRE?
+                Para que serve?
               </h2>
-              <p className="text-xl text-[var(--text-secondary)]">Muito além da especulação.</p>
+              <p className="text-xl text-[var(--text-secondary)]">Utilidade real, impacto real.</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
                   icon: faLightbulb,
-                  title: 'Apoio à Educação',
-                  description: 'Ao adquirir o token, você financia diretamente a produção de conteúdo gratuito e ferramentas de proteção para todos.',
+                  title: 'Financiar Educação',
+                  description: 'Cada token adquirido ajuda a manter nossos servidores, produzir vídeos e criar guias anti-golpe gratuitos para a comunidade.',
                   color: 'text-green-500',
                   bg: 'bg-green-500/10'
                 },
                 {
                   icon: faUsers,
-                  title: 'Comunidade Consciente',
-                  description: 'Faça parte de um grupo que valoriza a verdade e o aprendizado acima do hype vazio e das promessas falsas.',
+                  title: 'Acesso à Comunidade',
+                  description: 'Holders de $MILAGRE têm acesso a canais exclusivos de discussão e votação sobre os próximos passos do projeto.',
                   color: 'text-teal-500',
                   bg: 'bg-teal-500/10'
                 },
                 {
                   icon: faShieldAlt,
-                  title: 'Sustentabilidade',
-                  description: 'O token ajuda a manter a plataforma independente, sem precisarmos vender nossa opinião para patrocinadores duvidosos.',
+                  title: 'Independência',
+                  description: 'Ao nos financiar, você garante que nunca precisaremos aceitar patrocínios de projetos duvidosos ou "shillar" shitcoins.',
                   color: 'text-blue-500',
                   bg: 'bg-blue-500/10'
                 }
               ].map((item, index) => (
-                <div key={index} className="glass-card p-10 rounded-3xl flex flex-col items-start group">
+                <div key={index} className="glass-card p-10 rounded-3xl flex flex-col items-start group hover:border-[var(--brand-primary)] transition-colors">
                   <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 ${item.bg} ${item.color} text-3xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
                     <FontAwesomeIcon icon={item.icon} />
                   </div>
@@ -176,10 +178,10 @@ export default function TokenPage() {
 
               <div className="text-center mb-16 relative z-10">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
-                  Tokenomics Transparente
+                  Transparência Total
                 </h2>
                 <p className="text-xl text-[var(--text-secondary)]">
-                  Sem taxas ocultas, sem carteiras secretas.
+                  Nada escondido. Verifique você mesmo na blockchain.
                 </p>
               </div>
 
@@ -190,23 +192,23 @@ export default function TokenPage() {
                     <p className="text-6xl md:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">
                       1 Bilhão
                     </p>
-                    <p className="text-[var(--text-secondary)] mt-2">Tokens imutáveis na Solana.</p>
+                    <p className="text-[var(--text-secondary)] mt-2">Tokens fixos. Sem minting function.</p>
                   </div>
 
                   <div className="glass-card p-8 rounded-2xl border-l-4 border-green-500">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-xl font-bold text-[var(--text-primary)]">Lançamento Justo</span>
+                      <span className="text-xl font-bold text-[var(--text-primary)]">Distribuição Justa</span>
                       <span className="text-2xl font-bold text-green-500">100%</span>
                     </div>
-                    <p className="text-[var(--text-secondary)]">Todo o supply foi disponibilizado ao público desde o início.</p>
+                    <p className="text-[var(--text-secondary)]">Lançado via Pump.fun. Sem pré-venda, sem alocação para time, sem privilégios.</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 gap-6">
                   {[
-                    { label: 'Rede', value: 'Solana', color: 'text-teal-500', icon: faGlobe },
-                    { label: 'Tipo', value: 'Utility Token', color: 'text-blue-500', icon: faCoins },
-                    { label: 'Taxas', value: '0% Imposto', color: 'text-green-500', icon: faCheckCircle }
+                    { label: 'Blockchain', value: 'Solana', color: 'text-teal-500', icon: faGlobe },
+                    { label: 'Contrato', value: 'Renunciado', color: 'text-blue-500', icon: faShieldAlt },
+                    { label: 'Taxas', value: '0% Compra/Venda', color: 'text-green-500', icon: faCheckCircle }
                   ].map((stat, index) => (
                     <div key={index} className="glass-card p-6 rounded-2xl flex items-center gap-6">
                       <div className={`text-3xl ${stat.color}`}>
@@ -227,10 +229,10 @@ export default function TokenPage() {
           <section className="mb-32">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
-                Nossa Construção
+                Plano de Ação
               </h2>
               <p className="text-xl text-[var(--text-secondary)]">
-                Um passo de cada vez, focando sempre na entrega de valor real.
+                Nosso foco é construir valor real, não hype artificial.
               </p>
             </div>
 
@@ -241,8 +243,8 @@ export default function TokenPage() {
               {[
                 {
                   phase: 'Fase 1',
-                  title: 'Fundação Ética',
-                  description: 'Lançamento do token, estabelecimento dos canais oficiais e início da produção de conteúdo educativo contra golpes.',
+                  title: 'Fundação da Verdade',
+                  description: 'Lançamento do portal educativo, estabelecimento dos canais oficiais e início da produção de conteúdo "Anti-Scam".',
                   icon: faSeedling,
                   status: 'current',
                   color: 'text-green-500',
@@ -251,9 +253,9 @@ export default function TokenPage() {
                 },
                 {
                   phase: 'Fase 2',
-                  title: 'Expansão do Conhecimento',
-                  description: 'Parcerias com educadores sérios, lançamento de ferramentas de análise on-chain para membros e workshops exclusivos.',
-                  icon: faChartLine,
+                  title: 'Ferramentas de Proteção',
+                  description: 'Desenvolvimento de bots para Telegram/Discord que ajudam a analisar contratos e identificar riscos em tempo real.',
+                  icon: faShieldAlt,
                   status: 'upcoming',
                   color: 'text-amber-500',
                   bg: 'bg-amber-500/10',
@@ -261,9 +263,9 @@ export default function TokenPage() {
                 },
                 {
                   phase: 'Fase 3',
-                  title: 'Ecossistema Autônomo',
-                  description: 'Implementação de governança descentralizada (DAO) onde a comunidade decide os rumos do projeto e dos recursos.',
-                  icon: faGlobe,
+                  title: 'Governança Comunitária',
+                  description: 'Implementação de votação para que a comunidade decida quais temas educativos devem ser priorizados e como usar o fundo comunitário.',
+                  icon: faUsers,
                   status: 'future',
                   color: 'text-blue-500',
                   bg: 'bg-blue-500/10',
@@ -305,10 +307,10 @@ export default function TokenPage() {
             <div className="glass p-12 rounded-[3rem]">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
-                  Como Adquirir
+                  Como Apoiar
                 </h2>
                 <p className="text-xl text-[var(--text-secondary)]">
-                  Se você acredita na nossa missão, veja como participar.
+                  Se você quer fortalecer a educação cripto no Brasil.
                 </p>
               </div>
 
@@ -316,22 +318,22 @@ export default function TokenPage() {
                 {[
                   {
                     step: '01',
-                    title: 'Crie sua Carteira',
-                    desc: 'Recomendamos Phantom ou Solflare pela segurança e facilidade de uso.',
+                    title: 'Carteira Solana',
+                    desc: 'Use Phantom ou Solflare. Mantenha suas chaves privadas seguras e nunca as compartilhe.',
                     icon: faWallet,
                     color: 'text-purple-500'
                   },
                   {
                     step: '02',
-                    title: 'Adquira Solana',
-                    desc: 'Você precisará de SOL para trocar pelo token $MILAGRE.',
+                    title: 'Tenha SOL',
+                    desc: 'Você precisará de Solana (SOL) para adquirir o token $MILAGRE na rede.',
                     icon: faCoins,
                     color: 'text-green-500'
                   },
                   {
                     step: '03',
-                    title: 'Troque por $MILAGRE',
-                    desc: 'Use o link oficial abaixo para garantir que está comprando o token correto.',
+                    title: 'Acesse o Pump.fun',
+                    desc: 'Use o link oficial. Verifique sempre o endereço do contrato antes de confirmar.',
                     icon: faExchangeAlt,
                     color: 'text-blue-500'
                   }
@@ -374,7 +376,7 @@ export default function TokenPage() {
             </h2>
 
             <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto text-[var(--text-secondary)]">
-              Ao adquirir $MILAGRE, você não está apenas comprando um token. Você está financiando a verdade no mercado cripto.
+              Ao adquirir $MILAGRE, você sinaliza que apoia um mercado cripto mais limpo, ético e educado.
             </p>
 
             <div className="flex flex-wrap justify-center gap-6 mb-16">
@@ -422,7 +424,7 @@ export default function TokenPage() {
             </div>
 
             <p className="text-sm mt-12 max-w-2xl mx-auto leading-relaxed text-[var(--text-tertiary)]">
-              Importante: Criptomoedas envolvem riscos. Este projeto tem fins educacionais e comunitários. Nunca invista dinheiro que você não pode perder. A transparência é nosso maior valor.
+              Isenção de Responsabilidade: $MILAGRE é um token de utilidade para a comunidade. Não possui valor intrínseco garantido e não deve ser tratado como investimento financeiro. O valor pode flutuar. Faça sua própria pesquisa (DYOR).
             </p>
           </section>
 

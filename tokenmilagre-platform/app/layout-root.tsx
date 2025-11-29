@@ -31,7 +31,7 @@ interface FearGreedData {
 const dashboardHeaderConfig: Record<string, { title: string; description: string }> = {
   '/': {
     title: 'Token Milagre',
-    description: 'Educação financeira descentralizada para todos'
+    description: 'Sua bússola no universo cripto. Dados reais, educação sem hype e segurança em primeiro lugar.'
   },
   '/graficos': {
     title: 'Gráficos e Análises de Mercado',
