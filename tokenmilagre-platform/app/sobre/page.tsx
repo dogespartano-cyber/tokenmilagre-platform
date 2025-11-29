@@ -8,14 +8,13 @@ import {
   faShieldHalved,
   faBookOpen,
   faUsers,
-  faRocket,
   faCode,
   faHeart,
   faHandshake,
   faCheckCircle,
   faExclamationTriangle,
-  faLightbulb,
-  faGlobe
+  faGlobe,
+  faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram, faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
@@ -28,7 +27,6 @@ export default function SobrePage() {
 
   return (
     <>
-      {/* Schema.org JSON-LD */}
       <Script id="about-schema" type="application/ld+json" strategy="afterInteractive">
         {JSON.stringify({
           "@context": "https://schema.org",
@@ -45,103 +43,35 @@ export default function SobrePage() {
         })}
       </Script>
 
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600&display=swap');
-
-        .font-montserrat {
-          font-family: 'Montserrat', sans-serif;
-        }
-
-        .font-inter {
-          font-family: 'Inter', sans-serif;
-        }
-
-        /* Glassmorphism Base */
-        .glass-panel {
-          background: rgba(255, 255, 255, 0.7);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.5);
-          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-        }
-
-        [data-theme="dark"] .glass-panel {
-          background: rgba(20, 20, 20, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        }
-
-        /* Neumorphism Elements */
-        .neumorphic-card {
-          background: #f0f2f5;
-          box-shadow: 9px 9px 18px #d1d3d6, -9px -9px 18px #ffffff;
-          border-radius: 24px;
-          border: 1px solid rgba(255,255,255,0.4);
-        }
-
-        [data-theme="dark"] .neumorphic-card {
-          background: #1a1b1e;
-          box-shadow: 8px 8px 16px #0d0e0f, -8px -8px 16px #27282d;
-          border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .neumorphic-button {
-          background: #f0f2f5;
-          box-shadow: 5px 5px 10px #d1d3d6, -5px -5px 10px #ffffff;
-          transition: all 0.3s ease;
-        }
-
-        .neumorphic-button:active {
-          box-shadow: inset 5px 5px 10px #d1d3d6, inset -5px -5px 10px #ffffff;
-        }
-
-        [data-theme="dark"] .neumorphic-button {
-          background: #1a1b1e;
-          box-shadow: 5px 5px 10px #0d0e0f, -5px -5px 10px #27282d;
-        }
-
-        [data-theme="dark"] .neumorphic-button:active {
-          box-shadow: inset 5px 5px 10px #0d0e0f, inset -5px -5px 10px #27282d;
-        }
-
-        /* Floating Animation */
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-15px); }
-          100% { transform: translateY(0px); }
-        }
-
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-
-        /* Gradient Text */
-        .gradient-text {
-          background: linear-gradient(135deg, #0d9488, #14b8a6, #5eead4);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-      `}</style>
-
-      <div className="min-h-screen relative overflow-hidden bg-[var(--bg-secondary)] transition-colors duration-300">
+      <div className="min-h-screen relative overflow-hidden bg-[var(--bg-secondary)] transition-colors duration-300 font-sans">
         {/* Background Orbs */}
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-          <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-green-400/20 rounded-full blur-[120px] animate-pulse"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-400/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute top-[40%] left-[40%] w-[400px] h-[400px] bg-teal-400/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '4s' }}></div>
+          <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-teal-500/20 rounded-full blur-[120px] animate-pulse-slow"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-500/20 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-[40%] left-[40%] w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '4s' }}></div>
         </div>
 
         <div className={`relative z-10 max-w-7xl mx-auto px-6 py-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
 
           {/* Hero Section */}
-          <section className="text-center space-y-8 mb-24">
-            {/* Animated Logo */}
+          <section className="text-center space-y-8 mb-32 pt-12">
+            {/* Animated Logo with Floating Effect */}
             <div className="flex justify-center mb-8 mt-12">
-              <div className="relative w-60 h-60 md:w-72 md:h-72 animate-float">
+              <div className="relative w-60 h-60 md:w-72 md:h-72 animate-float-vertical">
+                {/* Animated rings */}
+                <div className="absolute inset-0" style={{ animation: 'spin-slow 25s linear infinite' }}>
+                  <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-green-500"></div>
+                </div>
+                <div className="absolute inset-3" style={{ animation: 'spin-reverse 20s linear infinite' }}>
+                  <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-teal-500"></div>
+                </div>
+
+                {/* Glow effect */}
                 <div className="absolute inset-0 blur-2xl animate-pulse opacity-20" style={{
                   background: 'linear-gradient(135deg, #93c5fd, #bfdbfe, #dbeafe)'
                 }}></div>
+
+                {/* Image */}
                 <div className="relative z-10 flex items-center justify-center h-full transform hover:scale-105 transition-all duration-700">
                   <Image
                     src="/images/TOKEN-MILAGRE-Hero.webp"
@@ -155,42 +85,62 @@ export default function SobrePage() {
               </div>
             </div>
 
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold leading-tight drop-shadow-lg" style={{ color: 'var(--text-primary)' }}>
-              A Verdade Sobre{' '}
-              <span className="gradient-text">
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight text-[var(--text-primary)] drop-shadow-sm">
+              A Verdade Sobre <br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-blue-500">
                 Este Projeto
               </span>
             </h1>
+
+            <p className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed font-light">
+              Sem hype. Sem promessas falsas. Apenas educação e comunidade.
+            </p>
           </section>
 
-          {/* A Verdade */}
-          <section className="relative py-12 mb-16">
-            <div className="glass-panel p-8 md:p-12 rounded-3xl">
-              <div className="space-y-6 text-lg font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                <p className="text-xl md:text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
-                  O Token Milagre não é uma startup com equipe de 50 pessoas. Não temos investidores de venture capital.
-                  Não prometemos retornos de 1000x.
-                </p>
+          {/* Manifesto / A Verdade */}
+          <section className="relative mb-32">
+            <div className="glass p-8 md:p-16 rounded-[2.5rem] relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-teal-500/10 to-transparent rounded-bl-full -mr-16 -mt-16 transition-transform duration-700 group-hover:scale-110"></div>
 
-                <p className="text-xl md:text-2xl font-bold text-green-500">
-                  Somos um projeto de uma pessoa — um desenvolvedor que já viu gente demais
-                  perder dinheiro em golpes cripto e decidiu fazer algo a respeito.
-                </p>
+              <div className="relative z-10 space-y-8 text-center md:text-left">
+                <div className="md:flex items-center gap-12">
+                  <div className="flex-1 space-y-6">
+                    <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">
+                      O que NÃO somos
+                    </h2>
+                    <p className="text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed">
+                      O Token Milagre não é uma startup com equipe de 50 pessoas. Não temos investidores de venture capital.
+                      Não prometemos retornos de 1000x.
+                    </p>
+                  </div>
+                  <div className="w-px h-32 bg-gradient-to-b from-transparent via-[var(--border-medium)] to-transparent hidden md:block"></div>
+                  <div className="flex-1 space-y-6">
+                    <h2 className="text-3xl md:text-4xl font-bold text-teal-500">
+                      O que SOMOS
+                    </h2>
+                    <p className="text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed">
+                      Somos um projeto de uma pessoa — um desenvolvedor que já viu gente demais
+                      perder dinheiro em golpes cripto e decidiu fazer algo a respeito.
+                    </p>
+                  </div>
+                </div>
 
-                <p>
-                  Este projeto existe porque acredito que educação financeira descentralizada não deveria custar nada,
-                  e que <strong style={{ color: 'var(--text-primary)' }}>honestidade é mais valiosa que hype</strong>.
-                </p>
+                <div className="pt-8 border-t border-[var(--border-light)] text-center">
+                  <p className="text-xl md:text-2xl font-medium text-[var(--text-primary)]">
+                    "Honestidade é mais valiosa que hype."
+                  </p>
+                </div>
               </div>
             </div>
           </section>
 
-          {/* O Que Fazemos */}
-          <section className="relative py-12 mb-16">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-                O Que Fazemos (De Verdade)
+          {/* O Que Fazemos (Grid) */}
+          <section className="mb-32">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
+                O Que Fazemos
               </h2>
+              <p className="text-xl text-[var(--text-secondary)]">De verdade, sem enrolação.</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -199,32 +149,32 @@ export default function SobrePage() {
                   icon: faBookOpen,
                   title: 'Educação Cripto',
                   description: 'Recursos definitivos em português sobre blockchain e criptomoedas. Tutoriais sobre wallets, tokens, DeFi, análise de projetos — tudo verificado, tudo gratuito.',
-                  gradient: 'linear-gradient(135deg, #3b82f6, #2563eb)'
+                  color: 'text-blue-500',
+                  bg: 'bg-blue-500/10'
                 },
                 {
                   icon: faShieldHalved,
                   title: 'Proteção Contra Golpes',
-                  description: 'Identificamos padrões suspeitos, alertamos sobre projetos de risco e ensinamos como reconhecer red flags antes de investir. Nosso objetivo é que você nunca mais caia em rug pull.',
-                  gradient: 'linear-gradient(135deg, #22c55e, #16a34a)'
+                  description: 'Identificamos padrões suspeitos, alertamos sobre projetos de risco e ensinamos como reconhecer red flags antes de investir.',
+                  color: 'text-green-500',
+                  bg: 'bg-green-500/10'
                 },
                 {
                   icon: faUsers,
-                  title: 'Comunidade de Apoio Mútuo',
-                  description: 'Um espaço no Discord e Telegram onde iniciantes podem fazer perguntas sem julgamento, e onde membros mais experientes ajudam voluntariamente. Sem elitismo, sem "DYOR" jogado na cara.',
-                  gradient: 'linear-gradient(135deg, #0d9488, #0f766e)'
+                  title: 'Comunidade',
+                  description: 'Um espaço no Discord e Telegram onde iniciantes podem fazer perguntas sem julgamento, e onde membros mais experientes ajudam voluntariamente.',
+                  color: 'text-teal-500',
+                  bg: 'bg-teal-500/10'
                 }
               ].map((item, index) => (
-                <div key={index} className="neumorphic-card p-8 hover:scale-105 transition-transform duration-300">
-                  <div
-                    className="inline-flex w-16 h-16 rounded-2xl items-center justify-center mb-6 shadow-md neumorphic-button"
-                    style={{ background: item.gradient }}
-                  >
-                    <FontAwesomeIcon icon={item.icon} className="w-8 h-8 text-white" />
+                <div key={index} className="glass-card p-10 rounded-3xl flex flex-col items-start group">
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 ${item.bg} ${item.color} text-3xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
+                    <FontAwesomeIcon icon={item.icon} />
                   </div>
-                  <h3 className="text-xl font-montserrat font-bold mb-4 text-gray-900 dark:text-[var(--text-primary)]">
+                  <h3 className="text-2xl font-bold mb-4 text-[var(--text-primary)]">
                     {item.title}
                   </h3>
-                  <p className="font-inter leading-relaxed text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  <p className="text-[var(--text-secondary)] leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -232,287 +182,169 @@ export default function SobrePage() {
             </div>
           </section>
 
-          {/* Por Que Milagre */}
-          <section className="relative py-12 mb-16">
-            <div className="glass-panel p-8 md:p-12 rounded-3xl border-l-4 border-teal-500">
-              <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
-                Por Que "Milagre"?
-              </h2>
-              <div className="space-y-4 text-lg font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                <p>
-                  Não porque prometemos milagres financeiros. O oposto.
-                </p>
-                <p className="text-xl font-semibold text-green-500">
-                  O milagre é oferecer valor real sem agendas ocultas — apenas transparência e justiça.
-                </p>
-                <p>
-                  Que te avisa quando um projeto é golpe em vez de te empurrar para comprar.
-                  Que celebra quando você evita perder dinheiro, não só quando você lucra.
-                </p>
-                <p className="font-bold" style={{ color: 'var(--text-primary)' }}>
-                  Num mercado cheio de influenciadores pagos e projetos anônimos, honestidade é o milagre.
+          {/* Split Sections */}
+          <div className="space-y-24 mb-32">
+            {/* Por Que Milagre */}
+            <section className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="order-2 md:order-1">
+                <div className="glass p-10 rounded-3xl relative overflow-hidden">
+                  <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-teal-500/20 rounded-full blur-3xl"></div>
+                  <h3 className="text-3xl font-bold mb-6 text-[var(--text-primary)]">Por Que "Milagre"?</h3>
+                  <div className="space-y-4 text-[var(--text-secondary)] text-lg">
+                    <p>Não porque prometemos milagres financeiros. O oposto.</p>
+                    <p className="font-semibold text-teal-500">O milagre é oferecer valor real sem agendas ocultas.</p>
+                    <p>Num mercado cheio de influenciadores pagos e projetos anônimos, honestidade é o milagre.</p>
+                  </div>
+                </div>
+              </div>
+              <div className="order-1 md:order-2 text-center md:text-left pl-0 md:pl-12">
+                <h2 className="text-4xl md:text-6xl font-extrabold text-[var(--text-primary)] mb-6">
+                  Transparência <br /> Radical
+                </h2>
+                <p className="text-xl text-[var(--text-secondary)]">
+                  Nossa única moeda de troca é a confiança.
                 </p>
               </div>
-            </div>
-          </section>
+            </section>
 
-          {/* O Token */}
-          <section className="relative py-12 mb-16">
-            <div className="glass-panel p-8 md:p-12 rounded-3xl border-l-4 border-amber-500">
-              <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
-                O Token $MILAGRE
-              </h2>
-              <div className="space-y-4 text-lg font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                <p>
-                  Sim, existe um token SPL na Solana. <strong style={{ color: 'var(--text-primary)' }}>Não, ele não vai te fazer rico.</strong>
+            {/* O Token */}
+            <section className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="text-center md:text-right pr-0 md:pr-12">
+                <h2 className="text-4xl md:text-6xl font-extrabold text-[var(--text-primary)] mb-6">
+                  O Token <br /> <span className="text-amber-500">$MILAGRE</span>
+                </h2>
+                <p className="text-xl text-[var(--text-secondary)]">
+                  Um símbolo de pertencimento, não de enriquecimento.
                 </p>
-                <p>
-                  O $MILAGRE no momento não tem utilidade real, mas futuramente terá funcionalidades dentro da plataforma.
-                  Por enquanto, serve apenas como forma de identificar membros da comunidade.
-                </p>
-
-                <div className="neumorphic-card p-6 border-2 border-red-500 mt-6">
-                  <div className="flex items-start gap-4">
-                    <FontAwesomeIcon icon={faExclamationTriangle} className="text-3xl text-red-500 mt-1" />
-                    <div>
-                      <p className="font-bold text-red-500 mb-2">
-                        Não é investimento. Não prometemos valorização.
-                      </p>
-                      <p className="text-base">
-                        Se você comprar esperando moon, vai se frustrar. Esse não é o propósito do token.
-                      </p>
+              </div>
+              <div>
+                <div className="glass p-10 rounded-3xl border-l-4 border-amber-500">
+                  <div className="space-y-6 text-[var(--text-secondary)] text-lg">
+                    <p>
+                      Sim, existe um token SPL na Solana. <strong className="text-[var(--text-primary)]">Não, ele não vai te fazer rico.</strong>
+                    </p>
+                    <p>
+                      Serve apenas como forma de identificar membros da comunidade.
+                    </p>
+                    <div className="bg-red-500/10 border border-red-500/20 p-6 rounded-xl flex gap-4 items-start">
+                      <FontAwesomeIcon icon={faExclamationTriangle} className="text-red-500 text-2xl mt-1" />
+                      <div>
+                        <p className="font-bold text-red-500 mb-1">Não é investimento.</p>
+                        <p className="text-sm">Se você comprar esperando moon, vai se frustrar.</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
 
-          {/* Transparência Real */}
-          <section className="relative py-12 mb-16">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-                🎯 Como Pretendemos Nos Sustentar
-              </h2>
-            </div>
+          {/* Sustentabilidade & Open Source */}
+          <section className="mb-32">
+            <div className="glass p-12 rounded-[3rem] relative overflow-hidden">
 
-            <div className="neumorphic-card p-8 md:p-12">
-              <div className="grid md:grid-cols-1 gap-8">
+              <div className="grid md:grid-cols-2 gap-16">
                 <div>
-                  <ul className="space-y-3">
+                  <h3 className="text-3xl font-bold mb-8 text-[var(--text-primary)]">Como vamos nos sustentar</h3>
+                  <ul className="space-y-4">
                     {[
-                      'Links afiliados para exchanges confiáveis (sempre com aviso claro)',
+                      'Links afiliados para exchanges confiáveis',
                       'Newsletter com sponsors éticos',
-                      'Funcionalidades do token $MILAGRE que ajudarão na receita do projeto',
-                      'Futuramente, cursos avançados pagos'
+                      'Funcionalidades futuras do token',
+                      'Cursos avançados (o básico sempre será grátis)'
                     ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 mt-1" />
-                        <span style={{ color: 'var(--text-secondary)' }}>{item}</span>
+                      <li key={i} className="flex items-center gap-4 text-[var(--text-secondary)]">
+                        <FontAwesomeIcon icon={faCheckCircle} className="text-green-500" />
+                        <span>{item}</span>
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-4 font-semibold text-green-500">
-                    O conteúdo educacional básico será sempre gratuito.
-                  </p>
                 </div>
 
-                <div className="md:col-span-2">
-                  <h3 className="text-2xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-                    <FontAwesomeIcon icon={faCode} className="mr-2 text-blue-500" />
-                    Código
+                <div>
+                  <h3 className="text-3xl font-bold mb-8 text-[var(--text-primary)] flex items-center gap-3">
+                    <FontAwesomeIcon icon={faCode} className="text-blue-500" />
+                    Open Source
                   </h3>
-                  <p style={{ color: 'var(--text-secondary)' }}>
-                    Backend open-source no GitHub para auditoria. Qualquer pessoa pode verificar que não fazemos nada obscuro.
+                  <p className="text-[var(--text-secondary)] mb-8 text-lg">
+                    Nosso código é aberto. Qualquer pessoa pode auditar e verificar que não fazemos nada obscuro.
                   </p>
                   <a
                     href="https://github.com/dogespartano-cyber/tokenmilagre-platform"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 mt-4 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 neumorphic-button"
-                    style={{ color: 'var(--text-primary)' }}
+                    className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--bg-primary)] hover:bg-[var(--bg-tertiary)] text-[var(--text-primary)] font-bold transition-all border border-[var(--border-medium)] hover:border-[var(--border-focus)] shadow-sm hover:shadow-md"
                   >
-                    <FontAwesomeIcon icon={faGithub} />
-                    Ver no GitHub
+                    <FontAwesomeIcon icon={faGithub} className="text-xl" />
+                    <span>Ver no GitHub</span>
+                    <FontAwesomeIcon icon={faArrowRight} className="text-sm opacity-50" />
                   </a>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* Quem Está Por Trás */}
-          <section className="relative py-12 mb-16">
-            <div className="glass-panel p-8 md:p-12 rounded-3xl">
-              <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
-                Quem Está Por Trás
-              </h2>
-              <div className="space-y-4 text-lg font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                <p>
-                  Um desenvolvedor que dedica seu tempo livre a este projeto porque acredita
-                  que educação cripto honesta pode fazer diferença na vida das pessoas.
-                </p>
-                <p>
-                  Trabalho nisso nas horas vagas, sem investidores ou equipe. Não uso pseudônimo
-                  para parecer misterioso. É um projeto pessoal que pode crescer com o tempo.
-                </p>
-              </div>
-            </div>
-          </section>
+          {/* Community CTA */}
+          <section className="text-center pb-12">
+            <h2 className="text-4xl md:text-6xl font-bold mb-12 text-[var(--text-primary)]">
+              Junte-se à nós
+            </h2>
 
-          {/* O Que Pedimos */}
-          <section className="relative py-12 mb-16">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-                O Que Pedimos
-              </h2>
-            </div>
+            <div className="flex flex-wrap justify-center gap-6">
+              <a
+                href="https://discord.gg/xk4zrz8j"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative px-10 py-5 rounded-full bg-[#5865F2] text-white font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#5865F2]/30"
+              >
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                <div className="relative flex items-center gap-3">
+                  <FontAwesomeIcon icon={faDiscord} className="text-2xl" />
+                  <span>Discord</span>
+                </div>
+              </a>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="neumorphic-card p-8">
-                <h3 className="text-2xl font-montserrat font-bold mb-4 flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
-                  <FontAwesomeIcon icon={faHeart} className="text-red-500" />
-                  Se o projeto te ajudou
-                </h3>
-                <ul className="space-y-3">
-                  {[
-                    'Compartilhe com alguém que precisa de educação cripto honesta',
-                    'Participe da comunidade no Discord',
-                    'Se usar nossos links de afiliados, saiba que isso ajuda a manter as luzes acesas'
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <span className="text-green-500 mt-1">•</span>
-                      <span style={{ color: 'var(--text-secondary)' }}>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="neumorphic-card p-8">
-                <h3 className="text-2xl font-montserrat font-bold mb-4 flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
-                  <FontAwesomeIcon icon={faHandshake} className="text-blue-500" />
-                  Se você quer contribuir
-                </h3>
-                <ul className="space-y-3">
-                  {[
-                    'Escreva um artigo educacional',
-                    'Ajude a responder dúvidas de iniciantes na comunidade',
-                    'Reporte golpes que encontrar para alertarmos outros'
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <span className="text-green-500 mt-1">•</span>
-                      <span style={{ color: 'var(--text-secondary)' }}>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* Onde Nos Encontrar */}
-          <section className="relative py-12 mb-16">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-5xl font-montserrat font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-                <FontAwesomeIcon icon={faGlobe} className="mr-3 text-teal-500" />
-                Onde Nos Encontrar
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              {[
-                {
-                  name: 'Discord',
-                  icon: faDiscord,
-                  url: 'https://discord.gg/xk4zrz8j',
-                  description: 'Servidor da comunidade',
-                  color: '#5865F2'
-                },
-                {
-                  name: 'Telegram',
-                  icon: faTelegram,
-                  url: 'https://t.me/+Bop_TVFc_mg3Njlh',
-                  description: 'Canal oficial da comunidade',
-                  color: '#0088cc'
-                },
-                {
-                  name: 'GitHub',
-                  icon: faGithub,
-                  url: 'https://github.com/dogespartano-cyber/tokenmilagre-platform',
-                  description: 'Código open source - 100% auditável',
-                  color: '#333'
-                },
-                {
-                  name: 'Twitter/X',
-                  icon: faTwitter,
-                  url: 'https://x.com/TokenMilagre',
-                  description: 'Updates e anúncios',
-                  color: '#1DA1F2'
-                }
-              ].map((link, index) => (
-                <a
-                  key={index}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group neumorphic-card p-8 flex items-center gap-6 hover:scale-105 transition-transform duration-300"
-                >
-                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center neumorphic-button" style={{
-                    backgroundColor: link.color,
-                    color: 'white'
-                  }}>
-                    <FontAwesomeIcon icon={link.icon} className="text-3xl" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-montserrat font-bold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-                      {link.name}
-                      <span className="text-sm opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                    </h3>
-                    <p className="font-inter" style={{ color: 'var(--text-secondary)' }}>
-                      {link.description}
-                    </p>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </section>
-
-          {/* CTA Final */}
-          <section className="relative py-24 mt-12">
-            <div className="glass-panel p-12 md:p-16 rounded-3xl text-center">
-              <h2 className="text-4xl md:text-6xl font-montserrat font-bold mb-8" style={{ color: 'var(--text-primary)' }}>
-                Junte-se à Comunidade
-              </h2>
-
-              <p className="text-lg md:text-xl mb-12 max-w-4xl mx-auto font-inter leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                Uma comunidade onde você pode fazer perguntas, aprender sobre cripto, e se proteger de golpes.
-                Sem julgamentos, sem promessas vazias.
-              </p>
-
-              <div className="flex flex-wrap justify-center gap-6 mt-12">
-                <a
-                  href="https://discord.gg/xk4zrz8j"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-10 py-5 rounded-full font-inter font-bold text-white bg-[#5865F2] hover:bg-[#4752C4] shadow-xl text-lg transition-all"
-                >
-                  <FontAwesomeIcon icon={faDiscord} className="w-6 h-6" />
-                  <span>Entrar no Discord</span>
-                </a>
-
-                <a
-                  href="https://t.me/+Bop_TVFc_mg3Njlh"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-10 py-5 rounded-full font-inter font-bold text-white bg-[#0088cc] hover:bg-[#006699] shadow-xl text-lg transition-all"
-                >
-                  <FontAwesomeIcon icon={faTelegram} className="w-6 h-6" />
-                  <span>Entrar no Telegram</span>
-                </a>
-              </div>
+              <a
+                href="https://t.me/+Bop_TVFc_mg3Njlh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative px-10 py-5 rounded-full bg-[#0088cc] text-white font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#0088cc]/30"
+              >
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                <div className="relative flex items-center gap-3">
+                  <FontAwesomeIcon icon={faTelegram} className="text-2xl" />
+                  <span>Telegram</span>
+                </div>
+              </a>
             </div>
           </section>
 
         </div>
       </div>
+      <style jsx>{`
+        @keyframes float-vertical {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-15px); }
+          100% { transform: translateY(0px); }
+        }
+        .animate-float-vertical {
+          animation: float-vertical 6s ease-in-out infinite;
+        }
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes spin-reverse {
+          from { transform: rotate(360deg); }
+          to { transform: rotate(0deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
+        .animate-spin-reverse {
+          animation: spin-reverse 15s linear infinite;
+        }
+      `}</style>
     </>
   );
 }

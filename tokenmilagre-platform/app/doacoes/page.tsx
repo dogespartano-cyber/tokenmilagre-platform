@@ -11,7 +11,10 @@ import {
   faHeart,
   faWallet,
   faChartPie,
-  faShieldAlt
+  faShieldAlt,
+  faGlobe,
+  faRocket,
+  faHandshake
 } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
@@ -23,78 +26,78 @@ export default function DoacoesPage() {
     {
       image: '/images/method-milagre.webp',
       title: '$MILAGRE Token',
-      description: 'Apoie com nosso token nativo',
+      description: 'Fortaleça a economia do nosso ecossistema.',
       address: '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump',
       network: 'Solana SPL',
-      color: '#4caf50', // Green
-      gradient: 'linear-gradient(135deg, #4caf50, #81c784)'
+      color: 'text-green-500',
+      bg: 'bg-green-500/10'
     },
     {
       image: '/images/method-solana.webp',
       title: 'Solana (SOL)',
-      description: 'Rápido, seguro e com taxas baixíssimas',
+      description: 'Contribuição direta para infraestrutura e taxas.',
       address: 'Em breve',
       network: 'Solana Mainnet',
-      color: '#2196f3', // Blue
-      gradient: 'linear-gradient(135deg, #2196f3, #64b5f6)'
+      color: 'text-blue-500',
+      bg: 'bg-blue-500/10'
     }
   ];
 
   const impactAreas = [
     {
-      title: 'Educação Gratuita',
-      description: 'Manutenção da plataforma, criação de novos conteúdos e tutoriais.',
+      title: 'Conteúdo Gratuito',
+      description: 'Produção de guias, vídeos e alertas contra golpes para todos.',
       percentage: '40%',
       color: '#4caf50', // Green
-      image: '/images/impact-education.webp',
       icon: faChartPie
     },
     {
-      title: 'Desenvolvimento',
-      description: 'Melhorias de segurança, novas features e infraestrutura.',
+      title: 'Ferramentas',
+      description: 'Desenvolvimento de bots e sistemas de análise de risco.',
       percentage: '30%',
       color: '#2196f3', // Blue
-      image: '/images/impact-dev.webp',
       icon: faShieldAlt
     },
     {
-      title: 'Apoio Comunitário',
-      description: 'Eventos, suporte a membros e iniciativas de ajuda mútua.',
+      title: 'Fundo Comunitário',
+      description: 'Recursos para ajudar membros e financiar iniciativas votadas.',
       percentage: '20%',
       color: '#ff9800', // Orange
-      image: '/images/impact-community.webp',
       icon: faHeart
     },
     {
-      title: 'Crescimento',
-      description: 'Marketing ético e expansão para alcançar mais pessoas.',
+      title: 'Operacional',
+      description: 'Servidores, domínios e custos básicos de manutenção.',
       percentage: '10%',
       color: '#0D9488', // Teal
-      image: '/images/impact-growth.webp',
       icon: faArrowUp
     }
   ];
 
   const whyDonate = [
     {
-      title: '100% Transparente',
-      description: 'Todas as doações e gastos são registrados publicamente na blockchain.',
-      color: '#4caf50'
+      title: 'Transparência Radical',
+      description: 'Diferente de "projetos" opacos, aqui você sabe exatamente para onde vai cada centavo.',
+      color: 'text-green-500',
+      icon: faGlobe
     },
     {
-      title: 'Sem Intermediários',
-      description: 'Sua doação vai diretamente para a comunidade. Sem bancos ou taxas abusivas.',
-      color: '#ffc107'
+      title: 'Independência Real',
+      description: 'Não aceitamos dinheiro de exchanges ou projetos duvidosos para falar bem deles.',
+      color: 'text-amber-500',
+      icon: faShieldAlt
     },
     {
-      title: 'Impacto Real',
-      description: 'Cada centavo é investido em recursos que beneficiam milhares de pessoas.',
-      color: '#f44336'
+      title: 'Educação Primeiro',
+      description: 'Seu apoio garante que o conhecimento continue gratuito e acessível a quem precisa.',
+      color: 'text-blue-500',
+      icon: faRocket
     },
     {
-      title: 'Comunidade Ativa',
-      description: 'Somos pessoas reais, trabalhando todos os dias para fazer a diferença.',
-      color: '#2196f3'
+      title: 'Construção Coletiva',
+      description: 'Este não é o projeto de um dono só. É um movimento construído por todos nós.',
+      color: 'text-purple-500',
+      icon: faHandshake
     }
   ];
 
@@ -104,8 +107,6 @@ export default function DoacoesPage() {
     setCopiedAddress(label);
     setTimeout(() => setCopiedAddress(''), 2000);
   };
-
-
 
   useEffect(() => {
     setIsVisible(true);
@@ -118,108 +119,18 @@ export default function DoacoesPage() {
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "name": "Doações - $MILAGRE Community",
-          "description": "Apoie o desenvolvimento da plataforma educacional e comunitária $MILAGRE",
+          "name": "Apoie o Milagre - Transparência e Educação",
+          "description": "Contribua para manter a educação cripto gratuita e independente.",
           "url": "https://tokenmilagre.xyz/doacoes"
         })}
       </Script>
 
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600&display=swap');
-
-        .font-montserrat {
-          font-family: 'Montserrat', sans-serif;
-        }
-
-        .font-inter {
-          font-family: 'Inter', sans-serif;
-        }
-
-        /* Glassmorphism Base */
-        .glass-panel {
-          background: rgba(255, 255, 255, 0.7);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.5);
-          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-        }
-
-        [data-theme="dark"] .glass-panel {
-          background: rgba(20, 20, 20, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        }
-
-        /* Neumorphism Elements */
-        .neumorphic-card {
-          background: #f0f2f5;
-          box-shadow: 9px 9px 18px #d1d3d6, -9px -9px 18px #ffffff;
-          border-radius: 24px;
-          border: 1px solid rgba(255,255,255,0.4);
-        }
-
-        [data-theme="dark"] .neumorphic-card {
-          background: #1a1b1e;
-          box-shadow: 8px 8px 16px #0d0e0f, -8px -8px 16px #27282d;
-          border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .neumorphic-button {
-          background: #f0f2f5;
-          box-shadow: 5px 5px 10px #d1d3d6, -5px -5px 10px #ffffff;
-          transition: all 0.3s ease;
-        }
-
-        .neumorphic-button:active {
-          box-shadow: inset 5px 5px 10px #d1d3d6, inset -5px -5px 10px #ffffff;
-        }
-
-        [data-theme="dark"] .neumorphic-button {
-          background: #1a1b1e;
-          box-shadow: 5px 5px 10px #0d0e0f, -5px -5px 10px #27282d;
-        }
-
-        [data-theme="dark"] .neumorphic-button:active {
-          box-shadow: inset 5px 5px 10px #0d0e0f, inset -5px -5px 10px #27282d;
-        }
-
-        /* Floating Animation */
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-15px); }
-          100% { transform: translateY(0px); }
-        }
-
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-
-        /* Gradient Text */
-        .gradient-text {
-          background: linear-gradient(135deg, #4caf50, #2196f3);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        /* Spinning Animations */
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-
-        @keyframes spin-reverse {
-          from { transform: rotate(360deg); }
-          to { transform: rotate(0deg); }
-        }
-      `}</style>
-
-      <div className="min-h-screen relative overflow-hidden bg-[var(--bg-secondary)] transition-colors duration-300">
+      <div className="min-h-screen relative overflow-hidden bg-[var(--bg-secondary)] transition-colors duration-300 font-sans">
         {/* Background Orbs */}
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-          <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-green-400/20 rounded-full blur-[120px] animate-pulse"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-400/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute top-[40%] left-[40%] w-[400px] h-[400px] bg-purple-400/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '4s' }}></div>
+          <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-green-500/20 rounded-full blur-[120px] animate-pulse-slow"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-500/20 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-[40%] left-[40%] w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '4s' }}></div>
         </div>
 
         <div className={`relative z-10 max-w-7xl mx-auto px-6 py-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -228,7 +139,7 @@ export default function DoacoesPage() {
           <div className="text-center mb-20 pt-10">
             {/* Animated Logo with Floating Effect */}
             <div className="flex justify-center mb-8 mt-12">
-              <div className="relative w-60 h-60 md:w-72 md:h-72 animate-float">
+              <div className="relative w-60 h-60 md:w-72 md:h-72 animate-float-vertical">
                 {/* Animated rings */}
                 <div className="absolute inset-0" style={{ animation: 'spin-slow 25s linear infinite' }}>
                   <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-green-500"></div>
@@ -256,30 +167,31 @@ export default function DoacoesPage() {
               </div>
             </div>
 
-            <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full glass-panel mb-6">
-              <FontAwesomeIcon icon={faHeart} className="text-red-500 animate-pulse" />
-              <span className="text-sm font-bold text-[var(--text-secondary)] tracking-wide uppercase">Faça a Diferença</span>
+            <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-teal-500/10 border border-teal-500/20 mb-6">
+              <FontAwesomeIcon icon={faHandshake} className="text-teal-500 animate-pulse" />
+              <span className="text-sm font-bold text-teal-500 tracking-wide uppercase">Comunidade & Sustentabilidade</span>
             </div>
 
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold leading-tight mb-6 text-[var(--text-primary)] tracking-tight">
-              Apoie o <span className="gradient-text">$MILAGRE</span>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 text-[var(--text-primary)] tracking-tight">
+              Mantenha o <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500">Milagre Vivo</span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed font-inter">
-              Sua contribuição impulsiona nossa missão de levar educação financeira e liberdade para todos.
+            <p className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed font-light">
+              Não temos investidores bilionários. Temos você. <br />
+              Ajude a manter nossa independência e a qualidade do conteúdo.
             </p>
           </div>
 
-          {/* Main Donation Cards - Neumorphic & Glassmorphic Mix */}
+          {/* Main Donation Cards */}
           <div className="grid lg:grid-cols-2 gap-12 mb-32">
             {donationMethods.map((method, index) => (
-              <div key={index} className="neumorphic-card p-8 md:p-12 relative overflow-hidden group transition-all duration-500 hover:-translate-y-2">
+              <div key={index} className="glass-card p-8 md:p-12 relative overflow-hidden group transition-all duration-500 hover:-translate-y-2">
                 {/* Decorative Background */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-white/10 to-transparent rounded-bl-full opacity-50 pointer-events-none"></div>
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-white/5 to-transparent rounded-bl-full opacity-50 pointer-events-none"></div>
 
                 <div className="flex flex-col items-center text-center relative z-10">
-                  {/* Circular Image with Neumorphic Border */}
-                  <div className="relative w-48 h-48 mb-8 rounded-full p-2 neumorphic-button animate-float" style={{ animationDelay: `${index * 0.5}s` }}>
+                  {/* Circular Image */}
+                  <div className="relative w-40 h-40 mb-8 rounded-full p-2 bg-[var(--bg-primary)] shadow-xl animate-float-vertical" style={{ animationDelay: `${index * 0.5}s` }}>
                     <div className="w-full h-full rounded-full overflow-hidden relative">
                       <Image
                         src={method.image}
@@ -298,11 +210,11 @@ export default function DoacoesPage() {
                     </div>
                   </div>
 
-                  <h2 className="text-3xl font-montserrat font-bold mb-2 text-[var(--text-primary)]">{method.title}</h2>
+                  <h2 className="text-3xl font-bold mb-2 text-[var(--text-primary)]">{method.title}</h2>
                   <p className="text-[var(--text-secondary)] mb-8 font-medium">{method.description}</p>
 
                   {/* Address Container */}
-                  <div className="w-full glass-panel rounded-2xl p-6 mb-8 relative group-hover:bg-white/5 transition-colors">
+                  <div className="w-full bg-[var(--bg-primary)] rounded-2xl p-6 mb-8 relative border border-[var(--border-medium)]">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-wider">{method.network}</span>
                       <FontAwesomeIcon icon={faWallet} className="text-[var(--text-tertiary)] opacity-50" />
@@ -319,7 +231,7 @@ export default function DoacoesPage() {
                       px-8 py-4 rounded-full font-bold text-lg transition-all w-full md:w-auto min-w-[200px]
                       ${method.address === 'Em breve'
                         ? 'opacity-50 cursor-not-allowed bg-gray-200 text-gray-500'
-                        : 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg hover:shadow-green-500/30 hover:scale-105 active:scale-95'
+                        : 'bg-gradient-to-r from-green-500 to-teal-600 text-white shadow-lg hover:shadow-green-500/30 hover:scale-105 active:scale-95'
                       }
                     `}
                   >
@@ -338,61 +250,49 @@ export default function DoacoesPage() {
             ))}
           </div>
 
-          {/* Impact Section - Circular Cards */}
+          {/* Impact Section */}
           <div className="mb-32">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-6 text-[var(--text-primary)]">
-                Seu Impacto Visualizado
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
+                Destino dos Recursos
               </h2>
               <p className="text-xl text-[var(--text-secondary)] max-w-2xl mx-auto">
-                Para onde vai cada recurso investido na comunidade.
+                Transparência total sobre como cada doação é utilizada.
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {impactAreas.map((area, index) => (
-                <div key={index} className="glass-panel rounded-[30px] text-center hover:bg-white/10 transition-all duration-300 group overflow-hidden">
-                  {/* Card Cover Image */}
-                  <div className="relative w-full h-48 mb-0 overflow-hidden group-hover:opacity-90 transition-opacity">
-                    <Image
-                      src={area.image}
-                      alt={area.title}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-
-                    {/* Icon Overlay */}
-                    <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
-                      <FontAwesomeIcon icon={area.icon} className="text-white w-5 h-5" />
-                    </div>
+                <div key={index} className="glass-card p-8 rounded-[30px] text-center hover:bg-white/5 transition-all duration-300 group">
+                  <div className="w-16 h-16 rounded-2xl bg-[var(--bg-primary)] flex items-center justify-center mx-auto mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                    <FontAwesomeIcon icon={area.icon} className="text-2xl" style={{ color: area.color }} />
                   </div>
 
-                  {/* Content */}
-                  <div className="p-6 pt-6">
-                    <h3 className="text-xl font-bold mb-3 text-[var(--text-primary)]">{area.title}</h3>
-                    <p className="text-sm text-[var(--text-secondary)] mb-4 min-h-[60px]">{area.description}</p>
+                  <h3 className="text-xl font-bold mb-3 text-[var(--text-primary)]">{area.title}</h3>
+                  <p className="text-sm text-[var(--text-secondary)] mb-6 min-h-[40px]">{area.description}</p>
 
-                    <div className="relative h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                      <div
-                        className="absolute top-0 left-0 h-full rounded-full transition-all duration-1000"
-                        style={{ width: isVisible ? area.percentage : '0%', backgroundColor: area.color }}
-                      ></div>
-                    </div>
-                    <div className="text-right mt-2 text-xs font-bold" style={{ color: area.color }}>{area.percentage}</div>
+                  <div className="relative h-2 bg-[var(--bg-primary)] rounded-full overflow-hidden mb-2">
+                    <div
+                      className="absolute top-0 left-0 h-full rounded-full transition-all duration-1000"
+                      style={{ width: isVisible ? area.percentage : '0%', backgroundColor: area.color }}
+                    ></div>
                   </div>
+                  <div className="text-right text-lg font-bold" style={{ color: area.color }}>{area.percentage}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Trust Section - Glassmorphic Strip */}
-          <div className="glass-panel rounded-[40px] p-12 md:p-16 relative overflow-hidden mb-20">
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600"></div>
+          {/* Trust Section (Why Donate) */}
+          <div className="glass p-12 md:p-16 rounded-[3rem] relative overflow-hidden mb-20">
+            {/* Removed the colored top border as requested */}
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
               {whyDonate.map((reason, index) => (
-                <div key={index} className="relative pl-6 border-l-2 border-gray-200 dark:border-gray-700">
+                <div key={index} className="relative pl-6 border-l-2 border-[var(--border-medium)]">
+                  <div className={`text-2xl mb-4 ${reason.color}`}>
+                    <FontAwesomeIcon icon={reason.icon} />
+                  </div>
                   <h3 className="text-lg font-bold mb-2 text-[var(--text-primary)]">{reason.title}</h3>
                   <p className="text-sm text-[var(--text-secondary)]">{reason.description}</p>
                 </div>
@@ -402,7 +302,24 @@ export default function DoacoesPage() {
 
         </div>
 
-
+        <style jsx>{`
+          @keyframes float-vertical {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+          }
+          .animate-float-vertical {
+            animation: float-vertical 6s ease-in-out infinite;
+          }
+          @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          @keyframes spin-reverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+          }
+        `}</style>
       </div>
     </>
   );
