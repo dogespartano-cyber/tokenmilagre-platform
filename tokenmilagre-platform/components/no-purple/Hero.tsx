@@ -38,7 +38,7 @@ export default function Hero({
   subtitle = 'Educação financeira descentralizada. Transparente, sustentável e projetado para crescimento de longo prazo.',
   primaryCta = {
     label: 'Entrar no Discord',
-    href: 'https://discord.gg/xk4zrz8j',
+    href: 'https://discord.gg/jPgZr7BVXY',
     external: true
   },
   secondaryCta = {

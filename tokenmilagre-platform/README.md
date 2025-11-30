@@ -571,7 +571,7 @@ Ver documentação completa em:
 ## 🔗 Links Importantes
 
 - **Token Contract**: [3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump](https://solscan.io/token/3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump)
-- **Discord**: [discord.gg/xk4zrz8j](https://discord.gg/xk4zrz8j)
+- **Discord**: [discord.gg/jPgZr7BVXY](https://discord.gg/jPgZr7BVXY)
 - **Telegram**: [t.me/+Bop_TVFc_mg3Njlh](https://t.me/+Bop_TVFc_mg3Njlh)
 - **Pump.fun**: [pump.fun/coin/3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump](https://pump.fun/coin/3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump)
 

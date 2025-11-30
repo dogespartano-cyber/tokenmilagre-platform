@@ -385,7 +385,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
             </p>
             <div className="flex flex-wrap gap-3">
               <a
-                href="https://discord.gg/xk4zrz8j"
+                href="https://discord.gg/jPgZr7BVXY"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 bg-[#5865F2] text-white"

@@ -22,7 +22,7 @@ export default function SobrePage() {
   const socialLinks = [
     {
       name: 'Discord',
-      url: 'https://discord.gg/xk4zrz8j',
+      url: 'https://discord.gg/jPgZr7BVXY',
       icon: faDiscord,
       color: 'bg-[#5865F2]',
       hover: 'hover:bg-[#4752C4]',
@@ -45,12 +45,12 @@ export default function SobrePage() {
       description: 'Siga-nos para notícias rápidas e interações com o ecossistema.'
     },
     {
-      name: 'GitHub',
+      name: 'Github - Open Source',
       url: 'https://github.com/dogespartano-cyber/tokenmilagre-platform',
       icon: faGithub,
       color: 'bg-[#333]',
       hover: 'hover:bg-[#24292e]',
-      description: 'Analise nosso código. Transparência total é nossa prioridade.'
+      description: 'A confiança se conquista com código, não com palavras. Nossa plataforma é 100% código aberto.'
     }
   ];
 
@@ -163,19 +163,34 @@ export default function SobrePage() {
                 </div>
               </a>
             ))}
-          </div>
 
-          {/* Open Source Badge */}
-          <div className="text-center">
-            <a
-              href="https://github.com/dogespartano-cyber/tokenmilagre-platform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-light)] text-base text-[var(--text-secondary)] hover:border-[var(--brand-primary)] transition-colors shadow-sm hover:shadow-md"
-            >
-              <FontAwesomeIcon icon={faCode} className="text-[var(--brand-primary)]" />
-              <span>Projeto 100% Open Source</span>
-            </a>
+            {/* Sustentabilidade Card - Styled to match */}
+            <div className="glass-card p-8 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]">
+              <div className="flex items-center gap-6 mb-4">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg bg-green-600 shrink-0">
+                  <FontAwesomeIcon icon={faCheckCircle} />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-[var(--text-primary)]">
+                    Sustentabilidade do Projeto
+                  </h3>
+                </div>
+              </div>
+
+              <ul className="space-y-4 mt-6 pl-2">
+                {[
+                  'Doações da comunidade',
+                  'Links afiliados éticos (exchanges seguras)',
+                  'Parcerias transparentes',
+                  'Produtos educacionais avançados'
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center gap-3 text-[var(--text-secondary)]">
+                    <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-lg" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
         </div>

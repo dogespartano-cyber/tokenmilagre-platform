@@ -625,7 +625,7 @@ export default function GraficosPage() {
 
                 <div className="flex flex-wrap gap-4">
                   <a
-                    href="https://discord.gg/xk4zrz8j"
+                    href="https://discord.gg/jPgZr7BVXY"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group flex items-center gap-3 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"

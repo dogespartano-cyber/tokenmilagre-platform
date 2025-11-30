@@ -448,7 +448,7 @@ export default function TokenPage() {
 
             <div className="flex flex-wrap justify-center gap-6 mb-16">
               <a
-                href="https://discord.gg/xk4zrz8j"
+                href="https://discord.gg/jPgZr7BVXY"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative px-10 py-5 rounded-full bg-[#5865F2] text-white font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-xl"

@@ -141,8 +141,8 @@ export default function RootLayoutNav({
     { href: '/criptomoedas', label: 'Criptomoedas', icon: faBitcoinSign },
     { href: '/educacao', label: 'Educação', icon: faGraduationCap },
     { href: '/recursos', label: 'Recursos', icon: faStore },
-    { href: '/sobre', label: 'Sobre', icon: faInfoCircle },
     { href: '/token', label: 'Token', icon: faCoins },
+    { href: '/sobre', label: 'Sobre', icon: faInfoCircle },
   ];
 
   return (

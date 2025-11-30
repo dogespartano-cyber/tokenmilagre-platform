@@ -25,7 +25,7 @@ export default function Footer() {
       { label: 'Recursos', href: '/recursos' },
     ],
     comunidade: [
-      { label: 'Discord', href: 'https://discord.gg/xk4zrz8j', external: true },
+      { label: 'Discord', href: 'https://discord.gg/jPgZr7BVXY', external: true },
       { label: 'Telegram', href: 'https://t.me/+Bop_TVFc_mg3Njlh', external: true },
       { label: 'Twitter', href: '#', external: true },
       { label: 'GitHub', href: '#', external: true },
@@ -62,7 +62,7 @@ export default function Footer() {
             {/* Social Links */}
             <div className="flex gap-4 mt-4">
               <a
-                href="https://discord.gg/xk4zrz8j"
+                href="https://discord.gg/jPgZr7BVXY"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--bg-page)] text-[var(--text-secondary)] transition-all hover:bg-[var(--brand-primary)] hover:text-white hover:-translate-y-0.5"
