@@ -82,13 +82,7 @@ export default function TopCryptosList({ currentCryptoId }: TopCryptosListProps)
 
   if (loading) {
     return (
-      <div
-        className="rounded-2xl p-6 border shadow-md sticky top-24"
-        style={{
-          backgroundColor: 'var(--bg-elevated)',
-          borderColor: 'var(--border-light)',
-        }}
-      >
+      <div className="glass-card rounded-2xl p-6 border border-[var(--border-article)] shadow-md sticky top-24">
         <div className="flex items-center gap-3 mb-4">
           <FontAwesomeIcon
             icon={faCoins}
@@ -115,13 +109,7 @@ export default function TopCryptosList({ currentCryptoId }: TopCryptosListProps)
   }
 
   return (
-    <div
-      className="rounded-2xl p-6 border shadow-md sticky top-24"
-      style={{
-        backgroundColor: 'var(--bg-elevated)',
-        borderColor: 'var(--border-light)',
-      }}
-    >
+    <div className="glass-card rounded-2xl p-6 border border-[var(--border-article)] shadow-md sticky top-24">
       <div className="flex items-center gap-3 mb-4">
         <FontAwesomeIcon
           icon={faCoins}

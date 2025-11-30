@@ -63,11 +63,11 @@ export default function CriptomoedasPage() {
     return `Há ${diffDays}d`;
   };
 
-  const getSentimentColor = (sentiment: string) => {
+  const getSentimentColorClass = (sentiment: string) => {
     switch (sentiment) {
-      case 'positive': return '#22c55e';
-      case 'negative': return '#ef4444';
-      default: return '#f59e0b';
+      case 'positive': return 'bg-emerald-500 text-white';
+      case 'negative': return 'bg-red-500 text-white';
+      default: return 'bg-amber-500 text-white';
     }
   };
 
@@ -79,100 +79,61 @@ export default function CriptomoedasPage() {
     }
   };
 
-
-
   return (
     <>
       <div className="container mx-auto px-4 py-8">
         <div className="space-y-16">
           {/* Rastreador de Mercado */}
           <div className="space-y-8">
-            <div
-              className="rounded-2xl overflow-hidden shadow-lg border"
-              style={{
-                borderColor: 'var(--border-light)',
-                backgroundColor: 'var(--bg-elevated)',
-              }}
-            >
+            <div className="glass-card rounded-2xl overflow-hidden shadow-lg border border-[var(--border-article)] p-1">
               <CustomCryptoScreener />
             </div>
 
             {/* Notícias Relacionadas */}
             {!loadingNews && news.length > 0 && (
               <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <FontAwesomeIcon
-                    icon={faNewspaper}
-                    className="w-6 h-6"
-                    style={{ color: 'var(--brand-primary)' }}
-                  />
-                  <h2
-                    className="text-2xl font-bold"
-                    style={{ color: 'var(--text-primary)' }}
-                  >
-                    Notícias Relacionadas sobre Criptomoedas
+                <div className="pl-2 border-l-4 border-[var(--brand-primary)]">
+                  <h2 className="text-2xl font-bold text-[var(--text-article-title)]">
+                    Notícias
                   </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {news.map((newsItem) => (
                     <Link
                       key={newsItem.id}
                       href={newsItem.url}
-                      className="group rounded-xl p-5 border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-                      style={{
-                        backgroundColor: 'var(--bg-elevated)',
-                        borderColor: 'var(--border-light)',
-                      }}
+                      className="glass-card group flex flex-col p-5 rounded-2xl border border-[var(--border-article)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-[var(--brand-primary)]/50"
                     >
                       {/* Header: Category + Sentiment */}
-                      <div className="flex items-center justify-between mb-3">
-                        <span
-                          className="px-2 py-1 rounded text-xs font-bold"
-                          style={{
-                            backgroundColor: 'var(--bg-secondary)',
-                            color: 'var(--text-secondary)',
-                          }}
-                        >
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="px-2.5 py-1 rounded-lg text-xs font-bold bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] uppercase tracking-wide">
                           {newsItem.category[0]}
                         </span>
-                        <span
-                          className="px-2 py-1 rounded text-xs font-bold"
-                          style={{
-                            backgroundColor: `${getSentimentColor(newsItem.sentiment)}20`,
-                            color: getSentimentColor(newsItem.sentiment),
-                          }}
-                        >
+                        <span className={`px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide ${getSentimentColorClass(newsItem.sentiment)}`}>
                           {getSentimentLabel(newsItem.sentiment)}
                         </span>
                       </div>
 
                       {/* Title */}
-                      <h3
-                        className="text-lg font-bold mb-2 line-clamp-2 group-hover:underline"
-                        style={{ color: 'var(--text-primary)' }}
-                      >
+                      <h3 className="text-lg font-bold mb-3 line-clamp-2 text-[var(--text-article-title)] group-hover:text-[var(--brand-primary)] transition-colors">
                         {newsItem.title}
                       </h3>
 
                       {/* Summary */}
-                      <p
-                        className="text-sm mb-4 line-clamp-2"
-                        style={{ color: 'var(--text-secondary)' }}
-                      >
+                      <p className="text-sm mb-4 line-clamp-3 text-[var(--text-article-body)] flex-grow">
                         {newsItem.summary}
                       </p>
 
                       {/* Footer: Time + Arrow */}
-                      <div className="flex items-center justify-between pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
-                        <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--text-tertiary)' }}>
+                      <div className="flex items-center justify-between pt-4 border-t border-[var(--border-article)] mt-auto">
+                        <div className="flex items-center gap-2 text-xs text-[var(--text-article-muted)]">
                           <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
                           {getTimeAgo(newsItem.publishedAt)}
                         </div>
                         <FontAwesomeIcon
                           icon={faArrowRight}
-                          className="w-4 h-4 transition-transform group-hover:translate-x-1"
-                          style={{ color: 'var(--brand-primary)' }}
+                          className="w-4 h-4 text-[var(--brand-primary)] transition-transform group-hover:translate-x-1"
                         />
                       </div>
                     </Link>
@@ -180,13 +141,10 @@ export default function CriptomoedasPage() {
                 </div>
 
                 {/* Ver mais notícias */}
-                <div>
+                <div className="flex justify-center pt-4">
                   <Link
                     href="/dashboard/noticias"
-                    className="inline-flex items-center gap-2 font-semibold transition-all hover:gap-3"
-                    style={{
-                      color: 'var(--brand-primary)',
-                    }}
+                    className="inline-flex items-center gap-2 px-8 py-3 rounded-xl font-bold transition-all hover:gap-3 bg-[var(--brand-primary)] text-white shadow-lg hover:shadow-xl hover:opacity-90 transform hover:-translate-y-0.5"
                   >
                     Ver todas as notícias
                     <FontAwesomeIcon icon={faArrowRight} />
@@ -197,7 +155,6 @@ export default function CriptomoedasPage() {
           </div>
         </div>
       </div>
-
     </>
   );
 }

@@ -316,11 +316,11 @@ export default function CryptoPage() {
     return `Há ${diffDays}d`;
   };
 
-  const getSentimentColor = (sentiment: string) => {
+  const getSentimentColorClass = (sentiment: string) => {
     switch (sentiment) {
-      case 'positive': return '#22c55e';
-      case 'negative': return '#ef4444';
-      default: return '#f59e0b';
+      case 'positive': return 'bg-emerald-500 text-white';
+      case 'negative': return 'bg-red-500 text-white';
+      default: return 'bg-amber-500 text-white';
     }
   };
 
@@ -338,11 +338,7 @@ export default function CryptoPage() {
         <div className="flex items-center justify-center min-h-[calc(100vh-300px)] animate-fade-in">
           {/* Spinner circular */}
           <div
-            className="w-12 h-12 border-4 rounded-full animate-spin"
-            style={{
-              borderColor: 'var(--border-light)',
-              borderTopColor: 'var(--brand-primary)',
-            }}
+            className="w-12 h-12 border-4 rounded-full animate-spin border-[var(--border-article)] border-t-[var(--brand-primary)]"
           />
         </div>
       </div>
@@ -354,25 +350,22 @@ export default function CryptoPage() {
       <div className="container mx-auto px-4 py-12">
         <div className="text-center">
           <div className="text-6xl mb-4">❌</div>
-          <h1 className="text-3xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+          <h1 className="text-3xl font-bold mb-4 text-[var(--text-article-title)]">
             {error || 'Criptomoeda não encontrada'}
           </h1>
-
         </div>
       </div>
     );
   }
 
   const socialLinks = parseSocialLinks(crypto.socialLinks);
-  const priceChangeColor =
+  const priceChangeColorClass =
     crypto.priceChangePercentage24h && crypto.priceChangePercentage24h > 0
-      ? '#22c55e'
-      : '#ef4444';
+      ? 'text-emerald-500'
+      : 'text-red-500';
 
   return (
     <div className="container mx-auto px-4 py-8">
-
-
       {/* Grid Layout: Content + Sidebar */}
       <div
         className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-8 transition-all duration-300 ease-in-out"
@@ -384,13 +377,7 @@ export default function CryptoPage() {
         {/* Main Content */}
         <div className="space-y-8">
           {/* Hero Section */}
-          <div
-            className="rounded-2xl p-8 border shadow-lg"
-            style={{
-              background: 'linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-secondary) 100%)',
-              borderColor: 'var(--border-light)',
-            }}
-          >
+          <div className="glass-card rounded-2xl p-8 border border-[var(--border-article)] shadow-lg">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
               <div className="flex items-center gap-4">
                 {crypto.imageLarge && (
@@ -404,51 +391,30 @@ export default function CryptoPage() {
                 )}
                 <div>
                   <div className="flex items-center gap-3 mb-2">
-                    <h1
-                      className="text-4xl font-bold font-[family-name:var(--font-poppins)]"
-                      style={{ color: 'var(--text-primary)' }}
-                    >
+                    <h1 className="text-4xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-article-title)]">
                       {crypto.name}
                     </h1>
-                    <span
-                      className="px-3 py-1 rounded-lg text-sm font-bold"
-                      style={{
-                        backgroundColor: 'var(--bg-secondary)',
-                        color: 'var(--text-secondary)',
-                      }}
-                    >
+                    <span className="px-3 py-1 rounded-lg text-sm font-bold bg-[var(--bg-article-tag)] text-[var(--text-article-muted)]">
                       {crypto.symbol}
                     </span>
                     {crypto.marketCapRank && (
-                      <span
-                        className="px-3 py-1 rounded-lg text-sm font-bold"
-                        style={{
-                          background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                          color: 'white',
-                        }}
-                      >
+                      <span className="px-3 py-1 rounded-lg text-sm font-bold bg-gradient-to-br from-amber-400 to-amber-600 text-white shadow-sm">
                         #{crypto.marketCapRank}
                       </span>
                     )}
                   </div>
-                  <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                  <p className="text-sm text-[var(--text-article-muted)]">
                     {crypto.blockchain && `Blockchain: ${crypto.blockchain}`}
                   </p>
                 </div>
               </div>
 
               <div className="text-left lg:text-right">
-                <div
-                  className="text-5xl font-bold mb-2"
-                  style={{ color: 'var(--text-primary)' }}
-                >
+                <div className="text-5xl font-bold mb-2 text-[var(--text-article-title)]">
                   {formatPrice(crypto.currentPrice)}
                 </div>
                 {crypto.priceChangePercentage24h !== null && (
-                  <div
-                    className="flex items-center gap-2 text-xl font-semibold justify-start lg:justify-end"
-                    style={{ color: priceChangeColor }}
-                  >
+                  <div className={`flex items-center gap-2 text-xl font-semibold justify-start lg:justify-end ${priceChangeColorClass}`}>
                     <FontAwesomeIcon
                       icon={crypto.priceChangePercentage24h > 0 ? faArrowUp : faArrowDown}
                     />
@@ -462,93 +428,65 @@ export default function CryptoPage() {
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Market Cap */}
-            <div
-              className="rounded-xl p-6 border shadow-md"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)',
-              }}
-            >
+            <div className="glass-card rounded-xl p-6 border border-[var(--border-article)] shadow-md">
               <div className="flex items-center gap-3 mb-2">
                 <FontAwesomeIcon
                   icon={faChartLine}
-                  className="w-5 h-5"
-                  style={{ color: 'var(--brand-primary)' }}
+                  className="w-5 h-5 text-[var(--brand-primary)]"
                 />
-                <h3 className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                <h3 className="text-sm font-semibold text-[var(--text-article-muted)]">
                   Market Cap
                 </h3>
               </div>
-              <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+              <p className="text-2xl font-bold text-[var(--text-article-title)]">
                 {formatLargeNumber(crypto.marketCap)}
               </p>
             </div>
 
             {/* Volume 24h */}
-            <div
-              className="rounded-xl p-6 border shadow-md"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)',
-              }}
-            >
+            <div className="glass-card rounded-xl p-6 border border-[var(--border-article)] shadow-md">
               <div className="flex items-center gap-3 mb-2">
                 <FontAwesomeIcon
                   icon={faChartSimple}
-                  className="w-5 h-5"
-                  style={{ color: 'var(--brand-primary)' }}
+                  className="w-5 h-5 text-[var(--brand-primary)]"
                 />
-                <h3 className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                <h3 className="text-sm font-semibold text-[var(--text-article-muted)]">
                   Volume 24h
                 </h3>
               </div>
-              <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+              <p className="text-2xl font-bold text-[var(--text-article-title)]">
                 {formatLargeNumber(crypto.totalVolume)}
               </p>
             </div>
 
             {/* Máxima 24h */}
-            <div
-              className="rounded-xl p-6 border shadow-md"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)',
-              }}
-            >
+            <div className="glass-card rounded-xl p-6 border border-[var(--border-article)] shadow-md">
               <div className="flex items-center gap-3 mb-2">
                 <FontAwesomeIcon
                   icon={faArrowUp}
-                  className="w-5 h-5"
-                  style={{ color: '#22c55e' }}
+                  className="w-5 h-5 text-emerald-500"
                 />
-                <h3 className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                <h3 className="text-sm font-semibold text-[var(--text-article-muted)]">
                   Máxima 24h
                 </h3>
               </div>
-              <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+              <p className="text-2xl font-bold text-[var(--text-article-title)]">
                 {formatPrice(crypto.high24h)}
               </p>
             </div>
 
             {/* Mínima 24h */}
-            <div
-              className="rounded-xl p-6 border shadow-md"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)',
-              }}
-            >
+            <div className="glass-card rounded-xl p-6 border border-[var(--border-article)] shadow-md">
               <div className="flex items-center gap-3 mb-2">
                 <FontAwesomeIcon
                   icon={faArrowDown}
-                  className="w-5 h-5"
-                  style={{ color: '#ef4444' }}
+                  className="w-5 h-5 text-red-500"
                 />
-                <h3 className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                <h3 className="text-sm font-semibold text-[var(--text-article-muted)]">
                   Mínima 24h
                 </h3>
               </div>
-              <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+              <p className="text-2xl font-bold text-[var(--text-article-title)]">
                 {formatPrice(crypto.low24h)}
               </p>
             </div>
@@ -557,39 +495,32 @@ export default function CryptoPage() {
           {/* Supply & ATH/ATL */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Supply Info */}
-            <div
-              className="rounded-2xl p-6 border shadow-md"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)',
-              }}
-            >
+            <div className="glass-card rounded-2xl p-6 border border-[var(--border-article)] shadow-md">
               <div className="flex items-center gap-3 mb-4">
                 <FontAwesomeIcon
                   icon={faCoins}
-                  className="w-6 h-6"
-                  style={{ color: 'var(--brand-primary)' }}
+                  className="w-6 h-6 text-[var(--brand-primary)]"
                 />
-                <h2 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                <h2 className="text-xl font-bold text-[var(--text-article-title)]">
                   Fornecimento
                 </h2>
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span style={{ color: 'var(--text-secondary)' }}>Circulante:</span>
-                  <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  <span className="text-[var(--text-article-muted)]">Circulante:</span>
+                  <span className="font-semibold text-[var(--text-article-title)]">
                     {formatSupply(crypto.circulatingSupply)} {crypto.symbol}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span style={{ color: 'var(--text-secondary)' }}>Total:</span>
-                  <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  <span className="text-[var(--text-article-muted)]">Total:</span>
+                  <span className="font-semibold text-[var(--text-article-title)]">
                     {formatSupply(crypto.totalSupply)} {crypto.symbol}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span style={{ color: 'var(--text-secondary)' }}>Máximo:</span>
-                  <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  <span className="text-[var(--text-article-muted)]">Máximo:</span>
+                  <span className="font-semibold text-[var(--text-article-title)]">
                     {crypto.maxSupply ? `${formatSupply(crypto.maxSupply)} ${crypto.symbol}` : '∞'}
                   </span>
                 </div>
@@ -597,47 +528,40 @@ export default function CryptoPage() {
             </div>
 
             {/* ATH/ATL */}
-            <div
-              className="rounded-2xl p-6 border shadow-md"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)',
-              }}
-            >
+            <div className="glass-card rounded-2xl p-6 border border-[var(--border-article)] shadow-md">
               <div className="flex items-center gap-3 mb-4">
                 <FontAwesomeIcon
                   icon={faTrophy}
-                  className="w-6 h-6"
-                  style={{ color: 'var(--brand-primary)' }}
+                  className="w-6 h-6 text-[var(--brand-primary)]"
                 />
-                <h2 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                <h2 className="text-xl font-bold text-[var(--text-article-title)]">
                   Recordes
                 </h2>
               </div>
               <div className="space-y-3">
                 <div>
                   <div className="flex justify-between items-center mb-1">
-                    <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    <span className="text-sm text-[var(--text-article-muted)]">
                       All-Time High:
                     </span>
-                    <span className="text-xl font-bold" style={{ color: '#22c55e' }}>
+                    <span className="text-xl font-bold text-emerald-500">
                       {formatPrice(crypto.ath)}
                     </span>
                   </div>
-                  <p className="text-xs text-right" style={{ color: 'var(--text-tertiary)' }}>
+                  <p className="text-xs text-right text-[var(--text-article-muted)]">
                     {formatDate(crypto.athDate)}
                   </p>
                 </div>
                 <div>
                   <div className="flex justify-between items-center mb-1">
-                    <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    <span className="text-sm text-[var(--text-article-muted)]">
                       All-Time Low:
                     </span>
-                    <span className="text-xl font-bold" style={{ color: '#ef4444' }}>
+                    <span className="text-xl font-bold text-red-500">
                       {formatPrice(crypto.atl)}
                     </span>
                   </div>
-                  <p className="text-xs text-right" style={{ color: 'var(--text-tertiary)' }}>
+                  <p className="text-xs text-right text-[var(--text-article-muted)]">
                     {formatDate(crypto.atlDate)}
                   </p>
                 </div>
@@ -647,22 +571,12 @@ export default function CryptoPage() {
 
           {/* Description */}
           {crypto.description && (
-            <div
-              className="rounded-2xl p-6 border shadow-md"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)',
-              }}
-            >
-              <h2
-                className="text-2xl font-bold mb-4"
-                style={{ color: 'var(--text-primary)' }}
-              >
+            <div className="glass-card rounded-2xl p-6 border border-[var(--border-article)] shadow-md">
+              <h2 className="text-2xl font-bold mb-4 text-[var(--text-article-title)]">
                 Sobre {crypto.name}
               </h2>
               <div
-                className="prose prose-lg max-w-none"
-                style={{ color: 'var(--text-secondary)' }}
+                className="prose prose-lg max-w-none text-[var(--text-article-body)]"
                 dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
               />
             </div>
@@ -675,11 +589,7 @@ export default function CryptoPage() {
                 href={crypto.homepage}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 shadow-md"
-                style={{
-                  background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-                  color: 'white',
-                }}
+                className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 shadow-md bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-hover)] text-white"
               >
                 <FontAwesomeIcon icon={faGlobe} />
                 Website Oficial
@@ -691,12 +601,7 @@ export default function CryptoPage() {
                 href={crypto.whitepaper}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 shadow-md"
-                style={{
-                  backgroundColor: 'var(--bg-elevated)',
-                  color: 'var(--text-primary)',
-                  border: '2px solid var(--border-medium)',
-                }}
+                className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 shadow-md glass-card border border-[var(--border-article)] text-[var(--text-article-title)] hover:border-[var(--brand-primary)]"
               >
                 <FontAwesomeIcon icon={faFileAlt} />
                 Whitepaper
@@ -708,11 +613,7 @@ export default function CryptoPage() {
                 href={`https://twitter.com/${socialLinks.twitter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 shadow-md"
-                style={{
-                  background: 'linear-gradient(135deg, #1DA1F2, #0d8bd9)',
-                  color: 'white',
-                }}
+                className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 shadow-md bg-[#1DA1F2] text-white"
               >
                 <FontAwesomeIcon icon={faTwitter} />
                 Twitter
@@ -724,11 +625,7 @@ export default function CryptoPage() {
                 href={`https://t.me/${socialLinks.telegram}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 shadow-md"
-                style={{
-                  background: 'linear-gradient(135deg, #0088cc, #006699)',
-                  color: 'white',
-                }}
+                className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 shadow-md bg-[#0088cc] text-white"
               >
                 <FontAwesomeIcon icon={faTelegram} />
                 Telegram
@@ -740,11 +637,7 @@ export default function CryptoPage() {
                 href={socialLinks.reddit}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 shadow-md"
-                style={{
-                  background: 'linear-gradient(135deg, #FF4500, #d93d00)',
-                  color: 'white',
-                }}
+                className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 shadow-md bg-[#FF4500] text-white"
               >
                 <FontAwesomeIcon icon={faReddit} />
                 Reddit
@@ -755,106 +648,63 @@ export default function CryptoPage() {
           {/* Related News Section */}
           {!loadingNews && relatedNews.length > 0 && (
             <div className="space-y-6">
-              <div className="flex items-center gap-3">
-                <FontAwesomeIcon
-                  icon={faNewspaper}
-                  className="w-6 h-6"
-                  style={{ color: 'var(--brand-primary)' }}
-                />
-                <h2
-                  className="text-2xl font-bold"
-                  style={{ color: 'var(--text-primary)' }}
-                >
-                  Notícias Relacionadas sobre {crypto.name}
+              <div className="pl-2 border-l-4 border-[var(--brand-primary)]">
+                <h2 className="text-2xl font-bold text-[var(--text-article-title)]">
+                  Notícias
                 </h2>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {relatedNews.map((news) => (
                   <Link
                     key={news.id}
                     href={news.url}
-                    className="group rounded-xl p-5 border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-                    style={{
-                      backgroundColor: 'var(--bg-elevated)',
-                      borderColor: 'var(--border-light)',
-                    }}
+                    className="glass-card group flex flex-col p-5 rounded-2xl border border-[var(--border-article)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-[var(--brand-primary)]/50"
                   >
                     {/* Header: Category + Sentiment */}
-                    <div className="flex items-center justify-between mb-3">
-                      <span
-                        className="px-2 py-1 rounded text-xs font-bold"
-                        style={{
-                          backgroundColor: 'var(--bg-secondary)',
-                          color: 'var(--text-secondary)',
-                        }}
-                      >
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="px-2.5 py-1 rounded-lg text-xs font-bold bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] uppercase tracking-wide">
                         {news.category[0]}
                       </span>
-                      <span
-                        className="px-2 py-1 rounded text-xs font-bold"
-                        style={{
-                          backgroundColor: `${getSentimentColor(news.sentiment)}20`,
-                          color: getSentimentColor(news.sentiment),
-                        }}
-                      >
+                      <span className={`px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide ${getSentimentColorClass(news.sentiment)}`}>
                         {getSentimentLabel(news.sentiment)}
                       </span>
                     </div>
 
                     {/* Title */}
-                    <h3
-                      className="text-lg font-bold mb-2 line-clamp-2 group-hover:underline"
-                      style={{ color: 'var(--text-primary)' }}
-                    >
+                    <h3 className="text-lg font-bold mb-3 line-clamp-2 text-[var(--text-article-title)] group-hover:text-[var(--brand-primary)] transition-colors">
                       {news.title}
                     </h3>
 
                     {/* Summary */}
-                    <p
-                      className="text-sm mb-4 line-clamp-2"
-                      style={{ color: 'var(--text-secondary)' }}
-                    >
+                    <p className="text-sm mb-4 line-clamp-3 text-[var(--text-article-body)] flex-grow">
                       {news.summary}
                     </p>
 
                     {/* Footer: Time + Arrow */}
-                    <div className="flex items-center justify-between pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
-                      <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--text-tertiary)' }}>
+                    <div className="flex items-center justify-between pt-4 border-t border-[var(--border-article)] mt-auto">
+                      <div className="flex items-center gap-2 text-xs text-[var(--text-article-muted)]">
                         <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
                         {getTimeAgo(news.publishedAt)}
                       </div>
                       <FontAwesomeIcon
                         icon={faArrowRight}
-                        className="w-4 h-4 transition-transform group-hover:translate-x-1"
-                        style={{ color: 'var(--brand-primary)' }}
+                        className="w-4 h-4 text-[var(--brand-primary)] transition-transform group-hover:translate-x-1"
                       />
                     </div>
                   </Link>
                 ))}
               </div>
-
-              {/* Ver mais notícias */}
-              <div>
-                <Link
-                  href="/dashboard/noticias"
-                  className="inline-flex items-center gap-2 font-semibold transition-all hover:gap-3"
-                  style={{
-                    color: 'var(--brand-primary)',
-                  }}
-                >
-                  Ver todas as notícias
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </Link>
-              </div>
             </div>
           )}
         </div>
 
-        {/* Sidebar - Top Cryptos */}
-        <aside className="lg:block">
-          <TopCryptosList currentCryptoId={coingeckoId} />
-        </aside>
+        {/* Sidebar */}
+        <div className="space-y-8">
+          <div className="sticky top-24">
+            <TopCryptosList />
+          </div>
+        </div>
       </div>
     </div>
   );
