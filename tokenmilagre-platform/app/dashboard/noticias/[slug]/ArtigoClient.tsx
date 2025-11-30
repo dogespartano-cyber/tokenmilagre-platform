@@ -339,6 +339,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:font-[family-name:var(--font-poppins)] prose-a:text-[var(--brand-primary)] prose-img:rounded-xl prose-img:shadow-lg">
                   <ReactMarkdown
                     components={{
+                      ...citationComponents,
                       h1: ({ children }) => <h1 className="text-3xl font-bold mt-10 mb-6 text-[var(--text-article-title)]">{children}</h1>,
                       h2: ({ children }) => {
                         const text = String(children);
@@ -350,7 +351,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                         const id = createSlug(text);
                         return <h3 id={id} className="text-xl font-bold mt-8 mb-4 text-[var(--text-article-title)] scroll-mt-32">{children}</h3>;
                       },
-                      p: ({ children }) => <p className="mb-6 leading-relaxed text-[var(--text-article-body)]">{children}</p>,
+                      // p removido pois já vem em citationComponents
                       ul: ({ children }) => <ul className="mb-6 space-y-2 list-disc list-inside text-[var(--text-article-body)] marker:text-[var(--brand-primary)]">{children}</ul>,
                       ol: ({ children }) => <ol className="mb-6 space-y-2 list-decimal list-inside text-[var(--text-article-body)] marker:text-[var(--brand-primary)]">{children}</ol>,
                       blockquote: ({ children }) => (
@@ -363,7 +364,6 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                           {children}
                         </code>
                       ),
-                      ...citationComponents,
                     }}
                   >
                     {cleanContent || 'Conteúdo não disponível.'}
