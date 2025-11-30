@@ -5,7 +5,7 @@ import Script from 'next/script';
 import Link from 'next/link';
 import { useInfiniteScrollData } from '@/hooks/useInfiniteScrollData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faArrowRight, faSearch, faTimes, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faArrowRight, faSearch, faTimes, faArrowUp, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/utils/level-helpers';
 import { getCategoryIcon } from '@/lib/utils/category-helpers';
 import DashboardHeader from '@/app/components/DashboardHeader';
@@ -139,7 +139,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
         })}
       </Script>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 relative">
         <div className="space-y-16">
           {/* Header with Discord/Telegram Buttons */}
           <DashboardHeader
@@ -149,85 +149,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
           {/* Cards Principais em Destaque (Removido conforme solicitado) */}
 
-          {/* Busca e Filtros */}
-          <div className="space-y-6">
-            {/* Campo de Busca + Botão Limpar */}
-            <div className="flex items-center gap-3 max-w-2xl">
-              <div className="relative flex-1">
-                <input
-                  type="text"
-                  placeholder="Buscar por título, descrição ou tag..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-4 py-3 pl-12 rounded-xl border-2 transition-all focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] glass-card text-[var(--text-article-body)] placeholder-[var(--text-article-muted)]"
-                  style={{
-                    borderColor: 'var(--border-article)',
-                  }}
-                />
-                <FontAwesomeIcon
-                  icon={faSearch}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5"
-                  style={{ color: 'var(--text-article-muted)' }}
-                />
-                {searchTerm && (
-                  <button
-                    onClick={() => setSearchTerm('')}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                    aria-label="Limpar busca"
-                  >
-                    <FontAwesomeIcon icon={faTimes} className="w-5 h-5" />
-                  </button>
-                )}
-              </div>
 
-              {getActiveFiltersCount() > 0 && (
-                <button
-                  onClick={clearAllFilters}
-                  className="px-4 py-3 rounded-xl font-semibold transition-all hover:opacity-80 whitespace-nowrap glass-card border border-[var(--border-article)] text-[var(--brand-primary)]"
-                >
-                  Limpar filtros
-                </button>
-              )}
-            </div>
-
-            {/* Filtros */}
-            <div className="flex flex-wrap items-center gap-4">
-              {/* Categorias */}
-              <div className="flex flex-wrap gap-2">
-                {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setSelectedCategory(cat.id)}
-                    className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 ${selectedCategory === cat.id
-                      ? 'shadow-md bg-[var(--brand-primary)] text-white'
-                      : 'hover:opacity-80 glass-card border border-[var(--border-article)] text-[var(--text-article-body)]'
-                      }`}
-                  >
-                    {cat.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Divider */}
-              <div className="h-8 w-px bg-[var(--border-article)]"></div>
-
-              {/* Níveis */}
-              <div className="flex flex-wrap gap-2">
-                {levels.map((level) => (
-                  <button
-                    key={level.id}
-                    onClick={() => setSelectedLevel(level.id)}
-                    className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 ${selectedLevel === level.id
-                      ? 'shadow-md bg-[var(--brand-primary)] text-white'
-                      : 'hover:opacity-80 glass-card border border-[var(--border-article)] text-[var(--text-article-body)]'
-                      }`}
-                  >
-                    {level.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
 
           {/* Lista de Recursos - NOVO DESIGN COM GLASSMORPHISM */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -400,6 +322,128 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
 
         </div>
+
+        {/* Floating Filter Button */}
+        <button
+          onClick={() => setShowFilters(true)}
+          className="fixed bottom-24 right-8 z-50 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-500 hover:scale-110 bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-light)]"
+          style={{
+            boxShadow: '5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px rgba(255, 255, 255, 0.05)'
+          }}
+          aria-label="Filtrar artigos"
+        >
+          <div className="relative">
+            <FontAwesomeIcon icon={faFilter} className="w-5 h-5" />
+            {getActiveFiltersCount() > 0 && (
+              <span className="absolute -top-2 -right-2 flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full bg-[var(--brand-primary)] text-white">
+                {getActiveFiltersCount()}
+              </span>
+            )}
+          </div>
+        </button>
+
+        {/* Filter Modal */}
+        {showFilters && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <div
+              className="absolute inset-0 bg-black/20 dark:bg-black/60 backdrop-blur-sm animate-fade-in"
+              onClick={() => setShowFilters(false)}
+            />
+
+            <div className="relative w-full max-w-4xl bg-[var(--bg-modal)] rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto animate-scale-in flex flex-col border border-[var(--border-modal)]">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-[var(--border-modal)]">
+                <h2 className="text-2xl font-bold text-[var(--text-modal)]">Filtrar Artigos</h2>
+                <div className="flex items-center gap-3">
+                  {getActiveFiltersCount() > 0 && (
+                    <button
+                      onClick={clearAllFilters}
+                      className="text-sm font-bold text-red-500 hover:text-red-600 px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors"
+                    >
+                      Limpar Filtros
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setShowFilters(false)}
+                    className="p-2 rounded-lg hover:bg-[var(--bg-modal-hover)] text-[var(--text-modal-muted)] hover:text-[var(--text-modal)] transition-colors"
+                  >
+                    <FontAwesomeIcon icon={faTimes} className="w-6 h-6" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-6 space-y-8">
+                {/* Busca */}
+                <div className="space-y-3">
+                  <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Buscar</label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Buscar por título, descrição ou tag..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full pl-12 pr-4 py-4 rounded-xl bg-[var(--bg-modal-input)] border border-[var(--border-modal)] text-[var(--text-modal)] text-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-all placeholder-[var(--text-modal-muted)]"
+                    />
+                    <FontAwesomeIcon
+                      icon={faSearch}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-modal-muted)] text-lg"
+                    />
+                    {searchTerm && (
+                      <button
+                        onClick={() => setSearchTerm('')}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-modal-muted)] hover:text-[var(--text-modal)]"
+                      >
+                        <FontAwesomeIcon icon={faTimes} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid lg:grid-cols-2 gap-8">
+                  {/* Categorias */}
+                  <div className="space-y-4">
+                    <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Categorias</label>
+                    <div className="grid grid-cols-2 gap-3">
+                      {categories.map((cat) => (
+                        <button
+                          key={cat.id}
+                          onClick={() => setSelectedCategory(cat.id)}
+                          className={`flex items-center justify-center px-4 py-2.5 rounded-xl transition-all duration-200 border ${selectedCategory === cat.id
+                            ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-md'
+                            : 'bg-[var(--bg-modal-input)] border-transparent text-[var(--text-modal-muted)] hover:bg-[var(--bg-modal-hover)]'
+                            }`}
+                        >
+                          <span className="font-medium text-sm">{cat.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Níveis */}
+                  <div className="space-y-4">
+                    <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Nível de Conhecimento</label>
+                    <div className="flex flex-col gap-3">
+                      {levels.map((level) => (
+                        <button
+                          key={level.id}
+                          onClick={() => setSelectedLevel(level.id)}
+                          className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 border ${selectedLevel === level.id
+                            ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-md'
+                            : 'bg-[var(--bg-modal-input)] border-transparent text-[var(--text-modal-muted)] hover:bg-[var(--bg-modal-hover)]'
+                            }`}
+                        >
+                          <span className="font-medium text-sm">{level.label}</span>
+                          {selectedLevel === level.id && <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
     </>
   );

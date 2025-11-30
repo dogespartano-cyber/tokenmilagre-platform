@@ -218,9 +218,8 @@ export default function CustomCryptoScreener() {
                 icon={isPositive ? faArrowUp : faArrowDown}
                 className={`w-3 h-3 ${isPositive ? 'text-[#10B981]' : 'text-[#EF4444]'}`}
               />
-              <span className={`font-semibold font-mono ${
-                isPositive ? 'text-[#10B981]' : 'text-[#EF4444]'
-              }`}>
+              <span className={`font-semibold font-mono ${isPositive ? 'text-[#10B981]' : 'text-[#EF4444]'
+                }`}>
                 {Math.abs(value).toFixed(2)}%
               </span>
             </div>
@@ -322,10 +321,7 @@ export default function CustomCryptoScreener() {
 
   if (data.length === 0) {
     return (
-      <div className="rounded-2xl p-12 border-2 shadow-xl" style={{
-        backgroundColor: 'var(--bg-elevated)',
-        borderColor: 'var(--border-medium)'
-      }}>
+      <div className="glass-card rounded-2xl p-12 border border-[var(--border-light)] shadow-xl">
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="text-4xl">📊</div>
           <p className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Dados temporariamente indisponíveis</p>
@@ -354,10 +350,7 @@ export default function CustomCryptoScreener() {
   };
 
   return (
-    <div className="rounded-2xl border-2 shadow-xl overflow-hidden" style={{
-      backgroundColor: 'var(--bg-elevated)',
-      borderColor: 'var(--border-medium)'
-    }}>
+    <div className="glass-card rounded-2xl border border-[var(--border-light)] shadow-xl overflow-hidden">
       {/* Search Bar */}
       <div className="p-4 border-b" style={{ borderColor: 'var(--border-light)' }}>
         <div className="relative">

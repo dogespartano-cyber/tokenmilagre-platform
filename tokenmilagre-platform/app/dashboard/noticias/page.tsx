@@ -208,20 +208,24 @@ export default function NoticiasPage() {
     <div className="container mx-auto px-4 py-8 relative">
       {/* Header com Título e Botão de Filtros */}
       {/* Header com Botão de Filtros */}
-      <div className="flex items-center justify-end mb-8">
-        <button
-          onClick={() => setShowFilters(true)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl glass-card text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-all hover:scale-105 active:scale-95"
-        >
-          <FontAwesomeIcon icon={faFilter} />
-          <span className="font-semibold">Filtros</span>
+      {/* Floating Filter Button */}
+      <button
+        onClick={() => setShowFilters(true)}
+        className="fixed bottom-24 right-8 z-50 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-500 hover:scale-110 bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-light)]"
+        style={{
+          boxShadow: '5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px rgba(255, 255, 255, 0.05)'
+        }}
+        aria-label="Filtrar notícias"
+      >
+        <div className="relative">
+          <FontAwesomeIcon icon={faFilter} className="w-5 h-5" />
           {getActiveFiltersCount() > 0 && (
-            <span className="flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full bg-[var(--brand-primary)] text-white ml-1">
+            <span className="absolute -top-2 -right-2 flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full bg-[var(--brand-primary)] text-white">
               {getActiveFiltersCount()}
             </span>
           )}
-        </button>
-      </div>
+        </div>
+      </button>
 
       <div>
 
