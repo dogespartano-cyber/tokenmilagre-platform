@@ -134,23 +134,19 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
   // Artigo não encontrado
   if (!article) {
     return (
-      <div className="py-8 max-w-4xl" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
+      <div className="py-8 max-w-4xl mx-auto px-4">
         <div className="space-y-8">
-          <div className="text-center py-20">
+          <div className="text-center py-20 glass-card rounded-2xl p-8 border border-[var(--border-article)]">
             <div className="text-6xl mb-4">📚</div>
-            <h1 className="text-3xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+            <h1 className="text-3xl font-bold mb-4 text-[var(--text-article-title)]">
               Artigo não encontrado
             </h1>
-            <p className="mb-8" style={{ color: 'var(--text-secondary)' }}>
+            <p className="mb-8 text-[var(--text-article-body)]">
               O artigo que você procura não existe ou foi removido.
             </p>
             <button
               onClick={() => router.push('/educacao')}
-              className="px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
-              style={{
-                backgroundColor: 'var(--brand-primary)',
-                color: 'var(--text-inverse)'
-              }}
+              className="px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 bg-[var(--brand-primary)] text-white"
             >
               ← Voltar para Educação
             </button>
@@ -171,46 +167,41 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
         }}
       />
 
-      <div className="py-8">
-        <div className="flex gap-8" style={{ paddingLeft: '55px', paddingRight: '1rem' }}>
+      <div className="py-8 container mx-auto px-4">
+        <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-1 max-w-4xl space-y-8">
             {/* Voltar */}
 
 
             {/* Header do Artigo */}
-            <div className="space-y-6">
+            <div className="glass-card rounded-2xl p-8 border border-[var(--border-article)] space-y-6">
               {/* Meta info */}
               <div className="flex flex-wrap items-center gap-3">
                 <span
-                  className="px-3 py-1 rounded-lg text-sm font-semibold"
+                  className="px-3 py-1 rounded-lg text-sm font-semibold text-white"
                   style={{
                     backgroundColor: getLevelColor(article.level),
-                    color: 'white'
                   }}
                 >
                   {getLevelLabel(article.level)}
                 </span>
                 <span
-                  className="px-3 py-1 rounded-lg text-sm font-semibold"
-                  style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    color: 'var(--text-primary)'
-                  }}
+                  className="px-3 py-1 rounded-lg text-sm font-semibold bg-[var(--bg-article-tag)] text-[var(--text-article-muted)]"
                 >
                   {article.type}
                 </span>
-                <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                <span className="text-sm text-[var(--text-article-muted)]">
                   📖 {article.readTime} de leitura
                 </span>
               </div>
 
               {/* Título */}
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight font-[family-name:var(--font-poppins)] text-[var(--text-article-title)]">
                 {article.title}
               </h1>
 
               {/* Descrição */}
-              <p className="text-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-xl leading-relaxed text-[var(--text-article-body)]">
                 {article.description}
               </p>
 
@@ -219,11 +210,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                 {article.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="px-3 py-1 rounded-lg text-sm"
-                    style={{
-                      backgroundColor: 'var(--bg-secondary)',
-                      color: 'var(--text-tertiary)'
-                    }}
+                    className="px-3 py-1 rounded-lg text-sm bg-[var(--bg-article-tag)] text-[var(--text-article-muted)]"
                   >
                     #{tag}
                   </span>
@@ -231,204 +218,186 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
               </div>
             </div>
 
-            {/* Divider */}
-            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-
             {/* Conteúdo do Artigo */}
-            <article
-              className="prose prose-lg max-w-none"
-              style={{
-                color: 'var(--text-primary)',
-              }}
-            >
-              <ReactMarkdown
-                components={{
-                  h1: ({ children }) => (
-                    <h1 className="text-3xl font-bold mt-8 mb-4 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                      {children}
-                    </h1>
-                  ),
-                  h2: ({ children }) => {
-                    const text = String(children);
-                    const id = slugify(text);
-                    return (
-                      <h2 id={id} className="text-2xl font-bold mt-8 mb-4 font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
-                        {children}
-                      </h2>
-                    );
-                  },
-                  h3: ({ children }) => {
-                    const text = String(children);
-                    const id = slugify(text);
-                    return (
-                      <h3 id={id} className="text-xl font-bold mt-6 mb-3 font-[family-name:var(--font-poppins)] scroll-mt-24" style={{ color: 'var(--text-primary)' }}>
-                        {children}
-                      </h3>
-                    );
-                  },
-                  p: ({ children }) => (
-                    <p className="mb-4 leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                      {children}
-                    </p>
-                  ),
-                  ul: ({ children }) => (
-                    <ul className="mb-4 space-y-2 list-disc list-inside" style={{ color: 'var(--text-primary)' }}>
-                      {children}
-                    </ul>
-                  ),
-                  ol: ({ children }) => (
-                    <ol className="mb-4 space-y-2 list-decimal list-inside" style={{ color: 'var(--text-primary)' }}>
-                      {children}
-                    </ol>
-                  ),
-                  li: ({ children }) => (
-                    <li className="ml-4" style={{ color: 'var(--text-primary)' }}>
-                      {children}
-                    </li>
-                  ),
-                  strong: ({ children }) => (
-                    <strong className="font-bold" style={{ color: 'var(--text-primary)' }}>
-                      {children}
-                    </strong>
-                  ),
-                  code: ({ children }) => (
-                    <code
-                      className="px-2 py-1 rounded text-sm font-mono"
-                      style={{
-                        backgroundColor: 'var(--bg-secondary)',
-                        color: 'var(--brand-primary)'
-                      }}
-                    >
-                      {children}
-                    </code>
-                  ),
-                  blockquote: ({ children }) => (
-                    <blockquote
-                      className="pl-4 border-l-4 italic my-4"
-                      style={{
-                        borderColor: 'var(--brand-primary)',
-                        color: 'var(--text-secondary)'
-                      }}
-                    >
-                      {children}
-                    </blockquote>
-                  ),
-                }}
+            <div className="glass-card rounded-2xl p-8 border border-[var(--border-article)]">
+              <article
+                className="prose prose-lg max-w-none prose-headings:text-[var(--text-article-title)] prose-p:text-[var(--text-article-body)] prose-strong:text-[var(--text-article-title)] prose-ul:text-[var(--text-article-body)] prose-ol:text-[var(--text-article-body)] prose-li:text-[var(--text-article-body)]"
               >
-                {article.content}
-              </ReactMarkdown>
-            </article>
-
-            {/* Fontes e Referências */}
-            {article.factCheckSources && (() => {
-              try {
-                const sources: string[] = JSON.parse(article.factCheckSources);
-                if (sources.length > 0) {
-                  return (
-                    <>
-                      <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
-                      <div className="space-y-4">
-                        <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                          📚 Fontes e Referências
+                <ReactMarkdown
+                  components={{
+                    h1: ({ children }) => (
+                      <h1 className="text-3xl font-bold mt-8 mb-4 font-[family-name:var(--font-poppins)] text-[var(--text-article-title)]">
+                        {children}
+                      </h1>
+                    ),
+                    h2: ({ children }) => {
+                      const text = String(children);
+                      const id = slugify(text);
+                      return (
+                        <h2 id={id} className="text-2xl font-bold mt-8 mb-4 font-[family-name:var(--font-poppins)] scroll-mt-24 text-[var(--text-article-title)]">
+                          {children}
+                        </h2>
+                      );
+                    },
+                    h3: ({ children }) => {
+                      const text = String(children);
+                      const id = slugify(text);
+                      return (
+                        <h3 id={id} className="text-xl font-bold mt-6 mb-3 font-[family-name:var(--font-poppins)] scroll-mt-24 text-[var(--text-article-title)]">
+                          {children}
                         </h3>
-                        <ol className="space-y-2">
-                          {sources.map((url, index) => {
-                            try {
-                              const domain = new URL(url).hostname.replace(/^www\./, '');
-                              return (
-                                <li key={index} className="text-sm flex gap-2">
-                                  <span className="font-semibold" style={{ color: 'var(--brand-primary)' }}>
-                                    [{index + 1}]
-                                  </span>
-                                  <a
-                                    href={url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="hover:underline"
-                                    style={{ color: 'var(--text-secondary)' }}
-                                  >
-                                    {domain}
-                                  </a>
-                                </li>
-                              );
-                            } catch {
-                              return (
-                                <li key={index} className="text-sm flex gap-2">
-                                  <span className="font-semibold" style={{ color: 'var(--brand-primary)' }}>
-                                    [{index + 1}]
-                                  </span>
-                                  <a
-                                    href={url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="hover:underline"
-                                    style={{ color: 'var(--text-secondary)' }}
-                                  >
-                                    {url}
-                                  </a>
-                                </li>
-                              );
-                            }
-                          })}
-                        </ol>
-                      </div>
-                    </>
-                  );
+                      );
+                    },
+                    p: ({ children }) => (
+                      <p className="mb-4 leading-relaxed text-[var(--text-article-body)]">
+                        {children}
+                      </p>
+                    ),
+                    ul: ({ children }) => (
+                      <ul className="mb-4 space-y-2 list-disc list-inside text-[var(--text-article-body)]">
+                        {children}
+                      </ul>
+                    ),
+                    ol: ({ children }) => (
+                      <ol className="mb-4 space-y-2 list-decimal list-inside text-[var(--text-article-body)]">
+                        {children}
+                      </ol>
+                    ),
+                    li: ({ children }) => (
+                      <li className="ml-4 text-[var(--text-article-body)]">
+                        {children}
+                      </li>
+                    ),
+                    strong: ({ children }) => (
+                      <strong className="font-bold text-[var(--text-article-title)]">
+                        {children}
+                      </strong>
+                    ),
+                    code: ({ children }) => (
+                      <code
+                        className="px-2 py-1 rounded text-sm font-mono bg-[var(--bg-article-tag)] text-[var(--brand-primary)]"
+                      >
+                        {children}
+                      </code>
+                    ),
+                    blockquote: ({ children }) => (
+                      <blockquote
+                        className="pl-4 border-l-4 italic my-4 border-[var(--brand-primary)] text-[var(--text-article-muted)]"
+                      >
+                        {children}
+                      </blockquote>
+                    ),
+                  }}
+                >
+                  {article.content}
+                </ReactMarkdown>
+              </article>
+
+              {/* Fontes e Referências */}
+              {article.factCheckSources && (() => {
+                try {
+                  const sources: string[] = JSON.parse(article.factCheckSources);
+                  if (sources.length > 0) {
+                    return (
+                      <>
+                        <div className="border-t border-[var(--border-article)] my-8"></div>
+                        <div className="space-y-4">
+                          <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-article-title)]">
+                            📚 Fontes e Referências
+                          </h3>
+                          <ol className="space-y-2">
+                            {sources.map((url, index) => {
+                              try {
+                                const domain = new URL(url).hostname.replace(/^www\./, '');
+                                return (
+                                  <li key={index} className="text-sm flex gap-2">
+                                    <span className="font-semibold text-[var(--brand-primary)]">
+                                      [{index + 1}]
+                                    </span>
+                                    <a
+                                      href={url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="hover:underline text-[var(--text-article-muted)]"
+                                    >
+                                      {domain}
+                                    </a>
+                                  </li>
+                                );
+                              } catch {
+                                return (
+                                  <li key={index} className="text-sm flex gap-2">
+                                    <span className="font-semibold text-[var(--brand-primary)]">
+                                      [{index + 1}]
+                                    </span>
+                                    <a
+                                      href={url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="hover:underline text-[var(--text-article-muted)]"
+                                    >
+                                      {url}
+                                    </a>
+                                  </li>
+                                );
+                              }
+                            })}
+                          </ol>
+                        </div>
+                      </>
+                    );
+                  }
+                } catch (err) {
+                  console.error('Error parsing factCheckSources:', err);
                 }
-              } catch (err) {
-                console.error('Error parsing factCheckSources:', err);
-              }
-              return null;
-            })()}
+                return null;
+              })()}
 
-            {/* Divider */}
-            <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+              {/* Divider */}
+              <div className="border-t border-[var(--border-article)] my-8"></div>
 
-            {/* Compartilhar */}
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                Compartilhe este artigo
-              </h3>
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(currentUrl)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
-                  style={{ backgroundColor: '#1DA1F2', color: 'white' }}
-                >
-                  <FontAwesomeIcon icon={faXTwitter} className="w-5 h-5" />
-                  Twitter
-                </a>
-                <a
-                  href={`https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(article.title)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
-                  style={{ backgroundColor: '#0088cc', color: 'white' }}
-                >
-                  <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
-                  Telegram
-                </a>
-                <a
-                  href={`https://wa.me/?text=${encodeURIComponent(article.title + ' ' + currentUrl)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80"
-                  style={{ backgroundColor: '#25D366', color: 'white' }}
-                >
-                  <FontAwesomeIcon icon={faWhatsapp} className="w-5 h-5" />
-                  WhatsApp
-                </a>
+              {/* Compartilhar */}
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-article-title)]">
+                  Compartilhe este artigo
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(currentUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80 bg-[#1DA1F2] text-white"
+                  >
+                    <FontAwesomeIcon icon={faXTwitter} className="w-5 h-5" />
+                    Twitter
+                  </a>
+                  <a
+                    href={`https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(article.title)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80 bg-[#0088cc] text-white"
+                  >
+                    <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
+                    Telegram
+                  </a>
+                  <a
+                    href={`https://wa.me/?text=${encodeURIComponent(article.title + ' ' + currentUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80 bg-[#25D366] text-white"
+                  >
+                    <FontAwesomeIcon icon={faWhatsapp} className="w-5 h-5" />
+                    WhatsApp
+                  </a>
+                </div>
               </div>
             </div>
 
             {/* Artigos Relacionados */}
             {relatedArticles.length > 0 && (
               <>
-                <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
                 <div className="space-y-6">
-                  <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+                  <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-article-title)]">
                     Artigos Relacionados
                   </h3>
                   <div className="grid gap-4">
@@ -436,32 +405,27 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                       <Link
                         key={related.id}
                         href={`/educacao/${related.slug}`}
-                        className="p-4 rounded-xl border transition-all hover:shadow-lg"
-                        style={{
-                          backgroundColor: 'var(--bg-secondary)',
-                          borderColor: 'var(--border-light)'
-                        }}
+                        className="glass-card p-4 rounded-xl border border-[var(--border-article)] transition-all hover:shadow-lg hover:border-[var(--brand-primary)]/50"
                       >
                         <div className="flex items-start gap-3">
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-2">
                               <span
-                                className="px-2 py-0.5 rounded text-xs font-semibold"
+                                className="px-2 py-0.5 rounded text-xs font-semibold text-white"
                                 style={{
                                   backgroundColor: getLevelColor(related.level),
-                                  color: 'white'
                                 }}
                               >
                                 {getLevelLabel(related.level)}
                               </span>
-                              <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+                              <span className="text-xs text-[var(--text-article-muted)]">
                                 📖 {related.readTime}
                               </span>
                             </div>
-                            <h4 className="font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
+                            <h4 className="font-bold mb-1 text-[var(--text-article-title)]">
                               {related.title}
                             </h4>
-                            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                            <p className="text-sm text-[var(--text-article-body)]">
                               {related.description}
                             </p>
                           </div>
@@ -477,8 +441,8 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
           {/* Índice Lateral (Table of Contents) */}
           {tableOfContents.length > 0 && (
             <aside className="hidden xl:block w-64 flex-shrink-0">
-              <div className="sticky top-24 space-y-4">
-                <h3 className="text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--text-tertiary)' }}>
+              <div className="sticky top-24 space-y-4 glass-card p-6 rounded-2xl border border-[var(--border-article)]">
+                <h3 className="text-sm font-bold uppercase tracking-wide text-[var(--text-article-muted)]">
                   Neste Artigo
                 </h3>
                 <nav className="space-y-1">
@@ -487,14 +451,9 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                       key={item.id}
                       onClick={() => scrollToSection(item.id)}
                       className={`block w-full text-left text-sm py-2 px-3 rounded transition-all ${activeSection === item.id
-                        ? 'font-semibold'
-                        : 'hover:opacity-80'
+                        ? 'font-semibold bg-[var(--bg-article-tag)] text-[var(--brand-primary)] border-l-4 border-[var(--brand-primary)]'
+                        : 'hover:opacity-80 text-[var(--text-article-body)] border-l-4 border-transparent'
                         }`}
-                      style={{
-                        backgroundColor: activeSection === item.id ? 'var(--bg-secondary)' : 'transparent',
-                        color: activeSection === item.id ? 'var(--brand-primary)' : 'var(--text-secondary)',
-                        borderLeft: activeSection === item.id ? '3px solid var(--brand-primary)' : '3px solid transparent'
-                      }}
                     >
                       {item.text}
                     </button>
@@ -504,8 +463,6 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
             </aside>
           )}
         </div>
-
-
       </div>
     </>
   );

@@ -150,10 +150,10 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
           {/* Cards Principais em Destaque */}
           <div className="space-y-6">
             <div>
-              <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] mb-3" style={{ color: 'var(--text-primary)' }}>
+              <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] mb-3 text-[var(--text-article-title)]">
                 Comece por Aqui
               </h2>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
                 Artigos essenciais para dar seus primeiros passos no mundo cripto
               </p>
             </div>
@@ -166,26 +166,22 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   setSelectedLevel('iniciante');
                   window.scrollTo({ top: 600, behavior: 'smooth' });
                 }}
-                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left"
-                style={{
-                  background: 'linear-gradient(135deg, #F7931A 0%, #E67E22 100%)',
-                  minHeight: '180px'
-                }}
+                className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left border border-[var(--border-article)] hover:border-[#F7931A]"
+                style={{ minHeight: '180px' }}
               >
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
-                <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                <div className="relative z-10 h-full flex flex-col justify-between">
                   <div>
-                    <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
+                    <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-[#F7931A]/20 text-[#F7931A]">
                       Iniciante
                     </div>
-                    <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                    <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left text-[var(--text-article-title)]">
                       O que é Blockchain?
                     </h4>
-                    <p className="text-sm opacity-90 mb-3">
+                    <p className="text-sm opacity-90 mb-3 text-[var(--text-article-body)]">
                       Entenda a tecnologia por trás das criptomoedas
                     </p>
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between text-[#F7931A]">
                     <span className="text-xs font-semibold opacity-90">Leitura essencial</span>
                     <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -199,26 +195,22 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   setSelectedLevel('iniciante');
                   window.scrollTo({ top: 600, behavior: 'smooth' });
                 }}
-                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left"
-                style={{
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  minHeight: '180px'
-                }}
+                className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left border border-[var(--border-article)] hover:border-[#764ba2]"
+                style={{ minHeight: '180px' }}
               >
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
-                <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                <div className="relative z-10 h-full flex flex-col justify-between">
                   <div>
-                    <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
+                    <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-[#764ba2]/20 text-[#764ba2]">
                       Iniciante
                     </div>
-                    <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                    <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left text-[var(--text-article-title)]">
                       Segurança Cripto
                     </h4>
-                    <p className="text-sm opacity-90 mb-3">
+                    <p className="text-sm opacity-90 mb-3 text-[var(--text-article-body)]">
                       Aprenda a proteger suas criptomoedas
                     </p>
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between text-[#764ba2]">
                     <span className="text-xs font-semibold opacity-90">Segurança</span>
                     <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -232,26 +224,22 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   setSelectedLevel('intermediario');
                   window.scrollTo({ top: 600, behavior: 'smooth' });
                 }}
-                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left"
-                style={{
-                  background: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
-                  minHeight: '180px'
-                }}
+                className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left border border-[var(--border-article)] hover:border-[#11998e]"
+                style={{ minHeight: '180px' }}
               >
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
-                <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                <div className="relative z-10 h-full flex flex-col justify-between">
                   <div>
-                    <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
+                    <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-[#11998e]/20 text-[#11998e]">
                       Intermediário
                     </div>
-                    <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
+                    <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left text-[var(--text-article-title)]">
                       Trading de Cripto
                     </h4>
-                    <p className="text-sm opacity-90 mb-3">
+                    <p className="text-sm opacity-90 mb-3 text-[var(--text-article-body)]">
                       Estratégias e técnicas de trading
                     </p>
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between text-[#11998e]">
                     <span className="text-xs font-semibold opacity-90">Investimento</span>
                     <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -265,26 +253,22 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   setSelectedLevel('intermediario');
                   window.scrollTo({ top: 600, behavior: 'smooth' });
                 }}
-                className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left"
-                style={{
-                  background: 'linear-gradient(135deg, #ee0979 0%, #ff6a00 100%)',
-                  minHeight: '180px'
-                }}
+                className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left border border-[var(--border-article)] hover:border-[#ee0979]"
+                style={{ minHeight: '180px' }}
               >
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
-                <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                <div className="relative z-10 h-full flex flex-col justify-between">
                   <div>
-                    <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-white/20 backdrop-blur-sm">
+                    <div className="inline-block px-2 py-1 rounded-md text-xs font-bold mb-3 bg-[#ee0979]/20 text-[#ee0979]">
                       Intermediário
                     </div>
-                    <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left">
-                      DeFi - Finanças Descentralizadas
+                    <h4 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform origin-left text-[var(--text-article-title)]">
+                      DeFi
                     </h4>
-                    <p className="text-sm opacity-90 mb-3">
+                    <p className="text-sm opacity-90 mb-3 text-[var(--text-article-body)]">
                       Explore o mundo das finanças descentralizadas
                     </p>
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between text-[#ee0979]">
                     <span className="text-xs font-semibold opacity-90">DeFi</span>
                     <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -303,17 +287,15 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   placeholder="Buscar por título, descrição ou tag..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-4 py-3 pl-12 rounded-xl border-2 transition-all focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="w-full px-4 py-3 pl-12 rounded-xl border-2 transition-all focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] glass-card text-[var(--text-article-body)] placeholder-[var(--text-article-muted)]"
                   style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border-medium)',
-                    color: 'var(--text-primary)'
+                    borderColor: 'var(--border-article)',
                   }}
                 />
                 <FontAwesomeIcon
                   icon={faSearch}
                   className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5"
-                  style={{ color: 'var(--text-tertiary)' }}
+                  style={{ color: 'var(--text-article-muted)' }}
                 />
                 {searchTerm && (
                   <button
@@ -329,8 +311,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
               {getActiveFiltersCount() > 0 && (
                 <button
                   onClick={clearAllFilters}
-                  className="px-4 py-3 rounded-xl font-semibold transition-all hover:opacity-80 whitespace-nowrap"
-                  style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--brand-primary)' }}
+                  className="px-4 py-3 rounded-xl font-semibold transition-all hover:opacity-80 whitespace-nowrap glass-card border border-[var(--border-article)] text-[var(--brand-primary)]"
                 >
                   Limpar filtros
                 </button>
@@ -346,13 +327,9 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
                     className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 ${selectedCategory === cat.id
-                      ? 'shadow-md'
-                      : 'hover:opacity-80'
+                      ? 'shadow-md bg-[var(--brand-primary)] text-white'
+                      : 'hover:opacity-80 glass-card border border-[var(--border-article)] text-[var(--text-article-body)]'
                       }`}
-                    style={{
-                      backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
-                      color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
-                    }}
                   >
                     {cat.label}
                   </button>
@@ -360,7 +337,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
               </div>
 
               {/* Divider */}
-              <div className="h-8 w-px" style={{ backgroundColor: 'var(--border-light)' }}></div>
+              <div className="h-8 w-px bg-[var(--border-article)]"></div>
 
               {/* Níveis */}
               <div className="flex flex-wrap gap-2">
@@ -369,13 +346,9 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                     key={level.id}
                     onClick={() => setSelectedLevel(level.id)}
                     className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 ${selectedLevel === level.id
-                      ? 'shadow-md'
-                      : 'hover:opacity-80'
+                      ? 'shadow-md bg-[var(--brand-primary)] text-white'
+                      : 'hover:opacity-80 glass-card border border-[var(--border-article)] text-[var(--text-article-body)]'
                       }`}
-                    style={{
-                      backgroundColor: selectedLevel === level.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
-                      color: selectedLevel === level.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
-                    }}
                   >
                     {level.label}
                   </button>
@@ -384,17 +357,13 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
             </div>
           </div>
 
-          {/* Lista de Recursos - NOVO DESIGN COM GRADIENTES SUTIS */}
+          {/* Lista de Recursos - NOVO DESIGN COM GLASSMORPHISM */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredResources.map((resource) => (
               <Link
                 key={resource.id}
                 href={`/educacao/${resource.slug}`}
-                className="group relative rounded-2xl p-6 overflow-hidden border shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer block"
-                style={{
-                  background: `linear-gradient(135deg, ${getLevelGradient(resource.level)}, var(--bg-elevated))`,
-                  borderColor: 'var(--border-light)'
-                }}
+                className="glass-card group relative rounded-2xl p-6 overflow-hidden border border-[var(--border-article)] shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer block hover:border-[var(--brand-primary)]/50"
               >
                 {/* Glow sutil no topo no hover */}
                 <div
@@ -427,22 +396,19 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                     </div>
 
                     {/* Tempo de leitura */}
-                    <span className="text-xs font-medium px-2.5 py-1 rounded-md backdrop-blur-sm flex items-center gap-1.5" style={{
-                      backgroundColor: 'var(--bg-secondary)',
-                      color: 'var(--text-tertiary)'
-                    }}>
+                    <span className="text-xs font-medium px-2.5 py-1 rounded-md backdrop-blur-sm flex items-center gap-1.5 bg-[var(--bg-article-tag)] text-[var(--text-article-muted)]">
                       <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
                       {resource.readTime || '5 min'}
                     </span>
                   </div>
 
                   {/* Título */}
-                  <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-brand-primary transition-colors min-h-[3.5rem]" style={{ color: 'var(--text-primary)' }}>
+                  <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-[var(--brand-primary)] transition-colors min-h-[3.5rem] text-[var(--text-article-title)]">
                     {resource.title}
                   </h3>
 
                   {/* Descrição */}
-                  <p className="text-sm mb-4 line-clamp-3 leading-relaxed opacity-90 min-h-[4.5rem]" style={{ color: 'var(--text-secondary)' }}>
+                  <p className="text-sm mb-4 line-clamp-3 leading-relaxed opacity-90 min-h-[4.5rem] text-[var(--text-article-body)]">
                     {resource.description}
                   </p>
 
@@ -451,11 +417,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                     {resource.tags.slice(0, 3).map((tag, index) => (
                       <span
                         key={index}
-                        className="px-2 py-0.5 rounded text-xs font-medium backdrop-blur-sm"
-                        style={{
-                          backgroundColor: 'var(--bg-secondary)',
-                          color: 'var(--text-tertiary)'
-                        }}
+                        className="px-2 py-0.5 rounded text-xs font-medium backdrop-blur-sm bg-[var(--bg-article-tag)] text-[var(--text-article-muted)]"
                       >
                         #{tag}
                       </span>
@@ -466,10 +428,10 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   <div className="flex-grow"></div>
 
                   {/* Footer */}
-                  <div className="pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                  <div className="pt-3 border-t border-[var(--border-article)]">
                     <div className="flex items-center justify-end">
                       {/* CTA com seta animada */}
-                      <div className="flex items-center gap-2 text-sm font-bold group-hover:gap-3 transition-all" style={{ color: 'var(--text-primary)' }}>
+                      <div className="flex items-center gap-2 text-sm font-bold group-hover:gap-3 transition-all text-[var(--text-article-title)] group-hover:text-[var(--brand-primary)]">
                         Ler artigo
                         <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                       </div>
@@ -485,55 +447,52 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
             {/* Loader minimalista */}
             {(isLoadingMore || filteredResources.length === 0) && (
               <div className="col-span-full flex justify-center py-12">
-                <div className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin" style={{
-                  borderColor: 'var(--border-medium)',
-                  borderTopColor: 'var(--brand-primary)'
-                }} />
+                <div className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin border-[var(--border-article)] border-t-[var(--brand-primary)]" />
               </div>
             )}
           </div>
 
           {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+          <div className="border-t border-[var(--border-article)]"></div>
 
           {/* Roadmap de Aprendizagem */}
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+            <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-article-title)]">
               O que você vai aprender
             </h2>
 
             <div className="space-y-4">
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold" style={{ backgroundColor: 'var(--brand-primary)', color: 'var(--text-inverse)' }}>
+                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold bg-[var(--brand-primary)] text-white">
                   1
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Iniciante</h3>
-                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  <h3 className="font-bold mb-1 text-[var(--text-article-title)]">Iniciante</h3>
+                  <p className="text-sm text-[var(--text-article-body)]">
                     Fundamentos de blockchain, como criar wallets, primeiros passos em cripto
                   </p>
                 </div>
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold" style={{ backgroundColor: 'var(--brand-primary)', color: 'var(--text-inverse)' }}>
+                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold bg-[var(--brand-primary)] text-white">
                   2
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Intermediário</h3>
-                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  <h3 className="font-bold mb-1 text-[var(--text-article-title)]">Intermediário</h3>
+                  <p className="text-sm text-[var(--text-article-body)]">
                     Trading, DeFi, análise técnica, estratégias de investimento
                   </p>
                 </div>
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold" style={{ backgroundColor: 'var(--brand-primary)', color: 'var(--text-inverse)' }}>
+                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold bg-[var(--brand-primary)] text-white">
                   3
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Avançado</h3>
-                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  <h3 className="font-bold mb-1 text-[var(--text-article-title)]">Avançado</h3>
+                  <p className="text-sm text-[var(--text-article-body)]">
                     Desenvolvimento de smart contracts, programação Web3, arquitetura blockchain
                   </p>
                 </div>
@@ -542,14 +501,14 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
           </div>
 
           {/* Divider */}
-          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+          <div className="border-t border-[var(--border-article)]"></div>
 
           {/* CTA */}
           <div className="space-y-6 py-8">
-            <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+            <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-article-title)]">
               Contribua com a Comunidade
             </h2>
-            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+            <p className="text-lg text-[var(--text-article-body)]">
               Tem conhecimento para compartilhar? Ajude a comunidade escrevendo artigos e tutoriais educacionais.
             </p>
             <div className="flex flex-wrap gap-3">
@@ -557,11 +516,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                 href="https://discord.gg/xk4zrz8j"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
-                style={{
-                  backgroundColor: '#5865F2',
-                  color: 'white'
-                }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 bg-[#5865F2] text-white"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" />
