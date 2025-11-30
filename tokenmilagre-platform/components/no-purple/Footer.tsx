@@ -32,7 +32,6 @@ export default function Footer() {
     ],
     legal: [
       { label: 'Segurança', href: '/seguranca/verificador-url' },
-      { label: 'Doações', href: '/doacoes' },
     ],
   };
 

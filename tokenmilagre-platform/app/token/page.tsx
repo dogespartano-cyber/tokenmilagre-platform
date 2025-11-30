@@ -19,7 +19,9 @@ import {
   faCopy,
   faArrowRight,
   faHandshake,
-  faLightbulb
+  faLightbulb,
+  faChartPie,
+  faArrowUp
 } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
@@ -30,6 +32,37 @@ export default function TokenPage() {
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  const impactAreas = [
+    {
+      title: 'Educação Gratuita',
+      description: 'Produção de guias anti-golpe e tutoriais de segurança.',
+      percentage: '40%',
+      color: '#4caf50', // Green
+      icon: faChartPie
+    },
+    {
+      title: 'Tecnologia',
+      description: 'Desenvolvimento de ferramentas de análise de risco.',
+      percentage: '30%',
+      color: '#2196f3', // Blue
+      icon: faShieldAlt
+    },
+    {
+      title: 'Fundo de Reserva',
+      description: 'Proteção contra volatilidade e emergências.',
+      percentage: '20%',
+      color: '#ff9800', // Orange
+      icon: faCoins
+    },
+    {
+      title: 'Infraestrutura',
+      description: 'Manutenção de servidores e APIs.',
+      percentage: '10%',
+      color: '#0D9488', // Teal
+      icon: faArrowUp
+    }
+  ];
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(TOKEN_ADDRESS);
@@ -179,6 +212,31 @@ export default function TokenPage() {
               ))}
             </div>
           </section>
+
+          {/* Impact Section - Moved from /doacoes */}
+          <div className="mb-32">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
+                Impacto Real
+              </h2>
+              <p className="text-xl text-[var(--text-secondary)] max-w-2xl mx-auto">
+                Para onde vai sua contribuição?
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {impactAreas.map((area, index) => (
+                <div key={index} className="glass-card p-8 rounded-[30px] text-center hover:bg-white/5 transition-all duration-300 group">
+                  <div className="w-16 h-16 rounded-2xl bg-[var(--bg-primary)] flex items-center justify-center mx-auto mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                    <FontAwesomeIcon icon={area.icon} className="text-2xl" style={{ color: area.color }} />
+                  </div>
+
+                  <h3 className="text-xl font-bold mb-3 text-[var(--text-primary)]">{area.title}</h3>
+                  <p className="text-sm text-[var(--text-secondary)] mb-6 min-h-[40px]">{area.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
 
           {/* Tokenomics */}
           <section className="mb-32">
@@ -437,7 +495,7 @@ export default function TokenPage() {
             </p>
           </section>
 
-        </div>
+        </div >
 
         <style jsx>{`
           @keyframes float-vertical {
@@ -457,7 +515,7 @@ export default function TokenPage() {
             to { transform: rotate(0deg); }
           }
         `}</style>
-      </div>
+      </div >
     </>
   );
 }

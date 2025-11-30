@@ -52,7 +52,6 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
     'graficos': 'Gráficos',
     'educacao': 'Educação',
     'recursos': 'Recursos',
-    'doacoes': 'Doações',
     ...customLabels
   };
 
