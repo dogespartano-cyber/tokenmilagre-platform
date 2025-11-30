@@ -48,7 +48,16 @@ export default function TokenPage() {
         })}
       </Script>
 
-      <div className="min-h-screen relative overflow-hidden bg-[var(--bg-secondary)] transition-colors duration-300 font-sans">
+      <div className="min-h-screen relative overflow-hidden transition-colors duration-300 font-sans">
+        {/* Background Color with Mask to blend with Breadcrumbs */}
+        <div
+          className="absolute inset-0 bg-[var(--bg-secondary)] z-0 pointer-events-none"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent, black 150px)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 150px)'
+          }}
+        />
+
         {/* Background Orbs */}
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
           <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-green-500/20 rounded-full blur-[120px] animate-pulse-slow"></div>

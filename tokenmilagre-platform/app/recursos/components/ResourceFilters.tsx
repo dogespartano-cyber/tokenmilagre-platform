@@ -39,25 +39,18 @@ export default function ResourceFilters({
             placeholder="Buscar por nome, descrição ou tag..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full px-4 py-3 pl-12 rounded-xl border-2 transition-all focus:outline-none focus:ring-2 focus:ring-yellow-400"
-            style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border-medium)',
-              color: 'var(--text-primary)'
-            }}
+            className="w-full px-4 py-3 pl-12 rounded-xl border-2 transition-all focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] bg-[var(--bg-secondary)] border-[var(--border-medium)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)]"
             aria-label="Buscar recursos por nome, descrição ou tag"
             role="searchbox"
           />
           <FontAwesomeIcon
             icon={faSearch}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5"
-            style={{ color: 'var(--text-tertiary)' }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-tertiary)]"
           />
           {searchTerm && (
             <button
               onClick={() => onSearchChange('')}
-              className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors hover:scale-110"
-              style={{ color: 'var(--text-tertiary)' }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors hover:scale-110 text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
               aria-label="Limpar busca"
             >
               <FontAwesomeIcon icon={faTimes} className="w-5 h-5" />
@@ -67,12 +60,7 @@ export default function ResourceFilters({
         {activeFiltersCount > 0 && (
           <button
             onClick={onClearFilters}
-            className="px-4 py-3 rounded-xl font-semibold transition-all hover:scale-105 whitespace-nowrap"
-            style={{
-              backgroundColor: 'var(--bg-secondary)',
-              color: 'var(--brand-primary)',
-              border: '2px solid var(--border-medium)'
-            }}
+            className="px-4 py-3 rounded-xl font-semibold transition-all hover:scale-105 whitespace-nowrap bg-[var(--bg-secondary)] text-[var(--brand-primary)] border-2 border-[var(--border-medium)] hover:border-[var(--brand-primary)]"
             aria-label={`Limpar ${activeFiltersCount} filtro${activeFiltersCount > 1 ? 's' : ''} ativo${activeFiltersCount > 1 ? 's' : ''}`}
           >
             Limpar filtros
@@ -89,13 +77,9 @@ export default function ResourceFilters({
               key={cat.id}
               onClick={() => onCategoryChange(cat.id)}
               className={`px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:shadow-lg ${selectedCategory === cat.id
-                  ? 'shadow-md'
-                  : 'hover:opacity-80'
+                  ? 'bg-[var(--brand-primary)] text-[var(--text-inverse)] shadow-md'
+                  : 'bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:opacity-80'
                 }`}
-              style={{
-                backgroundColor: selectedCategory === cat.id ? 'var(--brand-primary)' : 'var(--bg-secondary)',
-                color: selectedCategory === cat.id ? 'var(--text-inverse)' : 'var(--text-secondary)'
-              }}
               aria-label={`Filtrar por categoria: ${cat.label}`}
               aria-pressed={selectedCategory === cat.id}
             >
