@@ -304,6 +304,20 @@ html {
   /* gray-50 */
   --bg-modal-hover: #F3F4F6;
   /* gray-100 */
+
+  /* Article Specific Variables - Isolated */
+  --text-article-title: #111827;
+  /* gray-900 */
+  --text-article-body: #374151;
+  /* gray-700 */
+  --text-article-muted: #6B7280;
+  /* gray-500 */
+  --bg-article-tag: #F3F4F6;
+  /* gray-100 */
+  --bg-article-quote: #F9FAFB;
+  /* gray-50 */
+  --border-article: #E5E7EB;
+  /* gray-200 */
 }
 
 [data-theme="dark"] {
@@ -415,6 +429,16 @@ html {
   /* gray-800 */
   --bg-modal-hover: #374151;
   /* gray-700 */
+
+  /* Article Specific Variables - Isolated (Dark) */
+  --text-article-title: #FFFFFF;
+  --text-article-body: #D1D5DB;
+  /* gray-300 */
+  --text-article-muted: #9CA3AF;
+  /* gray-400 */
+  --bg-article-tag: rgba(255, 255, 255, 0.05);
+  --bg-article-quote: rgba(255, 255, 255, 0.05);
+  --border-article: rgba(255, 255, 255, 0.1);
 }
 
 @theme inline {
