@@ -31,14 +31,13 @@ export default function SobrePage() {
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          "name": "Token Milagre",
+          "name": "$MILAGRE",
           "url": "https://tokenmilagre.xyz/sobre",
-          "description": "Token Milagre: Um movimento de educação cripto e proteção contra golpes. Transparência radical e comunidade blindada.",
-          "foundingDate": "2024-10",
+          "description": "$MILAGRE: Um movimento de educação cripto e proteção contra golpes. Transparência radical e comunidade blindada.",
+          "logo": "https://tokenmilagre.xyz/images/TOKEN-MILAGRE-Hero.webp",
           "sameAs": [
             "https://x.com/TokenMilagre",
-            "https://t.me/+Bop_TVFc_mg3Njlh",
-            "https://discord.gg/xk4zrz8j"
+            "https://t.me/+Bop_TVFc_mg3Njlh"
           ]
         })}
       </Script>

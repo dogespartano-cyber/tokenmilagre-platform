@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   title: "$MILAGRE - Token Comunitário de Apoio Mútuo na Solana | SPL Token",
   description: "Nunca estarás sozinho. $MILAGRE é um token SPL na Solana criado para conectar pessoas através de apoio mútuo, mentorias e esperança. Guardiões da Prosperidade, Sabedoria e Esperança. Contrato: 3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump",
   keywords: [
-    "MILAGRE",
+    "$MILAGRE",
     "token",
     "Solana",
     "SPL Token",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     title: "$MILAGRE - Nunca Estarás Sozinho ❤️",
     description: "Token SPL comunitário de apoio mútuo na Solana. Três Guardiões Celestiais guiando holders em prosperidade, sabedoria e esperança. FAQ interativa, tutorial completo e comunidade ativa.",
     url: 'https://tokenmilagre.xyz',
-    siteName: '$MILAGRE Token - Comunidade de Apoio Mútuo',
+    siteName: '$MILAGRE',
     images: [
       {
         url: '/images/TOKEN-MILAGRE-Hero.webp',

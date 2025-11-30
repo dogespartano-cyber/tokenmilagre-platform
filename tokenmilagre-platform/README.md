@@ -1,4 +1,4 @@
-# 🌟 TokenMilagre Platform
+# 🌟 $MILAGRE Platform
 
 **Plataforma educacional e de comunidade para o token $MILAGRE (Solana)**
 

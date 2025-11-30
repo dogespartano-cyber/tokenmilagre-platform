@@ -106,7 +106,7 @@ export default function LoginPage() {
             className="text-3xl font-bold mb-4 font-[family-name:var(--font-poppins)]"
             style={{ color: 'var(--text-primary)' }}
           >
-            Token Milagre
+            $MILAGRE
           </h1>
         </div>
 

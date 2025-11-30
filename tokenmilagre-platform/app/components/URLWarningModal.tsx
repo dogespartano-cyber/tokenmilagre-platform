@@ -178,7 +178,7 @@ export default function URLWarningModal({
             </button>
           </div>
           <p className="text-xs text-center mt-3 opacity-70" style={{ color: textColor }}>
-            Token Milagre não se responsabiliza por danos causados por sites externos
+            $MILAGRE não se responsabiliza por danos causados por sites externos
           </p>
         </div>
       </div>

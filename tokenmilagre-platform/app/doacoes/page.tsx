@@ -119,7 +119,7 @@ export default function DoacoesPage() {
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "name": "Contribua com o Token Milagre",
+          "name": "Contribua com o $MILAGRE",
           "description": "Ajude a manter a educação cripto gratuita e independente. Sua contribuição fortalece nossa luta contra golpes.",
           "url": "https://tokenmilagre.xyz/doacoes"
         })}

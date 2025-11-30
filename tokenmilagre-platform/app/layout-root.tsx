@@ -30,7 +30,7 @@ interface FearGreedData {
 // Configuração do DashboardHeader por pathname
 const dashboardHeaderConfig: Record<string, { title: string; description: string }> = {
   '/': {
-    title: 'Token Milagre',
+    title: '$MILAGRE',
     description: 'Sua bússola no universo cripto. Dados reais, educação sem hype e segurança em primeiro lugar.'
   },
   '/graficos': {
@@ -158,13 +158,10 @@ export default function RootLayoutNav({
 
       {/* Sidebar */}
       <aside className={`fixed top-0 left-0 h-full w-72 z-50 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 shadow-2xl`} style={{
-          backgroundColor: 'var(--bg-elevated)',
-          borderRight: '1px solid rgba(255, 255, 255, 0.05)'
-        }}>
+        } lg:translate-x-0 glass border-r border-[var(--border-light)]`}>
         <div className="flex flex-col h-full">
           {/* Sidebar Header - Fixed Height for Alignment */}
-          <div className="h-[88px] flex items-center px-6 border-b" style={{ borderColor: 'rgba(255, 255, 255, 0.05)' }}>
+          <div className="h-[88px] flex items-center px-6 border-b border-[var(--border-light)]">
             <div className="flex items-center justify-between w-full">
               <Link href="/" className="flex items-center gap-3 hover:opacity-100 transition-all duration-300 group px-2 py-1 rounded-xl" onClick={() => setSidebarOpen(false)}>
                 <div className="relative w-10 h-10 rounded-full shadow-[0_0_15px_rgba(var(--brand-primary-rgb),0.3)] border-2 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(var(--brand-primary-rgb),0.6)]" style={{
@@ -184,8 +181,7 @@ export default function RootLayoutNav({
               </Link>
               <button
                 onClick={() => setSidebarOpen(false)}
-                className="group lg:hidden p-2 rounded-lg transition-all duration-300 hover:scale-110 hover:bg-opacity-50"
-                style={{ color: 'var(--text-primary)' }}
+                className="group lg:hidden p-2 rounded-lg transition-all duration-300 hover:scale-110 hover:bg-opacity-50 text-[var(--text-primary)]"
               >
                 <FontAwesomeIcon icon={faTimes} className="w-5 h-5 transition-transform duration-300 group-hover:rotate-90" />
               </button>
@@ -203,25 +199,19 @@ export default function RootLayoutNav({
                     href={item.href}
                     onClick={() => setSidebarOpen(false)}
                     className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base transition-all duration-300 relative overflow-hidden ${isActive
-                      ? 'text-brand-primary shadow-theme-sm'
-                      : 'text-theme-primary hover:bg-white/5 hover:translate-x-1'
+                      ? 'text-[var(--brand-primary)] glass-card border-l-4 border-l-[var(--brand-primary)]'
+                      : 'text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1'
                       }`}
-                    style={{
-                      backgroundColor: isActive
-                        ? 'rgba(13, 148, 136, 0.1)' // Soft button background (Teal 600)
-                        : 'transparent',
-                      color: isActive
-                        ? 'var(--brand-primary)'
-                        : 'var(--text-primary)'
-                    }}
                   >
                     {/* Shine Effect - Green in Light Mode, White in Dark Mode */}
-                    <div
-                      className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"
-                      style={{
-                        background: `linear-gradient(90deg, transparent, ${theme === 'light' ? 'rgba(13, 148, 136, 0.5)' : 'rgba(255,255,255,0.2)'}, transparent)`
-                      }}
-                    />
+                    {isActive && (
+                      <div
+                        className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"
+                        style={{
+                          background: `linear-gradient(90deg, transparent, ${theme === 'light' ? 'rgba(13, 148, 136, 0.2)' : 'rgba(255,255,255,0.1)'}, transparent)`
+                        }}
+                      />
+                    )}
 
                     <FontAwesomeIcon
                       icon={item.icon}
@@ -239,16 +229,13 @@ export default function RootLayoutNav({
       {/* Main Content Wrapper */}
       < div className="min-h-screen flex flex-col lg:ml-72" >
         {/* Header - Fixed Height for Alignment */}
-        < header className="sticky top-0 z-30 backdrop-blur-xl h-[88px] flex items-center" style={{
-          backgroundColor: 'transparent',
-        }}>
+        < header className="sticky top-0 z-30 backdrop-blur-xl h-[88px] flex items-center bg-transparent">
           <div className="container mx-auto px-6 h-full">
             <div className="flex justify-between items-center h-full">
               {/* Hamburger Menu Button - Mobile & Desktop */}
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="group lg:hidden p-2 rounded-lg transition-all duration-300 hover:scale-110 hover:bg-opacity-50"
-                style={{ color: 'var(--text-primary)' }}
+                className="group lg:hidden p-2 rounded-lg transition-all duration-300 hover:scale-110 hover:bg-opacity-50 text-[var(--text-primary)]"
               >
                 <FontAwesomeIcon icon={faBars} className="w-6 h-6 transition-transform duration-300 group-hover:rotate-90" />
               </button>
@@ -277,11 +264,7 @@ export default function RootLayoutNav({
 
                 <button
                   onClick={toggleTheme}
-                  className="group flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105"
-                  style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    color: 'var(--text-primary)'
-                  }}
+                  className="group flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105 bg-[var(--bg-secondary)] text-[var(--text-primary)]"
                 >
                   <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
                   <span className="text-xs font-semibold whitespace-nowrap">{theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}</span>
@@ -477,10 +460,7 @@ export default function RootLayoutNav({
               <nav className="hidden lg:flex items-center gap-6 pl-8 h-10 my-auto">
                 <button
                   onClick={toggleTheme}
-                  className="group flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-white/5"
-                  style={{
-                    color: 'var(--text-primary)'
-                  }}
+                  className="group flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-white/5 text-[var(--text-primary)]"
                 >
                   <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
                   <span className="text-sm font-semibold">{theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}</span>
@@ -534,11 +514,7 @@ export default function RootLayoutNav({
             }}
           >
             <div
-              className="rounded-2xl overflow-hidden shadow-md border"
-              style={{
-                borderColor: 'var(--border-light)',
-                backgroundColor: 'var(--bg-elevated)',
-              }}
+              className="rounded-2xl overflow-hidden shadow-md border border-[var(--border-light)] bg-[var(--bg-elevated)]"
             >
               <TickerTapeWidget />
             </div>
@@ -550,16 +526,13 @@ export default function RootLayoutNav({
         </main>
 
         {/* Footer */}
-        <footer className="border-t mt-12" style={{
-          backgroundColor: 'var(--bg-elevated)',
-          borderColor: 'var(--border-medium)'
-        }}>
+        <footer className="glass border-t border-[var(--border-medium)] mt-12">
           <div className="container mx-auto px-4 py-8">
             <div className="space-y-4">
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
                 $MILAGRE é um projeto comunitário criado para conectar pessoas através de apoio mútuo e esperança.
               </p>
-              <p className="text-sm font-semibold" style={{ color: 'var(--text-tertiary)' }}>
+              <p className="text-sm font-semibold text-[var(--text-tertiary)]">
                 © 2025 $MILAGRE Community
               </p>
             </div>

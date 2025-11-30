@@ -110,7 +110,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!article) {
     return {
-      title: 'Artigo não encontrado | TokenMilagre',
+      title: 'Artigo não encontrado | $MILAGRE',
       description: 'O artigo solicitado não foi encontrado.',
     };
   }
@@ -119,7 +119,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const articleUrl = `${baseUrl}/dashboard/noticias/${article.slug || article.id}`;
 
   return {
-    title: `${article.title} | TokenMilagre`,
+    title: `${article.title} | $MILAGRE`,
     description: article.summary.substring(0, 160),
     keywords: article.keywords.join(', '),
     authors: [{ name: article.source }],
@@ -131,7 +131,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       authors: [article.source],
       tags: article.keywords,
       url: articleUrl,
-      siteName: '$MILAGRE - TokenMilagre',
+      siteName: '$MILAGRE',
     },
     twitter: {
       card: 'summary_large_image',

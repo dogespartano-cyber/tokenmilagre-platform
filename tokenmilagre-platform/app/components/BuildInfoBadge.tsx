@@ -44,7 +44,7 @@ export default function BuildInfoBadge() {
   const copyToClipboard = async () => {
     if (!buildInfo) return;
 
-    const text = `Build Info - Token Milagre Platform
+    const text = `Build Info - $MILAGRE Platform
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Type: ${buildInfo.type}
 Branch: ${buildInfo.branch}
@@ -168,11 +168,10 @@ Updated: ${formatDateTime(buildInfo.lastUpdate)}${buildInfo.compareMain ? `\nvs 
           {/* Git Status */}
           <div className="flex items-center justify-between">
             <div className="text-xs text-gray-500 dark:text-gray-400">Status</div>
-            <div className={`text-xs flex items-center gap-1 ${
-              buildInfo.gitStatus === 'Clean'
+            <div className={`text-xs flex items-center gap-1 ${buildInfo.gitStatus === 'Clean'
                 ? 'text-green-600 dark:text-green-400'
                 : 'text-yellow-600 dark:text-yellow-400'
-            }`}>
+              }`}>
               <FontAwesomeIcon
                 icon={buildInfo.gitStatus === 'Clean' ? faCircleCheck : faTriangleExclamation}
                 className="text-xs"
