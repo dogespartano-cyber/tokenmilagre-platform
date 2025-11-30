@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Script from 'next/script';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faEnvelope,
   faCode,
   faArrowRight,
   faGlobe,
@@ -92,20 +91,37 @@ export default function SobrePage() {
           <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-500/20 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
         </div>
 
-        <div className={`relative z-10 max-w-5xl mx-auto px-6 py-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`relative z-10 max-w-3xl mx-auto px-6 py-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
 
           {/* Hero Section */}
           <section className="text-center space-y-8 mb-20 pt-12">
-            <div className="flex justify-center mb-8">
-              <div className="relative w-40 h-40 animate-float-vertical">
-                <Image
-                  src="/images/TOKEN-MILAGRE-Hero.webp"
-                  alt="$MILAGRE"
-                  width={160}
-                  height={160}
-                  className="drop-shadow-2xl rounded-full"
-                  priority
-                />
+            {/* Animated Logo with Floating Effect */}
+            <div className="flex justify-center mb-8 mt-12">
+              <div className="relative w-60 h-60 md:w-72 md:h-72 animate-float-vertical">
+                {/* Animated rings */}
+                <div className="absolute inset-0" style={{ animation: 'spin-slow 25s linear infinite' }}>
+                  <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-green-500"></div>
+                </div>
+                <div className="absolute inset-3" style={{ animation: 'spin-reverse 20s linear infinite' }}>
+                  <div className="absolute inset-0 rounded-full border-2 border-dashed opacity-30 border-teal-500"></div>
+                </div>
+
+                {/* Glow effect */}
+                <div className="absolute inset-0 blur-2xl animate-pulse opacity-20" style={{
+                  background: 'linear-gradient(135deg, #93c5fd, #bfdbfe, #dbeafe)'
+                }}></div>
+
+                {/* Image */}
+                <div className="relative z-10 flex items-center justify-center h-full transform hover:scale-105 transition-all duration-700">
+                  <Image
+                    src="/images/TOKEN-MILAGRE-Hero.webp"
+                    alt="$MILAGRE"
+                    width={288}
+                    height={288}
+                    className="drop-shadow-2xl"
+                    priority
+                  />
+                </div>
               </div>
             </div>
 
@@ -119,8 +135,8 @@ export default function SobrePage() {
             </p>
           </section>
 
-          {/* Contact Cards Grid */}
-          <div className="grid md:grid-cols-2 gap-6 mb-20">
+          {/* Contact Cards Grid - Single Column */}
+          <div className="grid grid-cols-1 gap-6 mb-20">
             {socialLinks.map((link, index) => (
               <a
                 key={index}
@@ -129,50 +145,25 @@ export default function SobrePage() {
                 rel="noopener noreferrer"
                 className="glass-card p-8 rounded-3xl group hover:border-[var(--brand-primary)] transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="flex items-start gap-6">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg transition-colors ${link.color} ${link.hover}`}>
+                <div className="flex items-center gap-6">
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg transition-colors ${link.color} ${link.hover} shrink-0`}>
                     <FontAwesomeIcon icon={link.icon} />
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--brand-primary)] transition-colors">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--brand-primary)] transition-colors">
                       {link.name}
                     </h3>
-                    <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
+                    <p className="text-[var(--text-secondary)] text-base leading-relaxed">
                       {link.description}
                     </p>
                   </div>
-                  <div className="ml-auto self-center opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0">
-                    <FontAwesomeIcon icon={faArrowRight} className="text-[var(--brand-primary)]" />
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity -translate-x-4 group-hover:translate-x-0">
+                    <FontAwesomeIcon icon={faArrowRight} className="text-[var(--brand-primary)] text-xl" />
                   </div>
                 </div>
               </a>
             ))}
           </div>
-
-          {/* Direct Contact / Email */}
-          <section className="glass p-10 rounded-[2.5rem] text-center mb-20 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--brand-primary)] to-transparent opacity-50"></div>
-
-            <div className="relative z-10">
-              <div className="w-16 h-16 bg-[var(--bg-primary)] rounded-full flex items-center justify-center mx-auto mb-6 text-2xl text-[var(--brand-primary)] shadow-sm">
-                <FontAwesomeIcon icon={faEnvelope} />
-              </div>
-
-              <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-4">
-                Precisa falar diretamente?
-              </h2>
-              <p className="text-[var(--text-secondary)] mb-8">
-                Para parcerias, imprensa ou assuntos específicos que não podem ser tratados na comunidade.
-              </p>
-
-              <a
-                href="mailto:contato@tokenmilagre.xyz"
-                className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--brand-primary)] text-white font-bold hover:bg-[var(--brand-hover)] transition-all shadow-lg hover:shadow-[var(--brand-primary)]/30"
-              >
-                <span>contato@tokenmilagre.xyz</span>
-              </a>
-            </div>
-          </section>
 
           {/* Open Source Badge */}
           <div className="text-center">
@@ -180,7 +171,7 @@ export default function SobrePage() {
               href="https://github.com/dogespartano-cyber/tokenmilagre-platform"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-light)] text-sm text-[var(--text-secondary)] hover:border-[var(--brand-primary)] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-light)] text-base text-[var(--text-secondary)] hover:border-[var(--brand-primary)] transition-colors shadow-sm hover:shadow-md"
             >
               <FontAwesomeIcon icon={faCode} className="text-[var(--brand-primary)]" />
               <span>Projeto 100% Open Source</span>
@@ -193,11 +184,19 @@ export default function SobrePage() {
       <style jsx>{`
         @keyframes float-vertical {
           0% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
+          50% { transform: translateY(-15px); }
           100% { transform: translateY(0px); }
         }
         .animate-float-vertical {
-          animation: float-vertical 4s ease-in-out infinite;
+          animation: float-vertical 6s ease-in-out infinite;
+        }
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes spin-reverse {
+          from { transform: rotate(360deg); }
+          to { transform: rotate(0deg); }
         }
       `}</style>
     </>
