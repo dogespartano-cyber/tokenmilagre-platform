@@ -703,7 +703,7 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
       // Atualizar APENAS o campo corrigido, preservando tudo mais
       const updatedArticle = {
         ...article,
-        [fieldToFix]: fixedField[fieldToFix],
+        [fieldToFix]: refinedArticle[fieldToFix],
         status: 'success' as const,
         error: undefined
       };
@@ -718,7 +718,7 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
 
       console.log(`✅ Campo "${fieldToFix}" corrigido com sucesso!`, {
         original: article[fieldToFix as keyof GeneratedArticle],
-        fixed: fixedField[fieldToFix]
+        fixed: refinedArticle[fieldToFix]
       });
 
       alert(`✅ Campo "${fieldToFix}" corrigido com sucesso!\n\nAgora você pode tentar salvar novamente.`);
