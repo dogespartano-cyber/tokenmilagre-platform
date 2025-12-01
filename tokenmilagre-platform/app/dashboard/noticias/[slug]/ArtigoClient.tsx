@@ -256,8 +256,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
 
       <div className="container mx-auto px-4 py-8 lg:py-12">
 
-        {/* Botão Voltar Mobile */}
-        <div className="mb-6 lg:hidden">
+        {/* Botão Voltar Mobile - REMOVIDO CONFORME SOLICITADO */}
+        {/* <div className="mb-6 lg:hidden">
           <button
             onClick={() => router.back()}
             className="flex items-center gap-2 text-[var(--text-article-muted)] hover:text-[var(--brand-primary)] transition-colors"
@@ -265,7 +265,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
             <FontAwesomeIcon icon={faArrowLeft} />
             <span className="font-semibold">Voltar</span>
           </button>
-        </div>
+        </div> */}
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
@@ -325,7 +325,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                       <button
                         key={idx}
                         onClick={() => router.push(`/dashboard/noticias?search=${encodeURIComponent(keyword)}`)}
-                        className="px-3 py-1.5 rounded-full text-sm font-medium transition-all bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] hover:bg-[var(--brand-primary)] hover:text-white hover:shadow-md"
+                        className="px-3 py-1.5 rounded-full text-sm font-medium transition-all bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] lg:hover:bg-[var(--brand-primary)] lg:hover:text-white lg:hover:shadow-md"
                       >
                         #{keyword}
                       </button>
@@ -398,15 +398,15 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                     Compartilhe esta notícia
                   </h3>
                   <div className="flex flex-wrap gap-3">
-                    <button onClick={shareOnX} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-black text-white hover:bg-gray-800 hover:scale-105 active:scale-95 shadow-md">
+                    <button onClick={shareOnX} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-black text-white lg:hover:bg-gray-800 lg:hover:scale-105 active:scale-95 shadow-md">
                       <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
                       X (Twitter)
                     </button>
-                    <button onClick={shareOnTelegram} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-[#0088cc] text-white hover:bg-[#0077b5] hover:scale-105 active:scale-95 shadow-md">
+                    <button onClick={shareOnTelegram} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-[#0088cc] text-white lg:hover:bg-[#0077b5] lg:hover:scale-105 active:scale-95 shadow-md">
                       <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
                       Telegram
                     </button>
-                    <button onClick={shareOnWhatsApp} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-[#25D366] text-white hover:bg-[#20bd5a] hover:scale-105 active:scale-95 shadow-md">
+                    <button onClick={shareOnWhatsApp} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-[#25D366] text-white lg:hover:bg-[#20bd5a] lg:hover:scale-105 active:scale-95 shadow-md">
                       <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
                       WhatsApp
                     </button>
@@ -427,7 +427,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                     <Link
                       key={related.id}
                       href={`/dashboard/noticias/${related.slug || related.id}`}
-                      className="glass-card group p-5 rounded-2xl border border-[var(--border-article)] hover:border-[var(--brand-primary)]/50 transition-all hover:-translate-y-1 hover:shadow-xl block"
+                      className="glass-card group p-5 rounded-2xl border border-[var(--border-article)] lg:hover:border-[var(--brand-primary)]/50 transition-all lg:hover:-translate-y-1 lg:hover:shadow-xl block"
                     >
                       <div className="flex items-center gap-2 mb-3">
                         <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${getSentimentColorClass(related.sentiment)}`}>
@@ -437,7 +437,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                           {related.category[0]}
                         </span>
                       </div>
-                      <h4 className="text-lg font-bold mb-2 text-[var(--text-article-title)] group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2">
+                      <h4 className="text-lg font-bold mb-2 text-[var(--text-article-title)] lg:group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2">
                         {related.title}
                       </h4>
                       <p className="text-sm text-[var(--text-article-body)] line-clamp-2">
