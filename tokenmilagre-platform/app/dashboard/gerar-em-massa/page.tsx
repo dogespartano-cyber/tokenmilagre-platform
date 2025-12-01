@@ -835,22 +835,50 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
         let wasCorrected = false;
 
         // 🔒 Excerpt: garantir que existe e está dentro do limite
+        // Função auxiliar para gerar excerpt do conteúdo
+        const generateExcerptFromContent = (content: string): string => {
+          // Remove títulos markdown e divide em parágrafos
+          const paragraphs = content
+            .replace(/^#+\s+.*$/gm, '') // Remove títulos markdown
+            .split(/\n\n+/) // Divide por múltiplas quebras de linha
+            .map(p => p
+              .replace(/[#*_`\[\]]/g, '') // Remove markdown
+              .replace(/\n/g, ' ') // Substitui quebras por espaços
+              .trim()
+            )
+            .filter(p => p.length > 0); // Remove parágrafos vazios
+
+          // Pega o primeiro parágrafo válido (com pelo menos 30 caracteres)
+          const validParagraph = paragraphs.find(p => p.length >= 30);
+
+          if (validParagraph) {
+            return validParagraph.substring(0, 297) + '...';
+          }
+
+          // Se não encontrou parágrafo válido, concatena o que tiver
+          const allText = paragraphs.join(' ').substring(0, 297);
+          return allText.length > 10 ? allText + '...' : '';
+        };
+
         if (!payload.excerpt || typeof payload.excerpt !== 'string') {
           // Se excerpt está faltando ou inválido, gerar a partir do content
           if (payload.content && typeof payload.content === 'string') {
-            const firstParagraph = payload.content
-              .replace(/^#+\s+.*$/gm, '') // Remove títulos markdown
-              .split('\n\n')[0] // Pega primeiro parágrafo
-              .replace(/[#*_`]/g, '') // Remove markdown
-              .trim();
+            const generatedExcerpt = generateExcerptFromContent(payload.content);
 
-            payload.excerpt = firstParagraph.substring(0, 297) + '...';
-            console.warn(`⚠️ [${i + 1}] Excerpt gerado do conteúdo: ${payload.excerpt.length} chars`);
-            wasCorrected = true;
+            if (generatedExcerpt.length >= 50) {
+              payload.excerpt = generatedExcerpt;
+              console.warn(`⚠️ [${i + 1}] Excerpt gerado do conteúdo: ${payload.excerpt.length} chars`);
+              wasCorrected = true;
+            } else {
+              // Fallback: usar título como excerpt
+              payload.excerpt = (payload.title || 'Artigo gerado por IA').substring(0, 297) + '...';
+              console.warn(`⚠️ [${i + 1}] Excerpt gerado do título (fallback - conteúdo inválido)`);
+              wasCorrected = true;
+            }
           } else {
             // Fallback: usar título como excerpt
             payload.excerpt = (payload.title || 'Artigo gerado por IA').substring(0, 297) + '...';
-            console.warn(`⚠️ [${i + 1}] Excerpt gerado do título (fallback)`);
+            console.warn(`⚠️ [${i + 1}] Excerpt gerado do título (fallback - sem conteúdo)`);
             wasCorrected = true;
           }
         } else if (payload.excerpt.length > 300) {
@@ -862,15 +890,18 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
         } else if (payload.excerpt.length < 50) {
           // Se excerpt é muito curto, tentar gerar do content
           if (payload.content && typeof payload.content === 'string') {
-            const firstParagraph = payload.content
-              .replace(/^#+\s+.*$/gm, '')
-              .split('\n\n')[0]
-              .replace(/[#*_`]/g, '')
-              .trim();
+            const generatedExcerpt = generateExcerptFromContent(payload.content);
 
-            payload.excerpt = firstParagraph.substring(0, 297) + '...';
-            console.warn(`⚠️ [${i + 1}] Excerpt muito curto, regenerado: ${payload.excerpt.length} chars`);
-            wasCorrected = true;
+            if (generatedExcerpt.length >= 50) {
+              payload.excerpt = generatedExcerpt;
+              console.warn(`⚠️ [${i + 1}] Excerpt muito curto, regenerado do conteúdo: ${payload.excerpt.length} chars`);
+              wasCorrected = true;
+            } else {
+              // Fallback: usar título
+              payload.excerpt = (payload.title || 'Artigo gerado por IA').substring(0, 297) + '...';
+              console.warn(`⚠️ [${i + 1}] Excerpt muito curto, usando título como fallback: ${payload.excerpt.length} chars`);
+              wasCorrected = true;
+            }
           }
         }
 

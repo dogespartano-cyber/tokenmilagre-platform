@@ -334,22 +334,50 @@ export default function CriarArtigoPage() {
       let wasCorrected = false;
 
       // 🔒 Excerpt: garantir que existe e está dentro do limite
+      // Função auxiliar para gerar excerpt do conteúdo
+      const generateExcerptFromContent = (content: string): string => {
+        // Remove títulos markdown e divide em parágrafos
+        const paragraphs = content
+          .replace(/^#+\s+.*$/gm, '') // Remove títulos markdown
+          .split(/\n\n+/) // Divide por múltiplas quebras de linha
+          .map(p => p
+            .replace(/[#*_`\[\]]/g, '') // Remove markdown
+            .replace(/\n/g, ' ') // Substitui quebras por espaços
+            .trim()
+          )
+          .filter(p => p.length > 0); // Remove parágrafos vazios
+
+        // Pega o primeiro parágrafo válido (com pelo menos 30 caracteres)
+        const validParagraph = paragraphs.find(p => p.length >= 30);
+
+        if (validParagraph) {
+          return validParagraph.substring(0, 297) + '...';
+        }
+
+        // Se não encontrou parágrafo válido, concatena o que tiver
+        const allText = paragraphs.join(' ').substring(0, 297);
+        return allText.length > 10 ? allText + '...' : '';
+      };
+
       if (!articleToValidate.excerpt || typeof articleToValidate.excerpt !== 'string') {
         // Se excerpt está faltando ou inválido, gerar a partir do content
         if (articleToValidate.content && typeof articleToValidate.content === 'string') {
-          const firstParagraph = articleToValidate.content
-            .replace(/^#+\s+.*$/gm, '') // Remove títulos markdown
-            .split('\n\n')[0] // Pega primeiro parágrafo
-            .replace(/[#*_`]/g, '') // Remove markdown
-            .trim();
+          const generatedExcerpt = generateExcerptFromContent(articleToValidate.content);
 
-          articleToValidate.excerpt = firstParagraph.substring(0, 297) + '...';
-          console.warn(`⚠️ Excerpt gerado do conteúdo: ${articleToValidate.excerpt.length} chars`);
-          wasCorrected = true;
+          if (generatedExcerpt.length >= 50) {
+            articleToValidate.excerpt = generatedExcerpt;
+            console.warn(`⚠️ Excerpt gerado do conteúdo: ${articleToValidate.excerpt.length} chars`);
+            wasCorrected = true;
+          } else {
+            // Fallback: usar título como excerpt
+            articleToValidate.excerpt = (articleToValidate.title || 'Artigo gerado por IA').substring(0, 297) + '...';
+            console.warn(`⚠️ Excerpt gerado do título (fallback - conteúdo inválido)`);
+            wasCorrected = true;
+          }
         } else {
           // Fallback: usar título como excerpt
           articleToValidate.excerpt = (articleToValidate.title || 'Artigo gerado por IA').substring(0, 297) + '...';
-          console.warn(`⚠️ Excerpt gerado do título (fallback)`);
+          console.warn(`⚠️ Excerpt gerado do título (fallback - sem conteúdo)`);
           wasCorrected = true;
         }
       } else if (articleToValidate.excerpt.length > 300) {
@@ -361,15 +389,18 @@ export default function CriarArtigoPage() {
       } else if (articleToValidate.excerpt.length < 50) {
         // Se excerpt é muito curto, tentar gerar do content
         if (articleToValidate.content && typeof articleToValidate.content === 'string') {
-          const firstParagraph = articleToValidate.content
-            .replace(/^#+\s+.*$/gm, '')
-            .split('\n\n')[0]
-            .replace(/[#*_`]/g, '')
-            .trim();
+          const generatedExcerpt = generateExcerptFromContent(articleToValidate.content);
 
-          articleToValidate.excerpt = firstParagraph.substring(0, 297) + '...';
-          console.warn(`⚠️ Excerpt muito curto, regenerado: ${articleToValidate.excerpt.length} chars`);
-          wasCorrected = true;
+          if (generatedExcerpt.length >= 50) {
+            articleToValidate.excerpt = generatedExcerpt;
+            console.warn(`⚠️ Excerpt muito curto, regenerado do conteúdo: ${articleToValidate.excerpt.length} chars`);
+            wasCorrected = true;
+          } else {
+            // Fallback: usar título
+            articleToValidate.excerpt = (articleToValidate.title || 'Artigo gerado por IA').substring(0, 297) + '...';
+            console.warn(`⚠️ Excerpt muito curto, usando título como fallback: ${articleToValidate.excerpt.length} chars`);
+            wasCorrected = true;
+          }
         }
       }
 
