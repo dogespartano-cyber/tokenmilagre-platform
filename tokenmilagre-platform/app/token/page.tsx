@@ -98,7 +98,7 @@ export default function TokenPage() {
           <div className="absolute top-[40%] left-[40%] w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '4s' }}></div>
         </div>
 
-        <div className={`relative z-10 max-w-7xl mx-auto px-4 md:px-6 py-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`relative z-10 max-w-7xl mx-auto px-6 md:px-10 py-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
 
           {/* Hero Section */}
           <section className="text-center space-y-8 mb-32 pt-12">

@@ -396,7 +396,7 @@ export default function HomePage() {
         <div className="absolute top-[40%] left-[40%] w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '4s' }}></div>
       </div>
 
-      <div className="container mx-auto px-4 py-8 relative z-10">
+      <div className="container mx-auto px-6 md:px-10 py-8 relative z-10">
         {loading ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4 animate-pulse">📊</div>
