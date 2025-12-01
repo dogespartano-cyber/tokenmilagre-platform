@@ -157,7 +157,7 @@ export default function RootLayoutNav({
 
       {/* Sidebar */}
       <aside className={`fixed top-0 left-0 h-full w-72 z-50 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 glass border-r border-[var(--border-light)]`}>
+        } lg:translate-x-0 bg-[var(--bg-elevated)] lg:bg-transparent lg:glass border-r border-[var(--border-light)] shadow-2xl lg:shadow-none`}>
         <div className="flex flex-col h-full">
           {/* Sidebar Header - Fixed Height for Alignment */}
           <div className="h-[88px] flex items-center px-6 border-b border-[var(--border-light)]">
@@ -450,7 +450,7 @@ export default function RootLayoutNav({
                 )}
 
                 {/* Crypto Ticker */}
-                <div className="flex-1 overflow-hidden">
+                <div className="flex-1 overflow-x-auto no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                   <NavbarCryptoTicker />
                 </div>
               </div>
