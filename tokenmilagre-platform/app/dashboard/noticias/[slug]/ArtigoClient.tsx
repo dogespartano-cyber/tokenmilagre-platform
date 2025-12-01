@@ -382,7 +382,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                     <div className="space-y-2">
                       <h3 className="font-bold text-[var(--text-article-title)]">Nota de Transparência</h3>
                       <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
-                        Publicado por $MILAGRE Research | Última atualização: {new Date(article.publishedAt).toLocaleDateString('pt-BR')}
+                        <span className="hidden md:inline">Publicado por $MILAGRE Research | </span>Última atualização: {new Date(article.publishedAt).toLocaleDateString('pt-BR')}
                       </p>
                       <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
                         Este conteúdo é educacional e informativo. Não constitui aconselhamento financeiro. Sempre faça sua própria pesquisa (DYOR).
