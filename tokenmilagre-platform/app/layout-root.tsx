@@ -31,7 +31,7 @@ interface FearGreedData {
 const dashboardHeaderConfig: Record<string, { title: string; description: string }> = {
   '/': {
     title: '$MILAGRE',
-    description: 'Sua bússola no universo cripto. Dados reais, educação sem hype e segurança em primeiro lugar.'
+    description: 'Em busca de uma comunidade com prosperidade.'
   },
   '/graficos': {
     title: 'Gráficos e Análises de Mercado',
@@ -525,7 +525,7 @@ export default function RootLayoutNav({
         </main>
 
         {/* Footer */}
-        <footer className="glass border-t border-[var(--border-medium)] mt-12">
+        <footer className="glass border-t border-[var(--border-medium)]">
           <div className="container mx-auto px-4 py-8">
             <div className="space-y-4">
               <p className="text-sm leading-relaxed text-[var(--text-secondary)]">

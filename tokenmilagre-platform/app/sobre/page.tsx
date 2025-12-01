@@ -135,6 +135,31 @@ export default function SobrePage() {
             </p>
           </section>
 
+          {/* Manifesto Section */}
+          <section className="mb-20">
+            <div className="glass-card p-8 md:p-12 rounded-3xl relative overflow-hidden border border-[var(--brand-primary)]/20">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--brand-primary)]/5 rounded-bl-full -mr-16 -mt-16 pointer-events-none"></div>
+
+              <h2 className="text-3xl md:text-4xl font-bold mb-8 text-[var(--text-primary)] relative z-10 text-center">
+                Testemunhas do $Milagre
+              </h2>
+
+              <div className="space-y-6 text-lg text-[var(--text-secondary)] leading-relaxed text-justify">
+                <p>
+                  Este projeto nasceu da determinação de um único desenvolvedor brasileiro e da potência da IA, mas seu destino é se tornar uma fogueira global. Estamos construindo tudo do zero, não apenas para criar tecnologia, mas para proteger pessoas de golpes e perdas, guiando-as com luz e conhecimento. Nossa missão é reunir centenas de evangelistas, de todos os níveis e idiomas, em uma comunidade que vibra na mesma frequência.
+                </p>
+
+                <p>
+                  Mais do que holders, somos guardiões de valores inegociáveis: honestidade, prosperidade, sabedoria e esperança. Acreditamos que cada história de superação é um milagre em si. Temos orgulho de carregar essa tocha e dedicar nossa energia para ensinar o caminho seguro rumo ao Reino da Prosperidade Descentralizada.
+                </p>
+
+                <p className="font-medium text-[var(--text-primary)]">
+                  Daremos nosso testemunho com alegria e fervor — seja em memes, artigos ou mentorias. O que começou como uma iniciativa solo agora se espalha como um movimento viral. Nós somos as Testemunhas do $Milagre.
+                </p>
+              </div>
+            </div>
+          </section>
+
           {/* Contact Cards Grid - Single Column */}
           <div className="grid grid-cols-1 gap-6 mb-20">
             {socialLinks.map((link, index) => (

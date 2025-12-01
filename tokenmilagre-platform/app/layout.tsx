@@ -27,8 +27,8 @@ import RootLayoutNav from "./layout-root";
 // });
 
 export const metadata: Metadata = {
-  title: "$MILAGRE - Token Comunitário de Apoio Mútuo na Solana | SPL Token",
-  description: "Nunca estarás sozinho. $MILAGRE é um token SPL na Solana criado para conectar pessoas através de apoio mútuo, mentorias e esperança. Guardiões da Prosperidade, Sabedoria e Esperança. Contrato: 3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump",
+  title: "$MILAGRE - Em busca de uma comunidade com prosperidade",
+  description: "Não somos apenas holders. Somos Testemunhas. Junte-se ao movimento por prosperidade, educação e apoio mútuo na Solana. Contrato: 3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump",
   keywords: [
     "$MILAGRE",
     "token",
@@ -37,6 +37,9 @@ export const metadata: Metadata = {
     "crypto",
     "criptomoeda",
     "comunidade",
+    "testemunhas",
+    "movimento",
+    "prosperidade",
     "apoio mútuo",
     "pump.fun",
     "memecoin",
@@ -54,8 +57,8 @@ export const metadata: Metadata = {
   publisher: "$MILAGRE",
   metadataBase: new URL('https://tokenmilagre.xyz'),
   openGraph: {
-    title: "$MILAGRE - Nunca Estarás Sozinho ❤️",
-    description: "Token SPL comunitário de apoio mútuo na Solana. Três Guardiões Celestiais guiando holders em prosperidade, sabedoria e esperança. FAQ interativa, tutorial completo e comunidade ativa.",
+    title: "$MILAGRE - Em busca de uma comunidade com prosperidade",
+    description: "Não somos apenas holders. Somos Testemunhas. Junte-se ao movimento por prosperidade, educação e apoio mútuo na Solana.",
     url: 'https://tokenmilagre.xyz',
     siteName: '$MILAGRE',
     images: [
@@ -71,8 +74,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "$MILAGRE - Nunca Estarás Sozinho ❤️",
-    description: "Token SPL comunitário na Solana | Guardiões da Prosperidade, Sabedoria e Esperança | Junte-se à comunidade",
+    title: "$MILAGRE - Em busca de uma comunidade com prosperidade",
+    description: "Não somos apenas holders. Somos Testemunhas. Junte-se ao movimento por prosperidade, educação e apoio mútuo na Solana.",
     images: ['/images/TOKEN-MILAGRE-Hero.webp'],
     creator: '@tokenmilagre',
   },
