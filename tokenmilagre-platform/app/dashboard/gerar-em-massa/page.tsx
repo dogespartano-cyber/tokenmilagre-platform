@@ -726,12 +726,44 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         // 🔧 AUTO-CORREÇÃO: Truncar campos que excedem limites de validação
         let wasCorrected = false;
 
-        // Excerpt: máximo 300 caracteres (schema: min 50, max 300)
-        if (payload.excerpt && payload.excerpt.length > 300) {
+        // 🔒 Excerpt: garantir que existe e está dentro do limite
+        if (!payload.excerpt || typeof payload.excerpt !== 'string') {
+          // Se excerpt está faltando ou inválido, gerar a partir do content
+          if (payload.content && typeof payload.content === 'string') {
+            const firstParagraph = payload.content
+              .replace(/^#+\s+.*$/gm, '') // Remove títulos markdown
+              .split('\n\n')[0] // Pega primeiro parágrafo
+              .replace(/[#*_`]/g, '') // Remove markdown
+              .trim();
+
+            payload.excerpt = firstParagraph.substring(0, 297) + '...';
+            console.warn(`⚠️ [${i + 1}] Excerpt gerado do conteúdo: ${payload.excerpt.length} chars`);
+            wasCorrected = true;
+          } else {
+            // Fallback: usar título como excerpt
+            payload.excerpt = (payload.title || 'Artigo gerado por IA').substring(0, 297) + '...';
+            console.warn(`⚠️ [${i + 1}] Excerpt gerado do título (fallback)`);
+            wasCorrected = true;
+          }
+        } else if (payload.excerpt.length > 300) {
+          // Se excerpt existe mas é muito longo, truncar
           const originalLength = payload.excerpt.length;
           payload.excerpt = payload.excerpt.substring(0, 297) + '...';
           console.warn(`⚠️ [${i + 1}] Excerpt truncado: ${originalLength} → 300 chars`);
           wasCorrected = true;
+        } else if (payload.excerpt.length < 50) {
+          // Se excerpt é muito curto, tentar gerar do content
+          if (payload.content && typeof payload.content === 'string') {
+            const firstParagraph = payload.content
+              .replace(/^#+\s+.*$/gm, '')
+              .split('\n\n')[0]
+              .replace(/[#*_`]/g, '')
+              .trim();
+
+            payload.excerpt = firstParagraph.substring(0, 297) + '...';
+            console.warn(`⚠️ [${i + 1}] Excerpt muito curto, regenerado: ${payload.excerpt.length} chars`);
+            wasCorrected = true;
+          }
         }
 
         // Title: máximo 200 caracteres (schema: min 10, max 200)

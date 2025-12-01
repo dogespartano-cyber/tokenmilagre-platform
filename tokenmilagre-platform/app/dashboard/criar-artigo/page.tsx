@@ -333,12 +333,44 @@ export default function CriarArtigoPage() {
       // 🔧 AUTO-CORREÇÃO: Truncar campos que excedem limites de validação
       let wasCorrected = false;
 
-      // Excerpt: máximo 300 caracteres (schema: min 50, max 300)
-      if (articleToValidate.excerpt && articleToValidate.excerpt.length > 300) {
+      // 🔒 Excerpt: garantir que existe e está dentro do limite
+      if (!articleToValidate.excerpt || typeof articleToValidate.excerpt !== 'string') {
+        // Se excerpt está faltando ou inválido, gerar a partir do content
+        if (articleToValidate.content && typeof articleToValidate.content === 'string') {
+          const firstParagraph = articleToValidate.content
+            .replace(/^#+\s+.*$/gm, '') // Remove títulos markdown
+            .split('\n\n')[0] // Pega primeiro parágrafo
+            .replace(/[#*_`]/g, '') // Remove markdown
+            .trim();
+
+          articleToValidate.excerpt = firstParagraph.substring(0, 297) + '...';
+          console.warn(`⚠️ Excerpt gerado do conteúdo: ${articleToValidate.excerpt.length} chars`);
+          wasCorrected = true;
+        } else {
+          // Fallback: usar título como excerpt
+          articleToValidate.excerpt = (articleToValidate.title || 'Artigo gerado por IA').substring(0, 297) + '...';
+          console.warn(`⚠️ Excerpt gerado do título (fallback)`);
+          wasCorrected = true;
+        }
+      } else if (articleToValidate.excerpt.length > 300) {
+        // Se excerpt existe mas é muito longo, truncar
         const originalLength = articleToValidate.excerpt.length;
         articleToValidate.excerpt = articleToValidate.excerpt.substring(0, 297) + '...';
         console.warn(`⚠️ Excerpt truncado: ${originalLength} → 300 chars`);
         wasCorrected = true;
+      } else if (articleToValidate.excerpt.length < 50) {
+        // Se excerpt é muito curto, tentar gerar do content
+        if (articleToValidate.content && typeof articleToValidate.content === 'string') {
+          const firstParagraph = articleToValidate.content
+            .replace(/^#+\s+.*$/gm, '')
+            .split('\n\n')[0]
+            .replace(/[#*_`]/g, '')
+            .trim();
+
+          articleToValidate.excerpt = firstParagraph.substring(0, 297) + '...';
+          console.warn(`⚠️ Excerpt muito curto, regenerado: ${articleToValidate.excerpt.length} chars`);
+          wasCorrected = true;
+        }
       }
 
       // Title: máximo 200 caracteres (schema: min 10, max 200)
