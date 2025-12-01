@@ -26,7 +26,7 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
   return (
     <>
       <div className="py-12 animate-in fade-in duration-500">
-        <div className="flex gap-8 px-4 md:px-8 lg:pl-[55px]">
+        <div className="flex gap-8 px-6 md:px-10 lg:pl-[55px]">
           <div className="flex-1 max-w-5xl space-y-16">
             {/* Header */}
             <ResourceHeader resource={resource} />
