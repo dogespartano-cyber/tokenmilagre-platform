@@ -330,6 +330,39 @@ export default function CriarArtigoPage() {
         ? articleToValidate.citations
         : undefined;
 
+      // 🔧 AUTO-CORREÇÃO: Truncar campos que excedem limites de validação
+      let wasCorrected = false;
+
+      // Excerpt: máximo 300 caracteres (schema: min 50, max 300)
+      if (articleToValidate.excerpt && articleToValidate.excerpt.length > 300) {
+        const originalLength = articleToValidate.excerpt.length;
+        articleToValidate.excerpt = articleToValidate.excerpt.substring(0, 297) + '...';
+        console.warn(`⚠️ Excerpt truncado: ${originalLength} → 300 chars`);
+        wasCorrected = true;
+      }
+
+      // Title: máximo 200 caracteres (schema: min 10, max 200)
+      if (articleToValidate.title && articleToValidate.title.length > 200) {
+        const originalLength = articleToValidate.title.length;
+        articleToValidate.title = articleToValidate.title.substring(0, 197) + '...';
+        console.warn(`⚠️ Título truncado: ${originalLength} → 200 chars`);
+        wasCorrected = true;
+      }
+
+      // Content: mínimo 100 caracteres
+      if (articleToValidate.content && articleToValidate.content.length < 100) {
+        console.error(`❌ Conteúdo muito curto: ${articleToValidate.content.length} chars (mínimo 100)`);
+        throw new Error(`Conteúdo insuficiente: ${articleToValidate.content.length} caracteres (mínimo 100)`);
+      }
+
+      if (wasCorrected) {
+        console.log('✅ Payload auto-corrigido e pronto para envio');
+        addMessage({
+          role: 'assistant',
+          content: '⚠️ **Ajustes automáticos aplicados:**\n\nAlguns campos foram truncados para atender aos limites de validação (excerpt máx. 300 chars, título máx. 200 chars).'
+        });
+      }
+
       const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

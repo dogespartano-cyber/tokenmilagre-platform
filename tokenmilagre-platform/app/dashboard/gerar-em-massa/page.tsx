@@ -723,9 +723,41 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
           throw new Error(`Categoria inválida: esperado string, recebido ${typeof payload.category}`);
         }
 
+        // 🔧 AUTO-CORREÇÃO: Truncar campos que excedem limites de validação
+        let wasCorrected = false;
+
+        // Excerpt: máximo 300 caracteres (schema: min 50, max 300)
+        if (payload.excerpt && payload.excerpt.length > 300) {
+          const originalLength = payload.excerpt.length;
+          payload.excerpt = payload.excerpt.substring(0, 297) + '...';
+          console.warn(`⚠️ [${i + 1}] Excerpt truncado: ${originalLength} → 300 chars`);
+          wasCorrected = true;
+        }
+
+        // Title: máximo 200 caracteres (schema: min 10, max 200)
+        if (payload.title && payload.title.length > 200) {
+          const originalLength = payload.title.length;
+          payload.title = payload.title.substring(0, 197) + '...';
+          console.warn(`⚠️ [${i + 1}] Título truncado: ${originalLength} → 200 chars`);
+          wasCorrected = true;
+        }
+
+        // Content: mínimo 100 caracteres (validação Zod)
+        if (payload.content && payload.content.length < 100) {
+          console.error(`❌ [${i + 1}] Conteúdo muito curto: ${payload.content.length} chars (mínimo 100)`);
+          throw new Error(`Conteúdo insuficiente: ${payload.content.length} caracteres (mínimo 100)`);
+        }
+
+        if (wasCorrected) {
+          console.log(`✅ [${i + 1}] Payload auto-corrigido e pronto para envio`);
+        }
+
         console.log(`📦 [${i + 1}] Payload:`, {
           type: payload.type,
           title: payload.title || payload.name,
+          titleLength: payload.title?.length,
+          excerpt: payload.excerpt?.substring(0, 50) + '...',
+          excerptLength: payload.excerpt?.length,
           category: payload.category,
           categoryType: typeof payload.category,
           slug: payload.slug
