@@ -682,26 +682,49 @@ Responda APENAS com um objeto JSON:
 }`;
       }
 
-      // Chamar Gemini via endpoint de refine (reutilizar endpoint existente)
-      const response = await fetch('/api/process-gemini', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          content: prompt,
-          mode: 'fix-field' // Modo especial para correção pontual
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Erro ao chamar Gemini');
+      // Chamar Gemini diretamente via API pública
+      // Nota: Em produção, mova isso para um endpoint backend para proteger a API key
+      const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+      if (!GEMINI_API_KEY) {
+        throw new Error('GEMINI_API_KEY não configurada');
       }
 
-      const data = await response.json();
-      let fixedField;
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{ text: prompt }]
+            }],
+            generationConfig: {
+              temperature: 0.7,
+              topK: 40,
+              topP: 0.95,
+              maxOutputTokens: 2048,
+            }
+          })
+        }
+      );
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Erro Gemini:', errorData);
+        throw new Error(`Gemini API error: ${errorData.error?.message || 'Unknown error'}`);
+      }
+
+      const geminiData = await response.json();
+      const responseText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
+
+      if (!responseText) {
+        throw new Error('Resposta vazia do Gemini');
+      }
+
+      let fixedField;
       try {
         // Tentar extrair JSON da resposta
-        const jsonMatch = data.content?.match(/\{[\s\S]*\}/);
+        const jsonMatch = responseText.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
           fixedField = JSON.parse(jsonMatch[0]);
         } else {
@@ -709,6 +732,7 @@ Responda APENAS com um objeto JSON:
         }
       } catch (e) {
         console.error('Erro ao parsear resposta do Gemini:', e);
+        console.error('Resposta recebida:', responseText);
         throw new Error('Gemini retornou formato inválido');
       }
 
