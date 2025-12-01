@@ -189,7 +189,15 @@ export async function POST(request: NextRequest) {
     })
 
     // Validate using Zod schema
-    const validated = validation.validate(articleCreateInputCurrent, body)
+    let validated;
+    try {
+      validated = validation.validate(articleCreateInputCurrent, body)
+    } catch (validationError: any) {
+      // Log validation error details to server console
+      console.error('❌ [Validation Failed] Body that failed:', JSON.stringify(body, null, 2));
+      console.error('❌ [Validation Failed] Error:', validationError);
+      throw validationError; // Re-throw to be caught by outer catch
+    }
 
     // Create article using service layer
     // Service handles JSON stringification and authorId fallback

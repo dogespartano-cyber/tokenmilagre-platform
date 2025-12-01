@@ -804,11 +804,25 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
           const errorMessage = errorData.error || response.statusText;
+
+          // 🔍 Log detalhado do erro com payload completo
           console.error(`❌ [${i + 1}] Erro ao salvar:`, {
             status: response.status,
             error: errorMessage,
-            details: errorData.details
+            details: errorData.details,
+            validationErrors: errorData.validationErrors
           });
+
+          console.error(`📦 [${i + 1}] Payload que falhou:`, JSON.stringify(payload, null, 2));
+
+          // Se houver erros de validação específicos, mostrar claramente
+          if (errorData.validationErrors && Array.isArray(errorData.validationErrors)) {
+            const errorsText = errorData.validationErrors
+              .map((e: any) => `${e.path}: ${e.message}`)
+              .join('\n');
+            throw new Error(`Validação falhou:\n${errorsText}`);
+          }
+
           throw new Error(`Erro ao salvar "${article.title || article.name}": ${errorMessage}`);
         }
 
