@@ -678,9 +678,9 @@ export default function HomePage() {
                   </div>
                 </Link>
 
-                {/* Card 2: Exchanges Verificadas */}
+                {/* Card 2: Ferramentas & Recursos */}
                 <Link
-                  href="/recursos?search=exchange"
+                  href="/recursos"
                   className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
                 >
                   <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/20 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
@@ -691,10 +691,10 @@ export default function HomePage() {
                         <FontAwesomeIcon icon={faShieldAlt} />
                       </div>
                       <h4 className="text-xl font-bold mb-2 text-[var(--text-primary)]">
-                        Exchanges Verificadas
+                        Ferramentas & Recursos
                       </h4>
                       <p className="text-sm text-[var(--text-secondary)] mb-3">
-                        Links oficiais de plataformas confiáveis
+                        Plataformas e ferramentas essenciais
                       </p>
                     </div>
                     <div className="flex items-center justify-between text-blue-500 text-sm font-semibold">
@@ -813,7 +813,7 @@ export default function HomePage() {
                   <Link key={item.id} href={`/educacao/${item.slug}`} className="glass-card rounded-2xl p-6 hover:-translate-y-1 transition-transform">
                     <div className="mb-4">
                       <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-3`} style={{ background: getLevelGradient(item.level) }}>
-                        <FontAwesomeIcon icon={getLevelIcon(item.level)} className="text-white" />
+                        <FontAwesomeIcon icon={getLevelIcon(item.level)} style={{ color: getLevelColor(item.level) }} />
                       </div>
                     </div>
                     <h3 className="text-lg font-bold mb-2 line-clamp-2 text-[var(--text-primary)]">
@@ -834,7 +834,7 @@ export default function HomePage() {
             </div>
 
             {/* Gráfico de Preços */}
-            <div className="glass-card rounded-2xl p-6">
+            <div className="glass-card rounded-2xl p-6 overflow-hidden">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
                   Gráfico de Preços
@@ -860,7 +860,7 @@ export default function HomePage() {
                   </button>
                 </div>
               </div>
-              <div className="h-[400px] w-full">
+              <div className="w-full">
                 <LightweightChart symbol={chartSymbol} />
               </div>
             </div>

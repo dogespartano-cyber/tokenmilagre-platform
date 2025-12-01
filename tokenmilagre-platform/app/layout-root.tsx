@@ -231,39 +231,43 @@ export default function RootLayoutNav({
         < header className="sticky top-0 z-30 backdrop-blur-xl h-[88px] flex items-center bg-transparent">
           <div className="container mx-auto px-6 h-full">
             <div className="flex justify-between items-center h-full">
-              {/* Hamburger Menu Button - Mobile & Desktop */}
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="group lg:hidden p-2 rounded-lg transition-all duration-300 hover:scale-110 hover:bg-opacity-50 text-[var(--text-primary)]"
-              >
-                <FontAwesomeIcon icon={faBars} className="w-6 h-6 transition-transform duration-300 group-hover:rotate-90" />
-              </button>
+              {/* Mobile Header Layout */}
+              <div className="flex items-center justify-between w-full lg:hidden">
+                {/* Left Side: Hamburger + Logo */}
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => setSidebarOpen(true)}
+                    className="group p-2 rounded-lg transition-all duration-300 hover:scale-110 hover:bg-opacity-50 text-[var(--text-primary)]"
+                  >
+                    <FontAwesomeIcon icon={faBars} className="w-6 h-6 transition-transform duration-300 group-hover:rotate-90" />
+                  </button>
 
-              <div className="flex items-center gap-4 lg:hidden">
-                <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-all duration-300 group">
-                  <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 group-hover:scale-110 transition-all duration-300 group-hover:rotate-12" style={{
-                    borderColor: 'var(--brand-primary)'
-                  }}>
-                    <div className="absolute inset-0 blur-sm" style={{
-                      background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-                      opacity: 0.2
-                    }}></div>
-                    <Image
-                      src="/images/TOKEN-MILAGRE-Hero.webp"
-                      alt="$MILAGRE"
-                      width={40}
-                      height={40}
-                      className="w-full h-full object-cover relative z-10"
-                    />
-                  </div>
-                  <div className="text-xl sm:text-2xl font-bold drop-shadow-lg transition-all duration-300 font-[family-name:var(--font-poppins)] text-theme-primary group-hover:text-brand-primary group-hover:scale-105">
-                    $MILAGRE
-                  </div>
-                </Link>
+                  <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-all duration-300 group">
+                    <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 group-hover:scale-110 transition-all duration-300 group-hover:rotate-12" style={{
+                      borderColor: 'var(--brand-primary)'
+                    }}>
+                      <div className="absolute inset-0 blur-sm" style={{
+                        background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+                        opacity: 0.2
+                      }}></div>
+                      <Image
+                        src="/images/TOKEN-MILAGRE-Hero.webp"
+                        alt="$MILAGRE"
+                        width={40}
+                        height={40}
+                        className="w-full h-full object-cover relative z-10"
+                      />
+                    </div>
+                    <div className="text-xl sm:text-2xl font-bold drop-shadow-lg transition-all duration-300 font-[family-name:var(--font-poppins)] text-theme-primary group-hover:text-brand-primary group-hover:scale-105">
+                      $MILAGRE
+                    </div>
+                  </Link>
+                </div>
 
+                {/* Right Side: Theme Toggle */}
                 <button
                   onClick={toggleTheme}
-                  className="group flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105 bg-[var(--bg-secondary)] text-[var(--text-primary)]"
+                  className="group flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105 glass-card text-[var(--text-primary)]"
                 >
                   <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
                   <span className="text-xs font-semibold whitespace-nowrap">{theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}</span>
@@ -513,7 +517,7 @@ export default function RootLayoutNav({
             }}
           >
             <div
-              className="rounded-2xl overflow-hidden shadow-md border border-[var(--border-light)] bg-[var(--bg-elevated)]"
+              className="rounded-2xl overflow-hidden glass-card"
             >
               <TickerTapeWidget />
             </div>

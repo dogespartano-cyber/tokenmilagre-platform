@@ -296,7 +296,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                     <span className={`px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wide shadow-sm ${getSentimentColorClass(article.sentiment)}`}>
                       {getSentimentLabel(article.sentiment)}
                     </span>
-                    <span className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wide bg-[var(--bg-article-tag)] text-[var(--text-article-body)]">
+                    <span className="hidden md:inline-block px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wide bg-[var(--bg-article-tag)] text-[var(--text-article-body)]">
                       {article.source}
                     </span>
                     <div className="flex items-center gap-4 text-sm text-[var(--text-article-muted)] ml-auto md:ml-0">
@@ -382,7 +382,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                     <div className="space-y-2">
                       <h3 className="font-bold text-[var(--text-article-title)]">Nota de Transparência</h3>
                       <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
-                        <span className="hidden md:inline">Publicado por $MILAGRE Research | </span>Última atualização: {new Date(article.publishedAt).toLocaleDateString('pt-BR')}
+                        Publicado por $MILAGRE Research | Última atualização: {new Date(article.publishedAt).toLocaleDateString('pt-BR')}
                       </p>
                       <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
                         Este conteúdo é educacional e informativo. Não constitui aconselhamento financeiro. Sempre faça sua própria pesquisa (DYOR).
