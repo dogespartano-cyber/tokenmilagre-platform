@@ -92,6 +92,13 @@ export default function GerarEmMassaPage() {
             error: draft.error
           };
 
+          // 🔒 BLINDAGEM: Corrigir categoria se vier como objeto do cache
+          if (article.category && typeof article.category === 'object') {
+            const categoryObj = article.category as any;
+            article.category = categoryObj.category || categoryObj.name || undefined;
+            console.warn(`⚠️ Categoria corrigida do rascunho ${draft.id}:`, article.category);
+          }
+
           // 🔧 REGENERAR slug para usar novo formato (timestamp em vez de data)
           if (article.title) {
             // Usa a função centralizada que já tem a correção para não deixar hífen no final
@@ -545,8 +552,16 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
       }
 
       // 4.5. NOVO: Aplicar fallback de categoria ANTES da validação Zod (P0 - Blindagem)
+      // 🔒 BLINDAGEM: Garantir que category seja sempre uma string válida
+      let rawCategory = processedArticle.category;
+      if (typeof rawCategory === 'object' && rawCategory !== null) {
+        // Se a IA retornou um objeto por engano, tentar extrair string
+        rawCategory = (rawCategory as any).category || (rawCategory as any).name || undefined;
+        console.warn(`⚠️ [${index + 1}] Categoria veio como objeto da IA, extraído:`, rawCategory);
+      }
+
       const { category: normalizedCategory, hadFallback } = normalizeCategoryWithFallback(
-        processedArticle.category,
+        rawCategory,
         article.type as ArticleType
       );
 
@@ -554,7 +569,7 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
 
       if (hadFallback) {
         console.warn(`⚠️ [${index + 1}] Categoria normalizada:`, {
-          original: processedArticle.category,
+          original: rawCategory,
           normalizada: normalizedCategory,
           tipo: article.type
         });
@@ -624,10 +639,19 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         const article = selected[i];
         console.log(`💾 [${i + 1}/${selected.length}] Salvando: ${article.title || article.name}`);
 
+        // 🔒 BLINDAGEM: Garantir que category seja sempre uma string válida
+        // Pode vir como objeto se houve erro de parsing/cache
+        let rawCategory = article.category;
+        if (typeof rawCategory === 'object' && rawCategory !== null) {
+          // Se veio como objeto (ex: { category: string, hadFallback: boolean }), extrair a string
+          rawCategory = (rawCategory as any).category || undefined;
+          console.warn(`⚠️ [${i + 1}] Categoria veio como objeto, extraído:`, rawCategory);
+        }
+
         // FIX: Aplicar fallback robusto de categoria para TODOS os tipos (P0)
         // Substitui normalização manual por função centralizada
         const { category: normalizedCategory, hadFallback } = normalizeCategoryWithFallback(
-          article.category,
+          rawCategory,
           contentType
         );
 
@@ -638,7 +662,7 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
 
         if (hadFallback) {
           console.warn(`⚠️ [${i + 1}] Categoria do artigo normalizada ao salvar:`, {
-            original: article.category,
+            original: rawCategory,
             normalizada: normalizedCategory,
             tipo: contentType
           });
@@ -693,10 +717,17 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
         delete payload.error;
         delete payload.citations;
 
+        // 🔒 VALIDAÇÃO FINAL: Garantir que category é string antes de enviar
+        if (payload.category && typeof payload.category !== 'string') {
+          console.error(`❌ [${i + 1}] ERRO CRÍTICO: category não é string:`, payload.category);
+          throw new Error(`Categoria inválida: esperado string, recebido ${typeof payload.category}`);
+        }
+
         console.log(`📦 [${i + 1}] Payload:`, {
           type: payload.type,
           title: payload.title || payload.name,
           category: payload.category,
+          categoryType: typeof payload.category,
           slug: payload.slug
         });
 

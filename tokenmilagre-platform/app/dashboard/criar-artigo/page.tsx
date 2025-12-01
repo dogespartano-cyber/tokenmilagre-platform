@@ -244,9 +244,17 @@ export default function CriarArtigoPage() {
     // STEP 1: Normalizar categoria com fallback (P0 - Blindar contra erros da IA)
     let articleToValidate = { ...generatedArticle };
 
+    // 🔒 BLINDAGEM: Garantir que category seja sempre uma string válida
+    let rawCategory = generatedArticle.category;
+    if (typeof rawCategory === 'object' && rawCategory !== null) {
+      // Se a IA retornou um objeto por engano, tentar extrair string
+      rawCategory = (rawCategory as any).category || (rawCategory as any).name || undefined;
+      console.warn('⚠️ Categoria veio como objeto da IA, extraído:', rawCategory);
+    }
+
     // Aplicar fallback de categoria para TODOS os tipos (News, Educational, Resource)
     const { category: normalizedCategory, hadFallback } = normalizeCategoryWithFallback(
-      generatedArticle.category,
+      rawCategory,
       selectedType
     );
 
