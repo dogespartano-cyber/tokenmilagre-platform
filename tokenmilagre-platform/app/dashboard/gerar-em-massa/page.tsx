@@ -641,99 +641,63 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
       });
 
       // Construir prompt CIRÚRGICO - apenas para o campo problemático
-      let prompt = '';
+      let refinementPrompt = '';
       let fieldToFix = '';
 
       if (needsContent) {
         fieldToFix = 'content';
-        prompt = `Você é um redator de notícias cripto. Gere APENAS o CONTEÚDO completo (campo "content") para este artigo:
+        refinementPrompt = `GERE APENAS o campo "content" para este artigo.
 
-Título: "${article.title}"
-Categoria: ${article.category || 'tecnologia'}
-
-INSTRUÇÕES CRÍTICAS:
-- Gere APENAS o campo "content" com o artigo completo em português
+**INSTRUÇÕES CRÍTICAS:**
+- Crie um artigo completo e informativo sobre: "${article.title}"
 - Mínimo 500 caracteres, máximo 5000 caracteres
-- Use formato Markdown (títulos ##, listas, etc)
-- Seja informativo e profissional
-- NÃO inclua título no content (já existe separado)
-- NÃO reescreva outros campos
+- Use formato Markdown com seções ## (H2)
+- Estrutura: Introdução → Contexto → Análise → Conclusão
+- Seja profissional e objetivo
+- NÃO inclua título H1 no início (# Título)
+- NÃO inclua seção de fontes/referências ao final
+- NÃO altere outros campos (title, excerpt, category, tags, etc)
+- Preserve TODOS os outros campos existentes
 
-Responda APENAS com um objeto JSON:
-{
-  "content": "## Introdução\\n\\nConteúdo do artigo aqui..."
-}`;
+APENAS GERE O CAMPO "content". NÃO REESCREVA O ARTIGO INTEIRO.`;
       } else if (needsExcerpt) {
         fieldToFix = 'excerpt';
-        prompt = `Você é um redator de notícias cripto. Gere APENAS o RESUMO (campo "excerpt") para este artigo:
+        refinementPrompt = `GERE APENAS o campo "excerpt" para este artigo.
 
-Título: "${article.title}"
-Conteúdo: ${article.content?.substring(0, 500)}...
-
-INSTRUÇÕES CRÍTICAS:
-- Gere APENAS o campo "excerpt" (resumo do artigo)
+**INSTRUÇÕES CRÍTICAS:**
+- Crie um resumo conciso e atrativo
 - Mínimo 50 caracteres, máximo 300 caracteres
-- Seja conciso e atrativo
-- NÃO reescreva outros campos
+- Seja objetivo e profissional
+- NÃO altere outros campos (title, content, category, tags, etc)
+- Preserve TODOS os outros campos existentes
 
-Responda APENAS com um objeto JSON:
-{
-  "excerpt": "Resumo conciso aqui..."
-}`;
+APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
       }
 
-      // Chamar Gemini diretamente via API pública
-      // Nota: Em produção, mova isso para um endpoint backend para proteger a API key
-      const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-      if (!GEMINI_API_KEY) {
-        throw new Error('GEMINI_API_KEY não configurada');
-      }
-
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{
-              parts: [{ text: prompt }]
-            }],
-            generationConfig: {
-              temperature: 0.7,
-              topK: 40,
-              topP: 0.95,
-              maxOutputTokens: 2048,
-            }
-          })
-        }
-      );
+      // Chamar endpoint /api/refine-article (mesmo que página criar-artigo usa)
+      const response = await fetch('/api/refine-article', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          article: article,
+          refinementPrompt: refinementPrompt,
+          articleType: article.type || 'news'
+        })
+      });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Erro Gemini:', errorData);
-        throw new Error(`Gemini API error: ${errorData.error?.message || 'Unknown error'}`);
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Erro ao chamar /api/refine-article:', errorData);
+        throw new Error(errorData.error || 'Erro ao chamar Gemini');
       }
 
-      const geminiData = await response.json();
-      const responseText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
+      const data = await response.json();
+      const refinedArticle = data.article;
 
-      if (!responseText) {
-        throw new Error('Resposta vazia do Gemini');
-      }
-
-      let fixedField;
-      try {
-        // Tentar extrair JSON da resposta
-        const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          fixedField = JSON.parse(jsonMatch[0]);
-        } else {
-          throw new Error('Resposta não contém JSON válido');
-        }
-      } catch (e) {
-        console.error('Erro ao parsear resposta do Gemini:', e);
-        console.error('Resposta recebida:', responseText);
-        throw new Error('Gemini retornou formato inválido');
+      if (!refinedArticle || !refinedArticle[fieldToFix]) {
+        console.error('Gemini não gerou o campo:', fieldToFix);
+        console.error('Resposta:', refinedArticle);
+        throw new Error(`Gemini não gerou o campo "${fieldToFix}"`);
       }
 
       // Atualizar APENAS o campo corrigido, preservando tudo mais
