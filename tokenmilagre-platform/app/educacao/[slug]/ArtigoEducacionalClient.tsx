@@ -173,7 +173,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
             }}
           />
 
-          <div className="container mx-auto px-4 relative z-10">
+          <div className="container mx-auto px-6 md:px-10 relative z-10">
             <div className="max-w-6xl">
 
 
