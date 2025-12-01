@@ -198,7 +198,7 @@ export default function RootLayoutNav({
                     href={item.href}
                     onClick={() => setSidebarOpen(false)}
                     className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base transition-all duration-300 relative overflow-hidden ${isActive
-                      ? 'text-[var(--brand-primary)] glass-card border-l-4 border-l-[var(--brand-primary)]'
+                      ? 'text-[var(--brand-primary)] glass-card border-l-4 border-l-[var(--brand-primary)] border-y-0 border-r-0'
                       : 'text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1'
                       }`}
                   >
