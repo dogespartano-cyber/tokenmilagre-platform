@@ -218,7 +218,7 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
         aria-label="Breadcrumb"
         style={{ backgroundColor: 'transparent' }}
       >
-        <ol className="flex items-center gap-2 flex-wrap">
+        <ol className="flex items-center gap-2 whitespace-nowrap">
           {/* Home */}
           <li>
             <Link
@@ -229,30 +229,27 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
                 backgroundColor: 'transparent'
               }}
             >
-              <FontAwesomeIcon icon={faHome} className="w-4 h-4" />
-              <span className="text-sm font-medium">Início</span>
+              <FontAwesomeIcon icon={faHome} className="w-4 h-4 shrink-0" />
+              <span className="text-sm font-medium hidden sm:inline">Início</span>
             </Link>
           </li>
 
           {breadcrumbItems.map((item, index) => (
-            <li key={index} className="flex items-center gap-2">
+            <li key={index} className={`flex items-center gap-2 ${index === breadcrumbItems.length - 1 ? 'min-w-0 overflow-hidden' : 'shrink-0'}`}>
               <FontAwesomeIcon
                 icon={faChevronRight}
-                className="w-3 h-3"
+                className="w-3 h-3 shrink-0"
                 style={{ color: 'var(--text-muted)' }}
               />
               {index === breadcrumbItems.length - 1 ? (
                 <span
-                  className="text-sm font-semibold"
+                  className="text-sm font-semibold truncate block"
                   style={{
                     color: 'var(--text-primary)'
                   }}
                   aria-current="page"
                 >
-                  {item.label.length > 30
-                    ? item.label.substring(0, 30) + '...'
-                    : item.label
-                  }
+                  {item.label}
                 </span>
               ) : (
                 <Link
