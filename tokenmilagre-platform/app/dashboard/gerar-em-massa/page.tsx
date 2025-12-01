@@ -623,6 +623,126 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
     }
   };
 
+  /**
+   * Corrige campos problemáticos de um artigo usando Gemini
+   * IMPORTANTE: Só corrige o campo específico, não reescreve o artigo
+   */
+  const handleFixWithAI = async (article: GeneratedArticle) => {
+    try {
+      setIsGenerating(true);
+
+      // Identificar qual campo precisa ser corrigido
+      const needsContent = !article.content || article.content.length < 100;
+      const needsExcerpt = !article.excerpt || article.excerpt.length < 50 || article.excerpt.length > 300;
+
+      console.log(`🤖 Corrigindo artigo "${article.title}" com Gemini:`, {
+        needsContent,
+        needsExcerpt
+      });
+
+      // Construir prompt CIRÚRGICO - apenas para o campo problemático
+      let prompt = '';
+      let fieldToFix = '';
+
+      if (needsContent) {
+        fieldToFix = 'content';
+        prompt = `Você é um redator de notícias cripto. Gere APENAS o CONTEÚDO completo (campo "content") para este artigo:
+
+Título: "${article.title}"
+Categoria: ${article.category || 'tecnologia'}
+
+INSTRUÇÕES CRÍTICAS:
+- Gere APENAS o campo "content" com o artigo completo em português
+- Mínimo 500 caracteres, máximo 5000 caracteres
+- Use formato Markdown (títulos ##, listas, etc)
+- Seja informativo e profissional
+- NÃO inclua título no content (já existe separado)
+- NÃO reescreva outros campos
+
+Responda APENAS com um objeto JSON:
+{
+  "content": "## Introdução\\n\\nConteúdo do artigo aqui..."
+}`;
+      } else if (needsExcerpt) {
+        fieldToFix = 'excerpt';
+        prompt = `Você é um redator de notícias cripto. Gere APENAS o RESUMO (campo "excerpt") para este artigo:
+
+Título: "${article.title}"
+Conteúdo: ${article.content?.substring(0, 500)}...
+
+INSTRUÇÕES CRÍTICAS:
+- Gere APENAS o campo "excerpt" (resumo do artigo)
+- Mínimo 50 caracteres, máximo 300 caracteres
+- Seja conciso e atrativo
+- NÃO reescreva outros campos
+
+Responda APENAS com um objeto JSON:
+{
+  "excerpt": "Resumo conciso aqui..."
+}`;
+      }
+
+      // Chamar Gemini via endpoint de refine (reutilizar endpoint existente)
+      const response = await fetch('/api/process-gemini', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: prompt,
+          mode: 'fix-field' // Modo especial para correção pontual
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao chamar Gemini');
+      }
+
+      const data = await response.json();
+      let fixedField;
+
+      try {
+        // Tentar extrair JSON da resposta
+        const jsonMatch = data.content?.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          fixedField = JSON.parse(jsonMatch[0]);
+        } else {
+          throw new Error('Resposta não contém JSON válido');
+        }
+      } catch (e) {
+        console.error('Erro ao parsear resposta do Gemini:', e);
+        throw new Error('Gemini retornou formato inválido');
+      }
+
+      // Atualizar APENAS o campo corrigido, preservando tudo mais
+      const updatedArticle = {
+        ...article,
+        [fieldToFix]: fixedField[fieldToFix],
+        status: 'success' as const,
+        error: undefined
+      };
+
+      // Atualizar no state
+      setArticles(prev => prev.map(a =>
+        a.id === article.id ? updatedArticle : a
+      ));
+
+      // Salvar no draft storage
+      DraftStorageService.saveDraft(updatedArticle, article.type);
+
+      console.log(`✅ Campo "${fieldToFix}" corrigido com sucesso!`, {
+        original: article[fieldToFix as keyof GeneratedArticle],
+        fixed: fixedField[fieldToFix]
+      });
+
+      alert(`✅ Campo "${fieldToFix}" corrigido com sucesso!\n\nAgora você pode tentar salvar novamente.`);
+
+    } catch (error: any) {
+      console.error('❌ Erro ao corrigir com IA:', error);
+      alert(`❌ Erro ao corrigir: ${error.message}\n\nTente novamente ou corrija manualmente.`);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   const saveSelectedArticles = async () => {
     const selected = articles.filter(a => a.selected && a.status === 'success');
 
@@ -774,10 +894,33 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
           wasCorrected = true;
         }
 
-        // Content: mínimo 100 caracteres (validação Zod)
-        if (payload.content && payload.content.length < 100) {
+        // Content: obrigatório e mínimo 100 caracteres (validação Zod)
+        if (!payload.content || typeof payload.content !== 'string') {
+          console.error(`❌ [${i + 1}] Conteúdo está faltando no rascunho`);
+
+          // Marcar artigo como com erro para permitir correção com IA
+          setArticles(prev => prev.map(a =>
+            a.id === article.id ? {
+              ...a,
+              status: 'error',
+              error: 'Campo "content" está faltando. Use "Corrigir com IA" para gerar o conteúdo automaticamente.'
+            } : a
+          ));
+
+          throw new Error(`Campo obrigatório "content" está faltando. O rascunho está incompleto.\n\nUse o botão "Corrigir com IA" para gerar o conteúdo automaticamente.`);
+        } else if (payload.content.length < 100) {
           console.error(`❌ [${i + 1}] Conteúdo muito curto: ${payload.content.length} chars (mínimo 100)`);
-          throw new Error(`Conteúdo insuficiente: ${payload.content.length} caracteres (mínimo 100)`);
+
+          // Marcar artigo como com erro
+          setArticles(prev => prev.map(a =>
+            a.id === article.id ? {
+              ...a,
+              status: 'error',
+              error: `Conteúdo muito curto: ${payload.content.length} caracteres (mínimo 100). Use "Corrigir com IA".`
+            } : a
+          ));
+
+          throw new Error(`Conteúdo insuficiente: ${payload.content.length} caracteres (mínimo 100).\n\nUse o botão "Corrigir com IA" para expandir o conteúdo.`);
         }
 
         if (wasCorrected) {
@@ -1382,9 +1525,30 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
                           )}
 
                           {article.error && (
-                            <div className="mt-3 p-3 rounded-lg flex items-start gap-2" style={{ backgroundColor: '#ef444410' }}>
-                              <FontAwesomeIcon icon={faExclamationTriangle} className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
-                              <p className="text-sm text-red-600">{article.error}</p>
+                            <div className="mt-3 p-3 rounded-lg border-l-4" style={{
+                              backgroundColor: '#ef444410',
+                              borderColor: '#ef4444'
+                            }}>
+                              <div className="flex items-start gap-2 mb-3">
+                                <FontAwesomeIcon icon={faExclamationTriangle} className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                                <p className="text-sm text-red-600 flex-1">{article.error}</p>
+                              </div>
+
+                              {/* Botão Corrigir com IA - Aparece apenas para erros de campos faltantes */}
+                              {(article.error.includes('faltando') || article.error.includes('muito curto')) && (
+                                <button
+                                  onClick={() => handleFixWithAI(article)}
+                                  disabled={isGenerating}
+                                  className="w-full mt-2 py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-200 hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                  style={{
+                                    background: 'linear-gradient(135deg, #7C3AED, #F59E0B)',
+                                    color: 'white'
+                                  }}
+                                >
+                                  <FontAwesomeIcon icon={faRobot} className="w-4 h-4" />
+                                  Corrigir com IA (Gemini)
+                                </button>
+                              )}
                             </div>
                           )}
                         </div>
