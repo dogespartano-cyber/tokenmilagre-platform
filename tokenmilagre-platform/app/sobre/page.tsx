@@ -24,32 +24,32 @@ export default function SobrePage() {
       name: 'Discord',
       url: 'https://discord.gg/jPgZr7BVXY',
       icon: faDiscord,
-      color: 'bg-[#5865F2]',
-      hover: 'hover:bg-[#4752C4]',
+      color: 'bg-[#5865F2]/10 border border-[#5865F2]/20 text-gray-900 dark:text-[#5865F2]',
+      hover: 'hover:bg-[#5865F2]/20',
       description: 'Participe da nossa comunidade ativa, tire dúvidas e colabore.'
     },
     {
       name: 'Telegram',
       url: 'https://t.me/+Bop_TVFc_mg3Njlh',
       icon: faTelegram,
-      color: 'bg-[#0088cc]',
-      hover: 'hover:bg-[#0077b5]',
+      color: 'bg-[#0088cc]/10 border border-[#0088cc]/20 text-gray-900 dark:text-[#0088cc]',
+      hover: 'hover:bg-[#0088cc]/20',
       description: 'Receba atualizações em tempo real e alertas de segurança.'
     },
     {
       name: 'Twitter / X',
       url: 'https://x.com/TokenMilagre',
       icon: faTwitter,
-      color: 'bg-black',
-      hover: 'hover:bg-gray-800',
+      color: 'bg-black/5 border border-black/10 text-gray-900 dark:text-white dark:bg-white/5 dark:border-white/10',
+      hover: 'hover:bg-black/10 dark:hover:bg-white/10',
       description: 'Siga-nos para notícias rápidas e interações com o ecossistema.'
     },
     {
       name: 'Github - Open Source',
       url: 'https://github.com/dogespartano-cyber/tokenmilagre-platform',
       icon: faGithub,
-      color: 'bg-[#333]',
-      hover: 'hover:bg-[#24292e]',
+      color: 'bg-black/5 border border-black/10 text-gray-900 dark:text-white dark:bg-white/5 dark:border-white/10',
+      hover: 'hover:bg-black/10 dark:hover:bg-white/10',
       description: 'A confiança se conquista com código, não com palavras. Nossa plataforma é 100% código aberto.'
     }
   ];
@@ -75,15 +75,9 @@ export default function SobrePage() {
         })}
       </Script>
 
-      <div className="min-h-screen relative overflow-hidden transition-colors duration-300 font-sans">
+      <div className="min-h-screen relative transition-colors duration-300 font-sans">
         {/* Background Color with Mask to blend with Breadcrumbs */}
-        <div
-          className="absolute inset-0 bg-[var(--bg-secondary)] z-0 pointer-events-none"
-          style={{
-            maskImage: 'linear-gradient(to bottom, transparent, black 150px)',
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 150px)'
-          }}
-        />
+
 
         {/* Background Orbs */}
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -140,7 +134,7 @@ export default function SobrePage() {
             <div className="glass-card p-8 md:p-12 rounded-3xl relative overflow-hidden border border-[var(--brand-primary)]/20">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--brand-primary)]/5 rounded-bl-full -mr-16 -mt-16 pointer-events-none"></div>
 
-              <h2 className="text-3xl md:text-4xl font-bold mb-8 text-[var(--text-primary)] relative z-10 text-center">
+              <h2 className="text-3xl md:text-4xl font-bold mb-8 text-[var(--text-primary)] relative z-10 text-left md:text-center">
                 Testemunhas do $Milagre
               </h2>
 
@@ -171,7 +165,7 @@ export default function SobrePage() {
                 className="glass-card p-8 rounded-3xl group hover:border-[var(--brand-primary)] transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="flex items-center gap-6">
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg transition-colors ${link.color} ${link.hover} shrink-0`}>
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-3xl shadow-lg transition-colors ${link.color} ${link.hover} shrink-0`}>
                     <FontAwesomeIcon icon={link.icon} />
                   </div>
                   <div className="flex-1">

@@ -85,7 +85,7 @@ export default function CriptomoedasPage() {
         <div className="space-y-16">
           {/* Rastreador de Mercado */}
           <div className="space-y-8">
-            <div className="glass-card rounded-2xl overflow-hidden shadow-lg border border-[var(--border-article)] p-1">
+            <div className="glass-card rounded-2xl overflow-hidden shadow-lg p-1">
               <CustomCryptoScreener />
             </div>
 
@@ -141,10 +141,10 @@ export default function CriptomoedasPage() {
                 </div>
 
                 {/* Ver mais notícias */}
-                <div className="flex justify-center pt-4">
+                <div className="flex justify-start pt-4">
                   <Link
                     href="/dashboard/noticias"
-                    className="inline-flex items-center gap-2 px-8 py-3 rounded-xl font-bold transition-all hover:gap-3 bg-[var(--brand-primary)] text-white shadow-lg hover:shadow-xl hover:opacity-90 transform hover:-translate-y-0.5"
+                    className="glass-card inline-flex items-center gap-2 px-8 py-3 rounded-xl font-bold transition-all hover:gap-3 bg-[var(--brand-primary)]/10 hover:bg-[var(--brand-primary)]/20 border border-[var(--brand-primary)]/20 text-[var(--brand-primary)] shadow-lg hover:shadow-xl hover:opacity-90 transform hover:-translate-y-0.5"
                   >
                     Ver todas as notícias
                     <FontAwesomeIcon icon={faArrowRight} />

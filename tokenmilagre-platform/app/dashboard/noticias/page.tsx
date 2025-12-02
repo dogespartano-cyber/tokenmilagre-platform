@@ -211,10 +211,7 @@ export default function NoticiasPage() {
       {/* Floating Filter Button */}
       <button
         onClick={() => setShowFilters(true)}
-        className="fixed bottom-24 right-8 z-50 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-500 hover:scale-110 bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-light)]"
-        style={{
-          boxShadow: '5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px rgba(255, 255, 255, 0.05)'
-        }}
+        className="glass-card fixed bottom-24 right-8 z-50 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 text-[var(--text-primary)]"
         aria-label="Filtrar notícias"
       >
         <div className="relative">

@@ -157,10 +157,10 @@ export default function RootLayoutNav({
 
       {/* Sidebar */}
       <aside className={`fixed top-0 left-0 h-full w-72 z-50 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 bg-[var(--bg-elevated)]/30 backdrop-blur-xl lg:bg-transparent lg:glass border-r border-[var(--border-light)] shadow-2xl lg:shadow-none`}>
+        } lg:translate-x-0 bg-[var(--bg-elevated)]/30 backdrop-blur-xl lg:bg-transparent lg:glass shadow-2xl lg:shadow-none`}>
         <div className="flex flex-col h-full">
           {/* Sidebar Header - Fixed Height for Alignment */}
-          <div className="h-[88px] flex items-center px-6 border-b border-[var(--border-light)]">
+          <div className="h-[88px] flex items-center px-6">
             <div className="flex items-center justify-between w-full">
               <Link href="/" className="flex items-center gap-3 hover:opacity-100 transition-all duration-300 group px-2 py-1 rounded-xl" onClick={() => setSidebarOpen(false)}>
                 <div className="relative w-10 h-10 rounded-full shadow-[0_0_15px_rgba(var(--brand-primary-rgb),0.3)] border-2 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(var(--brand-primary-rgb),0.6)]" style={{
@@ -471,14 +471,10 @@ export default function RootLayoutNav({
 
                 <Link
                   href="/token"
-                  className="group flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(var(--brand-primary-rgb),0.3)] hover:shadow-[0_0_25px_rgba(var(--brand-primary-rgb),0.5)] hover:scale-105 font-bold relative overflow-hidden"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-                    color: 'white'
-                  }}
+                  className="glass-card group flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all duration-300 hover:scale-105 font-bold relative overflow-hidden bg-[var(--brand-primary)]/10 hover:bg-[var(--brand-primary)]/20 border border-[var(--brand-primary)]/20 text-[var(--brand-primary)]"
                 >
                   {/* Angelical Shine Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
 
                   <FontAwesomeIcon icon={faHeart} className="w-5 h-5 transition-transform duration-300 group-hover:scale-125 group-hover:animate-pulse relative z-10" />
                   <span className="relative z-10">$MILAGRE</span>
@@ -529,7 +525,7 @@ export default function RootLayoutNav({
         </main>
 
         {/* Footer */}
-        <footer className="glass border-t border-[var(--border-medium)]">
+        <footer className="bg-transparent border-none">
           <div className="container mx-auto px-4 py-8">
             <div className="space-y-4">
               <p className="text-sm leading-relaxed text-[var(--text-secondary)]">

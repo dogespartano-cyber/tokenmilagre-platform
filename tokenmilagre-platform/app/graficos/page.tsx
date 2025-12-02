@@ -45,7 +45,7 @@ export default function GraficosPage() {
         })}
       </Script>
 
-      <div className="min-h-screen relative overflow-hidden bg-gray-50 dark:bg-[#0F1419] transition-colors duration-300">
+      <div className="min-h-screen relative transition-colors duration-300">
         {/* Dynamic Background Blobs */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand-primary/10 dark:bg-brand-primary/20 blur-[120px] animate-pulse-slow"></div>
@@ -628,11 +628,7 @@ export default function GraficosPage() {
                     href="https://discord.gg/jPgZr7BVXY"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-3 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
-                    style={{
-                      background: 'linear-gradient(135deg, #5865F2, #4752C4)',
-                      color: 'white'
-                    }}
+                    className="glass-card group flex items-center gap-3 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 bg-[#5865F2]/10 hover:bg-[#5865F2]/20 border border-[#5865F2]/20 text-[#5865F2]"
                   >
                     <FontAwesomeIcon icon={faDiscord} className="w-5 h-5" />
                     <span>Discord</span>
@@ -642,11 +638,7 @@ export default function GraficosPage() {
                     href="https://t.me/+Bop_TVFc_mg3Njlh"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-3 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
-                    style={{
-                      background: 'linear-gradient(135deg, #0088cc, #006699)',
-                      color: 'white'
-                    }}
+                    className="glass-card group flex items-center gap-3 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/20 text-[#0088cc]"
                   >
                     <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
                     <span>Telegram</span>

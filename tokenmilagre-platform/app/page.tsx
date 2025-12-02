@@ -388,7 +388,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-[var(--bg-primary)] transition-colors duration-300">
+    <div className="min-h-screen relative">
       {/* Background Orbs */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] animate-pulse-slow"></div>

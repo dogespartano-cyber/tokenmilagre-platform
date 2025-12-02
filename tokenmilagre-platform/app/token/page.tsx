@@ -81,15 +81,9 @@ export default function TokenPage() {
         })}
       </Script>
 
-      <div className="min-h-screen relative overflow-hidden transition-colors duration-300 font-sans">
+      <div className="min-h-screen relative transition-colors duration-300 font-sans">
         {/* Background Color with Mask to blend with Breadcrumbs */}
-        <div
-          className="absolute inset-0 bg-[var(--bg-secondary)] z-0 pointer-events-none"
-          style={{
-            maskImage: 'linear-gradient(to bottom, transparent, black 150px)',
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 150px)'
-          }}
-        />
+
 
         {/* Background Orbs */}
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -452,7 +446,7 @@ export default function TokenPage() {
                 href="https://discord.gg/jPgZr7BVXY"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative px-10 py-5 rounded-full bg-[#5865F2] text-white font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-xl"
+                className="group relative px-10 py-5 rounded-full glass-card bg-[#5865F2]/10 hover:bg-[#5865F2]/20 border border-[#5865F2]/20 text-[#5865F2] font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-xl"
               >
                 <div className="relative flex items-center gap-3">
                   <FontAwesomeIcon icon={faDiscord} className="text-2xl" />
@@ -464,7 +458,7 @@ export default function TokenPage() {
                 href="https://t.me/+Bop_TVFc_mg3Njlh"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative px-10 py-5 rounded-full bg-[#0088cc] text-white font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-xl"
+                className="group relative px-10 py-5 rounded-full glass-card bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/20 text-[#0088cc] font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-xl"
               >
                 <div className="relative flex items-center gap-3">
                   <FontAwesomeIcon icon={faTelegram} className="text-2xl" />

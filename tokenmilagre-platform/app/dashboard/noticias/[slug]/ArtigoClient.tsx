@@ -293,20 +293,13 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 {/* Header Info */}
                 <div className="space-y-6">
                   <div className="flex flex-wrap items-center gap-3">
-                    <span className={`px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wide shadow-sm ${getSentimentColorClass(article.sentiment)}`}>
-                      {getSentimentLabel(article.sentiment)}
-                    </span>
-                    <span className="hidden md:inline-block px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wide bg-[var(--bg-article-tag)] text-[var(--text-article-body)]">
-                      {article.source}
-                    </span>
-                    <div className="flex items-center gap-4 text-sm text-[var(--text-article-muted)] ml-auto md:ml-0">
-                      <span className="flex items-center gap-1.5">
-                        <FontAwesomeIcon icon={faClock} className="w-3.5 h-3.5" />
-                        {readingTime} min
+                    <div className="inline-flex items-center gap-3">
+                      <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">
+                        Sentimento
                       </span>
-                      <span className="flex items-center gap-1.5">
-                        <FontAwesomeIcon icon={faCalendar} className="w-3.5 h-3.5" />
-                        {getTimeAgo(article.publishedAt)}
+                      <div className="w-1 h-1 rounded-full bg-[var(--text-tertiary)]" />
+                      <span className={`text-xs font-bold uppercase tracking-wide ${getSentimentColorClass(article.sentiment).replace('bg-', 'text-').replace('text-white', '')}`}>
+                        {getSentimentLabel(article.sentiment)}
                       </span>
                     </div>
                   </div>
@@ -314,6 +307,17 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                   <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-[var(--text-article-title)] font-[family-name:var(--font-poppins)]">
                     {article.title}
                   </h1>
+
+                  <div className="flex items-center gap-4 text-sm text-[var(--text-article-muted)]">
+                    <span className="flex items-center gap-1.5">
+                      <FontAwesomeIcon icon={faClock} className="w-3.5 h-3.5" />
+                      {readingTime} min
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <FontAwesomeIcon icon={faCalendar} className="w-3.5 h-3.5" />
+                      {getTimeAgo(article.publishedAt)}
+                    </span>
+                  </div>
 
                   <p className="text-lg md:text-xl leading-relaxed text-[var(--text-article-body)] border-l-4 border-[var(--brand-primary)] pl-4 italic">
                     {article.summary}
@@ -331,6 +335,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                       </button>
                     ))}
                   </div>
+
+
                 </div>
 
                 <div className="h-px bg-[var(--border-article)]" />
@@ -398,15 +404,15 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                     Compartilhe esta notícia
                   </h3>
                   <div className="flex flex-wrap gap-3">
-                    <button onClick={shareOnX} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-black text-white lg:hover:bg-gray-800 lg:hover:scale-105 active:scale-95 shadow-md">
+                    <button onClick={shareOnX} className="glass-card flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-black/5 hover:bg-black/10 border border-black/10 text-black dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/10 dark:text-white lg:hover:scale-105 active:scale-95 shadow-sm">
                       <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
                       X (Twitter)
                     </button>
-                    <button onClick={shareOnTelegram} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-[#0088cc] text-white lg:hover:bg-[#0077b5] lg:hover:scale-105 active:scale-95 shadow-md">
+                    <button onClick={shareOnTelegram} className="glass-card flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/20 text-[#0088cc] lg:hover:scale-105 active:scale-95 shadow-sm">
                       <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
                       Telegram
                     </button>
-                    <button onClick={shareOnWhatsApp} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-[#25D366] text-white lg:hover:bg-[#20bd5a] lg:hover:scale-105 active:scale-95 shadow-md">
+                    <button onClick={shareOnWhatsApp} className="glass-card flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/20 text-[#25D366] lg:hover:scale-105 active:scale-95 shadow-sm">
                       <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
                       WhatsApp
                     </button>
