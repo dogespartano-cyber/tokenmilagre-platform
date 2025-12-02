@@ -507,10 +507,9 @@ export default function RootLayoutNav({
 
           {/* Ticker Tape - Sempre montado para evitar recarregamento */}
           <div
-            className="container mx-auto px-4 mb-8 relative z-10"
-            style={{
-              display: headerConfig ? 'block' : 'none',
-            }}
+            // Ticker visibility controlled by Tailwind classes
+            suppressHydrationWarning={true}
+            className={`container mx-auto px-4 mb-8 relative z-10 ${headerConfig ? 'hidden lg:block' : 'hidden'}`}
           >
             <div
               className="rounded-2xl overflow-hidden glass-card"

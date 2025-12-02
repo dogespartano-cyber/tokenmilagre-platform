@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import type React from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowUp, faCalendar, faClock, faShareNodes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowUp, faCalendar, faClock, faShareNodes, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { getCitationAwareMarkdownComponents, SourcesSection } from '@/lib/citations-processor';
 
@@ -199,6 +199,14 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
     }
   };
 
+  const getSentimentColorHex = (sentiment: string) => {
+    switch (sentiment) {
+      case 'positive': return '#10B981'; // emerald-500
+      case 'negative': return '#EF4444'; // red-500
+      default: return '#F59E0B'; // amber-500
+    }
+  };
+
   const shareOnX = () => {
     const url = window.location.href;
     const text = `${article?.title} via @TokenMilagre`;
@@ -254,7 +262,59 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
         style={{ width: `${readingProgress}%` }}
       />
 
-      <div className="container mx-auto px-4 py-8 lg:py-12">
+      <div className="relative pt-6 pb-4 md:pt-12 md:pb-8 overflow-hidden">
+        {/* Background Glow Effect */}
+        <div className="absolute top-0 left-0 w-full max-w-4xl h-full opacity-30 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle at 20% 30%, ${getSentimentColorHex(article.sentiment)}40 0%, transparent 70%)`,
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 20%)',
+            maskImage: 'linear-gradient(to bottom, transparent, black 20%)'
+          }}
+        />
+
+        <div className="container mx-auto px-6 md:px-10 relative z-10">
+          <div className="max-w-6xl">
+
+            {/* Meta Badges */}
+            <div className="flex flex-wrap items-center gap-3 mb-6">
+              <div className="inline-flex items-center gap-2">
+                <span className="text-[10px] font-bold text-zinc-700 dark:text-white/90 uppercase tracking-wider drop-shadow-md">
+                  Sentimento
+                </span>
+                <div className="w-1 h-1 rounded-full bg-zinc-700/50 dark:bg-white/50 shadow-sm" />
+                <span className="text-sm font-extrabold uppercase tracking-wide drop-shadow-md" style={{ color: getSentimentColorHex(article.sentiment) }}>
+                  {getSentimentLabel(article.sentiment)}
+                </span>
+              </div>
+
+            </div>
+
+            {/* Title */}
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 font-[family-name:var(--font-poppins)] text-[var(--text-article-title)]">
+              {article.title}
+            </h1>
+
+            {/* Description */}
+            <p className="text-xl md:text-2xl leading-relaxed text-[var(--text-article-body)] opacity-90 max-w-2xl">
+              {article.summary}
+            </p>
+
+            {/* Author & Date */}
+            <div className="mt-8 flex items-center gap-6 text-sm text-[var(--text-article-muted)]">
+              <div className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faCalendar} className="w-3 h-3" />
+                <span>{new Date(article.publishedAt).toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
+                <span>{readingTime} min de leitura</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 pt-2 pb-8 lg:pt-4 lg:pb-12">
 
         {/* Botão Voltar Mobile - REMOVIDO CONFORME SOLICITADO */}
         {/* <div className="mb-6 lg:hidden">
@@ -288,58 +348,9 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 </div>
               )}
 
-              <div className="p-6 md:p-10 space-y-8">
-
-                {/* Header Info */}
-                <div className="space-y-6">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <div className="inline-flex items-center gap-3">
-                      <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">
-                        Sentimento
-                      </span>
-                      <div className="w-1 h-1 rounded-full bg-[var(--text-tertiary)]" />
-                      <span className={`text-xs font-bold uppercase tracking-wide ${getSentimentColorClass(article.sentiment).replace('bg-', 'text-').replace('text-white', '')}`}>
-                        {getSentimentLabel(article.sentiment)}
-                      </span>
-                    </div>
-                  </div>
-
-                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-[var(--text-article-title)] font-[family-name:var(--font-poppins)]">
-                    {article.title}
-                  </h1>
-
-                  <div className="flex items-center gap-4 text-sm text-[var(--text-article-muted)]">
-                    <span className="flex items-center gap-1.5">
-                      <FontAwesomeIcon icon={faClock} className="w-3.5 h-3.5" />
-                      {readingTime} min
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <FontAwesomeIcon icon={faCalendar} className="w-3.5 h-3.5" />
-                      {getTimeAgo(article.publishedAt)}
-                    </span>
-                  </div>
-
-                  <p className="text-lg md:text-xl leading-relaxed text-[var(--text-article-body)] border-l-4 border-[var(--brand-primary)] pl-4 italic">
-                    {article.summary}
-                  </p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    {article.keywords.map((keyword, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => router.push(`/dashboard/noticias?search=${encodeURIComponent(keyword)}`)}
-                        className="px-3 py-1.5 rounded-full text-sm font-medium transition-all bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] lg:hover:bg-[var(--brand-primary)] lg:hover:text-white lg:hover:shadow-md"
-                      >
-                        #{keyword}
-                      </button>
-                    ))}
-                  </div>
+              <div className="p-4 md:px-10 md:py-8 space-y-8">
 
 
-                </div>
-
-                <div className="h-px bg-[var(--border-article)]" />
 
                 {/* Conteúdo Markdown */}
                 <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:font-[family-name:var(--font-poppins)] prose-a:text-[var(--brand-primary)] prose-img:rounded-xl prose-img:shadow-lg">
@@ -375,6 +386,21 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                     {cleanContent || 'Conteúdo não disponível.'}
                   </ReactMarkdown>
                 </article>
+
+                {/* Tags Footer */}
+                <div className="mt-12 pt-8 border-t border-[var(--border-article)]">
+                  <div className="flex flex-wrap gap-2">
+                    {article.keywords.map((keyword, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => router.push(`/dashboard/noticias?search=${encodeURIComponent(keyword)}`)}
+                        className="px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] lg:hover:bg-[var(--brand-primary)] lg:hover:text-white lg:hover:shadow-md"
+                      >
+                        #{keyword}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
                 {/* Seção de Fontes */}
                 <SourcesSection citations={citations} />

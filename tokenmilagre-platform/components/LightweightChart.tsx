@@ -175,7 +175,7 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
           </div>
         </div>
       )}
-      <div className="p-4 pt-0 pr-8">
+      <div className="p-4 pt-0 pr-0">
         <div ref={chartContainerRef} />
       </div>
     </div>
