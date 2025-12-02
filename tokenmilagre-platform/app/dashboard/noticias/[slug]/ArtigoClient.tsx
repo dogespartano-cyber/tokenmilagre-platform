@@ -295,7 +295,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
             </h1>
 
             {/* Description */}
-            <p className="text-xl md:text-2xl leading-relaxed text-[var(--text-article-body)] opacity-90 max-w-2xl">
+            <p className="text-lg md:text-xl leading-relaxed text-[var(--text-article-body)] opacity-90 max-w-2xl">
               {article.summary}
             </p>
 
@@ -333,7 +333,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
           <div className="lg:col-span-8 space-y-8">
 
             {/* Card Principal do Artigo */}
-            <div className="glass-card rounded-3xl overflow-hidden shadow-2xl border border-[var(--border-article)]">
+            <div className="rounded-3xl overflow-hidden md:bg-white/10 md:backdrop-blur-xl md:border md:border-white/20 md:shadow-md dark:md:bg-white/5 dark:md:border-white/5">
 
               {/* Imagem de Capa */}
               {(article as any).coverImage && (

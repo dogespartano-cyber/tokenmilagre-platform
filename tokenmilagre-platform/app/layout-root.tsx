@@ -157,7 +157,7 @@ export default function RootLayoutNav({
 
       {/* Sidebar */}
       <aside className={`fixed top-0 left-0 h-full w-72 z-50 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 bg-[var(--bg-elevated)]/30 backdrop-blur-xl lg:bg-transparent lg:glass shadow-2xl lg:shadow-none`}>
+        } lg:translate-x-0 bg-white dark:bg-[var(--bg-elevated)]/30 backdrop-blur-xl lg:bg-transparent lg:glass shadow-2xl lg:shadow-none`}>
         <div className="flex flex-col h-full">
           {/* Sidebar Header - Fixed Height for Alignment */}
           <div className="h-[88px] flex items-center px-6">
@@ -270,7 +270,7 @@ export default function RootLayoutNav({
                   className="group flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105 glass-card text-[var(--text-primary)]"
                 >
                   <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
-                  <span className="text-xs font-semibold whitespace-nowrap">{theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}</span>
+                  <span className="text-xs font-semibold whitespace-nowrap">{theme === 'light' ? 'Modo Escuro' : 'Claro'}</span>
                 </button>
               </div>
 
@@ -466,7 +466,7 @@ export default function RootLayoutNav({
                   className="group flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-white/5 text-[var(--text-primary)]"
                 >
                   <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
-                  <span className="text-sm font-semibold">{theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}</span>
+                  <span className="text-sm font-semibold">{theme === 'light' ? 'Modo Escuro' : 'Claro'}</span>
                 </button>
 
                 <Link
