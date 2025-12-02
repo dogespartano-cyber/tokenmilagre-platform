@@ -1,0 +1,104 @@
+'use client';
+
+import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBitcoin, faEthereum } from '@fortawesome/free-brands-svg-icons';
+import { TokenBTC, TokenETH, TokenSOL } from '@token-icons/react';
+
+const AdvancedChart = dynamic(() => import('@/components/AdvancedChart'), {
+    ssr: false,
+});
+
+const TechnicalAnalysisWidget = dynamic(() => import('@/components/TechnicalAnalysisWidget'), {
+    ssr: false,
+});
+
+type Asset = 'BTC' | 'ETH' | 'SOL';
+
+export default function CryptoAnalyzer() {
+    const [activeAsset, setActiveAsset] = useState<Asset>('BTC');
+
+    const assets = {
+        BTC: {
+            symbol: 'BTCUSDT',
+            taSymbol: 'BINANCE:BTCUSDT',
+            name: 'Bitcoin',
+            icon: <TokenBTC size={20} variant="branded" />,
+            color: 'text-[#F7931A]',
+            bg: 'bg-[#F7931A]/10',
+            border: 'border-[#F7931A]/20'
+        },
+        ETH: {
+            symbol: 'ETHUSDT',
+            taSymbol: 'BINANCE:ETHUSDT',
+            name: 'Ethereum',
+            icon: <TokenETH size={20} variant="branded" />,
+            color: 'text-[#627EEA]',
+            bg: 'bg-[#627EEA]/10',
+            border: 'border-[#627EEA]/20'
+        },
+        SOL: {
+            symbol: 'SOLUSDT',
+            taSymbol: 'BINANCE:SOLUSDT',
+            name: 'Solana',
+            icon: <TokenSOL size={20} variant="branded" />,
+            color: 'text-[#14F195]',
+            bg: 'bg-[#14F195]/10',
+            border: 'border-[#14F195]/20'
+        }
+    };
+
+    return (
+        <div className="space-y-6">
+            {/* Tabs */}
+            <div className="flex flex-nowrap overflow-x-auto no-scrollbar w-full md:w-fit gap-2 md:gap-4 p-1 bg-gray-100/50 dark:bg-white/5 rounded-xl backdrop-blur-sm border border-gray-200 dark:border-white/10">
+                {(Object.keys(assets) as Asset[]).map((asset) => (
+                    <button
+                        key={asset}
+                        onClick={() => setActiveAsset(asset)}
+                        className={`
+              flex items-center justify-center gap-2 px-4 py-2 md:px-6 md:py-2.5 rounded-lg font-semibold transition-all duration-300 flex-1 md:flex-none whitespace-nowrap
+              ${activeAsset === asset
+                                ? 'bg-white dark:bg-white/10 shadow-md scale-105 ' + assets[asset].color
+                                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5'
+                            }
+            `}
+                    >
+                        <span className="shrink-0 hidden md:flex items-center">{assets[asset].icon}</span>
+                        <span className="md:hidden">{asset}</span>
+                        <span className="hidden md:inline">{assets[asset].name}</span>
+                    </button>
+                ))}
+            </div>
+
+            {/* Content Area */}
+            <div className="grid lg:grid-cols-3 gap-6 animate-fade-in-up">
+                {/* Main Chart - Spans 2 columns */}
+                <div className="lg:col-span-2 space-y-4">
+                    <div className={`glass-card p-1 rounded-2xl overflow-hidden border transition-colors duration-500 ${assets[activeAsset].border}`}>
+                        <div className="h-auto min-h-[600px] w-full bg-white/50 dark:bg-[#131722]">
+                            <AdvancedChart
+                                symbol={assets[activeAsset].symbol}
+                                name={`${assets[activeAsset].name} / Tether US`}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Technical Analysis - Spans 1 column */}
+                <div className="space-y-4">
+                    <div className={`glass-card p-4 rounded-2xl border h-full flex flex-col transition-colors duration-500 ${assets[activeAsset].border}`}>
+                        <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white">
+                            {assets[activeAsset].icon}
+                            <span>Análise Técnica</span>
+                        </h3>
+                        <div className="flex-1 min-h-[500px] rounded-xl overflow-hidden">
+                            <TechnicalAnalysisWidget symbol={assets[activeAsset].taSymbol} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}

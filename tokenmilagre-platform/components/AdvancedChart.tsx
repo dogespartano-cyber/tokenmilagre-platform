@@ -138,11 +138,12 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       },
       width: chartContainerRef.current.clientWidth,
       height: 600,
+      autoSize: true, // Enable autoSize
       timeScale: {
         borderColor: borderColor || 'rgba(255, 255, 255, 0.2)',
         timeVisible: true,
         secondsVisible: false,
-        rightOffset: 12, // Espaço entre último candle e borda direita (aproximadamente 55px)
+        rightOffset: 12,
       },
       rightPriceScale: {
         borderColor: borderColor || 'rgba(255, 255, 255, 0.2)',
@@ -234,19 +235,18 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       bbLower: bbLowerSeries,
     });
 
-    // Responsivo
-    const handleResize = () => {
-      if (chartContainerRef.current && chart) {
-        chart.applyOptions({
-          width: chartContainerRef.current.clientWidth,
-        });
-      }
-    };
+    // Responsivo com ResizeObserver
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (entries.length === 0 || !entries[0].target) return;
 
-    window.addEventListener('resize', handleResize);
+      const newRect = entries[0].contentRect;
+      chart.applyOptions({ width: newRect.width });
+    });
+
+    resizeObserver.observe(chartContainerRef.current);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      resizeObserver.disconnect();
       chart.remove();
     };
   }, [symbol, timeframe, theme]);
@@ -324,11 +324,11 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
 
   return (
     <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: 'transparent' }}>
-      {/* Título, Preço e Timeframe - Mesma Linha */}
-      <div className="px-4 pt-4 pb-2 flex items-center justify-between gap-4">
+      {/* Título, Preço e Timeframe - Responsivo */}
+      <div className="px-4 pt-4 pb-2 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         {/* Esquerda: Título + Preço */}
         {name && (
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <h4 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>{name}</h4>
             {currentPrice && (
               <div className="px-3 py-1 rounded-lg font-bold text-lg border" style={{
@@ -343,14 +343,13 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
         )}
 
         {/* Direita: Timeframe Selector */}
-        <div className="flex gap-1 rounded-lg p-1" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+        <div className="flex gap-1 rounded-lg p-1 w-full md:w-auto overflow-x-auto no-scrollbar" style={{ backgroundColor: 'var(--bg-secondary)' }}>
           {(['15m', '4h', '1d'] as Timeframe[]).map((tf) => (
             <button
               key={tf}
               onClick={() => setTimeframe(tf)}
-              className={`px-3 py-1 rounded text-sm font-medium transition-all ${
-                timeframe === tf ? 'bg-yellow-400/30 shadow-sm' : ''
-              }`}
+              className={`px-3 py-1 rounded text-sm font-medium transition-all flex-1 md:flex-none text-center ${timeframe === tf ? 'bg-yellow-400/30 shadow-sm' : ''
+                }`}
               style={timeframe === tf ? { color: 'var(--text-primary)' } : { color: 'var(--text-tertiary)' }}
             >
               {tf.toUpperCase()}

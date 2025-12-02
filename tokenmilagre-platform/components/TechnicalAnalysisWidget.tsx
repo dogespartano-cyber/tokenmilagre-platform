@@ -35,7 +35,7 @@ function TechnicalAnalysisWidget({ symbol = "BINANCE:BTCUSDT" }: TechnicalAnalys
   }, [symbol]);
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden" style={{ height: "500px" }}>
+    <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden max-w-full" style={{ height: "500px" }}>
       <div
         className="tradingview-widget-container"
         ref={container}

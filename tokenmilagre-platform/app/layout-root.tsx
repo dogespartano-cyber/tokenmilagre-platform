@@ -486,7 +486,7 @@ export default function RootLayoutNav({
 
         <main className="flex-1 relative">
           {/* Animated Background - Global */}
-          <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="fixed inset-0 z-0 pointer-events-none hidden dark:block lg:block">
             <AnimatedBackground variant="hero" opacity={0.08} />
           </div>
 

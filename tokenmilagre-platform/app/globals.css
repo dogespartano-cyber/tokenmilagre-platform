@@ -320,6 +320,21 @@ html {
   /* gray-50 */
   --border-article: #E5E7EB;
   /* gray-200 */
+  /* Mobile Light Mode Overrides - No Glow, Pure White */
+  @media (max-width: 1024px) {
+    :root[data-theme="light"] {
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #FFFFFF;
+      --bg-tertiary: #FFFFFF;
+      --bg-elevated: #FFFFFF;
+      --background: #FFFFFF;
+      --bg-brand-bg: #FFFFFF;
+      --bg-success-bg: #FFFFFF;
+      --bg-error-bg: #FFFFFF;
+      --bg-warning-bg: #FFFFFF;
+      --bg-info-bg: #FFFFFF;
+    }
+  }
 }
 
 [data-theme="dark"] {
