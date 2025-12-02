@@ -45,8 +45,6 @@ interface TableOfContentsItem {
 
 export default function ArtigoClient({ article, relatedArticles = [], previousArticle = null, nextArticle = null }: ArtigoClientProps) {
   const router = useRouter();
-  const [readingProgress, setReadingProgress] = useState(0);
-
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
   const [activeSection, setActiveSection] = useState<string>('');
 
@@ -143,15 +141,9 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
     setTableOfContents(headings);
   }, [article]);
 
-  // Calcula progresso de leitura e rastreia seção ativa
+  // Rastreia seção ativa
   useEffect(() => {
     const handleScroll = () => {
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const scrollTop = window.scrollY;
-      const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
-      setReadingProgress(Math.min(scrollPercent, 100));
-
       const headingElements = tableOfContents.map(item => ({
         id: item.id,
         element: document.getElementById(item.id)
@@ -257,14 +249,9 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
   return (
     <>
       {/* Barra de progresso de leitura */}
-      <div
-        className="fixed top-0 left-0 h-1.5 z-[100] transition-all bg-[var(--brand-primary)] shadow-[0_0_10px_var(--brand-primary)]"
-        style={{ width: `${readingProgress}%` }}
-      />
-
       <div className="relative pt-6 pb-4 md:pt-12 md:pb-8 overflow-hidden">
-        {/* Background Glow Effect */}
-        <div className="absolute top-0 left-0 w-full max-w-4xl h-full opacity-30 pointer-events-none"
+        {/* Background Glow Effect - Dark Mode Only */}
+        <div className="absolute top-0 left-0 w-full max-w-4xl h-full opacity-30 pointer-events-none hidden dark:block"
           style={{
             background: `radial-gradient(circle at 20% 30%, ${getSentimentColorHex(article.sentiment)}40 0%, transparent 70%)`,
             WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 20%)',
