@@ -10,7 +10,7 @@ const AdvancedChart = dynamic(() => import('@/components/AdvancedChart'), {
     ssr: false,
 });
 
-const TechnicalAnalysisWidget = dynamic(() => import('@/components/TechnicalAnalysisWidget'), {
+const TrendMeter = dynamic(() => import('@/components/TrendMeter'), {
     ssr: false,
 });
 
@@ -90,11 +90,10 @@ export default function CryptoAnalyzer() {
                 <div className="space-y-4">
                     <div className={`glass-card p-4 rounded-2xl border h-full flex flex-col transition-colors duration-500 ${assets[activeAsset].border}`}>
                         <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white">
-                            {assets[activeAsset].icon}
-                            <span>Análise Técnica</span>
+                            <span>Análise Técnica (4H)</span>
                         </h3>
-                        <div className="flex-1 min-h-[500px] rounded-xl overflow-hidden">
-                            <TechnicalAnalysisWidget symbol={assets[activeAsset].taSymbol} />
+                        <div className="flex-1 min-h-[500px] rounded-xl p-2">
+                            <TrendMeter key={assets[activeAsset].symbol} symbol={assets[activeAsset].symbol} />
                         </div>
                     </div>
                 </div>

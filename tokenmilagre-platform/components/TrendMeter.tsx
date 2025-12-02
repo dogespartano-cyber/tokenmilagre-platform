@@ -1,0 +1,268 @@
+'use client';
+
+import { useBinanceData } from '@/hooks/useBinanceData';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner, faExclamationTriangle, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
+
+interface TrendMeterProps {
+    symbol: string;
+}
+
+export default function TrendMeter({ symbol }: TrendMeterProps) {
+    const { indicators, loading, error } = useBinanceData(symbol);
+    const [gaugeValue, setGaugeValue] = useState(50); // 0 to 100
+    const [displayScore, setDisplayScore] = useState(0);
+
+    useEffect(() => {
+        if (indicators && indicators.trend) {
+            // Map score (-6 to +6) to gauge value (0 to 100)
+            // -6 -> 0 (Strong Sell)
+            // 0 -> 50 (Neutral)
+            // +6 -> 100 (Strong Buy)
+            const score = indicators.trend.score;
+            const exactScore = indicators.trend.exactScore;
+
+            // Use exactScore for smoother gauge movement
+            let targetValue = (exactScore + 6) * (100 / 12);
+            targetValue = Math.max(0, Math.min(100, targetValue));
+
+            setGaugeValue(targetValue);
+            setDisplayScore(exactScore);
+        }
+    }, [indicators]);
+
+    if (loading) {
+        return (
+            <div className="h-full min-h-[300px] flex flex-col items-center justify-center text-gray-400 gap-3">
+                <FontAwesomeIcon icon={faSpinner} spin className="text-3xl text-blue-500" />
+                <span className="text-sm font-medium animate-pulse">Analisando mercado...</span>
+            </div>
+        );
+    }
+
+    if (error || !indicators) {
+        return (
+            <div className="h-full min-h-[300px] flex flex-col items-center justify-center text-red-400 gap-3">
+                <FontAwesomeIcon icon={faExclamationTriangle} className="text-3xl" />
+                <span className="text-sm text-center px-4">Não foi possível carregar os dados para {symbol}</span>
+            </div>
+        );
+    }
+
+    const { trend, rsi, macd, sma50, sma200 } = indicators;
+
+    // Gauge Configuration
+    const radius = 80;
+    const stroke = 12;
+    const normalizedRadius = radius - stroke * 2;
+    const circumference = normalizedRadius * 2 * Math.PI;
+    const arcLength = circumference / 2; // Semi-circle
+
+    // Needle Rotation
+    // 0 value -> -90deg
+    // 50 value -> 0deg
+    // 100 value -> 90deg
+    const needleRotation = (gaugeValue / 100) * 180 - 90;
+
+    const getTrendColor = (score: number) => {
+        if (score <= -3) return '#EF4444'; // Red-500
+        if (score < 0) return '#F97316'; // Orange-500
+        if (score === 0) return '#EAB308'; // Yellow-500
+        if (score < 3) return '#84CC16'; // Lime-500
+        return '#22C55E'; // Green-500
+    };
+
+    const trendColor = getTrendColor(displayScore);
+
+    return (
+        <div className="flex flex-col h-full w-full">
+            {/* Gauge Graphic */}
+            <div className="relative flex items-center justify-center py-6">
+                <svg
+                    viewBox="0 0 200 120"
+                    className="w-full max-w-[280px] overflow-visible drop-shadow-xl"
+                >
+                    <defs>
+                        <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor="#EF4444" />   {/* Strong Sell */}
+                            <stop offset="25%" stopColor="#F97316" />  {/* Sell */}
+                            <stop offset="50%" stopColor="#EAB308" />  {/* Neutral */}
+                            <stop offset="75%" stopColor="#84CC16" />  {/* Buy */}
+                            <stop offset="100%" stopColor="#22C55E" /> {/* Strong Buy */}
+                        </linearGradient>
+                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                    </defs>
+
+                    {/* Background Arc */}
+                    <path
+                        d="M 20 100 A 80 80 0 0 1 180 100"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.1)"
+                        strokeWidth={stroke}
+                        strokeLinecap="round"
+                    />
+
+                    {/* Colored Arc */}
+                    <path
+                        d="M 20 100 A 80 80 0 0 1 180 100"
+                        fill="none"
+                        stroke="url(#gaugeGradient)"
+                        strokeWidth={stroke}
+                        strokeLinecap="round"
+                        filter="url(#glow)"
+                    />
+
+                    {/* Ticks */}
+                    {[0, 25, 50, 75, 100].map((tick) => {
+                        const angle = (tick / 100) * 180 - 180;
+                        const rad = (angle * Math.PI) / 180;
+                        const innerR = 65;
+                        const outerR = 75;
+                        const x1 = 100 + innerR * Math.cos(rad);
+                        const y1 = 100 + innerR * Math.sin(rad);
+                        const x2 = 100 + outerR * Math.cos(rad);
+                        const y2 = 100 + outerR * Math.sin(rad);
+                        return (
+                            <line
+                                key={tick}
+                                x1={x1}
+                                y1={y1}
+                                x2={x2}
+                                y2={y2}
+                                stroke="rgba(255,255,255,0.3)"
+                                strokeWidth="2"
+                            />
+                        );
+                    })}
+
+                    {/* Labels */}
+                    <text x="20" y="115" fill="#EF4444" fontSize="8" fontWeight="bold" textAnchor="middle">Sobrecomprado</text>
+                    <text x="100" y="115" fill="#EAB308" fontSize="8" fontWeight="bold" textAnchor="middle">Neutro</text>
+                    <text x="180" y="115" fill="#22C55E" fontSize="8" fontWeight="bold" textAnchor="middle">Sobrevendido</text>
+
+                    {/* Needle */}
+                    <g
+                        transform={`translate(100, 100) rotate(${needleRotation})`}
+                        className="transition-transform duration-1000 ease-out"
+                    >
+                        <path
+                            d="M -4 0 L 0 -75 L 4 0 Z"
+                            fill={trendColor}
+                            filter="drop-shadow(0 2px 3px rgba(0,0,0,0.3))"
+                        />
+                        <circle r="6" fill="#1F2937" stroke={trendColor} strokeWidth="2" />
+                    </g>
+
+                    {/* Score Text */}
+                    <text
+                        x="100"
+                        y="70"
+                        fill={trendColor}
+                        fontSize="20"
+                        fontWeight="900"
+                        textAnchor="middle"
+                        filter="url(#glow)"
+                    >
+                        {displayScore > 0 ? `+${displayScore.toFixed(2)}` : displayScore.toFixed(2)}
+                    </text>
+                </svg>
+            </div>
+
+            {/* Trend Label */}
+            <div className="text-center mb-6">
+                <div className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+                    <span className="text-sm font-bold" style={{ color: trendColor }}>
+                        {trend.label}
+                    </span>
+                </div>
+            </div>
+
+            {/* Indicators Grid */}
+            <div className="grid grid-cols-2 gap-3 px-2">
+                {/* RSI Card */}
+                <div className="glass-card p-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors">
+                    <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs text-gray-400">RSI (14)</span>
+                        <span className={`text-sm font-bold ${rsi && rsi > 70 ? 'text-red-400' : rsi && rsi < 30 ? 'text-green-400' : 'text-gray-300'}`}>
+                            {rsi?.toFixed(1)}
+                        </span>
+                    </div>
+                    <div className="w-full bg-gray-700/50 h-1.5 rounded-full overflow-hidden">
+                        <div
+                            className="h-full bg-blue-500 transition-all duration-500"
+                            style={{ width: `${Math.min(100, Math.max(0, rsi || 0))}%` }}
+                        />
+                    </div>
+                </div>
+
+                {/* MACD Card */}
+                <div className="glass-card p-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors">
+                    <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs text-gray-400">MACD</span>
+                        <div className="flex items-center gap-1">
+                            {macd.histogram && macd.histogram > 0 ?
+                                <FontAwesomeIcon icon={faArrowUp} className="text-green-400 text-[10px]" /> :
+                                <FontAwesomeIcon icon={faArrowDown} className="text-red-400 text-[10px]" />
+                            }
+                            <span className={`text-sm font-bold ${macd.histogram && macd.histogram > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                {macd.histogram?.toFixed(2)}
+                            </span>
+                        </div>
+                    </div>
+                    <div className="text-[10px] text-gray-500 text-right">Momentum</div>
+                </div>
+
+                {/* Moving Averages */}
+                <div className="col-span-2 glass-card p-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors">
+                    <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs text-gray-400">Médias Móveis</span>
+                        <div className="flex gap-4">
+                            <div className="flex items-center gap-1.5">
+                                <div className={`w-2 h-2 rounded-full ${sma50 && indicators.sma50 && indicators.sma50 < (indicators.sma200 || 0) ? 'bg-red-500' : 'bg-green-500'}`} />
+                                <span className="text-[10px] text-gray-300">SMA 50</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                                <div className={`w-2 h-2 rounded-full ${sma200 && indicators.sma200 && indicators.sma200 < (indicators.sma50 || 0) ? 'bg-green-500' : 'bg-gray-500'}`} />
+                                <span className="text-[10px] text-gray-300">SMA 200</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Breakdown Details */}
+            {trend.breakdown && (
+                <div className="mt-4 pt-4 border-t border-white/5 px-2">
+                    <div className="grid grid-cols-5 gap-1 text-center">
+                        <ScoreItem label="RSI" score={trend.breakdown.rsiScore} />
+                        <ScoreItem label="MACD" score={trend.breakdown.macdScore} />
+                        <ScoreItem label="SMA50" score={trend.breakdown.sma50Score} />
+                        <ScoreItem label="SMA200" score={trend.breakdown.sma200Score} />
+                        <ScoreItem label="Cross" score={trend.breakdown.crossScore} />
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+function ScoreItem({ label, score }: { label: string, score: number }) {
+    const getColor = (s: number) => {
+        if (s > 0) return 'text-green-400';
+        if (s < 0) return 'text-red-400';
+        return 'text-gray-500';
+    };
+
+    return (
+        <div className="flex flex-col items-center gap-1">
+            <span className="text-[9px] text-gray-500 uppercase tracking-wider">{label}</span>
+            <span className={`text-xs font-bold ${getColor(score)}`}>
+                {score > 0 ? '+' : ''}{score}
+            </span>
+        </div>
+    );
+}

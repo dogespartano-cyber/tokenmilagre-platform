@@ -44,8 +44,13 @@ export default function GraficosPage() {
         <div className="container mx-auto px-4 py-8 relative z-10">
           <div className="space-y-16">
 
-            {/* Section 1: Macro & Money Flow */}
-            <section className="space-y-12 animate-fade-in-up">
+            {/* Section 1: Command Center (Deep Dive) - Moved to Top */}
+            <section className="space-y-6 animate-fade-in-up">
+              <CryptoAnalyzer />
+            </section>
+
+            {/* Section 2: Macro & Money Flow */}
+            <section className="space-y-12 animate-fade-in-up delay-100">
               <MarketFlow />
 
               <div className="glass-card p-6 rounded-3xl border border-gray-200 dark:border-white/10">
@@ -66,8 +71,8 @@ export default function GraficosPage() {
               </div>
             </section>
 
-            {/* Section 2: Crypto Overview */}
-            <section className="space-y-12 animate-fade-in-up delay-100">
+            {/* Section 3: Crypto Overview */}
+            <section className="space-y-12 animate-fade-in-up delay-200">
               {/* Heatmap - Full Width */}
               <div className="glass-card p-6 rounded-3xl border border-gray-200 dark:border-white/10 h-[600px] flex flex-col">
                 <div className="mb-4">
@@ -97,10 +102,7 @@ export default function GraficosPage() {
               </div>
             </section>
 
-            {/* Section 3: Command Center (Deep Dive) */}
-            <section className="space-y-6 animate-fade-in-up delay-200">
-              <CryptoAnalyzer />
-            </section>
+
 
             {/* Section 4: Institutional Data */}
             <section className="animate-fade-in-up delay-300">

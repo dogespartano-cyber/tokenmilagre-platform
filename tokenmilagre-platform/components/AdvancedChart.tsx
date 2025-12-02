@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createChart, ColorType, ISeriesApi, CandlestickSeries, LineSeries, Time } from 'lightweight-charts';
 import { useTheme } from '@/contexts/ThemeContext';
+import { calculateSMA, calculateRSI, calculateBollingerBands } from '@/lib/utils/technical-analysis';
 
 interface AdvancedChartProps {
   symbol: string;
@@ -250,77 +251,6 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
       chart.remove();
     };
   }, [symbol, timeframe, theme]);
-
-  // Calcular SMA (Simple Moving Average)
-  const calculateSMA = (data: number[], period: number): (number | null)[] => {
-    const sma: (number | null)[] = [];
-    for (let i = 0; i < data.length; i++) {
-      if (i < period - 1) {
-        sma.push(null);
-      } else {
-        const sum = data.slice(i - period + 1, i + 1).reduce((a, b) => a + b, 0);
-        sma.push(sum / period);
-      }
-    }
-    return sma;
-  };
-
-  // Calcular Bandas de Bollinger
-  const calculateBollingerBands = (data: number[], period: number, stdDev: number) => {
-    const sma = calculateSMA(data, period);
-    const upper: (number | null)[] = [];
-    const middle: (number | null)[] = [];
-    const lower: (number | null)[] = [];
-
-    for (let i = 0; i < data.length; i++) {
-      if (i < period - 1) {
-        upper.push(null);
-        middle.push(null);
-        lower.push(null);
-      } else {
-        const slice = data.slice(i - period + 1, i + 1);
-        const mean = sma[i]!;
-        const variance = slice.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / period;
-        const std = Math.sqrt(variance);
-
-        middle.push(mean);
-        upper.push(mean + stdDev * std);
-        lower.push(mean - stdDev * std);
-      }
-    }
-
-    return { upper, middle, lower };
-  };
-
-  // Calcular RSI (Relative Strength Index)
-  const calculateRSI = (data: number[], period: number): (number | null)[] => {
-    const rsi: (number | null)[] = [];
-    const changes: number[] = [];
-
-    // Calcular mudanças de preço
-    for (let i = 1; i < data.length; i++) {
-      changes.push(data[i] - data[i - 1]);
-    }
-
-    for (let i = 0; i < data.length; i++) {
-      if (i < period) {
-        rsi.push(null);
-      } else {
-        const slice = changes.slice(i - period, i);
-        const gains = slice.filter((c) => c > 0).reduce((sum, c) => sum + c, 0) / period;
-        const losses = Math.abs(slice.filter((c) => c < 0).reduce((sum, c) => sum + c, 0)) / period;
-
-        if (losses === 0) {
-          rsi.push(100);
-        } else {
-          const rs = gains / losses;
-          rsi.push(100 - 100 / (1 + rs));
-        }
-      }
-    }
-
-    return rsi;
-  };
 
   return (
     <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: 'transparent' }}>
