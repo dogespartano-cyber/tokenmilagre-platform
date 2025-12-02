@@ -145,7 +145,7 @@ export default function TokenPage() {
                 href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-10 py-5 rounded-full font-bold text-lg text-white bg-gradient-to-r from-teal-500 to-green-500 hover:from-teal-600 hover:to-green-600 shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex items-center gap-3"
+                className="px-10 py-5 rounded-full font-bold text-lg text-white backdrop-blur-md bg-gradient-to-r from-teal-500/90 to-green-500/90 border border-white/20 hover:from-teal-600/90 hover:to-green-600/90 shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex items-center gap-3"
               >
                 <span>Testemunhe Conosco</span>
                 <FontAwesomeIcon icon={faHandshake} className="w-5 h-5" />
@@ -153,7 +153,7 @@ export default function TokenPage() {
 
               <button
                 onClick={() => document.getElementById('saiba-mais')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-10 py-5 rounded-full font-bold text-lg text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-medium)] hover:border-[var(--brand-primary)] shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                className="px-10 py-5 rounded-full font-bold text-lg text-[var(--text-primary)] backdrop-blur-md bg-white/5 border border-white/10 hover:bg-white/10 shadow-lg hover:shadow-xl hover:scale-105 transition-all"
               >
                 Entenda a Utilidade
               </button>
@@ -235,8 +235,7 @@ export default function TokenPage() {
 
           {/* Tokenomics */}
           <section className="mb-32">
-            <div className="glass p-12 rounded-[3rem] relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-teal-500/10 to-transparent rounded-bl-full -mr-20 -mt-20"></div>
+            <div className="relative">
 
               <div className="text-center mb-16 relative z-10">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
@@ -366,7 +365,7 @@ export default function TokenPage() {
 
           {/* Como Se Unir à Aliança */}
           <section className="mb-32">
-            <div className="glass p-12 rounded-[3rem]">
+            <div>
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
                   Como Se Unir à Aliança
@@ -422,7 +421,7 @@ export default function TokenPage() {
                   href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 px-10 py-5 rounded-full font-bold text-white bg-[#0d9488] hover:bg-[#0f766e] shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
+                  className="inline-flex items-center gap-3 px-6 py-3 md:px-10 md:py-5 rounded-full font-bold text-base md:text-lg text-white backdrop-blur-md bg-gradient-to-r from-[#0d9488]/90 to-[#0f766e]/90 border border-white/20 hover:from-[#0d9488] hover:to-[#0f766e] shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
                 >
                   <span>Acessar o Pump.fun Oficial</span>
                   <FontAwesomeIcon icon={faRocket} className="w-5 h-5" />
@@ -477,7 +476,7 @@ export default function TokenPage() {
                 </code>
                 <button
                   onClick={copyToClipboard}
-                  className="p-4 rounded-xl bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-hover)] transition-colors shadow-lg"
+                  className="p-4 rounded-xl backdrop-blur-md bg-[var(--brand-primary)]/90 text-white hover:bg-[var(--brand-primary)] border border-white/20 transition-all shadow-lg hover:scale-105"
                   title="Copiar endereço"
                 >
                   <FontAwesomeIcon icon={faCopy} />

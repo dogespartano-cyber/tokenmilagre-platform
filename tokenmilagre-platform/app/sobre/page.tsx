@@ -138,7 +138,7 @@ export default function SobrePage() {
                 Testemunhas do $Milagre
               </h2>
 
-              <div className="space-y-6 text-lg text-[var(--text-secondary)] leading-relaxed text-justify">
+              <div className="space-y-6 text-lg text-[var(--text-secondary)] leading-relaxed text-left">
                 <p>
                   Este projeto nasceu da determinação de um único desenvolvedor brasileiro e da potência da IA, mas seu destino é se tornar uma fogueira global. Estamos construindo tudo do zero, não apenas para criar tecnologia, mas para proteger pessoas de golpes e perdas, guiando-as com luz e conhecimento. Nossa missão é reunir centenas de evangelistas, de todos os níveis e idiomas, em uma comunidade que vibra na mesma frequência.
                 </p>
@@ -185,15 +185,10 @@ export default function SobrePage() {
 
             {/* Sustentabilidade Card - Styled to match */}
             <div className="glass-card p-8 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]">
-              <div className="flex items-center gap-6 mb-4">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg bg-green-600 shrink-0">
-                  <FontAwesomeIcon icon={faCheckCircle} />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-[var(--text-primary)]">
-                    Sustentabilidade do Projeto
-                  </h3>
-                </div>
+              <div className="mb-4">
+                <h3 className="text-2xl font-bold text-[var(--text-primary)]">
+                  Sustentabilidade do Projeto
+                </h3>
               </div>
 
               <ul className="space-y-4 mt-6 pl-2">
@@ -201,7 +196,8 @@ export default function SobrePage() {
                   'Doações da comunidade',
                   'Links afiliados éticos (exchanges seguras)',
                   'Parcerias transparentes',
-                  'Produtos educacionais avançados'
+                  'Produtos educacionais avançados',
+                  'Futuras usabilidades com o token $Milagre'
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-3 text-[var(--text-secondary)]">
                     <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-lg" />
