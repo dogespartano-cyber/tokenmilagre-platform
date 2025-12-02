@@ -270,7 +270,7 @@ export default function RootLayoutNav({
                   className="group flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105 glass-card text-[var(--text-primary)]"
                 >
                   <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
-                  <span className="text-xs font-semibold whitespace-nowrap">{theme === 'light' ? 'Modo Escuro' : 'Claro'}</span>
+                  <span className="text-xs font-semibold whitespace-nowrap">{theme === 'light' ? 'Escuro' : 'Claro'}</span>
                 </button>
               </div>
 
@@ -466,7 +466,7 @@ export default function RootLayoutNav({
                   className="group flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-white/5 text-[var(--text-primary)]"
                 >
                   <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
-                  <span className="text-sm font-semibold">{theme === 'light' ? 'Modo Escuro' : 'Claro'}</span>
+                  <span className="text-sm font-semibold">{theme === 'light' ? 'Escuro' : 'Claro'}</span>
                 </button>
 
                 <Link
