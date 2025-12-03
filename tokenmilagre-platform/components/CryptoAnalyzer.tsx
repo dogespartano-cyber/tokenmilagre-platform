@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBitcoin, faEthereum } from '@fortawesome/free-brands-svg-icons';
-import { TokenBTC, TokenETH, TokenSOL } from '@token-icons/react';
+import { TokenSOL } from '@token-icons/react';
 
 const AdvancedChart = dynamic(() => import('@/components/AdvancedChart'), {
     ssr: false,
@@ -18,13 +19,14 @@ type Asset = 'BTC' | 'ETH' | 'SOL';
 
 export default function CryptoAnalyzer() {
     const [activeAsset, setActiveAsset] = useState<Asset>('BTC');
+    const [timeframe, setTimeframe] = useState<any>('4h');
 
     const assets = {
         BTC: {
             symbol: 'BTCUSDT',
             taSymbol: 'BINANCE:BTCUSDT',
             name: 'Bitcoin',
-            icon: <TokenBTC size={20} variant="branded" />,
+            icon: <FontAwesomeIcon icon={faBitcoin} className="text-[#F7931A] w-6 h-6" />,
             color: 'text-[#F7931A]',
             bg: 'bg-[#F7931A]/10',
             border: 'border-[#F7931A]/20'
@@ -33,7 +35,7 @@ export default function CryptoAnalyzer() {
             symbol: 'ETHUSDT',
             taSymbol: 'BINANCE:ETHUSDT',
             name: 'Ethereum',
-            icon: <TokenETH size={20} variant="branded" />,
+            icon: <FontAwesomeIcon icon={faEthereum} className="text-[#627EEA] w-6 h-6" />,
             color: 'text-[#627EEA]',
             bg: 'bg-[#627EEA]/10',
             border: 'border-[#627EEA]/20'
@@ -42,7 +44,7 @@ export default function CryptoAnalyzer() {
             symbol: 'SOLUSDT',
             taSymbol: 'BINANCE:SOLUSDT',
             name: 'Solana',
-            icon: <TokenSOL size={20} variant="branded" />,
+            icon: <TokenSOL size={24} variant="branded" />,
             color: 'text-[#14F195]',
             bg: 'bg-[#14F195]/10',
             border: 'border-[#14F195]/20'
@@ -72,7 +74,6 @@ export default function CryptoAnalyzer() {
                 ))}
             </div>
 
-            {/* Content Area */}
             <div className="grid lg:grid-cols-3 gap-6 animate-fade-in-up">
                 {/* Main Chart - Spans 2 columns */}
                 <div className="lg:col-span-2 space-y-4">
@@ -81,6 +82,8 @@ export default function CryptoAnalyzer() {
                             <AdvancedChart
                                 symbol={assets[activeAsset].symbol}
                                 name={`${assets[activeAsset].name} / Tether US`}
+                                timeframe={timeframe}
+                                onTimeframeChange={setTimeframe}
                             />
                         </div>
                     </div>
@@ -89,11 +92,34 @@ export default function CryptoAnalyzer() {
                 {/* Technical Analysis - Spans 1 column */}
                 <div className="space-y-4">
                     <div className={`glass-card p-4 rounded-2xl border h-full flex flex-col transition-colors duration-500 ${assets[activeAsset].border}`}>
-                        <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white">
-                            <span>Análise Técnica (4H)</span>
-                        </h3>
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
+                            <h3 className="text-lg font-bold flex items-center gap-2 text-gray-900 dark:text-white">
+                                <span>Análise Técnica ({timeframe.toUpperCase()})</span>
+                            </h3>
+
+                            {/* Timeframe Selector */}
+                            <div className="flex gap-1 bg-gray-100 dark:bg-white/5 p-1 rounded-lg">
+                                {['15m', '4h', '1d'].map((tf) => (
+                                    <button
+                                        key={tf}
+                                        onClick={() => setTimeframe(tf)}
+                                        className={`px-2 py-1 text-xs font-bold rounded transition-all ${timeframe === tf
+                                            ? 'bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm'
+                                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                                            }`}
+                                    >
+                                        {tf.toUpperCase()}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
                         <div className="flex-1 min-h-[500px] rounded-xl p-2">
-                            <TrendMeter key={assets[activeAsset].symbol} symbol={assets[activeAsset].symbol} />
+                            <TrendMeter
+                                key={`${assets[activeAsset].symbol}-${timeframe}`}
+                                symbol={assets[activeAsset].symbol}
+                                interval={timeframe}
+                            />
                         </div>
                     </div>
                 </div>

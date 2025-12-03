@@ -5,16 +5,28 @@ import { createChart, ColorType, ISeriesApi, CandlestickSeries, LineSeries, Time
 import { useTheme } from '@/contexts/ThemeContext';
 import { calculateSMA, calculateRSI, calculateBollingerBands } from '@/lib/utils/technical-analysis';
 
-interface AdvancedChartProps {
-  symbol: string;
-  name?: string;
-}
-
 type Timeframe = '15m' | '4h' | '1d';
 
-export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
+interface AdvancedChartProps {
+  symbol: string;
+  name: string;
+  timeframe?: Timeframe;
+  onTimeframeChange?: (timeframe: Timeframe) => void;
+}
+
+export default function AdvancedChart({ symbol, name, timeframe: controlledTimeframe, onTimeframeChange }: AdvancedChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
-  const [timeframe, setTimeframe] = useState<Timeframe>('1d');
+  const [internalTimeframe, setInternalTimeframe] = useState<Timeframe>('4h');
+  const timeframe = controlledTimeframe || internalTimeframe;
+
+  const handleTimeframeChange = (newTimeframe: Timeframe) => {
+    if (onTimeframeChange) {
+      onTimeframeChange(newTimeframe);
+    } else {
+      setInternalTimeframe(newTimeframe);
+    }
+  };
+
   const [currentPrice, setCurrentPrice] = useState<number | null>(null);
   const { theme } = useTheme();
 
@@ -274,13 +286,14 @@ export default function AdvancedChart({ symbol, name }: AdvancedChartProps) {
 
         {/* Direita: Timeframe Selector */}
         <div className="flex gap-1 rounded-lg p-1 w-full md:w-auto overflow-x-auto no-scrollbar" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-          {(['15m', '4h', '1d'] as Timeframe[]).map((tf) => (
+          {['15m', '4h', '1d'].map((tf) => (
             <button
               key={tf}
-              onClick={() => setTimeframe(tf)}
-              className={`px-3 py-1 rounded text-sm font-medium transition-all flex-1 md:flex-none text-center ${timeframe === tf ? 'bg-yellow-400/30 shadow-sm' : ''
+              onClick={() => handleTimeframeChange(tf as Timeframe)}
+              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${timeframe === tf
+                ? 'bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm'
+                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
                 }`}
-              style={timeframe === tf ? { color: 'var(--text-primary)' } : { color: 'var(--text-tertiary)' }}
             >
               {tf.toUpperCase()}
             </button>

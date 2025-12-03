@@ -221,14 +221,14 @@ export default function RootLayoutNav({
                 );
               })}
             </div>
-          </nav >
-        </div >
-      </aside >
+          </nav>
+        </div>
+      </aside>
 
       {/* Main Content Wrapper */}
       < div className="min-h-screen flex flex-col lg:ml-72" >
         {/* Header - Fixed Height for Alignment */}
-        < header className="sticky top-0 z-30 backdrop-blur-xl h-[88px] flex items-center bg-transparent">
+        < header className="sticky top-0 z-30 backdrop-blur-xl h-[88px] flex items-center bg-transparent" >
           <div className="container mx-auto px-6 h-full">
             <div className="flex justify-between items-center h-full">
               {/* Mobile Header Layout */}

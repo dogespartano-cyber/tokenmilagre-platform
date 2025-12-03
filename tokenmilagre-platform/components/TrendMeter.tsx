@@ -7,10 +7,11 @@ import { useEffect, useState } from 'react';
 
 interface TrendMeterProps {
     symbol: string;
+    interval?: string;
 }
 
-export default function TrendMeter({ symbol }: TrendMeterProps) {
-    const { indicators, loading, error } = useBinanceData(symbol);
+export default function TrendMeter({ symbol, interval = '4h' }: TrendMeterProps) {
+    const { indicators, loading, error } = useBinanceData(symbol, interval);
     const [gaugeValue, setGaugeValue] = useState(50); // 0 to 100
     const [displayScore, setDisplayScore] = useState(0);
 
@@ -140,9 +141,9 @@ export default function TrendMeter({ symbol }: TrendMeterProps) {
                     })}
 
                     {/* Labels */}
-                    <text x="20" y="115" fill="#EF4444" fontSize="8" fontWeight="bold" textAnchor="middle">Sobrecomprado</text>
-                    <text x="100" y="115" fill="#EAB308" fontSize="8" fontWeight="bold" textAnchor="middle">Neutro</text>
-                    <text x="180" y="115" fill="#22C55E" fontSize="8" fontWeight="bold" textAnchor="middle">Sobrevendido</text>
+                    <text x="20" y="115" fill="#EF4444" fontSize="10" fontWeight="bold" textAnchor="middle">Sobrecomprado</text>
+                    <text x="100" y="115" fill="#EAB308" fontSize="10" fontWeight="bold" textAnchor="middle">Neutro</text>
+                    <text x="180" y="115" fill="#22C55E" fontSize="10" fontWeight="bold" textAnchor="middle">Sobrevendido</text>
 
                     {/* Needle */}
                     <g
@@ -152,7 +153,6 @@ export default function TrendMeter({ symbol }: TrendMeterProps) {
                         <path
                             d="M -4 0 L 0 -75 L 4 0 Z"
                             fill={trendColor}
-                            filter="drop-shadow(0 2px 3px rgba(0,0,0,0.3))"
                         />
                         <circle r="6" fill="#1F2937" stroke={trendColor} strokeWidth="2" />
                     </g>
@@ -162,10 +162,9 @@ export default function TrendMeter({ symbol }: TrendMeterProps) {
                         x="100"
                         y="70"
                         fill={trendColor}
-                        fontSize="20"
+                        fontSize="24"
                         fontWeight="900"
                         textAnchor="middle"
-                        filter="url(#glow)"
                     >
                         {displayScore > 0 ? `+${displayScore.toFixed(2)}` : displayScore.toFixed(2)}
                     </text>
@@ -173,25 +172,25 @@ export default function TrendMeter({ symbol }: TrendMeterProps) {
             </div>
 
             {/* Trend Label */}
-            <div className="text-center mb-6">
-                <div className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
-                    <span className="text-sm font-bold" style={{ color: trendColor }}>
+            <div className="text-center mb-8">
+                <div className="inline-block px-6 py-2 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 backdrop-blur-sm">
+                    <span className="text-base font-bold" style={{ color: trendColor }}>
                         {trend.label}
                     </span>
                 </div>
             </div>
 
             {/* Indicators Grid */}
-            <div className="grid grid-cols-2 gap-3 px-2">
-                {/* RSI Card */}
-                <div className="glass-card p-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors">
-                    <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs text-gray-400">RSI (14)</span>
-                        <span className={`text-sm font-bold ${rsi && rsi > 70 ? 'text-red-400' : rsi && rsi < 30 ? 'text-green-400' : 'text-gray-300'}`}>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-8 px-4">
+                {/* RSI */}
+                <div className="flex flex-col gap-2">
+                    <div className="flex justify-between items-end border-b border-gray-200 dark:border-white/10 pb-2">
+                        <span className="text-sm font-bold text-gray-700 dark:text-gray-400">RSI (14)</span>
+                        <span className={`text-base font-bold ${rsi && rsi > 70 ? 'text-red-500' : rsi && rsi < 30 ? 'text-green-500' : 'text-gray-700 dark:text-gray-300'}`}>
                             {rsi?.toFixed(1)}
                         </span>
                     </div>
-                    <div className="w-full bg-gray-700/50 h-1.5 rounded-full overflow-hidden">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700/30 h-1.5 rounded-full overflow-hidden mt-1">
                         <div
                             className="h-full bg-blue-500 transition-all duration-500"
                             style={{ width: `${Math.min(100, Math.max(0, rsi || 0))}%` }}
@@ -199,36 +198,34 @@ export default function TrendMeter({ symbol }: TrendMeterProps) {
                     </div>
                 </div>
 
-                {/* MACD Card */}
-                <div className="glass-card p-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors">
-                    <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs text-gray-400">MACD</span>
+                {/* MACD */}
+                <div className="flex flex-col gap-2">
+                    <div className="flex justify-between items-end border-b border-gray-200 dark:border-white/10 pb-2">
+                        <span className="text-sm font-bold text-gray-700 dark:text-gray-400">MACD</span>
                         <div className="flex items-center gap-1">
                             {macd.histogram && macd.histogram > 0 ?
-                                <FontAwesomeIcon icon={faArrowUp} className="text-green-400 text-[10px]" /> :
-                                <FontAwesomeIcon icon={faArrowDown} className="text-red-400 text-[10px]" />
+                                <FontAwesomeIcon icon={faArrowUp} className="text-green-500 text-xs" /> :
+                                <FontAwesomeIcon icon={faArrowDown} className="text-red-500 text-xs" />
                             }
-                            <span className={`text-sm font-bold ${macd.histogram && macd.histogram > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                            <span className={`text-base font-bold ${macd.histogram && macd.histogram > 0 ? 'text-green-500' : 'text-red-500'}`}>
                                 {macd.histogram?.toFixed(2)}
                             </span>
                         </div>
                     </div>
-                    <div className="text-[10px] text-gray-500 text-right">Momentum</div>
+                    <div className="text-xs font-medium text-gray-500 text-right">Momentum</div>
                 </div>
 
                 {/* Moving Averages */}
-                <div className="col-span-2 glass-card p-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors">
-                    <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs text-gray-400">Médias Móveis</span>
-                        <div className="flex gap-4">
-                            <div className="flex items-center gap-1.5">
-                                <div className={`w-2 h-2 rounded-full ${sma50 && indicators.sma50 && indicators.sma50 < (indicators.sma200 || 0) ? 'bg-red-500' : 'bg-green-500'}`} />
-                                <span className="text-[10px] text-gray-300">SMA 50</span>
-                            </div>
-                            <div className="flex items-center gap-1.5">
-                                <div className={`w-2 h-2 rounded-full ${sma200 && indicators.sma200 && indicators.sma200 < (indicators.sma50 || 0) ? 'bg-green-500' : 'bg-gray-500'}`} />
-                                <span className="text-[10px] text-gray-300">SMA 200</span>
-                            </div>
+                <div className="col-span-2 flex justify-between items-center pt-4 border-t border-gray-200 dark:border-white/5">
+                    <span className="text-sm font-bold text-gray-700 dark:text-gray-400">Médias Móveis</span>
+                    <div className="flex gap-8">
+                        <div className="flex items-center gap-2">
+                            <div className={`w-2 h-2 rounded-full ${sma50 && indicators.sma50 && indicators.sma50 < (indicators.sma200 || 0) ? 'bg-red-500' : 'bg-green-500'}`} />
+                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">SMA 50</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className={`w-2 h-2 rounded-full ${sma200 && indicators.sma200 && indicators.sma200 < (indicators.sma50 || 0) ? 'bg-green-500' : 'bg-gray-500'}`} />
+                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">SMA 200</span>
                         </div>
                     </div>
                 </div>
@@ -236,13 +233,13 @@ export default function TrendMeter({ symbol }: TrendMeterProps) {
 
             {/* Breakdown Details */}
             {trend.breakdown && (
-                <div className="mt-4 pt-4 border-t border-white/5 px-2">
-                    <div className="grid grid-cols-5 gap-1 text-center">
-                        <ScoreItem label="RSI" score={trend.breakdown.rsiScore} />
-                        <ScoreItem label="MACD" score={trend.breakdown.macdScore} />
-                        <ScoreItem label="SMA50" score={trend.breakdown.sma50Score} />
-                        <ScoreItem label="SMA200" score={trend.breakdown.sma200Score} />
-                        <ScoreItem label="Cross" score={trend.breakdown.crossScore} />
+                <div className="mt-6 pt-6 border-t border-gray-200 dark:border-white/5 px-2">
+                    <div className="grid grid-cols-5 gap-2 text-center">
+                        <ScoreItem label="RSI" score={trend.breakdown.rsiScore} type="rsi" />
+                        <ScoreItem label="MACD" score={trend.breakdown.macdScore} type="macd" />
+                        <ScoreItem label="SMA50" score={trend.breakdown.sma50Score} type="sma" />
+                        <ScoreItem label="SMA200" score={trend.breakdown.sma200Score} type="sma" />
+                        <ScoreItem label="Cross" score={trend.breakdown.crossScore} type="cross" />
                     </div>
                 </div>
             )}
@@ -250,18 +247,51 @@ export default function TrendMeter({ symbol }: TrendMeterProps) {
     );
 }
 
-function ScoreItem({ label, score }: { label: string, score: number }) {
+function ScoreItem({ label, score, type = 'general' }: { label: string, score: number, type?: 'rsi' | 'macd' | 'sma' | 'cross' | 'general' }) {
+    const getLabel = (s: number, t: string) => {
+        if (t === 'rsi') {
+            if (s >= 2) return 'Oportunidade'; // RSI < 30
+            if (s === 1) return 'Barato';      // RSI < 45
+            if (s === 0) return 'Neutro';
+            if (s === -1) return 'Caro';       // RSI > 55
+            if (s <= -2) return 'Arriscado';   // RSI > 70
+        }
+
+        if (t === 'macd') {
+            if (s > 0) return 'Subindo';
+            if (s < 0) return 'Caindo';
+            return 'Neutro';
+        }
+
+        if (t === 'sma') {
+            if (s > 0) return 'Alta';
+            if (s < 0) return 'Baixa';
+            return 'Neutro';
+        }
+
+        if (t === 'cross') {
+            if (s > 0) return 'Compra';
+            if (s < 0) return 'Venda';
+            return 'Neutro';
+        }
+
+        // General fallback
+        if (s > 0) return 'Positivo';
+        if (s < 0) return 'Negativo';
+        return 'Neutro';
+    };
+
     const getColor = (s: number) => {
-        if (s > 0) return 'text-green-400';
-        if (s < 0) return 'text-red-400';
+        if (s > 0) return 'text-green-500';
+        if (s < 0) return 'text-red-500';
         return 'text-gray-500';
     };
 
     return (
-        <div className="flex flex-col items-center gap-1">
-            <span className="text-[9px] text-gray-500 uppercase tracking-wider">{label}</span>
+        <div className="flex flex-col items-center gap-1.5">
+            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">{label}</span>
             <span className={`text-xs font-bold ${getColor(score)}`}>
-                {score > 0 ? '+' : ''}{score}
+                {getLabel(score, type)}
             </span>
         </div>
     );

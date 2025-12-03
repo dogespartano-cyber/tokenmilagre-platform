@@ -20,6 +20,11 @@ interface MarketData {
   marketCapChange24h: number;
 }
 
+interface FearGreedData {
+  value: string;
+  value_classification: string;
+}
+
 interface NewsItem {
   id: string;
   slug?: string;
@@ -59,6 +64,8 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [loadingResources, setLoadingResources] = useState(true);
   const [chartSymbol, setChartSymbol] = useState('BTCUSDT');
+  const [fearGreed, setFearGreed] = useState<FearGreedData | null>(null);
+  const [gaugeValue, setGaugeValue] = useState(0);
 
   useEffect(() => {
     fetchMarketData();
@@ -77,7 +84,75 @@ export default function HomePage() {
     }, 30000);
 
     return () => clearInterval(interval);
+    return () => clearInterval(interval);
   }, []);
+
+  // Buscar Fear & Greed Index
+  useEffect(() => {
+    const CACHE_KEY = 'fear_greed_index';
+
+    // Carregar do cache imediatamente
+    const cached = sessionStorage.getItem(CACHE_KEY);
+    if (cached) {
+      try {
+        const cachedData = JSON.parse(cached);
+        setFearGreed(cachedData);
+      } catch (error) {
+        console.error('Erro ao carregar cache:', error);
+      }
+    }
+
+    // Buscar dados atualizados em background
+    const fetchFearGreed = async () => {
+      try {
+        const response = await fetch('/api/fear-greed');
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setFearGreed(result.data);
+          sessionStorage.setItem(CACHE_KEY, JSON.stringify(result.data));
+        }
+      } catch (error) {
+        console.error('Erro ao buscar Fear & Greed Index:', error);
+      }
+    };
+
+    fetchFearGreed();
+  }, []);
+
+  // Animação do ponteiro do velocímetro
+  useEffect(() => {
+    if (fearGreed) {
+      const targetValue = parseInt(fearGreed.value);
+      const duration = 2500;
+      const steps = 60;
+      const stepDuration = duration / steps;
+
+      let currentStep = 0;
+      setGaugeValue(0);
+
+      const easeOutCubic = (t: number): number => {
+        return 1 - Math.pow(1 - t, 3);
+      };
+
+      const animate = () => {
+        currentStep++;
+        const progress = currentStep / steps;
+        const easedProgress = easeOutCubic(progress);
+        const newValue = Math.floor(easedProgress * targetValue);
+
+        setGaugeValue(newValue);
+
+        if (currentStep < steps) {
+          setTimeout(animate, stepDuration);
+        } else {
+          setGaugeValue(targetValue);
+        }
+      };
+
+      animate();
+    }
+  }, [fearGreed]);
 
 
 
@@ -410,6 +485,83 @@ export default function HomePage() {
 
             {/* Visão Geral do Mercado + Velocímetro Integrado */}
             <div className="space-y-6">
+              {/* Mobile Fear & Greed Gauge - Redesigned */}
+              {fearGreed && (
+                <div className="lg:hidden mb-8 px-2">
+                  <div className="flex items-center justify-between">
+                    {/* Gauge */}
+                    <div className="relative flex items-center justify-center" style={{ width: '130px', height: '75px' }}>
+                      <svg viewBox="20 30 140 85" className="w-full h-full" style={{ overflow: 'visible' }}>
+                        <defs>
+                          <linearGradient id="rainbowGradientHome" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor="#DC2626" />
+                            <stop offset="20%" stopColor="#EA580C" />
+                            <stop offset="40%" stopColor="#F59E0B" />
+                            <stop offset="60%" stopColor="#84CC16" />
+                            <stop offset="80%" stopColor="#22C55E" />
+                            <stop offset="100%" stopColor="#10B981" />
+                          </linearGradient>
+                          <filter id="intensiveGlowHome" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                            <feMerge>
+                              <feMergeNode in="coloredBlur" />
+                              <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                          </filter>
+                        </defs>
+                        {/* Track */}
+                        <path d="M 30 100 A 60 60 0 0 1 150 100" fill="none" stroke="var(--bg-tertiary)" strokeWidth="12" strokeLinecap="round" opacity="0.5" />
+                        {/* Colored Arc */}
+                        <path d="M 30 100 A 60 60 0 0 1 150 100" fill="none" stroke="url(#rainbowGradientHome)" strokeWidth="12" strokeLinecap="round" filter="url(#intensiveGlowHome)" opacity="0.9" />
+
+                        {/* Needle */}
+                        <g style={{ transform: `rotate(${(gaugeValue * 1.8) - 90}deg)`, transformOrigin: '90px 100px', transition: 'transform 1s cubic-bezier(0.4, 0, 0.2, 1)' }}>
+                          <circle cx="90" cy="100" r="8" fill={
+                            gaugeValue <= 20 ? '#DC2626' :
+                              gaugeValue <= 40 ? '#F59E0B' :
+                                gaugeValue <= 60 ? '#84CC16' :
+                                  gaugeValue <= 80 ? '#22C55E' : '#10B981'
+                          } />
+                          <path d="M 90 100 L 86 96 L 90 45 L 94 96 Z" fill={
+                            gaugeValue <= 20 ? '#DC2626' :
+                              gaugeValue <= 40 ? '#F59E0B' :
+                                gaugeValue <= 60 ? '#84CC16' :
+                                  gaugeValue <= 80 ? '#22C55E' : '#10B981'
+                          } />
+                        </g>
+
+                        {/* Value inside gauge */}
+                        <text x="90" y="85" fill="var(--text-primary)" fontSize="28" fontWeight="800" textAnchor="middle" dominantBaseline="middle" className="font-[family-name:var(--font-poppins)]">
+                          {gaugeValue}
+                        </text>
+                      </svg>
+                    </div>
+
+                    {/* Text Info */}
+                    <div className="flex flex-col items-start text-left pl-4">
+                      <span className="text-xs text-[var(--text-secondary)] flex items-center gap-1 mb-1">
+                        Fear & Greed Index <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                      </span>
+                      <span className="text-2xl font-bold font-[family-name:var(--font-poppins)] leading-none mb-1" style={{
+                        color: parseInt(fearGreed.value) <= 25 ? '#EF4444' :
+                          parseInt(fearGreed.value) <= 45 ? '#F59E0B' :
+                            parseInt(fearGreed.value) <= 55 ? '#EAB308' :
+                              parseInt(fearGreed.value) <= 75 ? '#22C55E' : '#10B981'
+                      }}>
+                        {fearGreed.value_classification === 'Extreme Fear' ? 'Medo Extremo' :
+                          fearGreed.value_classification === 'Fear' ? 'Medo' :
+                            fearGreed.value_classification === 'Neutral' ? 'Neutro' :
+                              fearGreed.value_classification === 'Greed' ? 'Ganância' :
+                                fearGreed.value_classification === 'Extreme Greed' ? 'Ganância Extrema' : fearGreed.value_classification}
+                      </span>
+                      <span className="text-xs font-semibold text-[var(--text-tertiary)] uppercase tracking-wider">
+                        Sentimento do Mercado
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Mobile/Tablet: Cards em Grid 2x2 */}
               <div className="lg:hidden grid grid-cols-2 gap-4">
                 {/* Capitalização Total */}
