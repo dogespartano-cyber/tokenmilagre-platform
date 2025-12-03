@@ -731,6 +731,16 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
     }
   };
 
+  const discardAll = () => {
+    if (confirm('Descartar todos os artigos gerados?')) {
+      setArticles([]);
+      setCurrentStep(0);
+      setTotalSteps(0);
+      setFoundTopics([]);
+      setSelectedTopics(new Set());
+    }
+  };
+
   const saveSelectedArticles = async () => {
     const selected = articles.filter(a => a.selected && a.status === 'success');
 
@@ -1089,321 +1099,305 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
 
   return (
     <AdminRoute allowEditor={true}>
-      <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
-        <div className="container mx-auto px-4 py-8 max-w-7xl">
-          {/* Header */}
-          <div className="mb-8">
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center gap-2 text-sm font-semibold mb-4 hover:underline"
-              style={{ color: 'var(--brand-primary)' }}
-            >
-              <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
-              Voltar ao Dashboard
-            </Link>
-
-            <div className="flex items-center gap-4 mb-2">
-              <div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #7C3AED, #F59E0B)' }}
-              >
-                <FontAwesomeIcon icon={faRobot} className="w-8 h-8 text-white" />
-              </div>
-              <div>
-                <h1 className="text-4xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                  Geração em Massa com IA
-                </h1>
-                <p className="text-lg mt-1" style={{ color: 'var(--text-secondary)' }}>
-                  Popule seu banco de dados automaticamente com conteúdo de qualidade
-                </p>
-              </div>
-            </div>
-          </div>
+      <div className="min-h-screen relative">
+        <div className="container mx-auto px-4 py-8 max-w-7xl relative z-10">
+          {/* Header Removed */}
 
           {/* Configuration Panel */}
           {articles.length === 0 && (
-            <div
-              className="rounded-2xl p-8 border shadow-lg mb-8"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)'
-              }}
-            >
-              <h2 className="text-2xl font-bold mb-6 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                Configuração da Geração
-              </h2>
-
-              {/* Type Selection */}
-              <div className="mb-6">
-                <label className="block text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
-                  Tipo de Conteúdo
-                </label>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {(['news', 'educational', 'resource'] as const).map((type) => {
-                    const config = getTypeConfig(type);
-                    const isSelected = contentType === type;
-
-                    return (
-                      <button
-                        key={type}
-                        onClick={() => setContentType(type)}
-                        className="p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105"
-                        style={{
-                          backgroundColor: isSelected ? `${config.color}15` : 'var(--bg-secondary)',
-                          borderColor: isSelected ? config.color : 'var(--border-light)',
-                          boxShadow: isSelected ? `0 0 20px ${config.color}30` : 'none'
-                        }}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div
-                            className="w-10 h-10 rounded-lg flex items-center justify-center"
-                            style={{ background: config.gradient }}
-                          >
-                            <FontAwesomeIcon icon={config.icon} className="w-5 h-5 text-white" />
-                          </div>
-                          <span className="font-bold" style={{ color: isSelected ? config.color : 'var(--text-primary)' }}>
-                            {config.label}
-                          </span>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Quantity */}
-              <div className="mb-6">
-                <label className="block text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
-                  Quantidade de Artigos
-                </label>
-                <div className="flex items-center gap-4">
-                  <input
-                    type="range"
-                    min="1"
-                    max="10"
-                    value={quantity}
-                    onChange={(e) => setQuantity(Number(e.target.value))}
-                    className="flex-1"
-                    style={{ accentColor: 'var(--brand-primary)' }}
-                  />
-                  <div
-                    className="w-20 text-center font-bold text-2xl px-4 py-2 rounded-lg"
-                    style={{
-                      backgroundColor: 'var(--brand-primary)',
-                      color: 'white'
-                    }}
+            <div className="rounded-3xl p-8 border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl shadow-xl mb-8 relative overflow-hidden">
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-8">
+                  <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-gray-900 dark:text-white flex items-center gap-3">
+                    <span className="w-1 h-8 bg-teal-500 rounded-full block"></span>
+                    Configuração da Geração
+                  </h2>
+                  <Link
+                    href="/dashboard"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                   >
-                    {quantity}
+                    <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
+                    Voltar ao Dashboard
+                  </Link>
+                </div>
+
+                {/* Type Selection */}
+                <div className="mb-8">
+                  <label className="block text-sm font-medium mb-4 text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                    Tipo de Conteúdo
+                  </label>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {(['news', 'educational', 'resource'] as const).map((type) => {
+                      const config = getTypeConfig(type);
+                      const isSelected = contentType === type;
+
+                      return (
+                        <button
+                          key={type}
+                          onClick={() => setContentType(type)}
+                          className={`group relative p-6 rounded-2xl border transition-all duration-300 overflow-hidden text-left ${isSelected
+                            ? 'border-teal-500/50 bg-teal-500/10 shadow-[0_0_30px_rgba(20,184,166,0.1)]'
+                            : 'border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-white/5'
+                            }`}
+                        >
+                          <div className={`absolute inset-0 ${isSelected ? 'bg-teal-500/5' : 'bg-transparent'} transition-opacity duration-500`} />
+
+                          <div className="relative z-10 flex flex-col gap-4">
+                            <div
+                              className={`w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 ${isSelected ? 'bg-teal-500 shadow-lg shadow-teal-500/30' : 'bg-gray-200 dark:bg-white/10'
+                                }`}
+                            >
+                              <FontAwesomeIcon icon={config.icon} className={`w-6 h-6 ${isSelected ? 'text-white' : 'text-gray-600 dark:text-white'}`} />
+                            </div>
+                            <div>
+                              <span className={`block font-bold text-lg mb-1 ${isSelected ? 'text-teal-700 dark:text-white' : 'text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white'}`}>
+                                {config.label}
+                              </span>
+                              <span className="text-xs text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-400 transition-colors">
+                                {type === 'news' && 'Notícias recentes e factuais'}
+                                {type === 'educational' && 'Guias e conceitos explicativos'}
+                                {type === 'resource' && 'Ferramentas e plataformas'}
+                              </span>
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
-                <p className="text-sm mt-2" style={{ color: 'var(--text-tertiary)' }}>
-                  Custo estimado: ~${(quantity * 0.008 * 2).toFixed(3)} USD (busca de tópicos + geração)
-                </p>
-              </div>
 
-              {/* Info Box */}
-              <div
-                className="rounded-lg p-4 mb-6"
-                style={{ backgroundColor: 'var(--bg-secondary)', borderLeft: '4px solid var(--brand-primary)' }}
-              >
-                <div className="flex items-start gap-3">
-                  <FontAwesomeIcon icon={faSearch} className="w-5 h-5 mt-0.5" style={{ color: 'var(--brand-primary)' }} />
-                  <div>
-                    <h3 className="font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
-                      Busca Inteligente de Tópicos
-                    </h3>
-                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                      A IA buscará tópicos <strong>relevantes e atuais</strong> em tempo real, verificando duplicados no banco de dados antes de gerar.
-                    </p>
-                    <ul className="mt-2 space-y-1 text-sm" style={{ color: 'var(--text-tertiary)' }}>
-                      <li>✅ Notícias das últimas 24-48h</li>
-                      <li>✅ Artigos educacionais demandados</li>
-                      <li>✅ Recursos populares e verificados</li>
-                      <li>✅ Validação completa (mesma qualidade de criar-artigo)</li>
-                    </ul>
+                {/* Quantity */}
+                <div className="mb-8">
+                  <div className="flex items-center justify-between mb-4">
+                    <label className="block text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                      Quantidade de Artigos
+                    </label>
+                    <span className="text-xs text-gray-500">
+                      Custo estimado: <span className="text-teal-400 font-mono">~${(quantity * 0.008 * 2).toFixed(3)} USD</span>
+                    </span>
+                  </div>
+
+                  <div className="bg-gray-50 dark:bg-white/5 rounded-2xl p-6 border border-gray-200 dark:border-white/5 flex items-center gap-6">
+                    <div className="flex-1 relative h-12 flex items-center">
+                      <input
+                        type="range"
+                        min="1"
+                        max="10"
+                        value={quantity}
+                        onChange={(e) => setQuantity(Number(e.target.value))}
+                        className="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-teal-500 hover:accent-teal-400 transition-all"
+                      />
+                    </div>
+                    <div
+                      className="w-24 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-teal-500/20 to-teal-600/20 border border-teal-500/30 shadow-inner"
+                    >
+                      <span className="text-3xl font-bold text-white font-[family-name:var(--font-poppins)]">
+                        {quantity}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Search Topics Button */}
-              <button
-                onClick={searchAndShowTopics}
-                disabled={isGenerating || searchingTopics}
-                className="w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-                style={{
-                  background: 'linear-gradient(135deg, #7C3AED, #F59E0B)',
-                  color: 'white',
-                  boxShadow: '0 10px 30px rgba(124, 58, 237, 0.3)'
-                }}
-              >
-                {searchingTopics ? (
-                  <>
-                    <FontAwesomeIcon icon={faSpinner} className="w-6 h-6 animate-spin" />
-                    Buscando Tópicos Relevantes...
-                  </>
-                ) : (
-                  <>
-                    <FontAwesomeIcon icon={faSearch} className="w-6 h-6" />
-                    Buscar {quantity} Tópicos de {getTypeConfig(contentType).label}
-                  </>
-                )}
-              </button>
+                {/* Info Box (Simplified) */}
+                <div className="mb-8">
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-lg bg-teal-500/10 flex items-center justify-center flex-shrink-0 text-teal-500">
+                      <FontAwesomeIcon icon={faSearch} className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold mb-2 text-teal-900 dark:text-white text-lg">
+                        Busca Inteligente de Tópicos
+                      </h3>
+                      <p className="text-sm text-teal-800/70 dark:text-gray-400 mb-3 leading-relaxed">
+                        A IA buscará tópicos <strong className="text-teal-600 dark:text-teal-300">relevantes e atuais</strong> em tempo real, verificando duplicados no banco de dados antes de gerar.
+                      </p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <FontAwesomeIcon icon={faCheckCircle} className="w-3 h-3 text-teal-500/70" />
+                          <span>Notícias das últimas 24-48h</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <FontAwesomeIcon icon={faCheckCircle} className="w-3 h-3 text-teal-500/70" />
+                          <span>Artigos educacionais demandados</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <FontAwesomeIcon icon={faCheckCircle} className="w-3 h-3 text-teal-500/70" />
+                          <span>Recursos populares e verificados</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <FontAwesomeIcon icon={faCheckCircle} className="w-3 h-3 text-teal-500/70" />
+                          <span>Validação completa</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Search Topics Button */}
+                <div className="flex justify-start">
+                  <button
+                    onClick={searchAndShowTopics}
+                    disabled={isGenerating || searchingTopics}
+                    className="px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group relative overflow-hidden shadow-lg shadow-teal-500/20 bg-teal-600 hover:bg-teal-500 text-white"
+                  >
+                    <span className="relative z-10 flex items-center gap-3">
+                      {searchingTopics ? (
+                        <>
+                          <FontAwesomeIcon icon={faSpinner} className="w-6 h-6 animate-spin" />
+                          Buscando...
+                        </>
+                      ) : (
+                        <>
+                          <FontAwesomeIcon icon={faSearch} className="w-6 h-6" />
+                          Buscar Tópicos
+                        </>
+                      )}
+                    </span>
+                  </button>
+                </div>
+              </div>
             </div>
           )}
 
           {/* Topics Confirmation Panel */}
           {foundTopics.length > 0 && articles.length === 0 && (
-            <div
-              className="rounded-2xl p-8 border shadow-lg mb-8"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)'
-              }}
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                  Tópicos Encontrados ({foundTopics.length})
-                </h2>
-                <button
-                  onClick={() => {
-                    setFoundTopics([]);
-                    setSelectedTopics(new Set());
-                  }}
-                  className="text-sm px-4 py-2 rounded-lg hover:opacity-80 transition-opacity"
-                  style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    color: 'var(--text-secondary)'
-                  }}
-                >
-                  <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4 mr-2" />
-                  Buscar Novamente
-                </button>
-              </div>
+            <div className="rounded-3xl p-8 border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl shadow-xl mb-8 relative overflow-hidden">
+              <div className="relative z-10">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
+                  <div>
+                    <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-gray-900 dark:text-white flex items-center gap-3">
+                      <span className="w-1 h-8 bg-teal-500 rounded-full block"></span>
+                      Tópicos Encontrados ({foundTopics.length})
+                    </h2>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 ml-4">
+                      Selecione os tópicos que deseja gerar.
+                    </p>
+                  </div>
 
-              <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
-                Selecione os tópicos que deseja gerar. Todos estão selecionados por padrão.
-              </p>
-
-              {/* Topics List */}
-              <div className="space-y-3 mb-6 max-h-96 overflow-y-auto">
-                {foundTopics.map((topic, index) => {
-                  const isSelected = selectedTopics.has(index);
-                  const config = getTypeConfig(contentType);
-
-                  return (
-                    <div
-                      key={index}
-                      onClick={() => toggleTopicSelection(index)}
-                      className="flex items-start gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 hover:scale-[1.02]"
-                      style={{
-                        backgroundColor: isSelected ? `${config.color}10` : 'var(--bg-secondary)',
-                        borderColor: isSelected ? config.color : 'var(--border-light)',
-                        boxShadow: isSelected ? `0 0 15px ${config.color}20` : 'none'
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => {
+                        setFoundTopics([]);
+                        setSelectedTopics(new Set());
                       }}
+                      className="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all border border-transparent hover:border-gray-200 dark:hover:border-white/10"
                     >
-                      <div
-                        className="w-6 h-6 rounded border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all"
-                        style={{
-                          borderColor: isSelected ? config.color : 'var(--border-medium)',
-                          backgroundColor: isSelected ? config.color : 'transparent'
-                        }}
-                      >
-                        {isSelected && (
-                          <FontAwesomeIcon icon={faCheck} className="w-3 h-3 text-white" />
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <p className="font-semibold" style={{ color: isSelected ? config.color : 'var(--text-primary)' }}>
-                          {topic}
-                        </p>
-                      </div>
-                      <span
-                        className="text-xs px-2 py-1 rounded flex-shrink-0"
-                        style={{
-                          backgroundColor: 'var(--bg-secondary)',
-                          color: 'var(--text-tertiary)'
-                        }}
-                      >
-                        #{index + 1}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
+                      <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3 mr-2" />
+                      Voltar
+                    </button>
 
-              {/* Stats */}
-              <div className="flex items-center justify-between mb-4 p-4 rounded-lg" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                <div>
-                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                    <strong>{selectedTopics.size}</strong> de <strong>{foundTopics.length}</strong> tópicos selecionados
-                  </p>
-                  <p className="text-xs mt-1" style={{ color: 'var(--text-tertiary)' }}>
-                    Custo estimado: ~${(selectedTopics.size * 0.008).toFixed(3)} USD
-                  </p>
+                    <button
+                      onClick={() => {
+                        if (selectedTopics.size === foundTopics.length) {
+                          setSelectedTopics(new Set());
+                        } else {
+                          setSelectedTopics(new Set(foundTopics.map((_, i) => i)));
+                        }
+                      }}
+                      className="px-4 py-2 rounded-lg text-sm font-medium text-teal-400 hover:text-teal-300 hover:bg-teal-500/10 transition-all border border-teal-500/20 hover:border-teal-500/40"
+                    >
+                      {selectedTopics.size === foundTopics.length ? 'Desmarcar Todos' : 'Selecionar Todos'}
+                    </button>
+                  </div>
                 </div>
-                <button
-                  onClick={() => {
-                    if (selectedTopics.size === foundTopics.length) {
-                      setSelectedTopics(new Set());
-                    } else {
-                      setSelectedTopics(new Set(foundTopics.map((_, i) => i)));
-                    }
-                  }}
-                  className="text-sm px-4 py-2 rounded-lg hover:opacity-80 transition-opacity"
-                  style={{
-                    backgroundColor: 'var(--brand-primary)',
-                    color: 'white'
-                  }}
-                >
-                  {selectedTopics.size === foundTopics.length ? 'Desmarcar Todos' : 'Selecionar Todos'}
-                </button>
-              </div>
 
-              {/* Confirm Button */}
-              <button
-                onClick={confirmAndGenerate}
-                disabled={selectedTopics.size === 0}
-                className="w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{
-                  background: 'linear-gradient(135deg, #10b981, #059669)',
-                  color: 'white',
-                  boxShadow: '0 10px 30px rgba(16, 185, 129, 0.3)'
-                }}
-              >
-                <FontAwesomeIcon icon={faBolt} className="w-6 h-6" />
-                Gerar {selectedTopics.size} {selectedTopics.size === 1 ? 'Artigo' : 'Artigos'}
-              </button>
+                {/* Topics List - Grid Layout */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+                  {foundTopics.map((topic, index) => {
+                    const isSelected = selectedTopics.has(index);
+                    const config = getTypeConfig(contentType);
+
+                    return (
+                      <div
+                        key={index}
+                        onClick={() => toggleTopicSelection(index)}
+                        className={`group relative p-5 rounded-xl border cursor-pointer transition-all duration-300 ${isSelected
+                          ? 'border-teal-500/50 bg-teal-500/10 shadow-[0_0_20px_rgba(20,184,166,0.1)]'
+                          : 'border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 hover:border-gray-300 dark:hover:border-white/10'
+                          }`}
+                      >
+                        <div className="flex items-start gap-3 relative z-10">
+                          <div
+                            className={`w-6 h-6 rounded-md border flex items-center justify-center flex-shrink-0 mt-0.5 transition-all ${isSelected
+                              ? 'bg-teal-500 border-teal-500'
+                              : 'bg-transparent border-gray-400 dark:border-gray-600 group-hover:border-gray-600 dark:group-hover:border-gray-400'
+                              }`}
+                          >
+                            {isSelected && (
+                              <FontAwesomeIcon icon={faCheck} className="w-3 h-3 text-white" />
+                            )}
+                          </div>
+                          <div className="flex-1">
+                            <p className={`font-medium text-sm leading-relaxed ${isSelected ? 'text-teal-900 dark:text-white' : 'text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white'}`}>
+                              {topic}
+                            </p>
+                          </div>
+                          <span className="text-[10px] font-mono text-gray-600 group-hover:text-gray-500">
+                            #{index + 1}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Bottom Action Bar */}
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-6 rounded-2xl bg-white/80 dark:bg-white/5 border border-gray-200 dark:border-white/10 backdrop-blur-md">
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Selecionados
+                      </p>
+                      <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                        {selectedTopics.size} <span className="text-sm font-normal text-gray-500">/ {foundTopics.length}</span>
+                      </p>
+                    </div>
+                    <div className="h-10 w-px bg-gray-200 dark:bg-white/10 mx-2" />
+                    <div>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Custo Estimado
+                      </p>
+                      <p className="text-lg font-mono text-teal-400">
+                        ~${(selectedTopics.size * 0.008).toFixed(3)}
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={confirmAndGenerate}
+                    disabled={selectedTopics.size === 0}
+                    className="w-full md:w-auto px-8 py-3 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-teal-500/20 bg-teal-600 hover:bg-teal-500 text-white"
+                  >
+                    <FontAwesomeIcon icon={faBolt} className="w-5 h-5" />
+                    Gerar {selectedTopics.size} {selectedTopics.size === 1 ? 'Artigo' : 'Artigos'}
+                  </button>
+                </div>
+              </div>
             </div>
           )}
 
           {/* Progress Bar */}
           {isGenerating && totalSteps > 0 && (
-            <div
-              className="rounded-2xl p-6 border shadow-lg mb-8"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-light)'
-              }}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
+            <div className="rounded-2xl p-6 border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl shadow-xl mb-8 relative overflow-hidden">
+              <div className="flex items-center justify-between mb-4 relative z-10">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                  <FontAwesomeIcon icon={faSpinner} className="w-4 h-4 animate-spin text-teal-500 dark:text-teal-400" />
                   Gerando Artigos...
                 </h3>
-                <span className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                <span className="text-sm font-mono text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/20">
                   {currentStep} / {totalSteps}
                 </span>
               </div>
-              <div
-                className="h-3 rounded-full overflow-hidden"
-                style={{ backgroundColor: 'var(--bg-secondary)' }}
-              >
+              <div className="h-2 rounded-full bg-gray-200 dark:bg-white/10 overflow-hidden relative z-10">
                 <div
-                  className="h-full transition-all duration-500"
+                  className="h-full transition-all duration-500 relative"
                   style={{
                     width: `${(currentStep / totalSteps) * 100}%`,
-                    background: 'linear-gradient(135deg, #7C3AED, #F59E0B)'
+                    background: '#14b8a6'
                   }}
-                />
+                >
+                  <div className="absolute inset-0 bg-white/30" />
+                </div>
               </div>
             </div>
           )}
@@ -1412,75 +1406,47 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
           {articles.length > 0 && (
             <>
               {/* Summary Stats */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div
-                  className="rounded-xl p-4 border"
-                  style={{
-                    backgroundColor: 'var(--bg-elevated)',
-                    borderColor: 'var(--border-light)'
-                  }}
-                >
-                  <p className="text-sm mb-1" style={{ color: 'var(--text-secondary)' }}>Total Gerados</p>
-                  <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>{articles.length}</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div className="rounded-2xl p-5 border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Total Gerados</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-white">{articles.length}</p>
                 </div>
-                <div
-                  className="rounded-xl p-4 border"
-                  style={{
-                    backgroundColor: 'var(--bg-elevated)',
-                    borderColor: 'var(--border-light)'
-                  }}
-                >
-                  <p className="text-sm mb-1" style={{ color: 'var(--text-secondary)' }}>Sucesso</p>
-                  <p className="text-2xl font-bold" style={{ color: '#10b981' }}>{successCount}</p>
+                <div className="rounded-2xl p-5 border border-teal-500/20 bg-teal-500/5 backdrop-blur-md">
+                  <p className="text-xs text-teal-600 dark:text-teal-400/80 uppercase tracking-wider mb-1">Sucesso</p>
+                  <p className="text-3xl font-bold text-teal-600 dark:text-teal-400">{successCount}</p>
                 </div>
-                <div
-                  className="rounded-xl p-4 border"
-                  style={{
-                    backgroundColor: 'var(--bg-elevated)',
-                    borderColor: 'var(--border-light)'
-                  }}
-                >
-                  <p className="text-sm mb-1" style={{ color: 'var(--text-secondary)' }}>Erros</p>
-                  <p className="text-2xl font-bold" style={{ color: '#ef4444' }}>{errorCount}</p>
+                <div className="rounded-2xl p-5 border border-red-500/20 bg-red-500/5 backdrop-blur-md">
+                  <p className="text-xs text-red-600 dark:text-red-400/80 uppercase tracking-wider mb-1">Erros</p>
+                  <p className="text-3xl font-bold text-red-600 dark:text-red-400">{errorCount}</p>
                 </div>
-                <div
-                  className="rounded-xl p-4 border"
-                  style={{
-                    backgroundColor: 'var(--bg-elevated)',
-                    borderColor: 'var(--border-light)'
-                  }}
-                >
-                  <p className="text-sm mb-1" style={{ color: 'var(--text-secondary)' }}>Selecionados</p>
-                  <p className="text-2xl font-bold" style={{ color: 'var(--brand-primary)' }}>{selectedCount}</p>
+                <div className="rounded-2xl p-5 border border-teal-500/20 bg-teal-500/5 backdrop-blur-md">
+                  <p className="text-xs text-teal-600 dark:text-teal-400/80 uppercase tracking-wider mb-1">Selecionados</p>
+                  <p className="text-3xl font-bold text-teal-600 dark:text-teal-400">{selectedCount}</p>
                 </div>
               </div>
 
               {/* Articles Grid */}
-              <div className="space-y-4 mb-6">
+              <div className="grid grid-cols-1 gap-4 mb-8">
                 {articles.map((article) => {
                   const config = getTypeConfig(article.type);
 
                   return (
                     <div
                       key={article.id}
-                      className="rounded-xl p-6 border transition-all duration-300"
-                      style={{
-                        backgroundColor: 'var(--bg-elevated)',
-                        borderColor: article.selected ? config.color : 'var(--border-light)',
-                        boxShadow: article.selected ? `0 0 20px ${config.color}30` : 'none',
-                        opacity: article.status === 'generating' ? 0.7 : 1
-                      }}
+                      className={`rounded-2xl p-6 border transition-all duration-300 relative overflow-hidden ${article.selected
+                        ? 'border-teal-500/30 bg-teal-500/5 shadow-[0_0_30px_rgba(20,184,166,0.05)]'
+                        : 'border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5'
+                        } ${article.status === 'generating' ? 'opacity-70' : 'opacity-100'}`}
                     >
-                      <div className="flex items-start gap-4">
+                      <div className="flex items-start gap-5 relative z-10">
                         {/* Checkbox */}
                         <button
                           onClick={() => toggleArticleSelection(article.id)}
                           disabled={article.status !== 'success'}
-                          className="mt-1 w-6 h-6 rounded border-2 flex items-center justify-center transition-all duration-300 flex-shrink-0 disabled:opacity-30 disabled:cursor-not-allowed"
-                          style={{
-                            borderColor: article.selected ? config.color : 'var(--border-medium)',
-                            backgroundColor: article.selected ? config.color : 'transparent'
-                          }}
+                          className={`mt-1 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all duration-300 flex-shrink-0 disabled:opacity-30 disabled:cursor-not-allowed ${article.selected
+                            ? 'border-teal-500 bg-teal-500'
+                            : 'border-gray-600 bg-transparent hover:border-gray-400'
+                            }`}
                         >
                           {article.selected && (
                             <FontAwesomeIcon icon={faCheck} className="w-3 h-3 text-white" />
@@ -1488,33 +1454,33 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
                         </button>
 
                         {/* Content */}
-                        <div className="flex-1">
-                          <div className="flex items-start justify-between mb-2">
-                            <h3 className="text-lg font-bold pr-4" style={{ color: 'var(--text-primary)' }}>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-3">
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white pr-4 leading-tight">
                               {article.title}
                             </h3>
 
                             {/* Status Badge */}
                             <div className="flex-shrink-0">
                               {article.status === 'pending' && (
-                                <span className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-tertiary)' }}>
+                                <span className="text-xs px-3 py-1.5 rounded-full bg-white/10 text-gray-400 border border-white/5">
                                   Aguardando
                                 </span>
                               )}
                               {article.status === 'generating' && (
-                                <span className="text-xs px-3 py-1 rounded-full flex items-center gap-2" style={{ backgroundColor: '#3b82f615', color: '#3b82f6' }}>
+                                <span className="text-xs px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center gap-2">
                                   <FontAwesomeIcon icon={faSpinner} className="w-3 h-3 animate-spin" />
                                   Gerando...
                                 </span>
                               )}
                               {article.status === 'success' && (
-                                <span className="text-xs px-3 py-1 rounded-full flex items-center gap-2" style={{ backgroundColor: '#10b98115', color: '#10b981' }}>
+                                <span className="text-xs px-3 py-1.5 rounded-full bg-teal-500/10 text-teal-400 border border-teal-500/20 flex items-center gap-2">
                                   <FontAwesomeIcon icon={faCheckCircle} className="w-3 h-3" />
                                   Pronto
                                 </span>
                               )}
                               {article.status === 'error' && (
-                                <span className="text-xs px-3 py-1 rounded-full flex items-center gap-2" style={{ backgroundColor: '#ef444415', color: '#ef4444' }}>
+                                <span className="text-xs px-3 py-1.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 flex items-center gap-2">
                                   <FontAwesomeIcon icon={faExclamationTriangle} className="w-3 h-3" />
                                   Erro
                                 </span>
@@ -1523,20 +1489,21 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
                           </div>
 
                           {article.excerpt && (
-                            <p className="text-sm mb-3 line-clamp-2" style={{ color: 'var(--text-secondary)' }}>
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2 leading-relaxed">
                               {article.excerpt}
                             </p>
                           )}
 
                           {article.status === 'success' && (
-                            <div className="flex flex-wrap gap-2 mt-3">
+                            <div className="flex flex-wrap gap-2 mt-2">
                               {article.category && (
-                                <span className="text-xs px-2 py-1 rounded" style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-tertiary)' }}>
+                                <span className="text-xs px-2.5 py-1 rounded-md bg-white/5 text-gray-300 border border-white/10">
                                   {article.category}
                                 </span>
                               )}
                               {article.citations && article.citations.length > 0 && (
-                                <span className="text-xs px-2 py-1 rounded" style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-tertiary)' }}>
+                                <span className="text-xs px-2.5 py-1 rounded-md bg-white/5 text-gray-300 border border-white/10 flex items-center gap-1">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
                                   {article.citations.length} fontes
                                 </span>
                               )}
@@ -1544,25 +1511,18 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
                           )}
 
                           {article.error && (
-                            <div className="mt-3 p-3 rounded-lg border-l-4" style={{
-                              backgroundColor: '#ef444410',
-                              borderColor: '#ef4444'
-                            }}>
-                              <div className="flex items-start gap-2 mb-3">
-                                <FontAwesomeIcon icon={faExclamationTriangle} className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
-                                <p className="text-sm text-red-600 flex-1">{article.error}</p>
+                            <div className="mt-4 p-4 rounded-xl border border-red-500/20 bg-red-500/5">
+                              <div className="flex items-start gap-3 mb-3">
+                                <FontAwesomeIcon icon={faExclamationTriangle} className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                                <p className="text-sm text-red-300 flex-1">{article.error}</p>
                               </div>
 
-                              {/* Botão Corrigir com IA - Aparece apenas para erros de campos faltantes */}
+                              {/* Botão Corrigir com IA */}
                               {(article.error.includes('faltando') || article.error.includes('muito curto')) && (
                                 <button
                                   onClick={() => handleFixWithAI(article)}
                                   disabled={isGenerating}
-                                  className="w-full mt-2 py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-200 hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                                  style={{
-                                    background: 'linear-gradient(135deg, #7C3AED, #F59E0B)',
-                                    color: 'white'
-                                  }}
+                                  className="w-full mt-2 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 bg-teal-600 text-white shadow-lg shadow-teal-500/20"
                                 >
                                   <FontAwesomeIcon icon={faRobot} className="w-4 h-4" />
                                   Corrigir com IA (Gemini)
@@ -1578,45 +1538,31 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-4">
-                <button
-                  onClick={() => {
-                    if (confirm('Descartar todos os artigos gerados?')) {
-                      setArticles([]);
-                      setCurrentStep(0);
-                      setTotalSteps(0);
-                    }
-                  }}
-                  disabled={isGenerating}
-                  className="flex-1 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    color: 'var(--text-primary)',
-                    border: '2px solid var(--border-medium)'
-                  }}
-                >
-                  <FontAwesomeIcon icon={faXmark} className="w-5 h-5 mr-2" />
-                  Descartar Todos
-                </button>
+              <div className="flex flex-col md:flex-row gap-4 p-6 rounded-2xl bg-white/80 dark:bg-white/5 border border-gray-200 dark:border-white/10 backdrop-blur-md sticky bottom-4 z-50 shadow-2xl justify-start">
+                <div className="flex items-center gap-3 w-full md:w-auto">
+                  <button
+                    onClick={discardAll}
+                    disabled={isGenerating}
+                    className="px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 hover:bg-gray-100 dark:hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                  >
+                    <FontAwesomeIcon icon={faXmark} className="w-4 h-4 mr-2" />
+                    Descartar Todos
+                  </button>
 
-                <button
-                  onClick={saveSelectedArticles}
-                  disabled={isGenerating || selectedCount === 0}
-                  className="flex-1 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{
-                    background: 'linear-gradient(135deg, #10b981, #059669)',
-                    color: 'white',
-                    boxShadow: '0 10px 30px rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <FontAwesomeIcon icon={faDatabase} className="w-5 h-5" />
-                  Salvar {selectedCount} {selectedCount === 1 ? 'Artigo' : 'Artigos'} Selecionado{selectedCount !== 1 ? 's' : ''}
-                </button>
+                  <button
+                    onClick={saveSelectedArticles}
+                    disabled={isGenerating || selectedCount === 0}
+                    className="px-6 py-2.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed bg-teal-600 hover:bg-teal-500 text-white shadow-lg shadow-teal-500/20"
+                  >
+                    <FontAwesomeIcon icon={faDatabase} className="w-4 h-4" />
+                    Salvar {selectedCount} {selectedCount === 1 ? 'Artigo' : 'Artigos'}
+                  </button>
+                </div>
               </div>
             </>
           )}
         </div>
       </div>
-    </AdminRoute>
+    </AdminRoute >
   );
 }

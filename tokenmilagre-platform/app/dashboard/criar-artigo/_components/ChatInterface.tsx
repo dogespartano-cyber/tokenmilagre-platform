@@ -5,8 +5,9 @@
 
 import { useRef, useEffect, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
+import { faPaperPlane, faSpinner, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { type ArticleType, MESSAGES, PROMPT_SUGGESTIONS, ANIMATION_DELAYS, CHAT_CONFIG } from '../_lib/constants';
 import type { Message } from '../_hooks/usePerplexityChat';
 
@@ -201,36 +202,29 @@ export default function ChatInterface({
   };
 
   return (
-    <div
-      className="rounded-2xl border overflow-hidden"
-      style={{
-        backgroundColor: 'var(--bg-elevated)',
-        borderColor: 'var(--border-medium)',
-      }}
-    >
+    <div className="rounded-2xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl overflow-hidden shadow-xl">
       {/* Mensagens */}
       <div
         ref={chatContainerRef}
-        className="p-6 space-y-4 overflow-y-auto overflow-x-hidden"
-        style={{ maxHeight: CHAT_CONFIG.maxHeight }}
+        className="p-6 pt-12 space-y-4 relative"
       >
+        {/* Back Link inside Card */}
+        <div className="absolute top-4 right-6 z-10">
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-2 text-xs font-medium text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+          >
+            <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
+            Voltar ao Dashboard
+          </Link>
+        </div>
+
         {conversation.length === 0 && (
           <div className="py-12">
-            <div className="text-6xl mb-4">🤖</div>
-            <h3
-              className="text-xl font-bold mb-2 text-left"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              {selectedType ? MESSAGES.chat.welcome.withType : MESSAGES.chat.welcome.withoutType}
-            </h3>
-            <p className="text-left mb-6" style={{ color: 'var(--text-secondary)' }}>
-              {selectedType ? MESSAGES.chat.description.withType : MESSAGES.chat.description.withoutType}
-            </p>
-
             {/* Sugestões de Prompts */}
             {!selectedType && (
               <div className="space-y-3">
-                <p className="text-sm font-semibold text-left mb-3" style={{ color: 'var(--text-tertiary)' }}>
+                <p className="text-sm font-semibold text-left mb-3 text-gray-500 dark:text-gray-400">
                   {MESSAGES.chat.suggestions}
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -238,12 +232,7 @@ export default function ChatInterface({
                     <button
                       key={idx}
                       onClick={() => onPromptChange(suggestion.prompt)}
-                      className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border"
-                      style={{
-                        backgroundColor: 'var(--bg-secondary)',
-                        borderColor: 'var(--border-medium)',
-                        color: 'var(--text-primary)'
-                      }}
+                      className="text-left px-4 py-3 rounded-xl transition-all hover:brightness-110 border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10"
                     >
                       <div className="text-2xl mb-1">{suggestion.emoji}</div>
                       <span className="font-medium text-sm">{suggestion.label}</span>
@@ -261,17 +250,12 @@ export default function ChatInterface({
             className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-[80%] p-4 rounded-xl break-words overflow-wrap-anywhere ${
-                msg.role === 'user' ? 'rounded-br-none' : 'rounded-bl-none'
-              }`}
-              style={{
-                backgroundColor: msg.role === 'user' ? 'var(--brand-primary)' : 'var(--bg-secondary)',
-                color: msg.role === 'user' ? 'var(--text-inverse)' : 'var(--text-primary)',
-                wordBreak: 'break-word',
-                overflowWrap: 'break-word'
-              }}
+              className={`max-w-[80%] p-4 rounded-xl break-words overflow-wrap-anywhere ${msg.role === 'user'
+                ? 'bg-teal-600 text-white rounded-br-none'
+                : 'bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-gray-100 rounded-bl-none'
+                }`}
             >
-              <div className="prose prose-sm max-w-none">
+              <div className="prose prose-sm max-w-none dark:prose-invert">
                 <ReactMarkdown components={markdownComponents}>
                   {msg.content}
                 </ReactMarkdown>
@@ -282,14 +266,11 @@ export default function ChatInterface({
 
         {loading && (
           <div className="flex justify-start">
-            <div
-              className="p-4 rounded-xl rounded-bl-none"
-              style={{ backgroundColor: 'var(--bg-secondary)' }}
-            >
+            <div className="p-4 rounded-xl rounded-bl-none bg-gray-100 dark:bg-white/5">
               <div className="flex gap-2">
-                <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: ANIMATION_DELAYS.bounce1 }}></div>
-                <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: ANIMATION_DELAYS.bounce2 }}></div>
-                <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: ANIMATION_DELAYS.bounce3 }}></div>
+                <div className="w-2 h-2 rounded-full animate-bounce bg-teal-500" style={{ animationDelay: ANIMATION_DELAYS.bounce1 }}></div>
+                <div className="w-2 h-2 rounded-full animate-bounce bg-teal-500" style={{ animationDelay: ANIMATION_DELAYS.bounce2 }}></div>
+                <div className="w-2 h-2 rounded-full animate-bounce bg-teal-500" style={{ animationDelay: ANIMATION_DELAYS.bounce3 }}></div>
               </div>
             </div>
           </div>
@@ -297,10 +278,7 @@ export default function ChatInterface({
 
         {processing && (
           <div className="flex justify-start">
-            <div
-              className="p-4 rounded-xl rounded-bl-none flex items-center gap-2"
-              style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
-            >
+            <div className="p-4 rounded-xl rounded-bl-none flex items-center gap-2 bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white">
               <FontAwesomeIcon icon={faSpinner} spin />
               Processando com Gemini...
             </div>
@@ -309,10 +287,7 @@ export default function ChatInterface({
       </div>
 
       {/* Input */}
-      <div
-        className="p-4 border-t"
-        style={{ borderColor: 'var(--border-light)' }}
-      >
+      <div className="p-4 border-t border-gray-200 dark:border-white/10">
         <div className="flex gap-3">
           <input
             type="text"
@@ -321,22 +296,13 @@ export default function ChatInterface({
             onKeyPress={handleKeyPress}
             placeholder="Digite sua mensagem..."
             disabled={loading || processing}
-            className="flex-1 px-4 py-3 rounded-xl border focus:outline-none transition-colors"
-            style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border-medium)',
-              color: 'var(--text-primary)'
-            }}
+            className="flex-1 px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50 transition-all placeholder-gray-400"
             aria-label="Campo de entrada para conversar com a IA"
           />
           <button
             onClick={onSendMessage}
             disabled={!prompt.trim() || loading || processing}
-            className="px-6 py-3 rounded-xl font-semibold transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{
-              backgroundColor: 'var(--brand-primary)',
-              color: 'var(--text-inverse)'
-            }}
+            className="px-6 py-3 rounded-xl font-semibold transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed bg-teal-600 text-white shadow-lg shadow-teal-500/20 hover:shadow-teal-500/30"
             aria-label={loading ? 'Aguardando resposta da IA' : 'Enviar mensagem'}
           >
             <FontAwesomeIcon icon={faPaperPlane} />

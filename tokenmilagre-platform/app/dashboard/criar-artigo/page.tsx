@@ -318,11 +318,11 @@ export default function CriarArtigoPage() {
       // Citations: transform URL strings to citation objects
       const citationsToSend = articleToValidate.citations && articleToValidate.citations.length > 0
         ? articleToValidate.citations.map((url: string, index: number) => ({
-            url,
-            title: url, // Use URL as title placeholder
-            order: index,
-            verified: false
-          }))
+          url,
+          title: url, // Use URL as title placeholder
+          order: index,
+          verified: false
+        }))
         : undefined;
 
       // FactCheckSources: keep as URL string array (no JSON.stringify)
@@ -455,29 +455,9 @@ export default function CriarArtigoPage() {
 
   return (
     <AdminRoute allowEditor={true}>
-      <div className="min-h-screen overflow-x-hidden" style={{ background: 'var(--bg-primary)' }}>
-        <div className="container mx-auto px-4 py-8 max-w-[1600px]">
-          {/* Header */}
-          <div className="mb-8">
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-70 mb-4"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              <FontAwesomeIcon icon={faArrowLeft} />
-              Voltar ao Dashboard
-            </Link>
-
-            <h1
-              className="text-4xl font-bold font-[family-name:var(--font-poppins)] mb-2"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              Criar Artigo com IA
-            </h1>
-            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-              Converse livremente com a IA para criar artigos completos
-            </p>
-          </div>
+      <div className="min-h-screen relative">
+        <div className="container mx-auto px-4 py-8 max-w-7xl relative z-10">
+          {/* Header Removed */}
 
           <div className="space-y-6">
             {/* Chat Interface */}

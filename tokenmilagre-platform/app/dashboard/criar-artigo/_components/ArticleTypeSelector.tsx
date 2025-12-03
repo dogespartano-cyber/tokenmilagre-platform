@@ -18,8 +18,8 @@ export default function ArticleTypeSelector({ selectedType, onTypeChange }: Arti
   };
 
   return (
-    <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--border-light)' }}>
-      <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
+    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10">
+      <h3 className="text-sm font-semibold mb-3 text-gray-500 dark:text-gray-400">
         Selecione o tipo de artigo:
       </h3>
 
@@ -27,13 +27,10 @@ export default function ArticleTypeSelector({ selectedType, onTypeChange }: Arti
         {/* Botão Notícia */}
         <button
           onClick={() => toggleType('news')}
-          className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex items-center gap-2 ${
-            selectedType === 'news' ? '' : 'hover:opacity-80'
-          }`}
-          style={{
-            backgroundColor: selectedType === 'news' ? 'var(--brand-primary)' : 'var(--bg-secondary)',
-            color: selectedType === 'news' ? 'var(--text-inverse)' : 'var(--text-primary)'
-          }}
+          className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex items-center gap-2 ${selectedType === 'news'
+              ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20'
+              : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10'
+            }`}
           aria-pressed={selectedType === 'news'}
           aria-label={`${ARTICLE_TYPE_CONFIG.news.ariaLabel} ${selectedType === 'news' ? '(selecionado)' : ''}`}
         >
@@ -44,13 +41,10 @@ export default function ArticleTypeSelector({ selectedType, onTypeChange }: Arti
         {/* Botão Educação */}
         <button
           onClick={() => toggleType('educational')}
-          className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex items-center gap-2 ${
-            selectedType === 'educational' ? '' : 'hover:opacity-80'
-          }`}
-          style={{
-            backgroundColor: selectedType === 'educational' ? 'var(--brand-primary)' : 'var(--bg-secondary)',
-            color: selectedType === 'educational' ? 'var(--text-inverse)' : 'var(--text-primary)'
-          }}
+          className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex items-center gap-2 ${selectedType === 'educational'
+              ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20'
+              : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10'
+            }`}
           aria-pressed={selectedType === 'educational'}
           aria-label={`${ARTICLE_TYPE_CONFIG.educational.ariaLabel} ${selectedType === 'educational' ? '(selecionado)' : ''}`}
         >
@@ -61,13 +55,10 @@ export default function ArticleTypeSelector({ selectedType, onTypeChange }: Arti
         {/* Botão Recurso */}
         <button
           onClick={() => toggleType('resource')}
-          className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex items-center gap-2 ${
-            selectedType === 'resource' ? '' : 'hover:opacity-80'
-          }`}
-          style={{
-            backgroundColor: selectedType === 'resource' ? 'var(--brand-primary)' : 'var(--bg-secondary)',
-            color: selectedType === 'resource' ? 'var(--text-inverse)' : 'var(--text-primary)'
-          }}
+          className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex items-center gap-2 ${selectedType === 'resource'
+              ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20'
+              : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10'
+            }`}
           aria-pressed={selectedType === 'resource'}
           aria-label={`${ARTICLE_TYPE_CONFIG.resource.ariaLabel} ${selectedType === 'resource' ? '(selecionado)' : ''}`}
         >
@@ -78,14 +69,7 @@ export default function ArticleTypeSelector({ selectedType, onTypeChange }: Arti
 
       {/* Feedback de modo selecionado */}
       {selectedType && (
-        <div
-          className="mt-3 p-3 rounded-lg text-sm"
-          style={{
-            backgroundColor: 'rgba(34, 197, 94, 0.15)',
-            borderLeft: '3px solid #22C55E',
-            color: 'var(--text-primary)'
-          }}
-        >
+        <div className="mt-3 p-3 rounded-lg text-sm bg-teal-500/10 border-l-4 border-teal-500 text-gray-700 dark:text-gray-200">
           ✅ <strong>Modo Criação Ativado:</strong> {ARTICLE_TYPE_CONFIG[selectedType].description}
         </div>
       )}
@@ -93,11 +77,7 @@ export default function ArticleTypeSelector({ selectedType, onTypeChange }: Arti
       {/* Modo conversa livre */}
       {!selectedType && (
         <div
-          className="mt-3 p-3 rounded-lg text-sm"
-          style={{
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-            color: 'var(--text-primary)'
-          }}
+          className="mt-3 p-3 rounded-lg text-sm bg-blue-500/10 text-gray-700 dark:text-gray-200"
           dangerouslySetInnerHTML={{ __html: MESSAGES.chat.modeInfo.free }}
         />
       )}

@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 import type { Role } from '@/lib/generated/prisma';
 
 /**
@@ -61,9 +62,35 @@ export async function authenticate(request?: NextRequest): Promise<AuthResult> {
     };
   }
 
+  // 🔒 Verify user exists in database to prevent FK errors
+  const dbUser = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { id: true, role: true }
+  });
+
+  if (!dbUser) {
+    return {
+      success: false,
+      response: NextResponse.json(
+        {
+          success: false,
+          error: 'User not found',
+          message: 'Your account appears to be invalid or deleted.',
+        },
+        { status: 401 }
+      ),
+    };
+  }
+
+  // Update session role with DB role (source of truth)
+  const user = {
+    ...session.user,
+    role: dbUser.role
+  } as AuthenticatedUser;
+
   return {
     success: true,
-    user: session.user as AuthenticatedUser,
+    user,
   };
 }
 

@@ -35,43 +35,25 @@ export default function ArticlePreviewPanel({
   onPublish
 }: ArticlePreviewPanelProps) {
   return (
-    <div
-      className="rounded-2xl p-6 border"
-      style={{
-        backgroundColor: 'var(--bg-elevated)',
-        borderColor: 'var(--border-medium)',
-      }}
-    >
+    <div className="rounded-2xl p-6 border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl shadow-xl">
       <div className="mb-6">
         {/* Header */}
         <div className="flex items-center gap-3 mb-4">
-          <h2
-            className="text-2xl font-bold font-[family-name:var(--font-poppins)]"
-            style={{ color: 'var(--text-primary)' }}
-          >
+          <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-gray-900 dark:text-white">
             Preview do Artigo
           </h2>
           {article.coverImage && (
-            <span className="px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1" style={{
-              backgroundColor: '#10B981',
-              color: 'white'
-            }}>
+            <span className="px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 bg-emerald-500 text-white">
               🎨 Com capa
             </span>
           )}
           {/* Badge de Citations */}
           {article.citations && article.citations.length > 0 ? (
-            <span className="px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1" style={{
-              backgroundColor: '#3B82F6',
-              color: 'white'
-            }}>
+            <span className="px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 bg-blue-500 text-white">
               📚 {article.citations.length} fontes
             </span>
           ) : (
-            <span className="px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1" style={{
-              backgroundColor: '#EF4444',
-              color: 'white'
-            }}>
+            <span className="px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 bg-red-500 text-white">
               ⚠️ Sem fontes
             </span>
           )}
@@ -83,13 +65,7 @@ export default function ArticlePreviewPanel({
             onClick={() => {
               refineSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }}
-            className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2"
-            style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border-medium)',
-              border: '1px solid',
-              color: 'var(--text-primary)'
-            }}
+            className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2 border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10"
             aria-label="Scroll até a seção de edição manual do artigo"
           >
             <FontAwesomeIcon icon={faPen} />
@@ -100,13 +76,7 @@ export default function ArticlePreviewPanel({
             <button
               onClick={onGenerateCover}
               disabled={generatingCover}
-              className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2 disabled:opacity-50"
-              style={{
-                backgroundColor: 'var(--bg-secondary)',
-                borderColor: 'var(--border-medium)',
-                border: '1px solid',
-                color: 'var(--text-primary)'
-              }}
+              className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2 disabled:opacity-50 border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10"
             >
               {generatingCover ? (
                 <>
@@ -124,13 +94,7 @@ export default function ArticlePreviewPanel({
           <button
             onClick={onProcessWithGemini}
             disabled={processing}
-            className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2 disabled:opacity-50"
-            style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border-medium)',
-              border: '1px solid',
-              color: 'var(--text-primary)'
-            }}
+            className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2 disabled:opacity-50 border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10"
             aria-label={processing ? 'Refinando artigo com Gemini' : 'Refinar conteúdo do artigo usando Gemini AI'}
           >
             {processing ? (
@@ -147,13 +111,10 @@ export default function ArticlePreviewPanel({
 
           <button
             onClick={onCopyArticle}
-            className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2"
-            style={{
-              backgroundColor: copiedProcessed ? '#10B981' : 'var(--bg-secondary)',
-              borderColor: 'var(--border-medium)',
-              border: '1px solid',
-              color: copiedProcessed ? 'white' : 'var(--text-primary)'
-            }}
+            className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2 border ${copiedProcessed
+                ? 'bg-emerald-500 border-emerald-500 text-white'
+                : 'border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10'
+              }`}
             aria-label={copiedProcessed ? 'Conteúdo copiado para área de transferência' : 'Copiar conteúdo do artigo'}
           >
             <FontAwesomeIcon icon={copiedProcessed ? faCheck : faCopy} />
@@ -162,32 +123,30 @@ export default function ArticlePreviewPanel({
         </div>
 
         {/* Botão Publicar (destaque) */}
-        <button
-          onClick={onPublish}
-          disabled={processing}
-          className="px-8 py-3 rounded-xl font-bold text-base transition-all hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg"
-          style={{
-            backgroundColor: '#10B981',
-            color: 'white'
-          }}
-          aria-label={processing ? 'Publicando artigo no sistema' : 'Publicar artigo gerado'}
-        >
-          {processing ? (
-            <>
-              <FontAwesomeIcon icon={faSpinner} spin />
-              Publicando...
-            </>
-          ) : (
-            <>
-              <FontAwesomeIcon icon={faCheck} />
-              Publicar Artigo
-            </>
-          )}
-        </button>
+        <div className="flex justify-start">
+          <button
+            onClick={onPublish}
+            disabled={processing}
+            className="px-8 py-3 rounded-xl font-bold text-base transition-all hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg bg-teal-600 text-white shadow-teal-500/20 hover:shadow-teal-500/30"
+            aria-label={processing ? 'Publicando artigo no sistema' : 'Publicar artigo gerado'}
+          >
+            {processing ? (
+              <>
+                <FontAwesomeIcon icon={faSpinner} spin />
+                Publicando...
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faCheck} />
+                Publicar Artigo
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Divisor */}
-      <div className="border-t my-6" style={{ borderColor: 'var(--border-light)' }}></div>
+      <div className="border-t border-gray-200 dark:border-white/10 my-6"></div>
 
       {/* Preview do Artigo */}
       {articleType !== 'resource' ? (
@@ -201,33 +160,25 @@ export default function ArticlePreviewPanel({
       ) : (
         // Preview simplificado para Resources
         <div className="space-y-6">
-          <div className="p-6 rounded-xl border" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-light)' }}>
-            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+          <div className="p-6 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5">
+            <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
               {article.name}
             </h3>
-            <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>
+            <p className="mb-4 text-gray-600 dark:text-gray-400">
               {article.shortDescription}
             </p>
             <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 rounded-lg text-sm font-semibold" style={{
-                backgroundColor: 'var(--brand-primary)',
-                color: 'white'
-              }}>
+              <span className="px-3 py-1 rounded-lg text-sm font-semibold bg-teal-600 text-white">
                 {article.category}
               </span>
               {article.platforms?.map((platform: string, idx: number) => (
-                <span key={idx} className="px-3 py-1 rounded-lg text-sm" style={{
-                  backgroundColor: 'var(--bg-secondary)',
-                  borderColor: 'var(--border-medium)',
-                  border: '1px solid',
-                  color: 'var(--text-primary)'
-                }}>
+                <span key={idx} className="px-3 py-1 rounded-lg text-sm border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-gray-700 dark:text-gray-300">
                   {platform}
                 </span>
               ))}
             </div>
           </div>
-          <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+          <div className="text-sm text-gray-500 dark:text-gray-400">
             <p>✅ Resource criado e pronto para publicação</p>
             <p className="mt-2">O preview completo estará disponível após a publicação na página de recursos.</p>
           </div>
