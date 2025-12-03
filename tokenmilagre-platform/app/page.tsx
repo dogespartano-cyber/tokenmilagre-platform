@@ -197,7 +197,7 @@ export default function HomePage() {
   };
 
   const fetchNews = async () => {
-    const CACHE_KEY = 'home_news_list';
+    const CACHE_KEY = 'home_news_list_v2'; // Changed key to force refresh
 
     // Carregar do cache imediatamente (elimina flash visual)
     const cached = sessionStorage.getItem(CACHE_KEY);
@@ -212,7 +212,14 @@ export default function HomePage() {
 
     // Buscar dados atualizados em background
     try {
-      const response = await fetch('/api/articles?type=news', { cache: 'no-store' });
+      // Add timestamp to prevent browser caching and filter by published
+      const response = await fetch(`/api/articles?type=news&published=true&t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: {
+          'Pragma': 'no-cache',
+          'Cache-Control': 'no-cache'
+        }
+      });
       const data = await response.json();
       if (data.success && data.data) {
         // Ordenar por data (mais recentes primeiro) e pegar apenas as 6 últimas notícias
