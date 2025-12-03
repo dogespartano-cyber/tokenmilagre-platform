@@ -85,9 +85,7 @@ export default function CriptomoedasPage() {
         <div className="space-y-16">
           {/* Rastreador de Mercado */}
           <div className="space-y-8">
-            <div className="glass-card rounded-2xl overflow-hidden shadow-lg p-1">
-              <CustomCryptoScreener />
-            </div>
+            <CustomCryptoScreener />
 
             {/* Notícias Relacionadas */}
             {!loadingNews && news.length > 0 && (
@@ -110,9 +108,16 @@ export default function CriptomoedasPage() {
                         <span className="px-2.5 py-1 rounded-lg text-xs font-bold bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] uppercase tracking-wide">
                           {newsItem.category[0]}
                         </span>
-                        <span className={`px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide ${getSentimentColorClass(newsItem.sentiment)}`}>
-                          {getSentimentLabel(newsItem.sentiment)}
-                        </span>
+                        <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-md ${newsItem.sentiment === 'positive' ? 'text-emerald-500 bg-emerald-500/10' :
+                          newsItem.sentiment === 'negative' ? 'text-red-500 bg-red-500/10' :
+                            'text-amber-500 bg-amber-500/10'
+                          }`}>
+                          <div className={`w-1.5 h-1.5 rounded-full ${newsItem.sentiment === 'positive' ? 'bg-emerald-500' :
+                            newsItem.sentiment === 'negative' ? 'bg-red-500' :
+                              'bg-amber-500'
+                            }`} />
+                          {newsItem.sentiment === 'positive' ? 'Positivo' : newsItem.sentiment === 'negative' ? 'Negativo' : 'Neutro'}
+                        </div>
                       </div>
 
                       {/* Title */}

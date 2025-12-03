@@ -396,15 +396,21 @@ export default function NoticiasPage() {
                   className="glass-card group flex flex-col rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="p-6 flex flex-col h-full">
-                    {/* Header: Categoria e Data */}
+                    {/* Header: Categoria e Sentimento */}
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)] uppercase tracking-wider">
                         {item.category[0]}
                       </span>
-                      <span className="text-xs font-medium text-[var(--text-tertiary)] flex items-center gap-1.5">
-                        <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
-                        {getTimeAgo(item.publishedAt)}
-                      </span>
+                      <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-md ${item.sentiment === 'positive' ? 'text-emerald-500 bg-emerald-500/10' :
+                        item.sentiment === 'negative' ? 'text-red-500 bg-red-500/10' :
+                          'text-amber-500 bg-amber-500/10'
+                        }`}>
+                        <div className={`w-1.5 h-1.5 rounded-full ${item.sentiment === 'positive' ? 'bg-emerald-500' :
+                          item.sentiment === 'negative' ? 'bg-red-500' :
+                            'bg-amber-500'
+                          }`} />
+                        {item.sentiment === 'positive' ? 'Positivo' : item.sentiment === 'negative' ? 'Negativo' : 'Neutro'}
+                      </div>
                     </div>
 
                     {/* Título */}
@@ -417,20 +423,12 @@ export default function NoticiasPage() {
                       {item.summary}
                     </p>
 
-                    {/* Footer: Tags e Sentimento */}
+                    {/* Footer: Data e Seta */}
                     <div className="mt-auto pt-4 border-t border-[var(--border-light)] flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-md ${item.sentiment === 'positive' ? 'text-emerald-500 bg-emerald-500/10' :
-                          item.sentiment === 'negative' ? 'text-red-500 bg-red-500/10' :
-                            'text-amber-500 bg-amber-500/10'
-                          }`}>
-                          <div className={`w-1.5 h-1.5 rounded-full ${item.sentiment === 'positive' ? 'bg-emerald-500' :
-                            item.sentiment === 'negative' ? 'bg-red-500' :
-                              'bg-amber-500'
-                            }`} />
-                          {item.sentiment === 'positive' ? 'Positivo' : item.sentiment === 'negative' ? 'Negativo' : 'Neutro'}
-                        </div>
-                      </div>
+                      <span className="text-xs font-medium text-[var(--text-tertiary)] flex items-center gap-1.5">
+                        <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
+                        {getTimeAgo(item.publishedAt)}
+                      </span>
 
                       <span className="text-[var(--brand-primary)] opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0 duration-300">
                         <FontAwesomeIcon icon={faArrowRight} />
