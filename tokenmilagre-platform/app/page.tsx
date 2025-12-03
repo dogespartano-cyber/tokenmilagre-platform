@@ -511,7 +511,7 @@ export default function HomePage() {
                         <path d="M 30 100 A 60 60 0 0 1 150 100" fill="none" stroke="url(#rainbowGradientHome)" strokeWidth="12" strokeLinecap="round" filter="url(#intensiveGlowHome)" opacity="0.9" />
 
                         {/* Needle */}
-                        <g style={{ transform: `rotate(${(gaugeValue * 1.8) - 90}deg)`, transformOrigin: '90px 100px', transition: 'transform 1s cubic-bezier(0.4, 0, 0.2, 1)' }}>
+                        <g style={{ transform: `rotate(${(gaugeValue * 1.8) - 90}deg)`, transformOrigin: '90px 100px' }}>
                           <circle cx="90" cy="100" r="8" fill={
                             gaugeValue <= 20 ? '#DC2626' :
                               gaugeValue <= 40 ? '#F59E0B' :

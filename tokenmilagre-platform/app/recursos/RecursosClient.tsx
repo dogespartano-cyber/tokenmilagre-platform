@@ -165,17 +165,17 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
               {/* Categorias */}
               <div className="space-y-4">
                 <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Categorias</label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div className="flex flex-wrap gap-2">
                   {categories.map((cat) => (
                     <button
                       key={cat.id}
                       onClick={() => setSelectedCategory(cat.id)}
-                      className={`flex items-center justify-center px-4 py-2.5 rounded-xl transition-all duration-200 border ${selectedCategory === cat.id
-                        ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-md'
-                        : 'bg-[var(--bg-modal-input)] border-transparent text-[var(--text-modal-muted)] hover:bg-[var(--bg-modal-hover)]'
+                      className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all backdrop-blur-md border ${selectedCategory === cat.id
+                        ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)] border-[var(--brand-primary)]/30 shadow-sm'
+                        : 'bg-white/5 hover:bg-white/10 border-white/10 text-[var(--text-secondary)]'
                         }`}
                     >
-                      <span className="font-medium text-sm">{cat.label}</span>
+                      {cat.label}
                     </button>
                   ))}
                 </div>

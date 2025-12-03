@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTimes, faClock, faArrowRight, faFilter, faSortAmountDown } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTimes, faClock, faArrowRight, faFilter } from '@fortawesome/free-solid-svg-icons';
 
 interface NewsItem {
   id: string;
@@ -27,11 +27,11 @@ export default function NoticiasPage() {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [filteredNews, setFilteredNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState('all');
+
   const [searchTerm, setSearchTerm] = useState('');
 
   const [selectedSentiment, setSelectedSentiment] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'alphabetical'>('newest');
+
 
   // Estados de paginação para infinite scroll
   const [page, setPage] = useState(1);
@@ -50,15 +50,7 @@ export default function NoticiasPage() {
     }
   }, []);
 
-  const categories = [
-    { id: 'all', label: 'Todas', icon: '📰' },
-    { id: 'bitcoin', label: 'Bitcoin', icon: '₿' },
-    { id: 'ethereum', label: 'Ethereum', icon: 'Ξ' },
-    { id: 'solana', label: 'Solana', icon: '◎' },
-    { id: 'defi', label: 'DeFi', icon: '🏦' },
-    { id: 'nfts', label: 'NFTs', icon: '🎨' },
-    { id: 'regulação', label: 'Regulação', icon: '⚖️' },
-  ];
+
 
   const fetchNews = useCallback(async (pageNum: number = 1, append: boolean = false) => {
     if (append) {
@@ -69,8 +61,7 @@ export default function NoticiasPage() {
 
     try {
       // Buscar artigos do banco de dados com paginação
-      const categoryParam = selectedCategory !== 'all' ? `&category=${selectedCategory}` : '';
-      const url = `/api/articles?type=news&page=${pageNum}&limit=12${categoryParam}`;
+      const url = `/api/articles?type=news&page=${pageNum}&limit=12`;
 
       const articlesRes = await fetch(url);
       const articlesData = await articlesRes.json();
@@ -98,7 +89,7 @@ export default function NoticiasPage() {
       setLoading(false);
       setIsLoadingMore(false);
     }
-  }, [selectedCategory]);
+  }, []);
 
   // Carregar mais artigos (infinite scroll)
   const loadMore = useCallback(() => {
@@ -107,15 +98,7 @@ export default function NoticiasPage() {
     }
   }, [page, hasMore, isLoadingMore, fetchNews]);
 
-  // Resetar paginação e carregar primeira página quando categoria mudar
-  useEffect(() => {
-    setPage(1);
-    setHasMore(true);
-    setNews([]);
-    setFilteredNews([]);
-    fetchNews(1, false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCategory]);
+
 
   // Hook de infinite scroll
   const { sentinelRef } = useInfiniteScroll({
@@ -144,19 +127,11 @@ export default function NoticiasPage() {
       filtered = filtered.filter(item => item.sentiment === selectedSentiment);
     }
 
-    // Ordenação
-    filtered.sort((a, b) => {
-      if (sortBy === 'newest') {
-        return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
-      } else if (sortBy === 'oldest') {
-        return new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime();
-      } else {
-        return a.title.localeCompare(b.title);
-      }
-    });
+    // Ordenação (Padrão: Mais recentes)
+    filtered.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
     setFilteredNews(filtered);
-  }, [searchTerm, news, selectedSentiment, sortBy]);
+  }, [searchTerm, news, selectedSentiment]);
 
   const getTimeAgo = (date: string) => {
     const now = new Date();
@@ -178,9 +153,8 @@ export default function NoticiasPage() {
 
   const clearAllFilters = () => {
     setSearchTerm('');
-    setSelectedCategory('all');
     setSelectedSentiment('all');
-    setSortBy('newest');
+
   };
 
   // Bloquear scroll do body quando filtros estiverem abertos
@@ -198,9 +172,8 @@ export default function NoticiasPage() {
   const getActiveFiltersCount = () => {
     let count = 0;
     if (searchTerm) count++;
-    if (selectedCategory !== 'all') count++;
     if (selectedSentiment !== 'all') count++;
-    if (sortBy !== 'newest') count++;
+
     return count;
   };
 
@@ -284,78 +257,41 @@ export default function NoticiasPage() {
                   </div>
                 </div>
 
-                <div className="grid lg:grid-cols-3 gap-8">
+                <div className="grid lg:grid-cols-2 gap-8">
 
-                  {/* Coluna Esquerda: Categorias (2/3 width) */}
-                  <div className="lg:col-span-2 space-y-4">
-                    <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Categorias</label>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                      {categories.map((cat) => (
-                        <button
-                          key={cat.id}
-                          onClick={() => setSelectedCategory(cat.id)}
-                          className={`flex items-center justify-center px-4 py-2.5 rounded-xl transition-all duration-200 border ${selectedCategory === cat.id
-                            ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-md'
-                            : 'bg-[var(--bg-modal-input)] border-transparent text-[var(--text-modal-muted)] hover:bg-[var(--bg-modal-hover)]'
-                            }`}
-                        >
-                          <span className="font-medium text-sm">{cat.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                  {/* Coluna Esquerda: Filtros (Full width now) */}
+                  <div className="lg:col-span-2 space-y-6">
 
-                  {/* Coluna Direita: Filtros (1/3 width) */}
-                  <div className="space-y-6">
 
-                    {/* Ordenação */}
-                    <div className="space-y-3">
-                      <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Ordenação</label>
-                      <div className="relative">
-                        <select
-                          value={sortBy}
-                          onChange={(e) => setSortBy(e.target.value as any)}
-                          className="w-full appearance-none px-4 py-3 rounded-xl bg-[var(--bg-modal-input)] border border-[var(--border-modal)] text-[var(--text-modal)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] cursor-pointer"
-                        >
-                          <option value="newest">Mais Recentes</option>
-                          <option value="oldest">Mais Antigas</option>
-                          <option value="alphabetical">Alfabética (A-Z)</option>
-                        </select>
-                        <FontAwesomeIcon
-                          icon={faSortAmountDown}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-modal-muted)] pointer-events-none"
-                        />
-                      </div>
-                    </div>
 
                     {/* Sentimento */}
                     <div className="space-y-3">
                       <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Sentimento</label>
                       <div className="flex flex-col gap-2">
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className="flex flex-wrap gap-2">
                           <button
                             onClick={() => setSelectedSentiment(selectedSentiment === 'positive' ? 'all' : 'positive')}
-                            className={`px-2 py-2.5 rounded-lg text-sm font-bold transition-all border ${selectedSentiment === 'positive'
-                              ? 'bg-emerald-500 text-white border-emerald-500 shadow-md'
-                              : 'bg-emerald-50 text-emerald-600 border-transparent hover:bg-emerald-100'
+                            className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all backdrop-blur-md border ${selectedSentiment === 'positive'
+                              ? 'bg-emerald-500/20 text-emerald-500 border-emerald-500/30 shadow-sm'
+                              : 'bg-white/5 hover:bg-white/10 border-white/10 text-[var(--text-secondary)]'
                               }`}
                           >
                             Positivo
                           </button>
                           <button
                             onClick={() => setSelectedSentiment(selectedSentiment === 'neutral' ? 'all' : 'neutral')}
-                            className={`px-2 py-2.5 rounded-lg text-sm font-bold transition-all border ${selectedSentiment === 'neutral'
-                              ? 'bg-amber-500 text-white border-amber-500 shadow-md'
-                              : 'bg-amber-50 text-amber-600 border-transparent hover:bg-amber-100'
+                            className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all backdrop-blur-md border ${selectedSentiment === 'neutral'
+                              ? 'bg-amber-500/20 text-amber-500 border-amber-500/30 shadow-sm'
+                              : 'bg-white/5 hover:bg-white/10 border-white/10 text-[var(--text-secondary)]'
                               }`}
                           >
                             Neutro
                           </button>
                           <button
                             onClick={() => setSelectedSentiment(selectedSentiment === 'negative' ? 'all' : 'negative')}
-                            className={`px-2 py-2.5 rounded-lg text-sm font-bold transition-all border ${selectedSentiment === 'negative'
-                              ? 'bg-red-500 text-white border-red-500 shadow-md'
-                              : 'bg-red-50 text-red-600 border-transparent hover:bg-red-100'
+                            className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all backdrop-blur-md border ${selectedSentiment === 'negative'
+                              ? 'bg-red-500/20 text-red-500 border-red-500/30 shadow-sm'
+                              : 'bg-white/5 hover:bg-white/10 border-white/10 text-[var(--text-secondary)]'
                               }`}
                           >
                             Negativo
