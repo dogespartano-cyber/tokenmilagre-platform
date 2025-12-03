@@ -316,21 +316,7 @@ export default function CryptoPage() {
     return `Há ${diffDays}d`;
   };
 
-  const getSentimentColorClass = (sentiment: string) => {
-    switch (sentiment) {
-      case 'positive': return 'bg-emerald-500 text-white';
-      case 'negative': return 'bg-red-500 text-white';
-      default: return 'bg-amber-500 text-white';
-    }
-  };
 
-  const getSentimentLabel = (sentiment: string) => {
-    switch (sentiment) {
-      case 'positive': return 'Positiva';
-      case 'negative': return 'Negativa';
-      default: return 'Neutra';
-    }
-  };
 
   if (loading) {
     return (
@@ -666,9 +652,16 @@ export default function CryptoPage() {
                       <span className="px-2.5 py-1 rounded-lg text-xs font-bold bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] uppercase tracking-wide">
                         {news.category[0]}
                       </span>
-                      <span className={`px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide ${getSentimentColorClass(news.sentiment)}`}>
-                        {getSentimentLabel(news.sentiment)}
-                      </span>
+                      <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-md ${news.sentiment === 'positive' ? 'text-emerald-500 bg-emerald-500/10' :
+                        news.sentiment === 'negative' ? 'text-red-500 bg-red-500/10' :
+                          'text-amber-500 bg-amber-500/10'
+                        }`}>
+                        <div className={`w-1.5 h-1.5 rounded-full ${news.sentiment === 'positive' ? 'bg-emerald-500' :
+                          news.sentiment === 'negative' ? 'bg-red-500' :
+                            'bg-amber-500'
+                          }`} />
+                        {news.sentiment === 'positive' ? 'Positivo' : news.sentiment === 'negative' ? 'Negativo' : 'Neutro'}
+                      </div>
                     </div>
 
                     {/* Title */}

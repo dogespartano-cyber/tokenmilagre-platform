@@ -164,14 +164,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
       <div className="pb-20">
         {/* Hero Section - Left Aligned & Editorial Style */}
         <div className="relative pt-12 pb-16 overflow-hidden">
-          {/* Background Glow Effect */}
-          <div className="absolute top-0 left-0 w-full max-w-4xl h-full opacity-30 pointer-events-none"
-            style={{
-              background: `radial-gradient(circle at 20% 30%, ${getLevelColor(article.level)}40 0%, transparent 70%)`,
-              WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 20%)',
-              maskImage: 'linear-gradient(to bottom, transparent, black 20%)'
-            }}
-          />
+
 
           <div className="container mx-auto px-6 md:px-10 relative z-10">
             <div className="max-w-6xl">

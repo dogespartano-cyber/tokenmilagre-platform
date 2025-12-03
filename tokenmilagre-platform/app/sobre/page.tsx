@@ -79,11 +79,7 @@ export default function SobrePage() {
         {/* Background Color with Mask to blend with Breadcrumbs */}
 
 
-        {/* Background Orbs */}
-        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-          <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-teal-500/20 rounded-full blur-[120px] animate-pulse-slow"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-500/20 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
-        </div>
+
 
         <div className={`relative z-10 max-w-3xl mx-auto px-6 md:px-10 py-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
 
@@ -131,8 +127,8 @@ export default function SobrePage() {
 
           {/* Manifesto Section */}
           <section className="mb-20">
-            <div className="glass-card p-8 md:p-12 rounded-3xl relative overflow-hidden border border-[var(--brand-primary)]/20">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--brand-primary)]/5 rounded-bl-full -mr-16 -mt-16 pointer-events-none"></div>
+            <div className="glass-card p-8 md:p-12 rounded-3xl relative overflow-hidden">
+
 
               <h2 className="text-3xl md:text-4xl font-bold mb-8 text-[var(--text-primary)] relative z-10 text-left md:text-center">
                 Testemunhas do $Milagre

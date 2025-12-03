@@ -464,12 +464,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen relative">
-      {/* Background Orbs */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] animate-pulse-slow"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-teal-500/10 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-[40%] left-[40%] w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '4s' }}></div>
-      </div>
+
 
       <div className="container mx-auto px-6 md:px-10 py-8 relative z-10">
         {loading ? (
@@ -594,7 +589,7 @@ export default function HomePage() {
                 {/* Dominância BTC */}
                 <div className="glass-card rounded-2xl p-4">
                   <div className="mb-2">
-                    <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>BTC</p>
+                    <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Dominância BTC</p>
                   </div>
                   <p className="font-bold text-xl mb-1" style={{ color: 'var(--text-primary)' }}>
                     {marketData && marketData.btcDominance.toFixed(2)}%
@@ -613,7 +608,7 @@ export default function HomePage() {
                 {/* Dominância ETH */}
                 <div className="glass-card rounded-2xl p-4">
                   <div className="mb-2">
-                    <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>ETH</p>
+                    <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Dominância ETH</p>
                   </div>
                   <p className="font-bold text-xl mb-1" style={{ color: 'var(--text-primary)' }}>
                     {marketData && marketData.ethDominance.toFixed(2)}%

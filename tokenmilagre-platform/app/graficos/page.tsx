@@ -34,12 +34,7 @@ export default function GraficosPage() {
       </Script>
 
       <div className="min-h-screen relative transition-colors duration-300">
-        {/* Dynamic Background Blobs */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand-primary/10 dark:bg-brand-primary/20 blur-[120px] animate-pulse-slow"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-info/10 dark:bg-info/20 blur-[120px] animate-pulse-slow" style={{ animationDelay: '1.5s' }}></div>
-          <div className="absolute top-[40%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 w-[30%] h-[30%] rounded-full bg-purple-500/5 dark:bg-purple-500/10 blur-[100px] animate-pulse-slow" style={{ animationDelay: '0.8s' }}></div>
-        </div>
+
 
         <div className="container mx-auto px-4 py-8 relative z-10">
           <div className="space-y-16">

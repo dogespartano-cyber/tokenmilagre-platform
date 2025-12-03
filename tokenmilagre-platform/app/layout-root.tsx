@@ -13,7 +13,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import DashboardHeader from '@/app/components/DashboardHeader';
 import UserDropdown from '@/components/UserDropdown';
 import NavbarCryptoTicker from '@/components/NavbarCryptoTicker';
-import AnimatedBackground from '@/components/AnimatedBackground';
+import GlobalBackground from '@/components/GlobalBackground';
 import ScrollToTop from '@/app/components/ScrollToTop';
 
 const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
@@ -486,9 +486,7 @@ export default function RootLayoutNav({
 
         <main className="flex-1 relative">
           {/* Animated Background - Global */}
-          <div className="fixed inset-0 z-0 pointer-events-none hidden dark:block">
-            <AnimatedBackground variant="hero" opacity={0.08} />
-          </div>
+          <GlobalBackground />
 
           {/* Breadcrumbs - Moved to Main Content */}
           <div className="container mx-auto px-4 mt-4 relative z-10">
