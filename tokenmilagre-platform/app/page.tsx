@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faArrowRight, faCheckCircle, faArrowUp, faChartLine, faShieldAlt, faGraduationCap, faNewspaper } from '@fortawesome/free-solid-svg-icons';
 import { TokenBTC, TokenETH } from '@token-icons/react';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/utils/level-helpers';
+import NavbarCryptoTicker from '@/components/NavbarCryptoTicker';
 
 const LightweightChart = dynamic(() => import('@/components/LightweightChart'), {
   ssr: false,
@@ -556,6 +557,13 @@ export default function HomePage() {
                   </div>
                 </div>
               )}
+
+              {/* Mobile Crypto Ticker */}
+              <div className="lg:hidden mb-8">
+                <div className="py-4">
+                  <NavbarCryptoTicker variant="mobile" />
+                </div>
+              </div>
 
               {/* Mobile/Tablet: Cards em Grid 2x2 */}
               <div className="lg:hidden grid grid-cols-2 gap-4">

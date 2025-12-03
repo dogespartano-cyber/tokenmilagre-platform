@@ -235,12 +235,7 @@ export default function RootLayoutNav({
               <div className="flex items-center justify-between w-full lg:hidden">
                 {/* Left Side: Hamburger + Logo */}
                 <div className="flex items-center gap-4">
-                  <button
-                    onClick={() => setSidebarOpen(true)}
-                    className="group p-2 rounded-lg transition-all duration-300 hover:scale-110 hover:bg-opacity-50 text-[var(--text-primary)]"
-                  >
-                    <FontAwesomeIcon icon={faBars} className="w-6 h-6 transition-transform duration-300 group-hover:rotate-90" />
-                  </button>
+
 
                   <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-all duration-300 group">
                     <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 group-hover:scale-110 transition-all duration-300 group-hover:rotate-12" style={{
@@ -534,6 +529,15 @@ export default function RootLayoutNav({
             </div>
           </div>
         </footer>
+
+        {/* Mobile Sidebar Toggle FAB */}
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="glass-card fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full flex lg:hidden items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-lg"
+          aria-label="Abrir menu"
+        >
+          <FontAwesomeIcon icon={faBars} className="w-6 h-6" style={{ color: 'var(--text-primary)' }} />
+        </button>
 
         {/* Global Scroll to Top Button */}
         <ScrollToTop />

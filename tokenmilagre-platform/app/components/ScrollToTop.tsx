@@ -29,7 +29,7 @@ export default function ScrollToTop() {
     <>
       <button
         onClick={scrollToTop}
-        className={`glass-card fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 ${showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
+        className={`glass-card fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full hidden lg:flex items-center justify-center transition-all duration-500 hover:scale-110 ${showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
         aria-label="Voltar ao topo"
       >
         <FontAwesomeIcon icon={faArrowUp} className="w-5 h-5" style={{ color: 'var(--text-primary)' }} />

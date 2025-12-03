@@ -103,7 +103,11 @@ interface CryptoData {
     priceChange24h: number;
 }
 
-export default function NavbarCryptoTicker() {
+interface NavbarCryptoTickerProps {
+    variant?: 'navbar' | 'mobile';
+}
+
+export default function NavbarCryptoTicker({ variant = 'navbar' }: NavbarCryptoTickerProps) {
     const [cryptoData, setCryptoData] = useState<CryptoData[]>([]);
     const [loading, setLoading] = useState(true);
     const [isInitialLoad, setIsInitialLoad] = useState(true);
@@ -209,14 +213,14 @@ export default function NavbarCryptoTicker() {
             case 'ETH': return <TokenETH size={20} variant="branded" />;
             case 'XRP': return <TokenXRP size={20} variant="branded" />;
             case 'BNB': return <TokenBNB size={20} variant="branded" />;
-            case 'SOL': return <TokenSOL size={20} variant="branded" />;
+            case 'SOL': return <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=026" alt="SOL" className="w-5 h-5" />;
             default: return null;
         }
     };
 
     if (loading && cryptoData.length === 0) {
         return (
-            <div className="flex items-center justify-center gap-8 w-full animate-pulse">
+            <div className={`flex items-center ${variant === 'mobile' ? 'justify-start flex-wrap' : 'justify-center'} gap-8 w-full animate-pulse`}>
                 {[1, 2, 3, 4, 5].map((i) => (
                     <div key={i} className="h-8 w-24 bg-gray-200/20 rounded"></div>
                 ))}
@@ -225,7 +229,7 @@ export default function NavbarCryptoTicker() {
     }
 
     return (
-        <div className="flex items-center justify-center gap-8 w-full">
+        <div className={`flex items-center ${variant === 'mobile' ? 'justify-start flex-wrap gap-x-6 gap-y-4' : 'justify-center gap-8'} w-full`}>
             {cryptoData.map((coin) => {
                 // Formatar preço
                 const priceStr = coin.currentPrice < 10
@@ -240,15 +244,17 @@ export default function NavbarCryptoTicker() {
                         href={`/criptomoedas/${coin.id}`}
                         className="flex items-center gap-3 shrink-0 group cursor-pointer transition-transform hover:scale-105"
                     >
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 group-hover:border-white/20 transition-colors shadow-sm">
-                            {getIcon(coin.symbol)}
-                        </div>
+                        {variant !== 'mobile' && (
+                            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 group-hover:border-white/20 transition-colors shadow-sm">
+                                {getIcon(coin.symbol)}
+                            </div>
+                        )}
 
                         <div className="flex flex-col justify-center">
                             <div className="flex items-center gap-2">
                                 <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{coin.symbol}</span>
                                 <div
-                                    className="flex items-center text-lg font-bold font-mono leading-none"
+                                    className="flex items-center text-lg font-bold leading-none"
                                     style={{ color: 'var(--text-primary)', letterSpacing: '0.02em' }}
                                 >
                                     {priceDigits.map((digit, index) => (
