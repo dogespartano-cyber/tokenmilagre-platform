@@ -301,7 +301,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
         </div>
       </div>
 
-      <div className="container mx-auto px-4 pt-2 pb-8 lg:pt-4 lg:pb-12">
+      <div className="container mx-auto px-6 pt-2 pb-8 lg:pt-4 lg:pb-12">
 
         {/* Botão Voltar Mobile - REMOVIDO CONFORME SOLICITADO */}
         {/* <div className="mb-6 lg:hidden">
@@ -335,7 +335,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 </div>
               )}
 
-              <div className="p-4 md:px-10 md:py-8 space-y-8">
+              <div className="py-4 px-0 md:px-10 md:py-8 space-y-8">
 
 
 
@@ -395,18 +395,15 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 <div className="h-px bg-[var(--border-article)]" />
 
                 {/* Nota de Transparência */}
-                <div className="p-6 rounded-xl border border-[var(--border-article)]">
-                  <div className="flex items-start gap-4">
-                    <div className="text-3xl">🛡️</div>
-                    <div className="space-y-2">
-                      <h3 className="font-bold text-[var(--text-article-title)]">Nota de Transparência</h3>
-                      <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
-                        Publicado por $MILAGRE Research | Última atualização: {new Date(article.publishedAt).toLocaleDateString('pt-BR')}
-                      </p>
-                      <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
-                        Este conteúdo é educacional e informativo. Não constitui aconselhamento financeiro. Sempre faça sua própria pesquisa (DYOR).
-                      </p>
-                    </div>
+                <div className="mt-8">
+                  <div className="space-y-2">
+                    <h3 className="font-bold text-[var(--text-article-title)]">Nota de Transparência</h3>
+                    <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
+                      Publicado por $MILAGRE Research | Última atualização: {new Date(article.publishedAt).toLocaleDateString('pt-BR')}
+                    </p>
+                    <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
+                      Este conteúdo é educacional e informativo. Não constitui aconselhamento financeiro. Sempre faça sua própria pesquisa (DYOR).
+                    </p>
                   </div>
                 </div>
 
@@ -523,12 +520,12 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                     {previousArticle && (
                       <Link
                         href={`/dashboard/noticias/${previousArticle.slug || previousArticle.id}`}
-                        className="block p-4 rounded-xl bg-[var(--bg-article-quote)] border border-transparent hover:border-[var(--brand-primary)]/30 hover:bg-[var(--bg-article-tag)] transition-all group"
+                        className="block py-2 transition-all group"
                       >
                         <div className="text-xs font-bold text-[var(--text-article-muted)] mb-1 group-hover:text-[var(--brand-primary)] transition-colors">
                           ← ANTERIOR
                         </div>
-                        <div className="text-sm font-bold text-[var(--text-article-title)] line-clamp-2">
+                        <div className="text-sm font-bold text-[var(--text-article-title)] line-clamp-2 group-hover:text-[var(--brand-primary)] transition-colors">
                           {previousArticle.title}
                         </div>
                       </Link>
@@ -536,12 +533,12 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                     {nextArticle && (
                       <Link
                         href={`/dashboard/noticias/${nextArticle.slug || nextArticle.id}`}
-                        className="block p-4 rounded-xl bg-[var(--bg-article-quote)] border border-transparent hover:border-[var(--brand-primary)]/30 hover:bg-[var(--bg-article-tag)] transition-all group text-right"
+                        className="block py-2 transition-all group text-left"
                       >
                         <div className="text-xs font-bold text-[var(--text-article-muted)] mb-1 group-hover:text-[var(--brand-primary)] transition-colors">
                           PRÓXIMA →
                         </div>
-                        <div className="text-sm font-bold text-[var(--text-article-title)] line-clamp-2">
+                        <div className="text-sm font-bold text-[var(--text-article-title)] line-clamp-2 group-hover:text-[var(--brand-primary)] transition-colors">
                           {nextArticle.title}
                         </div>
                       </Link>

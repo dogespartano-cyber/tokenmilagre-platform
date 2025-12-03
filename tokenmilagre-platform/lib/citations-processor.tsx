@@ -110,12 +110,11 @@ export function SourcesSection({ citations }: SourcesSectionProps) {
         onClick={() => setIsExpanded(!isExpanded)}
         className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:opacity-80"
         style={{
-          backgroundColor: 'var(--bg-secondary)',
+          backgroundColor: 'transparent',
           color: 'var(--text-secondary)',
           border: '1px solid var(--border-light)'
         }}
       >
-        <span>📚</span>
         <span>{citations.length} {citations.length === 1 ? 'fonte' : 'fontes'}</span>
         <span style={{ transition: 'transform 0.2s', transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}>
           ▼
@@ -125,10 +124,10 @@ export function SourcesSection({ citations }: SourcesSectionProps) {
       {/* Card de fontes expansível */}
       {isExpanded && (
         <div
-          className="mt-3 p-4 rounded-xl border space-y-3 animate-in fade-in duration-200"
+          className="mt-3 p-4 space-y-3 animate-in fade-in duration-200"
           style={{
-            backgroundColor: 'var(--bg-secondary)',
-            borderColor: 'var(--border-light)',
+            backgroundColor: 'transparent',
+            border: 'none',
           }}
         >
           <div className="flex items-center justify-between mb-2">
@@ -138,13 +137,7 @@ export function SourcesSection({ citations }: SourcesSectionProps) {
             >
               Fontes Consultadas
             </h4>
-            <button
-              onClick={() => setIsExpanded(false)}
-              className="text-sm hover:opacity-70 transition-opacity"
-              style={{ color: 'var(--text-tertiary)' }}
-            >
-              ✕
-            </button>
+
           </div>
 
           <div className="space-y-2">
@@ -154,9 +147,9 @@ export function SourcesSection({ citations }: SourcesSectionProps) {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-2 p-2 rounded-lg transition-all hover:brightness-95"
+                className="flex items-start gap-2 p-2 rounded-lg transition-all hover:opacity-80"
                 style={{
-                  backgroundColor: 'var(--bg-primary)',
+                  backgroundColor: 'transparent',
                   textDecoration: 'none',
                 }}
               >
