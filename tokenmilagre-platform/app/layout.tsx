@@ -115,10 +115,10 @@ export default function RootLayout({
               (function() {
                 try {
                   const savedTheme = localStorage.getItem('theme');
-                  const theme = savedTheme || 'light';
+                  const theme = savedTheme || 'dark';
                   document.documentElement.setAttribute('data-theme', theme);
                 } catch (e) {
-                  document.documentElement.setAttribute('data-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'dark');
                 }
               })();
             `,

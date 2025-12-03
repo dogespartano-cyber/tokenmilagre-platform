@@ -26,7 +26,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     // Check localStorage and system preference
     // Check localStorage only, default to light to avoid system conflict
     const savedTheme = localStorage.getItem('theme') as Theme | null;
-    const initialTheme = savedTheme || 'light';
+    const initialTheme = savedTheme || 'dark';
     setTheme(initialTheme);
     document.documentElement.setAttribute('data-theme', initialTheme);
   }, []);
