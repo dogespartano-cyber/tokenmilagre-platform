@@ -15,6 +15,8 @@ import { paginatedResponse, successResponse, errorResponse } from '@/lib/helpers
 import { requireEditor } from '@/lib/helpers/auth-helpers'
 import { articleQueryInputCurrent, articleCreateInputCurrent } from '@/lib/schemas/article-schemas'
 
+export const dynamic = 'force-dynamic';
+
 // Helper para parse seguro de JSON
 function safeJSONParse<T>(json: string | null | undefined, fallback: T): T {
   if (!json) return fallback;

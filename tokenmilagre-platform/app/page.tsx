@@ -212,7 +212,7 @@ export default function HomePage() {
 
     // Buscar dados atualizados em background
     try {
-      const response = await fetch('/api/articles?type=news');
+      const response = await fetch('/api/articles?type=news', { cache: 'no-store' });
       const data = await response.json();
       if (data.success && data.data) {
         // Ordenar por data (mais recentes primeiro) e pegar apenas as 6 últimas notícias
