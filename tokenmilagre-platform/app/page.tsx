@@ -796,72 +796,20 @@ export default function HomePage() {
             <div className="space-y-6">
               <div>
                 <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] mb-3" style={{ color: 'var(--text-primary)' }}>
-                  Recursos Essenciais
+                  Comece por Aqui
                 </h2>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  Ferramentas e conhecimento para navegar o mercado cripto com segurança
+                  Tudo o que você precisa para iniciar sua jornada no mercado cripto
                 </p>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {/* Card 1: Gráficos Avançados */}
-                <Link
-                  href="/graficos"
-                  className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
-                >
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/20 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-
-                  <div className="relative z-10 h-full flex flex-col justify-between">
-                    <div>
-                      <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-purple-500/10 text-purple-500 mb-4">
-                        <FontAwesomeIcon icon={faChartLine} />
-                      </div>
-                      <h4 className="text-xl font-bold mb-2 text-[var(--text-primary)]">
-                        Gráficos Avançados
-                      </h4>
-                      <p className="text-sm text-[var(--text-secondary)] mb-3">
-                        Análise técnica profissional em tempo real
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-between text-purple-500 text-sm font-semibold">
-                      <span>TradingView</span>
-                      <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </Link>
-
-                {/* Card 2: Ferramentas & Recursos */}
-                <Link
-                  href="/recursos"
-                  className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
-                >
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/20 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-
-                  <div className="relative z-10 h-full flex flex-col justify-between">
-                    <div>
-                      <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500/10 text-blue-500 mb-4">
-                        <FontAwesomeIcon icon={faShieldAlt} />
-                      </div>
-                      <h4 className="text-xl font-bold mb-2 text-[var(--text-primary)]">
-                        Ferramentas & Recursos
-                      </h4>
-                      <p className="text-sm text-[var(--text-secondary)] mb-3">
-                        Plataformas e ferramentas essenciais
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-between text-blue-500 text-sm font-semibold">
-                      <span>Links seguros</span>
-                      <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </Link>
-
-                {/* Card 3: Como Investir */}
+                {/* Card 1: Como Investir */}
                 <Link
                   href="/educacao"
                   className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
                 >
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/20 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+
 
                   <div className="relative z-10 h-full flex flex-col justify-between">
                     <div>
@@ -882,12 +830,12 @@ export default function HomePage() {
                   </div>
                 </Link>
 
-                {/* Card 4: Notícias do Mercado */}
+                {/* Card 2: Notícias do Mercado */}
                 <Link
                   href="/dashboard/noticias"
                   className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
                 >
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/20 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+
 
                   <div className="relative z-10 h-full flex flex-col justify-between">
                     <div>
@@ -903,6 +851,58 @@ export default function HomePage() {
                     </div>
                     <div className="flex items-center justify-between text-red-500 text-sm font-semibold">
                       <span>Em tempo real</span>
+                      <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </Link>
+
+                {/* Card 3: Gráficos Avançados */}
+                <Link
+                  href="/graficos"
+                  className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
+                >
+
+
+                  <div className="relative z-10 h-full flex flex-col justify-between">
+                    <div>
+                      <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-purple-500/10 text-purple-500 mb-4">
+                        <FontAwesomeIcon icon={faChartLine} />
+                      </div>
+                      <h4 className="text-xl font-bold mb-2 text-[var(--text-primary)]">
+                        Gráficos Avançados
+                      </h4>
+                      <p className="text-sm text-[var(--text-secondary)] mb-3">
+                        Análise técnica profissional em tempo real
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between text-purple-500 text-sm font-semibold">
+                      <span>TradingView</span>
+                      <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </Link>
+
+                {/* Card 4: Ferramentas & Recursos */}
+                <Link
+                  href="/recursos"
+                  className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
+                >
+
+
+                  <div className="relative z-10 h-full flex flex-col justify-between">
+                    <div>
+                      <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500/10 text-blue-500 mb-4">
+                        <FontAwesomeIcon icon={faShieldAlt} />
+                      </div>
+                      <h4 className="text-xl font-bold mb-2 text-[var(--text-primary)]">
+                        Ferramentas & Recursos
+                      </h4>
+                      <p className="text-sm text-[var(--text-secondary)] mb-3">
+                        Plataformas e ferramentas essenciais
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between text-blue-500 text-sm font-semibold">
+                      <span>Links seguros</span>
                       <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
@@ -1014,6 +1014,16 @@ export default function HomePage() {
               </div>
               <div className="w-full">
                 <LightweightChart symbol={chartSymbol} />
+              </div>
+
+              <div className="mt-6 flex justify-center lg:justify-end">
+                <Link
+                  href="/graficos"
+                  className="glass-card inline-flex items-center gap-2 px-6 py-3 rounded-xl text-[var(--text-primary)] font-semibold transition-all duration-300 hover:scale-105 hover:border-[var(--brand-primary)] group"
+                >
+                  Ver Análise Técnica Completa
+                  <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform text-[var(--brand-primary)]" />
+                </Link>
               </div>
             </div>
 

@@ -51,8 +51,6 @@ export default function GraficosPage() {
 
             {/* Section 2: Macro & Money Flow */}
             <section className="space-y-12 animate-fade-in-up delay-100">
-              <MarketFlow />
-
               <div className="glass-card p-6 rounded-3xl border border-gray-200 dark:border-white/10">
                 <div className="mb-6">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Mapa de Calor S&P 500</h2>
@@ -69,6 +67,8 @@ export default function GraficosPage() {
                   </p>
                 </div>
               </div>
+
+              <MarketFlow />
             </section>
 
             {/* Section 3: Crypto Overview */}

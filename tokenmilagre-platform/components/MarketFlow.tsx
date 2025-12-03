@@ -10,7 +10,7 @@ export default function MarketFlow() {
             {/* Desktop: Horizontal Flow with SVG Connectors */}
             <div className="hidden md:flex items-center justify-between relative">
                 {/* Connecting Line Background */}
-                <div className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-blue-500/20 via-orange-500/20 to-red-500/20 -translate-y-1/2 z-0 rounded-full"></div>
+
 
                 {/* Step 1: S&P 500 */}
                 <div className="relative z-10 flex-1 max-w-[240px] group">
