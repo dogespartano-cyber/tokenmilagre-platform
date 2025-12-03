@@ -38,20 +38,11 @@ export default function NoticiasPage() {
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
+
   // Estado para sidebar/drawer (agora unificado para desktop e mobile)
   const [showFilters, setShowFilters] = useState(false);
 
-  // Capturar parâmetro de busca da URL
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchParam = urlParams.get('search');
-    if (searchParam) {
-      setSearchTerm(decodeURIComponent(searchParam));
-    }
-  }, []);
-
-
-
+  // Função para buscar notícias (definida cedo para ser usada em useEffect)
   const fetchNews = useCallback(async (pageNum: number = 1, append: boolean = false) => {
     if (append) {
       setIsLoadingMore(true);
@@ -60,10 +51,14 @@ export default function NoticiasPage() {
     }
 
     try {
-      // Buscar artigos do banco de dados com paginação
-      const url = `/api/articles?type=news&page=${pageNum}&limit=12`;
+      // Cache-busting: adicionar timestamp para garantir requisições frescas
+      const timestamp = Date.now();
+      const url = `/api/articles?type=news&page=${pageNum}&limit=12&_t=${timestamp}`;
 
-      const articlesRes = await fetch(url);
+      const articlesRes = await fetch(url, {
+        cache: 'no-store',
+        next: { revalidate: 0 }
+      });
       const articlesData = await articlesRes.json();
 
       if (articlesData.success) {
@@ -90,6 +85,21 @@ export default function NoticiasPage() {
       setIsLoadingMore(false);
     }
   }, []);
+
+  // Capturar parâmetro de busca da URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    if (searchParam) {
+      setSearchTerm(decodeURIComponent(searchParam));
+    }
+  }, []);
+
+  // Carregar notícias na montagem inicial
+  useEffect(() => {
+    fetchNews();
+  }, [fetchNews]);
+
 
   // Carregar mais artigos (infinite scroll)
   const loadMore = useCallback(() => {
