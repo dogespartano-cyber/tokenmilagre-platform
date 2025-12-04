@@ -27,7 +27,7 @@ export default function CookieConsent() {
 
     return (
         <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md z-50 animate-fade-in-up">
-            <div className="glass-card backdrop-blur-xl bg-[var(--bg-elevated)]/80 p-6 rounded-2xl shadow-2xl border border-[var(--brand-primary)]/20 relative overflow-hidden">
+            <div className="glass-card !backdrop-blur-2xl !bg-white/90 dark:!bg-gray-900/90 p-6 rounded-2xl shadow-2xl border border-[var(--brand-primary)]/20 relative overflow-hidden">
                 {/* Background Glow */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--brand-primary)]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
