@@ -10,27 +10,18 @@ export default function WhyGoodSection({ whyGood }: WhyGoodSectionProps) {
   return (
     <section className="space-y-6">
       <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
-        <FontAwesomeIcon icon={faCheckCircle} className="text-2xl text-[var(--brand-primary)]" />
         {whyGood.title}
       </h2>
-      <div
-        className="p-8 rounded-2xl border backdrop-blur-sm"
-        style={{
-          backgroundColor: 'var(--bg-secondary)',
-          borderColor: 'var(--border-light)'
-        }}
-      >
-        <div className="space-y-4">
-          {whyGood.content.map((paragraph, index) => (
-            <p
-              key={index}
-              className="leading-relaxed text-lg"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              {paragraph}
-            </p>
-          ))}
-        </div>
+      <div className="space-y-4">
+        {whyGood.content.map((paragraph, index) => (
+          <p
+            key={index}
+            className="leading-relaxed text-lg"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            {paragraph}
+          </p>
+        ))}
       </div>
     </section>
   );

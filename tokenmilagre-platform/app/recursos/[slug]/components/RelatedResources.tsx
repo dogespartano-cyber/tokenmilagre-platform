@@ -13,8 +13,7 @@ export default function RelatedResources({ relatedResources }: RelatedResourcesP
   return (
     <>
       <section className="space-y-8">
-        <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
-          <FontAwesomeIcon icon={faLightbulb} className="text-2xl text-[var(--brand-primary)]" />
+        <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
           Você Também Pode Gostar
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
@@ -22,11 +21,7 @@ export default function RelatedResources({ relatedResources }: RelatedResourcesP
             <Link
               key={relatedResource.slug}
               href={`/recursos/${relatedResource.slug}`}
-              className="group p-6 rounded-2xl border transition-all hover:shadow-lg hover:-translate-y-1 block h-full"
-              style={{
-                backgroundColor: 'var(--bg-secondary)',
-                borderColor: 'var(--border-light)'
-              }}
+              className="group block h-full"
               aria-label={`Ver detalhes de ${relatedResource.name}`}
             >
               <div className="space-y-4 h-full flex flex-col">

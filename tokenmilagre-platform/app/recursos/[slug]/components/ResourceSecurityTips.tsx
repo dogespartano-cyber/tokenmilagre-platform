@@ -10,20 +10,15 @@ export default function ResourceSecurityTips({ securityTips }: ResourceSecurityT
   return (
     <section className="space-y-8">
       <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
-        <FontAwesomeIcon icon={faShieldAlt} className="text-2xl text-[var(--brand-primary)]" />
         Dicas de Segurança
       </h2>
       <div className="grid md:grid-cols-2 gap-6">
         {securityTips.map((tip, index) => (
           <div
             key={index}
-            className="p-6 rounded-2xl border transition-all hover:shadow-md"
-            style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border-light)'
-            }}
+            className="space-y-2"
           >
-            <h3 className="text-lg font-bold mb-3 flex items-center gap-3 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+            <h3 className="text-lg font-bold mb-2 flex items-center gap-3 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
               <div
                 className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{

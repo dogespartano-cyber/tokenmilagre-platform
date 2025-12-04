@@ -319,8 +319,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
           {/* Coluna Principal (Artigo) */}
           <div className="lg:col-span-8 space-y-8">
 
-            {/* Card Principal do Artigo */}
-            <div className="rounded-3xl overflow-hidden md:bg-white/10 md:backdrop-blur-xl md:border md:border-white/20 md:shadow-md dark:md:bg-white/5 dark:md:border-white/5">
+            {/* Card Principal do Artigo - Estilo removido conforme solicitado */}
+            <div className="overflow-hidden">
 
               {/* Imagem de Capa */}
               {(article as any).coverImage && (
@@ -335,7 +335,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 </div>
               )}
 
-              <div className="py-4 px-0 md:px-10 md:py-8 space-y-8">
+              <div className="py-4 space-y-8">
 
 
 

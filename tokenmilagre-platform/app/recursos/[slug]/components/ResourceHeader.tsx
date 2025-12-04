@@ -12,15 +12,7 @@ export default function ResourceHeader({ resource }: ResourceHeaderProps) {
     <div className="space-y-6">
       {/* Meta badges */}
       <div className="flex flex-wrap items-center gap-3">
-        <span
-          className="px-3 py-1 rounded-lg text-sm font-semibold"
-          style={{
-            backgroundColor: 'var(--brand-primary)',
-            color: 'var(--text-inverse)'
-          }}
-        >
-          ✓ Verificado
-        </span>
+
         <span
           className="px-3 py-1 rounded-lg text-sm font-semibold"
           style={{

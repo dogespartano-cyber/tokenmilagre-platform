@@ -15,30 +15,28 @@ export default function ResourceFAQ({ faq }: ResourceFAQProps) {
   return (
     <section className="space-y-8">
       <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
-        <FontAwesomeIcon icon={faQuestionCircle} className="text-2xl text-[var(--brand-primary)]" />
         Perguntas Frequentes
       </h2>
       <div className="space-y-4">
         {faq.map((item, index) => (
           <div
             key={index}
-            className="rounded-2xl border overflow-hidden transition-all hover:shadow-md"
+            className="border-b transition-all"
             style={{
-              backgroundColor: 'var(--bg-secondary)',
               borderColor: 'var(--border-light)'
             }}
           >
             <button
               onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
-              className="w-full p-6 flex items-center justify-between text-left transition-colors hover:bg-[rgba(0,0,0,0.02)] dark:hover:bg-[rgba(255,255,255,0.02)]"
+              className="w-full py-4 flex items-center justify-between text-left transition-colors hover:text-[var(--brand-primary)]"
               aria-expanded={openFaqIndex === index}
               aria-controls={`faq-answer-${index}`}
             >
-              <h3 className="text-lg font-bold pr-6 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+              <h3 className="text-lg font-bold pr-6 font-[family-name:var(--font-poppins)]" style={{ color: openFaqIndex === index ? 'var(--brand-primary)' : 'var(--text-primary)' }}>
                 {item.question}
               </h3>
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${openFaqIndex === index ? 'rotate-180 bg-[var(--brand-primary)] text-white' : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)]'}`}
+                className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${openFaqIndex === index ? 'rotate-180 text-[var(--brand-primary)]' : 'text-[var(--text-secondary)]'}`}
                 aria-hidden="true"
               >
                 <svg
@@ -57,8 +55,8 @@ export default function ResourceFAQ({ faq }: ResourceFAQProps) {
               role="region"
             >
               <div className="overflow-hidden">
-                <div className="px-6 pb-6 pt-0">
-                  <p className="leading-relaxed text-lg border-t pt-4" style={{ color: 'var(--text-secondary)', borderColor: 'var(--border-light)' }}>
+                <div className="pb-6 pt-0">
+                  <p className="leading-relaxed text-lg" style={{ color: 'var(--text-secondary)' }}>
                     {item.answer}
                   </p>
                 </div>

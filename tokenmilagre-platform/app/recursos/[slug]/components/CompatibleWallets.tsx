@@ -15,7 +15,6 @@ export default function CompatibleWallets({ resourceName, showCompatibleWallets 
     <>
       <section className="space-y-6">
         <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
-          <FontAwesomeIcon icon={faPlug} className="text-2xl text-[var(--brand-primary)]" />
           Wallets Compatíveis
         </h2>
         <p className="leading-relaxed text-lg" style={{ color: 'var(--text-secondary)' }}>
@@ -24,11 +23,7 @@ export default function CompatibleWallets({ resourceName, showCompatibleWallets 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Link
             href="/recursos?search=wallet"
-            className="p-4 rounded-xl border transition-all hover:shadow-lg hover:-translate-y-1 text-center group"
-            style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border-light)'
-            }}
+            className="p-4 rounded-xl transition-all hover:bg-[var(--bg-secondary)] text-center group border border-transparent hover:border-[var(--border-light)]"
             aria-label="Ver todas as wallets disponíveis"
           >
             <FontAwesomeIcon icon={faBriefcase} className="text-2xl mb-2 block mx-auto group-hover:scale-110 transition-transform text-[var(--brand-primary)]" />
@@ -38,11 +33,7 @@ export default function CompatibleWallets({ resourceName, showCompatibleWallets 
           </Link>
           <Link
             href="/recursos?search=hardware"
-            className="p-4 rounded-xl border transition-all hover:shadow-lg hover:-translate-y-1 text-center group"
-            style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border-light)'
-            }}
+            className="p-4 rounded-xl transition-all hover:bg-[var(--bg-secondary)] text-center group border border-transparent hover:border-[var(--border-light)]"
             aria-label="Ver cold wallets (hardware wallets)"
           >
             <FontAwesomeIcon icon={faLock} className="text-2xl mb-2 block mx-auto group-hover:scale-110 transition-transform text-[var(--brand-primary)]" />
@@ -52,11 +43,7 @@ export default function CompatibleWallets({ resourceName, showCompatibleWallets 
           </Link>
           <Link
             href="/recursos?search=hot"
-            className="p-4 rounded-xl border transition-all hover:shadow-lg hover:-translate-y-1 text-center group"
-            style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border-light)'
-            }}
+            className="p-4 rounded-xl transition-all hover:bg-[var(--bg-secondary)] text-center group border border-transparent hover:border-[var(--border-light)]"
             aria-label="Ver hot wallets (software wallets)"
           >
             <FontAwesomeIcon icon={faFire} className="text-2xl mb-2 block mx-auto group-hover:scale-110 transition-transform text-[var(--brand-primary)]" />
@@ -66,11 +53,7 @@ export default function CompatibleWallets({ resourceName, showCompatibleWallets 
           </Link>
           <Link
             href="/recursos"
-            className="p-4 rounded-xl border transition-all hover:shadow-lg hover:-translate-y-1 text-center group"
-            style={{
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border-light)'
-            }}
+            className="p-4 rounded-xl transition-all hover:bg-[var(--bg-secondary)] text-center group border border-transparent hover:border-[var(--border-light)]"
             aria-label="Ver todos os recursos verificados"
           >
             <FontAwesomeIcon icon={faThLarge} className="text-2xl mb-2 block mx-auto group-hover:scale-110 transition-transform text-[var(--brand-primary)]" />
