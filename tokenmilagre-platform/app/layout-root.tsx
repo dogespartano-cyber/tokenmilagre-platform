@@ -15,6 +15,7 @@ import UserDropdown from '@/components/UserDropdown';
 import NavbarCryptoTicker from '@/components/NavbarCryptoTicker';
 import GlobalBackground from '@/components/GlobalBackground';
 import ScrollToTop from '@/app/components/ScrollToTop';
+import CookieConsent from '@/components/CookieConsent';
 
 const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
   ssr: false,
@@ -148,12 +149,11 @@ export default function RootLayoutNav({
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
       {/* Sidebar Overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+      <div
+        className={`fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300 ${sidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
+        onClick={() => setSidebarOpen(false)}
+      />
 
       {/* Sidebar */}
       <aside className={`fixed top-0 left-0 h-full w-72 z-50 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
@@ -517,15 +517,26 @@ export default function RootLayoutNav({
         </main>
 
         {/* Footer */}
-        <footer className="bg-transparent border-none">
+        <footer className="bg-transparent border-none relative z-10">
           <div className="container mx-auto px-4 py-8">
-            <div className="space-y-4">
-              <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
-                $MILAGRE é um projeto comunitário criado para conectar pessoas através de apoio mútuo e esperança.
-              </p>
-              <p className="text-sm font-semibold text-[var(--text-tertiary)]">
-                © 2025 $MILAGRE Community
-              </p>
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+              <div className="space-y-2 text-center md:text-left">
+                <p className="text-sm leading-relaxed text-[var(--text-secondary)] max-w-md">
+                  $MILAGRE é um projeto comunitário criado para conectar pessoas através de apoio mútuo e esperança.
+                </p>
+                <p className="text-sm font-semibold text-[var(--text-tertiary)]">
+                  © 2025 $MILAGRE Community
+                </p>
+              </div>
+
+              <div className="flex flex-wrap justify-center gap-6 text-sm font-medium text-[var(--text-secondary)]">
+                <Link href="/termos" className="hover:text-[var(--brand-primary)] transition-colors">
+                  Termos de Uso
+                </Link>
+                <Link href="/privacidade" className="hover:text-[var(--brand-primary)] transition-colors">
+                  Política de Privacidade
+                </Link>
+              </div>
             </div>
           </div>
         </footer>
@@ -539,7 +550,8 @@ export default function RootLayoutNav({
           <FontAwesomeIcon icon={faBars} className="w-6 h-6" style={{ color: 'var(--text-primary)' }} />
         </button>
 
-        {/* Global Scroll to Top Button */}
+        {/* Global Components */}
+        <CookieConsent />
         <ScrollToTop />
       </div >
     </div >

@@ -8,6 +8,7 @@ import { faClock, faArrowRight, faCheckCircle, faArrowUp, faChartLine, faShieldA
 import { TokenBTC, TokenETH } from '@token-icons/react';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/utils/level-helpers';
 import NavbarCryptoTicker from '@/components/NavbarCryptoTicker';
+import { Skeleton } from '@/components/SkeletonLoader';
 
 const LightweightChart = dynamic(() => import('@/components/LightweightChart'), {
   ssr: false,
@@ -476,9 +477,34 @@ export default function HomePage() {
 
       <div className="container mx-auto px-6 md:px-10 py-8 relative z-10">
         {loading ? (
-          <div className="text-center py-20">
-            <div className="text-6xl mb-4 animate-pulse">📊</div>
-            <p className="text-xl" style={{ color: 'var(--text-primary)' }}>Carregando dados do mercado...</p>
+          <div className="space-y-12 animate-fade-in">
+            {/* Market Data Skeleton */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="glass-card rounded-2xl p-6 h-32 flex flex-col justify-between">
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-8 w-32" />
+                  <Skeleton className="h-4 w-16" />
+                </div>
+              ))}
+            </div>
+
+            {/* Daily Analysis Skeleton */}
+            <div className="glass-card rounded-2xl p-6 border-l-4 border-[var(--border-medium)]">
+              <div className="flex justify-between mb-4">
+                <Skeleton className="h-6 w-32" />
+                <Skeleton className="h-4 w-24" />
+              </div>
+              <Skeleton className="h-8 w-3/4 mb-3" />
+              <Skeleton className="h-4 w-full mb-2" />
+              <Skeleton className="h-4 w-5/6 mb-4" />
+              <div className="grid grid-cols-3 gap-3 mb-4">
+                <Skeleton className="h-16 rounded-lg" />
+                <Skeleton className="h-16 rounded-lg" />
+                <Skeleton className="h-16 rounded-lg" />
+              </div>
+              <Skeleton className="h-10 w-48 rounded-lg" />
+            </div>
           </div>
         ) : (
           <div className="space-y-12">

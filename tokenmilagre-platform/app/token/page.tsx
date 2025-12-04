@@ -241,11 +241,12 @@ export default function TokenPage() {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-12 items-center relative z-10">
-                <div className="text-center md:text-left space-y-8">
-                  <div>
-                    <p className="text-sm font-bold uppercase tracking-widest text-[var(--text-secondary)] mb-2">A Abundância</p>
-                    <p className="text-6xl md:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">
+              <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
+                {/* Left: Stats & Info */}
+                <div className="space-y-8">
+                  <div className="text-center lg:text-left">
+                    <p className="text-sm font-bold uppercase tracking-widest text-[var(--text-secondary)] mb-2">Supply Total</p>
+                    <p className="text-6xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">
                       1 Bilhão
                     </p>
                     <p className="text-[var(--text-secondary)] mt-2">Tokens fixos. Imutável.</p>
@@ -256,26 +257,70 @@ export default function TokenPage() {
                       <span className="text-xl font-bold text-[var(--text-primary)]">A Justiça</span>
                       <span className="text-2xl font-bold text-green-500">100%</span>
                     </div>
-                    <p className="text-[var(--text-secondary)]">Entregue à comunidade via Pump.fun. Sem privilégios, sem pré-venda.</p>
+                    <p className="text-[var(--text-secondary)]">Entregue à comunidade via Pump.fun. Sem privilégios, sem pré-venda, sem alocação de time.</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {[
+                      { label: 'Rede', value: 'Solana', color: 'text-teal-500', icon: faGlobe },
+                      { label: 'Contrato', value: 'Renunciado', color: 'text-blue-500', icon: faShieldAlt },
+                      { label: 'Taxa', value: '0%', color: 'text-green-500', icon: faCheckCircle }
+                    ].map((stat, index) => (
+                      <div key={index} className="glass-card p-4 rounded-xl flex flex-col items-center text-center gap-2">
+                        <div className={`text-2xl ${stat.color}`}>
+                          <FontAwesomeIcon icon={stat.icon} />
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold uppercase text-[var(--text-secondary)]">{stat.label}</p>
+                          <p className="text-lg font-bold text-[var(--text-primary)]">{stat.value}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-6">
-                  {[
-                    { label: 'O Solo Sagrado', value: 'Solana', color: 'text-teal-500', icon: faGlobe },
-                    { label: 'Contrato', value: 'Renunciado', color: 'text-blue-500', icon: faShieldAlt },
-                    { label: 'A Liberdade', value: 'Taxa Zero', color: 'text-green-500', icon: faCheckCircle }
-                  ].map((stat, index) => (
-                    <div key={index} className="glass-card p-6 rounded-2xl flex items-center gap-6">
-                      <div className={`text-3xl ${stat.color}`}>
-                        <FontAwesomeIcon icon={stat.icon} />
-                      </div>
-                      <div>
-                        <p className="text-sm font-bold uppercase text-[var(--text-secondary)]">{stat.label}</p>
-                        <p className="text-2xl font-bold text-[var(--text-primary)]">{stat.value}</p>
-                      </div>
+                {/* Right: Visual Pie Chart */}
+                <div className="relative flex justify-center">
+                  {/* CSS Pie Chart */}
+                  <div className="relative w-80 h-80 md:w-96 md:h-96">
+                    {/* Outer Glow */}
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-teal-500/20 to-blue-500/20 blur-3xl animate-pulse"></div>
+
+                    {/* Chart Container */}
+                    <svg viewBox="0 0 100 100" className="w-full h-full transform -rotate-90 drop-shadow-2xl">
+                      {/* Segment 1: Community (100%) */}
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="40"
+                        fill="transparent"
+                        stroke="url(#gradient-community)"
+                        strokeWidth="12"
+                        strokeDasharray="251.2"
+                        strokeDashoffset="0"
+                        className="transition-all duration-1000 ease-out"
+                      />
+
+                      {/* Defs for Gradients */}
+                      <defs>
+                        <linearGradient id="gradient-community" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="#2DD4BF" /> {/* Teal 400 */}
+                          <stop offset="100%" stopColor="#3B82F6" /> {/* Blue 500 */}
+                        </linearGradient>
+                      </defs>
+                    </svg>
+
+                    {/* Center Text */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                      <span className="text-4xl font-bold text-[var(--text-primary)]">100%</span>
+                      <span className="text-sm font-medium text-[var(--text-secondary)] uppercase tracking-wider">Comunidade</span>
                     </div>
-                  ))}
+
+                    {/* Floating Labels */}
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[var(--bg-elevated)] px-4 py-2 rounded-full shadow-lg border border-[var(--border-light)] animate-bounce-slow">
+                      <span className="text-sm font-bold text-teal-500">Pump.fun Launch</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
