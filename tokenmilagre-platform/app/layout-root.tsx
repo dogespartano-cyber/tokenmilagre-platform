@@ -46,6 +46,14 @@ const dashboardHeaderConfig: Record<string, { title: string; description: string
     title: 'Notícias Cripto',
     description: 'Resumos inteligentes das principais notícias do mercado'
   },
+  '/educacao': {
+    title: 'Domine o Mercado Cripto',
+    description: 'Artigos e tutoriais descomplicados para todos os níveis. Aprenda a investir com segurança e evite armadilhas.'
+  },
+  '/recursos': {
+    title: 'Ferramentas e Links Seguros',
+    description: 'Acesse exchanges, carteiras e sites oficiais com tranquilidade. Nossa lista verificada elimina o risco de phishing e golpes.'
+  },
   '/dashboard': {
     title: 'Painel Administrativo',
     description: 'Gerencie todo o conteúdo e configurações da plataforma'
@@ -498,18 +506,20 @@ export default function RootLayoutNav({
             </div>
           )}
 
-          {/* Ticker Tape - Sempre montado para evitar recarregamento */}
-          <div
-            // Ticker visibility controlled by Tailwind classes
-            suppressHydrationWarning={true}
-            className={`container mx-auto px-4 mb-8 relative z-10 ${headerConfig ? 'hidden lg:block' : 'hidden'}`}
-          >
+          {/* Ticker Tape - Renderizado apenas se houver headerConfig */}
+          {headerConfig && (
             <div
-              className="rounded-2xl overflow-hidden glass-card"
+              // Ticker visibility controlled by Tailwind classes
+              suppressHydrationWarning={true}
+              className="container mx-auto px-4 mb-8 relative z-10 hidden lg:block"
             >
-              <TickerTapeWidget />
+              <div
+                className="rounded-2xl overflow-hidden glass-card"
+              >
+                <TickerTapeWidget />
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="relative z-10">
             {children}

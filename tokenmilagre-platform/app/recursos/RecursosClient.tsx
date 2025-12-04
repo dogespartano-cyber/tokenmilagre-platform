@@ -66,10 +66,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
     <div className="container mx-auto px-4 py-8 relative">
       <div className="space-y-8">
         {/* Header with Discord/Telegram Buttons */}
-        <DashboardHeader
-          title="Ferramentas e Links Seguros"
-          description="Acesse exchanges, carteiras e sites oficiais com tranquilidade. Nossa lista verificada elimina o risco de phishing e golpes, para iniciantes e experts."
-        />
+        {/* Header with Discord/Telegram Buttons - REMOVIDO (Agora gerenciado pelo layout-root) */}
 
         {/* Filtros Inline */}
         <div className="space-y-6">

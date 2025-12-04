@@ -137,10 +137,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
       <div className="container mx-auto px-4 py-8 relative">
         <div className="space-y-8">
           {/* Header with Discord/Telegram Buttons */}
-          <DashboardHeader
-            title="Domine o Mercado Cripto"
-            description="Artigos e tutoriais descomplicados para todos os níveis. Aprenda a investir com segurança e evite armadilhas, tudo 100% gratuito."
-          />
+          {/* Header with Discord/Telegram Buttons - REMOVIDO (Agora gerenciado pelo layout-root) */}
 
           {/* Filtros Inline */}
           {/* Filtros Inline */}
