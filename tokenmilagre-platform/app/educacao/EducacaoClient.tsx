@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Script from 'next/script';
 import Link from 'next/link';
 import { useInfiniteScrollData } from '@/hooks/useInfiniteScrollData';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faArrowRight, faSearch, faTimes, faArrowUp, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/utils/level-helpers';
@@ -48,6 +49,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedLevel, setSelectedLevel] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebouncedValue(searchTerm, 500);
   const [showFilters, setShowFilters] = useState(false);
 
   const categories = [
@@ -77,7 +79,8 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
     filters: {
       type: 'educational',
       category: selectedCategory,
-      level: selectedLevel
+      level: selectedLevel,
+      search: debouncedSearchTerm
     },
     initialData: resources,
     pageSize: 12,
@@ -97,16 +100,8 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
     }
   });
 
-  // Filtrar recursos localmente (apenas por termo de busca)
-  const filteredResources = allResources.filter(resource => {
-    // Filtro por termo de busca
-    const searchMatch = !searchTerm.trim() ||
-      resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      resource.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      resource.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-
-    return searchMatch;
-  });
+  // Filtrar recursos localmente (apenas por termo de busca) - REMOVIDO EM FAVOR DO SERVER-SIDE SEARCH
+  const filteredResources = allResources;
 
 
 
@@ -140,16 +135,93 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
       </Script>
 
       <div className="container mx-auto px-4 py-8 relative">
-        <div className="space-y-16">
+        <div className="space-y-8">
           {/* Header with Discord/Telegram Buttons */}
           <DashboardHeader
             title="Educação Cripto"
             description="Artigos e tutoriais gratuitos criados pela comunidade $MILAGRE. Conhecimento livre para todos."
           />
 
-          {/* Cards Principais em Destaque (Removido conforme solicitado) */}
+          {/* Filtros Inline */}
+          {/* Filtros Inline */}
+          <div className="space-y-6">
+            {getActiveFiltersCount() > 0 && (
+              <div className="flex items-center justify-end mb-4">
+                <button
+                  onClick={clearAllFilters}
+                  className="text-sm font-bold text-red-500 hover:text-red-600 px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors flex items-center gap-2"
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                  Limpar Filtros
+                </button>
+              </div>
+            )}
 
+            <div className="grid lg:grid-cols-12 gap-6">
+              {/* Busca */}
+              <div className="lg:col-span-12">
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Buscar por título, descrição ou tag..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-[var(--bg-page)] border border-[var(--border-article)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-all placeholder-[var(--text-secondary)]"
+                  />
+                  <FontAwesomeIcon
+                    icon={faSearch}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]"
+                  />
+                  {searchTerm && (
+                    <button
+                      onClick={() => setSearchTerm('')}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </button>
+                  )}
+                </div>
+              </div>
 
+              {/* Categorias */}
+              <div className="lg:col-span-7 space-y-3">
+                <label className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Categorias</label>
+                <div className="flex flex-wrap gap-2">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.id)}
+                      className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all border hover:scale-105 active:scale-95 ${selectedCategory === cat.id
+                        ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)] border-[var(--brand-primary)]/30 shadow-sm hover:bg-[var(--brand-primary)]/30'
+                        : 'bg-[var(--bg-page)] hover:bg-[var(--bg-hover)] border-[var(--border-article)] text-[var(--text-secondary)] hover:border-[var(--brand-primary)]/50 hover:text-[var(--text-primary)]'
+                        }`}
+                    >
+                      {cat.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Níveis */}
+              <div className="lg:col-span-5 space-y-3">
+                <label className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Nível</label>
+                <div className="flex flex-wrap gap-2">
+                  {levels.map((level) => (
+                    <button
+                      key={level.id}
+                      onClick={() => setSelectedLevel(level.id)}
+                      className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all border hover:scale-105 active:scale-95 ${selectedLevel === level.id
+                        ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)] border-[var(--brand-primary)]/30 shadow-sm hover:bg-[var(--brand-primary)]/30'
+                        : 'bg-[var(--bg-page)] hover:bg-[var(--bg-hover)] border-[var(--border-article)] text-[var(--text-secondary)] hover:border-[var(--brand-primary)]/50 hover:text-[var(--text-primary)]'
+                        }`}
+                    >
+                      {level.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
 
           {/* Lista de Recursos - NOVO DESIGN COM GLASSMORPHISM */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -319,127 +391,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
               </a>
             </div>
           </div>
-
-
         </div>
-
-        {/* Floating Filter Button */}
-        <button
-          onClick={() => setShowFilters(true)}
-          className="glass-card fixed bottom-24 right-8 z-50 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 text-[var(--text-primary)]"
-          aria-label="Filtrar artigos"
-        >
-          <div className="relative">
-            <FontAwesomeIcon icon={faFilter} className="w-5 h-5" />
-            {getActiveFiltersCount() > 0 && (
-              <span className="absolute -top-2 -right-2 flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full bg-[var(--brand-primary)] text-white">
-                {getActiveFiltersCount()}
-              </span>
-            )}
-          </div>
-        </button>
-
-        {/* Filter Modal */}
-        {showFilters && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <div
-              className="absolute inset-0 bg-black/20 dark:bg-black/60 backdrop-blur-sm animate-fade-in"
-              onClick={() => setShowFilters(false)}
-            />
-
-            <div className="relative w-full max-w-4xl bg-[var(--bg-modal)] rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto animate-scale-in flex flex-col border border-[var(--border-modal)]">
-              {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-[var(--border-modal)]">
-                <h2 className="text-2xl font-bold text-[var(--text-modal)]">Filtrar Artigos</h2>
-                <div className="flex items-center gap-3">
-                  {getActiveFiltersCount() > 0 && (
-                    <button
-                      onClick={clearAllFilters}
-                      className="text-sm font-bold text-red-500 hover:text-red-600 px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors"
-                    >
-                      Limpar Filtros
-                    </button>
-                  )}
-                  <button
-                    onClick={() => setShowFilters(false)}
-                    className="p-2 rounded-lg hover:bg-[var(--bg-modal-hover)] text-[var(--text-modal-muted)] hover:text-[var(--text-modal)] transition-colors"
-                  >
-                    <FontAwesomeIcon icon={faTimes} className="w-6 h-6" />
-                  </button>
-                </div>
-              </div>
-
-              <div className="p-6 space-y-8">
-                {/* Busca */}
-                <div className="space-y-3">
-                  <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Buscar</label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      placeholder="Buscar por título, descrição ou tag..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 rounded-xl bg-[var(--bg-modal-input)] border border-[var(--border-modal)] text-[var(--text-modal)] text-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-all placeholder-[var(--text-modal-muted)]"
-                    />
-                    <FontAwesomeIcon
-                      icon={faSearch}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-modal-muted)] text-lg"
-                    />
-                    {searchTerm && (
-                      <button
-                        onClick={() => setSearchTerm('')}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-modal-muted)] hover:text-[var(--text-modal)]"
-                      >
-                        <FontAwesomeIcon icon={faTimes} />
-                      </button>
-                    )}
-                  </div>
-                </div>
-
-                <div className="grid lg:grid-cols-2 gap-8">
-                  {/* Categorias */}
-                  <div className="space-y-4">
-                    <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Categorias</label>
-                    <div className="flex flex-wrap gap-2">
-                      {categories.map((cat) => (
-                        <button
-                          key={cat.id}
-                          onClick={() => setSelectedCategory(cat.id)}
-                          className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all backdrop-blur-md border ${selectedCategory === cat.id
-                            ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)] border-[var(--brand-primary)]/30 shadow-sm'
-                            : 'bg-white/5 hover:bg-white/10 border-white/10 text-[var(--text-secondary)]'
-                            }`}
-                        >
-                          {cat.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Níveis */}
-                  <div className="space-y-4">
-                    <label className="text-xs font-bold text-[var(--text-modal-muted)] uppercase tracking-wider">Nível de Conhecimento</label>
-                    <div className="flex flex-wrap gap-2">
-                      {levels.map((level) => (
-                        <button
-                          key={level.id}
-                          onClick={() => setSelectedLevel(level.id)}
-                          className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all backdrop-blur-md border ${selectedLevel === level.id
-                            ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)] border-[var(--brand-primary)]/30 shadow-sm'
-                            : 'bg-white/5 hover:bg-white/10 border-white/10 text-[var(--text-secondary)]'
-                            }`}
-                        >
-                          {level.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
       </div>
     </>
   );
