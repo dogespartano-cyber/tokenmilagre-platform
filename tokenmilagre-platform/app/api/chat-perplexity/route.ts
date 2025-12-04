@@ -97,26 +97,30 @@ SEMPRE estruturar notícias com 5-6 seções H2 seguindo este fluxo narrativo:
    - ❌ ERRADO: "[Desafios e Perspectivas] Volatilidade..."
 
    **Dentro desta última seção, adicionar:**
-   **### Conclusão** - Parágrafo final resumindo (H3, não H2!)
+   **### [Título Contextual Final]** - Parágrafo final resumindo (H3, não H2!). NUNCA use "Conclusão" como título. Use algo como "O Futuro do [Tema]" ou "Impacto no Mercado".
 
 **REGRAS CRÍTICAS:**
 - NUNCA usar colchetes [] nos títulos das seções
-- NUNCA usar títulos genéricos ("Introdução", "Desenvolvimento", "Informações")
+- NUNCA usar títulos genéricos ("Introdução", "Desenvolvimento", "Conclusão")
 - SEMPRE usar títulos descritivos e específicos sobre o conteúdo real
 - NUNCA incluir H1 (#) no content
 - Content começa direto com ## (primeira seção H2)
-- Mínimo 5, ideal 6 seções H2 + 1 subseção H3 (conclusão)
+- Mínimo 5, ideal 6 seções H2 + 1 subseção H3 (fechamento)
 - Pesquisar informações RECENTES (últimas 24h quando possível)
 - Incluir dados concretos: valores, percentuais, datas
 - **Citações em Caixa:** Use \`> Citação\` para destacar falas diretas de autoridades ou pontos-chave.
 - **Listas:** Use *listas* APENAS para conjuntos de dados, cronologias ou itens distintos. Evite usar listas para a narrativa geral do texto.
+- **GRAMÁTICA E ESTILO (MESTRE):**
+  - **Português Brasileiro Culto:** Use vocabulário rico.
+  - **Anti-Anglicismos:** NUNCA use travessão colado (—). Use sempre com espaços ( — ).
+  - **Conectivos:** Use conectivos variados para coesão.
 
 **Formato de resposta:**
 \`\`\`json
 {
   "title": "Título Descritivo e Impactante da Notícia",
   "excerpt": "Resumo objetivo em 1-2 frases destacando o fato principal",
-  "content": "## [Título Fato]\\n\\nTexto...\\n\\n## [Título Contexto]\\n\\nTexto...\\n\\n## [Título Impacto]\\n\\nTexto...\\n\\n## [Título Visão]\\n\\nTexto...\\n\\n## [Título Reflexão]\\n\\nTexto...\\n\\n## [Título Desafios]\\n\\nTexto...\\n\\n### Conclusão\\n\\nTexto final.",
+  "content": "## [Título Fato]\\n\\nTexto...\\n\\n## [Título Contexto]\\n\\nTexto...\\n\\n## [Título Impacto]\\n\\nTexto...\\n\\n## [Título Visão]\\n\\nTexto...\\n\\n## [Título Reflexão]\\n\\nTexto...\\n\\n## [Título Desafios]\\n\\nTexto...\\n\\n### [Título Contextual Final]\\n\\nTexto final.",
   "category": "bitcoin|ethereum|defi|politica|nfts|altcoins",
   "tags": ["palavra-chave1", "palavra-chave2", "palavra-chave3", "palavra-chave4", "palavra-chave5"],
   "sentiment": "positive|neutral|negative"
@@ -138,19 +142,32 @@ SEMPRE estruturar notícias com 5-6 seções H2 seguindo este fluxo narrativo:
          - **Importância/Benefícios:** Por que isso importa no ecossistema.
          - **Exemplos Práticos/Casos de Uso:** Aplicação no mundo real.
          - **Riscos e Desafios:** Visão crítica e equilibrada.
-         - **Conclusão:** Resumo dos pontos-chave.
+         - **[Título Contextual Final]:** Resumo dos pontos-chave. NUNCA use "Conclusão" como título. Use algo como "O Futuro do [Tema]" ou "Considerações Finais".
 
       2. **Formatação Profissional:**
          - NUNCA use H1 (#). Comece direto com o texto introdutório.
          - Use **H2 (##)** para as seções principais listadas acima.
          - Use **H3 (###)** para quebrar seções longas.
          - Use **negrito** para destacar termos-chave e conceitos importantes.
-         - **Equilíbrio Texto/Listas:** Use parágrafos para explicar conceitos, contextos e narrativas. Use *listas* APENAS para enumerações, passos ou características. Evite artigos compostos majoritariamente por bullet points.
+         - **HARMONIA VISUAL E NARRATIVA (CRÍTICO):**
+           - **Estilo de Revista:** Escreva como um artigo de revista (Wired, The Economist), focado em narrativa fluida e envolvente. NÃO escreva como manual técnico ou slide de PowerPoint.
+           - **PROIBIDO LISTAS EM:** Introdução, Definição de Conceitos, Importância/Benefícios, Conclusão. Estas seções devem ser 100% texto corrido (parágrafos bem construídos).
+           - **LISTAS PERMITIDAS APENAS EM:** "Passo a Passo", "Exemplos Práticos" (se curtos), "Prós e Contras" ou dados estatísticos.
+           - **REGRA DE OURO:** Antes de qualquer lista, deve haver pelo menos 2 parágrafos explicativos introduzindo o contexto. NUNCA comece uma seção com uma lista.
+         - **PONTUAÇÃO BRASILEIRA:** Use espaços ao redor de travessões ( — ) para separar orações. Evite o padrão americano "colado" (—). Prefira vírgulas para pausas simples.
          - **OBRIGATÓRIO:** Incluir no mínimo **2 blockquotes** (iniciados com >) durante o texto.
            - Exemplo: "> **Dica Pro:** ..." ou "> **Curiosidade:** ..."
            - Use para destacar fatos interessantes, dicas práticas ou avisos importantes.
 
-      3. **Tom de Voz:**
+      3. **GRAMÁTICA E ESTILO (MESTRE):**
+         - **Português Brasileiro Culto:** Use vocabulário rico e natural do Brasil. Evite repetições de palavras.
+         - **Anti-Anglicismos:** NUNCA use estruturas frasais traduzidas literalmente do inglês.
+           - ❌ ERRADO: "A Tether é a ponte—que conecta..." (Travessão colado é erro grave).
+           - ✅ CORRETO: "A Tether é a ponte — que conecta..." (Espaços obrigatórios).
+         - **Conectivos Variados:** Use "Portanto", "Contudo", "Além disso", "Por outro lado" para criar coesão. Evite o uso excessivo de "E" ou "Mas" no início de frases.
+         - **Voz Ativa:** Prefira "O mercado valorizou o ativo" em vez de "O ativo foi valorizado pelo mercado".
+
+      4. **Tom de Voz:**
          - **Iniciante:** Analogias do dia a dia, zero "tech-speak" sem explicação.
          - **Intermediário:** Foco em mecanismos e interações de sistemas.
          - **Avançado:** Detalhes de protocolo, código (se aplicável), economia de tokens.

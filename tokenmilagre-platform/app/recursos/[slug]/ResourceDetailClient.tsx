@@ -195,6 +195,22 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
               </div>
             </div>
 
+            {/* Nota de Transparência */}
+            <div className="pt-8 border-t border-[var(--border-article)]">
+              <div className="space-y-2">
+                <h3 className="font-bold text-[var(--text-article-title)]">Nota de Transparência</h3>
+                <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
+                  Publicado por $MILAGRE Research | Última atualização: {new Date(resource.updatedAt).toLocaleDateString('pt-BR')}
+                </p>
+                <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
+                  Conteúdo assistido por IA e revisão humana. Pode conter imprecisões.
+                </p>
+                <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
+                  Este conteúdo é educacional e informativo. Não constitui aconselhamento financeiro. Sempre faça sua própria pesquisa (DYOR).
+                </p>
+              </div>
+            </div>
+
             {/* Recursos Relacionados */}
             <div className="pt-8 border-t border-[var(--border-article)]">
               <RelatedResources relatedResources={relatedResources} />
