@@ -407,27 +407,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                   </div>
                 </div>
 
-                {/* Compartilhar */}
-                <div className="space-y-4 pt-4">
-                  <h3 className="text-lg font-bold flex items-center gap-2 text-[var(--text-article-title)]">
-                    <FontAwesomeIcon icon={faShareNodes} />
-                    Compartilhe esta notícia
-                  </h3>
-                  <div className="flex flex-wrap gap-3">
-                    <button onClick={shareOnX} className="glass-card flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-black/5 hover:bg-black/10 border border-black/10 text-black dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/10 dark:text-white lg:hover:scale-105 active:scale-95 shadow-sm">
-                      <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
-                      X (Twitter)
-                    </button>
-                    <button onClick={shareOnTelegram} className="glass-card flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/20 text-[#0088cc] lg:hover:scale-105 active:scale-95 shadow-sm">
-                      <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
-                      Telegram
-                    </button>
-                    <button onClick={shareOnWhatsApp} className="glass-card flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/20 text-[#25D366] lg:hover:scale-105 active:scale-95 shadow-sm">
-                      <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
-                      WhatsApp
-                    </button>
-                  </div>
-                </div>
+
 
               </div>
             </div>
@@ -508,44 +488,38 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                 </div>
               )}
 
-              {/* Navegação Anterior/Próximo */}
-              {(previousArticle || nextArticle) && (
-                <div className="glass-card p-6 rounded-2xl border border-[var(--border-article)] space-y-4">
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--text-article-muted)] flex items-center gap-2">
-                    <span className="w-1 h-4 bg-[var(--brand-primary)] rounded-full"></span>
-                    Navegação
-                  </h3>
-
-                  <div className="space-y-3">
-                    {previousArticle && (
-                      <Link
-                        href={`/dashboard/noticias/${previousArticle.slug || previousArticle.id}`}
-                        className="block py-2 transition-all group"
-                      >
-                        <div className="text-xs font-bold text-[var(--text-article-muted)] mb-1 group-hover:text-[var(--brand-primary)] transition-colors">
-                          ← ANTERIOR
-                        </div>
-                        <div className="text-sm font-bold text-[var(--text-article-title)] line-clamp-2 group-hover:text-[var(--brand-primary)] transition-colors">
-                          {previousArticle.title}
-                        </div>
-                      </Link>
-                    )}
-                    {nextArticle && (
-                      <Link
-                        href={`/dashboard/noticias/${nextArticle.slug || nextArticle.id}`}
-                        className="block py-2 transition-all group text-left"
-                      >
-                        <div className="text-xs font-bold text-[var(--text-article-muted)] mb-1 group-hover:text-[var(--brand-primary)] transition-colors">
-                          PRÓXIMA →
-                        </div>
-                        <div className="text-sm font-bold text-[var(--text-article-title)] line-clamp-2 group-hover:text-[var(--brand-primary)] transition-colors">
-                          {nextArticle.title}
-                        </div>
-                      </Link>
-                    )}
-                  </div>
+              {/* Compartilhar (Sidebar) */}
+              <div className="glass-card p-6 rounded-2xl border border-[var(--border-article)] space-y-4">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--text-article-muted)] flex items-center gap-2">
+                  <FontAwesomeIcon icon={faShareNodes} />
+                  Compartilhe
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={shareOnX}
+                    className="flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold transition-all bg-black/5 hover:bg-black/10 border border-black/10 text-black dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/10 dark:text-white hover:scale-105 active:scale-95 text-sm"
+                  >
+                    <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
+                    X
+                  </button>
+                  <button
+                    onClick={shareOnTelegram}
+                    className="flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold transition-all bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/20 text-[#0088cc] hover:scale-105 active:scale-95 text-sm"
+                  >
+                    <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
+                    Telegram
+                  </button>
+                  <button
+                    onClick={shareOnWhatsApp}
+                    className="flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold transition-all bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/20 text-[#25D366] hover:scale-105 active:scale-95 text-sm"
+                  >
+                    <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
+                    WhatsApp
+                  </button>
                 </div>
-              )}
+              </div>
+
+
             </div>
           </div>
         </div>

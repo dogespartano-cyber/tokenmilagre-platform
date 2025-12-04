@@ -282,42 +282,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                   </div>
                 </div>
 
-                {/* Compartilhar */}
-                <div className="space-y-4 pt-4">
-                  <h3 className="text-lg font-bold flex items-center gap-2 text-[var(--text-article-title)]">
-                    <FontAwesomeIcon icon={faShareNodes} />
-                    Compartilhe este artigo
-                  </h3>
-                  <div className="flex flex-wrap gap-3">
-                    <a
-                      href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(currentUrl)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="glass-card flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-black/5 hover:bg-black/10 border border-black/10 text-black dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/10 dark:text-white lg:hover:scale-105 active:scale-95 shadow-sm"
-                    >
-                      <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
-                      X (Twitter)
-                    </a>
-                    <a
-                      href={`https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(article.title)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="glass-card flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/20 text-[#0088cc] lg:hover:scale-105 active:scale-95 shadow-sm"
-                    >
-                      <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
-                      Telegram
-                    </a>
-                    <a
-                      href={`https://wa.me/?text=${encodeURIComponent(article.title + ' ' + currentUrl)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="glass-card flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/20 text-[#25D366] lg:hover:scale-105 active:scale-95 shadow-sm"
-                    >
-                      <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
-                      WhatsApp
-                    </a>
-                  </div>
-                </div>
+
 
               </div>
             </div>
@@ -399,6 +364,43 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                   </nav>
                 </div>
               )}
+
+              {/* Compartilhar (Sidebar) */}
+              <div className="glass-card p-6 rounded-2xl border border-[var(--border-article)] space-y-4">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--text-article-muted)] flex items-center gap-2">
+                  <FontAwesomeIcon icon={faShareNodes} />
+                  Compartilhe
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(currentUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold transition-all bg-black/5 hover:bg-black/10 border border-black/10 text-black dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/10 dark:text-white hover:scale-105 active:scale-95 text-sm"
+                  >
+                    <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
+                    X
+                  </a>
+                  <a
+                    href={`https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(article.title)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold transition-all bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/20 text-[#0088cc] hover:scale-105 active:scale-95 text-sm"
+                  >
+                    <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
+                    Telegram
+                  </a>
+                  <a
+                    href={`https://wa.me/?text=${encodeURIComponent(article.title + ' ' + currentUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold transition-all bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/20 text-[#25D366] hover:scale-105 active:scale-95 text-sm"
+                  >
+                    <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
+                    WhatsApp
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
