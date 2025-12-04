@@ -108,6 +108,8 @@ SEMPRE estruturar notícias com 5-6 seções H2 seguindo este fluxo narrativo:
 - Mínimo 5, ideal 6 seções H2 + 1 subseção H3 (conclusão)
 - Pesquisar informações RECENTES (últimas 24h quando possível)
 - Incluir dados concretos: valores, percentuais, datas
+- **Citações em Caixa:** Use `> Citação` para destacar falas diretas de autoridades ou pontos-chave.
+- **Listas:** Use *listas* APENAS para conjuntos de dados, cronologias ou itens distintos. Evite usar listas para a narrativa geral do texto.
 
 **Formato de resposta:**
 \`\`\`json

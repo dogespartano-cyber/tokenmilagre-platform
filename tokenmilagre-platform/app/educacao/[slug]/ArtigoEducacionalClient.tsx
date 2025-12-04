@@ -282,6 +282,24 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                   </div>
                 </div>
 
+                <div className="h-px bg-[var(--border-article)] mt-8" />
+
+                {/* Nota de Transparência */}
+                <div className="mt-8">
+                  <div className="space-y-2">
+                    <h3 className="font-bold text-[var(--text-article-title)]">Nota de Transparência</h3>
+                    <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
+                      Publicado por $MILAGRE Research | Última atualização: {new Date(article.publishedAt).toLocaleDateString('pt-BR')}
+                    </p>
+                    <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
+                      Conteúdo assistido por IA e revisão humana. Pode conter imprecisões.
+                    </p>
+                    <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
+                      Este conteúdo é educacional e informativo. Não constitui aconselhamento financeiro. Sempre faça sua própria pesquisa (DYOR).
+                    </p>
+                  </div>
+                </div>
+
 
 
               </div>
@@ -366,7 +384,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
               )}
 
               {/* Compartilhar (Sidebar) */}
-              <div className="glass-card p-6 rounded-2xl border border-[var(--border-article)] space-y-4">
+              <div className="space-y-4 pt-2">
                 <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--text-article-muted)] flex items-center gap-2">
                   <FontAwesomeIcon icon={faShareNodes} />
                   Compartilhe
