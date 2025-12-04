@@ -34,7 +34,8 @@ interface GeneratedArticle {
   content?: string;
   category?: string;
   tags?: string[];
-  citations?: string[];
+  citations?: any[];
+  quiz?: any[]; // Quiz data
   selected: boolean;
   status: 'pending' | 'generating' | 'success' | 'error';
   error?: string;
@@ -815,6 +816,7 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
           type: contentType, // GARANTIR que o tipo seja enviado
           tags: tagsToSend.length > 0 ? tagsToSend : undefined,
           factCheckSources: citationsToSend,
+          quizData: articleToSave.quiz, // Include quiz data
           published: true
         };
 

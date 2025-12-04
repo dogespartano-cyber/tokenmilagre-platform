@@ -324,6 +324,7 @@ export const articleCreateInputCurrent = z.object({
   factCheckStatus: z.string().max(50).optional(),
   authorId: z.string().optional(), // Optional - allows overriding author for AI-generated content
   status: z.enum(['DRAFT', 'PUBLISHED', 'ARCHIVED']).optional(), // Add status support
+  quizData: z.union([z.string(), z.any()]).optional(), // JSON string or object
 })
 
 /**

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faTimesCircle, faTrophy, faRedo } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faTimesCircle, faTrophy, faRedo, faLightbulb } from '@fortawesome/free-solid-svg-icons';
 
 interface Question {
     id: number;
@@ -155,8 +155,14 @@ export default function QuizComponent({ title = 'Teste seus Conhecimentos', ques
             </div>
 
             {isAnswered && question.explanation && (
-                <div className="mb-6 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-sm text-blue-600 dark:text-blue-400">
-                    <strong>Explicação:</strong> {question.explanation}
+                <div className="mb-6 p-5 rounded-r-xl border-l-4 border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 flex gap-3">
+                    <div className="text-[var(--brand-primary)] mt-0.5">
+                        <FontAwesomeIcon icon={faLightbulb} />
+                    </div>
+                    <div className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                        <strong className="block text-[var(--brand-primary)] mb-1">Explicação:</strong>
+                        {question.explanation}
+                    </div>
                 </div>
             )}
 
@@ -166,8 +172,8 @@ export default function QuizComponent({ title = 'Teste seus Conhecimentos', ques
                         onClick={handleSubmit}
                         disabled={selectedOption === null}
                         className={`px-6 py-3 rounded-xl font-bold transition-all ${selectedOption !== null
-                                ? 'bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-hover)] shadow-lg'
-                                : 'bg-[var(--bg-secondary)] text-[var(--text-disabled)] cursor-not-allowed'
+                            ? 'bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-hover)] shadow-lg'
+                            : 'bg-[var(--bg-secondary)] text-[var(--text-disabled)] cursor-not-allowed'
                             }`}
                     >
                         Confirmar Resposta

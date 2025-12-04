@@ -46,6 +46,7 @@ interface GenerateArticleResponse {
     readTime: string
     sentiment?: 'positive' | 'neutral' | 'negative'
     citations?: string[]
+    quiz?: any[]
   }
   error?: string
   usage?: {
@@ -254,7 +255,16 @@ Inclua PELO MENOS 3-4 das seguintes métricas:
   "content": "Parágrafo introdutório...\\n\\n## Primeira Seção...",
   "category": "blockchain",
   "level": "iniciante",
-  "tags": ["tag1", "tag2", "tag3"]
+  "tags": ["tag1", "tag2", "tag3"],
+  "quiz": [
+    {
+      "id": 1,
+      "text": "Pergunta sobre o conteúdo?",
+      "options": ["Opção A", "Opção B", "Opção C", "Opção D"],
+      "correctAnswer": 0,
+      "explanation": "Explicação curta do porquê esta é a correta."
+    }
+  ]
 }
 
 ⚠️ **IMPORTANTE**: Retorne APENAS o objeto JSON puro, sem:
@@ -541,6 +551,7 @@ export async function POST(request: NextRequest) {
         readTime,
         sentiment: params.type === 'news' ? articleData.sentiment : undefined,
         citations,
+        quiz: params.type === 'educational' ? articleData.quiz : undefined,
       },
       usage: {
         inputTokens,

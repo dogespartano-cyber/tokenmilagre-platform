@@ -40,6 +40,7 @@ interface EducationalArticle {
   tags: string[];
   author?: string;
   publishedAt: string;
+  quizData?: string | null;
 }
 
 // **DEPRECATED** - Array mantido apenas para referência histórica
@@ -69,6 +70,7 @@ async function getArticle(slug: string): Promise<EducationalArticle | null> {
     tags: JSON.parse(article.tags || '[]'),
     author: 'Comunidade $MILAGRE',
     publishedAt: article.createdAt.toISOString().split('T')[0],
+    quizData: article.quizData,
   };
 }
 

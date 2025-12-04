@@ -163,6 +163,7 @@ export class ArticleService {
         factCheckSources: data.factCheckSources ? JSON.stringify(data.factCheckSources) : null,
         factCheckDate: data.factCheckDate,
         factCheckStatus: data.factCheckStatus,
+        quizData: data.quizData ? (typeof data.quizData === 'string' ? data.quizData : JSON.stringify(data.quizData)) : null,
       }
 
       // Add citations if provided
@@ -477,6 +478,9 @@ export class ArticleService {
       }
       if (data.factCheckDate !== undefined) updateData.factCheckDate = data.factCheckDate
       if (data.factCheckStatus !== undefined) updateData.factCheckStatus = data.factCheckStatus
+      if (data.quizData !== undefined) {
+        updateData.quizData = data.quizData ? (typeof data.quizData === 'string' ? data.quizData : JSON.stringify(data.quizData)) : null
+      }
 
       // Update article
       const article = await prisma.article.update({

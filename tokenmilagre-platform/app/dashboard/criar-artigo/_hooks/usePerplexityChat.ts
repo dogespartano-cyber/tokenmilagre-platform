@@ -43,6 +43,7 @@ export interface ProcessedArticle {
   shortDescription?: string;
   officialUrl?: string;
   platforms?: string[];
+  quiz?: any[]; // Array de perguntas do quiz
 }
 
 export interface UsePerplexityChatOptions {

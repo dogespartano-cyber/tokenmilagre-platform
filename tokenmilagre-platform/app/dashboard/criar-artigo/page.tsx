@@ -435,7 +435,8 @@ export default function CriarArtigoPage() {
           authorId: selectedType !== 'resource' ? session.user.id : undefined,
           tags: tagsToSend,
           citations: selectedType !== 'resource' ? citationsToSend : undefined,
-          factCheckSources: selectedType !== 'resource' ? factCheckSourcesToSend : undefined
+          factCheckSources: selectedType !== 'resource' ? factCheckSourcesToSend : undefined,
+          quizData: articleToValidate.quiz
         })
       });
 

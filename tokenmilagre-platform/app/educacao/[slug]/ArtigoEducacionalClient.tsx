@@ -9,6 +9,7 @@ import { faArrowLeft, faArrowUp, faClock, faCalendar, faUser, faShareNodes } fro
 import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { getLevelLabel } from '@/lib/utils/level-helpers';
 import { slugify } from '@/lib/utils/content-helpers';
+import QuizComponent from '@/components/QuizComponent';
 
 interface EducationalArticle {
   id: string;
@@ -24,6 +25,7 @@ interface EducationalArticle {
   author?: string;
   publishedAt: string;
   factCheckSources?: string; // JSON array de URLs
+  quizData?: string | null;
 }
 
 interface ArtigoEducacionalClientProps {
@@ -256,6 +258,16 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                   </ReactMarkdown>
                 </article>
 
+                {/* Quiz Section */}
+                {article.quizData && (
+                  <div className="mt-8 mb-8">
+                    <QuizComponent
+                      title="Quiz"
+                      questions={typeof article.quizData === 'string' ? JSON.parse(article.quizData) : article.quizData}
+                    />
+                  </div>
+                )}
+
                 {/* Tags Footer */}
                 <div className="mt-12 pt-8 border-t border-[var(--border-article)]">
                   <div className="flex flex-wrap gap-2">
@@ -310,6 +322,8 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
               </div>
             </div>
 
+
+
             {/* Artigos Relacionados */}
             {relatedArticles.length > 0 && (
               <div className="space-y-6">
@@ -356,6 +370,8 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                 </div>
                 Voltar para Educação
               </button>
+
+
 
               {/* Índice */}
               {tableOfContents.length > 0 && (
