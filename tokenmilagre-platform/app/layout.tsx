@@ -109,19 +109,57 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
+        {/* Script for theme initialization */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 try {
-                  const savedTheme = localStorage.getItem('theme');
-                  const theme = savedTheme || 'dark';
-                  document.documentElement.setAttribute('data-theme', theme);
-                } catch (e) {
-                  document.documentElement.setAttribute('data-theme', 'dark');
-                }
+                  var savedTheme = localStorage.getItem('theme');
+                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  
+                  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
               })();
             `,
+          }}
+        />
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "name": "$MILAGRE",
+                  "url": "https://tokenmilagre.xyz",
+                  "logo": "https://tokenmilagre.xyz/images/TOKEN-MILAGRE-Hero.webp",
+                  "description": "Movimento por prosperidade, educação e apoio mútuo na Solana.",
+                  "sameAs": [
+                    "https://twitter.com/tokenmilagre",
+                    "https://github.com/dogespartano-cyber/tokenmilagre-platform"
+                  ]
+                },
+                {
+                  "@type": "WebSite",
+                  "name": "$MILAGRE Platform",
+                  "url": "https://tokenmilagre.xyz",
+                  "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://tokenmilagre.xyz/search?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                  }
+                }
+              ]
+            })
           }}
         />
       </head>
