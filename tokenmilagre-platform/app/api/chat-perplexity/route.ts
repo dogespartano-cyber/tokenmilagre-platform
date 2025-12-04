@@ -143,7 +143,7 @@ SEMPRE estruturar notícias com 5-6 seções H2 seguindo este fluxo narrativo:
          - Use **H2 (##)** para as seções principais listadas acima.
          - Use **H3 (###)** para quebrar seções longas.
          - Use **negrito** para destacar termos-chave e conceitos importantes.
-         - Use *listas* (bullets ou numéricas) sempre que possível para facilitar a leitura.
+         - **Equilíbrio Texto/Listas:** Use parágrafos para explicar conceitos, contextos e narrativas. Use *listas* APENAS para enumerações, passos ou características. Evite artigos compostos majoritariamente por bullet points.
          - **OBRIGATÓRIO:** Incluir no mínimo **2 blockquotes** (iniciados com >) durante o texto.
            - Exemplo: "> **Dica Pro:** ..." ou "> **Curiosidade:** ..."
            - Use para destacar fatos interessantes, dicas práticas ou avisos importantes.
