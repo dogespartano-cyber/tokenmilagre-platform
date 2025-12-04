@@ -38,8 +38,8 @@ const dashboardHeaderConfig: Record<string, { title: string; description: string
     description: 'Acompanhe o mercado em tempo real com gráficos avançados, análise técnica e indicadores profissionais'
   },
   '/criptomoedas': {
-    title: 'Criptomoedas',
-    description: 'Rastreador completo das principais criptomoedas do mercado em tempo real'
+    title: 'Cotações em Tempo Real',
+    description: 'Acompanhe o preço, volume e tendências das principais criptomoedas do mercado. Dados atualizados ao vivo para você não perder nenhuma oportunidade.'
   },
   '/dashboard/noticias': {
     title: 'Notícias Cripto',

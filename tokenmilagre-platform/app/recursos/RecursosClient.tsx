@@ -67,8 +67,8 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
       <div className="space-y-8">
         {/* Header with Discord/Telegram Buttons */}
         <DashboardHeader
-          title="Recursos Verificados"
-          description="Ferramentas essenciais com links oficiais verificados pela comunidade $MILAGRE. Acesse com segurança."
+          title="Ferramentas e Links Seguros"
+          description="Acesse exchanges, carteiras e sites oficiais com tranquilidade. Nossa lista verificada elimina o risco de phishing e golpes, para iniciantes e experts."
         />
 
         {/* Filtros Inline */}

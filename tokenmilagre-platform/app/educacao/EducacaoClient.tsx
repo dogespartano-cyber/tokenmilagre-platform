@@ -138,8 +138,8 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
         <div className="space-y-8">
           {/* Header with Discord/Telegram Buttons */}
           <DashboardHeader
-            title="Educação Cripto"
-            description="Artigos e tutoriais gratuitos criados pela comunidade $MILAGRE. Conhecimento livre para todos."
+            title="Domine o Mercado Cripto"
+            description="Artigos e tutoriais descomplicados para todos os níveis. Aprenda a investir com segurança e evite armadilhas, tudo 100% gratuito."
           />
 
           {/* Filtros Inline */}
@@ -229,79 +229,58 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
               <Link
                 key={resource.id}
                 href={`/educacao/${resource.slug}`}
-                className="glass-card group relative rounded-2xl p-6 overflow-hidden border border-[var(--border-article)] shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer block hover:border-[var(--brand-primary)]/50"
+                className="glass-card group relative flex flex-col p-6 rounded-2xl border border-[var(--border-light)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl overflow-hidden"
               >
-                {/* Glow sutil no topo no hover */}
+                {/* Hover Glow Effect */}
                 <div
-                  className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"
                   style={{
-                    background: `linear-gradient(90deg, transparent, ${getLevelColor(resource.level)}, transparent)`,
-                    boxShadow: `0 0 20px ${getLevelColor(resource.level)}40`
+                    background: getLevelColor(resource.level)
                   }}
                 />
 
-                {/* Content wrapper */}
-                <div className="relative flex flex-col h-full">
-                  {/* Header do Card */}
-                  <div className="flex items-start justify-between mb-4">
-                    {/* Badge de Nível com ícone (sem borda lateral) */}
-                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg backdrop-blur-sm" style={{
-                      backgroundColor: `${getLevelColor(resource.level)}15`,
-                      border: `1px solid ${getLevelColor(resource.level)}30`
-                    }}>
+                <div className="relative z-10 flex flex-col h-full">
+                  {/* Header: Level & Read Time */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-1.5">
                       <FontAwesomeIcon
                         icon={getLevelIcon(resource.level)}
-                        className="w-3.5 h-3.5"
+                        className="w-2.5 h-2.5"
                         style={{ color: getLevelColor(resource.level) }}
                       />
-                      <span className="text-xs font-bold uppercase tracking-wide" style={{
+                      <span className="text-[10px] font-bold tracking-wide" style={{
                         color: getLevelColor(resource.level)
                       }}>
                         {resource.level === 'iniciante' ? 'Iniciante' : resource.level === 'intermediario' ? 'Intermediário' : resource.level === 'avancado' ? 'Avançado' : 'Geral'}
                       </span>
                     </div>
 
-                    {/* Tempo de leitura */}
-                    <span className="text-xs font-medium px-2.5 py-1 rounded-md backdrop-blur-sm flex items-center gap-1.5 bg-[var(--bg-article-tag)] text-[var(--text-article-muted)]">
+                    <span className="text-xs font-medium flex items-center gap-1.5 text-[var(--text-tertiary)]">
                       <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
                       {resource.readTime || '5 min'}
                     </span>
                   </div>
 
-                  {/* Título */}
-                  <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-[var(--brand-primary)] transition-colors min-h-[3.5rem] text-[var(--text-article-title)]">
+                  {/* Title */}
+                  <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-[var(--brand-primary)] transition-colors text-[var(--text-primary)]">
                     {resource.title}
                   </h3>
 
-                  {/* Descrição */}
-                  <p className="text-sm mb-4 line-clamp-3 leading-relaxed opacity-90 min-h-[4.5rem] text-[var(--text-article-body)]">
+                  {/* Description */}
+                  <p className="text-sm mb-4 line-clamp-3 leading-relaxed text-[var(--text-secondary)]">
                     {resource.description}
                   </p>
 
                   {/* Tags */}
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {resource.tags.slice(0, 3).map((tag, index) => (
+                  <div className="flex flex-wrap gap-2">
+                    {resource.tags.slice(0, 2).map((tag, index) => (
                       <span
                         key={index}
-                        className="px-2 py-0.5 rounded text-xs font-medium backdrop-blur-sm bg-[var(--bg-article-tag)] text-[var(--text-article-muted)]"
+                        className="text-xs font-medium text-[var(--text-tertiary)]"
                       >
                         #{tag}
                       </span>
                     ))}
-                  </div>
-
-                  {/* Spacer to push footer to bottom */}
-                  <div className="flex-grow"></div>
-
-                  {/* Footer */}
-                  <div className="pt-3 border-t border-[var(--border-article)]">
-                    <div className="flex items-center justify-end">
-                      {/* CTA com seta animada */}
-                      <div className="flex items-center gap-2 text-sm font-bold group-hover:gap-3 transition-all text-[var(--text-article-title)] group-hover:text-[var(--brand-primary)]">
-                        Ler artigo
-                        <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                      </div>
-                    </div>
                   </div>
                 </div>
               </Link>
