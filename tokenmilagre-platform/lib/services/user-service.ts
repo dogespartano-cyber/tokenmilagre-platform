@@ -467,6 +467,11 @@ export class UserService {
         return null
       }
 
+      if (!user.password) {
+        this.logger.warn('User has no password (OAuth user)', { userId: user.id })
+        return null
+      }
+
       const isValid = await bcrypt.compare(password, user.password)
 
       if (isValid) {

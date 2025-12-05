@@ -63,13 +63,12 @@ export async function POST(req: Request) {
                 update: {
                     name,
                     image: image_url,
-                    // If we wanted to map Clerk ID to Prisma ID, we'd need to handle that carefully.
-                    // For now, we update the existing record or create new.
-                    // Ideally, we might want to store clerkId in a separate field or link account.
+                    // Link account using clerkId if available
+                    clerkId: id,
                 },
                 create: {
-                    // We CAN try to use the Clerk ID as the Prisma ID if it's a new user
-                    // id: id, 
+                    // We use the Clerk ID as a unique identifier for mapping
+                    clerkId: id,
                     email,
                     name,
                     image: image_url,

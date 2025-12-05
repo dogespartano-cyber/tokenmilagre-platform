@@ -33,13 +33,13 @@ export async function POST(request: NextRequest) {
       id: user.id,
       name: user.name,
       role: user.role,
-      hashPrefix: user.password.substring(0, 20)
+      hashPrefix: user.password ? user.password.substring(0, 20) : 'NO_PASSWORD'
     })
 
     // 2. Testar senha
     console.log('[DEBUG-AUTH] Testando senha...')
     const startTime = Date.now()
-    const isValid = await bcrypt.compare(password, user.password)
+    const isValid = user.password ? await bcrypt.compare(password, user.password) : false
     const duration = Date.now() - startTime
 
     console.log('[DEBUG-AUTH] Resultado:', isValid ? 'VÁLIDO' : 'INVÁLIDO')

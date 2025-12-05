@@ -28,6 +28,10 @@ export const authOptions: NextAuthOptions = {
           throw new Error('Credenciais inválidas');
         }
 
+        if (!user.password) {
+          throw new Error('Por favor, faça login com o Google (sua conta não possui senha definida).');
+        }
+
         const isPasswordValid = await bcrypt.compare(
           credentials.password,
           user.password
