@@ -8,19 +8,26 @@ import { useEffect, useState } from 'react';
 interface TrendMeterProps {
     symbol: string;
     interval?: string;
+    onColorChange?: (color: string) => void;
 }
 
-export default function TrendMeter({ symbol, interval = '4h' }: TrendMeterProps) {
+export default function TrendMeter({ symbol, interval = '4h', onColorChange }: TrendMeterProps) {
     const { indicators, loading, error } = useBinanceData(symbol, interval);
     const [gaugeValue, setGaugeValue] = useState(50); // 0 to 100
     const [displayScore, setDisplayScore] = useState(0);
 
+    const getTrendColor = (score: number) => {
+        if (score <= -3) return '#EF4444'; // Red-500
+        if (score < 0) return '#F97316'; // Orange-500
+        if (score === 0) return '#EAB308'; // Yellow-500
+        if (score < 3) return '#84CC16'; // Lime-500
+        return '#22C55E'; // Green-500
+    };
+
+    // Handle data updates
     useEffect(() => {
         if (indicators && indicators.trend) {
             // Map score (-6 to +6) to gauge value (0 to 100)
-            // -6 -> 0 (Strong Sell)
-            // 0 -> 50 (Neutral)
-            // +6 -> 100 (Strong Buy)
             const score = indicators.trend.score;
             const exactScore = indicators.trend.exactScore;
 
@@ -30,8 +37,22 @@ export default function TrendMeter({ symbol, interval = '4h' }: TrendMeterProps)
 
             setGaugeValue(targetValue);
             setDisplayScore(exactScore);
+
+            if (onColorChange) {
+                onColorChange(getTrendColor(exactScore));
+            }
+        } else if (!loading && (error || !indicators)) {
+            // If finished loading but error or no data, emit default neutral color
+            // to ensure chart becomes visible (in default gray state)
+            if (onColorChange) {
+                // Using a neutral gray or simply letting the chart use its default
+                // passing a color is required to un-hide the chart if strictly using opacity toggle based on presence
+                // But we want it to look "default".
+                // Let's pass a specific GRAY to signal "ready but neutral"
+                onColorChange('#E5E7EB');
+            }
         }
-    }, [indicators]);
+    }, [indicators, loading, error, onColorChange]);
 
     if (loading) {
         return (
@@ -65,14 +86,6 @@ export default function TrendMeter({ symbol, interval = '4h' }: TrendMeterProps)
     // 50 value -> 0deg
     // 100 value -> 90deg
     const needleRotation = (gaugeValue / 100) * 180 - 90;
-
-    const getTrendColor = (score: number) => {
-        if (score <= -3) return '#EF4444'; // Red-500
-        if (score < 0) return '#F97316'; // Orange-500
-        if (score === 0) return '#EAB308'; // Yellow-500
-        if (score < 3) return '#84CC16'; // Lime-500
-        return '#22C55E'; // Green-500
-    };
 
     const trendColor = getTrendColor(displayScore);
 

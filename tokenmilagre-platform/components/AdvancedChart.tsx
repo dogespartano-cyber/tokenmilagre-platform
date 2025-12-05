@@ -12,12 +12,15 @@ interface AdvancedChartProps {
   name: string;
   timeframe?: Timeframe;
   onTimeframeChange?: (timeframe: Timeframe) => void;
+  trendColor?: string;
 }
 
-export default function AdvancedChart({ symbol, name, timeframe: controlledTimeframe, onTimeframeChange }: AdvancedChartProps) {
+export default function AdvancedChart({ symbol, name, timeframe: controlledTimeframe, onTimeframeChange, trendColor }: AdvancedChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const [internalTimeframe, setInternalTimeframe] = useState<Timeframe>('4h');
   const timeframe = controlledTimeframe || internalTimeframe;
+  const chartRef = useRef<any>(null); // Ref to hold chart instance
+  const candlestickSeriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
 
   const handleTimeframeChange = (newTimeframe: Timeframe) => {
     if (onTimeframeChange) {
@@ -29,6 +32,30 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
 
   const [currentPrice, setCurrentPrice] = useState<number | null>(null);
   const { theme } = useTheme();
+
+  // Apply trend color updates
+  useEffect(() => {
+    if (candlestickSeriesRef.current && trendColor) {
+      candlestickSeriesRef.current.applyOptions({
+        upColor: 'transparent',
+        borderUpColor: trendColor,
+        wickUpColor: trendColor,
+        downColor: trendColor,
+        borderDownColor: trendColor,
+        wickDownColor: trendColor,
+      });
+    } else if (candlestickSeriesRef.current && !trendColor) {
+      // Default Style (Gray almost white)
+      candlestickSeriesRef.current.applyOptions({
+        upColor: 'transparent',
+        downColor: '#E5E7EB',
+        borderUpColor: '#E5E7EB',
+        borderDownColor: '#E5E7EB',
+        wickUpColor: '#E5E7EB',
+        wickDownColor: '#E5E7EB',
+      });
+    }
+  }, [trendColor]);
 
   useEffect(() => {
     if (!chartContainerRef.current) return;
@@ -175,48 +202,63 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
       },
     });
 
-    // Série de candlestick preto (contorno muda conforme tema)
-    const candleBorderColor = theme === 'dark' ? '#ffffff' : '#000000';
+    chartRef.current = chart;
+
+    // Série de candlestick
     const candlestickSeries = chart.addSeries(CandlestickSeries, {
-      upColor: '#000000',        // Preto
-      downColor: '#000000',      // Preto
-      borderUpColor: candleBorderColor,  // Branco (dark) ou Preto (light)
-      borderDownColor: candleBorderColor, // Branco (dark) ou Preto (light)
-      wickUpColor: candleBorderColor,    // Branco (dark) ou Preto (light)
-      wickDownColor: candleBorderColor,  // Branco (dark) ou Preto (light)
+      upColor: 'transparent',        // Vermelho para Alta (Default) - AGORA TRANSPARENTE
+      downColor: 'transparent',      // Verde para Queda (Default) - AGORA TRANSPARENTE
+      borderUpColor: '#EF5350',
+      borderDownColor: '#26A69A',
+      wickUpColor: '#EF5350',
+      wickDownColor: '#26A69A',
     });
 
-    // SMA 20 (azul vibrante)
+    candlestickSeriesRef.current = candlestickSeries;
+
+    // Apply initial trend color if exists
+    if (trendColor) {
+      candlestickSeries.applyOptions({
+        upColor: 'transparent',
+        borderUpColor: trendColor,
+        wickUpColor: trendColor,
+        downColor: trendColor,
+        borderDownColor: trendColor,
+        wickDownColor: trendColor,
+      });
+    }
+
+    // SMA 20 (Amarelo)
     const sma20Series = chart.addSeries(LineSeries, {
-      color: '#3b82f6',
+      color: '#EAB308',
       lineWidth: 3,
       title: 'SMA 20',
     });
 
-    // SMA 50 (laranja vibrante)
+    // SMA 50 (Azul Real)
     const sma50Series = chart.addSeries(LineSeries, {
-      color: '#f97316',
+      color: '#3B82F6',
       lineWidth: 3,
       title: 'SMA 50',
     });
 
-    // Bandas de Bollinger (roxo vibrante)
+    // Bandas de Bollinger (Cinza/Slate - Sutil)
     const bbUpperSeries = chart.addSeries(LineSeries, {
-      color: '#a855f7',
+      color: '#94A3B8',
       lineWidth: 2,
       lineStyle: 2, // Linha tracejada
       title: 'BB Superior',
     });
 
     const bbMiddleSeries = chart.addSeries(LineSeries, {
-      color: '#d946ef',
+      color: '#94A3B8',
       lineWidth: 1,
       lineStyle: 3, // Linha pontilhada
       title: 'BB Média',
     });
 
     const bbLowerSeries = chart.addSeries(LineSeries, {
-      color: '#a855f7',
+      color: '#94A3B8',
       lineWidth: 2,
       lineStyle: 2, // Linha tracejada
       title: 'BB Inferior',
@@ -265,7 +307,14 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
   }, [symbol, timeframe, theme]);
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: 'transparent' }}>
+    <div
+      className="rounded-2xl overflow-hidden"
+      style={{
+        backgroundColor: 'transparent',
+        opacity: trendColor ? 1 : 0,
+        transition: 'opacity 0.3s ease-in-out'
+      }}
+    >
       {/* Título, Preço e Timeframe - Responsivo */}
       <div className="px-4 pt-4 pb-2 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         {/* Esquerda: Título + Preço */}
@@ -305,15 +354,15 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
       <div className="px-4 pb-2">
         <div className="flex flex-wrap gap-3 text-xs">
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5" style={{ backgroundColor: '#3b82f6' }}></div>
+            <div className="w-3 h-0.5" style={{ backgroundColor: '#EAB308' }}></div>
             <span style={{ color: 'var(--text-secondary)' }}>SMA 20</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5" style={{ backgroundColor: '#f97316' }}></div>
+            <div className="w-3 h-0.5" style={{ backgroundColor: '#3B82F6' }}></div>
             <span style={{ color: 'var(--text-secondary)' }}>SMA 50</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5" style={{ backgroundColor: '#a855f7' }}></div>
+            <div className="w-3 h-0.5" style={{ backgroundColor: '#94A3B8' }}></div>
             <span style={{ color: 'var(--text-secondary)' }}>Bollinger</span>
           </div>
           <div className="flex items-center gap-1.5">

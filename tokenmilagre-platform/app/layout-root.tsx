@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { useSession } from 'next-auth/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faNewspaper, faSun, faMoon, faHome, faInfoCircle, faCoins, faBars, faTimes, faBook, faGraduationCap, faStore, faHeart, faBitcoinSign, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faNewspaper, faSun, faMoon, faHome, faInfoCircle, faCoins, faBars, faTimes, faBook, faGraduationCap, faStore, faHeart, faBitcoinSign } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@/contexts/ThemeContext';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import DashboardHeader from '@/app/components/DashboardHeader';
@@ -145,7 +145,7 @@ export default function RootLayoutNav({
 
   const menuItems = [
     { href: '/', label: 'Início', icon: faHome },
-    { href: '/comece-aqui', label: 'Comece Aqui', icon: faShieldAlt },
+
     { href: '/dashboard/noticias', label: 'Notícias', icon: faNewspaper },
     { href: '/graficos', label: 'Gráficos', icon: faChartLine },
     { href: '/criptomoedas', label: 'Criptomoedas', icon: faBitcoinSign },

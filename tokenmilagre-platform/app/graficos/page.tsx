@@ -15,10 +15,6 @@ const StockHeatmapWidget = dynamic(() => import('@/components/StockHeatmapWidget
   ssr: false,
 });
 
-const ETFMetricsSection = dynamic(() => import('@/components/ETFMetricsSection'), {
-  ssr: false,
-});
-
 export default function GraficosPage() {
   return (
     <>
@@ -28,7 +24,7 @@ export default function GraficosPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           "name": "Gráficos e Análises de Mercado Cripto",
-          "description": "Acompanhe o mercado de criptomoedas em tempo real com gráficos avançados, análise técnica, indicadores profissionais e dados de ETFs de Bitcoin e Ethereum",
+          "description": "Acompanhe o mercado de criptomoedas em tempo real com gráficos avançados, análise técnica e indicadores profissionais",
           "url": "https://tokenmilagre.xyz/graficos"
         })}
       </Script>
@@ -46,7 +42,7 @@ export default function GraficosPage() {
 
             {/* Section 2: Macro & Money Flow */}
             <section className="space-y-12 animate-fade-in-up delay-100">
-              <div className="glass-card p-6 rounded-3xl border border-gray-200 dark:border-white/10">
+              <div className="p-6">
                 <div className="mb-6">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Mapa de Calor S&P 500</h2>
                   <p className="text-gray-500 dark:text-gray-400">Visão macro do mercado de ações global</p>
@@ -69,7 +65,7 @@ export default function GraficosPage() {
             {/* Section 3: Crypto Overview */}
             <section className="space-y-12 animate-fade-in-up delay-200">
               {/* Heatmap - Full Width */}
-              <div className="glass-card p-6 rounded-3xl border border-gray-200 dark:border-white/10 h-[600px] flex flex-col">
+              <div className="p-6 h-[600px] flex flex-col">
                 <div className="mb-4">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Mapa de Calor Cripto</h2>
                   <p className="text-gray-500 dark:text-gray-400">Performance do mercado em tempo real</p>
@@ -80,12 +76,12 @@ export default function GraficosPage() {
               </div>
 
               {/* Bubbles - Full Width */}
-              <div className="glass-card p-6 rounded-3xl border border-gray-200 dark:border-white/10 h-[800px] flex flex-col">
+              <div className="p-6 h-[800px] flex flex-col">
                 <div className="mb-4">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Bolhas Cripto</h2>
                   <p className="text-gray-500 dark:text-gray-400">Visualização interativa de volume e tendência</p>
                 </div>
-                <div className="flex-1 rounded-xl overflow-hidden bg-black/5 dark:bg-black/20">
+                <div className="flex-1 rounded-xl overflow-hidden">
                   <iframe
                     src="https://cryptobubbles.net"
                     className="w-full h-full"
@@ -99,10 +95,7 @@ export default function GraficosPage() {
 
 
 
-            {/* Section 4: Institutional Data */}
-            <section className="animate-fade-in-up delay-300">
-              <ETFMetricsSection />
-            </section>
+            {/* Section 4: Institutional Data - REMOVIDO */}
 
             {/* Footer CTA - Reverted to Original Style */}
             <div className="space-y-6 animate-fade-in-up delay-400">

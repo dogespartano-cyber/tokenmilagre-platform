@@ -20,6 +20,7 @@ type Asset = 'BTC' | 'ETH' | 'SOL';
 export default function CryptoAnalyzer() {
     const [activeAsset, setActiveAsset] = useState<Asset>('BTC');
     const [timeframe, setTimeframe] = useState<any>('4h');
+    const [trendColor, setTrendColor] = useState<string | undefined>(undefined);
 
     const assets = {
         BTC: {
@@ -58,7 +59,10 @@ export default function CryptoAnalyzer() {
                 {(Object.keys(assets) as Asset[]).map((asset) => (
                     <button
                         key={asset}
-                        onClick={() => setActiveAsset(asset)}
+                        onClick={() => {
+                            setActiveAsset(asset);
+                            setTrendColor(undefined); // Reset color on asset change
+                        }}
                         className={`
               flex items-center justify-center gap-2 px-4 py-2 md:px-6 md:py-2.5 rounded-lg font-semibold transition-all duration-300 flex-1 md:flex-none whitespace-nowrap
               ${activeAsset === asset
@@ -77,13 +81,14 @@ export default function CryptoAnalyzer() {
             <div className="grid lg:grid-cols-3 gap-6 animate-fade-in-up">
                 {/* Main Chart - Spans 2 columns */}
                 <div className="lg:col-span-2 space-y-4">
-                    <div className={`glass-card p-1 rounded-2xl overflow-hidden border transition-colors duration-500 ${assets[activeAsset].border}`}>
-                        <div className="h-auto min-h-[600px] w-full bg-white/50 dark:bg-[#131722]">
+                    <div className="p-1 rounded-2xl overflow-hidden">
+                        <div className="h-auto min-h-[600px] w-full">
                             <AdvancedChart
                                 symbol={assets[activeAsset].symbol}
                                 name={`${assets[activeAsset].name} / Tether US`}
                                 timeframe={timeframe}
                                 onTimeframeChange={setTimeframe}
+                                trendColor={trendColor}
                             />
                         </div>
                     </div>
@@ -91,7 +96,7 @@ export default function CryptoAnalyzer() {
 
                 {/* Technical Analysis - Spans 1 column */}
                 <div className="space-y-4">
-                    <div className={`glass-card p-4 rounded-2xl border h-full flex flex-col transition-colors duration-500 ${assets[activeAsset].border}`}>
+                    <div className="p-4 rounded-2xl h-full flex flex-col transition-colors duration-500">
                         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
                             <h3 className="text-lg font-bold flex items-center gap-2 text-gray-900 dark:text-white">
                                 <span>Análise Técnica ({timeframe.toUpperCase()})</span>
@@ -119,6 +124,7 @@ export default function CryptoAnalyzer() {
                                 key={`${assets[activeAsset].symbol}-${timeframe}`}
                                 symbol={assets[activeAsset].symbol}
                                 interval={timeframe}
+                                onColorChange={setTrendColor}
                             />
                         </div>
                     </div>
