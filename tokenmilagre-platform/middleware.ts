@@ -25,8 +25,9 @@ export default clerkMiddleware(async (auth, req) => {
   }
 
   // 2. Protect routes if needed (e.g., /admin, /dashboard/perfil)
-  // const isProtectedRoute = createRouteMatcher(['/dashboard/perfil(.*)', '/quiz(.*)']);
-  // if (isProtectedRoute(req)) auth().protect();
+  // 2. Protect routes if needed (e.g., /admin, /dashboard/perfil)
+  const isProtectedRoute = createRouteMatcher(['/membro(.*)', '/quiz(.*)']);
+  if (isProtectedRoute(req)) await auth.protect();
 
   // Note: We are temporarily removing the NextAuth middleware call for /admin 
   // to avoid conflicts during this migration. 

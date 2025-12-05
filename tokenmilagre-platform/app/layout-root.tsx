@@ -14,6 +14,9 @@ import DashboardHeader from '@/app/components/DashboardHeader';
 import UserDropdown from '@/components/UserDropdown';
 import NavbarCryptoTicker from '@/components/NavbarCryptoTicker';
 import GlobalBackground from '@/components/GlobalBackground';
+// import UserLevelWidget from '@/components/gamification/UserLevelWidget'; // Moved to /membro dashboard
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import CustomUserButton from '@/components/CustomUserButton';
 import ScrollToTop from '@/app/components/ScrollToTop';
 import CookieConsent from '@/components/CookieConsent';
 
@@ -465,6 +468,19 @@ export default function RootLayoutNav({
 
               {/* Desktop Actions */}
               <nav className="hidden lg:flex items-center gap-6 pl-8 h-10 my-auto">
+                <div className="mr-4">
+                  <SignedIn>
+                    <CustomUserButton />
+                  </SignedIn>
+                  <SignedOut>
+                    <SignInButton mode="modal">
+                      <button className="px-4 py-2 rounded-lg bg-[var(--brand-primary)] text-white text-sm font-bold hover:bg-[var(--brand-hover)] transition-colors shadow-lg shadow-[var(--brand-primary)]/20">
+                        Entrar
+                      </button>
+                    </SignInButton>
+                  </SignedOut>
+                </div>
+
                 <button
                   onClick={toggleTheme}
                   className="group flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-white/5 text-[var(--text-primary)]"
@@ -541,6 +557,9 @@ export default function RootLayoutNav({
               </div>
 
               <div className="flex flex-wrap justify-center gap-6 text-sm font-medium text-[var(--text-secondary)]">
+                <Link href="/transparencia" className="hover:text-[var(--brand-primary)] transition-colors">
+                  Transparência
+                </Link>
                 <Link href="/manifesto" className="hover:text-[var(--brand-primary)] transition-colors">
                   Manifesto
                 </Link>

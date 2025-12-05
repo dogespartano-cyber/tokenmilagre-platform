@@ -4,12 +4,6 @@ import { Shield, BookOpen, Heart, Lock, Eye, Users, Globe, Scale } from 'lucide-
 export default function ManifestoPage() {
     return (
         <main className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-            {/* Background Elements - Calming Green/Teal */}
-            <div className="fixed inset-0 z-0 pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-[120px] animate-pulse-slow" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] animate-pulse-slow delay-1000" />
-            </div>
-
             <div className="max-w-5xl mx-auto relative z-10 space-y-20">
 
                 {/* Header */}

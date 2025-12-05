@@ -748,7 +748,7 @@ export default function HomePage() {
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <h3 className="text-lg font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                      📊 Análise do Dia
+                      📊 Análise do Dia <span className="ml-2 text-[10px] px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-500 border border-purple-500/20 font-normal">AI Powered</span>
                     </h3>
                     <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
                       Todos os dias as 21h
@@ -947,7 +947,7 @@ export default function HomePage() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                  Últimas Notícias
+                  Últimas Notícias <span className="ml-2 text-sm font-normal text-muted-foreground opacity-60">(Curadoria por IA)</span>
                 </h2>
                 <Link href="/dashboard/noticias" className="text-sm font-semibold hover:underline" style={{ color: 'var(--brand-primary)' }}>
                   Ver todas
