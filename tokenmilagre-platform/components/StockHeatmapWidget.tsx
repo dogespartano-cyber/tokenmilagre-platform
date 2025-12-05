@@ -42,10 +42,9 @@ function StockHeatmapWidget() {
   }, []);
 
   return (
-    <div className="backdrop-blur-lg rounded-2xl border-2 shadow-xl overflow-hidden" style={{
+    <div className="backdrop-blur-lg rounded-2xl shadow-xl overflow-hidden" style={{
       height: "600px",
-      background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
-      borderColor: 'var(--border-medium)'
+      background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))'
     }}>
       <div
         className="tradingview-widget-container"

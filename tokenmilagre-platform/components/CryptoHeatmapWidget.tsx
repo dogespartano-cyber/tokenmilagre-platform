@@ -40,7 +40,7 @@ function CryptoHeatmapWidget() {
   }, []);
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden" style={{ height: "600px" }}>
+    <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl overflow-hidden" style={{ height: "100%" }}>
       <div
         className="tradingview-widget-container"
         ref={container}

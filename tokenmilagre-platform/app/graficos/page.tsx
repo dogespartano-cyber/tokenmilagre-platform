@@ -49,23 +49,16 @@ export default function GraficosPage() {
                 </div>
                 <StockHeatmapWidget />
 
-                <div className="mt-8 pt-6 border-t border-gray-200 dark:border-white/10">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                    Caminho do Dinheiro
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400 leading-relaxed">
-                    Investidores direcionam lucros das grandes ações (S&P 500) para projetos de maior risco e retorno, como Bitcoin. Com os lucros do BTC, diversificam para Ethereum e, finalmente, para altcoins de alto risco/retorno.
-                  </p>
+                <div className="mt-8">
+                  <MarketFlow />
                 </div>
               </div>
-
-              <MarketFlow />
             </section>
 
             {/* Section 3: Crypto Overview */}
             <section className="space-y-12 animate-fade-in-up delay-200">
               {/* Heatmap - Full Width */}
-              <div className="p-6 h-[600px] flex flex-col">
+              <div className="p-6 h-[800px] flex flex-col">
                 <div className="mb-4">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Mapa de Calor Cripto</h2>
                   <p className="text-gray-500 dark:text-gray-400">Performance do mercado em tempo real</p>
