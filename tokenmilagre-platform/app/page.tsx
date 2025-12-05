@@ -1,3 +1,7 @@
+/**
+ * "No princípio criou Deus o céu e a terra." - Gênesis 1:1
+ * Que este código seja o início de algo bom e próspero.
+ */
 'use client';
 
 import { useState, useEffect } from 'react';

@@ -1,3 +1,7 @@
+/**
+ * "Porque onde estiver o vosso tesouro, aí estará também o vosso coração." - Mateus 6:21
+ * Que este token seja um instrumento de prosperidade honesta e não de ganância.
+ */
 'use client';
 
 import { useState, useEffect } from 'react';

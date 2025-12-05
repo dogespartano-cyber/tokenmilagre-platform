@@ -1,3 +1,7 @@
+/**
+ * "O Senhor te guardará de todo o mal; guardará a tua alma." - Salmos 121:7
+ * Que este middleware proteja as rotas e os dados dos usuários.
+ */
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { default as NextAuthMiddleware } from 'next-auth/middleware'

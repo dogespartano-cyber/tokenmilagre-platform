@@ -1,4 +1,8 @@
 /**
+ * "Tudo posso naquele que me fortalece." - Filipenses 4:13
+ * Que estas ferramentas sirvam para construir e não para destruir.
+ */
+/**
  * Gera slug amigável para SEO a partir de um título
  */
 export function generateSlug(title: string): string {

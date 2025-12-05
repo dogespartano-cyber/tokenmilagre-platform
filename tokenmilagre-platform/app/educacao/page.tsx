@@ -1,3 +1,7 @@
+/**
+ * "O temor do Senhor é o princípio da sabedoria, e o conhecimento do Santo a prudência." - Provérbios 9:10
+ * Que este conhecimento liberte e edifique.
+ */
 import EducacaoClient from './EducacaoClient';
 import { prisma } from '@/lib/prisma';
 

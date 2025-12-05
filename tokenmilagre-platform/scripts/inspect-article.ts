@@ -4,7 +4,7 @@ import { PrismaClient } from '../lib/generated/prisma/index.js';
 const prisma = new PrismaClient();
 
 async function main() {
-    const slug = 'como-os-fundamentos-do-bitcoin-influenciarao-seu-preco-em-2026';
+    const slug = 'brad-garlinghouse-projeta-bitcoin-a-us-180-mil-ate-fim-de-2026-mis2tet1';
     console.log(`Inspecting article: ${slug}`);
 
     const article = await prisma.article.findUnique({

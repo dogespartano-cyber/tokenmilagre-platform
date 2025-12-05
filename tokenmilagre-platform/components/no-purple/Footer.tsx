@@ -32,6 +32,7 @@ export default function Footer() {
     ],
     legal: [
       { label: 'Segurança', href: '/seguranca/verificador-url' },
+      { label: 'Manifesto', href: '/manifesto' },
     ],
   };
 
@@ -162,9 +163,14 @@ export default function Footer() {
 
         {/* Footer Bottom */}
         <div className="pt-8 border-t border-[var(--border-light)] flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
-          <p className="text-sm text-[var(--text-tertiary)]">
-            © {currentYear} $MILAGRE. Todos os direitos reservados.
-          </p>
+          <div className="flex flex-col gap-2">
+            <p className="text-sm text-[var(--text-tertiary)]">
+              © {currentYear} $MILAGRE. Todos os direitos reservados.
+            </p>
+            <p className="text-xs text-[var(--text-tertiary)] italic opacity-70">
+              "Porque dele, e por ele, e para ele são todas as coisas." — Romanos 11:36
+            </p>
+          </div>
 
           <p className="text-xs text-[var(--text-tertiary)] max-w-xl">
             Criptomoedas envolvem riscos. Este não é um conselho financeiro.

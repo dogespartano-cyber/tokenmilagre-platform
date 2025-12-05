@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 // Fonts disabled for offline build
 // import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
@@ -167,6 +168,21 @@ export default function RootLayout({
         className="antialiased"
         suppressHydrationWarning
       >
+        {/* 
+          "Todo aquele, pois, que escuta estas minhas palavras, e as pratica, 
+          assemelhá-lo-ei ao homem prudente, que edificou a sua casa sobre a rocha." 
+          - Mateus 7:24 
+        */}
+        <Script id="faith-console-log" strategy="afterInteractive">
+          {`
+            console.log(
+              "%c✨ $MILAGRE ✨\\n%c\\"Porque dele, e por ele, e para ele são todas as coisas.\\" - Romanos 11:36\\n%cBem-vindo à comunidade da prosperidade e do conhecimento.",
+              "color: #a855f7; font-size: 24px; font-weight: bold; text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);",
+              "color: #60a5fa; font-size: 14px; font-style: italic; margin-top: 5px;",
+              "color: #9ca3af; font-size: 12px; margin-top: 5px;"
+            );
+          `}
+        </Script>
         <SessionProvider>
           <ThemeProvider>
             <RootLayoutNav>

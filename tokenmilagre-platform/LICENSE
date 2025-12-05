@@ -1,0 +1,27 @@
+Business Source License 1.1
+
+Parameters
+
+Licensor: $MILAGRE Project
+Licensor's current business location: Brasil
+Change Date: 2029-01-01
+Change License: Apache License, Version 2.0
+Additional Use Grant: None
+
+Terms
+
+The Licensor hereby grants you the right to copy, modify, create derivative works, redistribute, and make non-production use of the Licensed Work. The Licensor may make an Additional Use Grant, above, permitting limited production use.
+
+Effective on the Change Date, or the fourth anniversary of the first publicly available distribution of a specific version of a Licensed Work under this License, whichever comes first, the Licensor hereby grants you rights under the Change License regarding that specific version of the Licensed Work.
+
+You may not use the Licensed Work for a commercial purpose or in a production environment (including, but not limited to, a website or application accessible to the public) without a separate commercial license from the Licensor, except as expressly permitted by the Additional Use Grant.
+
+This license applies to all files in this repository, unless otherwise specified.
+
+-------------------------------------------------------------------------
+
+IN PLAIN ENGLISH (Not legally binding):
+1. You can see the code, learn from it, and test it locally.
+2. You CANNOT use this code to run a public website or business (production use) without permission.
+3. You CANNOT copy this project to create a clone or scam.
+4. After 4 years (Change Date), this specific version becomes Open Source (Apache 2.0).

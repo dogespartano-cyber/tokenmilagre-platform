@@ -1,3 +1,7 @@
+/**
+ * "E conhecereis a verdade, e a verdade vos libertará." - João 8:32
+ * Que a segurança deste sistema seja firme e verdadeira.
+ */
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { prisma } from './prisma';
