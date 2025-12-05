@@ -12,6 +12,7 @@ import { faClock, faArrowRight, faCheckCircle, faArrowUp, faChartLine, faShieldA
 import { TokenBTC, TokenETH } from '@token-icons/react';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/utils/level-helpers';
 import NavbarCryptoTicker from '@/components/NavbarCryptoTicker';
+import TruthDetector from '@/components/TruthDetector';
 import { Skeleton } from '@/components/SkeletonLoader';
 
 const LightweightChart = dynamic(() => import('@/components/LightweightChart'), {
@@ -1014,6 +1015,9 @@ export default function HomePage() {
                     </div>
                   </Link>
                 ))}
+
+                {/* Detector de Mentiras - agora como cards integrados */}
+                <TruthDetector frameless />
               </div>
             </div>
 
@@ -1059,9 +1063,11 @@ export default function HomePage() {
               </div>
             </div>
 
+
+
           </div>
         )}
       </div>
-    </div>
+    </div >
   );
 }
