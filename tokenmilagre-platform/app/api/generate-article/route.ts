@@ -240,6 +240,7 @@ Inclua PELO MENOS 3-4 das seguintes métricas:
 ✅ Tom educacional e acessível
 ✅ Exemplos práticos e analogias
 ✅ Escrever informações diretamente no texto, sem marcadores de citação
+244: ✅ **IMPORTANTE**: Se houver exemplos de código (Solidity, Python, etc.), ELES DEVEM ESTAR DENTRO DE BLOCOS DE CÓDIGO MARKDOWN (\`\`\`linguagem ... \`\`\`). Use caixas de citação (>) para notas importantes.
 
 **CATEGORIAS DISPONÍVEIS**: blockchain, trading, defi, nfts, seguranca, desenvolvimento
 

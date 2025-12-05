@@ -1,95 +1,134 @@
 import React from 'react';
-import { Shield, BookOpen, Heart, Lock, Eye } from 'lucide-react';
+import { Shield, BookOpen, Heart, Lock, Eye, Users, Globe, Scale } from 'lucide-react';
 
 export default function ManifestoPage() {
     return (
         <main className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-            {/* Background Elements */}
+            {/* Background Elements - Calming Green/Teal */}
             <div className="fixed inset-0 z-0 pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-[120px] animate-pulse-slow" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px] animate-pulse-slow delay-1000" />
+                <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-[120px] animate-pulse-slow" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] animate-pulse-slow delay-1000" />
             </div>
 
-            <div className="max-w-4xl mx-auto relative z-10 space-y-12">
+            <div className="max-w-5xl mx-auto relative z-10 space-y-20">
 
                 {/* Header */}
-                <div className="text-center space-y-6">
-                    <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-blue-200">
+                <div className="text-center space-y-8 pt-10 animate-fade-in">
+                    <h1 className="text-4xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] via-teal-500 to-emerald-500 tracking-tight">
                         Manifesto $MILAGRE
                     </h1>
-                    <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed font-light">
                         Acreditamos que o conhecimento deve ser livre, mas a integridade deve ser protegida.
-                        Este é o nosso compromisso com a transparência, a educação e a segurança.
+                        Este é o nosso compromisso com a <span className="font-bold text-teal-600 dark:text-teal-400">transparência radical</span> e a prosperidade real.
                     </p>
                 </div>
 
-                {/* Core Values Grid */}
-                <div className="grid md:grid-cols-3 gap-6">
-                    <div className="glass-card p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg">
-                        <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4 text-purple-300">
-                            <Heart className="w-6 h-6" />
+                {/* Core Values Grid - Expandido */}
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="glass-card p-8 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]/50 backdrop-blur-lg shadow-sm hover:border-teal-500/30 transition-all group">
+                        <div className="w-14 h-14 bg-teal-500/10 rounded-2xl flex items-center justify-center mb-6 text-teal-600 dark:text-teal-400 group-hover:scale-110 transition-transform">
+                            <Heart className="w-7 h-7" />
                         </div>
-                        <h3 className="text-xl font-semibold text-white mb-2">Propósito Divino</h3>
-                        <p className="text-gray-400 text-sm">
-                            Nossa missão é ser um farol de esperança e educação, guiando as pessoas para longe de golpes e em direção à prosperidade real.
+                        <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">Propósito Divino</h3>
+                        <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
+                            Nossa missão transcende o lucro. Somos um farol de esperança guiando as pessoas para longe da ganância e em direção à mordomia fiel dos recursos.
                         </p>
                     </div>
 
-                    <div className="glass-card p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg">
-                        <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4 text-blue-300">
-                            <BookOpen className="w-6 h-6" />
+                    <div className="glass-card p-8 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]/50 backdrop-blur-lg shadow-sm hover:border-teal-500/30 transition-all group">
+                        <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+                            <BookOpen className="w-7 h-7" />
                         </div>
-                        <h3 className="text-xl font-semibold text-white mb-2">Conhecimento Livre</h3>
-                        <p className="text-gray-400 text-sm">
-                            Todo o nosso material educacional é livre (Creative Commons). O saber não pertence a ninguém, ele flui para quem busca.
+                        <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">Conhecimento Livre</h3>
+                        <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
+                            Todo o nosso material educacional é licenciado sob <strong>Creative Commons (CC-BY-SA)</strong>. O saber não pertence a ninguém, ele flui livremente para quem busca.
                         </p>
                     </div>
 
-                    <div className="glass-card p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg">
-                        <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-4 text-green-300">
-                            <Shield className="w-6 h-6" />
+                    <div className="glass-card p-8 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]/50 backdrop-blur-lg shadow-sm hover:border-teal-500/30 transition-all group">
+                        <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform">
+                            <Shield className="w-7 h-7" />
                         </div>
-                        <h3 className="text-xl font-semibold text-white mb-2">Proteção Ativa</h3>
-                        <p className="text-gray-400 text-sm">
-                            Protegemos nossa plataforma contra cópias maliciosas para garantir que, quando você vir a marca $MILAGRE, saiba que é seguro.
+                        <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">Proteção Ativa</h3>
+                        <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
+                            Protegemos nossa plataforma contra cópias maliciosas (BSL 1.1). Quando você vê a marca $MILAGRE, sabe que está em um porto seguro.
+                        </p>
+                    </div>
+
+                    <div className="glass-card p-8 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]/50 backdrop-blur-lg shadow-sm hover:border-teal-500/30 transition-all group">
+                        <div className="w-14 h-14 bg-teal-500/10 rounded-2xl flex items-center justify-center mb-6 text-teal-600 dark:text-teal-400 group-hover:scale-110 transition-transform">
+                            <Users className="w-7 h-7" />
+                        </div>
+                        <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">Comunidade Horizontal</h3>
+                        <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
+                            Não há "VIPs" ou "Insiders". Todos somos Testemunhas. O conhecimento e as oportunidades são distribuídos igualmente.
+                        </p>
+                    </div>
+
+                    <div className="glass-card p-8 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]/50 backdrop-blur-lg shadow-sm hover:border-teal-500/30 transition-all group">
+                        <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+                            <Globe className="w-7 h-7" />
+                        </div>
+                        <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">Descentralização Real</h3>
+                        <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
+                            Acreditamos na soberania do indivíduo. Ensinamos auto-custódia e DeFi para que você nunca dependa de terceiros para gerir seu patrimônio.
+                        </p>
+                    </div>
+
+                    <div className="glass-card p-8 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]/50 backdrop-blur-lg shadow-sm hover:border-teal-500/30 transition-all group">
+                        <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform">
+                            <Scale className="w-7 h-7" />
+                        </div>
+                        <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">Justiça Econômica</h3>
+                        <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
+                            Combatemos a cultura de "Pump and Dump". Construímos valor sustentável através de utilidade real e educação contínua.
                         </p>
                     </div>
                 </div>
 
-                {/* The "Middle Path" Section */}
-                <div className="glass-card p-8 md:p-10 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl space-y-8">
-                    <div className="space-y-4">
-                        <h2 className="text-3xl font-bold text-white">O Caminho do Meio</h2>
-                        <p className="text-gray-300 leading-relaxed">
-                            Vivemos em um mundo onde a confiança é rara, especialmente em cripto. Por isso, adotamos uma postura radical de
-                            <span className="text-purple-300 font-semibold"> Transparência Seletiva</span>.
+                {/* The "Middle Path" Section - Refined */}
+                <div className="glass-card p-8 md:p-12 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]/50 backdrop-blur-xl space-y-10 shadow-sm relative overflow-hidden">
+                    {/* Decorative Background */}
+                    <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+                        <Scale className="w-64 h-64 text-teal-500" />
+                    </div>
+
+                    <div className="space-y-6 relative z-10">
+                        <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">O Caminho do Meio: Nossa Estratégia de Licenciamento</h2>
+                        <p className="text-[var(--text-secondary)] text-lg leading-relaxed max-w-3xl">
+                            Vivemos em um mundo onde a confiança é rara, especialmente em cripto. Por isso, rejeitamos os extremos. Não somos nem "código fechado e secreto" nem "código aberto ingênuo". Adotamos a
+                            <span className="text-teal-600 dark:text-teal-400 font-bold"> Transparência Seletiva</span>.
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-8">
-                        <div className="space-y-4">
-                            <div className="flex items-center gap-3 text-green-400 mb-2">
-                                <Eye className="w-5 h-5" />
-                                <h3 className="font-bold text-lg">Código Aberto para Auditoria</h3>
+                    <div className="grid md:grid-cols-2 gap-10 relative z-10">
+                        <div className="space-y-6 p-6 rounded-2xl bg-[var(--bg-primary)]/50 border border-[var(--border-light)]">
+                            <div className="flex items-center gap-4 text-emerald-600 dark:text-emerald-400 mb-2">
+                                <div className="p-3 bg-emerald-500/10 rounded-xl">
+                                    <Eye className="w-6 h-6" />
+                                </div>
+                                <h3 className="font-bold text-xl">Código Aberto para Auditoria</h3>
                             </div>
-                            <p className="text-gray-400 text-sm leading-relaxed">
-                                Nosso código fonte está disponível publicamente. Qualquer desenvolvedor pode auditar nossos contratos e nossa plataforma para verificar que não há "backdoors" ou intenções ocultas. A verdade não teme a luz.
+                            <p className="text-[var(--text-secondary)] leading-relaxed">
+                                Nosso código fonte está disponível publicamente no GitHub. Qualquer desenvolvedor, auditor ou membro da comunidade pode inspecionar nossos contratos inteligentes e nossa plataforma para verificar que não há "backdoors", taxas ocultas ou intenções maliciosas. <br /><br /><strong>A verdade não teme a luz.</strong>
                             </p>
                         </div>
 
-                        <div className="space-y-4">
-                            <div className="flex items-center gap-3 text-red-400 mb-2">
-                                <Lock className="w-5 h-5" />
-                                <h3 className="font-bold text-lg">Protegido Contra Cópias</h3>
+                        <div className="space-y-6 p-6 rounded-2xl bg-[var(--bg-primary)]/50 border border-[var(--border-light)]">
+                            <div className="flex items-center gap-4 text-red-500 mb-2">
+                                <div className="p-3 bg-red-500/10 rounded-xl">
+                                    <Lock className="w-6 h-6" />
+                                </div>
+                                <h3 className="font-bold text-xl">Protegido Contra Cópias</h3>
                             </div>
-                            <p className="text-gray-400 text-sm leading-relaxed">
-                                Embora o código seja visível, ele é protegido pela licença <strong>BSL 1.1</strong>. Isso significa que golpistas não podem legalmente copiar nosso site para criar clones falsos ("phishing"). Protegemos nosso trabalho para proteger você.
+                            <p className="text-[var(--text-secondary)] leading-relaxed">
+                                Embora o código seja visível, ele é protegido pela licença <strong>Business Source License (BSL 1.1)</strong>. Isso significa que golpistas não podem legalmente copiar nosso site para criar clones falsos ("phishing") ou lançar versões concorrentes sem nossa permissão. <br /><br /><strong>Protegemos nosso trabalho para proteger você.</strong>
                             </p>
                         </div>
                     </div>
 
-                    <div className="pt-6 border-t border-white/10">
-                        <p className="text-center text-gray-500 text-sm italic">
+                    <div className="pt-8 border-t border-[var(--border-light)] relative z-10">
+                        <p className="text-center text-[var(--text-tertiary)] italic text-lg font-serif">
                             "Sede prudentes como as serpentes e simples como as pombas." — Mateus 10:16
                         </p>
                     </div>

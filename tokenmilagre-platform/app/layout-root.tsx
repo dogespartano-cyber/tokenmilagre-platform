@@ -145,6 +145,7 @@ export default function RootLayoutNav({
 
   const menuItems = [
     { href: '/', label: 'Início', icon: faHome },
+    { href: '/comece-aqui', label: 'Comece Aqui', icon: faShieldAlt },
     { href: '/dashboard/noticias', label: 'Notícias', icon: faNewspaper },
     { href: '/graficos', label: 'Gráficos', icon: faChartLine },
     { href: '/criptomoedas', label: 'Criptomoedas', icon: faBitcoinSign },
@@ -540,6 +541,9 @@ export default function RootLayoutNav({
               </div>
 
               <div className="flex flex-wrap justify-center gap-6 text-sm font-medium text-[var(--text-secondary)]">
+                <Link href="/manifesto" className="hover:text-[var(--brand-primary)] transition-colors">
+                  Manifesto
+                </Link>
                 <Link href="/termos" className="hover:text-[var(--brand-primary)] transition-colors">
                   Termos de Uso
                 </Link>

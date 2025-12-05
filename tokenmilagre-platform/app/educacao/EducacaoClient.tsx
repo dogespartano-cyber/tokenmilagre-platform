@@ -10,6 +10,7 @@ import { faClock, faArrowRight, faSearch, faTimes, faArrowUp, faFilter } from '@
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/utils/level-helpers';
 import { getCategoryIcon } from '@/lib/utils/category-helpers';
 import DashboardHeader from '@/app/components/DashboardHeader';
+import TruthDetector from '@/components/TruthDetector';
 
 interface Resource {
   id: string;
@@ -344,6 +345,9 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
           {/* Divider */}
           <div className="border-t border-[var(--border-article)]"></div>
+
+          {/* Detector de Mentiras (Operação Êxodo) */}
+          <TruthDetector />
 
           {/* CTA */}
           <div className="space-y-6 py-8">

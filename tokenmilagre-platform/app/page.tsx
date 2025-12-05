@@ -849,8 +849,6 @@ export default function HomePage() {
                   href="/educacao"
                   className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
                 >
-
-
                   <div className="relative z-10 h-full flex flex-col justify-between">
                     <div>
                       <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-green-500/10 text-green-500 mb-4">
@@ -875,8 +873,6 @@ export default function HomePage() {
                   href="/dashboard/noticias"
                   className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
                 >
-
-
                   <div className="relative z-10 h-full flex flex-col justify-between">
                     <div>
                       <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-red-500/10 text-red-500 mb-4">
@@ -901,8 +897,6 @@ export default function HomePage() {
                   href="/graficos"
                   className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
                 >
-
-
                   <div className="relative z-10 h-full flex flex-col justify-between">
                     <div>
                       <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-purple-500/10 text-purple-500 mb-4">
@@ -927,8 +921,6 @@ export default function HomePage() {
                   href="/recursos"
                   className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
                 >
-
-
                   <div className="relative z-10 h-full flex flex-col justify-between">
                     <div>
                       <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500/10 text-blue-500 mb-4">

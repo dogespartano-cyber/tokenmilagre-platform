@@ -10,6 +10,7 @@ config.autoAddCss = false;
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import SessionProvider from "@/components/SessionProvider";
 import RootLayoutNav from "./layout-root";
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -29,7 +30,7 @@ import RootLayoutNav from "./layout-root";
 
 export const metadata: Metadata = {
   title: "$MILAGRE - Em busca de uma comunidade com prosperidade",
-  description: "Não somos apenas holders. Somos Testemunhas. Junte-se ao movimento por prosperidade, educação e apoio mútuo na Solana. Contrato: 3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump",
+  description: "Cansado de golpes cripto? Junte-se à comunidade $MILAGRE. Educação gratuita, segurança blockchain e prosperidade real na Solana. Não somos apenas holders, somos Testemunhas.",
   keywords: [
     "$MILAGRE",
     "token",
@@ -51,6 +52,12 @@ export const metadata: Metadata = {
     "mentoria crypto",
     "comunidade Solana",
     "token comunitário",
+    "golpe cripto",
+    "como recuperar perdas cripto",
+    "comunidade cripto honesta",
+    "segurança blockchain",
+    "rug pull detector",
+    "educação financeira defi",
     "3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump"
   ],
   authors: [{ name: "$MILAGRE Community" }],
@@ -183,6 +190,7 @@ export default function RootLayout({
             );
           `}
         </Script>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />
         <SessionProvider>
           <ThemeProvider>
             <RootLayoutNav>
