@@ -109,18 +109,21 @@ export const metadata: Metadata = {
   },
 };
 
+import { ClerkProvider } from '@clerk/nextjs';
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" data-scroll-behavior="smooth" suppressHydrationWarning>
-      <head>
-        {/* Script for theme initialization */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
+    <ClerkProvider>
+      <html lang="pt-BR" data-scroll-behavior="smooth" suppressHydrationWarning>
+        <head>
+          {/* Script for theme initialization */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
               (function() {
                 try {
                   var savedTheme = localStorage.getItem('theme');
@@ -136,52 +139,52 @@ export default function RootLayout({
                 } catch (e) {}
               })();
             `,
-          }}
-        />
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@graph": [
-                {
-                  "@type": "Organization",
-                  "name": "$MILAGRE",
-                  "url": "https://tokenmilagre.xyz",
-                  "logo": "https://tokenmilagre.xyz/images/TOKEN-MILAGRE-Hero.webp",
-                  "description": "Movimento por prosperidade, educação e apoio mútuo na Solana.",
-                  "sameAs": [
-                    "https://twitter.com/tokenmilagre",
-                    "https://github.com/dogespartano-cyber/tokenmilagre-platform"
-                  ]
-                },
-                {
-                  "@type": "WebSite",
-                  "name": "$MILAGRE Platform",
-                  "url": "https://tokenmilagre.xyz",
-                  "potentialAction": {
-                    "@type": "SearchAction",
-                    "target": "https://tokenmilagre.xyz/search?q={search_term_string}",
-                    "query-input": "required name=search_term_string"
+            }}
+          />
+          {/* JSON-LD Structured Data */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@graph": [
+                  {
+                    "@type": "Organization",
+                    "name": "$MILAGRE",
+                    "url": "https://tokenmilagre.xyz",
+                    "logo": "https://tokenmilagre.xyz/images/TOKEN-MILAGRE-Hero.webp",
+                    "description": "Movimento por prosperidade, educação e apoio mútuo na Solana.",
+                    "sameAs": [
+                      "https://twitter.com/tokenmilagre",
+                      "https://github.com/dogespartano-cyber/tokenmilagre-platform"
+                    ]
+                  },
+                  {
+                    "@type": "WebSite",
+                    "name": "$MILAGRE Platform",
+                    "url": "https://tokenmilagre.xyz",
+                    "potentialAction": {
+                      "@type": "SearchAction",
+                      "target": "https://tokenmilagre.xyz/search?q={search_term_string}",
+                      "query-input": "required name=search_term_string"
+                    }
                   }
-                }
-              ]
-            })
-          }}
-        />
-      </head>
-      <body
-        className="antialiased"
-        suppressHydrationWarning
-      >
-        {/* 
+                ]
+              })
+            }}
+          />
+        </head>
+        <body
+          className="antialiased"
+          suppressHydrationWarning
+        >
+          {/* 
           "Todo aquele, pois, que escuta estas minhas palavras, e as pratica, 
           assemelhá-lo-ei ao homem prudente, que edificou a sua casa sobre a rocha." 
           - Mateus 7:24 
         */}
-        <Script id="faith-console-log" strategy="afterInteractive">
-          {`
+          <Script id="faith-console-log" strategy="afterInteractive">
+            {`
             console.log(
               "%c✨ $MILAGRE ✨\\n%c\\"Porque dele, e por ele, e para ele são todas as coisas.\\" - Romanos 11:36\\n%cBem-vindo à comunidade da prosperidade e do conhecimento.",
               "color: #a855f7; font-size: 24px; font-weight: bold; text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);",
@@ -189,16 +192,17 @@ export default function RootLayout({
               "color: #9ca3af; font-size: 12px; margin-top: 5px;"
             );
           `}
-        </Script>
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />
-        <SessionProvider>
-          <ThemeProvider>
-            <RootLayoutNav>
-              {children}
-            </RootLayoutNav>
-          </ThemeProvider>
-        </SessionProvider>
-      </body>
-    </html>
+          </Script>
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />
+          <SessionProvider>
+            <ThemeProvider>
+              <RootLayoutNav>
+                {children}
+              </RootLayoutNav>
+            </ThemeProvider>
+          </SessionProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

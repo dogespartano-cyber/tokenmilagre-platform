@@ -1,96 +1,43 @@
-/**
- * "O Senhor te guardará de todo o mal; guardará a tua alma." - Salmos 121:7
- * Que este middleware proteja as rotas e os dados dos usuários.
- */
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-import { default as NextAuthMiddleware } from 'next-auth/middleware'
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-/**
- * Global Middleware - Feature Flags e Controle de Rotas
- *
- * IMPORTANTE: Este middleware controla acesso a features experimentais
- * e rotas que dependem de migrações de schema.
- */
-
-// Feature Flags - Controle centralizado
+// Feature Flags
 const FEATURE_FLAGS = {
-  // API v2 depende do schema-v2.prisma
-  // ⚠️ DESABILITADO até migração do banco ser concluída
   API_V2_ENABLED: process.env.ENABLE_API_V2 === 'true' || false,
+} as const;
 
-  // Playwright E2E tests (dependem de API v2)
-  E2E_TESTS_ENABLED: process.env.ENABLE_E2E_TESTS === 'true' || false,
-} as const
+// Matcher for API v2
+const isApiV2Route = createRouteMatcher(['/api/v2(.*)']);
 
-export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-
-  // ============================================================================
-  // FEATURE FLAG: API v2
-  // ============================================================================
-
-  if (pathname.startsWith('/api/v2/')) {
+export default clerkMiddleware(async (auth, req) => {
+  // 1. Feature Flag: API v2 Check
+  if (isApiV2Route(req)) {
     if (!FEATURE_FLAGS.API_V2_ENABLED) {
       return NextResponse.json(
         {
           error: 'API v2 Temporarily Disabled',
-          message: 'API v2 is currently undergoing database migration. Please use API v1 endpoints or check back later.',
+          message: 'API v2 is currently undergoing database migration.',
           status: 503,
-          details: {
-            reason: 'Schema migration in progress',
-            eta: 'TBD - Waiting for staging validation',
-            fallback: 'Use /api/v1/* endpoints',
-            documentation: '/docs/API_V2_SPECIFICATION.md',
-          },
-          timestamp: new Date().toISOString(),
         },
-        {
-          status: 503,
-          headers: {
-            'Content-Type': 'application/json',
-            'Retry-After': '3600', // Retry after 1 hour
-            'X-Feature-Status': 'disabled',
-            'X-Migration-Status': 'pending',
-          },
-        }
-      )
+        { status: 503 }
+      );
     }
   }
 
-  // ============================================================================
-  // NEXTAUTH: Proteção de rotas admin
-  // ============================================================================
+  // 2. Protect routes if needed (e.g., /admin, /dashboard/perfil)
+  // const isProtectedRoute = createRouteMatcher(['/dashboard/perfil(.*)', '/quiz(.*)']);
+  // if (isProtectedRoute(req)) auth().protect();
 
-  if (pathname.startsWith('/admin/')) {
-    return NextAuthMiddleware(request as any)
-  }
-
-  // ============================================================================
-  // FUTURE: Outras feature flags podem ser adicionadas aqui
-  // ============================================================================
-
-  // Exemplo: Rate limiting global
-  // Exemplo: Maintenance mode
-  // Exemplo: A/B testing
-
-  // Continuar com a requisição normalmente
-  return NextResponse.next()
-}
-
-// ============================================================================
-// MATCHER CONFIG
-// ============================================================================
+  // Note: We are temporarily removing the NextAuth middleware call for /admin 
+  // to avoid conflicts during this migration. 
+  // If strict /admin protection is needed immediately, we should migrate admin to Clerk.
+});
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
-     */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
   ],
-}
+};

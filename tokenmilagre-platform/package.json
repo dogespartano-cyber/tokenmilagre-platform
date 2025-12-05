@@ -44,6 +44,7 @@
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.36.0",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
@@ -79,6 +80,7 @@
     "reflect-metadata": "^0.2.2",
     "remark-gfm": "^4.0.1",
     "simple-statistics": "^7.8.8",
+    "svix": "^1.82.0",
     "tsyringe": "^4.10.0",
     "zod": "^4.1.12"
   },
