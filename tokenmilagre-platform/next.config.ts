@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs";
 
-const nextConfig: NextConfig = {
+const nextConfig: any = {
   images: {
     unoptimized: false,
     remotePatterns: [
@@ -18,11 +18,6 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
-  },
-  eslint: {
-    // Desabilitar ESLint durante builds (arquivos gerados do Prisma causam erros)
-    // Linting deve ser feito localmente antes do commit
-    ignoreDuringBuilds: true,
   },
   typescript: {
     // Manter validação de TypeScript - importante para type safety
