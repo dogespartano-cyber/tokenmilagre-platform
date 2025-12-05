@@ -348,7 +348,9 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
           <div className="border-t border-[var(--border-article)]"></div>
 
           {/* Detector de Mentiras (Operação Êxodo) */}
-          <TruthDetector />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <TruthDetector />
+          </div>
 
           {/* CTA */}
           <div className="space-y-6 py-8">

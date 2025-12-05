@@ -20,10 +20,7 @@ export default function ComeceAquiPage() {
 
                 {/* Hero Section: A Empatia */}
                 <section className="text-center space-y-8 animate-fade-in pt-10">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-red-500 font-semibold mb-4">
-                        <AlertTriangle className="w-4 h-4" />
-                        <span>Zona de Desintoxicação</span>
-                    </div>
+
 
                     <h1 className="text-4xl md:text-7xl font-bold text-[var(--text-primary)] leading-tight tracking-tight">
                         Cansado de ser a <br />
@@ -157,7 +154,7 @@ export default function ComeceAquiPage() {
                             <div>
                                 <h4 className="text-lg font-bold text-[var(--text-primary)]">Entenda o que Aconteceu</h4>
                                 <p className="text-[var(--text-secondary)] text-sm mt-1">
-                                    Leia nosso guia sobre <Link href="/educacao/anatomia-de-um-golpe-a-engenharia-invisivel-por-tras-da-sua-perda" className="text-teal-600 dark:text-teal-400 font-bold hover:underline">"Anatomia de um Golpe"</Link> na seção de Educação para identificar onde foi o erro.
+                                    Acesse nossa <Link href="/educacao" className="text-teal-600 dark:text-teal-400 font-bold hover:underline">central de educação</Link> para entender como identificar golpes e proteger seu patrimônio.
                                 </p>
                             </div>
                         </div>
@@ -180,7 +177,7 @@ export default function ComeceAquiPage() {
                     <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)]">O Resgate Começa Agora</h2>
                     <p className="text-xl text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
                         O $MILAGRE não é uma promessa de lucro fácil. É uma promessa de <strong>nunca mais ser enganado</strong>.
-                        Nós construímos uma escola disfarçada de token para hackear o sistema e distribuir a verdadeira prosperidade: o conhecimento.
+                        Construímos um ecossistema focado em distribuir a verdadeira prosperidade: o conhecimento.
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
