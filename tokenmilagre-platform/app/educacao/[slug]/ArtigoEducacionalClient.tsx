@@ -10,6 +10,7 @@ import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg
 import { getLevelLabel } from '@/lib/utils/level-helpers';
 import { slugify } from '@/lib/utils/content-helpers';
 import QuizComponent from '@/components/QuizComponent';
+import TransparencyNote from '@/components/TransparencyNote';
 
 interface EducationalArticle {
   id: string;
@@ -285,20 +286,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                 <div className="h-px bg-[var(--border-article)] mt-8" />
 
                 {/* Nota de Transparência */}
-                <div className="mt-8">
-                  <div className="space-y-2">
-                    <h3 className="font-bold text-[var(--text-article-title)]">Nota de Transparência</h3>
-                    <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
-                      Publicado por $MILAGRE Research | Última atualização: {new Date(article.publishedAt).toLocaleDateString('pt-BR')}
-                    </p>
-                    <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
-                      Conteúdo assistido por IA e revisão humana. Pode conter imprecisões.
-                    </p>
-                    <p className="text-sm leading-relaxed text-[var(--text-article-body)]">
-                      Este conteúdo é educacional e informativo. Não constitui aconselhamento financeiro. Sempre faça sua própria pesquisa (DYOR).
-                    </p>
-                  </div>
-                </div>
+                <TransparencyNote publishedAt={article.publishedAt} />
 
 
 

@@ -41,9 +41,11 @@ export default function TransparencyStats() {
     return (
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Sistema Operacional */}
-            <div className="p-6 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-green-500/20 backdrop-blur-md">
+            <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-green-500/20 backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-green-500/10 cursor-default">
+                {/* Glow no topo no hover */}
+                <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-green-500 to-emerald-500" style={{ boxShadow: '0 0 20px #10b98140' }} />
                 <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-green-500/10 rounded-xl text-green-600 dark:text-green-400">
+                    <div className="p-2 bg-green-500/10 rounded-xl text-green-600 dark:text-green-400 transition-transform duration-300 group-hover:scale-110">
                         <Server className="w-5 h-5" />
                     </div>
                     <h3 className="font-bold text-green-600 dark:text-green-400">Sistema</h3>
@@ -59,9 +61,10 @@ export default function TransparencyStats() {
             </div>
 
             {/* Desenvolvimento */}
-            <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-indigo-500/5 border border-blue-500/20 backdrop-blur-md">
+            <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-indigo-500/5 border border-blue-500/20 backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/10 cursor-default">
+                <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-blue-500 to-indigo-500" style={{ boxShadow: '0 0 20px #3b82f640' }} />
                 <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-blue-500/10 rounded-xl text-blue-600 dark:text-blue-400">
+                    <div className="p-2 bg-blue-500/10 rounded-xl text-blue-600 dark:text-blue-400 transition-transform duration-300 group-hover:scale-110">
                         <Code className="w-5 h-5" />
                     </div>
                     <h3 className="font-bold text-blue-600 dark:text-blue-400">Desenvolvimento</h3>
@@ -76,9 +79,10 @@ export default function TransparencyStats() {
             </div>
 
             {/* IA Generativa - Artigos com breakdown */}
-            <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/5 border border-purple-500/20 backdrop-blur-md">
+            <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/5 border border-purple-500/20 backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-500/10 cursor-default">
+                <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-purple-500 to-pink-500" style={{ boxShadow: '0 0 20px #8b5cf640' }} />
                 <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-purple-500/10 rounded-xl text-purple-600 dark:text-purple-400">
+                    <div className="p-2 bg-purple-500/10 rounded-xl text-purple-600 dark:text-purple-400 transition-transform duration-300 group-hover:scale-110">
                         <Zap className="w-5 h-5" />
                     </div>
                     <h3 className="font-bold text-purple-600 dark:text-purple-400">Artigos IA</h3>
@@ -101,9 +105,10 @@ export default function TransparencyStats() {
             </div>
 
             {/* Recursos */}
-            <div className="p-6 rounded-2xl bg-gradient-to-br from-amber-500/10 to-orange-500/5 border border-amber-500/20 backdrop-blur-md">
+            <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-amber-500/10 to-orange-500/5 border border-amber-500/20 backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-500/10 cursor-default">
+                <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-amber-500 to-orange-500" style={{ boxShadow: '0 0 20px #f59e0b40' }} />
                 <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-amber-500/10 rounded-xl text-amber-600 dark:text-amber-400">
+                    <div className="p-2 bg-amber-500/10 rounded-xl text-amber-600 dark:text-amber-400 transition-transform duration-300 group-hover:scale-110">
                         <BookOpen className="w-5 h-5" />
                     </div>
                     <h3 className="font-bold text-amber-600 dark:text-amber-400">Recursos</h3>

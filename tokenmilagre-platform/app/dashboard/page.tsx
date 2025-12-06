@@ -156,135 +156,68 @@ export default function AdminDashboardPage() {
           </div>
         ) : stats && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {/* Total Articles */}
-            <div
-              className="group relative rounded-2xl p-6 border shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
-              style={{
-                background: 'linear-gradient(135deg, #3b82f615, var(--bg-elevated))',
-                borderColor: 'var(--border-light)'
-              }}
-            >
+            {/* Total Articles - Azul */}
+            <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-indigo-500/5 border border-blue-500/20 backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/10 cursor-default">
               {/* Glow no topo no hover */}
-              <div
-                className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{
-                  background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
-                  boxShadow: '0 0 20px #3b82f640'
-                }}
-              />
-              <div className="flex items-start justify-between mb-4">
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                  style={{ background: 'linear-gradient(135deg, #3b82f6, #2563eb)' }}
-                >
-                  <FontAwesomeIcon icon={faBook} className="w-6 h-6 text-white" />
+              <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-blue-500 to-indigo-500" style={{ boxShadow: '0 0 20px #3b82f640' }} />
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2.5 bg-blue-500/10 rounded-xl text-blue-600 dark:text-blue-400 transition-transform duration-300 group-hover:scale-110">
+                  <FontAwesomeIcon icon={faBook} className="w-5 h-5" />
                 </div>
+                <h3 className="font-bold text-blue-600 dark:text-blue-400">Total de Artigos</h3>
               </div>
-              <p className="text-3xl font-bold mb-1 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                {stats.totalArticles}
-              </p>
-              <p className="text-sm mb-3" style={{ color: 'var(--text-secondary)' }}>
-                Total de Artigos
-              </p>
-              <div className="pt-3 border-t flex gap-2 text-xs" style={{ borderColor: 'var(--border-light)', color: 'var(--text-tertiary)' }}>
-                <span>{stats.totalNews} notícias</span>
-                <span>•</span>
-                <span>{stats.totalEducational} educacionais</span>
+              <div className="flex items-end gap-2">
+                <p className="text-3xl font-bold text-gray-900 dark:text-white">{stats.totalArticles}</p>
               </div>
-            </div>
-
-            {/* Published This Week */}
-            <div
-              className="group relative rounded-2xl p-6 border shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
-              style={{
-                background: 'linear-gradient(135deg, #10b98115, var(--bg-elevated))',
-                borderColor: 'var(--border-light)'
-              }}
-            >
-              <div
-                className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{
-                  background: 'linear-gradient(135deg, #10b981, #059669)',
-                  boxShadow: '0 0 20px #10b98140'
-                }}
-              />
-              <div className="flex items-start justify-between mb-4">
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                  style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}
-                >
-                  <FontAwesomeIcon icon={faCalendarWeek} className="w-6 h-6 text-white" />
-                </div>
-              </div>
-              <p className="text-3xl font-bold mb-1 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                {stats.publishedThisWeek}
-              </p>
-              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                Publicados Esta Semana
+              <p className="text-xs text-blue-700/60 dark:text-blue-300/60 mt-3 pt-3 border-t border-blue-500/20">
+                {stats.totalNews} notícias • {stats.totalEducational} educacionais
               </p>
             </div>
 
-            {/* Total Users */}
-            <div
-              className="group relative rounded-2xl p-6 border shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
-              style={{
-                background: 'linear-gradient(135deg, #8b5cf615, var(--bg-elevated))',
-                borderColor: 'var(--border-light)'
-              }}
-            >
-              <div
-                className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{
-                  background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
-                  boxShadow: '0 0 20px #8b5cf640'
-                }}
-              />
-              <div className="flex items-start justify-between mb-4">
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                  style={{ background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)' }}
-                >
-                  <FontAwesomeIcon icon={faUsers} className="w-6 h-6 text-white" />
+            {/* Published This Week - Verde */}
+            <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-green-500/20 backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-green-500/10 cursor-default">
+              <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-green-500 to-emerald-500" style={{ boxShadow: '0 0 20px #10b98140' }} />
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2.5 bg-green-500/10 rounded-xl text-green-600 dark:text-green-400 transition-transform duration-300 group-hover:scale-110">
+                  <FontAwesomeIcon icon={faCalendarWeek} className="w-5 h-5" />
                 </div>
+                <h3 className="font-bold text-green-600 dark:text-green-400">Esta Semana</h3>
               </div>
-              <p className="text-3xl font-bold mb-1 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                {stats.totalUsers}
-              </p>
-              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                Usuários Cadastrados
-              </p>
+              <div className="flex items-end gap-2">
+                <p className="text-3xl font-bold text-gray-900 dark:text-white">{stats.publishedThisWeek}</p>
+                <p className="text-sm text-green-700/60 dark:text-green-300/60 mb-1">publicados</p>
+              </div>
             </div>
 
-            {/* Educational by Level */}
-            <div
-              className="group relative rounded-2xl p-6 border shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
-              style={{
-                background: 'linear-gradient(135deg, #f59e0b15, var(--bg-elevated))',
-                borderColor: 'var(--border-light)'
-              }}
-            >
-              <div
-                className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{
-                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                  boxShadow: '0 0 20px #f59e0b40'
-                }}
-              />
-              <div className="flex items-start justify-between mb-4">
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                  style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)' }}
-                >
-                  <FontAwesomeIcon icon={faGraduationCap} className="w-6 h-6 text-white" />
+            {/* Total Users - Roxo */}
+            <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/5 border border-purple-500/20 backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-500/10 cursor-default">
+              <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-purple-500 to-pink-500" style={{ boxShadow: '0 0 20px #8b5cf640' }} />
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2.5 bg-purple-500/10 rounded-xl text-purple-600 dark:text-purple-400 transition-transform duration-300 group-hover:scale-110">
+                  <FontAwesomeIcon icon={faUsers} className="w-5 h-5" />
                 </div>
+                <h3 className="font-bold text-purple-600 dark:text-purple-400">Usuários</h3>
               </div>
-              <p className="text-3xl font-bold mb-1 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                {stats.totalEducational}
-              </p>
-              <p className="text-sm mb-3" style={{ color: 'var(--text-secondary)' }}>
-                Artigos Educacionais
-              </p>
-              <div className="pt-3 border-t space-y-1 text-xs" style={{ borderColor: 'var(--border-light)', color: 'var(--text-tertiary)' }}>
+              <div className="flex items-end gap-2">
+                <p className="text-3xl font-bold text-gray-900 dark:text-white">{stats.totalUsers}</p>
+                <p className="text-sm text-purple-700/60 dark:text-purple-300/60 mb-1">cadastrados</p>
+              </div>
+            </div>
+
+            {/* Educational by Level - Âmbar */}
+            <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-amber-500/10 to-orange-500/5 border border-amber-500/20 backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-500/10 cursor-default">
+              <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-amber-500 to-orange-500" style={{ boxShadow: '0 0 20px #f59e0b40' }} />
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2.5 bg-amber-500/10 rounded-xl text-amber-600 dark:text-amber-400 transition-transform duration-300 group-hover:scale-110">
+                  <FontAwesomeIcon icon={faGraduationCap} className="w-5 h-5" />
+                </div>
+                <h3 className="font-bold text-amber-600 dark:text-amber-400">Educacionais</h3>
+              </div>
+              <div className="flex items-end gap-2">
+                <p className="text-3xl font-bold text-gray-900 dark:text-white">{stats.totalEducational}</p>
+                <p className="text-sm text-amber-700/60 dark:text-amber-300/60 mb-1">artigos</p>
+              </div>
+              <div className="text-xs text-amber-700/60 dark:text-amber-300/60 mt-3 pt-3 border-t border-amber-500/20 space-y-1">
                 <div className="flex justify-between">
                   <span>Iniciante:</span>
                   <span className="font-semibold">{stats.educationalByLevel.iniciante}</span>
