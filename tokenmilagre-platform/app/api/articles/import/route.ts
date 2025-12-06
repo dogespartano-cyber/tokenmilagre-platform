@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import matter from 'gray-matter';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { requireEditor, validateAPIKey } from '@/lib/helpers/auth-helpers';
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 📝 Nota de Transparência (adicionada automaticamente)
@@ -24,8 +23,8 @@ const TRANSPARENCY_NOTE = `
  */
 function hasTransparencyNote(content: string): boolean {
   return content.includes('Nota de Transparência') ||
-         content.includes('$MILAGRE Research') ||
-         content.includes('Sobre Este Conteúdo');
+    content.includes('$MILAGRE Research') ||
+    content.includes('Sobre Este Conteúdo');
 }
 
 /**
@@ -56,8 +55,8 @@ function addTransparencyNote(content: string, date: Date = new Date()): string {
   const lastSeparatorIndex = content.lastIndexOf('\n---\n');
   if (lastSeparatorIndex !== -1) {
     return content.substring(0, lastSeparatorIndex) +
-           noteWithDate +
-           content.substring(lastSeparatorIndex);
+      noteWithDate +
+      content.substring(lastSeparatorIndex);
   }
 
   // Se não encontrou local específico, adicionar no final
@@ -67,7 +66,7 @@ function addTransparencyNote(content: string, date: Date = new Date()): string {
 // POST /api/articles/import - Importar artigo de Markdown (autenticado)
 export async function POST(request: NextRequest) {
   try {
-    // Verificar autenticação via API Key (para scripts) ou Session (para usuários)
+    // Verificar autenticação via API Key (para scripts) ou Clerk Session (para usuários)
     const apiKey = request.headers.get('x-api-key');
     const validApiKey = process.env.ARTICLES_API_KEY;
 
@@ -75,23 +74,9 @@ export async function POST(request: NextRequest) {
     if (validApiKey && apiKey === validApiKey) {
       // Autenticado via API Key - prosseguir
     } else {
-      // Caso contrário, verificar sessão de usuário
-      const session = await getServerSession(authOptions);
-
-      if (!session || !session.user) {
-        return NextResponse.json(
-          { success: false, error: 'Não autenticado. Use API Key ou faça login.' },
-          { status: 401 }
-        );
-      }
-
-      // Verificar se é ADMIN ou EDITOR
-      if (session.user.role !== 'ADMIN' && session.user.role !== 'EDITOR') {
-        return NextResponse.json(
-          { success: false, error: 'Sem permissão para importar artigos' },
-          { status: 403 }
-        );
-      }
+      // Caso contrário, verificar sessão de usuário via Clerk
+      const auth = await requireEditor(request);
+      if (!auth.success) return auth.response;
     }
 
     const body = await request.json();
@@ -123,13 +108,13 @@ export async function POST(request: NextRequest) {
 
     // Gerar slug do título ou usar o nome do arquivo
     const slug = frontmatter.slug ||
-                 filename?.replace(/\.md$/, '').toLowerCase() ||
-                 frontmatter.title
-                   .toLowerCase()
-                   .normalize('NFD')
-                   .replace(/[\u0300-\u036f]/g, '')
-                   .replace(/[^a-z0-9]+/g, '-')
-                   .replace(/^-+|-+$/g, '');
+      filename?.replace(/\.md$/, '').toLowerCase() ||
+      frontmatter.title
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
 
     // Verificar se slug já existe
     const existing = await prisma.article.findUnique({

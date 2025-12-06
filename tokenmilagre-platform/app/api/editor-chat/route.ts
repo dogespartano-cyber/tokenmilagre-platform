@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { requireEditor } from '@/lib/helpers/auth-helpers';
 
 interface Message {
   role: 'user' | 'assistant' | 'system';
@@ -38,26 +37,14 @@ function checkRateLimit(userId: string): boolean {
 
 export async function POST(request: NextRequest) {
   try {
-    // Verificar autenticação
-    const session = await getServerSession(authOptions);
+    // Verificar autenticação via Clerk
+    const auth = await requireEditor(request);
+    if (!auth.success) return auth.response;
 
-    if (!session || !session.user) {
-      return NextResponse.json(
-        { success: false, error: 'Não autenticado' },
-        { status: 401 }
-      );
-    }
-
-    // Verificar permissão
-    if (session.user.role !== 'ADMIN' && session.user.role !== 'EDITOR') {
-      return NextResponse.json(
-        { success: false, error: 'Sem permissão. Apenas ADMIN e EDITOR.' },
-        { status: 403 }
-      );
-    }
+    const { user } = auth;
 
     // Rate limiting
-    if (!checkRateLimit(session.user.id)) {
+    if (!checkRateLimit(user.id)) {
       return NextResponse.json(
         { success: false, error: 'Limite de requisições excedido. Aguarde 1 minuto.' },
         { status: 429 }

@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import AdminRoute from '@/components/AdminRoute';
 
 // Components from /criar-artigo for manual mode
@@ -39,8 +38,24 @@ function getErrorMessage(error: unknown): string {
 // Manual Mode Content (same as /criar-artigo)
 function ManualModeContent() {
     const router = useRouter();
-    const { data: session } = useSession();
+    const [userId, setUserId] = useState<string | null>(null);
     const refineSectionRef = useRef<HTMLDivElement>(null);
+
+    // Fetch user ID on mount
+    useEffect(() => {
+        async function fetchUser() {
+            try {
+                const res = await fetch('/api/auth/me');
+                if (res.ok) {
+                    const data = await res.json();
+                    setUserId(data.id);
+                }
+            } catch (e) {
+                console.error('Error fetching user:', e);
+            }
+        }
+        fetchUser();
+    }, []);
 
     const [prompt, setPrompt] = useState('');
     const [selectedType, setSelectedType] = useState<ArticleType | null>(null);
@@ -178,7 +193,7 @@ function ManualModeContent() {
     };
 
     const handlePublish = async () => {
-        if (!generatedArticle || !session?.user?.id || !selectedType) return;
+        if (!generatedArticle || !userId || !selectedType) return;
         let articleToValidate = { ...generatedArticle };
         let rawCategory = generatedArticle.category;
         if (typeof rawCategory === 'object' && rawCategory !== null) {
@@ -211,7 +226,7 @@ function ManualModeContent() {
                 body: JSON.stringify({
                     ...articleToValidate,
                     published: selectedType !== 'resource' ? true : undefined,
-                    authorId: selectedType !== 'resource' ? session.user.id : undefined,
+                    authorId: selectedType !== 'resource' ? userId : undefined,
                     tags: tagsToSend,
                     citations: selectedType !== 'resource' ? citationsToSend : undefined,
                     factCheckSources: selectedType !== 'resource' ? articleToValidate.citations : undefined,

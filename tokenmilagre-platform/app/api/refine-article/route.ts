@@ -2,10 +2,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { parseJSONRobust } from '@/lib/json-sanitizer';
 import { validateProcessedArticle } from '@/lib/article-processor-client';
+import { requireEditor } from '@/lib/helpers/auth-helpers';
+import { checkAIRateLimit } from '@/lib/helpers/rate-limit';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 export async function POST(request: NextRequest) {
+  // Autenticação: Apenas ADMIN e EDITOR podem usar esta API (custo de IA)
+  const auth = await requireEditor(request);
+  if (!auth.success) return auth.response;
+
+  // Rate Limiting: 10 req/min por usuário
+  const rateLimit = await checkAIRateLimit(auth.user.id);
+  if (!rateLimit.success) return rateLimit.response!;
+
   try {
     const { article, refinementPrompt, articleType } = await request.json();
 

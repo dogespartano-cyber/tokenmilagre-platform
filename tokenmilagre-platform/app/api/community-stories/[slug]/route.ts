@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { authenticate } from '@/lib/helpers/auth-helpers';
 import { prisma } from '@/lib/prisma';
 
 // GET /api/community-stories/[slug] - Buscar história específica
@@ -52,14 +51,10 @@ export async function PATCH(
 ) {
   try {
     const { slug } = await params;
-    const session = await getServerSession(authOptions);
+    const auth = await authenticate(req);
+    if (!auth.success) return auth.response;
 
-    if (!session?.user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
+    const { user } = auth;
 
     const body = await req.json();
     const { title, content, category, published, verified, featured, likes } = body;
@@ -77,8 +72,8 @@ export async function PATCH(
     }
 
     // Apenas autor ou ADMIN/EDITOR pode editar
-    const userRole = (session.user as any).role;
-    const isOwner = story.userId === session.user.id;
+    const userRole = user.role;
+    const isOwner = story.userId === user.id;
     const isAdmin = userRole === 'ADMIN';
     const isEditor = userRole === 'EDITOR';
 
@@ -127,14 +122,10 @@ export async function DELETE(
 ) {
   try {
     const { slug } = await params;
-    const session = await getServerSession(authOptions);
+    const auth = await authenticate(req);
+    if (!auth.success) return auth.response;
 
-    if (!session?.user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
+    const { user } = auth;
 
     const story = await prisma.communityStory.findUnique({
       where: { slug },
@@ -148,8 +139,8 @@ export async function DELETE(
     }
 
     // Apenas autor ou ADMIN pode deletar
-    const userRole = (session.user as any).role;
-    const isOwner = story.userId === session.user.id;
+    const userRole = user.role;
+    const isOwner = story.userId === user.id;
     const isAdmin = userRole === 'ADMIN';
 
     if (!isOwner && !isAdmin) {

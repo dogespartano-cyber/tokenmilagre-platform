@@ -1,7 +1,8 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { useUser } from '@clerk/nextjs';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSignInAlt,
@@ -9,10 +10,30 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function UserDropdown() {
-  const { data: session, status } = useSession();
+  const { user, isLoaded, isSignedIn } = useUser();
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  // Buscar role do usuário
+  useEffect(() => {
+    async function fetchUserRole() {
+      if (!isLoaded || !isSignedIn || !user) return;
+
+      try {
+        const response = await fetch('/api/auth/me');
+        if (response.ok) {
+          const data = await response.json();
+          setUserRole(data.role || 'VIEWER');
+        }
+      } catch (error) {
+        console.error('Erro ao buscar role:', error);
+      }
+    }
+
+    fetchUserRole();
+  }, [isLoaded, isSignedIn, user]);
 
   // Loading state
-  if (status === 'loading') {
+  if (!isLoaded) {
     return (
       <div
         className="px-4 py-2 rounded-lg animate-pulse"
@@ -24,10 +45,10 @@ export default function UserDropdown() {
   }
 
   // Not authenticated - Show Login button
-  if (status === 'unauthenticated' || !session) {
+  if (!isSignedIn) {
     return (
       <Link
-        href="/login"
+        href="/sign-in"
         className="group flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all duration-300 shadow-theme-sm hover:shadow-theme-md hover:scale-105 font-semibold"
         style={{
           backgroundColor: 'var(--bg-secondary)',
@@ -42,9 +63,7 @@ export default function UserDropdown() {
   }
 
   // Authenticated - Show Admin button (only for ADMIN)
-  const user = session.user;
-
-  if (user.role === 'ADMIN') {
+  if (userRole === 'ADMIN') {
     return (
       <Link
         href="/dashboard"

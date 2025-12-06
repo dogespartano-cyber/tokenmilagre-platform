@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useClerk } from '@clerk/nextjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNewspaper,
@@ -42,6 +43,7 @@ interface FeatureCard {
 }
 
 export default function AdminDashboardPage() {
+  const { signOut } = useClerk();
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -387,10 +389,7 @@ export default function AdminDashboardPage() {
                 Precisa sair do painel administrativo?
               </p>
               <button
-                onClick={async () => {
-                  const { signOut } = await import('next-auth/react');
-                  await signOut({ redirect: true, callbackUrl: '/' });
-                }}
+                onClick={() => signOut({ redirectUrl: '/' })}
                 className="group flex items-center gap-3 px-6 py-3 rounded-lg border-2 transition-all duration-300 hover:scale-105 font-semibold"
                 style={{
                   backgroundColor: 'var(--bg-secondary)',

@@ -8,7 +8,6 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 config.autoAddCss = false;
 
 import { ThemeProvider } from "@/contexts/ThemeContext";
-import SessionProvider from "@/components/SessionProvider";
 import RootLayoutNav from "./layout-root";
 import { GoogleAnalytics } from '@next/third-parties/google';
 
@@ -194,13 +193,11 @@ export default function RootLayout({
           `}
           </Script>
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />
-          <SessionProvider>
-            <ThemeProvider>
-              <RootLayoutNav>
-                {children}
-              </RootLayoutNav>
-            </ThemeProvider>
-          </SessionProvider>
+          <ThemeProvider>
+            <RootLayoutNav>
+              {children}
+            </RootLayoutNav>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

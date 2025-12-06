@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { useSession } from 'next-auth/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faNewspaper, faSun, faMoon, faHome, faInfoCircle, faCoins, faBars, faTimes, faBook, faGraduationCap, faStore, faHeart, faBitcoinSign } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -72,7 +71,6 @@ export default function RootLayoutNav({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
-  const { data: session } = useSession();
   const [fearGreed, setFearGreed] = useState<FearGreedData | null>(null);
   const [gaugeValue, setGaugeValue] = useState(0);
 

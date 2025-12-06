@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { requireEditor } from '@/lib/helpers/auth-helpers';
 import { callPerplexityStreaming, parsePerplexityStream, type PerplexityMessage } from '@/lib/perplexity-client';
 
 export async function POST(request: NextRequest) {
   try {
-    // 1. Autenticação
-    const session = await getServerSession(authOptions);
-    if (!session || (session.user.role !== 'ADMIN' && session.user.role !== 'EDITOR')) {
-      return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
-    }
+    // 1. Autenticação via Clerk
+    const auth = await requireEditor(request);
+    if (!auth.success) return auth.response;
+
 
     // 2. Validar API Key
     const PERPLEXITY_API_KEY = process.env.PERPLEXITY_API_KEY;

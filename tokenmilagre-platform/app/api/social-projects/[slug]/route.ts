@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { requireEditor, requireAdmin } from '@/lib/helpers/auth-helpers';
 import { prisma } from '@/lib/prisma';
 
 // GET /api/social-projects/[slug] - Buscar projeto específico
@@ -55,22 +54,10 @@ export async function PATCH(
 ) {
   try {
     const { slug } = await params;
-    const session = await getServerSession(authOptions);
+    const auth = await requireEditor(req);
+    if (!auth.success) return auth.response;
 
-    if (!session?.user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const userRole = (session.user as any).role;
-    if (userRole !== 'ADMIN' && userRole !== 'EDITOR') {
-      return NextResponse.json(
-        { success: false, error: 'Forbidden' },
-        { status: 403 }
-      );
-    }
+    const { user } = auth;
 
     const body = await req.json();
     const updateData: any = {};
@@ -117,7 +104,7 @@ export async function PATCH(
     }
 
     // Apenas ADMIN pode alterar verified e featured
-    if (userRole === 'ADMIN') {
+    if (user.role === 'ADMIN') {
       if (body.verified !== undefined) updateData.verified = body.verified;
       if (body.featured !== undefined) updateData.featured = body.featured;
     }
@@ -147,22 +134,8 @@ export async function DELETE(
 ) {
   try {
     const { slug } = await params;
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const userRole = (session.user as any).role;
-    if (userRole !== 'ADMIN') {
-      return NextResponse.json(
-        { success: false, error: 'Forbidden - Admin only' },
-        { status: 403 }
-      );
-    }
+    const auth = await requireAdmin(req);
+    if (!auth.success) return auth.response;
 
     await prisma.socialProject.delete({
       where: { slug: slug },

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { requireEditor } from '@/lib/helpers/auth-helpers';
 import { prisma } from '@/lib/prisma';
 
 // GET /api/social-projects - Listar projetos sociais
@@ -72,23 +71,11 @@ export async function GET(req: NextRequest) {
 // POST /api/social-projects - Criar projeto social
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
     // Apenas ADMIN e EDITOR podem criar projetos
-    const userRole = (session.user as any).role;
-    if (userRole !== 'ADMIN' && userRole !== 'EDITOR') {
-      return NextResponse.json(
-        { success: false, error: 'Forbidden' },
-        { status: 403 }
-      );
-    }
+    const auth = await requireEditor(req);
+    if (!auth.success) return auth.response;
+
+    const { user } = auth;
 
     const body = await req.json();
     const {
@@ -154,7 +141,7 @@ export async function POST(req: NextRequest) {
         organizer,
         organizerEmail,
         organizerPhone,
-        verified: userRole === 'ADMIN' ? verified : false, // Apenas ADMIN pode marcar como verificado
+        verified: user.role === 'ADMIN' ? verified : false, // Apenas ADMIN pode marcar como verificado
         active,
       },
     });

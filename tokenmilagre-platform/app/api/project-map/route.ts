@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { requireEditor } from '@/lib/helpers/auth-helpers';
 import { prisma } from '@/lib/prisma';
 
 // GET /api/project-map - Listar todos os pontos no mapa
@@ -69,22 +68,8 @@ export async function GET(req: NextRequest) {
 // POST /api/project-map - Criar ponto no mapa
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const userRole = (session.user as any).role;
-    if (userRole !== 'ADMIN' && userRole !== 'EDITOR') {
-      return NextResponse.json(
-        { success: false, error: 'Forbidden' },
-        { status: 403 }
-      );
-    }
+    const auth = await requireEditor(req);
+    if (!auth.success) return auth.response;
 
     const body = await req.json();
     const {

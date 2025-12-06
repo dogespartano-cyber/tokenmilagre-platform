@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { requireAdmin } from '@/lib/helpers/auth-helpers';
 
 // Seed resources data from prisma/additional-resources
 const seedResources = async () => {
@@ -25,14 +24,8 @@ const seedResources = async () => {
 export async function POST(request: Request) {
   try {
     // Check if user is authenticated and is ADMIN
-    const session = await getServerSession(authOptions);
-
-    if (!session || session.user?.role !== 'ADMIN') {
-      return NextResponse.json(
-        { error: 'Unauthorized - Admin access required' },
-        { status: 401 }
-      );
-    }
+    const auth = await requireAdmin();
+    if (!auth.success) return auth.response;
 
     // Execute seed
     const result = await seedResources();
@@ -53,14 +46,9 @@ export async function POST(request: Request) {
 // GET endpoint to check current resources count
 export async function GET(request: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const auth = await requireAdmin();
+    if (!auth.success) return auth.response;
 
-    if (!session || session.user?.role !== 'ADMIN') {
-      return NextResponse.json(
-        { error: 'Unauthorized - Admin access required' },
-        { status: 401 }
-      );
-    }
 
     const count = await prisma.resource.count();
     const resources = await prisma.resource.findMany({

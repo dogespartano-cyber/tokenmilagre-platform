@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { authenticate } from '@/lib/helpers/auth-helpers';
 import { prisma } from '@/lib/prisma';
 
 // GET /api/community-stories - Listar histórias
@@ -69,14 +68,10 @@ export async function GET(req: NextRequest) {
 // POST /api/community-stories - Criar história
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const auth = await authenticate(req);
+    if (!auth.success) return auth.response;
 
-    if (!session?.user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
+    const { user } = auth;
 
     const body = await req.json();
     const {
@@ -117,7 +112,7 @@ export async function POST(req: NextRequest) {
         category,
         authorName,
         authorAvatar,
-        userId: session.user.id,
+        userId: user.id,
         published,
         verified: false, // Apenas ADMIN pode marcar como verified
       },

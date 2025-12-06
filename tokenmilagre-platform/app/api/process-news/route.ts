@@ -1,4 +1,5 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { requireEditor } from '@/lib/helpers/auth-helpers';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -10,7 +11,11 @@ interface NewsAnalysis {
   keywords: string[];
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  // Autenticação: Apenas ADMIN e EDITOR podem usar esta API
+  const auth = await requireEditor(request);
+  if (!auth.success) return auth.response;
+
   try {
     const { title, content, source } = await request.json();
 

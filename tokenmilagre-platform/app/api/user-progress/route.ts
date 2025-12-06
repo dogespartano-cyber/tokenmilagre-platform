@@ -1,26 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { authenticate } from '@/lib/helpers/auth-helpers';
 import { prisma } from '@/lib/prisma';
 
 // GET /api/user-progress - Buscar progresso do usuário
 export async function GET(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const auth = await authenticate(req);
+    if (!auth.success) return auth.response;
 
-    if (!session?.user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
+    const { user } = auth;
 
     const { searchParams } = new URL(req.url);
     const articleSlug = searchParams.get('articleSlug');
     const completed = searchParams.get('completed');
 
     const where: any = {
-      userId: session.user.id,
+      userId: user.id,
     };
 
     if (articleSlug) {
@@ -52,14 +47,10 @@ export async function GET(req: NextRequest) {
 // POST /api/user-progress - Criar ou atualizar progresso
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const auth = await authenticate(req);
+    if (!auth.success) return auth.response;
 
-    if (!session?.user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
+    const { user } = auth;
 
     const body = await req.json();
     const {
@@ -93,7 +84,7 @@ export async function POST(req: NextRequest) {
     const existing = await prisma.userProgress.findUnique({
       where: {
         userId_articleSlug: {
-          userId: session.user.id,
+          userId: user.id,
           articleSlug,
         },
       },
@@ -121,7 +112,7 @@ export async function POST(req: NextRequest) {
       userProgress = await prisma.userProgress.update({
         where: {
           userId_articleSlug: {
-            userId: session.user.id,
+            userId: user.id,
             articleSlug,
           },
         },
@@ -131,7 +122,7 @@ export async function POST(req: NextRequest) {
       // Se completou, conceder pontos
       if (completed && !existing.completed) {
         await prisma.user.update({
-          where: { id: session.user.id },
+          where: { id: user.id },
           data: { points: { increment: 10 } }, // 10 pontos por completar
         });
       }
@@ -139,7 +130,7 @@ export async function POST(req: NextRequest) {
       // Criar novo
       userProgress = await prisma.userProgress.create({
         data: {
-          userId: session.user.id,
+          userId: user.id,
           articleSlug,
           progress: parseInt(progress),
           completed,
@@ -151,7 +142,7 @@ export async function POST(req: NextRequest) {
 
       // Conceder pontos por começar
       await prisma.user.update({
-        where: { id: session.user.id },
+        where: { id: user.id },
         data: { points: { increment: 5 } }, // 5 pontos por começar
       });
     }

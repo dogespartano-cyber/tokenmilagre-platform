@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { requireAdmin } from '@/lib/helpers/auth-helpers';
 
 /**
  * PATCH /api/resources/[slug] - Atualizar recurso (ADMIN apenas)
@@ -11,22 +10,9 @@ export async function PATCH(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
-    const session = await getServerSession(authOptions);
+    const auth = await requireAdmin(request);
+    if (!auth.success) return auth.response;
 
-    if (!session || !session.user) {
-      return NextResponse.json(
-        { success: false, error: 'Não autenticado' },
-        { status: 401 }
-      );
-    }
-
-    // Apenas ADMIN pode editar recursos
-    if (session.user.role !== 'ADMIN') {
-      return NextResponse.json(
-        { success: false, error: 'Sem permissão. Apenas ADMIN pode editar recursos.' },
-        { status: 403 }
-      );
-    }
 
     const { slug } = await params;
     const body = await request.json();
@@ -125,22 +111,9 @@ export async function DELETE(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
-    const session = await getServerSession(authOptions);
+    const auth = await requireAdmin(request);
+    if (!auth.success) return auth.response;
 
-    if (!session || !session.user) {
-      return NextResponse.json(
-        { success: false, error: 'Não autenticado' },
-        { status: 401 }
-      );
-    }
-
-    // Apenas ADMIN pode deletar recursos
-    if (session.user.role !== 'ADMIN') {
-      return NextResponse.json(
-        { success: false, error: 'Sem permissão. Apenas ADMIN pode deletar recursos.' },
-        { status: 403 }
-      );
-    }
 
     const { slug } = await params;
 

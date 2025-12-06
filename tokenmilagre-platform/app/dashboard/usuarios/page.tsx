@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUsers,
@@ -52,7 +51,7 @@ interface EditUserForm {
 }
 
 export default function GerenciarUsuariosPage() {
-  const { data: session } = useSession();
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -85,6 +84,19 @@ export default function GerenciarUsuariosPage() {
   });
 
   useEffect(() => {
+    // Fetch current user ID
+    async function fetchCurrentUser() {
+      try {
+        const res = await fetch('/api/auth/me');
+        if (res.ok) {
+          const data = await res.json();
+          setCurrentUserId(data.id);
+        }
+      } catch (e) {
+        console.error('Error fetching current user:', e);
+      }
+    }
+    fetchCurrentUser();
     fetchUsers();
   }, []);
 
@@ -178,7 +190,7 @@ export default function GerenciarUsuariosPage() {
   };
 
   const handleDelete = async (id: string, email: string) => {
-    if (session?.user?.id === id) {
+    if (currentUserId === id) {
       alert('Você não pode deletar sua própria conta!');
       return;
     }
@@ -405,9 +417,9 @@ export default function GerenciarUsuariosPage() {
                                 {/* Delete */}
                                 <button
                                   onClick={() => handleDelete(user.id, user.email)}
-                                  disabled={deleting === user.id || session?.user?.id === user.id}
+                                  disabled={deleting === user.id || currentUserId === user.id}
                                   className="p-2 rounded-lg transition-all hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 disabled:opacity-50 disabled:cursor-not-allowed"
-                                  title={session?.user?.id === user.id ? 'Não pode deletar a si mesmo' : 'Deletar'}
+                                  title={currentUserId === user.id ? 'Não pode deletar a si mesmo' : 'Deletar'}
                                 >
                                   {deleting === user.id ? (
                                     <FontAwesomeIcon icon={faSpinner} className="w-4 h-4 animate-spin" />
@@ -693,7 +705,7 @@ export default function GerenciarUsuariosPage() {
                 <select
                   value={editForm.role}
                   onChange={(e) => setEditForm({ ...editForm, role: e.target.value as any })}
-                  disabled={session?.user?.id === editingUser.id}
+                  disabled={currentUserId === editingUser.id}
                   className="w-full px-4 py-2 rounded-lg border focus:outline-none transition-colors disabled:opacity-50"
                   style={{
                     backgroundColor: 'var(--bg-secondary)',
@@ -705,7 +717,7 @@ export default function GerenciarUsuariosPage() {
                   <option value="EDITOR">Editor</option>
                   <option value="ADMIN">Admin</option>
                 </select>
-                {session?.user?.id === editingUser.id && (
+                {currentUserId === editingUser.id && (
                   <p className="text-xs mt-1" style={{ color: 'var(--text-tertiary)' }}>
                     Você não pode alterar sua própria role
                   </p>

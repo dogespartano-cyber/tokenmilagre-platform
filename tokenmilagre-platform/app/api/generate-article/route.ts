@@ -14,6 +14,7 @@ import { z } from 'zod'
 import { ServiceLocator } from '@/lib/di/container'
 import { successResponse, errorResponse } from '@/lib/helpers/response-helpers'
 import { requireEditor } from '@/lib/helpers/auth-helpers'
+import { checkAIRateLimit } from '@/lib/helpers/rate-limit'
 import {
   processArticleContent,
   extractExcerpt,
@@ -376,6 +377,10 @@ Inclua PELO MENOS 3-4 das seguintes métricas:
 export async function POST(request: NextRequest) {
   const auth = await requireEditor(request)
   if (!auth.success) return auth.response
+
+  // Rate Limiting: 10 req/min por usuário
+  const rateLimit = await checkAIRateLimit(auth.user.id)
+  if (!rateLimit.success) return rateLimit.response!
 
   const logger = ServiceLocator.getLogger()
   logger.setContext({ endpoint: '/api/generate-article', method: 'POST', userId: auth.user.id })
