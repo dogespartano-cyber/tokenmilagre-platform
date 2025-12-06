@@ -109,7 +109,7 @@ export async function GET(request: NextRequest) {
       return {
         ...baseData,
         type: article.type,
-        url: `/dashboard/noticias/${article.slug}`,
+        url: `/noticias/${article.slug}`,
         source: '$MILAGRE Research',
         sources: ['$MILAGRE Research'],
         category: [article.category.charAt(0).toUpperCase() + article.category.slice(1)],
@@ -162,8 +162,21 @@ export async function GET(request: NextRequest) {
  * - coverImage: Cover image URL
  * - coverImageAlt: Cover image alt text
  */
+// ... imports ...
+
 export async function POST(request: NextRequest) {
-  const auth = await requireEditor(request)
+  // 1. Wrap Auth Check in Try/Catch to debug Auth failures properly
+  let auth;
+  try {
+    auth = await requireEditor(request)
+  } catch (authError: any) {
+    console.error('❌ [POST /api/articles] Critical Auth Error:', authError);
+    return errorResponse('Authentication System Failure: ' + authError.message, 500, {
+      stack: authError.stack,
+      type: 'AuthSystemError'
+    });
+  }
+
   if (!auth.success) return auth.response
 
   const logger = ServiceLocator.getLogger()
@@ -187,7 +200,8 @@ export async function POST(request: NextRequest) {
       hasTags: !!body.tags,
       tags: body.tags,
       published: body.published,
-      excerpt: body.excerpt?.substring(0, 50)
+      excerpt: body.excerpt?.substring(0, 50),
+      authorId: body.authorId // Log authorId if present
     })
 
     // Validate using Zod schema
@@ -198,6 +212,20 @@ export async function POST(request: NextRequest) {
       // Log validation error details to server console
       console.error('❌ [Validation Failed] Body that failed:', JSON.stringify(body, null, 2));
       console.error('❌ [Validation Failed] Error:', validationError);
+
+      // Return specific 400 response immediately for Zod errors
+      if (validationError.issues) {
+        const zodErrors = validationError.issues.map((issue: any) => ({
+          path: issue.path.join('.'),
+          message: issue.message,
+          code: issue.code
+        }))
+        return errorResponse(
+          'Validation failed: ' + zodErrors.map((e: any) => `${e.path}: ${e.message}`).join('; '),
+          400,
+          { validationErrors: zodErrors }
+        )
+      }
       throw validationError; // Re-throw to be caught by outer catch
     }
 
@@ -212,56 +240,40 @@ export async function POST(request: NextRequest) {
     })
 
     return successResponse(article)
-  } catch (error) {
+  } catch (error: any) {
     // 🐛 ENHANCED LOGGING - Log full error details to server console
     console.error('❌ [POST /api/articles] Error creating article:', {
-      errorName: (error as Error).name,
-      errorMessage: (error as Error).message,
-      errorStack: (error as any).stack,
-      // ValidationError details
-      errorDetails: (error as any).details,
-      // Zod errors
-      zodIssues: (error as any).issues,
+      errorName: error.name,
+      errorMessage: error.message,
+      errorStack: error.stack,
+      errorDetails: error.details,
+      zodIssues: error.issues,
       // Full error object for debugging
       fullError: JSON.stringify(error, Object.getOwnPropertyNames(error), 2)
     });
 
     logger.error('Error creating article', error as Error, {
-      errorName: (error as Error).name,
-      errorMessage: (error as Error).message,
-      errorStack: (error as any).stack,
-      // @ts-ignore - ValidationError has details property
-      errorDetails: (error as any).details,
-      // @ts-ignore - Zod errors have issues property
-      zodIssues: (error as any).issues,
+      name: error.name,
+      message: error.message,
+      stack: error.stack
     })
 
-    // Return detailed validation errors for debugging
-    // Check for Zod validation errors
-    if ((error as any).issues && Array.isArray((error as any).issues)) {
-      const zodErrors = (error as any).issues.map((issue: any) => ({
-        path: issue.path.join('.'),
-        message: issue.message,
-        code: issue.code
-      }))
-      return errorResponse(
-        'Validation failed: ' + zodErrors.map((e: any) => `${e.path}: ${e.message}`).join('; '),
-        400,
-        { validationErrors: zodErrors }
-      )
-    }
+    // Explicitly handle standard Error types to expose message
+    const errorDetails = {
+      name: error.name,
+      message: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
+      details: error.details,
+      issues: error.issues
+    };
 
-    // Check for ValidationError with details (from ValidationService)
-    if ((error as any).name === 'ValidationError' && (error as any).details) {
-      console.error('❌ [ValidationError] Details:', (error as any).details);
-      return errorResponse(
-        error as Error,
-        400,
-        (error as any).details
-      )
-    }
-
-    return errorResponse(error as Error)
+    // If it's a known operational error, use its status code, otherwise 500
+    // But force return the MESSAGE in the body so the user sees it
+    return errorResponse(
+      error.message || 'Internal Server Error',
+      error.statusCode || 500,
+      errorDetails
+    );
   } finally {
     logger.clearContext()
   }

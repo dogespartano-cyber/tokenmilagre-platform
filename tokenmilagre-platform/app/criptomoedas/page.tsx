@@ -148,7 +148,7 @@ export default function CriptomoedasPage() {
                 {/* Ver mais notícias */}
                 <div className="flex justify-start pt-4">
                   <Link
-                    href="/dashboard/noticias"
+                    href="/noticias"
                     className="glass-card inline-flex items-center gap-2 px-8 py-3 rounded-xl font-bold transition-all hover:gap-3 bg-[var(--brand-primary)]/10 hover:bg-[var(--brand-primary)]/20 border border-[var(--brand-primary)]/20 text-[var(--brand-primary)] shadow-lg hover:shadow-xl hover:opacity-90 transform hover:-translate-y-0.5"
                   >
                     Ver todas as notícias

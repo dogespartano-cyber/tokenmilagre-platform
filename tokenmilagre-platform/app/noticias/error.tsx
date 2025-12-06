@@ -59,7 +59,7 @@ export default function NoticiasError({
           </button>
 
           <Link
-            href="/dashboard/noticias"
+            href="/noticias"
             className="px-6 py-3 rounded-lg font-semibold border-2 transition-all hover:opacity-80"
             style={{
               borderColor: 'var(--border-medium)',

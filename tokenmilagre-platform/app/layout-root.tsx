@@ -45,7 +45,7 @@ const dashboardHeaderConfig: Record<string, { title: string; description: string
     title: 'Cotações em Tempo Real',
     description: 'Acompanhe o preço, volume e tendências das principais criptomoedas do mercado. Dados atualizados ao vivo para você não perder nenhuma oportunidade.'
   },
-  '/dashboard/noticias': {
+  '/noticias': {
     title: 'Notícias Cripto',
     description: 'Resumos inteligentes das principais notícias do mercado'
   },
@@ -149,7 +149,7 @@ export default function RootLayoutNav({
   const menuItems = [
     { href: '/', label: 'Início', icon: faHome },
 
-    { href: '/dashboard/noticias', label: 'Notícias', icon: faNewspaper },
+    { href: '/noticias', label: 'Notícias', icon: faNewspaper },
     { href: '/graficos', label: 'Gráficos', icon: faChartLine },
     { href: '/criptomoedas', label: 'Criptomoedas', icon: faBitcoinSign },
     { href: '/educacao', label: 'Educação', icon: faGraduationCap },

@@ -521,7 +521,7 @@ export default function GerenciarArtigosPage() {
                                     itemIsResource
                                       ? `/recursos/${item.slug}`
                                       : item.type === 'news'
-                                        ? `/dashboard/noticias/${item.slug}`
+                                        ? `/noticias/${item.slug}`
                                         : `/educacao/${item.slug}`
                                   }
                                   className="p-2 rounded-lg transition-all hover:bg-gray-100 dark:hover:bg-white/10 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"

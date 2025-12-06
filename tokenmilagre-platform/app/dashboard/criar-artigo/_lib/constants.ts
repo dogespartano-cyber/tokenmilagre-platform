@@ -283,7 +283,7 @@ export const API_ENDPOINTS = {
 
 export const ROUTES = {
   dashboard: '/dashboard',
-  newsArticle: (slug: string) => `/dashboard/noticias/${slug}`,
+  newsArticle: (slug: string) => `/noticias/${slug}`,
   educationalArticle: (slug: string) => `/educacao/${slug}`,
   resource: (slug: string) => `/recursos/${slug}`
 } as const;

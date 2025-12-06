@@ -68,7 +68,7 @@ export async function GET(request: Request) {
       title: article.title,
       summary: article.excerpt || '',
       content: article.content,
-      url: `/dashboard/noticias/${article.slug}`,
+      url: `/noticias/${article.slug}`,
       source: '$MILAGRE Research',
       sources: safeJSONParse<string[]>(article.factCheckSources, []),
       publishedAt: article.createdAt.toISOString(),

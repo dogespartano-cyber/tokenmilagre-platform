@@ -41,7 +41,7 @@ export default function LoginPage() {
               router.push('/dashboard/criar-artigo');
               break;
             case 'VIEWER':
-              router.push('/dashboard/noticias');
+              router.push('/noticias');
               break;
             default:
               router.push('/');

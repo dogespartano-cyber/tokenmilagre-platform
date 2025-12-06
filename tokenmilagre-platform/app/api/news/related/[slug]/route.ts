@@ -101,7 +101,7 @@ export async function GET(
       slug: article.slug,
       title: article.title,
       summary: article.excerpt || '',
-      url: `/dashboard/noticias/${article.slug}`,
+      url: `/noticias/${article.slug}`,
       source: '$MILAGRE Research',
       publishedAt: article.createdAt.toISOString(),
       category: [article.category.charAt(0).toUpperCase() + article.category.slice(1)],

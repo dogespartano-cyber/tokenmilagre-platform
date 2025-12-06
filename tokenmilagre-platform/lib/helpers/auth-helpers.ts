@@ -3,11 +3,11 @@
  *
  * Reusable authentication utilities for API routes
  * Reduces duplication across 31+ route files
+ * Updated to support Clerk Authentication
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@clerk/nextjs/server';
 import { prisma } from '@/lib/prisma';
 import type { Role } from '@/lib/generated/prisma';
 
@@ -15,7 +15,8 @@ import type { Role } from '@/lib/generated/prisma';
  * Authenticated user session
  */
 export interface AuthenticatedUser {
-  id: string;
+  id: string; // Internal DB ID (CUID)
+  clerkId: string; // Clerk ID
   email: string;
   name?: string | null;
   role: Role;
@@ -33,22 +34,11 @@ export type AuthResult =
  *
  * @param request - Next.js request object
  * @returns Authentication result with user or error response
- *
- * @example
- * ```typescript
- * export async function GET(request: NextRequest) {
- *   const auth = await authenticate(request);
- *   if (!auth.success) return auth.response;
- *
- *   const { user } = auth;
- *   // ... use user.id, user.role, etc.
- * }
- * ```
  */
 export async function authenticate(request?: NextRequest): Promise<AuthResult> {
-  const session = await getServerSession(authOptions);
+  const { userId: clerkId } = await auth();
 
-  if (!session || !session.user) {
+  if (!clerkId) {
     return {
       success: false,
       response: NextResponse.json(
@@ -62,13 +52,42 @@ export async function authenticate(request?: NextRequest): Promise<AuthResult> {
     };
   }
 
-  // 🔒 Verify user exists in database to prevent FK errors
-  const dbUser = await prisma.user.findUnique({
-    where: { id: session.user.id },
-    select: { id: true, role: true }
+  // 🔒 Verify user exists in database via Clerk ID
+  let dbUser = await prisma.user.findUnique({
+    where: { clerkId },
+    select: { id: true, email: true, name: true, role: true, clerkId: true }
   });
 
+  // 🔄 Self-Healing: If not found by Clerk ID, try email matching (Migration/First Login)
   if (!dbUser) {
+
+  }
+
+  // Re-evaluating: Importing currentUser might be heavy. 
+  // Let's stick to the plan: fetch Clerk User Object if DB lookup fails.
+  if (!dbUser) {
+    const { currentUser } = await import('@clerk/nextjs/server');
+    const clerkUser = await currentUser();
+
+    if (clerkUser) {
+      const email = clerkUser.emailAddresses[0]?.emailAddress;
+      if (email) {
+        // Try finding by email
+        const existingUser = await prisma.user.findUnique({ where: { email } });
+        if (existingUser) {
+          // LINK AND UPDATE
+          dbUser = await prisma.user.update({
+            where: { id: existingUser.id },
+            data: { clerkId },
+            select: { id: true, email: true, name: true, role: true, clerkId: true }
+          });
+        }
+      }
+    }
+  }
+
+  if (!dbUser) {
+    // Return 401 if still not found
     return {
       success: false,
       response: NextResponse.json(
@@ -82,11 +101,13 @@ export async function authenticate(request?: NextRequest): Promise<AuthResult> {
     };
   }
 
-  // Update session role with DB role (source of truth)
-  const user = {
-    ...session.user,
+  const user: AuthenticatedUser = {
+    id: dbUser.id,
+    clerkId: dbUser.clerkId || clerkId,
+    email: dbUser.email,
+    name: dbUser.name,
     role: dbUser.role
-  } as AuthenticatedUser;
+  };
 
   return {
     success: true,
@@ -100,17 +121,6 @@ export async function authenticate(request?: NextRequest): Promise<AuthResult> {
  * @param request - Next.js request object
  * @param allowedRoles - Array of allowed roles
  * @returns Authentication result with user or error response
- *
- * @example
- * ```typescript
- * export async function POST(request: NextRequest) {
- *   const auth = await requireRole(request, ['ADMIN', 'EDITOR']);
- *   if (!auth.success) return auth.response;
- *
- *   // User is authenticated and has ADMIN or EDITOR role
- *   const { user } = auth;
- * }
- * ```
  */
 export async function requireRole(
   request: NextRequest,
@@ -145,17 +155,6 @@ export async function requireRole(
  *
  * @param request - Next.js request object
  * @returns Authentication result with admin user or error response
- *
- * @example
- * ```typescript
- * export async function DELETE(request: NextRequest) {
- *   const auth = await requireAdmin(request);
- *   if (!auth.success) return auth.response;
- *
- *   // User is authenticated admin
- *   const { user } = auth;
- * }
- * ```
  */
 export async function requireAdmin(request?: NextRequest): Promise<AuthResult> {
   const auth = await authenticate(request);
@@ -185,17 +184,6 @@ export async function requireAdmin(request?: NextRequest): Promise<AuthResult> {
  *
  * @param request - Next.js request object
  * @returns Authentication result with user or error response
- *
- * @example
- * ```typescript
- * export async function POST(request: NextRequest) {
- *   const auth = await requireEditor(request);
- *   if (!auth.success) return auth.response;
- *
- *   // User can create/edit content
- *   const { user } = auth;
- * }
- * ```
  */
 export async function requireEditor(request?: NextRequest): Promise<AuthResult> {
   return requireRole(request!, ['ADMIN', 'EDITOR']);
@@ -207,17 +195,6 @@ export async function requireEditor(request?: NextRequest): Promise<AuthResult> 
  * @param user - Authenticated user
  * @param resourceOwnerId - ID of the resource owner
  * @returns True if user owns resource or is admin
- *
- * @example
- * ```typescript
- * const auth = await authenticate(request);
- * if (!auth.success) return auth.response;
- *
- * const article = await prisma.article.findUnique({ where: { id } });
- * if (!canAccessResource(auth.user, article.authorId)) {
- *   return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
- * }
- * ```
  */
 export function canAccessResource(
   user: AuthenticatedUser,
@@ -232,20 +209,6 @@ export function canAccessResource(
  * @param request - Next.js request object
  * @param validApiKey - Expected API key (from env)
  * @returns True if API key is valid
- *
- * @example
- * ```typescript
- * export async function POST(request: NextRequest) {
- *   const validApiKey = process.env.INTERNAL_API_KEY;
- *   if (validApiKey && validateAPIKey(request, validApiKey)) {
- *     // Authenticated via API key
- *   } else {
- *     // Fall back to session auth
- *     const auth = await authenticate(request);
- *     if (!auth.success) return auth.response;
- *   }
- * }
- * ```
  */
 export function validateAPIKey(request: NextRequest, validApiKey: string): boolean {
   const apiKey = request.headers.get('x-api-key');
@@ -268,13 +231,6 @@ const ROLE_HIERARCHY: Record<Role, number> = {
  * @param user - Authenticated user
  * @param minimumRole - Minimum required role
  * @returns True if user has sufficient permissions
- *
- * @example
- * ```typescript
- * if (hasMinimumRole(user, 'EDITOR')) {
- *   // User is EDITOR or ADMIN
- * }
- * ```
  */
 export function hasMinimumRole(user: AuthenticatedUser, minimumRole: Role): boolean {
   return ROLE_HIERARCHY[user.role] >= ROLE_HIERARCHY[minimumRole];

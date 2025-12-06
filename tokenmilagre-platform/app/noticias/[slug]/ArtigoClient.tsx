@@ -229,7 +229,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
             A notícia que você procura não existe ou foi removida.
           </p>
           <button
-            onClick={() => router.push('/dashboard/noticias')}
+            onClick={() => router.push('/noticias')}
             className="px-8 py-3 rounded-xl font-bold transition-all hover:opacity-90 bg-[var(--brand-primary)] text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             ← Voltar para Notícias
@@ -380,7 +380,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                     {article.keywords.map((keyword, idx) => (
                       <button
                         key={idx}
-                        onClick={() => router.push(`/dashboard/noticias?search=${encodeURIComponent(keyword)}`)}
+                        onClick={() => router.push(`/noticias?search=${encodeURIComponent(keyword)}`)}
                         className="px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] lg:hover:bg-[var(--brand-primary)] lg:hover:text-white lg:hover:shadow-md"
                       >
                         #{keyword}
@@ -425,7 +425,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
                   {relatedArticles.slice(0, 4).map((related) => (
                     <Link
                       key={related.id}
-                      href={`/dashboard/noticias/${related.slug || related.id}`}
+                      href={`/noticias/${related.slug || related.id}`}
                       className="glass-card group p-5 rounded-2xl border border-[var(--border-article)] lg:hover:border-[var(--brand-primary)]/50 transition-all lg:hover:-translate-y-1 lg:hover:shadow-xl block"
                     >
                       <div className="flex items-center gap-2 mb-3">
@@ -455,7 +455,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
 
               {/* Botão Voltar Desktop */}
               <button
-                onClick={() => router.push('/dashboard/noticias')}
+                onClick={() => router.push('/noticias')}
                 className="flex items-center gap-2 text-[var(--text-article-muted)] hover:text-[var(--brand-primary)] transition-colors font-medium mb-2 group"
               >
                 <div className="w-8 h-8 rounded-full bg-[var(--bg-article-tag)] flex items-center justify-center group-hover:bg-[var(--brand-primary)] group-hover:text-white transition-all">

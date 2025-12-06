@@ -85,7 +85,7 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
       title: article.title,
       summary: article.excerpt || '',
       content: article.content,
-      url: `/dashboard/noticias/${article.slug}`,
+      url: `/noticias/${article.slug}`,
       source: '$MILAGRE Research',
       sources: ['$MILAGRE Research'],
       publishedAt: article.createdAt.toISOString(),
@@ -116,7 +116,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   const baseUrl = 'https://tokenmilagre.xyz';
-  const articleUrl = `${baseUrl}/dashboard/noticias/${article.slug || article.id}`;
+  const articleUrl = `${baseUrl}/noticias/${article.slug || article.id}`;
 
   return {
     title: `${article.title} | $MILAGRE`,
@@ -190,7 +190,7 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
           title: a.title,
           summary: a.excerpt || '',
           content: a.content,
-          url: `/dashboard/noticias/${a.slug}`,
+          url: `/noticias/${a.slug}`,
           source: '$MILAGRE Research',
           sources: ['$MILAGRE Research'],
           publishedAt: a.createdAt.toISOString(),

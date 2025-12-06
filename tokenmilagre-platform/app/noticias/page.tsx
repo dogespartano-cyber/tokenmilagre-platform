@@ -338,7 +338,7 @@ export default function NoticiasPage() {
               {filteredNews.map((item, index) => (
                 <Link
                   key={index}
-                  href={`/dashboard/noticias/${item.slug || item.id}`}
+                  href={`/noticias/${item.slug || item.id}`}
                   className="glass-card group flex flex-col rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="p-6 flex flex-col h-full">

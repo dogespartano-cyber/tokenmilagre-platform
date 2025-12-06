@@ -763,7 +763,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Título da Análise */}
-                <Link href={`/dashboard/noticias/${dailyAnalysis.slug || dailyAnalysis.id}`}>
+                <Link href={`/noticias/${dailyAnalysis.slug || dailyAnalysis.id}`}>
                   <h4 className="text-xl font-bold mb-3 line-clamp-2 hover:text-teal-500 transition-colors cursor-pointer"
                     style={{ color: 'var(--text-primary)' }}>
                     {dailyAnalysis.title}

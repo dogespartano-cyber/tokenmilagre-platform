@@ -68,7 +68,7 @@ export async function GET(
         title: article.title,
         summary: article.excerpt || '',
         content: article.content,
-        url: `/dashboard/noticias/${article.slug}`,
+        url: `/noticias/${article.slug}`,
         source: '$MILAGRE Research',
         sources: ['$MILAGRE Research'],
         publishedAt: article.createdAt.toISOString(),
