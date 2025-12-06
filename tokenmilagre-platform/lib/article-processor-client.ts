@@ -79,9 +79,11 @@ export function generateSlug(title: string, addDate: boolean = false): string {
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '') // Remove acentos
-    .replace(/[^\w\s-]/g, '') // Remove caracteres especiais
-    .replace(/\s+/g, '-') // Substitui espaços por hífens
-    .replace(/-+/g, '-') // Remove hífens duplicados
+    .replace(/[^\w\s-]/g, '') // Remove caracteres especiais (incluindo $)
+    .replace(/\s+/g, ' ')     // 🔧 FIX: Normaliza espaços múltiplos ANTES de converter
+    .trim()                    // Remove espaços do início/fim
+    .replace(/\s+/g, '-')     // Substitui espaços por hífens
+    .replace(/-+/g, '-')       // Remove hífens duplicados
     .replace(/^-+|-+$/g, ''); // Remove hífens do início/fim
 
   // 🔧 FIX: Usa timestamp para garantir unicidade, não apenas data
@@ -101,8 +103,10 @@ export function generateSlug(title: string, addDate: boolean = false): string {
     slug = slug.substring(0, 100);
   }
 
-  // 🔧 Remover hífens no final (caso truncamento corte no meio de uma palavra)
-  return slug.replace(/-+$/g, '');
+  // 🔧 FIX: Limpar hífens duplicados/finais APÓS todas as operações
+  return slug
+    .replace(/-+/g, '-')       // Remove hífens duplicados (novamente, após truncamento)
+    .replace(/^-+|-+$/g, '');  // Remove hífens do início/fim
 }
 
 /**
