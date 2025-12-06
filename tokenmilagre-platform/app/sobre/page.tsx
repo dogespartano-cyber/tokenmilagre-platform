@@ -226,7 +226,6 @@ export default function SobrePage() {
 
                 <p className="leading-relaxed">
                   A escolha pela privacidade é intencional — o projeto deve ser julgado pelo <strong className="text-[var(--text-primary)]">código</strong>, não pela pessoa.
-                  E o código está 100% aberto para auditoria.
                 </p>
 
                 <div className="mt-6 p-4 rounded-xl bg-[var(--bg-tertiary)]/50 border border-cyan-500/10">
