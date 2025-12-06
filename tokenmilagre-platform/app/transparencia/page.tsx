@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Server, Code, Zap, Github, Shield, Users, CheckCircle, ExternalLink, GitBranch, Activity } from 'lucide-react';
+import { Github, Shield, Users, CheckCircle, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
+import TransparencyStats from '@/components/TransparencyStats';
 
 export const metadata = {
     title: 'Transparência Radical | $MILAGRE',
@@ -23,57 +24,8 @@ export default function TransparenciaPage() {
                     </p>
                 </div>
 
-                {/* System Status - Restored Distinct Colors */}
-                <div className="grid md:grid-cols-3 gap-6">
-                    <div className="p-6 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-green-500/20 backdrop-blur-md">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 bg-green-500/10 rounded-xl text-green-600 dark:text-green-400">
-                                <Server className="w-5 h-5" />
-                            </div>
-                            <h3 className="font-bold text-green-600 dark:text-green-400">Sistema Operacional</h3>
-                        </div>
-                        <div className="flex items-end gap-2">
-                            <p className="text-3xl font-bold text-gray-900 dark:text-white">100%</p>
-                            <p className="text-sm text-green-700/60 dark:text-green-300/60 mb-1">Online</p>
-                        </div>
-                        <p className="text-xs text-green-700/60 dark:text-green-300/60 mt-2 flex items-center gap-1">
-                            <Activity className="w-3 h-3" />
-                            Uptime 99.9%
-                        </p>
-                    </div>
-
-                    <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-indigo-500/5 border border-blue-500/20 backdrop-blur-md">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 bg-blue-500/10 rounded-xl text-blue-600 dark:text-blue-400">
-                                <Code className="w-5 h-5" />
-                            </div>
-                            <h3 className="font-bold text-blue-600 dark:text-blue-400">Desenvolvimento</h3>
-                        </div>
-                        <div className="flex items-end gap-2">
-                            <p className="text-3xl font-bold text-gray-900 dark:text-white">Ativo</p>
-                        </div>
-                        <p className="text-xs text-blue-700/60 dark:text-blue-300/60 mt-2 flex items-center gap-1">
-                            <GitBranch className="w-3 h-3" />
-                            Branch main atualizada
-                        </p>
-                    </div>
-
-                    <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/5 border border-purple-500/20 backdrop-blur-md">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 bg-purple-500/10 rounded-xl text-purple-600 dark:text-purple-400">
-                                <Zap className="w-5 h-5" />
-                            </div>
-                            <h3 className="font-bold text-purple-600 dark:text-purple-400">IA Generativa</h3>
-                        </div>
-                        <div className="flex items-end gap-2">
-                            <p className="text-3xl font-bold text-gray-900 dark:text-white">173</p>
-                            <p className="text-sm text-purple-700/60 dark:text-purple-300/60 mb-1">Artigos</p>
-                        </div>
-                        <p className="text-xs text-purple-700/60 dark:text-purple-300/60 mt-2">
-                            Gerando conhecimento
-                        </p>
-                    </div>
-                </div>
+                {/* System Status - Real-time Stats */}
+                <TransparencyStats />
 
                 {/* Open Source / Git Section - Minimalist */}
                 <div className="glass-card p-8 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]/50 relative overflow-hidden group">
