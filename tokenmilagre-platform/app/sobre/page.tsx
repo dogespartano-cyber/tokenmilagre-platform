@@ -230,9 +230,6 @@ export default function SobrePage() {
                 </p>
 
                 <div className="mt-6 p-4 rounded-xl bg-[var(--bg-tertiary)]/50 border border-cyan-500/10">
-                  <p className="text-sm text-[var(--text-tertiary)] mb-3 font-medium">
-                    🔍 A falta de um rosto não significa falta de compromisso:
-                  </p>
                   <ul className="space-y-2 text-sm pl-4 list-disc text-[var(--text-secondary)]">
                     <li>
                       <span>Contrato <strong>renunciado</strong> — ninguém pode alterá-lo</span>
