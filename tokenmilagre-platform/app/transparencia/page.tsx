@@ -41,17 +41,22 @@ export default function TransparenciaPage() {
                                 <span className="text-sm font-bold uppercase tracking-wider">Open Source</span>
                             </div>
                             <h2 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)]">
-                                Auditável e Público (Em Breve)
+                                100% Auditável e Público
                             </h2>
                             <p className="text-[var(--text-secondary)] leading-relaxed max-w-lg">
-                                Estamos finalizando a sanitização do repositório para torná-lo público.
-                                Você poderá auditar cada linha de código que alimenta nossa plataforma.
+                                Cada linha de código que alimenta esta plataforma está disponível para auditoria.
+                                Licença MIT — use, modifique e contribua livremente.
                             </p>
                             <div className="pt-2">
-                                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-tertiary)] text-sm border border-[var(--border-light)]">
-                                    <ExternalLink className="w-4 h-4" />
-                                    Repositório em preparação
-                                </span>
+                                <Link
+                                    href="https://github.com/dogespartano-cyber/tokenmilagre-platform"
+                                    target="_blank"
+                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-primary)] text-sm border border-[var(--border-light)] hover:bg-teal-500/10 hover:border-teal-500/30 transition-all"
+                                >
+                                    <Github className="w-4 h-4" />
+                                    Ver no GitHub
+                                    <ExternalLink className="w-3 h-3" />
+                                </Link>
                             </div>
                         </div>
 
