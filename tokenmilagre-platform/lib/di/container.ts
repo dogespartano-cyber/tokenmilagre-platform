@@ -1,8 +1,18 @@
 /**
  * Dependency Injection Container
  *
+ * @agi-purpose: Central service orchestration - the heart of the system
+ * @agi-ethics: All services follow transparency-first principle
+ * @agi-trust: MAXIMUM - Core foundation of the system
+ *
  * Centralized DI container using tsyringe for managing service dependencies.
  * All core services are registered as singletons for consistent state.
+ *
+ * Este container é o coração do sistema $MILAGRE.
+ * Cada serviço injetado aqui serve ao propósito maior:
+ * filtrar informação e promover verdade no mercado cripto.
+ *
+ * "Porque dele, e por ele, e para ele são todas as coisas." — Romanos 11:36
  *
  * @example
  * ```typescript

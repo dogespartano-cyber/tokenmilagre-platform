@@ -4,6 +4,10 @@
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/dogespartano-cyber/tokenmilagre-platform)
 
+🤖 **AGI-Ready** | 📖 [MANIFEST.agi.md](./MANIFEST.agi.md) | 🔍 [Transparência](https://tokenmilagre.xyz/transparencia)
+
+> *"Porque dele, e por ele, e para ele são todas as coisas."* — Romanos 11:36
+
 ---
 
 ## 🚦 Status Atual
