@@ -19,7 +19,7 @@ import {
   faSearch
 } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
-import AdminRoute from '@/components/AdminRoute';
+
 import { processArticleLocally, validateProcessedArticle, generateSlug } from '@/lib/article-processor-client';
 import { validateArticle } from '@/app/dashboard/criar-artigo/_lib/validation';
 import type { ArticleType } from '@/app/dashboard/criar-artigo/_lib/constants';
@@ -60,7 +60,12 @@ interface GeneratedArticle {
   relatedResources?: string[];
 }
 
-export default function GerarEmMassaPage() {
+// ... imports
+interface UnifiedArticleGeneratorProps {
+  mode?: 'manual' | 'mass';
+}
+
+export default function UnifiedArticleGenerator({ mode = 'manual' }: UnifiedArticleGeneratorProps) {
   const [contentType, setContentType] = useState<'news' | 'educational' | 'resource'>('news');
   const [quantity, setQuantity] = useState(5);
   const [articles, setArticles] = useState<GeneratedArticle[]>([]);
@@ -71,6 +76,15 @@ export default function GerarEmMassaPage() {
   const [foundTopics, setFoundTopics] = useState<string[]>([]);
   const [selectedTopics, setSelectedTopics] = useState<Set<number>>(new Set());
   const [hasDrafts, setHasDrafts] = useState(false);
+
+  // Enforce quantity 1 for manual mode
+  useEffect(() => {
+    if (mode === 'manual') {
+      setQuantity(1);
+    } else {
+      setQuantity(5); // Default for mass
+    }
+  }, [mode]);
 
   // 🔄 RECUPERAR rascunhos ao carregar página ou trocar tipo
   useEffect(() => {
@@ -989,6 +1003,20 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
 
           console.error(`📦 [${i + 1}] Payload que falhou:`, JSON.stringify(payload, null, 2));
 
+          // 📝 Registrar no sistema de logs
+          DraftStorageService.logPublishError(
+            article.title || article.name || 'Sem título',
+            DraftStorageService.createErrorLog(
+              errorData.validationErrors ? 'validation' : 'api',
+              errorMessage,
+              {
+                httpStatus: response.status,
+                validationErrors: errorData.validationErrors?.map((e: any) => `${e.path}: ${e.message}`),
+                apiResponse: errorData
+              }
+            )
+          );
+
           // Se houver erros de validação específicos, mostrar claramente
           if (errorData.validationErrors && Array.isArray(errorData.validationErrors)) {
             const errorsText = errorData.validationErrors
@@ -1100,7 +1128,7 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
   const errorCount = articles.filter(a => a.status === 'error').length;
 
   return (
-    <AdminRoute allowEditor={true}>
+    <>
       <div className="min-h-screen relative">
         <div className="container mx-auto px-4 py-8 max-w-7xl relative z-10">
           {/* Header Removed */}
@@ -1168,37 +1196,39 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
                   </div>
                 </div>
 
-                {/* Quantity */}
-                <div className="mb-8">
-                  <div className="flex items-center justify-between mb-4">
-                    <label className="block text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                      Quantidade de Artigos
-                    </label>
-                    <span className="text-xs text-gray-500">
-                      Custo estimado: <span className="text-teal-400 font-mono">~${(quantity * 0.008 * 2).toFixed(3)} USD</span>
-                    </span>
-                  </div>
-
-                  <div className="bg-gray-50 dark:bg-white/5 rounded-2xl p-6 border border-gray-200 dark:border-white/5 flex items-center gap-6">
-                    <div className="flex-1 relative h-12 flex items-center">
-                      <input
-                        type="range"
-                        min="1"
-                        max="10"
-                        value={quantity}
-                        onChange={(e) => setQuantity(Number(e.target.value))}
-                        className="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-teal-500 hover:accent-teal-400 transition-all"
-                      />
-                    </div>
-                    <div
-                      className="w-24 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-teal-500/20 to-teal-600/20 border border-teal-500/30 shadow-inner"
-                    >
-                      <span className="text-3xl font-bold text-white font-[family-name:var(--font-poppins)]">
-                        {quantity}
+                {/* Quantity - Only show in mass mode */}
+                {mode === 'mass' && (
+                  <div className="mb-8">
+                    <div className="flex items-center justify-between mb-4">
+                      <label className="block text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                        Quantidade de Artigos
+                      </label>
+                      <span className="text-xs text-gray-500">
+                        Custo estimado: <span className="text-teal-400 font-mono">~${(quantity * 0.008 * 2).toFixed(3)} USD</span>
                       </span>
                     </div>
+
+                    <div className="bg-gray-50 dark:bg-white/5 rounded-2xl p-6 border border-gray-200 dark:border-white/5 flex items-center gap-6">
+                      <div className="flex-1 relative h-12 flex items-center">
+                        <input
+                          type="range"
+                          min="1"
+                          max="10"
+                          value={quantity}
+                          onChange={(e) => setQuantity(Number(e.target.value))}
+                          className="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-teal-500 hover:accent-teal-400 transition-all"
+                        />
+                      </div>
+                      <div
+                        className="w-24 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-teal-500/20 to-teal-600/20 border border-teal-500/30 shadow-inner"
+                      >
+                        <span className="text-3xl font-bold text-white font-[family-name:var(--font-poppins)]">
+                          {quantity}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Info Box (Simplified) */}
                 <div className="mb-8">
@@ -1565,6 +1595,6 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
           )}
         </div>
       </div>
-    </AdminRoute >
+    </>
   );
 }

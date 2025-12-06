@@ -84,11 +84,11 @@ export default function AdminDashboardPage() {
 
   const features: FeatureCard[] = [
     {
-      title: '⚡ Geração em Massa',
-      description: 'Popule o banco automaticamente com múltiplos artigos de qualidade',
+      title: 'Criar Artigo',
+      description: 'Crie artigos manualmente ou gere em massa com IA',
       icon: faRobot,
-      href: '/dashboard/gerar-em-massa',
-      gradient: 'linear-gradient(135deg, #7C3AED, #F59E0B)'
+      href: '/dashboard/criar',
+      gradient: 'linear-gradient(135deg, #10b981, #059669)'
     },
     {
       title: 'Gerenciar Artigos',
@@ -97,13 +97,6 @@ export default function AdminDashboardPage() {
       href: '/dashboard/artigos',
       gradient: 'linear-gradient(135deg, #3b82f6, #2563eb)',
       stats: stats ? `${stats.totalArticles} artigos` : undefined
-    },
-    {
-      title: 'Gerar com IA',
-      description: 'Crie artigos automaticamente com Perplexity AI',
-      icon: faRobot,
-      href: '/dashboard/criar-artigo',
-      gradient: 'linear-gradient(135deg, #10b981, #059669)'
     },
     {
       title: 'Usuários',
