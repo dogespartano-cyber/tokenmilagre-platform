@@ -202,6 +202,58 @@ export default function SobrePage() {
                 ))}
               </ul>
             </div>
+
+            {/* Sobre o Criador - Novo Card */}
+            <div className="group relative p-8 rounded-3xl bg-gradient-to-br from-cyan-500/10 to-blue-500/5 border border-cyan-500/20 backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/10">
+              {/* Glow no topo no hover */}
+              <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-cyan-500 to-blue-500" style={{ boxShadow: '0 0 20px #06b6d440' }} />
+
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2.5 bg-cyan-500/10 rounded-xl text-cyan-600 dark:text-cyan-400 transition-transform duration-300 group-hover:scale-110">
+                  <FontAwesomeIcon icon={faCode} className="w-5 h-5" />
+                </div>
+                <h3 className="text-2xl font-bold text-cyan-600 dark:text-cyan-400">
+                  Sobre o Criador
+                </h3>
+              </div>
+
+              <div className="space-y-4 text-[var(--text-secondary)]">
+                <p className="leading-relaxed">
+                  $MILAGRE foi criado por <span className="font-semibold text-[var(--text-primary)]">Zen Foco</span>,
+                  um desenvolvedor brasileiro que acredita que através da <strong className="text-cyan-600 dark:text-cyan-400">fé</strong> e
+                  {' '}<strong className="text-cyan-600 dark:text-cyan-400">educação</strong>, podemos transformar o mercado cripto em um lugar mais seguro e acessível.
+                </p>
+
+                <p className="leading-relaxed">
+                  A escolha pela privacidade é intencional — o projeto deve ser julgado pelo <strong className="text-[var(--text-primary)]">código</strong>, não pela pessoa.
+                  E o código está 100% aberto para auditoria.
+                </p>
+
+                <div className="mt-6 p-4 rounded-xl bg-[var(--bg-tertiary)]/50 border border-cyan-500/10">
+                  <p className="text-sm text-[var(--text-tertiary)] mb-3 font-medium">
+                    🔍 A falta de um rosto não significa falta de compromisso:
+                  </p>
+                  <ul className="space-y-2 text-sm pl-4 list-disc text-[var(--text-secondary)]">
+                    <li>
+                      <span>Contrato <strong>renunciado</strong> — ninguém pode alterá-lo</span>
+                    </li>
+                    <li>
+                      <span>Código <strong>100% open source</strong> (MIT License)</span>
+                    </li>
+                    <li>
+                      <span>637+ testes automatizados</span>
+                    </li>
+                    <li>
+                      <span>Todas as ações são públicas na blockchain</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <p className="text-sm text-[var(--text-tertiary)] italic mt-4">
+                  "A confiança se conquista com código, não com palavras."
+                </p>
+              </div>
+            </div>
           </div>
 
         </div>

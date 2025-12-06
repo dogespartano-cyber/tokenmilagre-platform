@@ -142,6 +142,38 @@ export default function TransparenciaPage() {
                     </div>
                 </div>
 
+                {/* Quem está por trás? - Versão compacta */}
+                <div className="group relative p-8 rounded-3xl bg-gradient-to-br from-cyan-500/10 to-blue-500/5 border border-cyan-500/20 backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/10">
+                    {/* Glow no topo no hover */}
+                    <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-cyan-500 to-blue-500" style={{ boxShadow: '0 0 20px #06b6d440' }} />
+
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="p-2 bg-cyan-500/10 rounded-xl text-cyan-600 dark:text-cyan-400 transition-transform duration-300 group-hover:scale-110">
+                            <Users className="w-5 h-5" />
+                        </div>
+                        <h3 className="text-xl font-bold text-cyan-600 dark:text-cyan-400">
+                            Quem está por trás?
+                        </h3>
+                    </div>
+
+                    <div className="space-y-4 text-[var(--text-secondary)]">
+                        <p className="leading-relaxed">
+                            Criado por <span className="font-semibold text-[var(--text-primary)]">Zen Foco</span>,
+                            um desenvolvedor brasileiro anônimo que acredita em <strong className="text-cyan-600 dark:text-cyan-400">fé + educação</strong> como
+                            ferramentas para transformar o mercado cripto.
+                        </p>
+
+                        <p className="text-sm text-[var(--text-tertiary)]">
+                            A escolha pela privacidade é intencional — o projeto deve ser julgado pelo <strong>código</strong>, não pela pessoa.
+                            O código está 100% aberto para auditoria.
+                        </p>
+
+                        <p className="text-sm text-[var(--text-tertiary)] italic border-t border-cyan-500/10 pt-4 mt-4">
+                            "A falta de um rosto não significa falta de compromisso — os commits provam o trabalho."
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </main>
     );
