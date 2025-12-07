@@ -1,11 +1,31 @@
 # 📋 Sugestões e Ideias - $MILAGRE Platform
 
-> **Última atualização:** 2025-12-06  
+> **Última atualização:** 2025-12-07  
 > **Formato:** Use `[ ]`, `[/]`, `[x]` para status de cada item
 
 ---
 
 ## 🟢 Prioridade Alta (Quick Wins)
+
+### 🏗️ Refatoração Fractal - Fase 2 (Próximos Passos)
+
+- [ ] **Mover hooks para domínios** - Relocar hooks específicos
+  - `useBinanceData` → `lib/domains/crypto/hooks/`
+  - `useHolderCount` → `lib/domains/crypto/hooks/`
+  - Esforço: ~1h
+
+- [ ] **Criar domínio admin-chat** - Consolidar em `lib/domains/admin-chat/`
+  - Mover `hooks/admin-chat/` para `lib/domains/admin-chat/hooks/`
+  - Esforço: ~30min
+
+- [ ] **Refatorar ArticleService** (733 linhas) - Quebrar em serviços menores
+  - Separar: CRUD, Stats, Search, Relationships
+  - Seguir padrão fractal
+  - Esforço: ~2h
+
+- [ ] **Refatorar CustomCryptoScreener** (472 linhas) - Componente muito grande
+  - Separar: tabela, filtros, hooks de dados
+  - Esforço: ~1.5h
 
 ### Documentação & GitHub
 
@@ -79,6 +99,35 @@
 ---
 
 ## ✅ Concluídas
+
+### 2025-12-07 - Refatoração Fractal (Fase 1)
+
+**Objetivo:** Aplicar arquitetura fractal e Lei de Potência ao código
+
+#### 1. Quebrar `hooks/useAdminChat.ts` (1018 → 270 linhas, -74%)
+- [x] Criar `hooks/admin-chat/types.ts` - tipos e interfaces
+- [x] Criar `hooks/admin-chat/utils.ts` - helpers de storage/mensagens
+- [x] Criar `hooks/admin-chat/api.ts` - comunicação com backend
+- [x] Criar `hooks/admin-chat/handlers.ts` - action handlers
+- [x] Criar `hooks/admin-chat/useAdminChat.ts` - hook orquestrador
+- [x] Re-export de compatibilidade no arquivo original
+
+#### 2. Organizar `components/` por domínio
+- [x] Criar estrutura: `crypto/`, `widgets/`, `education/`, `layout/`, `shared/`
+- [x] Mover 34 componentes para domínios apropriados
+- [x] Criar `index.ts` para cada domínio com re-exports
+- [x] Atualizar 23+ imports quebrados em 15+ arquivos
+
+#### 3. Quebrar `layout-root.tsx` (591 → 220 linhas, -63%)
+- [x] Extrair `app/components/layout/Sidebar.tsx`
+- [x] Extrair `app/components/layout/FearGreedGaugeNavbar.tsx`
+- [x] Extrair `app/components/layout/Footer.tsx`
+- [x] Criar `app/components/layout/useFearGreedNavbar.ts` hook
+
+#### 4. Correções de Build
+- [x] Fix: `NavbarCryptoTicker.tsx` - prevenir `undefined.split()` no SSR
+- [x] Fix: `TopCryptosList` import quebrado em `criptomoedas/[slug]/page.tsx`
+- [x] Build Vercel passando ✅
 
 ### 2025-12-06
 - [x] Prompt educacional melhorado (~9.5/10)
