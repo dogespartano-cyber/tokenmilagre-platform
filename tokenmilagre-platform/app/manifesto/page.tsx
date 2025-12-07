@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, BookOpen, Heart, Lock, Eye, Users, Globe, Scale } from 'lucide-react';
+import { Shield, BookOpen, Heart, Eye, Users, Globe, Scale } from 'lucide-react';
 
 export default function ManifestoPage() {
     return (
@@ -80,18 +80,19 @@ export default function ManifestoPage() {
                     </div>
                 </div>
 
-                {/* The "Middle Path" Section - Refined */}
+                {/* Transparência Radical Section */}
                 <div className="glass-card p-8 md:p-12 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]/50 backdrop-blur-xl space-y-10 shadow-sm relative overflow-hidden">
                     {/* Decorative Background */}
                     <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
-                        <Scale className="w-64 h-64 text-teal-500" />
+                        <Eye className="w-64 h-64 text-teal-500" />
                     </div>
 
                     <div className="space-y-6 relative z-10">
-                        <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">O Caminho do Meio: Nossa Estratégia de Licenciamento</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Transparência Radical: Nossa Filosofia</h2>
                         <p className="text-[var(--text-secondary)] text-lg leading-relaxed max-w-3xl">
-                            Vivemos em um mundo onde a confiança é rara, especialmente em cripto. Por isso, rejeitamos os extremos. Não somos nem "código fechado e secreto" nem "código aberto ingênuo". Adotamos a
-                            <span className="text-teal-600 dark:text-teal-400 font-bold"> Transparência Seletiva</span>.
+                            Em um mercado cheio de projetos secretos e promessas vazias, escolhemos o caminho oposto:
+                            <span className="text-teal-600 dark:text-teal-400 font-bold"> abertura total</span>.
+                            Nosso código, nossas decisões e nossas finanças são públicas. Não temos nada a esconder.
                         </p>
                     </div>
 
@@ -101,29 +102,29 @@ export default function ManifestoPage() {
                                 <div className="p-3 bg-emerald-500/10 rounded-xl">
                                     <Eye className="w-6 h-6" />
                                 </div>
-                                <h3 className="font-bold text-xl">Código Aberto para Auditoria</h3>
+                                <h3 className="font-bold text-xl">100% Open Source</h3>
                             </div>
                             <p className="text-[var(--text-secondary)] leading-relaxed">
-                                Nosso código fonte está disponível publicamente no GitHub. Qualquer desenvolvedor, auditor ou membro da comunidade pode inspecionar nossos contratos inteligentes e nossa plataforma para verificar que não há "backdoors", taxas ocultas ou intenções maliciosas. <br /><br /><strong>A verdade não teme a luz.</strong>
+                                Todo o código fonte está no GitHub para qualquer pessoa auditar. Contratos inteligentes, plataforma, tudo. Sem backdoors, sem taxas ocultas, sem surpresas. <br /><br /><strong>A verdade não teme a luz.</strong>
                             </p>
                         </div>
 
                         <div className="space-y-6 p-6 rounded-2xl bg-[var(--bg-primary)]/50 border border-[var(--border-light)]">
-                            <div className="flex items-center gap-4 text-emerald-500 mb-2">
+                            <div className="flex items-center gap-4 text-emerald-600 dark:text-emerald-400 mb-2">
                                 <div className="p-3 bg-emerald-500/10 rounded-xl">
-                                    <Lock className="w-6 h-6" />
+                                    <BookOpen className="w-6 h-6" />
                                 </div>
                                 <h3 className="font-bold text-xl">Licença MIT - Liberdade Total</h3>
                             </div>
                             <p className="text-[var(--text-secondary)] leading-relaxed">
-                                Nosso código é licenciado sob <strong>MIT License</strong>, uma das licenças open source mais permissivas. Isso significa que qualquer pessoa pode estudar, modificar e até usar nosso código comercialmente. <br /><br /><strong>Acreditamos que a transparência total é a maior proteção.</strong>
+                                Usamos a licença <strong>MIT</strong>, uma das mais permissivas do mundo. Qualquer pessoa pode estudar, modificar, usar comercialmente ou criar projetos derivados. <br /><br /><strong>Acreditamos que o conhecimento livre gera mais valor do que muros.</strong>
                             </p>
                         </div>
                     </div>
 
                     <div className="pt-8 border-t border-[var(--border-light)] relative z-10">
                         <p className="text-center text-[var(--text-tertiary)] italic text-lg font-serif">
-                            "Sede prudentes como as serpentes e simples como as pombas." — Mateus 10:16
+                            "Conhecereis a verdade, e a verdade vos libertará." — João 8:32
                         </p>
                     </div>
                 </div>
