@@ -294,7 +294,7 @@ export class ArticleService {
       }
 
       if (query.type) {
-        where.type = query.type
+        where.type = query.type as Prisma.ArticleWhereInput['type']
       }
 
       if ((query as any).status) {
@@ -322,7 +322,7 @@ export class ArticleService {
       }
 
       if (query.level) {
-        where.level = query.level
+        where.level = query.level as Prisma.ArticleWhereInput['level']
       }
 
       if (query.projectHighlight !== undefined) {
@@ -454,8 +454,8 @@ export class ArticleService {
         updateData.tags = JSON.stringify(data.tags)
       }
       if (data.sentiment !== undefined) updateData.sentiment = data.sentiment
-      if (data.level !== undefined) updateData.level = data.level
-      if (data.contentType !== undefined) updateData.contentType = data.contentType
+      if (data.level !== undefined) updateData.level = data.level as Prisma.ArticleUpdateInput['level']
+      if (data.contentType !== undefined) updateData.contentType = data.contentType as Prisma.ArticleUpdateInput['contentType']
       if (data.readTime !== undefined) {
         // Ensure readTime is in string format "X min"
         updateData.readTime = typeof data.readTime === 'number'
@@ -477,7 +477,7 @@ export class ArticleService {
         updateData.factCheckSources = JSON.stringify(data.factCheckSources)
       }
       if (data.factCheckDate !== undefined) updateData.factCheckDate = data.factCheckDate
-      if (data.factCheckStatus !== undefined) updateData.factCheckStatus = data.factCheckStatus
+      if (data.factCheckStatus !== undefined) updateData.factCheckStatus = data.factCheckStatus as Prisma.ArticleUpdateInput['factCheckStatus']
       if (data.quizData !== undefined) {
         updateData.quizData = data.quizData ? (typeof data.quizData === 'string' ? data.quizData : JSON.stringify(data.quizData)) : null
       }

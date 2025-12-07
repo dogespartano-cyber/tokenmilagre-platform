@@ -126,7 +126,7 @@ export function useUpdateArticle(options: UseUpdateArticleOptions = {}) {
       if (previousArticle) {
         queryClient.setQueryData<ArticleWithRelations>(articleKeys.detail(id), {
           ...previousArticle,
-          ...data,
+          ...(data as Partial<ArticleWithRelations>),
           updatedAt: new Date(),
         })
       }
@@ -136,7 +136,7 @@ export function useUpdateArticle(options: UseUpdateArticleOptions = {}) {
         if (listData) {
           const updatedArticles = listData.articles.map((article) =>
             article.id === id
-              ? { ...article, ...data, updatedAt: new Date() }
+              ? { ...article, ...(data as Partial<ArticleWithRelations>), updatedAt: new Date() }
               : article
           )
 
