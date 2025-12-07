@@ -1,6 +1,6 @@
 # 🌟 $MILAGRE Platform
 
-**Plataforma educacional e de comunidade para o token $MILAGRE (Solana)**
+**Plataforma educacional e de comunidade para o token $MILAGRE **
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/dogespartano-cyber/tokenmilagre-platform)
 
