@@ -12,7 +12,7 @@ Se você descobrir uma vulnerabilidade de segurança, **NÃO** abra uma issue p�
 
 ### Como Reportar
 
-1. **Email**: Envie um email para [zenfoco@proton.me](mailto:zenfoco@proton.me)
+1. **Email**: Envie um email para [dogespartano@proton.me](mailto:dogespartano@proton.me)
 2. **Assunto**: `[SECURITY] Descrição breve da vulnerabilidade`
 3. **Conteúdo**: Inclua:
    - Descrição detalhada da vulnerabilidade

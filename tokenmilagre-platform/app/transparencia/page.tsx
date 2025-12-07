@@ -158,7 +158,7 @@ export default function TransparenciaPage() {
 
                     <div className="space-y-4 text-[var(--text-secondary)]">
                         <p className="leading-relaxed">
-                            Criado por <span className="font-semibold text-[var(--text-primary)]">Zen Foco</span>,
+                            Criado por <span className="font-semibold text-[var(--text-primary)]">dogespartano</span>,
                             um desenvolvedor brasileiro anônimo que acredita em <strong className="text-cyan-600 dark:text-cyan-400">fé + educação</strong> como
                             ferramentas para transformar o mercado cripto.
                         </p>
@@ -166,6 +166,13 @@ export default function TransparenciaPage() {
                         <p className="text-sm text-[var(--text-tertiary)]">
                             A escolha pela privacidade é intencional — o projeto deve ser julgado pelo <strong>código</strong>, não pela pessoa.
                             O código está 100% aberto para auditoria.
+                        </p>
+
+                        <p className="text-sm">
+                            <strong className="text-[var(--text-primary)]">Contato:</strong>{' '}
+                            <a href="mailto:dogespartano@proton.me" className="text-cyan-600 dark:text-cyan-400 hover:underline">
+                                dogespartano@proton.me
+                            </a>
                         </p>
 
                         <p className="text-sm text-[var(--text-tertiary)] italic border-t border-cyan-500/10 pt-4 mt-4">

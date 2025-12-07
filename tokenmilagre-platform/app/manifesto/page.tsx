@@ -45,7 +45,7 @@ export default function ManifestoPage() {
                         </div>
                         <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">Proteção Ativa</h3>
                         <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
-                            Protegemos nossa plataforma contra cópias maliciosas (BSL 1.1). Quando você vê a marca $MILAGRE, sabe que está em um porto seguro.
+                            Nosso código é 100% aberto sob licença <strong>MIT</strong>. Quando você vê a marca $MILAGRE, sabe que está em um porto seguro e auditável.
                         </p>
                     </div>
 
@@ -109,14 +109,14 @@ export default function ManifestoPage() {
                         </div>
 
                         <div className="space-y-6 p-6 rounded-2xl bg-[var(--bg-primary)]/50 border border-[var(--border-light)]">
-                            <div className="flex items-center gap-4 text-red-500 mb-2">
-                                <div className="p-3 bg-red-500/10 rounded-xl">
+                            <div className="flex items-center gap-4 text-emerald-500 mb-2">
+                                <div className="p-3 bg-emerald-500/10 rounded-xl">
                                     <Lock className="w-6 h-6" />
                                 </div>
-                                <h3 className="font-bold text-xl">Protegido Contra Cópias</h3>
+                                <h3 className="font-bold text-xl">Licença MIT - Liberdade Total</h3>
                             </div>
                             <p className="text-[var(--text-secondary)] leading-relaxed">
-                                Embora o código seja visível, ele é protegido pela licença <strong>Business Source License (BSL 1.1)</strong>. Isso significa que golpistas não podem legalmente copiar nosso site para criar clones falsos ("phishing") ou lançar versões concorrentes sem nossa permissão. <br /><br /><strong>Protegemos nosso trabalho para proteger você.</strong>
+                                Nosso código é licenciado sob <strong>MIT License</strong>, uma das licenças open source mais permissivas. Isso significa que qualquer pessoa pode estudar, modificar e até usar nosso código comercialmente. <br /><br /><strong>Acreditamos que a transparência total é a maior proteção.</strong>
                             </p>
                         </div>
                     </div>

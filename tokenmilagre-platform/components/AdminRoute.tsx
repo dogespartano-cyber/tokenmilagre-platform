@@ -64,12 +64,12 @@ export default function AdminRoute({ children, allowEditor = false }: AdminRoute
       // Se permite editor, aceita ADMIN e EDITOR
       if (allowEditor) {
         if (userRole !== 'ADMIN' && userRole !== 'EDITOR') {
-          router.push('/dashboard/noticias');
+          router.push('/noticias');
         }
       } else {
         // Se não permite editor, aceita apenas ADMIN
         if (userRole !== 'ADMIN') {
-          router.push('/dashboard/noticias');
+          router.push('/noticias');
         }
       }
     }
@@ -133,7 +133,7 @@ export default function AdminRoute({ children, allowEditor = false }: AdminRoute
             {allowEditor ? ' Apenas administradores e editores.' : ' Apenas administradores.'}
           </p>
           <button
-            onClick={() => router.push('/dashboard/noticias')}
+            onClick={() => router.push('/noticias')}
             className="px-6 py-3 rounded-lg font-bold transition-all hover:opacity-90"
             style={{
               background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',

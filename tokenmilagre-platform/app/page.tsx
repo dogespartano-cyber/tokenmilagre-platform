@@ -824,7 +824,7 @@ export default function HomePage() {
 
                 {/* CTA */}
                 <Link
-                  href={`/dashboard/noticias/${dailyAnalysis.slug || dailyAnalysis.id}`}
+                  href={`/noticias/${dailyAnalysis.slug || dailyAnalysis.id}`}
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm transition-all hover:opacity-80 bg-gradient-to-r from-teal-500 to-teal-600 text-white shadow-lg hover:shadow-teal-500/30"
                 >
                   <span>Ler Análise Completa</span>
@@ -871,7 +871,7 @@ export default function HomePage() {
 
                 {/* Card 2: Notícias do Mercado */}
                 <Link
-                  href="/dashboard/noticias"
+                  href="/noticias"
                   className="glass-card group relative rounded-2xl p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2"
                 >
                   <div className="relative z-10 h-full flex flex-col justify-between">
@@ -947,16 +947,16 @@ export default function HomePage() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                  Últimas Notícias <span className="ml-2 text-sm font-normal text-muted-foreground opacity-60">(Curadoria por IA)</span>
+                  Últimas Notícias
                 </h2>
-                <Link href="/dashboard/noticias" className="text-sm font-semibold hover:underline" style={{ color: 'var(--brand-primary)' }}>
+                <Link href="/noticias" className="text-sm font-semibold hover:underline" style={{ color: 'var(--brand-primary)' }}>
                   Ver todas
                 </Link>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 {news.map((item) => (
-                  <Link key={item.id} href={`/dashboard/noticias/${item.slug || item.id}`} className="glass-card rounded-2xl p-6 hover:-translate-y-1 transition-transform">
+                  <Link key={item.id} href={`/noticias/${item.slug || item.id}`} className="glass-card rounded-2xl p-6 hover:-translate-y-1 transition-transform">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-bold px-2 py-1 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)]">
                         {item.category[0]}

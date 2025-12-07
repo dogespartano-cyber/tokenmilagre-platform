@@ -7,7 +7,11 @@
   "orientation": "portrait-primary",
   "background_color": "#F8F9FA",
   "theme_color": "#0D9488",
-  "categories": ["finance", "education", "blockchain"],
+  "categories": [
+    "finance",
+    "education",
+    "blockchain"
+  ],
   "lang": "pt-BR",
   "dir": "ltr",
   "icons": [
@@ -35,7 +39,7 @@
       "name": "Notícias Cripto",
       "short_name": "Notícias",
       "description": "Últimas notícias do mercado de criptomoedas",
-      "url": "/dashboard/noticias",
+      "url": "/noticias",
       "icons": [
         {
           "src": "/icon-192.png",

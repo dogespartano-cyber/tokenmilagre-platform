@@ -219,13 +219,20 @@ export default function SobrePage() {
 
               <div className="space-y-4 text-[var(--text-secondary)]">
                 <p className="leading-relaxed">
-                  $MILAGRE foi criado por <span className="font-semibold text-[var(--text-primary)]">Zen Foco</span>,
+                  $MILAGRE foi criado por <span className="font-semibold text-[var(--text-primary)]">dogespartano</span>,
                   um desenvolvedor brasileiro que acredita que através da <strong className="text-cyan-600 dark:text-cyan-400">fé</strong> e
                   {' '}<strong className="text-cyan-600 dark:text-cyan-400">educação</strong>, podemos transformar o mercado cripto em um lugar mais seguro e acessível.
                 </p>
 
                 <p className="leading-relaxed">
                   A escolha pela privacidade é intencional — o projeto deve ser julgado pelo <strong className="text-[var(--text-primary)]">código</strong>, não pela pessoa.
+                </p>
+
+                <p className="leading-relaxed">
+                  <strong className="text-[var(--text-primary)]">Contato:</strong>{' '}
+                  <a href="mailto:dogespartano@proton.me" className="text-cyan-600 dark:text-cyan-400 hover:underline">
+                    dogespartano@proton.me
+                  </a>
                 </p>
 
                 <div className="mt-6 p-4 rounded-xl bg-[var(--bg-tertiary)]/50 border border-cyan-500/10">

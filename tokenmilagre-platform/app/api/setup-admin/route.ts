@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
         });
 
         // 3. 🚀 MIGRATION: Transfer articles from legacy admin to this user
-        // Only if this user is zenfoco@proton.me (safety check) or just do it for any Admin claiming it?
+        // Only if this user is dogespartano@proton.me (safety check) or just do it for any Admin claiming it?
         // Let's do it for any authenticated user running this setup, assuming they are the owner recovering access.
 
         let transferredCount = 0;
