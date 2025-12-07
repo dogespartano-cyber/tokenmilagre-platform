@@ -23,8 +23,8 @@ import {
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 import AdminRoute from '@/components/AdminRoute';
-import ToastContainer from '@/components/ToastContainer';
-import ConfirmDialog from '@/components/ConfirmDialog';
+import ToastContainer from '@/components/shared/ToastContainer';
+import ConfirmDialog from '@/components/shared/ConfirmDialog';
 import { useToast } from '@/hooks/useToast';
 
 interface Article {

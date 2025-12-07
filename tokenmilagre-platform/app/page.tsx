@@ -8,7 +8,7 @@
  */
 'use client';
 
-import NavbarCryptoTicker from '@/components/NavbarCryptoTicker';
+import NavbarCryptoTicker from '@/components/crypto/NavbarCryptoTicker';
 import {
   useHomeData,
   useFearGreed,

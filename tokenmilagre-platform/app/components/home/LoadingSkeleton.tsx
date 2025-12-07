@@ -5,7 +5,7 @@
 
 'use client';
 
-import { Skeleton } from '@/components/SkeletonLoader';
+import { Skeleton } from '@/components/shared/SkeletonLoader';
 
 export function LoadingSkeleton() {
     return (

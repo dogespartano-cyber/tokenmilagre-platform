@@ -9,7 +9,7 @@ import { faArrowLeft, faArrowUp, faClock, faCalendar, faUser, faShareNodes } fro
 import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { getLevelLabel } from '@/lib/utils/level-helpers';
 import { slugify } from '@/lib/utils/content-helpers';
-import QuizComponent from '@/components/QuizComponent';
+import QuizComponent from '@/components/education/QuizComponent';
 import TransparencyNote from '@/components/TransparencyNote';
 
 interface EducationalArticle {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { ToastType } from '@/components/Toast';
+import { ToastType } from '@/components/shared/Toast';
 
 interface ToastData {
   id: string;

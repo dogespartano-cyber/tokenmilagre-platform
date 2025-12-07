@@ -8,18 +8,18 @@ import dynamic from 'next/dynamic';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faNewspaper, faSun, faMoon, faHome, faInfoCircle, faCoins, faBars, faTimes, faBook, faGraduationCap, faStore, faHeart, faBitcoinSign } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@/contexts/ThemeContext';
-import Breadcrumbs from '@/components/Breadcrumbs';
+import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import DashboardHeader from '@/app/components/DashboardHeader';
 import UserDropdown from '@/components/UserDropdown';
-import NavbarCryptoTicker from '@/components/NavbarCryptoTicker';
-import GlobalBackground from '@/components/GlobalBackground';
+import NavbarCryptoTicker from '@/components/crypto/NavbarCryptoTicker';
+import GlobalBackground from '@/components/layout/GlobalBackground';
 // import UserLevelWidget from '@/components/gamification/UserLevelWidget'; // Moved to /membro dashboard
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import CustomUserButton from '@/components/CustomUserButton';
 import ScrollToTop from '@/app/components/ScrollToTop';
-import CookieConsent from '@/components/CookieConsent';
+import CookieConsent from '@/components/shared/CookieConsent';
 
-const TickerTapeWidget = dynamic(() => import('@/components/TickerTapeWidget'), {
+const TickerTapeWidget = dynamic(() => import('@/components/widgets/TickerTapeWidget'), {
   ssr: false,
 });
 

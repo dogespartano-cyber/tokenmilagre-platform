@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faNewspaper, faClock } from '@fortawesome/free-solid-svg-icons';
-import CustomCryptoScreener from '@/components/CustomCryptoScreener';
+import CustomCryptoScreener from '@/components/crypto/CustomCryptoScreener';
 
 interface NewsItem {
   id: string;
