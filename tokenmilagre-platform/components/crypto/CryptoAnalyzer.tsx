@@ -7,11 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBitcoin, faEthereum } from '@fortawesome/free-brands-svg-icons';
 import { TokenSOL } from '@token-icons/react';
 
-const AdvancedChart = dynamic(() => import('@/components/AdvancedChart'), {
+const AdvancedChart = dynamic(() => import('./AdvancedChart'), {
     ssr: false,
 });
 
-const TrendMeter = dynamic(() => import('@/components/TrendMeter'), {
+const TrendMeter = dynamic(() => import('./TrendMeter'), {
     ssr: false,
 });
 
