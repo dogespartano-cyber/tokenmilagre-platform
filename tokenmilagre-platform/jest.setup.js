@@ -2,15 +2,15 @@
 import '@testing-library/jest-dom'
 import { TextEncoder, TextDecoder } from 'util'
 
+// Polyfills for Next.js Web APIs
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder
+
 // Mock Prisma Client for tests
 jest.mock('@/lib/prisma', () => ({
   __esModule: true,
   prisma: require('./lib/__mocks__/prisma').prismaMock
 }))
-
-// Polyfills for Next.js Web APIs
-global.TextEncoder = TextEncoder
-global.TextDecoder = TextDecoder
 
 // Mock environment variables for tests
 process.env.NEXTAUTH_URL = 'http://localhost:3000'
@@ -34,14 +34,14 @@ Object.defineProperty(window, 'matchMedia', {
 
 // Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
-  disconnect() {}
-  observe() {}
+  constructor() { }
+  disconnect() { }
+  observe() { }
   takeRecords() {
     return []
   }
-  unobserve() {}
+  unobserve() { }
 }
 
-// Suppress console errors in tests (optional)
-// global.console.error = jest.fn()
+// Note: MSW polyfills are only loaded by tests that import __tests__/setup-msw.ts
+// This avoids loading undici globally which requires complex Node polyfills
