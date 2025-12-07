@@ -11,7 +11,7 @@ import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/utils/level-helpers';
 import { getCategoryIcon } from '@/lib/utils/category-helpers';
 import DashboardHeader from '@/app/components/DashboardHeader';
-import TruthDetector from '@/components/TruthDetector';
+import TruthDetector from '@/components/education/TruthDetector';
 
 interface Resource {
   id: string;

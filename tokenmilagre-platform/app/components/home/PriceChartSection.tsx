@@ -11,7 +11,7 @@ import dynamic from 'next/dynamic';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-const LightweightChart = dynamic(() => import('@/components/LightweightChart'), {
+const LightweightChart = dynamic(() => import('@/components/crypto/LightweightChart'), {
     ssr: false,
 });
 
@@ -36,8 +36,8 @@ export function PriceChartSection() {
                             key={option.symbol}
                             onClick={() => setChartSymbol(option.symbol)}
                             className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${chartSymbol === option.symbol
-                                    ? `${option.color} text-white`
-                                    : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)]'
+                                ? `${option.color} text-white`
+                                : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)]'
                                 }`}
                         >
                             {option.label}
