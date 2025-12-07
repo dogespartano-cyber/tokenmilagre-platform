@@ -25,7 +25,7 @@ import {
   faTelegram,
   faReddit
 } from '@fortawesome/free-brands-svg-icons';
-import TopCryptosList from '@/components/TopCryptosList';
+import TopCryptosList from '@/components/crypto/TopCryptosList';
 
 // Lista de top moedas para prefetch inteligente
 const TOP_CRYPTO_SLUGS = [
