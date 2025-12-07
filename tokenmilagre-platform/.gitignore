@@ -69,6 +69,7 @@ prisma/backup-*.json
 CLAUDE-MEMORY.md
 MANIFESTO.md
 MIGRACAO-POSTGRES.md
+Sugestoes.md
 *.backup.md
 
 # Example scripts (create new ones as needed)
