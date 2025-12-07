@@ -46,29 +46,6 @@ enum ProjectCategory {
   infrastructure
 }
 
-enum ArticleType {
-  news
-  educational
-}
-
-enum ArticleLevel {
-  iniciante
-  intermediario
-  avancado
-}
-
-enum ContentType {
-  Artigo
-  Tutorial
-  Curso
-}
-
-enum FactCheckStatus {
-  verified
-  failed
-  skipped
-}
-
 // Application Models
 model User {
   id            String    @id @default(cuid())
@@ -98,8 +75,8 @@ model Article {
   slug    String @unique
   content String // Markdown content
 
-  // Tipo de artigo
-  type ArticleType @default(news)
+  // Tipo de artigo: 'news' ou 'educational'
+  type String @default("news")
 
   // Campos compartilhados
   // Alinhado com API: excerpt usado internamente, exposto como summary
@@ -122,11 +99,11 @@ model Article {
   factCheckScore   Float? // Score de 0-100 (threshold padrão: 70%)
   factCheckSources String? // JSON array com URLs das fontes consultadas
   factCheckDate    DateTime? // Data da verificação
-  factCheckStatus  FactCheckStatus? // verified (>=70%), failed (<70%), skipped (sem APIs)
+  factCheckStatus  String? // verified (>=70%), failed (<70%), skipped (sem APIs)
 
   // Campos específicos de ARTIGOS EDUCACIONAIS
-  level       ArticleLevel? // Nível de dificuldade
-  contentType ContentType? // Tipo de conteúdo
+  level       String? // 'iniciante' | 'intermediario' | 'avancado'
+  contentType String? // 'Artigo' | 'Tutorial' | 'Curso'
   readTime    String? // Ex: '8 min', '15 min'
 
   // FASE 1 - Segurança
