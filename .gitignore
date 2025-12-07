@@ -24,3 +24,4 @@ __pycache__/
 # Dentro de tokenmilagre-platform/, seguir regras padrão
 # (node_modules, .next, etc já ignorados pelo .gitignore interno)
 .vercel
+.env*.local

@@ -39,7 +39,6 @@
 | Tecnologia | Propósito |
 |------------|-----------|
 | **Clerk** | Autenticação moderna (Google, etc) |
-| **NextAuth** | Autenticação sessions-based |
 
 ### Backend & Dados
 | Tecnologia | Propósito |
@@ -175,7 +174,6 @@ tokenmilagre-platform/
 | **CopilotActivity** | Log de ações do copilot |
 | **CopilotReport** | Relatórios gerados |
 | **AutomationTask** | Tarefas agendadas |
-| **Account/Session** | NextAuth |
 | **VerificationToken** | Tokens de verificação |
 
 ---
