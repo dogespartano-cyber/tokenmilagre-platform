@@ -1,8 +1,8 @@
 /**
  * Zod Validation Schemas for Articles
  *
- * Server-side validation schemas following schema-v2.prisma structure
- * All validation happens server-side for security
+ * Server-side validation schemas following Prisma schema structure.
+ * All validation happens server-side for security.
  *
  * @example
  * ```typescript
@@ -281,10 +281,10 @@ export type ArticleStatus = z.infer<typeof articleStatusEnum>
 
 /**
  * ================================================================================
- * CURRENT PRISMA SCHEMA COMPATIBLE TYPES
+ * PRISMA SCHEMA COMPATIBLE TYPES
  * ================================================================================
- * The schemas below are compatible with the current Prisma schema (not schema-v2)
- * Use these for ArticleService operations
+ * The schemas below are compatible with the current Prisma schema.
+ * Use these for ArticleService operations.
  */
 
 /**

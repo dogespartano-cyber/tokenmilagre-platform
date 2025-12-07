@@ -1,30 +1,7 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
-
-// Feature Flags
-const FEATURE_FLAGS = {
-  API_V2_ENABLED: process.env.ENABLE_API_V2 === 'true' || false,
-} as const;
-
-// Matcher for API v2
-const isApiV2Route = createRouteMatcher(['/api/v2(.*)']);
 
 export default clerkMiddleware(async (auth, req) => {
-  // 1. Feature Flag: API v2 Check
-  if (isApiV2Route(req)) {
-    if (!FEATURE_FLAGS.API_V2_ENABLED) {
-      return NextResponse.json(
-        {
-          error: 'API v2 Temporarily Disabled',
-          message: 'API v2 is currently undergoing database migration.',
-          status: 503,
-        },
-        { status: 503 }
-      );
-    }
-  }
-
-  // 2. Protect routes if needed (e.g., /admin, /dashboard/perfil)
+  // Protect routes if needed (e.g., /admin, /dashboard/perfil)
   // Protected routes require authentication
   const isProtectedRoute = createRouteMatcher(['/membro(.*)', '/quiz(.*)', '/dashboard(.*)']);
   if (isProtectedRoute(req)) await auth.protect();

@@ -1,10 +1,8 @@
 /**
- * LoggerService - STUB VERSION (API v2 Disabled)
+ * LoggerService - Lightweight Logger
  *
- * ⚠️ Este é um STUB temporário que apenas faz console.log básico.
- * A implementação completa com Pino está desabilitada até migração v2.
- *
- * @see _BACKUP-logger-service.ORIGINAL.txt - Implementação completa
+ * Implementação simples de logging usando console.
+ * Para projetos maiores, considere Pino ou Winston.
  */
 
 export class LoggerService {
@@ -57,8 +55,3 @@ export class LoggerService {
 
 // Export singleton
 export const logger = new LoggerService()
-
-/**
- * TODO: Restore full Pino implementation after schema-v2 migration
- * Original file backed up as _BACKUP-logger-service.ORIGINAL.txt
- */
