@@ -4,14 +4,14 @@ import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
-import CryptoAnalyzer from '@/components/CryptoAnalyzer';
-import MarketFlow from '@/components/MarketFlow';
+import CryptoAnalyzer from '@/components/crypto/CryptoAnalyzer';
+import MarketFlow from '@/components/crypto/MarketFlow';
 
-const CryptoHeatmapWidget = dynamic(() => import('@/components/CryptoHeatmapWidget'), {
+const CryptoHeatmapWidget = dynamic(() => import('@/components/widgets/CryptoHeatmapWidget'), {
   ssr: false,
 });
 
-const StockHeatmapWidget = dynamic(() => import('@/components/StockHeatmapWidget'), {
+const StockHeatmapWidget = dynamic(() => import('@/components/widgets/StockHeatmapWidget'), {
   ssr: false,
 });
 
