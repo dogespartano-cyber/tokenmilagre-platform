@@ -185,9 +185,12 @@ lib/
 
 ### 🟠 Média Prioridade  
 
-- [ ] **Dividir `app/page.tsx`** (1073 linhas) em componentes menores
-  - Extrair: Hero, LatestNews, Features, Community, etc
-  - Benefício: manutenibilidade + performance (lazy loading)
+- [x] **Dividir `app/page.tsx`** — ✅ Concluído (07/12/2025)
+  - Reduzido de 1074 → 70 linhas
+  - Criados 12 componentes em `app/components/home/`
+  - Hooks: `useHomeData`, `useFearGreed`
+  - Componentes: `MarketDataCards`, `FearGreedGauge`, `DailyAnalysisCard`, `QuickStartGrid`, `LatestNewsGrid`, `LearnCryptoSection`, `PriceChartSection`, `LoadingSkeleton`
+
 
 - [ ] **Adicionar OpenAPI spec** para documentação de APIs
   - Usar `next-swagger-doc` ou `@asteasolutions/zod-to-openapi`
