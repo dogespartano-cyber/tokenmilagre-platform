@@ -175,11 +175,11 @@ lib/
   - Solução: Criar config jest separada com `testEnvironment: 'node'` para testes MSW
   - Arquivos: `__tests__/api/*`, `lib/adapters/__tests__/*`
 
-- [ ] **Consolidar lib/core/** — Completar núcleo fractal
-  - Mover `lib/prisma.ts` → `lib/core/prisma.ts`
-  - Mover `lib/constants/*.ts` → `lib/core/constants/`
-  - Criar `lib/core/index.ts` com re-exports
-  - Risco: 🟡 Médio — requer atualização de imports
+- [x] **Consolidar lib/core/** — ✅ Concluído (07/12/2025)
+  - [x] Mover `lib/prisma.ts` → `lib/core/prisma.ts`
+  - [x] Mover `lib/constants/*.ts` → `lib/core/constants/`
+  - [x] Re-exports criados para compatibilidade (zero breaking changes)
+  - Resultado: 27+ arquivos usando prisma e 11+ usando constants continuam funcionando
 
 ---
 

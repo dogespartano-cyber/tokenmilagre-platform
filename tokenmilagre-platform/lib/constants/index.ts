@@ -1,11 +1,14 @@
 /**
- * 🌟 $MILAGRE Constants & Mission Module
+ * 🌟 $MILAGRE Constants Module (Compatibility Layer)
  * 
- * @agi-purpose: Centralized export of all mission-critical constants
+ * @deprecated Use '@/lib/core/constants' em novos arquivos
  * 
- * "Transparência é o novo ouro do futuro." — $MILAGRE
+ * Este arquivo é mantido para compatibilidade com código existente.
+ * Todos os exports são re-exportados de lib/core/constants/.
+ * 
+ * Para novos códigos, importe diretamente:
+ * import { MISSION, ETHICS } from '@/lib/core/constants';
  */
 
-// Core mission and values
-export { MISSION, ETHICS, AGI_COLLABORATION } from './mission';
-export type { MissionValue, EthicsAlways, EthicsNever } from './mission';
+// Re-export everything from core constants
+export * from '@/lib/core/constants';
