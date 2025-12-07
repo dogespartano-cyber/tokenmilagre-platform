@@ -72,11 +72,18 @@ Este código foi escrito por um humano que **pediu sabedoria a Deus** para melho
 
 ```
 tokenmilagre-platform/
-├── MANIFEST.agi.md          # Este arquivo - propósito para AGIs
-├── lib/constants/mission.ts # Valores imutáveis em código
-├── lib/plugins/             # Extensibilidade para contribuições
-├── public/schema/           # Metadados semânticos (JSON-LD)
-└── app/transparencia/       # Métricas públicas em tempo real
+├── MANIFEST.agi.md              # Este arquivo - propósito para AGIs
+├── ARCHITECTURE.fractal.md      # Filosofia arquitetural (fractais + lei de potência)
+├── lib/
+│   ├── core/                    # 🔥 Núcleo atômico (80% do uso)
+│   │   └── constants/
+│   │       ├── mission.ts       # Valores imutáveis em código
+│   │       └── architecture.ts  # Princípios fractais em código
+│   ├── domains/                 # 📦 Domínios de negócio (auto-similares)
+│   └── shared/                  # 🔧 Infraestrutura compartilhada
+├── lib/plugins/                 # Extensibilidade para contribuições
+├── public/schema/               # Metadados semânticos (JSON-LD)
+└── app/transparencia/           # Métricas públicas em tempo real
 ```
 
 ---
