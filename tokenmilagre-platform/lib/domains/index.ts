@@ -15,7 +15,11 @@
 // Resources Domain
 export * from './resources';
 
+// Articles Domain
+export * from './articles';
+
+// Users Domain
+export * from './users';
+
 // Future domains will be added here:
-// export * from './articles';
-// export * from './users';
 // export * from './gamification';

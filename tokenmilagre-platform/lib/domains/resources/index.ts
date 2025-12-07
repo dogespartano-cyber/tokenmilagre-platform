@@ -57,7 +57,7 @@ export {
 export {
     resourceCategoryEnum,
     interactiveTypeEnum,
-    slugSchema,
+    slugSchema as resourceSlugSchema,  // Renamed to avoid collision with articles domain
     featureSchema,
     howToStartStepSchema,
     faqItemSchema,
