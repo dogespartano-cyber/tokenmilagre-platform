@@ -231,10 +231,11 @@ export default function NavbarCryptoTicker({ variant = 'navbar' }: NavbarCryptoT
     return (
         <div className={`flex items-center ${variant === 'mobile' ? 'justify-start flex-wrap gap-x-6 gap-y-4' : 'justify-center gap-8'} w-full`}>
             {cryptoData.map((coin) => {
-                // Formatar preço
-                const priceStr = coin.currentPrice < 10
-                    ? `$${coin.currentPrice.toFixed(2)}`
-                    : `$${Math.round(coin.currentPrice).toLocaleString('en-US')}`;
+                // Formatar preço com fallback para undefined
+                const price = coin.currentPrice ?? 0;
+                const priceStr = price < 10
+                    ? `$${price.toFixed(2)}`
+                    : `$${Math.round(price).toLocaleString('en-US')}`;
 
                 const priceDigits = priceStr.split('');
 
