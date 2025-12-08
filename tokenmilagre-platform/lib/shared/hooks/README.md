@@ -70,7 +70,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 Busca lista paginada de artigos com filtros.
 
 ```typescript
-import { useArticles } from '@/lib/hooks'
+import { useArticles } from '@/lib/shared/hooks'
 
 function ArticleList() {
   const { data, isLoading, error, refetch } = useArticles({
@@ -125,7 +125,7 @@ function ArticleList() {
 Busca um artigo por ID ou slug.
 
 ```typescript
-import { useArticle } from '@/lib/hooks'
+import { useArticle } from '@/lib/shared/hooks'
 
 function ArticlePage({ articleId }: { articleId: string }) {
   const { data: article, isLoading, error } = useArticle({ id: articleId })
@@ -152,7 +152,7 @@ function ArticlePage({ articleId }: { articleId: string }) {
 Busca estatísticas de artigos (contadores por status, tipo, categoria).
 
 ```typescript
-import { useArticleStats } from '@/lib/hooks'
+import { useArticleStats } from '@/lib/shared/hooks'
 
 function DashboardStats() {
   const { data: stats, isLoading } = useArticleStats()
@@ -181,7 +181,7 @@ function DashboardStats() {
 Cria novo artigo com invalidação automática de cache.
 
 ```typescript
-import { useCreateArticle } from '@/lib/hooks'
+import { useCreateArticle } from '@/lib/shared/hooks'
 import { toast } from 'sonner'
 
 function CreateArticleForm() {
@@ -226,7 +226,7 @@ function CreateArticleForm() {
 Atualiza artigo com optimistic updates.
 
 ```typescript
-import { useUpdateArticle } from '@/lib/hooks'
+import { useUpdateArticle } from '@/lib/shared/hooks'
 
 function EditArticleForm({ article }: { article: Article }) {
   const updateArticle = useUpdateArticle({
@@ -272,7 +272,7 @@ function EditArticleForm({ article }: { article: Article }) {
 Soft delete com optimistic updates.
 
 ```typescript
-import { useDeleteArticle } from '@/lib/hooks'
+import { useDeleteArticle } from '@/lib/shared/hooks'
 
 function DeleteArticleButton({ articleId }: { articleId: string }) {
   const deleteArticle = useDeleteArticle({
@@ -311,7 +311,7 @@ function DeleteArticleButton({ articleId }: { articleId: string }) {
 Restaura artigo soft-deleted.
 
 ```typescript
-import { useRestoreArticle } from '@/lib/hooks'
+import { useRestoreArticle } from '@/lib/shared/hooks'
 
 function RestoreButton({ articleId }: { articleId: string }) {
   const restoreArticle = useRestoreArticle()
@@ -333,7 +333,7 @@ function RestoreButton({ articleId }: { articleId: string }) {
 Realiza operações em até 50 artigos (transacional, all-or-nothing).
 
 ```typescript
-import { useBulkOperation, useBulkPublish, useBulkDelete } from '@/lib/hooks'
+import { useBulkOperation, useBulkPublish, useBulkDelete } from '@/lib/shared/hooks'
 
 function BulkActionsToolbar({ selectedIds }: { selectedIds: string[] }) {
   const bulkPublish = useBulkPublish({
@@ -370,7 +370,7 @@ function BulkActionsToolbar({ selectedIds }: { selectedIds: string[] }) {
 ### Query Keys Hierárquicos
 
 ```typescript
-import { articleKeys } from '@/lib/hooks'
+import { articleKeys } from '@/lib/shared/hooks'
 
 // Invalida tudo relacionado a artigos
 queryClient.invalidateQueries({ queryKey: articleKeys.all })
@@ -417,7 +417,7 @@ Todos os mutation hooks invalidam cache automaticamente:
 
 ```typescript
 import { useQueryClient } from '@tanstack/react-query'
-import { articleKeys } from '@/lib/hooks'
+import { articleKeys } from '@/lib/shared/hooks'
 
 const queryClient = useQueryClient()
 

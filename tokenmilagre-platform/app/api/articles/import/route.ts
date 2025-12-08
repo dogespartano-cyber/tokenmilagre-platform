@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/core/prisma';
 import matter from 'gray-matter';
 import { requireEditor, validateAPIKey } from '@/lib/helpers/auth-helpers';
 

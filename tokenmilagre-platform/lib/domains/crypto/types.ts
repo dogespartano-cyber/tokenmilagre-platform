@@ -7,7 +7,7 @@
  * Shared types for crypto-related hooks and components.
  */
 
-import type { TrendSignal } from '@/lib/utils/technical-analysis';
+import type { TrendSignal } from '@/lib/shared/utils/technical-analysis';
 
 // ============================================
 // BINANCE DATA TYPES

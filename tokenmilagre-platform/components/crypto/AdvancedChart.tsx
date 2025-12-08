@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createChart, ColorType, ISeriesApi, CandlestickSeries, LineSeries, Time } from 'lightweight-charts';
 import { useTheme } from '@/contexts/ThemeContext';
-import { calculateSMA, calculateRSI, calculateBollingerBands } from '@/lib/utils/technical-analysis';
+import { calculateSMA, calculateRSI, calculateBollingerBands } from '@/lib/shared/utils/technical-analysis';
 
 type Timeframe = '15m' | '4h' | '1d';
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireEditor } from '@/lib/helpers/auth-helpers';
-import { callPerplexityStreaming, parsePerplexityStream, type PerplexityMessage } from '@/lib/perplexity-client';
+import { callPerplexityStreaming, parsePerplexityStream, type PerplexityMessage } from '@/lib/shared/ai/perplexity-client';
 
 export async function POST(request: NextRequest) {
   try {
@@ -455,7 +455,7 @@ Converse livremente com o usuário sobre qualquer assunto relacionado ao mundo c
 
     // Se está gerando artigo, usar não-streaming para capturar citations
     if (articleType) {
-      const { callPerplexity } = require('@/lib/perplexity-client');
+      const { callPerplexity } = require('@/lib/shared/ai/perplexity-client');
 
       const response = await callPerplexity(
         {

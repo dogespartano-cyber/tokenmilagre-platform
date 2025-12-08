@@ -6,7 +6,7 @@
  *
  * @example
  * ```typescript
- * import { checkRateLimit } from '@/lib/middleware/rate-limit'
+ * import { checkRateLimit } from '@/lib/shared/middleware/rate-limit'
  *
  * export async function GET(request: NextRequest) {
  *   const user = await authenticate(request)

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireEditor } from '@/lib/helpers/auth-helpers';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/core/prisma';
 
 // GET /api/project-map - Listar todos os pontos no mapa
 export async function GET(req: NextRequest) {

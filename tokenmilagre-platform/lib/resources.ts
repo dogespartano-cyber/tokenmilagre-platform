@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/core/prisma';
 
 // Safe JSON parser with fallback
 function safeJSONParse<T>(json: string, fallback: T, fieldName?: string): T {

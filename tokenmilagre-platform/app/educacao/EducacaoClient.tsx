@@ -8,8 +8,8 @@ import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faArrowRight, faSearch, faTimes, faArrowUp, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
-import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/utils/level-helpers';
-import { getCategoryIcon } from '@/lib/utils/category-helpers';
+import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/shared/utils/level-helpers';
+import { getCategoryIcon } from '@/lib/shared/utils/category-helpers';
 import DashboardHeader from '@/app/components/DashboardHeader';
 import TruthDetector from '@/components/education/TruthDetector';
 

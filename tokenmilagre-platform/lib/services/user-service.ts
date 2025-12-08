@@ -20,7 +20,7 @@
  * ```
  */
 
-import { prisma } from '@/lib/prisma'
+import { prisma } from '@/lib/core/prisma'
 import { User, Role, Prisma } from '@/lib/generated/prisma'
 import { ServiceLocator } from '@/lib/di/container'
 import { PAGINATION } from '@/lib/constants/pagination'

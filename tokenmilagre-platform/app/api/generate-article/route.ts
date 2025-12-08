@@ -21,9 +21,9 @@ import {
   titleToSlug,
   calculateReadTime,
   extractTags
-} from '@/lib/article-processor'
-import { validateArticleContent, ValidationResult } from '@/lib/content-validator'
-import { callPerplexity } from '@/lib/perplexity-client'
+} from '@/lib/domains/articles/services/article-processor'
+import { validateArticleContent, ValidationResult } from '@/lib/domains/articles/utils/content-validator'
+import { callPerplexity } from '@/lib/shared/ai/perplexity-client'
 
 // Request validation schema
 const generateArticleRequestSchema = z.object({

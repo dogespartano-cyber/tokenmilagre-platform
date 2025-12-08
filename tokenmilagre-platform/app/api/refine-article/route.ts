@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { parseJSONRobust } from '@/lib/json-sanitizer';
-import { validateProcessedArticle } from '@/lib/article-processor-client';
+import { validateProcessedArticle } from '@/lib/domains/articles/services/article-processor-client';
 import { requireEditor } from '@/lib/helpers/auth-helpers';
 import { checkAIRateLimit } from '@/lib/helpers/rate-limit';
 

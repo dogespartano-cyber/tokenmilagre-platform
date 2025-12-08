@@ -461,7 +461,7 @@ npm install -D supertest @types/supertest
 Certifique-se que o mock está configurado antes dos imports:
 
 ```typescript
-jest.mock('@/lib/prisma', () => ({
+jest.mock('@/lib/core/prisma', () => ({
   __esModule: true,
   prisma: require('@/lib/__mocks__/prisma').prismaMock,
 }))

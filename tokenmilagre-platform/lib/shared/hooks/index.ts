@@ -12,7 +12,7 @@
  *   useCreateArticle,
  *   useUpdateArticle,
  *   useDeleteArticle,
- * } from '@/lib/hooks'
+ * } from '@/lib/shared/hooks'
  * ```
  */
 

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCodeBranch, faCircleCheck, faTriangleExclamation, faClock, faCopy, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { formatDateTime } from '@/lib/utils/date-helpers';
+import { formatDateTime } from '@/lib/shared/utils/date-helpers';
 
 interface BuildInfo {
   branch: string;

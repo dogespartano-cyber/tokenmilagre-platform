@@ -1,7 +1,7 @@
 'use client';
 
 import ReactMarkdown from 'react-markdown';
-import { getCitationAwareMarkdownComponents, SourcesSection } from '@/lib/citations-processor';
+import { getCitationAwareMarkdownComponents, SourcesSection } from '@/lib/domains/articles/components/citations-processor';
 
 interface ArticlePreviewProps {
   article: {

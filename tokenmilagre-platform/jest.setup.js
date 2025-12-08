@@ -7,7 +7,7 @@ global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder
 
 // Mock Prisma Client for tests
-jest.mock('@/lib/prisma', () => ({
+jest.mock('@/lib/core/prisma', () => ({
   __esModule: true,
   prisma: require('./lib/__mocks__/prisma').prismaMock
 }))

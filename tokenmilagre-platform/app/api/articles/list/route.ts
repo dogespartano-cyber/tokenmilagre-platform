@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/core/prisma';
 
 // GET /api/articles/list - Listar apenas títulos e slugs (otimizado para verificação de duplicatas)
 export async function GET() {

@@ -11,7 +11,7 @@
  */
 
 import { useState, useCallback } from 'react';
-import { processArticleLocally, validateProcessedArticle } from '@/lib/article-processor-client';
+import { processArticleLocally, validateProcessedArticle } from '@/lib/domains/articles/services/article-processor-client';
 import { API_ENDPOINTS, MESSAGES, type ArticleType } from '../_lib/constants';
 
 // ============================================================================

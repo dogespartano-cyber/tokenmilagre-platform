@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ArtigoEducacionalClient from './ArtigoEducacionalClient';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/core/prisma';
 
 // Cache ISR: Revalida a cada 1 hora (artigos educacionais mudam raramente)
 export const revalidate = 3600;

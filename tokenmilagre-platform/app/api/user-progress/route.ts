@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { authenticate } from '@/lib/helpers/auth-helpers';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/core/prisma';
 
 // GET /api/user-progress - Buscar progresso do usuário
 export async function GET(req: NextRequest) {

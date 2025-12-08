@@ -19,16 +19,16 @@ import { ServiceLocator } from '@/lib/di/container'
 import { requireEditor } from '@/lib/helpers/auth-helpers'
 import { errorResponse } from '@/lib/helpers/response-helpers'
 import { chatRequestSchema } from '@/lib/schemas/chat-schemas'
-import { checkRateLimit } from '@/lib/utils/rate-limit'
+import { checkRateLimit } from '@/lib/shared/utils/rate-limit'
 import {
   callPerplexityStreaming,
   parsePerplexityStream,
   type PerplexityMessage,
   type PerplexityRequestOptions
-} from '@/lib/perplexity-client'
-import { extractPageContext, formatArticleContext } from '@/lib/admin-chat-context'
-import { validateArticleContent } from '@/lib/content-validator'
-import { detectIntent } from '@/lib/intent-detector'
+} from '@/lib/shared/ai/perplexity-client'
+import { extractPageContext, formatArticleContext } from '@/lib/domains/admin-chat/context'
+import { validateArticleContent } from '@/lib/domains/articles/utils/content-validator'
+import { detectIntent } from '@/lib/shared/ai/intent-detector'
 
 /**
  * Decide configuração do modelo Perplexity baseado na intenção

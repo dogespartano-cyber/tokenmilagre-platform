@@ -6,7 +6,7 @@
  *
  * @example
  * ```typescript
- * import { authenticate, requireRole } from '@/lib/middleware/auth'
+ * import { authenticate, requireRole } from '@/lib/shared/middleware/auth'
  *
  * export async function GET(request: NextRequest) {
  *   const user = await authenticate(request)

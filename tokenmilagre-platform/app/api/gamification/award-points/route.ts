@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { authenticate, requireAdmin } from '@/lib/helpers/auth-helpers';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/core/prisma';
 
 // POST /api/gamification/award-points - Conceder pontos ao usuário (ADMIN apenas)
 export async function POST(req: NextRequest) {

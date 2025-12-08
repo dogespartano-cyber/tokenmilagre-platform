@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireEditor } from '@/lib/helpers/auth-helpers';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/core/prisma';
 
 // GET /api/social-projects - Listar projetos sociais
 export async function GET(req: NextRequest) {

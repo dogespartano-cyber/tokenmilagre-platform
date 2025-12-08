@@ -7,8 +7,8 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowUp, faClock, faCalendar, faUser, faShareNodes } from '@fortawesome/free-solid-svg-icons';
 import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { getLevelLabel } from '@/lib/utils/level-helpers';
-import { slugify } from '@/lib/utils/content-helpers';
+import { getLevelLabel } from '@/lib/shared/utils/level-helpers';
+import { slugify } from '@/lib/shared/utils/content-helpers';
 import QuizComponent from '@/components/education/QuizComponent';
 import TransparencyNote from '@/components/TransparencyNote';
 

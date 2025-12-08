@@ -20,7 +20,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 
-import { processArticleLocally, validateProcessedArticle, generateSlug } from '@/lib/article-processor-client';
+import { processArticleLocally, validateProcessedArticle, generateSlug } from '@/lib/domains/articles/services/article-processor-client';
 import { validateArticle } from '@/app/dashboard/criar-artigo/_lib/validation';
 import type { ArticleType } from '@/app/dashboard/criar-artigo/_lib/constants';
 import { normalizeCategoryWithFallback } from '@/app/dashboard/criar-artigo/_lib/constants';

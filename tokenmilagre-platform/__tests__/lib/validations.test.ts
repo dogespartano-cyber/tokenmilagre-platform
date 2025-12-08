@@ -10,7 +10,7 @@ import {
   createNewsSchema,
   createEducationalSchema,
   articleQuerySchema,
-} from '@/lib/validations/article'
+} from '@/lib/shared/validations/article'
 
 describe('Article Validation Schemas', () => {
   describe('createArticleSchema', () => {

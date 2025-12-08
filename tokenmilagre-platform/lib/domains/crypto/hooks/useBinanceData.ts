@@ -14,7 +14,7 @@ import {
     calculateMACD,
     calculateBollingerBands,
     calculateTrendSignal,
-} from '@/lib/utils/technical-analysis';
+} from '@/lib/shared/utils/technical-analysis';
 import type { BinanceData, TechnicalIndicators, UseBinanceDataResult } from '../types';
 
 /**

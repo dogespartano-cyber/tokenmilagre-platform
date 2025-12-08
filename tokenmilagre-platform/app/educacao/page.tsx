@@ -3,7 +3,7 @@
  * Que este conhecimento liberte e edifique.
  */
 import EducacaoClient from './EducacaoClient';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/core/prisma';
 
 export const metadata = {
   title: 'Educação | $MILAGRE',

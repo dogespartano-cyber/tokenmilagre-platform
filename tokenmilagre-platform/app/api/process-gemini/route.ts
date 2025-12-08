@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireEditor } from '@/lib/helpers/auth-helpers';
-import { generateCoverImage, estimateImageSize } from '@/lib/gemini-image';
+import { generateCoverImage, estimateImageSize } from '@/lib/shared/ai/gemini-image';
 import { saveCoverImage, generateImageAltText, validateImageSize } from '@/lib/image-utils';
 
 export async function POST(request: NextRequest) {

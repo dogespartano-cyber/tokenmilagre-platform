@@ -6,7 +6,7 @@
  */
 
 import { sign } from 'jsonwebtoken'
-import type { UserRole } from '@/lib/middleware/auth'
+import type { UserRole } from '@/lib/shared/middleware/auth'
 
 /**
  * JWT secret for tests (same as in auth middleware)

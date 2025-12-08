@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/core/prisma';
 import ArtigoClient from './ArtigoClient';
 
 // Cache ISR: Revalida a cada 5 minutos (notícias mudam com mais frequência)

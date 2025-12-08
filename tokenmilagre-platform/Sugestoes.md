@@ -18,12 +18,12 @@
   - Mover `hooks/admin-chat/` para `lib/domains/admin-chat/hooks/`
   - Esforço: ~30min ✅
 
-- [ ] **Refatorar ArticleService** (733 linhas) - Quebrar em serviços menores
+- [x] **Refatorar ArticleService** (733 linhas) - Quebrar em serviços menores ✅
   - Separar: CRUD, Stats, Search, Relationships
   - Seguir padrão fractal
   - Esforço: ~2h
 
-- [ ] **Refatorar CustomCryptoScreener** (472 linhas) - Componente muito grande
+- [x] **Refatorar CustomCryptoScreener** (472 linhas) - Componente muito grande ✅
   - Separar: tabela, filtros, hooks de dados
   - Esforço: ~1.5h
 
@@ -234,7 +234,16 @@ lib/
 - [x] **Compatibilidade:** Re-exports criados em `hooks/` para evitar breaking changes.
 - [x] **Verificação:** Testado em localhost (Ticker, HolderCount, AIAssistant).
 
+### ✅ Concluído (Sessão 08/12/2025)
+
+#### 🌳 Zen Garden Cleanup (Refatoração de Infraestrutura)
+- [x] **Limpeza de Raiz:** Remoção de arquivos soltos em `lib/` para `lib/domains/` ou `lib/shared/`.
+- [x] **Criação de Shared:** Consolidação de infraestrutura em `lib/shared/` (`adapters`, `middleware`, `hooks`, `utils`, `ai`).
+- [x] **Unificação do Prisma:** Remoção de duplicados. Única fonte da verdade em `@/lib/core/prisma`.
+- [x] **Consistência de Imports:** Atualização massiva de imports para refletir nova estrutura.
+
 ---
+
 
 ### ✅ Concluído (Sessões Anteriores)
 - [x] Correção do schema Prisma (enums → Strings para compatibilidade)

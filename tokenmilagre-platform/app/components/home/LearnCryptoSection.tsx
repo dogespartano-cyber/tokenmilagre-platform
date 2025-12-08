@@ -8,7 +8,7 @@
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
-import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/utils/level-helpers';
+import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/shared/utils/level-helpers';
 import TruthDetector from '@/components/education/TruthDetector';
 import type { EducationItem } from './types';
 

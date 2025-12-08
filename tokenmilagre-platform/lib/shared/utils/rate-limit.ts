@@ -6,7 +6,7 @@
  *
  * @example
  * ```typescript
- * import { checkRateLimit } from '@/lib/utils/rate-limit'
+ * import { checkRateLimit } from '@/lib/shared/utils/rate-limit'
  *
  * if (!checkRateLimit(userId, 10, 60000)) {
  *   throw new Error('Rate limit exceeded')

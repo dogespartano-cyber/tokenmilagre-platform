@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/core/prisma';
 import { requireAdmin } from '@/lib/helpers/auth-helpers';
 
 // Seed resources data from prisma/additional-resources

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/core/prisma';
 
 // Cache de 30 minutos para maximizar uso de cache
 const CACHE_DURATION = 30 * 60 * 1000;
