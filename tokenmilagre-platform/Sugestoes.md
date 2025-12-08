@@ -255,6 +255,13 @@ lib/
 - [x] **Compatibilidade:** Criação de Facades Estritos em `lib/services` e `lib/schemas` para manter compatibilidade com códigos legados.
 - [x] **Verificação:** `npm run build` passando com sucesso (Zero erros de tipo).
 
+### ✅ Concluído (Sessão 08/12/2025) - Parte 3
+
+#### 🌿 Zen Garden Cleanup (Final)
+- [x] **Limpeza Final da Raiz:** Movidos `resources.ts`, `draft-storage.ts`, `category-helpers.ts` e `utils.ts` para domínios/shared.
+- [x] **Aderência Fractal:** 100% dos arquivos agora residem em containers apropriados (Domains ou Shared).
+- [x] **Integridade:** Validado com `type-check` (Imports atualizados em 15+ arquivos).
+
 ---
 
 

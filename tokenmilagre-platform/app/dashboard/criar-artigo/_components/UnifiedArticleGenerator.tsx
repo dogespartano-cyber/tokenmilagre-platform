@@ -24,7 +24,7 @@ import { processArticleLocally, validateProcessedArticle, generateSlug } from '@
 import { validateArticle } from '@/app/dashboard/criar-artigo/_lib/validation';
 import type { ArticleType } from '@/app/dashboard/criar-artigo/_lib/constants';
 import { normalizeCategoryWithFallback } from '@/app/dashboard/criar-artigo/_lib/constants';
-import { DraftStorageService } from '@/lib/draft-storage';
+import { DraftStorageService } from '@/lib/shared/services/draft-storage.service';
 
 interface GeneratedArticle {
   id: string;

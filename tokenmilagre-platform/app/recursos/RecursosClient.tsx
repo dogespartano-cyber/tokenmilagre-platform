@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Resource } from '@/lib/resources';
-import { getAllCategories } from '@/lib/category-helpers';
+import { Resource } from '@/lib/domains/resources/legacy-api';
+import { getAllCategories } from '@/lib/shared/utils/categories';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { SEARCH_DEBOUNCE_MS } from '@/lib/core/constants/ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

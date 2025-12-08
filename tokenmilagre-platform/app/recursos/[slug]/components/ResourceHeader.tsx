@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { Resource } from '@/lib/resources';
-import { getCategoryLabel } from '@/lib/category-helpers';
+import { Resource } from '@/lib/domains/resources/legacy-api';
+import { getCategoryLabel } from '@/lib/shared/utils/categories';
 
 interface ResourceHeaderProps {
   resource: Resource;

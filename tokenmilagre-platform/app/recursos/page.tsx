@@ -1,5 +1,5 @@
 import Script from 'next/script';
-import { getAllResources } from '@/lib/resources';
+import { getAllResources } from '@/lib/domains/resources/legacy-api';
 import RecursosClient from './RecursosClient';
 
 // Dynamic rendering - fetch data at request time

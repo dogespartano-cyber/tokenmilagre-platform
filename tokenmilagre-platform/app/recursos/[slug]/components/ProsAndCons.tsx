@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBalanceScale, faCheck, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { Resource } from '@/lib/resources';
+import { Resource } from '@/lib/domains/resources/legacy-api';
 
 interface ProsAndConsProps {
   prosAndCons: Resource['prosAndCons'];

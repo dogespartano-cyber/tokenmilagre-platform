@@ -47,7 +47,7 @@ export {
     getRelatedResources,
     getResourcesBySlugs,
     incrementResourceViews,
-} from '@/lib/resources';
+} from '@/lib/domains/resources/legacy-api';
 
 // ============================================
 // SCHEMAS

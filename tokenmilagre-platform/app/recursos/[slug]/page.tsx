@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
-import { getResourceBySlug, getAllResourceSlugs, getResourcesBySlugs } from '@/lib/resources';
+import { getResourceBySlug, getAllResourceSlugs, getResourcesBySlugs } from '@/lib/domains/resources/legacy-api';
 import ResourceDetailClient from './ResourceDetailClient';
 
 // Cache ISR: Revalida a cada 1 hora

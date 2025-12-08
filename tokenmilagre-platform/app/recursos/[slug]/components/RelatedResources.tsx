@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
-import { Resource } from '@/lib/resources';
+import { Resource } from '@/lib/domains/resources/legacy-api';
 
 interface RelatedResourcesProps {
   relatedResources: Resource[];

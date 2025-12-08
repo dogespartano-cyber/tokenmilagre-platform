@@ -3,7 +3,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import { Resource } from '@/lib/resources';
+import { Resource } from '@/lib/domains/resources/legacy-api';
 
 interface ResourceFAQProps {
   faq: Resource['faq'];

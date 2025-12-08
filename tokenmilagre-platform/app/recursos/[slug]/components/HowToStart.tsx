@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlagCheckered } from '@fortawesome/free-solid-svg-icons';
-import { Resource } from '@/lib/resources';
+import { Resource } from '@/lib/domains/resources/legacy-api';
 
 interface HowToStartProps {
   howToStart: Resource['howToStart'];

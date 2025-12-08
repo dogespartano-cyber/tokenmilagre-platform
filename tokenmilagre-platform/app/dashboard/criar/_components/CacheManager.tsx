@@ -17,7 +17,7 @@ import {
     faTimes,
     faClipboard
 } from '@fortawesome/free-solid-svg-icons';
-import { DraftStorageService, type DraftArticle, type PublishErrorLog } from '@/lib/draft-storage';
+import { DraftStorageService, type DraftArticle, type PublishErrorLog } from '@/lib/shared/services/draft-storage.service';
 
 interface CacheManagerProps {
     onDraftSelect?: (draft: DraftArticle) => void;
@@ -106,8 +106,8 @@ export default function CacheManager({ onDraftSelect, onClose }: CacheManagerPro
                     <button
                         onClick={() => setShowLogs(!showLogs)}
                         className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${showLogs
-                                ? 'bg-red-500/10 text-red-400 border border-red-500/20'
-                                : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10'
+                            ? 'bg-red-500/10 text-red-400 border border-red-500/20'
+                            : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10'
                             }`}
                     >
                         Logs ({errorLogs.length})
@@ -130,8 +130,8 @@ export default function CacheManager({ onDraftSelect, onClose }: CacheManagerPro
                         key={f}
                         onClick={() => setFilter(f)}
                         className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${filter === f
-                                ? 'bg-teal-500 text-white'
-                                : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10'
+                            ? 'bg-teal-500 text-white'
+                            : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10'
                             }`}
                     >
                         {f === 'all' && 'Todos'}

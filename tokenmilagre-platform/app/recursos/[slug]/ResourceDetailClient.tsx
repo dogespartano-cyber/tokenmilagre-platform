@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faShareNodes } from '@fortawesome/free-solid-svg-icons';
 import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { Resource } from '@/lib/resources';
+import { Resource } from '@/lib/domains/resources/legacy-api';
 import ResourceHeader from './components/ResourceHeader';
 import WhyGoodSection from './components/WhyGoodSection';
 import ResourceFeatures from './components/ResourceFeatures';
