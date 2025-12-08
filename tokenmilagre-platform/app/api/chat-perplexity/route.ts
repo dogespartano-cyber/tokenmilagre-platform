@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireEditor } from '@/lib/helpers/auth-helpers';
+import { requireEditor } from '@/lib/shared/helpers/auth-helpers';
 import { callPerplexityStreaming, parsePerplexityStream, type PerplexityMessage } from '@/lib/shared/ai/perplexity-client';
 
 export async function POST(request: NextRequest) {

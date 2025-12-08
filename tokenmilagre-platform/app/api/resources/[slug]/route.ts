@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/core/prisma';
-import { requireAdmin } from '@/lib/helpers/auth-helpers';
+import { requireAdmin } from '@/lib/shared/helpers/auth-helpers';
 
 /**
  * PATCH /api/resources/[slug] - Atualizar recurso (ADMIN apenas)

@@ -12,9 +12,9 @@
 import { NextRequest } from 'next/server'
 import { z } from 'zod'
 import { ServiceLocator } from '@/lib/di/container'
-import { successResponse, errorResponse } from '@/lib/helpers/response-helpers'
-import { requireEditor } from '@/lib/helpers/auth-helpers'
-import { checkAIRateLimit } from '@/lib/helpers/rate-limit'
+import { successResponse, errorResponse } from '@/lib/shared/helpers/response-helpers'
+import { requireEditor } from '@/lib/shared/helpers/auth-helpers'
+import { checkAIRateLimit } from '@/lib/shared/helpers/rate-limit'
 import {
   processArticleContent,
   extractExcerpt,

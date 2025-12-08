@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/core/prisma';
-import { requireAdmin } from '@/lib/helpers/auth-helpers';
+import { requireAdmin } from '@/lib/shared/helpers/auth-helpers';
 
 // Seed resources data from prisma/additional-resources
 const seedResources = async () => {

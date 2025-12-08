@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authenticate } from '@/lib/helpers/auth-helpers';
+import { authenticate } from '@/lib/shared/helpers/auth-helpers';
 import { prisma } from '@/lib/core/prisma';
 
 // GET /api/community-stories - Listar histórias

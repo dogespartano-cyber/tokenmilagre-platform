@@ -11,8 +11,8 @@
 
 import { NextRequest } from 'next/server'
 import { ServiceLocator } from '@/lib/di/container'
-import { paginatedResponse, successResponse, errorResponse } from '@/lib/helpers/response-helpers'
-import { requireEditor } from '@/lib/helpers/auth-helpers'
+import { paginatedResponse, successResponse, errorResponse } from '@/lib/shared/helpers/response-helpers'
+import { requireEditor } from '@/lib/shared/helpers/auth-helpers'
 import { articleQueryInputCurrent, articleCreateInputCurrent } from '@/lib/schemas/article-schemas'
 
 export const dynamic = 'force-dynamic';

@@ -11,8 +11,8 @@
 
 import { NextRequest } from 'next/server'
 import { ServiceLocator } from '@/lib/di/container'
-import { paginatedResponse, successResponse, errorResponse } from '@/lib/helpers/response-helpers'
-import { requireEditor } from '@/lib/helpers/auth-helpers'
+import { paginatedResponse, successResponse, errorResponse } from '@/lib/shared/helpers/response-helpers'
+import { requireEditor } from '@/lib/shared/helpers/auth-helpers'
 import { resourceCreateSchema, resourceQuerySchema } from '@/lib/schemas/resource-schemas'
 
 // Helper para parse seguro de JSON

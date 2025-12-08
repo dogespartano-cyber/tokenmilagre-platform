@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireEditor } from '@/lib/helpers/auth-helpers';
+import { requireEditor } from '@/lib/shared/helpers/auth-helpers';
 import { generateCoverImage, estimateImageSize } from '@/lib/shared/ai/gemini-image';
 import { saveCoverImage, generateImageAltText, validateImageSize } from "@/lib/shared/utils/image";
 

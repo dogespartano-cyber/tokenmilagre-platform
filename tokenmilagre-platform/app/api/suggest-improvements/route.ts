@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { requireEditor } from '@/lib/helpers/auth-helpers';
-import { checkAIRateLimit } from '@/lib/helpers/rate-limit';
+import { requireEditor } from '@/lib/shared/helpers/auth-helpers';
+import { checkAIRateLimit } from '@/lib/shared/helpers/rate-limit';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 

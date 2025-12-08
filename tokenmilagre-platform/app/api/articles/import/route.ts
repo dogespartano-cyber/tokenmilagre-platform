@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/core/prisma';
 import matter from 'gray-matter';
-import { requireEditor, validateAPIKey } from '@/lib/helpers/auth-helpers';
+import { requireEditor, validateAPIKey } from '@/lib/shared/helpers/auth-helpers';
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 📝 Nota de Transparência (adicionada automaticamente)

@@ -12,8 +12,8 @@
 
 import { NextRequest } from 'next/server'
 import { ServiceLocator } from '@/lib/di/container'
-import { requireAdmin } from '@/lib/helpers/auth-helpers'
-import { successResponse, errorResponse } from '@/lib/helpers/response-helpers'
+import { requireAdmin } from '@/lib/shared/helpers/auth-helpers'
+import { successResponse, errorResponse } from '@/lib/shared/helpers/response-helpers'
 import { userQuerySchema, userCreateSchema } from '@/lib/schemas/user-schemas'
 
 /**

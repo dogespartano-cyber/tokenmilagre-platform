@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireEditor } from '@/lib/helpers/auth-helpers';
+import { requireEditor } from '@/lib/shared/helpers/auth-helpers';
 
 interface Message {
   role: 'user' | 'assistant' | 'system';

@@ -12,8 +12,8 @@
 
 import { NextRequest } from 'next/server'
 import { ServiceLocator } from '@/lib/di/container'
-import { requireEditor } from '@/lib/helpers/auth-helpers'
-import { paginatedResponse, errorResponse } from '@/lib/helpers/response-helpers'
+import { requireEditor } from '@/lib/shared/helpers/auth-helpers'
+import { paginatedResponse, errorResponse } from '@/lib/shared/helpers/response-helpers'
 import { z } from 'zod'
 
 /**

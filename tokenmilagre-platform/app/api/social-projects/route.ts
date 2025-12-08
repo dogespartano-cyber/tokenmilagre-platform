@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireEditor } from '@/lib/helpers/auth-helpers';
+import { requireEditor } from '@/lib/shared/helpers/auth-helpers';
 import { prisma } from '@/lib/core/prisma';
 
 // GET /api/social-projects - Listar projetos sociais

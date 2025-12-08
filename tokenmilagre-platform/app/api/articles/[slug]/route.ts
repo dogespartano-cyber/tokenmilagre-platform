@@ -12,8 +12,8 @@
 
 import { NextRequest } from 'next/server'
 import { ServiceLocator } from '@/lib/di/container'
-import { requireAdmin, requireEditor } from '@/lib/helpers/auth-helpers'
-import { successResponse, errorResponse, notFoundResponse } from '@/lib/helpers/response-helpers'
+import { requireAdmin, requireEditor } from '@/lib/shared/helpers/auth-helpers'
+import { successResponse, errorResponse, notFoundResponse } from '@/lib/shared/helpers/response-helpers'
 import { articleUpdateInputCurrent } from '@/lib/schemas/article-schemas'
 import { promises as fs } from 'fs'
 import path from 'path'

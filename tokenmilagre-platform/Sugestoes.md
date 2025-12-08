@@ -271,6 +271,14 @@ lib/
 - [x] **Limpeza:** Removida pasta `lib/data` e arquivo de backup `lib/constants.ts.bak`.
 - [x] **Verificação:** Build verificado e imports corrigidos em `lib/url-security`.
 
+### ✅ Concluído (Sessão 08/12/2025) - Parte 5
+
+#### 🧹 Fractal Polish (Helpers Refactor)
+- [x] **Relocação de Helpers:** Movido `lib/helpers/*` (código ativo) para `lib/shared/helpers/`.
+- [x] **Correção de Imports:** Atualizadas 38+ referências de `@/lib/helpers` para `@/lib/shared/helpers`.
+- [x] **Auditoria:** O projeto atingiu ~95% de aderência à arquitetura fractal (apenas facades restaram na raiz).
+- [x] **Verificação:** Testado localmente (Auth, Resources, Admin) e Build Vercel validado.
+
 ---
 
 

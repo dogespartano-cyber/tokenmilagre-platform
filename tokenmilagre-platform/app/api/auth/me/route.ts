@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authenticate } from '@/lib/helpers/auth-helpers';
+import { authenticate } from '@/lib/shared/helpers/auth-helpers';
 
 /**
  * GET /api/auth/me - Retorna informações do usuário autenticado

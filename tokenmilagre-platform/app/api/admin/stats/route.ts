@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
-import { requireAdmin } from '@/lib/helpers/auth-helpers';
-import { successResponse, errorResponse } from '@/lib/helpers/response-helpers';
+import { requireAdmin } from '@/lib/shared/helpers/auth-helpers';
+import { successResponse, errorResponse } from '@/lib/shared/helpers/response-helpers';
 import { ServiceLocator } from '@/lib/di/container';
 import { TIME_MS } from '@/lib/constants/time';
 import { prisma } from '@/lib/core/prisma';

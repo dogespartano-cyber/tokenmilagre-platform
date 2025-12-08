@@ -16,8 +16,8 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { ServiceLocator } from '@/lib/di/container'
-import { requireEditor } from '@/lib/helpers/auth-helpers'
-import { errorResponse } from '@/lib/helpers/response-helpers'
+import { requireEditor } from '@/lib/shared/helpers/auth-helpers'
+import { errorResponse } from '@/lib/shared/helpers/response-helpers'
 import { chatRequestSchema } from '@/lib/schemas/chat-schemas'
 import { checkRateLimit } from '@/lib/shared/utils/rate-limit'
 import {
