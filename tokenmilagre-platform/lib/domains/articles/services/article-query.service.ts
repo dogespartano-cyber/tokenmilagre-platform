@@ -19,8 +19,8 @@ export class ArticleQueryService {
      * List articles with pagination and filters
      */
     async list(query: Partial<ArticleQuery> = {}): Promise<ArticleListResult> {
-        const page = query.page ?? PAGINATION.DEFAULT_PAGE;
-        const limit = Math.min(query.limit ?? PAGINATION.DEFAULT_LIMIT, PAGINATION.MAX_LIMIT);
+        const page = Number(query.page ?? PAGINATION.DEFAULT_PAGE);
+        const limit = Math.min(Number(query.limit ?? PAGINATION.DEFAULT_LIMIT), PAGINATION.MAX_LIMIT);
         const skip = (page - 1) * limit;
 
         this.logger.setContext({ operation: 'article.list', page, limit });
@@ -30,7 +30,7 @@ export class ArticleQueryService {
             const where: Prisma.ArticleWhereInput = {};
 
             if (query.published !== undefined) {
-                where.published = query.published;
+                where.published = String(query.published) === 'true';
             }
 
             if (query.type) {
@@ -66,7 +66,7 @@ export class ArticleQueryService {
             }
 
             if (query.projectHighlight !== undefined) {
-                where.projectHighlight = query.projectHighlight;
+                where.projectHighlight = String(query.projectHighlight) === 'true';
             }
 
             // Build orderBy

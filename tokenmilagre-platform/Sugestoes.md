@@ -128,6 +128,24 @@
 - [x] Fix: `NavbarCryptoTicker.tsx` - prevenir `undefined.split()` no SSR
 - [x] Fix: `TopCryptosList` import quebrado em `criptomoedas/[slug]/page.tsx`
 - [x] Build Vercel passando ✅
+#### 5. Refatoração ArticleService (Fase 2A)
+- [x] Facade Pattern: ArticleService agora é um facade
+- [x] ArticleCrudService: CRUD operations
+- [x] ArticleQueryService: Listagem e filtros
+- [x] ArticleStatsService: Estatísticas
+- [x] ArticleBulkService: Operações em massa
+- [x] Schema: Adaptação para Zod Types
+- [x] Testes: 35/35 testes passando ✅
+
+#### 6. Refatoração CustomCryptoScreener (Fase 2B)
+- [x] Hooks específicos: `useCryptoData` (Sentry, Cache, Fetching)
+- [x] Hooks UI: `useCryptoTable` (TanStack config)
+- [x] Componentes Fractal:
+  - `CryptoTable`: UI Pura
+  - `CryptoSearch`: UI Pura
+  - `CryptoPagination`: UI Pura
+- [x] Controller Pattern: `CustomCryptoScreener` orquestrando tudo
+- [x] Build: Passando ✅
 
 ### 2025-12-06
 - [x] Prompt educacional melhorado (~9.5/10)

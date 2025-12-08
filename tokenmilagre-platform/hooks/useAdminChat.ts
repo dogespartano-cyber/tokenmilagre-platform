@@ -19,4 +19,4 @@ export {
   type ChatMessage,
   type UseAdminChatOptions,
   type UseAdminChatReturn
-} from './admin-chat';
+} from '@/lib/domains/admin-chat';

@@ -107,9 +107,8 @@ export default function AdminChatSidebar({
 
       {/* Sidebar */}
       <div
-        className={`fixed right-0 top-0 h-full z-40 transition-transform duration-300 ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed right-0 top-0 h-full z-40 transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
         style={{
           width: '420px',
           maxWidth: '100vw'
@@ -280,17 +279,16 @@ export default function AdminChatSidebar({
               </div>
             )}
 
-            {messages.map((message) => (
+            {messages.map((message: any) => (
               <div
                 key={message.id}
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[85%] rounded-2xl p-3 ${
-                    message.role === 'user'
-                      ? 'rounded-br-none'
-                      : 'rounded-bl-none'
-                  }`}
+                  className={`max-w-[85%] rounded-2xl p-3 ${message.role === 'user'
+                    ? 'rounded-br-none'
+                    : 'rounded-bl-none'
+                    }`}
                   style={{
                     backgroundColor: message.role === 'user'
                       ? 'var(--brand-primary)'
@@ -390,7 +388,7 @@ export default function AdminChatSidebar({
                               const detectedMode: 'selection' | 'full' = isTrechoEdit ? 'selection' : 'full';
 
                               // 🔍 Tentar extrair texto original da mensagem anterior do usuário
-                              const messageIndex = messages.findIndex(m => m.id === message.id);
+                              const messageIndex = messages.findIndex((m: any) => m.id === message.id);
                               let originalText: string | undefined;
 
                               if (messageIndex > 0 && detectedMode === 'selection') {

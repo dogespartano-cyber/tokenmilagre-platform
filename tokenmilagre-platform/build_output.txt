@@ -9,20 +9,98 @@
 
  ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
    Creating an optimized production build ...
- ✓ Compiled successfully in 10.6s
+ ✓ Compiled successfully in 8.7s
    Running next.config.js provided runAfterProductionCompile ...
- ✓ Completed runAfterProductionCompile in 636ms
+ ✓ Completed runAfterProductionCompile in 552ms
    Running TypeScript ...
-Failed to compile.
+   Collecting page data using 11 workers ...
+ ⚠ Using edge runtime on a page currently disables static generation for that page
+   Generating static pages using 11 workers (0/53) ...
+   Generating static pages using 11 workers (13/53) 
+   Generating static pages using 11 workers (26/53) 
+   Generating static pages using 11 workers (39/53) 
+ ✓ Generating static pages using 11 workers (53/53) in 2.1s
+   Finalizing page optimization ...
 
-./app/dashboard/_components/AIAssistant.tsx:106:28
-Type error: Parameter 'message' implicitly has an 'any' type.
+Route (app)                         Revalidate  Expire
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/admin-chat
+├ ƒ /api/admin/articles
+├ ƒ /api/admin/seed-resources
+├ ƒ /api/admin/stats
+├ ƒ /api/admin/users
+├ ƒ /api/admin/users/[id]
+├ ƒ /api/articles
+├ ƒ /api/articles/[slug]
+├ ƒ /api/articles/import
+├ ƒ /api/articles/list
+├ ƒ /api/auth/me
+├ ƒ /api/build-info
+├ ƒ /api/chat-perplexity
+├ ƒ /api/check-url
+├ ƒ /api/community-stories
+├ ƒ /api/community-stories/[slug]
+├ ƒ /api/crypto/[slug]
+├ ƒ /api/crypto/top
+├ ƒ /api/editor-chat
+├ ƒ /api/fear-greed
+├ ƒ /api/gamification/award-points
+├ ƒ /api/generate-article
+├ ƒ /api/list-gemini-models
+├ ○ /api/market                             1m      1y
+├ ƒ /api/news
+├ ƒ /api/news/related/[slug]
+├ ƒ /api/process-gemini
+├ ƒ /api/process-news
+├ ƒ /api/project-map
+├ ƒ /api/public-stats
+├ ƒ /api/refine-article
+├ ƒ /api/resources
+├ ƒ /api/resources/[slug]
+├ ƒ /api/setup-admin
+├ ƒ /api/setup-supabase-schema
+├ ƒ /api/social-projects
+├ ƒ /api/social-projects/[slug]
+├ ƒ /api/suggest-improvements
+├ ƒ /api/test-env
+├ ƒ /api/user-progress
+├ ƒ /api/webhooks/clerk
+├ ○ /comece-aqui
+├ ○ /criptomoedas
+├ ƒ /criptomoedas/[slug]
+├ ○ /dashboard
+├ ○ /dashboard/admin
+├ ○ /dashboard/artigos
+├ ○ /dashboard/criar
+├ ○ /dashboard/editor
+├ ○ /dashboard/mercado
+├ ○ /dashboard/usuarios
+├ ƒ /educacao
+├ ƒ /educacao/[slug]
+├ ○ /graficos
+├ ○ /manifesto
+├ ƒ /membro
+├ ○ /noticias
+├ ƒ /noticias/[slug]
+├ ○ /privacidade
+├ ƒ /recursos
+├ ƒ /recursos/[slug]
+├ ○ /roadmap
+├ ○ /robots.txt
+├ ○ /seguranca/verificador-url
+├ ƒ /sign-in/[[...sign-in]]
+├ ƒ /sign-up/[[...sign-up]]
+├ ○ /sitemap.xml
+├ ○ /sobre
+├ ○ /sobre/equipe
+├ ○ /termos
+├ ○ /token
+└ ○ /transparencia
 
-[0m [90m 104 |[39m           [90m// Messages View - Wide Layout[39m
- [90m 105 |[39m           [33m<[39m[33mdiv[39m className[33m=[39m[32m"w-full max-w-5xl mx-auto px-6 py-12 pb-32"[39m[33m>[39m
-[31m[1m>[22m[39m[90m 106 |[39m             {messages[33m.[39mmap((message) [33m=>[39m (
- [90m     |[39m                            [31m[1m^[22m[39m
- [90m 107 |[39m               [33m<[39m[33mdiv[39m key[33m=[39m{message[33m.[39mid} className[33m=[39m[32m"mb-10"[39m[33m>[39m
- [90m 108 |[39m                 {message[33m.[39mrole [33m===[39m [32m'user'[39m [33m?[39m (
- [90m 109 |[39m                   [90m// User Message - Small pill on top right[39m[0m
-Next.js build worker exited with code: 1 and signal: null
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
