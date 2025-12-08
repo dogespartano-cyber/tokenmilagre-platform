@@ -103,7 +103,7 @@ export default function AIAssistant({
         ) : (
           // Messages View - Wide Layout
           <div className="w-full max-w-5xl mx-auto px-6 py-12 pb-32">
-            {messages.map((message) => (
+            {messages.map((message: any) => (
               <div key={message.id} className="mb-10">
                 {message.role === 'user' ? (
                   // User Message - Small pill on top right

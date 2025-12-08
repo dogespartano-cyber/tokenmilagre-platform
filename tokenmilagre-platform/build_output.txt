@@ -1,0 +1,28 @@
+
+> tokenmilagre-platform@0.1.0 build
+> next build
+
+   ▲ Next.js 16.0.7 (Turbopack)
+   - Environments: .env.local, .env
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 10.6s
+   Running next.config.js provided runAfterProductionCompile ...
+ ✓ Completed runAfterProductionCompile in 636ms
+   Running TypeScript ...
+Failed to compile.
+
+./app/dashboard/_components/AIAssistant.tsx:106:28
+Type error: Parameter 'message' implicitly has an 'any' type.
+
+[0m [90m 104 |[39m           [90m// Messages View - Wide Layout[39m
+ [90m 105 |[39m           [33m<[39m[33mdiv[39m className[33m=[39m[32m"w-full max-w-5xl mx-auto px-6 py-12 pb-32"[39m[33m>[39m
+[31m[1m>[22m[39m[90m 106 |[39m             {messages[33m.[39mmap((message) [33m=>[39m (
+ [90m     |[39m                            [31m[1m^[22m[39m
+ [90m 107 |[39m               [33m<[39m[33mdiv[39m key[33m=[39m{message[33m.[39mid} className[33m=[39m[32m"mb-10"[39m[33m>[39m
+ [90m 108 |[39m                 {message[33m.[39mrole [33m===[39m [32m'user'[39m [33m?[39m (
+ [90m 109 |[39m                   [90m// User Message - Small pill on top right[39m[0m
+Next.js build worker exited with code: 1 and signal: null

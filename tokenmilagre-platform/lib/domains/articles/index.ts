@@ -48,9 +48,14 @@ export {
 } from './types';
 
 // ============================================
-// SERVICE
-// Re-exported from lib/services/article-service.ts
+// SERVICES (Public)
 // ============================================
+export { ArticleCrudService } from './services/article-crud.service';
+export { ArticleQueryService } from './services/article-query.service';
+export { ArticleStatsService } from './services/article-stats.service';
+export { ArticleBulkService } from './services/article-bulk.service';
+
+// Re-export Legacy Facade
 export { ArticleService, articleService } from '@/lib/services/article-service';
 
 // ============================================

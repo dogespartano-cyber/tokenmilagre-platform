@@ -8,16 +8,53 @@
  * Re-exports from article-service.ts and article-schemas.ts
  */
 
+import { Article } from '@/lib/generated/prisma';
+
 // ============================================
-// RE-EXPORTS FROM SERVICE
-// These types are defined in article-service.ts
+// DOMAIN ENTITIES
+// Moved from article-service.ts to avoid circular deps
 // ============================================
-export type {
-    ArticleWithRelations,
-    ArticleListResult,
-    ArticleStats,
-    BulkOperationResult,
-} from '@/lib/services/article-service';
+
+/**
+ * Article with author relation
+ */
+export type ArticleWithRelations = Article & {
+    author?: { id: string; name: string | null; email: string }
+}
+
+/**
+ * Paginated article list result
+ */
+export interface ArticleListResult {
+    articles: ArticleWithRelations[]
+    total: number
+    page: number
+    limit: number
+    totalPages: number
+    hasMore: boolean
+}
+
+/**
+ * Article statistics
+ */
+export interface ArticleStats {
+    total: number
+    published: number
+    draft: number
+    byType: Record<string, number>
+    byCategory: Record<string, number>
+    bySentiment: Record<string, number>
+    avgFactCheckScore: number | null
+    withFactCheck: number
+}
+
+/**
+ * Bulk operation result
+ */
+export interface BulkOperationResult {
+    count: number
+    articleIds: string[]
+}
 
 // ============================================
 // RE-EXPORTS FROM SCHEMAS

@@ -374,7 +374,7 @@ export const bulkArticleOperationCurrent = z.object({
 /**
  * Export current schema types
  */
-export type ArticleCreateInputCurrent = z.infer<typeof articleCreateInputCurrent>
-export type ArticleUpdateInputCurrent = z.infer<typeof articleUpdateInputCurrent>
-export type ArticleQueryCurrent = z.infer<typeof articleQueryInputCurrent>
-export type BulkArticleOperationCurrent = z.infer<typeof bulkArticleOperationCurrent>
+export type ArticleCreateInputCurrent = z.input<typeof articleCreateInputCurrent>
+export type ArticleUpdateInputCurrent = z.input<typeof articleUpdateInputCurrent>
+export type ArticleQueryCurrent = z.input<typeof articleQueryInputCurrent>
+export type BulkArticleOperationCurrent = z.input<typeof bulkArticleOperationCurrent>
