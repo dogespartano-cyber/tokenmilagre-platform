@@ -5,8 +5,8 @@
 
 import { prisma } from '@/lib/core/prisma';
 import { Prisma } from '@/lib/generated/prisma';
-import { ServiceLocator } from '@/lib/di/container';
-import { NotFoundError, ConflictError } from '@/lib/services/error-service';
+import { ServiceLocator } from '@/lib/core/di/container';
+import { NotFoundError, ConflictError } from '@/lib/shared/services/error.service';
 import type {
     ArticleCreateInputCurrent as ArticleCreateInput,
     ArticleUpdateInputCurrent as ArticleUpdateInput,

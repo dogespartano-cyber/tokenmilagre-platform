@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { useThrottle } from '@/hooks/useThrottle';
-import { SCROLL_TOP_THRESHOLD, SCROLL_THROTTLE_MS } from '@/lib/constants';
+import { SCROLL_TOP_THRESHOLD, SCROLL_THROTTLE_MS } from '@/lib/core/constants/ui';
 
 export default function ScrollToTop() {
   const [showScrollTop, setShowScrollTop] = useState(false);

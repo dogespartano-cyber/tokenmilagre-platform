@@ -72,4 +72,4 @@ export {
 // Re-exported from lib/services/resource-service.ts
 // TODO: Move implementation here in future refactor
 // ============================================
-export { ResourceService } from '@/lib/services/resource-service';
+export { ResourceService } from './services/resource.service';

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Resource } from '@/lib/resources';
 import { getCategoryGradient, getAllCategories } from '@/lib/category-helpers';
-import { MAX_VISIBLE_TAGS } from '@/lib/constants';
+import { MAX_VISIBLE_TAGS } from '@/lib/core/constants/ui';
 
 interface ResourceGridProps {
   resources: Resource[];

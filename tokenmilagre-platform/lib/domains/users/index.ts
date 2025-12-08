@@ -19,7 +19,7 @@
 // ============================================
 export type {
     SafeUser,
-    UserQueryService,
+    UserQuery as UserQueryService, // Alias manual type
     UserCreateInput,
     UserUpdateInput,
     UserListResult,
@@ -30,7 +30,7 @@ export type {
     Login,
     AwardPoints,
     AddBadge,
-    Role,
+    RoleEnum as Role,
     UserRoleValue,
 } from './types';
 

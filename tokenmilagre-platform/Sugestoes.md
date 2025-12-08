@@ -242,6 +242,19 @@ lib/
 - [x] **Unificação do Prisma:** Remoção de duplicados. Única fonte da verdade em `@/lib/core/prisma`.
 - [x] **Consistência de Imports:** Atualização massiva de imports para refletir nova estrutura.
 
+### ✅ Concluído (Sessão 08/12/2025) - Parte 2
+
+#### 🧟 Exorcizando Zombies (Consolidação de Serviços & Schemas)
+- [x] **Migração de Serviços:** Mover `lib/services/*` para `lib/domains/*/services` ou `lib/shared/services`.
+    - `ArticleService` → `domains/articles`
+    - `UserService` → `domains/users`
+    - `ResourceService` → `domains/resources`
+    - `Logger`, `Error`, `Validation` → `shared/services`
+- [x] **Migração de Schemas:** Mover `lib/schemas/*` para `lib/domains/*/schemas` ou `lib/shared/schemas`.
+- [x] **Resolução de Dependências Circulares:** Correção crítica em `domains/users` e `domains/resources` (Tipos ↔ Serviços).
+- [x] **Compatibilidade:** Criação de Facades Estritos em `lib/services` e `lib/schemas` para manter compatibilidade com códigos legados.
+- [x] **Verificação:** `npm run build` passando com sucesso (Zero erros de tipo).
+
 ---
 
 

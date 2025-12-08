@@ -47,7 +47,7 @@ describe('useArticles', () => {
         status: 'PUBLISHED',
         categoryId: 'cat-1',
         authorId: 'user-1',
-        readTime: 5,
+        readTime: '5 min',
         createdAt: new Date('2024-01-01'),
         updatedAt: new Date('2024-01-01'),
         deletedAt: null,
@@ -61,11 +61,10 @@ describe('useArticles', () => {
           name: 'Test Author',
           email: 'test@example.com',
         },
-        category: {
-          id: 'cat-1',
-          name: 'Technology',
-          slug: 'technology',
-        },
+        // category field is likely string in Prisma if relation is not included or if it's the old string field
+        // But ArticleWithRelations usually includes the relation object.
+        // Let's assume the type expects the relation object based on 'include'
+        category: 'Technology', // Changed to string based on error "Type object not assignable to string"
         tags: [],
         citations: [],
         relatedArticles: [],
@@ -80,7 +79,7 @@ describe('useArticles', () => {
         status: 'PUBLISHED',
         categoryId: 'cat-1',
         authorId: 'user-1',
-        readTime: 3,
+        readTime: '3 min',
         createdAt: new Date('2024-01-02'),
         updatedAt: new Date('2024-01-02'),
         deletedAt: null,
@@ -94,11 +93,7 @@ describe('useArticles', () => {
           name: 'Test Author',
           email: 'test@example.com',
         },
-        category: {
-          id: 'cat-1',
-          name: 'Technology',
-          slug: 'technology',
-        },
+        category: 'Technology',
         tags: [],
         citations: [],
         relatedArticles: [],
@@ -109,10 +104,11 @@ describe('useArticles', () => {
     page: 1,
     limit: 10,
     totalPages: 1,
+    hasMore: false,
   }
 
   it('should fetch articles successfully', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValueOnce({
+    ; (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => mockArticlesResponse,
     })
@@ -130,7 +126,7 @@ describe('useArticles', () => {
   })
 
   it('should use default query parameters', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValueOnce({
+    ; (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => mockArticlesResponse,
     })
@@ -160,7 +156,7 @@ describe('useArticles', () => {
   })
 
   it('should apply custom query filters', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValueOnce({
+    ; (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => mockArticlesResponse,
     })
@@ -193,14 +189,14 @@ describe('useArticles', () => {
 
   it('should handle fetch errors', async () => {
     const errorMessage = 'Failed to fetch articles'
-    ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-      ok: false,
-      json: async () => ({
-        error: {
-          message: errorMessage,
-        },
-      }),
-    })
+      ; (global.fetch as jest.Mock).mockResolvedValueOnce({
+        ok: false,
+        json: async () => ({
+          error: {
+            message: errorMessage,
+          },
+        }),
+      })
 
     const { result } = renderHook(() => useArticles(), { wrapper })
 
@@ -213,7 +209,7 @@ describe('useArticles', () => {
   })
 
   it('should include credentials in request', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValueOnce({
+    ; (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => mockArticlesResponse,
     })
@@ -233,7 +229,7 @@ describe('useArticles', () => {
   })
 
   it('should cache results', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValue({
+    ; (global.fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: async () => mockArticlesResponse,
     })
@@ -262,10 +258,10 @@ describe('useArticles', () => {
       totalPages: 0,
     }
 
-    ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => emptyResponse,
-    })
+      ; (global.fetch as jest.Mock).mockResolvedValueOnce({
+        ok: true,
+        json: async () => emptyResponse,
+      })
 
     const { result } = renderHook(() => useArticles(), { wrapper })
 
@@ -278,7 +274,7 @@ describe('useArticles', () => {
   })
 
   it('should handle pagination', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValueOnce({
+    ; (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => ({
         ...mockArticlesResponse,
@@ -304,7 +300,7 @@ describe('useArticles', () => {
   })
 
   it('should handle network errors', async () => {
-    ;(global.fetch as jest.Mock).mockRejectedValueOnce(
+    ; (global.fetch as jest.Mock).mockRejectedValueOnce(
       new Error('Network error')
     )
 

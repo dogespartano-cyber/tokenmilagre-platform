@@ -33,7 +33,7 @@
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query'
 import { articleKeys } from './query-keys'
 import type { ArticleQuery } from '@/lib/schemas/article-schemas'
-import type { ArticleListResult } from '@/lib/services/article-service'
+import type { ArticleListResult } from '@/lib/domains/articles/types'
 
 /**
  * Fetches articles from API v2

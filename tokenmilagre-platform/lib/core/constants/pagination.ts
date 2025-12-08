@@ -21,6 +21,13 @@ export const PAGINATION = {
     INFINITE_SCROLL_LIMIT: 20,
 } as const;
 
+/**
+ * @deprecated Use PAGINATION.DEFAULT_LIMIT or ARTICLE_LIMITS instead.
+ * Kept for backward compatibility during migration.
+ */
+export const RESOURCES_PER_PAGE = 12; // Items per page (grid: 3 cols × 4 rows)
+export const ARTICLES_PER_PAGE = 9; // Items per page (grid: 3 cols × 3 rows)
+
 export const ARTICLE_LIMITS = {
     /** Limit for article listing in news page */
     NEWS_PAGE: 12,

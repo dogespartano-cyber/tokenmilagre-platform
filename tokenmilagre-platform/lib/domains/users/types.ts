@@ -5,21 +5,78 @@
  * @agi-pattern: fractal auto-similar
  * 
  * All types and interfaces for the users domain.
- * Re-exports from user-service.ts and user-schemas.ts
  */
 
+import { User, Role } from '@/lib/generated/prisma';
+
 // ============================================
-// RE-EXPORTS FROM SERVICE
-// These types are defined in user-service.ts
+// DOMAIN ENTITIES
+// Moved from user.service.ts to avoid circular deps
 // ============================================
-export type {
-    SafeUser,
-    UserQuery as UserQueryService,  // Renamed to avoid collision with schema type
-    UserCreateInput,
-    UserUpdateInput,
-    UserListResult,
-    UserStats,
-} from '@/lib/services/user-service';
+
+/**
+ * User without sensitive data
+ */
+export type SafeUser = Omit<User, 'password'>
+
+/**
+ * User query parameters
+ */
+export interface UserQuery {
+    page?: number
+    limit?: number
+    role?: Role
+    search?: string
+    sortBy?: keyof User
+    sortOrder?: 'asc' | 'desc'
+}
+
+/**
+ * User creation input
+ */
+export interface UserCreateInput {
+    email: string
+    password: string
+    name?: string
+    role?: Role
+    image?: string
+}
+
+/**
+ * User update input
+ */
+export interface UserUpdateInput {
+    email?: string
+    password?: string
+    name?: string
+    role?: Role
+    image?: string
+    points?: number
+    badges?: string
+}
+
+/**
+ * Paginated user list result
+ */
+export interface UserListResult {
+    users: SafeUser[]
+    total: number
+    page: number
+    limit: number
+    totalPages: number
+    hasMore: boolean
+}
+
+/**
+ * User statistics
+ */
+export interface UserStats {
+    total: number
+    byRole: Record<Role, number>
+    totalPoints: number
+    avgPointsPerUser: number
+    withBadges: number
+}
 
 // ============================================
 // RE-EXPORTS FROM SCHEMAS
@@ -28,11 +85,10 @@ export type {
 export type {
     UserCreate,
     UserUpdate,
-    UserQuery,
     Login,
     AwardPoints,
     AddBadge,
-    Role,
+    Role as RoleEnum, // Alias to avoid conflict with Prisma Role
 } from '@/lib/schemas/user-schemas';
 
 // ============================================

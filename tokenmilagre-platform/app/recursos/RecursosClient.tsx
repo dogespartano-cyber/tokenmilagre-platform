@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Resource } from '@/lib/resources';
 import { getAllCategories } from '@/lib/category-helpers';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
-import { SEARCH_DEBOUNCE_MS } from '@/lib/constants';
+import { SEARCH_DEBOUNCE_MS } from '@/lib/core/constants/ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
 // import ResourceFilters from './components/ResourceFilters'; // Removed
