@@ -1,3 +1,7 @@
+/**
+ * @deprecated Legacy API for resources. Use services from lib/domains/resources/services/ instead.
+ * This file is kept for backward compatibility only.
+ */
 import { prisma } from '@/lib/core/prisma';
 
 // Safe JSON parser with fallback
