@@ -21,5 +21,11 @@ export * from './articles';
 // Users Domain
 export * from './users';
 
+// Crypto Domain
+export * from './crypto';
+
+// Admin Chat Domain
+export * from './admin-chat';
+
 // Future domains will be added here:
 // export * from './gamification';

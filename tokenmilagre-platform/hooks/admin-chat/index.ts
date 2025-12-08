@@ -1,13 +1,14 @@
 /**
- * Admin Chat Module
- * Re-exports públicos seguindo estrutura fractal
+ * 🔄 Re-export for backward compatibility
  * 
- * @agi-module: admin-chat
- * @agi-pattern: fractal
+ * @deprecated Import from '@/lib/domains/admin-chat' instead
+ * 
+ * This file re-exports admin-chat from the new domain location
+ * to maintain compatibility with existing imports.
  */
 
 // Hook principal
-export { useAdminChat } from './useAdminChat';
+export { useAdminChat } from '@/lib/domains/admin-chat';
 
 // Tipos públicos
 export type {
@@ -16,10 +17,10 @@ export type {
     UseAdminChatReturn,
     ApiArticle,
     CanvasArticle
-} from './types';
+} from '@/lib/domains/admin-chat';
 
 // Utilitários que podem ser úteis externamente
 export {
     createUserMessage,
     createAssistantMessage
-} from './utils';
+} from '@/lib/domains/admin-chat';
