@@ -1,0 +1,50 @@
+{
+    "version": "1.0.0",
+    "lastUpdated": "2025-11-10",
+    "sources": [
+        "CryptoScamDB",
+        "PhishTank",
+        "Comunidade $MILAGRE"
+    ],
+    "domains": [
+        {
+            "domain": "binanse.com",
+            "type": "typosquatting",
+            "legitimate": "binance.com",
+            "addedAt": "2025-11-10",
+            "severity": "critical"
+        },
+        {
+            "domain": "binance-trade.com",
+            "type": "phishing",
+            "legitimate": "binance.com",
+            "addedAt": "2025-11-10",
+            "severity": "critical"
+        },
+        {
+            "domain": "coinbasse.com",
+            "type": "typosquatting",
+            "legitimate": "coinbase.com",
+            "addedAt": "2025-11-10",
+            "severity": "critical"
+        },
+        {
+            "domain": "free-btc-giveaway.com",
+            "type": "scam",
+            "severity": "critical",
+            "addedAt": "2025-11-10"
+        },
+        {
+            "domain": "double-your-bitcoin.com",
+            "type": "scam",
+            "severity": "critical",
+            "addedAt": "2025-11-10"
+        },
+        {
+            "domain": "btc-airdrop-2025.com",
+            "type": "scam",
+            "severity": "critical",
+            "addedAt": "2025-11-10"
+        }
+    ]
+}

@@ -1,0 +1,51 @@
+{
+    "version": "1.0.0",
+    "lastUpdated": "2025-11-10",
+    "exchanges": [
+        "binance.com",
+        "coinbase.com",
+        "kraken.com",
+        "kucoin.com",
+        "bybit.com",
+        "okx.com",
+        "gate.io",
+        "huobi.com",
+        "bitfinex.com",
+        "gemini.com"
+    ],
+    "wallets": [
+        "metamask.io",
+        "phantom.app",
+        "ledger.com",
+        "trezor.io",
+        "trust.com",
+        "exodus.com",
+        "electrum.org"
+    ],
+    "news": [
+        "coindesk.com",
+        "cointelegraph.com",
+        "decrypt.co",
+        "theblock.co",
+        "bitcoinmagazine.com"
+    ],
+    "official": [
+        "bitcoin.org",
+        "ethereum.org",
+        "solana.com",
+        "cardano.org",
+        "polkadot.network"
+    ],
+    "analytics": [
+        "coingecko.com",
+        "coinmarketcap.com",
+        "messari.io",
+        "glassnode.com"
+    ],
+    "defi": [
+        "uniswap.org",
+        "aave.com",
+        "compound.finance",
+        "curve.fi"
+    ]
+}

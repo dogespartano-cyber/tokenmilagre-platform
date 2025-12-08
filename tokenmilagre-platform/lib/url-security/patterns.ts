@@ -4,8 +4,8 @@
  * Detecta typosquatting, homograph attacks, e padrões suspeitos
  */
 
-import scamDomains from '@/lib/data/crypto-scam-domains.json';
-import trustedDomains from '@/lib/data/crypto-trusted-domains.json';
+import scamDomains from '@/lib/domains/crypto/data/scam-domains.json';
+import trustedDomains from '@/lib/domains/crypto/data/trusted-domains.json';
 
 // Levenshtein distance para detectar typosquatting
 function levenshteinDistance(a: string, b: string): number {
@@ -255,8 +255,8 @@ export function analyzeURL(url: string): URLAnalysis {
       educationalTip: entry.type === 'typosquatting'
         ? 'Typosquatting é quando golpistas registram domínios com pequenos erros de digitação para enganar usuários. Sempre confira o domínio letra por letra!'
         : entry.type === 'homograph'
-        ? 'Ataques homográficos usam caracteres Unicode que PARECEM iguais mas são diferentes. Seu navegador pode mostrar idênticos ao site real!'
-        : 'Este site foi reportado como scam pela comunidade. Nunca compartilhe suas chaves privadas ou senhas!',
+          ? 'Ataques homográficos usam caracteres Unicode que PARECEM iguais mas são diferentes. Seu navegador pode mostrar idênticos ao site real!'
+          : 'Este site foi reportado como scam pela comunidade. Nunca compartilhe suas chaves privadas ou senhas!',
       similarLegitDomain: entry.legitimate,
       source: 'blacklist',
     };

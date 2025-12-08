@@ -262,6 +262,15 @@ lib/
 - [x] **Aderência Fractal:** 100% dos arquivos agora residem em containers apropriados (Domains ou Shared).
 - [x] **Integridade:** Validado com `type-check` (Imports atualizados em 15+ arquivos).
 
+### ✅ Concluído (Sessão 08/12/2025) - Parte 4
+
+#### 💎 Core Consolidation (Remoção de Duplicatas Reais)
+- [x] **Análise Profunda:** Detectado que `lib/constants/*` eram duplicatas (código repetido) e não apenas fachadas.
+- [x] **Conversão para Facades:** Convertidos `mission.ts`, `pricing.ts`, `time.ts`, `validation.ts` e `pagination.ts` em `lib/constants/` para re-exports simples de `@/lib/core/constants/*`.
+- [x] **Migração de Dados:** `lib/data/*.json` movidos para `lib/domains/crypto/data/`.
+- [x] **Limpeza:** Removida pasta `lib/data` e arquivo de backup `lib/constants.ts.bak`.
+- [x] **Verificação:** Build verificado e imports corrigidos em `lib/url-security`.
+
 ---
 
 
