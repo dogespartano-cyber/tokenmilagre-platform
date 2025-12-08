@@ -9,14 +9,14 @@
 
 ### 🏗️ Refatoração Fractal - Fase 2 (Próximos Passos)
 
-- [ ] **Mover hooks para domínios** - Relocar hooks específicos
+- [x] **Mover hooks para domínios** - Relocar hooks específicos
   - `useBinanceData` → `lib/domains/crypto/hooks/`
   - `useHolderCount` → `lib/domains/crypto/hooks/`
-  - Esforço: ~1h
+  - Esforço: ~1h ✅
 
-- [ ] **Criar domínio admin-chat** - Consolidar em `lib/domains/admin-chat/`
+- [x] **Criar domínio admin-chat** - Consolidar em `lib/domains/admin-chat/`
   - Mover `hooks/admin-chat/` para `lib/domains/admin-chat/hooks/`
-  - Esforço: ~30min
+  - Esforço: ~30min ✅
 
 - [ ] **Refatorar ArticleService** (733 linhas) - Quebrar em serviços menores
   - Separar: CRUD, Stats, Search, Relationships
@@ -204,9 +204,17 @@ lib/
 ├── domains/
 │   ├── index.ts               # Registry
 │   ├── resources/             # Fase 1
-│   ├── articles/              # Fase 2
-│   └── users/                 # Fase 3
+│   ├── articles/              # Fase 2A
+│   ├── users/                 # Fase 3
+│   ├── crypto/                # Fase 2B (Novo)
+│   └── admin-chat/            # Fase 2C (Novo)
 ```
+
+#### ✅ Concluído (Fase 2 - Crypto & Admin Chat)
+- [x] **Domínio Crypto:** `lib/domains/crypto/` criado com hooks (`useBinanceData`, `useHolderCount`).
+- [x] **Domínio Admin-Chat:** `lib/domains/admin-chat/` criado.
+- [x] **Compatibilidade:** Re-exports criados em `hooks/` para evitar breaking changes.
+- [x] **Verificação:** Testado em localhost (Ticker, HolderCount, AIAssistant).
 
 ---
 
