@@ -29,19 +29,18 @@
 
 ### Documentação & GitHub
 
-- [ ] **README em Inglês** - Criar versão EN do README para adoção internacional
-  - Esforço: ~2h
-  - Arquivo: `README.en.md` ou seção bilíngue
+- [x] **README em Inglês** - Criada versão EN do README para adoção internacional ✅
+  - Arquivo: `README.en.md`
+  - Links cruzados entre versões
 
-- [ ] **GitHub Issues Templates** - Facilitar contribuições
-  - Esforço: ~30min
-  - Criar: `.github/ISSUE_TEMPLATE/bug_report.md`
-  - Criar: `.github/ISSUE_TEMPLATE/feature_request.md`
+- [x] **GitHub Issues Templates** - Facilitar contribuições ✅
+  - Criado: `.github/ISSUE_TEMPLATE/bug_report.md`
+  - Criado: `.github/ISSUE_TEMPLATE/feature_request.md`
 
-- [ ] **Melhorar descrição do repo GitHub** - Muito genérica atualmente
-  - Adicionar: Topics (nextjs, crypto, education, web3)
-  - Adicionar: Website link (tokenmilagre.xyz)
-  - Adicionar: Social previews
+- [x] **Melhorar descrição do repo GitHub** - Preparado ✅
+  - Topics sugeridos: nextjs, crypto, education, web3, blockchain, solana, typescript, prisma
+  - Website: tokenmilagre.xyz
+  - **Ação manual necessária**: Configurar no GitHub → Settings → About
 
 ---
 
@@ -291,10 +290,6 @@ lib/
 ---
 
 ### 🔴 Alta Prioridade (Próximos)
-
-- [ ] **Corrigir testes MSW** - Testes de API/adapters falham por falta de polyfills Node
-  - Solução: Criar config jest separada com `testEnvironment: 'node'` para testes MSW
-  - Arquivos: `__tests__/api/*`, `lib/adapters/__tests__/*`
 
 - [x] **Consolidar lib/core/** — ✅ Concluído (07/12/2025)
   - [x] Mover `lib/prisma.ts` → `lib/core/prisma.ts`

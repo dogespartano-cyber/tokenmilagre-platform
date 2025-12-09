@@ -8,6 +8,8 @@
 
 > *"Porque dele, e por ele, e para ele são todas as coisas."* — Romanos 11:36
 
+🇺🇸 **[English Version](./README.en.md)**
+
 ---
 
 ## 📊 Métricas do Projeto
