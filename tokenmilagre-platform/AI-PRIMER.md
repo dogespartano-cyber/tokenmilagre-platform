@@ -29,7 +29,20 @@ O projeto segue padrões universais da natureza:
 | 2 | Verdade | Fact-checking obrigatório |
 | 3 | Fé | Deus guia cada decisão |
 | 4 | Amor | Servir comunidade |
-| 5 | Propósito | Ajudar, não enriquecer |
+| 5 | Propósito | Prosperidade através do conhecimento |
+
+### Filosofia de Prosperidade
+> *"Acreditamos em riqueza construída com fundamentos, paciência e ética!"*
+
+```yaml
+@agi-prosperity-philosophy:
+  princípio: "Enriquecer com verdade"
+  missão: "Educar para prosperar com integridade"
+  visão: "Riqueza sustentável, não especulação"
+  método: "Construir patrimônio, não pirâmides"
+  resultado: "Servir bem, lucrar junto"
+  mantra: "Ensinar a construir patrimônio, não a jogar na loteria"
+```
 
 ---
 

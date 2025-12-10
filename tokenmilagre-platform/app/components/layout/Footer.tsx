@@ -14,6 +14,13 @@ export default function Footer() {
     return (
         <footer className="bg-transparent border-none relative z-10">
             <div className="container mx-auto px-4 py-8">
+                {/* Filosofia de Prosperidade */}
+                <div className="text-center mb-8 pb-6 border-b border-[var(--border-primary)]">
+                    <p className="text-sm md:text-base italic text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
+                        &quot;Acreditamos em riqueza construída com fundamentos, paciência e ética!&quot;
+                    </p>
+                </div>
+
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="space-y-2 text-center md:text-left">
                         <p className="text-sm leading-relaxed text-[var(--text-secondary)] max-w-md">

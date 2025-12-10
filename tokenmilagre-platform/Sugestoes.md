@@ -5,6 +5,29 @@
 
 ---
 
+## ✅ Concluído (Sessão 10/12/2025)
+
+### 📜 Reformulação de Valores - Filosofia de Prosperidade
+
+- [x] **Reformulação do valor "Propósito"** — De "Ajudar, não enriquecer" para "Prosperidade através do conhecimento"
+  - Motivação: Honestidade sobre a missão de ajudar pessoas a enriquecer de forma ética
+  - Arquivos atualizados:
+    - `AI-PRIMER.md` — Nova seção "Filosofia de Prosperidade" com todos os princípios
+    - `MANIFEST.agi.md` — Tabela de valores + nova seção de filosofia
+    - `lib/core/constants/mission.ts` — Nova constante `PROSPERITY_PHILOSOPHY`
+
+- [x] **Nova constante `PROSPERITY_PHILOSOPHY`** em `mission.ts`
+  - 6 princípios de prosperidade ética:
+    1. "Enriquecer com verdade"
+    2. "Prosperidade com propósito"
+    3. "Construir patrimônio, não pirâmides"
+    4. "Servir bem, lucrar junto"
+    5. "Educar para prosperar"
+    6. "Riqueza sustentável, não especulação"
+  - Mantra: "Ensinar a construir patrimônio, não a jogar na loteria"
+
+---
+
 ## ✅ Concluído (Sessão 09/12/2025)
 
 ### 🔧 Correções de Build e Autenticação

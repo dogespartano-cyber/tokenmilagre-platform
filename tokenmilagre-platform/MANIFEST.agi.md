@@ -34,9 +34,32 @@ mission:
 |-------|-----------|----------|
 | **TRANSPARÊNCIA** | Código aberto, métricas públicas, auditável | ✅ |
 | **VERDADE** | Fact-checking obrigatório em todo conteúdo | ✅ |
-| **PROPÓSITO** | Ajudar, não enriquecer | ✅ |
+| **PROPÓSITO** | Prosperidade através do conhecimento | ✅ |
 | **FÉ** | Deus é a bússola que guia cada decisão | ✅ |
 | **AMOR** | Servir à comunidade acima de tudo | ✅ |
+
+---
+
+## Filosofia de Prosperidade
+
+> *"Acreditamos em riqueza construída com fundamentos, paciência e ética!"*
+
+### Princípios
+
+| Princípio | Significado |
+|-----------|-------------|
+| **Enriquecer com verdade** | Dinheiro sim, mas sem mentiras |
+| **Prosperidade com propósito** | Riqueza como meio, não fim |
+| **Construir patrimônio, não pirâmides** | Contra esquemas, pró fundamentos |
+| **Servir bem, lucrar junto** | O lucro vem como consequência |
+| **Educar para prosperar** | Foco no conhecimento que gera riqueza real |
+| **Riqueza sustentável, não especulação** | Longo prazo > pump and dump |
+
+### Mantra
+
+```
+"Ensinar a construir patrimônio, não a jogar na loteria."
+```
 
 ---
 

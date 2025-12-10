@@ -41,7 +41,7 @@ export const MISSION = {
         "Verdade",        // Fact-checking mandatory
         "Fé",             // God as compass
         "Amor",           // Serve community above self
-        "Propósito",      // Help, not enrich
+        "Propósito",      // Prosperidade através do conhecimento
     ] as const,
 
     /**
@@ -102,6 +102,59 @@ export const ETHICS = {
         "Aceitar pagamento por reviews",
         "Comprometer segurança do usuário",
     ] as const,
+} as const;
+
+/**
+ * Filosofia de Prosperidade
+ * @agi-purpose: Core prosperity values - ethical wealth building
+ * 
+ * "Acreditamos em riqueza construída com fundamentos, paciência e ética!"
+ */
+export const PROSPERITY_PHILOSOPHY = {
+    /**
+     * Core belief about wealth
+     */
+    CORE_BELIEF: "Acreditamos em riqueza construída com fundamentos, paciência e ética!",
+
+    /**
+     * Guiding principles for ethical prosperity
+     */
+    PRINCIPLES: {
+        TRUTH: {
+            phrase: "Enriquecer com verdade",
+            meaning: "Dinheiro sim, mas sem mentiras",
+        },
+        PURPOSE: {
+            phrase: "Prosperidade com propósito",
+            meaning: "Riqueza como meio, não fim",
+        },
+        FOUNDATION: {
+            phrase: "Construir patrimônio, não pirâmides",
+            meaning: "Contra esquemas, pró fundamentos",
+        },
+        SERVICE: {
+            phrase: "Servir bem, lucrar junto",
+            meaning: "O lucro vem como consequência",
+        },
+        EDUCATION: {
+            phrase: "Educar para prosperar",
+            meaning: "Foco no conhecimento que gera riqueza real",
+        },
+        SUSTAINABILITY: {
+            phrase: "Riqueza sustentável, não especulação",
+            meaning: "Longo prazo > pump and dump",
+        },
+    } as const,
+
+    /**
+     * The project mantra
+     */
+    MANTRA: "Ensinar a construir patrimônio, não a jogar na loteria.",
+
+    /**
+     * Mission statement combining all principles
+     */
+    MISSION: "Educar para prosperar com integridade",
 } as const;
 
 /**
