@@ -28,6 +28,7 @@ import {
   faArrowUp
 } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
+import { SOCIAL_LINKS } from '@/lib/core/constants/social';
 
 export default function TokenPage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -486,7 +487,7 @@ export default function TokenPage() {
 
             <div className="flex flex-wrap justify-center gap-6 mb-16">
               <a
-                href="https://discord.gg/jPgZr7BVXY"
+                href={SOCIAL_LINKS.DISCORD}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative px-10 py-5 rounded-full glass-card bg-[#5865F2]/10 hover:bg-[#5865F2]/20 border border-[#5865F2]/20 text-[#5865F2] font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-xl"
@@ -498,7 +499,7 @@ export default function TokenPage() {
               </a>
 
               <a
-                href="https://t.me/+Bop_TVFc_mg3Njlh"
+                href={SOCIAL_LINKS.TELEGRAM}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative px-10 py-5 rounded-full glass-card bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/20 text-[#0088cc] font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-xl"

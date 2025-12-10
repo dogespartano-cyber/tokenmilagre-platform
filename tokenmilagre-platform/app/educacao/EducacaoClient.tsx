@@ -7,11 +7,11 @@ import { useInfiniteScrollData } from '@/hooks/useInfiniteScrollData';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faArrowRight, faSearch, faTimes, faArrowUp, faFilter } from '@fortawesome/free-solid-svg-icons';
-import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/shared/utils/level-helpers';
 import { getCategoryIcon } from '@/lib/shared/utils/category-helpers';
 import DashboardHeader from '@/components/shared/DashboardHeader';
 import TruthDetector from '@/components/education/TruthDetector';
+import SocialLinks from '@/components/shared/SocialLinks';
 
 interface Resource {
   id: string;
@@ -361,27 +361,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
               Tem conhecimento para compartilhar? Ajude a comunidade escrevendo artigos e tutoriais educacionais.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a
-                href="https://discord.gg/jPgZr7BVXY"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass-card group flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all hover:scale-105 whitespace-nowrap bg-[#5865F2]/10 hover:bg-[#5865F2]/20 border border-[#5865F2]/20 text-[#5865F2] dark:text-white"
-              >
-                <FontAwesomeIcon icon={faDiscord} className="w-5 h-5" />
-                <span>Discord</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </a>
-
-              <a
-                href="https://t.me/+Bop_TVFc_mg3Njlh"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass-card group flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all hover:scale-105 whitespace-nowrap bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/20 text-[#0088cc] dark:text-white"
-              >
-                <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
-                <span>Telegram</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </a>
+              <SocialLinks variant="buttons" platforms={['discord', 'telegram']} />
             </div>
           </div>
         </div>
