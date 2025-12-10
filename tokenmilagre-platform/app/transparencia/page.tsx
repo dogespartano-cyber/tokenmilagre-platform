@@ -2,7 +2,7 @@
 import React from 'react';
 import { Github, Shield, Users, CheckCircle, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
-import TransparencyStats from '@/components/TransparencyStats';
+import TransparencyStats from '@/components/shared/TransparencyStats';
 
 export const metadata = {
     title: 'Transparência Radical | $MILAGRE',

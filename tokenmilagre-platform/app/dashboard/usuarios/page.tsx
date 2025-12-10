@@ -21,7 +21,7 @@ import {
   faEyeSlash,
   faNewspaper
 } from '@fortawesome/free-solid-svg-icons';
-import AdminRoute from '@/components/AdminRoute';
+import { AdminRoute } from '@/lib/domains/users';
 
 interface User {
   id: string;

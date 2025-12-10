@@ -15,7 +15,7 @@ import ResourceFAQ from './components/ResourceFAQ';
 import ResourceSecurityTips from './components/ResourceSecurityTips';
 import RelatedResources from './components/RelatedResources';
 import { useState, useEffect } from 'react';
-import TransparencyNote from '@/components/TransparencyNote';
+import TransparencyNote from '@/components/shared/TransparencyNote';
 
 interface ResourceDetailClientProps {
   resource: Resource;

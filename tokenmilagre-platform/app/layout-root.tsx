@@ -17,12 +17,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon, faBars, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@/contexts/ThemeContext';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
-import DashboardHeader from '@/app/components/DashboardHeader';
+import DashboardHeader from '@/components/shared/DashboardHeader';
 import NavbarCryptoTicker from '@/components/crypto/NavbarCryptoTicker';
 import GlobalBackground from '@/components/layout/GlobalBackground';
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
-import CustomUserButton from '@/components/CustomUserButton';
-import ScrollToTop from '@/app/components/ScrollToTop';
+import CustomUserButton from '@/components/shared/CustomUserButton';
+import ScrollToTop from '@/components/shared/ScrollToTop';
 import CookieConsent from '@/components/shared/CookieConsent';
 
 // Componentes extraídos

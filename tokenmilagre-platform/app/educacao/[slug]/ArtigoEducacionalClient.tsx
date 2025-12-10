@@ -10,7 +10,7 @@ import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg
 import { getLevelLabel } from '@/lib/shared/utils/level-helpers';
 import { slugify } from '@/lib/shared/utils/content-helpers';
 import QuizComponent from '@/components/education/QuizComponent';
-import TransparencyNote from '@/components/TransparencyNote';
+import TransparencyNote from '@/components/shared/TransparencyNote';
 
 interface EducationalArticle {
   id: string;

@@ -33,6 +33,9 @@ export type {
     RoleEnum as Role,
     UserRoleValue,
 } from './types';
+export * from './types';
+export * from './components/AdminRoute';
+export { default as AdminRoute } from './components/AdminRoute';
 
 export { USER_ROLES } from './types';
 

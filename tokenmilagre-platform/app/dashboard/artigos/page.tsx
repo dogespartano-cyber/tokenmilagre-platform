@@ -22,7 +22,7 @@ import {
   faChevronLeft,
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
-import AdminRoute from '@/components/AdminRoute';
+import { AdminRoute } from '@/lib/domains/users';
 import ToastContainer from '@/components/shared/ToastContainer';
 import ConfirmDialog from '@/components/shared/ConfirmDialog';
 import { useToast } from '@/hooks/useToast';

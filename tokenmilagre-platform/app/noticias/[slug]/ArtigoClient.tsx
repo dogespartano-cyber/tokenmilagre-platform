@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowUp, faCalendar, faClock, faShareNodes, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { getCitationAwareMarkdownComponents, SourcesSection } from '@/lib/domains/articles/components/citations-processor';
-import TransparencyNote from '@/components/TransparencyNote';
+import TransparencyNote from '@/components/shared/TransparencyNote';
 
 interface NewsItem {
   id: string;

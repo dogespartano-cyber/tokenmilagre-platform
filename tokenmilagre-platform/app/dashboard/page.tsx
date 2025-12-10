@@ -17,8 +17,8 @@ import {
   faRobot,
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
-import AdminRoute from '@/components/AdminRoute';
-import BuildInfoBadge from '@/app/components/BuildInfoBadge';
+import AdminRoute from '@/components/admin/AdminRoute';
+import BuildInfoBadge from '@/components/shared/BuildInfoBadge';
 
 interface AdminStats {
   totalArticles: number;

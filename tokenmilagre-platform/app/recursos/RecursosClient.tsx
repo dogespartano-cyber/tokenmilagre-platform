@@ -10,7 +10,7 @@ import { faFilter, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
 // import ResourceFilters from './components/ResourceFilters'; // Removed
 import ResourceGrid from './components/ResourceGrid';
 import SecurityTips from './components/SecurityTips';
-import DashboardHeader from '@/app/components/DashboardHeader';
+import DashboardHeader from '@/components/shared/DashboardHeader';
 
 
 interface RecursosClientProps {

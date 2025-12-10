@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import AdminRoute from '@/components/AdminRoute';
+import { AdminRoute } from '@/lib/domains/users';
 
 // Components from /criar-artigo for manual mode
 import { usePerplexityChat } from '../criar-artigo/_hooks/usePerplexityChat';

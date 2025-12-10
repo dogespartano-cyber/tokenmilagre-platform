@@ -1,9 +1,32 @@
 # 📋 Sugestões e Ideias - $MILAGRE Platform
 
-> **Última atualização:** 2025-12-07  
+> **Última atualização:** 2025-12-09  
 > **Formato:** Use `[ ]`, `[/]`, `[x]` para status de cada item
 
 ---
+
+## ✅ Concluído (Sessão 09/12/2025)
+
+### 🔧 Correções de Build e Autenticação
+
+- [x] **Fix: `reflect-metadata` polyfill** — Corrigido erro de build `tsyringe requires a reflect polyfill`
+  - Arquivo: `lib/domains/users/services/user.service.ts`
+  - Adicionado import do polyfill antes do `tsyringe` (dependência circular intencional)
+  
+- [x] **Fix: AdminRoute usando role errada** — Corrigido redirect incorreto em `/dashboard/criar`
+  - Problema: Componente verificava `user.publicMetadata.role` do Clerk (vazio)
+  - Solução: Agora busca role real do DB via `/api/auth/me`
+  - Arquivo: `lib/domains/users/components/AdminRoute.tsx`
+
+### 🚀 Melhorias de Infraestrutura
+
+- [x] **Server Manager atualizado** — Script de gerenciamento com novas funcionalidades
+  - Atualizado `PROJECT_DIR` para ambiente correto
+  - Novas opções: Status Auth (`a`), Status Git (`g`), Commit & Push (`c`), Build Test (`b`)
+  - Arquivo: `server/server-manager.sh`
+
+---
+
 
 ## 🟢 Prioridade Alta (Quick Wins)
 
@@ -277,6 +300,14 @@ lib/
 - [x] **Correção de Imports:** Atualizadas 38+ referências de `@/lib/helpers` para `@/lib/shared/helpers`.
 - [x] **Auditoria:** O projeto atingiu ~95% de aderência à arquitetura fractal (apenas facades restaram na raiz).
 - [x] **Verificação:** Testado localmente (Auth, Resources, Admin) e Build Vercel validado.
+
+### ✅ Concluído (Sessão 08/12/2025) - Parte 6 (Polishing)
+
+#### ✨ Fractal Perfection (100% Cleanup)
+- [x] **Cleanup de Facades:** Removidos 9 arquivos "wrapper" da raiz de `components/` (`AdminRoute`, `CommunityStoryCard`, etc).
+- [x] **Consolidação de UI:** Migrados componentes genéricos de `app/components/` para `components/shared/` (`BuildInfoBadge`, `ScrollToTop`, `LinkInterceptor`).
+- [x] **Correção de Imports:** Atualizados 6+ arquivos críticos que dependiam dos facades antigos.
+- [x] **Status:** A dualidade `components/` vs `app/components` foi resolvida. Todos os componentes reutilizáveis residem em `components/shared` ou domínios.
 
 ---
 

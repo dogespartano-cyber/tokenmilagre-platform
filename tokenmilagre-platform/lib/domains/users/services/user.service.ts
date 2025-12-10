@@ -22,7 +22,11 @@
 
 import { prisma } from '@/lib/core/prisma'
 import { User, Role, Prisma } from '@/lib/generated/prisma'
-import { ServiceLocator } from '@/lib/di/container'
+// import { ServiceLocator } from '@/lib/di/container' // REMOVED to break circular dependency
+// NOTE: Since we import tsyringe directly (to break circular dep), we must also import the polyfill
+import 'reflect-metadata'
+import { container } from 'tsyringe'
+import { TOKENS } from '@/lib/core/di/tokens'
 import { PAGINATION } from '@/lib/core/constants/pagination'
 import { PASSWORD_CONSTRAINTS, EMAIL_CONSTRAINTS } from '@/lib/core/constants/validation'
 import bcrypt from 'bcryptjs'
@@ -34,6 +38,8 @@ import {
   UserListResult,
   UserStats,
 } from '../types'
+import { LoggerService } from '@/lib/shared/services/logger.service'
+import { ValidationService } from '@/lib/shared/services/validation.service'
 
 /**
  * User Service
@@ -42,11 +48,11 @@ import {
 export class UserService {
   // Lazy initialization to avoid circular dependency
   private get logger() {
-    return ServiceLocator.getLogger()
+    return container.resolve<LoggerService>(TOKENS.LoggerService)
   }
 
   private get validation() {
-    return ServiceLocator.getValidation()
+    return container.resolve<ValidationService>(TOKENS.ValidationService)
   }
 
   /**

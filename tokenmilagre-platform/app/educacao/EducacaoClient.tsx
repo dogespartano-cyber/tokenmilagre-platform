@@ -10,7 +10,7 @@ import { faClock, faArrowRight, faSearch, faTimes, faArrowUp, faFilter } from '@
 import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/shared/utils/level-helpers';
 import { getCategoryIcon } from '@/lib/shared/utils/category-helpers';
-import DashboardHeader from '@/app/components/DashboardHeader';
+import DashboardHeader from '@/components/shared/DashboardHeader';
 import TruthDetector from '@/components/education/TruthDetector';
 
 interface Resource {

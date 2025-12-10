@@ -11,7 +11,7 @@ import {
   faPaperPlane,
   faPen
 } from '@fortawesome/free-solid-svg-icons';
-import AdminRoute from '@/components/AdminRoute';
+import { AdminRoute } from '@/lib/domains/users';
 import ArticlePreview from '@/components/admin/ArticlePreview';
 
 function EditorContent() {
