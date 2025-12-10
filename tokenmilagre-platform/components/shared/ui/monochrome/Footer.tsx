@@ -13,6 +13,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { SOCIAL_LINKS } from '@/lib/core/constants/social';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -25,10 +26,10 @@ export default function Footer() {
       { label: 'Recursos', href: '/recursos' },
     ],
     comunidade: [
-      { label: 'Discord', href: 'https://discord.gg/jPgZr7BVXY', external: true },
-      { label: 'Telegram', href: 'https://t.me/+Bop_TVFc_mg3Njlh', external: true },
-      { label: 'Twitter', href: '#', external: true },
-      { label: 'GitHub', href: '#', external: true },
+      { label: 'Discord', href: SOCIAL_LINKS.DISCORD, external: true },
+      { label: 'Telegram', href: SOCIAL_LINKS.TELEGRAM, external: true },
+      { label: 'Twitter', href: SOCIAL_LINKS.TWITTER, external: true },
+      { label: 'GitHub', href: SOCIAL_LINKS.GITHUB, external: true },
     ],
     legal: [
       { label: 'Segurança', href: '/seguranca/verificador-url' },
@@ -63,7 +64,7 @@ export default function Footer() {
             {/* Social Links */}
             <div className="flex gap-4 mt-4">
               <a
-                href="https://discord.gg/jPgZr7BVXY"
+                href={SOCIAL_LINKS.DISCORD}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--bg-page)] text-[var(--text-secondary)] transition-all hover:bg-[var(--brand-primary)] hover:text-white hover:-translate-y-0.5"
@@ -75,7 +76,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://t.me/+Bop_TVFc_mg3Njlh"
+                href={SOCIAL_LINKS.TELEGRAM}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--bg-page)] text-[var(--text-secondary)] transition-all hover:bg-[var(--brand-primary)] hover:text-white hover:-translate-y-0.5"

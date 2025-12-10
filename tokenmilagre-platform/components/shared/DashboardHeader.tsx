@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDiscord, faTelegram } from '@fortawesome/free-brands-svg-icons';
+import SocialLinks from '@/components/shared/SocialLinks';
 
 interface DashboardHeaderProps {
   title: string;
@@ -140,36 +139,19 @@ export default function DashboardHeader({ title, description }: DashboardHeaderP
           </div>
         </div>
 
-        {/* Community Buttons */}
+        {/* Community Buttons - Now using centralized SocialLinks */}
         <div
-          className="flex gap-3"
           style={{
             opacity: animateTitle ? 1 : 0,
             transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
             transition: 'opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s'
           }}
         >
-          <a
-            href="https://discord.gg/jPgZr7BVXY"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="glass-card group flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all hover:scale-105 whitespace-nowrap bg-[#5865F2]/10 hover:bg-[#5865F2]/20 border border-[#5865F2]/20 text-[#5865F2] dark:text-white"
-          >
-            <FontAwesomeIcon icon={faDiscord} className="w-5 h-5" />
-            <span>Discord</span>
-            <span className="group-hover:translate-x-1 transition-transform">→</span>
-          </a>
-
-          <a
-            href="https://t.me/+Bop_TVFc_mg3Njlh"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="glass-card group flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all hover:scale-105 whitespace-nowrap bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/20 text-[#0088cc] dark:text-white"
-          >
-            <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
-            <span>Telegram</span>
-            <span className="group-hover:translate-x-1 transition-transform">→</span>
-          </a>
+          <SocialLinks
+            variant="buttons"
+            platforms={['discord', 'telegram']}
+            size="md"
+          />
         </div>
       </div>
     </div>

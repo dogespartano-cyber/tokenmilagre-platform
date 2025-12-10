@@ -16,6 +16,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { SOCIAL_LINKS } from '@/lib/core/constants/social';
 
 interface HeroProps {
   title?: string;
@@ -38,7 +39,7 @@ export default function Hero({
   subtitle = 'Educação financeira descentralizada. Transparente, sustentável e projetado para crescimento de longo prazo.',
   primaryCta = {
     label: 'Entrar no Discord',
-    href: 'https://discord.gg/jPgZr7BVXY',
+    href: SOCIAL_LINKS.DISCORD,
     external: true
   },
   secondaryCta = {
