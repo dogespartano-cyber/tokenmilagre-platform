@@ -275,7 +275,7 @@ tokenmilagre-platform/
 | Link | Descrição |
 |------|-----------|
 | [tokenmilagre.xyz](https://tokenmilagre.xyz) | Produção |
-| [Discord](https://discord.gg/jPgZr7BVXY) | Comunidade |
+| [Discord](https://discord.gg/9BU3mFVX58) | Comunidade |
 | [Telegram](https://t.me/+Bop_TVFc_mg3Njlh) | Grupo oficial |
 | [Solscan](https://solscan.io/token/3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump) | Token Contract |
 

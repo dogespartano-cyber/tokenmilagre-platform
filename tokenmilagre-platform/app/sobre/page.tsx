@@ -11,6 +11,7 @@ import {
   faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram, faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { SOCIAL_LINKS } from '@/lib/core/constants/social';
 
 export default function SobrePage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -22,7 +23,7 @@ export default function SobrePage() {
   const socialLinks = [
     {
       name: 'Discord',
-      url: 'https://discord.gg/jPgZr7BVXY',
+      url: SOCIAL_LINKS.DISCORD,
       icon: faDiscord,
       color: 'bg-[#5865F2]/10 border border-[#5865F2]/20 text-gray-900 dark:text-[#5865F2]',
       hover: 'hover:bg-[#5865F2]/20',
@@ -30,7 +31,7 @@ export default function SobrePage() {
     },
     {
       name: 'Telegram',
-      url: 'https://t.me/+Bop_TVFc_mg3Njlh',
+      url: SOCIAL_LINKS.TELEGRAM,
       icon: faTelegram,
       color: 'bg-[#0088cc]/10 border border-[#0088cc]/20 text-gray-900 dark:text-[#0088cc]',
       hover: 'hover:bg-[#0088cc]/20',
@@ -38,7 +39,7 @@ export default function SobrePage() {
     },
     {
       name: 'Twitter / X',
-      url: 'https://x.com/TokenMilagre',
+      url: SOCIAL_LINKS.TWITTER,
       icon: faTwitter,
       color: 'bg-black/5 border border-black/10 text-gray-900 dark:text-white dark:bg-white/5 dark:border-white/10',
       hover: 'hover:bg-black/10 dark:hover:bg-white/10',
@@ -46,7 +47,7 @@ export default function SobrePage() {
     },
     {
       name: 'Github - Open Source',
-      url: 'https://github.com/dogespartano-cyber/tokenmilagre-platform',
+      url: SOCIAL_LINKS.GITHUB,
       icon: faGithub,
       color: 'bg-black/5 border border-black/10 text-gray-900 dark:text-white dark:bg-white/5 dark:border-white/10',
       hover: 'hover:bg-black/10 dark:hover:bg-white/10',

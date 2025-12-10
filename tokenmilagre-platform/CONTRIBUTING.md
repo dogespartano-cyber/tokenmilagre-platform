@@ -74,7 +74,7 @@ Veja [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## ❓ Dúvidas?
 
-- [Discord](https://discord.gg/jPgZr7BVXY)
+- [Discord](https://discord.gg/9BU3mFVX58)
 - [Telegram](https://t.me/+Bop_TVFc_mg3Njlh)
 
 ---
