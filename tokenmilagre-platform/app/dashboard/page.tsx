@@ -15,7 +15,8 @@ import {
   faBook,
   faComments,
   faRobot,
-  faSignOutAlt
+  faSignOutAlt,
+  faMagic
 } from '@fortawesome/free-solid-svg-icons';
 import AdminRoute from '@/components/admin/AdminRoute';
 import BuildInfoBadge from '@/components/shared/BuildInfoBadge';
@@ -107,6 +108,13 @@ export default function AdminDashboardPage() {
       href: '/dashboard/usuarios',
       gradient: 'linear-gradient(135deg, #f59e0b, #d97706)',
       stats: stats ? `${stats.totalUsers} usuários` : undefined
+    },
+    {
+      title: 'Estúdio de IA',
+      description: 'Gerador de imagens Zenith Gold',
+      icon: faMagic,
+      href: '/dashboard/studio',
+      gradient: 'linear-gradient(135deg, #8b5cf6, #6366f1)'
     }
   ];
 

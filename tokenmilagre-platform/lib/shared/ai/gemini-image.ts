@@ -65,11 +65,11 @@ export async function generateCoverImage(
     const prompt = buildImagePrompt(title, colors, mood, articleType);
     console.log('[generateCoverImage] 📝 Prompt construído (primeiros 200 chars):', prompt.substring(0, 200) + '...');
 
-    // Chamar Gemini 2.0 Flash Image API
-    // Nota: gemini-2.5-flash-image não tem quota no free tier, usar 2.0
-    console.log('[generateCoverImage] 📡 Chamando API Gemini Image...');
+    // Chamar Gemini 2.5 Flash Image API (Nano Banana)
+    // Billing Ativo
+    console.log('[generateCoverImage] 📡 Chamando API Gemini Image (2.5)...');
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: {
