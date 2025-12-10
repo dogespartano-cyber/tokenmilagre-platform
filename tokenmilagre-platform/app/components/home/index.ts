@@ -20,3 +20,7 @@ export { LatestNewsGrid } from './LatestNewsGrid';
 export { LearnCryptoSection } from './LearnCryptoSection';
 export { PriceChartSection } from './PriceChartSection';
 export { LoadingSkeleton } from './LoadingSkeleton';
+export { ZenithHeroHUD } from './ZenithHeroHUD';
+export { ZenithMarketTicker } from './ZenithMarketTicker';
+
+

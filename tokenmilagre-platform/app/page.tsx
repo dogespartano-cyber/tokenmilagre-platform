@@ -8,13 +8,12 @@
  */
 'use client';
 
-import NavbarCryptoTicker from '@/components/crypto/NavbarCryptoTicker';
+
 import {
   useHomeData,
   useFearGreed,
-  MarketDataCards,
-  FearGreedGauge,
-  DailyAnalysisCard,
+  ZenithHeroHUD,
+  ZenithMarketTicker,
   QuickStartGrid,
   LatestNewsGrid,
   LearnCryptoSection,
@@ -32,36 +31,28 @@ export default function HomePage() {
         {loading ? (
           <LoadingSkeleton />
         ) : (
-          <div className="space-y-12">
-            {/* Visão Geral do Mercado + Velocímetro Integrado */}
-            <div className="space-y-6">
-              {/* Mobile Fear & Greed Gauge */}
-              <FearGreedGauge fearGreed={fearGreed} gaugeValue={gaugeValue} />
+          <div className="space-y-16 pb-20">
+            {/* 0. MARKET TICKER - Top Row Statistics */}
+            <ZenithMarketTicker marketData={marketData} />
 
-              {/* Mobile Crypto Ticker */}
-              <div className="lg:hidden mb-8">
-                <div className="py-4">
-                  <NavbarCryptoTicker variant="mobile" />
-                </div>
-              </div>
+            {/* 1. HERO HUD - The Control Center */}
+            <ZenithHeroHUD
+              marketData={marketData}
+              dailyAnalysis={dailyAnalysis}
+              fearGreed={fearGreed}
+              gaugeValue={gaugeValue}
+            />
 
-              {/* Market Data Cards */}
-              <MarketDataCards marketData={marketData} />
-            </div>
-
-            {/* Análise do Dia */}
-            <DailyAnalysisCard dailyAnalysis={dailyAnalysis} marketData={marketData} />
-
-            {/* Recursos Essenciais */}
+            {/* 2. Bento Grid Strategy */}
             <QuickStartGrid />
 
-            {/* Últimas Notícias */}
+            {/* 3. Market Intel */}
             <LatestNewsGrid news={news} />
 
-            {/* Aprenda sobre Cripto */}
+            {/* 4. Education & Truth */}
             <LearnCryptoSection education={education} />
 
-            {/* Gráfico de Preços */}
+            {/* 5. Tools */}
             <PriceChartSection />
           </div>
         )}

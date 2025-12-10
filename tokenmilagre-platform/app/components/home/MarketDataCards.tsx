@@ -20,12 +20,14 @@ const formatNumber = (num: number): string => {
 export function MarketDataCards({ marketData }: MarketDataProps) {
     if (!marketData) return null;
 
+    const cardClass = "relative p-4 lg:p-6 rounded-2xl crystal-card overflow-hidden";
+
     return (
         <>
             {/* Mobile/Tablet: Cards em Grid 2x2 */}
             <div className="lg:hidden grid grid-cols-2 gap-4">
                 {/* Capitalização Total */}
-                <div className="glass-card rounded-2xl p-4">
+                <div className={cardClass}>
                     <div className="mb-2">
                         <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Capitalização Total</p>
                     </div>
@@ -41,7 +43,7 @@ export function MarketDataCards({ marketData }: MarketDataProps) {
                 </div>
 
                 {/* Volume 24h */}
-                <div className="glass-card rounded-2xl p-4">
+                <div className={cardClass}>
                     <div className="mb-2">
                         <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Volume 24h</p>
                     </div>
@@ -52,14 +54,14 @@ export function MarketDataCards({ marketData }: MarketDataProps) {
                 </div>
 
                 {/* Dominância BTC */}
-                <div className="glass-card rounded-2xl p-4">
+                <div className={cardClass}>
                     <div className="mb-2">
                         <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Dominância BTC</p>
                     </div>
                     <p className="font-bold text-xl mb-1" style={{ color: 'var(--text-primary)' }}>
                         {marketData.btcDominance.toFixed(2)}%
                     </p>
-                    <div className="w-full rounded-full h-1.5 mt-1 bg-[var(--bg-tertiary)]">
+                    <div className="w-full rounded-full h-1.5 mt-1 bg-zinc-500/10">
                         <div
                             className="h-full rounded-full transition-all duration-500"
                             style={{
@@ -71,14 +73,14 @@ export function MarketDataCards({ marketData }: MarketDataProps) {
                 </div>
 
                 {/* Dominância ETH */}
-                <div className="glass-card rounded-2xl p-4">
+                <div className={cardClass}>
                     <div className="mb-2">
                         <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Dominância ETH</p>
                     </div>
                     <p className="font-bold text-xl mb-1" style={{ color: 'var(--text-primary)' }}>
                         {marketData.ethDominance.toFixed(2)}%
                     </p>
-                    <div className="w-full rounded-full h-1.5 mt-1 bg-[var(--bg-tertiary)]">
+                    <div className="w-full rounded-full h-1.5 mt-1 bg-zinc-500/10">
                         <div
                             className="h-full rounded-full transition-all duration-500"
                             style={{
@@ -93,7 +95,7 @@ export function MarketDataCards({ marketData }: MarketDataProps) {
             {/* Desktop: Cards em 1 Linha Horizontal */}
             <div className="hidden lg:grid lg:grid-cols-4 gap-6">
                 {/* Capitalização Total */}
-                <div className="glass-card rounded-2xl p-6">
+                <div className={cardClass}>
                     <div className="mb-2">
                         <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Capitalização Total</p>
                     </div>
@@ -109,7 +111,7 @@ export function MarketDataCards({ marketData }: MarketDataProps) {
                 </div>
 
                 {/* Volume 24h */}
-                <div className="glass-card rounded-2xl p-6">
+                <div className={cardClass}>
                     <div className="mb-2">
                         <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Volume 24h</p>
                     </div>
@@ -120,14 +122,14 @@ export function MarketDataCards({ marketData }: MarketDataProps) {
                 </div>
 
                 {/* Dominância BTC */}
-                <div className="glass-card rounded-2xl p-6">
+                <div className={cardClass}>
                     <div className="mb-2">
                         <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Dominância BTC</p>
                     </div>
                     <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
                         {marketData.btcDominance.toFixed(2)}%
                     </p>
-                    <div className="w-full rounded-full h-2 mt-2 bg-[var(--bg-tertiary)]">
+                    <div className="w-full rounded-full h-2 mt-2 bg-zinc-500/10">
                         <div
                             className="h-full rounded-full transition-all duration-500"
                             style={{
@@ -139,14 +141,14 @@ export function MarketDataCards({ marketData }: MarketDataProps) {
                 </div>
 
                 {/* Dominância ETH */}
-                <div className="glass-card rounded-2xl p-6">
+                <div className={cardClass}>
                     <div className="mb-2">
                         <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Dominância ETH</p>
                     </div>
                     <p className="font-bold text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>
                         {marketData.ethDominance.toFixed(2)}%
                     </p>
-                    <div className="w-full rounded-full h-2 mt-2 bg-[var(--bg-tertiary)]">
+                    <div className="w-full rounded-full h-2 mt-2 bg-zinc-500/10">
                         <div
                             className="h-full rounded-full transition-all duration-500"
                             style={{

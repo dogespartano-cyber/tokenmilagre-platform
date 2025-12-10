@@ -116,7 +116,7 @@ export function useHomeData(): UseHomeDataReturn {
                     .sort((a: NewsItem, b: NewsItem) =>
                         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
                     )
-                    .slice(0, 4);
+                    .slice(0, 5);
                 setNews(sortedNews);
                 sessionStorage.setItem(CACHE_KEY, JSON.stringify(sortedNews));
             }

@@ -26,12 +26,13 @@ export function DailyAnalysisCard({ dailyAnalysis, marketData }: DailyAnalysisPr
     if (!dailyAnalysis) return null;
 
     return (
-        <div className="glass-card rounded-2xl p-6 border-l-4 border-teal-500">
+        <div className="group relative p-6 rounded-2xl crystal-card overflow-hidden">
+
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <div>
                     <h3 className="text-lg font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
-                        📊 Análise do Dia <span className="ml-2 text-[10px] px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-500 border border-purple-500/20 font-normal">AI Powered</span>
+                        📊 Análise do Dia <span className="ml-2 text-[10px] px-2 py-0.5 rounded-full bg-zinc-500/10 text-zinc-400 border border-zinc-500/20 font-normal">AI Powered</span>
                     </h3>
                     <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
                         Todos os dias as 21h
@@ -47,7 +48,7 @@ export function DailyAnalysisCard({ dailyAnalysis, marketData }: DailyAnalysisPr
 
             {/* Título da Análise */}
             <Link href={`/noticias/${dailyAnalysis.slug || dailyAnalysis.id}`}>
-                <h4 className="text-xl font-bold mb-3 line-clamp-2 hover:text-teal-500 transition-colors cursor-pointer"
+                <h4 className="text-xl font-bold mb-3 line-clamp-2 transition-colors cursor-pointer hover:underline decoration-zinc-500/50"
                     style={{ color: 'var(--text-primary)' }}>
                     {dailyAnalysis.title}
                 </h4>
@@ -62,7 +63,7 @@ export function DailyAnalysisCard({ dailyAnalysis, marketData }: DailyAnalysisPr
             {marketData && (
                 <div className="grid grid-cols-3 gap-3 mb-4">
                     {/* BTC */}
-                    <div className="p-3 rounded-lg bg-[var(--bg-primary)]/50 backdrop-blur-sm border border-[var(--border-light)]">
+                    <div className="p-3 rounded-lg bg-zinc-500/5 backdrop-blur-sm border border-zinc-500/10">
                         <div className="flex items-center gap-1.5 mb-1">
                             <TokenBTC size={16} variant="branded" />
                             <span className="text-xs font-bold" style={{ color: 'var(--text-tertiary)' }}>
@@ -77,7 +78,7 @@ export function DailyAnalysisCard({ dailyAnalysis, marketData }: DailyAnalysisPr
                     </div>
 
                     {/* ETH */}
-                    <div className="p-3 rounded-lg bg-[var(--bg-primary)]/50 backdrop-blur-sm border border-[var(--border-light)]">
+                    <div className="p-3 rounded-lg bg-zinc-500/5 backdrop-blur-sm border border-zinc-500/10">
                         <div className="flex items-center gap-1.5 mb-1">
                             <TokenETH size={16} variant="branded" />
                             <span className="text-xs font-bold" style={{ color: 'var(--text-tertiary)' }}>
@@ -90,7 +91,7 @@ export function DailyAnalysisCard({ dailyAnalysis, marketData }: DailyAnalysisPr
                     </div>
 
                     {/* Sentimento */}
-                    <div className="p-3 rounded-lg bg-[var(--bg-primary)]/50 backdrop-blur-sm border border-[var(--border-light)]">
+                    <div className="p-3 rounded-lg bg-zinc-500/5 backdrop-blur-sm border border-zinc-500/10">
                         <div className="flex items-center gap-1.5 mb-1">
                             <span className="text-sm"><FontAwesomeIcon icon={getSentimentIcon(dailyAnalysis.sentiment)} /></span>
                             <span className="text-xs font-bold" style={{ color: 'var(--text-tertiary)' }}>
@@ -108,7 +109,7 @@ export function DailyAnalysisCard({ dailyAnalysis, marketData }: DailyAnalysisPr
             {/* CTA */}
             <Link
                 href={`/noticias/${dailyAnalysis.slug || dailyAnalysis.id}`}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm transition-all hover:opacity-80 bg-gradient-to-r from-teal-500 to-teal-600 text-white shadow-lg hover:shadow-teal-500/30"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm transition-all bg-zinc-500/10 hover:bg-zinc-500/20 text-[var(--text-primary)] border border-zinc-500/20 hover:shadow-lg"
             >
                 <span>Ler Análise Completa</span>
                 <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
