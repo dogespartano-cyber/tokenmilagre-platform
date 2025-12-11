@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faBolt, faChartLine, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { TokenBTC, TokenETH } from '@token-icons/react';
+import { FearGreedGauge } from './FearGreedGauge';
 import type { MarketDataProps, FearGreedProps, DailyAnalysisProps } from './types';
 
 // Combinando tipos para o HUD
@@ -28,9 +29,37 @@ export function ZenithHeroHUD({ marketData, dailyAnalysis, fearGreed, gaugeValue
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
+            {/* MOBILE ONLY: Fear & Greed and Simple Price Ticker */}
+            <div className="lg:hidden col-span-1 space-y-4">
+                <FearGreedGauge fearGreed={fearGreed} gaugeValue={gaugeValue} />
 
-            {/* 1. SENTIMENT MODULE (Col-4) - Widened */}
-            <div className="lg:col-span-4 zenith-card rounded-3xl p-6 relative overflow-visible group flex flex-col justify-center">
+                {/* Mobile Price Ticker */}
+                <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-2">
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-[var(--text-secondary)]">BTC</span>
+                        <span className="text-sm font-bold text-[var(--text-primary)]">$90,234</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-[var(--text-secondary)]">ETH</span>
+                        <span className="text-sm font-bold text-[var(--text-primary)]">$3,208</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-[var(--text-secondary)]">XRP</span>
+                        <span className="text-sm font-bold text-[var(--text-primary)]">$2.01</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-[var(--text-secondary)]">BNB</span>
+                        <span className="text-sm font-bold text-[var(--text-primary)]">$871</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-[var(--text-secondary)]">SOL</span>
+                        <span className="text-sm font-bold text-[var(--text-primary)]">$131</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* 1. SENTIMENT MODULE (Col-4) - Widened (Desktop Only - hidden on mobile) */}
+            <div className="hidden lg:flex col-span-4 zenith-card rounded-3xl p-6 relative overflow-visible group flex-col justify-center">
                 <div className="absolute top-0 right-0 p-4 opacity-50">
                     <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
                 </div>
