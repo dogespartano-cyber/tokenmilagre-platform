@@ -47,7 +47,6 @@ const cards = [
         icon: faCoins,
         title: 'Criptomoedas',
         description: 'Explore o mercado',
-        bgImage: '/assets/zenith/card-crypto.webp',
         theme: 'success'
     }
 ];
@@ -100,27 +99,11 @@ export function QuickStartGrid() {
                             href={card.href}
                             className={`
                 group relative overflow-hidden rounded-3xl
-                bg-[var(--bg-secondary)] border border-[var(--border-light)]
+                zenith-card
                 p-6 flex flex-col justify-between
-                transition-all duration-300
-                hover:scale-[1.02] hover:shadow-xl
-                hover:border-[var(--brand-primary)]/50
                 col-span-1 min-h-[220px]
               `}
                         >
-                            {/* Background Image Layer */}
-                            {card.bgImage && (
-                                <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-20 dark:opacity-20 dark:group-hover:opacity-40 transition-opacity duration-500">
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img
-                                        src={card.bgImage}
-                                        alt=""
-                                        className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-secondary)] via-[var(--bg-secondary)]/80 to-transparent" />
-                                </div>
-                            )}
-
                             {/* Content Layer (z-10 to stay above bg) */}
                             <div className="relative z-10">
                                 <div className="flex justify-between items-start mb-4">
@@ -128,7 +111,6 @@ export function QuickStartGrid() {
                     w-12 h-12 rounded-2xl flex items-center justify-center
                     text-xl transition-all duration-300
                     ${themeStyles.icon}
-                    group-hover:scale-110 group-hover:rotate-3
                     shadow-lg
                   `}>
                                         <FontAwesomeIcon icon={card.icon} />

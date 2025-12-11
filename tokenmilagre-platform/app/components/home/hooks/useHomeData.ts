@@ -143,9 +143,62 @@ export function useHomeData(): UseHomeDataReturn {
             const response = await fetch('/api/articles?type=educational');
             const data = await response.json();
             if (data.success && data.data) {
-                const educationalArticles = data.data.slice(0, 4);
-                setEducation(educationalArticles);
-                sessionStorage.setItem(CACHE_KEY, JSON.stringify(educationalArticles));
+                let educationalArticles = data.data;
+
+                // Fallback Content Generator
+                const fallbackContent: EducationItem[] = [
+                    {
+                        id: 'fallback-1',
+                        slug: 'o-que-e-defi',
+                        title: 'O que é DeFi? Finanças Descentralizadas Explicadas',
+                        summary: 'Descubra como o DeFi está eliminando intermediários financeiros através de Smart Contracts e criando um novo sistema bancário global aberto.',
+                        level: 'Iniciante',
+                        readTime: '6 min'
+                    },
+                    {
+                        id: 'fallback-2',
+                        slug: 'analise-tecnica-vs-fundamentalista',
+                        title: 'Análise Técnica vs. Fundamentalista: O Guia Completo',
+                        summary: 'Aprenda a combinar gráficos e fundamentos do projeto para tomar decisões de investimento mais assertivas e evitar armadilhas comuns.',
+                        level: 'Intermediário',
+                        readTime: '8 min'
+                    },
+                    {
+                        id: 'fallback-3',
+                        slug: 'seguranca-crypto-avancada',
+                        title: 'Segurança Máxima: Hardware Wallets e OpSec',
+                        summary: 'Proteja seu patrimônio contra hacks. Um guia prático sobre Cold Wallets, frases de recuperação e como evitar ataques de engenharia social.',
+                        level: 'Avançado',
+                        readTime: '12 min'
+                    },
+                    {
+                        id: 'fallback-4',
+                        slug: 'tokenomics-101',
+                        title: 'Tokenomics: A Ciência da Economia dos Tokens',
+                        summary: 'Entenda como oferta, demanda, vesting e utilidade influenciam o preço de um ativo no longo prazo. O que olhar antes de investir?',
+                        level: 'Intermediário',
+                        readTime: '7 min'
+                    },
+                    {
+                        id: 'fallback-5',
+                        slug: 'web3-basics',
+                        title: 'Web3 e o Futuro da Internet',
+                        summary: 'Como a internet descentralizada devolve a propriedade dos dados aos usuários e o impacto disso nas redes sociais e economia digital.',
+                        level: 'Iniciante',
+                        readTime: '5 min'
+                    }
+                ];
+
+                // Merge API data with Fallback if needed to reach 6 items
+                if (educationalArticles.length < 6) {
+                    const needed = 6 - educationalArticles.length;
+                    const extras = fallbackContent.slice(0, needed);
+                    educationalArticles = [...educationalArticles, ...extras];
+                }
+
+                const finalSelection = educationalArticles.slice(0, 6);
+                setEducation(finalSelection);
+                sessionStorage.setItem(CACHE_KEY, JSON.stringify(finalSelection));
             }
         } catch (error) {
             console.error('Erro ao buscar artigos educacionais:', error);

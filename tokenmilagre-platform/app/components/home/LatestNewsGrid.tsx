@@ -33,7 +33,7 @@ export function LatestNewsGrid({ news }: LatestNewsGridProps) {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-primary)] pl-1 border-l-4 border-[var(--info)]">
+                <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-primary)]">
                     Últimas Notícias
                 </h2>
                 <Link href="/noticias" className="text-sm font-semibold hover:text-[var(--brand-primary)] transition-colors text-[var(--text-tertiary)]">
@@ -57,7 +57,7 @@ export function LatestNewsGrid({ news }: LatestNewsGridProps) {
                             {/* Inner padding container */}
                             <div className={`${isFeatured ? 'p-8' : 'p-6'} h-full flex flex-col justify-between relative z-10`}>
                                 <div className="flex items-start justify-between mb-4">
-                                    <div className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wide border ${isFeatured ? 'bg-[var(--brand-bg)] border-[var(--brand-border)] text-[var(--brand-primary)]' : 'bg-white/5 border-white/10 text-[var(--text-tertiary)]'}`}>
+                                    <div className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wide border ${isFeatured ? 'bg-[var(--brand-bg)] border-[var(--brand-border)] text-[var(--brand-primary)]' : 'bg-[var(--bg-tertiary)] border-[var(--border-light)] text-[var(--text-secondary)]'}`}>
                                         {item.category[0]}
                                     </div>
                                     <span className="text-xs text-[var(--text-muted)] font-mono">{getTimeAgo(item.publishedAt)}</span>

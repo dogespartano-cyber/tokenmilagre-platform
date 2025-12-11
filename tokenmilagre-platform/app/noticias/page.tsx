@@ -344,7 +344,7 @@ export default function NoticiasPage() {
                   <div className="p-6 flex flex-col h-full">
                     {/* Header: Categoria e Sentimento */}
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)] uppercase tracking-wider">
+                      <span className="text-xs font-bold px-0 py-1 rounded-full text-[var(--text-secondary)] uppercase tracking-wider opacity-70">
                         {item.category[0]}
                       </span>
                       <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-md ${item.sentiment === 'positive' ? 'text-emerald-500 bg-emerald-500/10' :

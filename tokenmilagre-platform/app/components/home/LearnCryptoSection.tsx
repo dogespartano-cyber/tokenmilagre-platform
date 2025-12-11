@@ -1,15 +1,14 @@
 /**
  * @module home/LearnCryptoSection
- * @description Seção educacional com artigos + TruthDetector
+ * @description Seção educacional com artigos em grid
  */
 
 'use client';
 
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/shared/utils/level-helpers';
-import TruthDetector from '@/components/education/TruthDetector';
 import type { EducationItem } from './types';
 
 interface LearnCryptoSectionProps {
@@ -20,46 +19,40 @@ export function LearnCryptoSection({ education }: LearnCryptoSectionProps) {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-primary)] pl-1 border-l-4 border-purple-500">
-                    Base de Conhecimento
+                <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-primary)]">
+                    Entenda Criptomoedas
                 </h2>
                 <Link href="/educacao" className="text-sm font-semibold hover:text-[var(--brand-primary)] text-[var(--text-tertiary)]">
                     Academia
                 </Link>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {education.map((item) => (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {education.slice(0, 6).map((item) => (
                     <Link
                         key={item.id}
                         href={`/educacao/${item.slug}`}
-                        className="group relative p-6 rounded-3xl zenith-card overflow-hidden flex flex-col justify-between"
+                        className="group relative overflow-hidden zenith-card bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-orange-500/10 dark:to-amber-500/5 backdrop-blur-md dark:border-orange-500/20 hover:border-orange-500/50 dark:hover:border-orange-500/20 hover:shadow-orange-500/10"
                     >
-                        <div className="mb-4">
-                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform`} style={{ background: getLevelGradient(item.level) }}>
-                                <FontAwesomeIcon icon={getLevelIcon(item.level)} style={{ color: getLevelColor(item.level) }} className="w-5 h-5" />
-                            </div>
-                            <h3 className="text-lg font-bold mb-2 line-clamp-2 text-[var(--text-primary)] font-[family-name:var(--font-poppins)] group-hover:text-[var(--brand-primary)] transition-colors">
-                                {item.title}
-                            </h3>
-                        </div>
+                        <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-orange-500 to-amber-500" style={{ boxShadow: '0 0 20px #f9731640' }} />
+                        {/* Inner padding container */}
+                        <div className="p-6 h-full flex flex-col gap-4 relative z-10">
+                            <div className="flex flex-col gap-3">
+                                <h3 className="text-xl font-bold leading-tight text-orange-600 dark:text-[var(--text-primary)] font-[family-name:var(--font-poppins)] group-hover:text-orange-700 dark:group-hover:text-orange-500 transition-colors line-clamp-2">
+                                    {item.title}
+                                </h3>
 
-                        <div className="flex items-center gap-4 text-xs font-mono text-[var(--text-tertiary)] border-t border-[var(--border-light)] pt-4">
-                            <span className="flex items-center gap-1">
-                                <FontAwesomeIcon icon={faClock} />
-                                {item.readTime}
-                            </span>
-                            <span style={{ color: getLevelColor(item.level) }} className="font-bold uppercase">
-                                {item.level}
-                            </span>
+                                <p className="text-sm text-[var(--text-secondary)] dark:text-[var(--text-secondary)] line-clamp-3">
+                                    {item.summary}
+                                </p>
+                            </div>
+
+                            <div className="pt-4 border-t border-[var(--border-light)] dark:border-orange-500/10 flex items-center gap-2 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] group-hover:text-orange-600 dark:group-hover:text-orange-500 text-xs font-bold uppercase tracking-wider transition-colors">
+                                Ler Guia <FontAwesomeIcon icon={faArrowRight} />
+                            </div>
                         </div>
                     </Link>
                 ))}
-
-                {/* Detector de Mentiras - integrado como card */}
-                <div className="md:col-span-2 lg:col-span-4 mt-8 zenith-card p-2 bg-[var(--bg-tertiary)]/30 rounded-3xl">
-                    <TruthDetector frameless />
-                </div>
             </div>
         </div>
     );
