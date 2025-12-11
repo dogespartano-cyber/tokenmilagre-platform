@@ -1,7 +1,55 @@
 # 📋 Sugestões e Ideias - $MILAGRE Platform
 
-> **Última atualização:** 2025-12-09  
+> **Última atualização:** 2025-12-11  
 > **Formato:** Use `[ ]`, `[/]`, `[x]` para status de cada item
+
+---
+
+## ✅ Concluído (Sessão 11/12/2025) - Otimização /graficos
+
+### 🎯 BinanceDataContext — Unificação de Data Fetching
+
+**Objetivo:** Eliminar requisições duplicadas à API da Binance na página `/graficos`.
+
+#### Arquivos Criados/Modificados
+
+1. **`contexts/BinanceDataContext.tsx`** (NOVO)
+   - Provider centralizado para dados da Binance
+   - Único ponto de fetch (60s refresh)
+   - Hook `useBinanceContext` para consumir dados
+
+2. **`components/crypto/CryptoAnalyzer.tsx`**
+   - Integrado `BinanceDataProvider` como wrapper
+   - Tipo `any` → `Timeframe`
+   - Removido import `Image` não utilizado
+
+3. **`components/crypto/AdvancedChart.tsx`**
+   - Refatorado para consumir dados do context
+   - Removido fetch duplicado interno
+   - Adicionado estado `chartReady` (fix race condition)
+   - Tipado `chartRef` com `IChartApi`
+   - Removida função `handleTimeframeChange` (código morto)
+   - Adicionado SMA 200 ao gráfico + legenda
+
+4. **`components/crypto/TrendMeter.tsx`**
+   - Substituído `useBinanceData` por `useBinanceContext`
+   - Simplificado display de SMAs para Golden/Death Cross
+   - Documentada decisão de cores (Mean Reversion vs Trend Following)
+
+5. **`lib/shared/utils/technical-analysis.ts`**
+   - Extraídos magic numbers de RSI para constantes nomeadas
+
+6. **`lib/domains/crypto/hooks/useBinanceData.ts`**
+   - `console.error` agora só executa em desenvolvimento
+
+#### Resultado
+
+| Métrica | Antes | Depois |
+|---------|-------|--------|
+| Requisições Binance/asset | 2 | 1 |
+| Linhas de código | ~1600 | ~1400 |
+| Fetch duplicado | ❌ Sim | ✅ Não |
+| Race condition | ❌ Bug | ✅ Resolvido |
 
 ---
 
