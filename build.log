@@ -1,0 +1,72 @@
+
+> tokenmilagre-platform@0.1.0 build
+> next build
+
+   ▲ Next.js 16.0.7 (Turbopack)
+   - Environments: .env.local, .env
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+   Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 2 errors:
+./lib/url-security/patterns.ts:7:1
+Module not found: Can't resolve '@/lib/data/crypto-scam-domains.json'
+[0m [90m  5 |[39m [90m */[39m
+ [90m  6 |[39m
+[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m scamDomains [36mfrom[39m [32m'@/lib/data/crypto-scam-domains.json'[39m[33m;[39m
+ [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m  8 |[39m [36mimport[39m trustedDomains [36mfrom[39m [32m'@/lib/data/crypto-trusted-domains.json'[39m[33m;[39m
+ [90m  9 |[39m
+ [90m 10 |[39m [90m// Levenshtein distance para detectar typosquatting[39m[0m
+
+Import map: aliased to relative './lib/data/crypto-scam-domains.json' inside of [project]/
+
+
+Import traces:
+  #1 [App Route]:
+    ./lib/url-security/patterns.ts
+    ./app/api/check-url/route.ts
+
+  #2 [App Route]:
+    ./lib/url-security/patterns.ts
+    ./lib/generated/prisma/index.js
+    ./lib/core/prisma.ts
+    ./app/api/articles/import/route.ts
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./lib/url-security/patterns.ts:8:1
+Module not found: Can't resolve '@/lib/data/crypto-trusted-domains.json'
+[0m [90m  6 |[39m
+ [90m  7 |[39m [36mimport[39m scamDomains [36mfrom[39m [32m'@/lib/data/crypto-scam-domains.json'[39m[33m;[39m
+[31m[1m>[22m[39m[90m  8 |[39m [36mimport[39m trustedDomains [36mfrom[39m [32m'@/lib/data/crypto-trusted-domains.json'[39m[33m;[39m
+ [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m  9 |[39m
+ [90m 10 |[39m [90m// Levenshtein distance para detectar typosquatting[39m
+ [90m 11 |[39m [36mfunction[39m levenshteinDistance(a[33m:[39m string[33m,[39m b[33m:[39m string)[33m:[39m number {[0m
+
+Import map: aliased to relative './lib/data/crypto-trusted-domains.json' inside of [project]/
+
+
+Import traces:
+  #1 [App Route]:
+    ./lib/url-security/patterns.ts
+    ./app/api/check-url/route.ts
+
+  #2 [App Route]:
+    ./lib/url-security/patterns.ts
+    ./lib/generated/prisma/index.js
+    ./lib/core/prisma.ts
+    ./app/api/articles/import/route.ts
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (./lib/url-security/patterns.ts:7:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./lib/url-security/patterns.ts:8:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)

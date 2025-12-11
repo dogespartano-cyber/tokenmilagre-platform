@@ -1,0 +1,266 @@
+/**
+ * DESIGN TOKENS - Token Milagre
+ * Sistema de cores sem roxo - Paleta de confiança e sustentabilidade
+ *
+ * IMPORTANTE: Nenhuma cor roxa (purple, violet, magenta) deve ser usada neste projeto.
+ * A paleta foi cuidadosamente selecionada para transmitir confiança, crescimento e transparência.
+ */
+
+:root {
+  /* ============================================
+     CORES PRIMÁRIAS - Sem Roxo
+     ============================================ */
+
+  /* Primary (Confiança) - Azul Escuro */
+  --color-primary: #0B4A6F;
+  --color-primary-hover: #094162;
+  --color-primary-light: #0F6BA1;
+  --color-primary-lighter: #E0F2FE;
+
+  /* Accent / Action (Crescimento) - Verde */
+  --color-accent: #147A5C;  /* Ajustado para WCAG AA compliance */
+  --color-accent-hover: #0F5A43;
+  --color-accent-light: #1A9672;
+  --color-accent-lighter: #D1FAE5;
+
+  /* ============================================
+     CORES NEUTRAS
+     ============================================ */
+  --color-neutral-light: #F5F7F8;
+  --color-neutral-medium: #9AA6AD;
+  --color-neutral-dark: #2F3942;
+  --color-neutral-darker: #1A2027;
+
+  /* Background */
+  --bg-page: #F5F7F8;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --bg-overlay: rgba(47, 57, 66, 0.9);
+
+  /* Text */
+  --text-primary: #2F3942;
+  --text-secondary: #5A6772;
+  --text-tertiary: #9AA6AD;
+  --text-inverse: #FFFFFF;
+  --text-disabled: #C4CDD5;
+
+  /* Borders */
+  --border-light: #E8ECEF;
+  --border-medium: #D1D8DD;
+  --border-strong: #9AA6AD;
+  --border-focus: var(--color-accent);
+
+  /* ============================================
+     CORES SECUNDÁRIAS - Paleta Expandida (Sem Roxo)
+     ============================================ */
+
+  /* Azul - Informação e Confiabilidade */
+  --color-blue: #0B4A6F;
+  --color-blue-light: #3B82F6;
+  --color-blue-lighter: #DBEAFE;
+
+  /* Verde - Sucesso e Crescimento */
+  --color-green: #147A5C;
+  --color-green-light: #22B286;
+  --color-green-lighter: #ECFDF5;
+
+  /* Amarelo/Dourado - Destaque e Valor */
+  --color-gold: #FFB703;
+  --color-gold-light: #FCD34D;
+  --color-gold-lighter: #FEF9C3;
+
+  /* Laranja - Energia e Ação */
+  --color-orange: #FB8500;
+  --color-orange-light: #FDBA74;
+  --color-orange-lighter: #FFEDD5;
+
+  /* Teal - Modernidade e Inovação */
+  --color-teal: #14B8A6;
+  --color-teal-light: #5EEAD4;
+  --color-teal-lighter: #CCFBF1;
+
+  /* Vermelho - Erro e Atenção */
+  --color-red: #DC2626;
+  --color-red-light: #F87171;
+  --color-red-lighter: #FEE2E2;
+
+  /* ============================================
+     CORES DE ESTADO (Sem Roxo)
+     ============================================ */
+  --state-success: var(--color-green);
+  --state-success-bg: var(--color-green-lighter);
+  --state-error: var(--color-red);
+  --state-error-bg: var(--color-red-lighter);
+  --state-warning: var(--color-gold);
+  --state-warning-bg: var(--color-gold-lighter);
+  --state-info: var(--color-blue);
+  --state-info-bg: var(--color-blue-lighter);
+
+  /* ============================================
+     TIPOGRAFIA
+     ============================================ */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Montserrat', 'Inter', sans-serif;
+
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px - mínimo para corpo */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  --font-size-5xl: 3rem;      /* 48px */
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* ============================================
+     ESPAÇAMENTO
+     ============================================ */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+  --spacing-3xl: 4rem;     /* 64px */
+
+  /* ============================================
+     BORDAS E SOMBRAS
+     ============================================ */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* ============================================
+     TRANSIÇÕES
+     ============================================ */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ============================================
+     BREAKPOINTS (para uso em JS)
+     ============================================ */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* ============================================
+   TEMA ESCURO (Sem Roxo)
+   ============================================ */
+[data-theme="dark"] {
+  /* Primary e Accent mantém boa visibilidade */
+  --color-primary: #0F6BA1;
+  --color-primary-hover: #0B4A6F;
+  --color-primary-light: #3B9AD9;
+  --color-primary-lighter: #1E3A8A;
+
+  --color-accent: #22B286;
+  --color-accent-hover: #1E8F6E;
+  --color-accent-light: #34D399;
+  --color-accent-lighter: #064E3B;
+
+  /* Neutras invertidas */
+  --color-neutral-light: #2F3942;
+  --color-neutral-medium: #6B7885;
+  --color-neutral-dark: #E8ECEF;
+  --color-neutral-darker: #F5F7F8;
+
+  /* Background escuro */
+  --bg-page: #121212;
+  --bg-card: #1A2027;
+  --bg-elevated: #2F3942;
+  --bg-overlay: rgba(245, 247, 248, 0.1);
+
+  /* Text invertido */
+  --text-primary: #F5F7F8;
+  --text-secondary: #C4CDD5;
+  --text-tertiary: #9AA6AD;
+  --text-inverse: #2F3942;
+  --text-disabled: #5A6772;
+
+  /* Borders escuros */
+  --border-light: #2F3942;
+  --border-medium: #3D4A56;
+  --border-strong: #5A6772;
+  --border-focus: var(--color-accent);
+
+  /* Estados ajustados */
+  --color-blue: #3B82F6;
+  --color-green: #22B286;
+  --color-gold: #FBBF24;
+  --color-orange: #FB923C;
+  --color-teal: #2DD4BF;
+  --color-red: #F87171;
+}
+
+/* ============================================
+   UTILITÁRIOS DE COR (Sem Roxo)
+   ============================================ */
+.bg-primary { background-color: var(--color-primary); }
+.bg-accent { background-color: var(--color-accent); }
+.bg-neutral-light { background-color: var(--color-neutral-light); }
+.bg-neutral-medium { background-color: var(--color-neutral-medium); }
+.bg-neutral-dark { background-color: var(--color-neutral-dark); }
+
+.text-primary-color { color: var(--color-primary); }
+.text-accent { color: var(--color-accent); }
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+
+.border-primary { border-color: var(--color-primary); }
+.border-accent { border-color: var(--color-accent); }
+.border-light { border-color: var(--border-light); }
+.border-medium { border-color: var(--border-medium); }
+
+/* ============================================
+   GRADIENTES (Sem Roxo)
+   ============================================ */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-blue-light));
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-green-light));
+}
+
+.gradient-warm {
+  background: linear-gradient(135deg, var(--color-orange), var(--color-gold));
+}
+
+.gradient-cool {
+  background: linear-gradient(135deg, var(--color-blue), var(--color-teal));
+}
+
+.gradient-success {
+  background: linear-gradient(135deg, var(--color-green), var(--color-teal));
+}
+
+/* Gradiente de texto */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-teal), var(--color-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Bloquear área administrativa
+Disallow: /dashboard/
+Disallow: /login
+Disallow: /api/
+
+Sitemap: https://tokenmilagre.xyz/sitemap.xml

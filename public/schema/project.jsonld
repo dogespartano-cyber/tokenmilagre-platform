@@ -1,0 +1,163 @@
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": "https://tokenmilagre.xyz",
+    "name": "$MILAGRE Platform",
+    "alternateName": "Token Milagre",
+    "description": "Plataforma educacional de criptomoedas com transparência radical. Filtrando o mercado cripto do dinheiro sujo através de educação ética e verificação de fatos.",
+    "url": "https://tokenmilagre.xyz",
+    "applicationCategory": "FinanceApplication",
+    "applicationSubCategory": "CryptocurrencyEducation",
+    "operatingSystem": "Web Browser",
+    "browserRequirements": "Requires JavaScript",
+    "softwareVersion": "2.0.0",
+    "dateCreated": "2024-01-01",
+    "dateModified": "2025-12-06",
+    "inLanguage": "pt-BR",
+    "isAccessibleForFree": true,
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+    },
+    "creator": {
+        "@type": "Organization",
+        "@id": "https://tokenmilagre.xyz/#organization",
+        "name": "$MILAGRE Community",
+        "description": "Comunidade dedicada à educação ética sobre criptomoedas",
+        "foundingDate": "2024",
+        "ethicalPrinciples": [
+            "Transparência Radical",
+            "Verdade Verificável",
+            "Fé como Bússola",
+            "Amor à Comunidade",
+            "Propósito sobre Lucro"
+        ],
+        "slogan": "Nunca estarás sozinho. ❤️",
+        "sameAs": [
+            "https://discord.gg/9BU3mFVX58",
+            "https://t.me/+Bop_TVFc_mg3Njlh",
+            "https://github.com/dogespartano-cyber/tokenmilagre-platform"
+        ]
+    },
+    "maintainer": {
+        "@type": "Organization",
+        "name": "$MILAGRE Community"
+    },
+    "license": "https://opensource.org/licenses/MIT",
+    "codeRepository": "https://github.com/dogespartano-cyber/tokenmilagre-platform",
+    "programmingLanguage": [
+        "TypeScript",
+        "JavaScript",
+        "CSS"
+    ],
+    "runtimePlatform": "Node.js",
+    "softwareRequirements": [
+        "Next.js 15+",
+        "PostgreSQL",
+        "Prisma ORM"
+    ],
+    "keywords": [
+        "cryptocurrency",
+        "education",
+        "blockchain",
+        "solana",
+        "transparency",
+        "ethics",
+        "faith",
+        "open-source",
+        "fact-checking",
+        "community"
+    ],
+    "audience": {
+        "@type": "Audience",
+        "audienceType": "Cryptocurrency enthusiasts seeking ethical education"
+    },
+    "potentialAction": [
+        {
+            "@type": "ReadAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://tokenmilagre.xyz/educacao",
+                "actionPlatform": "https://schema.org/DesktopWebPlatform"
+            },
+            "object": {
+                "@type": "Article",
+                "name": "Educational Articles"
+            }
+        },
+        {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://tokenmilagre.xyz/noticias?q={search_term}",
+                "actionPlatform": "https://schema.org/DesktopWebPlatform"
+            },
+            "query-input": "required name=search_term"
+        }
+    ],
+    "hasPart": [
+        {
+            "@type": "WebPage",
+            "name": "Educação",
+            "url": "https://tokenmilagre.xyz/educacao",
+            "description": "Artigos educacionais sobre blockchain, trading, DeFi e segurança"
+        },
+        {
+            "@type": "WebPage",
+            "name": "Notícias",
+            "url": "https://tokenmilagre.xyz/noticias",
+            "description": "Notícias verificadas do mercado cripto com análise de sentimento"
+        },
+        {
+            "@type": "WebPage",
+            "name": "Recursos",
+            "url": "https://tokenmilagre.xyz/recursos",
+            "description": "Ferramentas e links verificados para o ecossistema cripto"
+        },
+        {
+            "@type": "WebPage",
+            "name": "Transparência",
+            "url": "https://tokenmilagre.xyz/transparencia",
+            "description": "Métricas públicas e status do sistema em tempo real"
+        }
+    ],
+    "about": {
+        "@type": "Thing",
+        "name": "Cryptocurrency Education",
+        "description": "Educação ética sobre criptomoedas com foco em transparência e verificação de fatos"
+    },
+    "additionalProperty": [
+        {
+            "@type": "PropertyValue",
+            "name": "blockchain_network",
+            "value": "Solana"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "token_address",
+            "value": "3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "contract_renounced",
+            "value": "true"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "liquidity_locked",
+            "value": "true"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "agi_ready",
+            "value": "true"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "spiritual_foundation",
+            "value": "Romanos 11:36"
+        }
+    ]
+}

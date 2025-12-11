@@ -1,0 +1,86 @@
+/* 
+ * ZENITH GOLD THEME (Current Design)
+ * Institutional Gold: Gold (#FCD535) + Deep Dark (#0B0E11)
+ * Features: Zenith Glass, Obsidian backgrounds.
+ */
+
+/* THEME VARIABLES */
+:root {
+    /* Brand Colors - Solar Gold */
+    --brand-primary: #FCD535;
+    --brand-secondary: #F0B90B;
+    --brand-bg: rgba(252, 213, 53, 0.1);
+    --brand-border: rgba(252, 213, 53, 0.2);
+
+    /* Backgrounds - Obsidian/Void */
+    --bg-primary: #0B0E11;
+    --bg-secondary: #181A20;
+    --bg-tertiary: #2B3139;
+
+    /* Text */
+    --text-primary: #EAECEF;
+    --text-secondary: #B7BDC6;
+    --text-tertiary: #848E9C;
+
+    /* Status */
+    --success: #0ECB81;
+    --success-bg: rgba(14, 203, 129, 0.1);
+    --error: #F6465D;
+    --error-bg: rgba(246, 70, 93, 0.1);
+    --info: #06b6d4;
+    --info-bg: rgba(6, 182, 212, 0.1);
+
+    /* Borders */
+    --border-light: rgba(255, 255, 255, 0.1);
+    --border-focus: #FCD535;
+}
+
+[data-theme="light"] {
+    --bg-primary: #FAFAFA;
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #F5F5F5;
+    --text-primary: #1E2329;
+    --text-secondary: #474D57;
+    --text-tertiary: #707A8A;
+    --border-light: rgba(0, 0, 0, 0.1);
+}
+
+/* ZENITH CARD SYSTEM */
+.zenith-card {
+    @apply relative overflow-hidden transition-all duration-300;
+
+    /* Light Mode Default */
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="dark"] .zenith-card {
+    /* Obsidian Glass */
+    background: linear-gradient(145deg, rgba(30, 35, 41, 0.6), rgba(11, 14, 17, 0.8));
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.zenith-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] .zenith-card:hover {
+    border-color: rgba(252, 213, 53, 0.3);
+    /* Gold reveal */
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(252, 213, 53, 0.02);
+}
+
+/* FEATURED CARD */
+.zenith-featured {
+    @apply relative overflow-hidden transition-all duration-300;
+    border: 1px solid var(--brand-primary);
+    box-shadow: 0 0 20px rgba(252, 213, 53, 0.1);
+}
+
+[data-theme="dark"] .zenith-featured {
+    background: linear-gradient(145deg, rgba(252, 213, 53, 0.05), rgba(11, 14, 17, 0.9));
+}

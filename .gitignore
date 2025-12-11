@@ -1,0 +1,80 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
+!.env.sentry-example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+.claude/settings.local.json
+.claude
+server
+
+# Prisma generated files (keep stub for offline builds)
+# /lib/generated/prisma
+lib/generated/prisma/client.*
+lib/generated/prisma/default.*
+lib/generated/prisma/edge.*
+lib/generated/prisma/wasm.*
+lib/generated/prisma/index-browser.js
+lib/generated/prisma/package.json
+lib/generated/prisma/schema.prisma
+lib/generated/prisma/runtime/
+lib/generated/prisma/*.node
+lib/generated/prisma/*.wasm
+lib/generated/prisma/query_engine_bg.js
+lib/generated/prisma/*-loader.mjs
+
+# Database files
+*.db
+*.db-journal
+prisma/backup-*.json
+
+# Local documentation (kept locally, not in git)
+CLAUDE-MEMORY.md
+MANIFESTO.md
+MIGRACAO-POSTGRES.md
+*.backup.md
+
+# Example scripts (create new ones as needed)
+scripts/publish-*.js
+
+# Sentry
+.sentryclirc
+sentry.properties
+.env*.local

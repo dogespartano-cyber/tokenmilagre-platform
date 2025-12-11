@@ -1,0 +1,53 @@
+PASS lib/services/__tests__/article-service.test.ts
+  ArticleService
+    create
+      ✓ should create article successfully (8 ms)
+      ✓ should throw ConflictError if slug already exists (21 ms)
+      ✓ should auto-calculate readTime if not provided (4 ms)
+      ✓ should create citations with normalized domains (5 ms)
+      ✓ should sanitize HTML content (4 ms)
+    getById
+      ✓ should get article by ID (4 ms)
+      ✓ should throw NotFoundError if article does not exist (3 ms)
+    getBySlug
+      ✓ should get article by slug (7 ms)
+      ✓ should throw NotFoundError if slug does not exist (3 ms)
+    list
+      ✓ should list articles with pagination (4 ms)
+      ✓ should filter by type (6 ms)
+      ✓ should filter by published status (4 ms)
+      ✓ should search by title and content (3 ms)
+      ✓ should sort articles (9 ms)
+    update
+      ✓ should update article successfully (4 ms)
+      ✓ should throw NotFoundError if article does not exist (5 ms)
+      ✓ should check slug uniqueness on update (15 ms)
+      ✓ should allow same slug for same article (3 ms)
+      ✓ should recalculate readTime if content changes (3 ms)
+      ✓ should verify relationships on update (9 ms)
+      ✓ should update tags when provided (4 ms)
+      ✓ should update citations when provided (4 ms)
+      ✓ should update related articles when provided (9 ms)
+    delete
+      ✓ should permanently delete article (4 ms)
+      ✓ should throw NotFoundError if article does not exist (7 ms)
+    bulkOperation
+      ✓ should publish articles in bulk (9 ms)
+      ✓ should archive articles in bulk (5 ms)
+      ✓ should delete articles in bulk (8 ms)
+      ✓ should restore articles in bulk (4 ms)
+      ✓ should throw ValidationError if too many articles (11 ms)
+    getStats
+      ✓ should return article statistics (6 ms)
+    verifyRelationships (private)
+      ✓ should verify all relationships exist (10 ms)
+      ✓ should throw if related articles do not exist (6 ms)
+    context management
+      ✓ should set and clear context on create (10 ms)
+      ✓ should clear context even on error (5 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       35 passed, 35 total
+Snapshots:   0 total
+Time:        0.94 s, estimated 1 s
+Ran all test suites matching lib/services/__tests__/article-service.test.ts.
