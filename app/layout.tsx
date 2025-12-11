@@ -7,7 +7,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 config.autoAddCss = false;
 
-import { ThemeProvider } from "@/contexts/ThemeContext";
+import { ThemeProvider } from "@/lib/core/theme";
 import RootLayoutNav from "./layout-root";
 import { GoogleAnalytics } from '@next/third-parties/google';
 

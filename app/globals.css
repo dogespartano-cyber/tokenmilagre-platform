@@ -1069,3 +1069,86 @@ body {
 .text-adaptive {
   color: var(--text-primary);
 }
+/* ==================================================
+   GLOBAL BACKGROUND - OPTIMIZED CSS-ONLY VERSION
+   ================================================== */
+
+/**
+ * GlobalBackground - CSS-Only Implementation
+ * 
+ * Base background que responde ao tema via data-theme attribute.
+ * 100% CSS, zero JavaScript overhead.
+ */
+.global-background-base {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg-primary);
+  transition: background-color 0.5s ease;
+}
+
+/**
+ * Container de efeitos visuais (apenas Dark Mode)
+ */
+.global-background-effects {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+[data-theme="dark"] .global-background-effects {
+  opacity: 1;
+}
+
+/* Light Mode: Clean */
+[data-theme="light"] .global-background-base {
+  background: var(--bg-primary);
+}
+
+/* Dark Mode: Zenith Prosper */
+[data-theme="dark"] .global-background-base {
+  background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
+}
+
+/* =================
+   DARK MODE EFFECTS
+   ================= */
+
+/* Efeito 1: Hexagonal Data Mesh */
+[data-theme="dark"] .global-background-effects::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='104' viewBox='0 0 60 104' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill-rule='evenodd' stroke='%23FCD535' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+  -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+  mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+}
+
+/* Efeito 2: Rising Prosperity Curve */
+[data-theme="dark"] .global-background-effects::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60vh;
+  opacity: 0.05;
+  background: radial-gradient(ellipse at bottom, var(--brand-primary) 0%, transparent 70%);
+  filter: blur(120px);
+  transform: scaleY(0.7);
+}
+
+/* Efeito 3: Vignette */
+[data-theme="dark"] .global-background-base::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 40%, var(--bg-primary) 100%);
+  pointer-events: none;
+}
+
