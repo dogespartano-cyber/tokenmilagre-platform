@@ -971,8 +971,8 @@ body {
 }
 
 [data-theme="dark"] .glass-card {
-  background: rgba(15, 23, 42, 0.6);
-  /* Dark Slate tint for better contrast */
+  background: rgba(15, 23, 42, 0.3);
+  /* Reduced opacity for better glass effect over new background */
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
