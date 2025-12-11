@@ -124,7 +124,7 @@ export async function POST(req: NextRequest) {
         address,
         city,
         state,
-        country: country || 'Brasil',
+        country: country || '',
         markerColor: markerColor || '#8B5CF6',
         markerIcon,
       },

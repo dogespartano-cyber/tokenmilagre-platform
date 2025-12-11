@@ -129,7 +129,7 @@ export async function POST(req: NextRequest) {
         longDescription,
         fundingGoal: parseFloat(fundingGoal),
         currentFunding: currentFunding ? parseFloat(currentFunding) : 0,
-        currency: currency || 'BRL',
+        currency: currency || 'USD',
         walletAddress,
         category,
         location,

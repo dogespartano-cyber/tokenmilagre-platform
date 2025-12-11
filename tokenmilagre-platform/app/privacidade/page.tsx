@@ -67,9 +67,9 @@ export default function PrivacyPage() {
                 </section>
 
                 <section className="space-y-4">
-                    <h2 className="text-2xl font-bold text-[var(--text-primary)]">5. Seus Direitos (LGPD)</h2>
+                    <h2 className="text-2xl font-bold text-[var(--text-primary)]">5. Seus Direitos de Privacidade</h2>
                     <p className="text-[var(--text-secondary)] leading-relaxed">
-                        De acordo com a Lei Geral de Proteção de Dados (LGPD), você tem direito a acessar, corrigir e solicitar a exclusão de seus dados pessoais, caso venhamos a coletá-los. Como priorizamos o anonimato, na maioria dos casos, não detemos dados que possam identificá-lo pessoalmente.
+                        De acordo com as leis de proteção de dados aplicáveis (incluindo GDPR, LGPD e similares), você tem direito a acessar, corrigir e solicitar a exclusão de seus dados pessoais, caso venhamos a coletá-los. Como priorizamos o anonimato, na maioria dos casos, não detemos dados que possam identificá-lo pessoalmente.
                     </p>
                 </section>
 

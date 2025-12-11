@@ -137,7 +137,7 @@ export default function SobrePage() {
 
               <div className="space-y-6 text-lg text-[var(--text-secondary)] leading-relaxed text-left">
                 <p>
-                  Este projeto nasceu da determinação de um único desenvolvedor brasileiro e da potência da IA, mas seu destino é se tornar uma fogueira global. Estamos construindo tudo do zero, não apenas para criar tecnologia, mas para proteger pessoas de golpes e perdas, guiando-as com luz e conhecimento. Nossa missão é reunir centenas de evangelistas, de todos os níveis e idiomas, em uma comunidade que vibra na mesma frequência.
+                  Este projeto nasceu da determinação de um único desenvolvedor e da potência da IA, mas seu destino é se tornar uma fogueira global. Estamos construindo tudo do zero, não apenas para criar tecnologia, mas para proteger pessoas de golpes e perdas, guiando-as com luz e conhecimento. Nossa missão é reunir centenas de evangelistas, de todos os níveis e idiomas, em uma comunidade que vibra na mesma frequência.
                 </p>
 
                 <p>
@@ -221,7 +221,7 @@ export default function SobrePage() {
               <div className="space-y-4 text-[var(--text-secondary)]">
                 <p className="leading-relaxed">
                   $MILAGRE foi criado por <span className="font-semibold text-[var(--text-primary)]">dogespartano</span>,
-                  um desenvolvedor brasileiro que acredita que através da <strong className="text-cyan-600 dark:text-cyan-400">fé</strong> e
+                  um desenvolvedor que acredita que através da <strong className="text-cyan-600 dark:text-cyan-400">fé</strong> e
                   {' '}<strong className="text-cyan-600 dark:text-cyan-400">educação</strong>, podemos transformar o mercado cripto em um lugar mais seguro e acessível.
                 </p>
 

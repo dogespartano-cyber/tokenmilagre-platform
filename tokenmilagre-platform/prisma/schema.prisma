@@ -388,7 +388,7 @@ model SocialProject {
   // Financiamento
   fundingGoal     Float
   currentFunding  Float           @default(0)
-  currency        String          @default("BRL") // BRL, USD, MILAGRE
+  currency        String          @default("USD") // USD, EUR, BRL, MILAGRE
   walletAddress   String?
 
   // Categorização
@@ -443,7 +443,7 @@ model ProjectMap {
   address         String?
   city            String
   state           String
-  country         String   @default("Brasil")
+  country         String   // No country-specific default
 
   // Display
   markerColor     String   @default("#8B5CF6") // Cor do marcador no mapa

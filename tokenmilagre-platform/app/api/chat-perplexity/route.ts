@@ -23,10 +23,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Mensagens inválidas' }, { status: 400 });
     }
 
-    // 4. Obter data/hora atual no horário de Brasília (UTC-3)
+    // 4. Obter data/hora atual em UTC
     const now = new Date();
-    const brasiliaTime = new Intl.DateTimeFormat('pt-BR', {
-      timeZone: 'America/Sao_Paulo',
+    const currentTime = new Intl.DateTimeFormat('pt-BR', {
+      timeZone: 'UTC',
       dateStyle: 'full',
       timeStyle: 'short'
     }).format(now);
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
 
     let systemPrompt: string;
 
-    const timezoneContext = `**IMPORTANTE:** Você está respondendo para usuários no Brasil. A data e hora atual no horário de Brasília é: ${brasiliaTime}. Use sempre este horário como referência para "hoje", "ontem", "esta semana", etc.`;
+    const timezoneContext = `**IMPORTANTE:** A data e hora atual (UTC) é: ${currentTime}. Use sempre este horário como referência para "hoje", "ontem", "esta semana", etc.`;
 
     if (!articleType) {
       // MODO CONVERSA LIVRE

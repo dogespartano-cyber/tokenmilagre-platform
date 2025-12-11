@@ -160,7 +160,7 @@ export default function TransparenciaPage() {
                     <div className="space-y-4 text-[var(--text-secondary)]">
                         <p className="leading-relaxed">
                             Criado por <span className="font-semibold text-[var(--text-primary)]">dogespartano</span>,
-                            um desenvolvedor brasileiro anônimo que acredita em <strong className="text-cyan-600 dark:text-cyan-400">fé + educação</strong> como
+                            um desenvolvedor anônimo que acredita em <strong className="text-cyan-600 dark:text-cyan-400">fé + educação</strong> como
                             ferramentas para transformar o mercado cripto.
                         </p>
 
