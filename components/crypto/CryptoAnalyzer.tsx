@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBitcoin, faEthereum } from '@fortawesome/free-brands-svg-icons';
 import { TokenSOL } from '@token-icons/react';
+import { BinanceDataProvider, useBinanceContext } from '@/contexts/BinanceDataContext';
 
 const AdvancedChart = dynamic(() => import('./AdvancedChart'), {
     ssr: false,
@@ -16,42 +16,78 @@ const TrendMeter = dynamic(() => import('./TrendMeter'), {
 });
 
 type Asset = 'BTC' | 'ETH' | 'SOL';
+type Timeframe = '15m' | '4h' | '1d' | '1w' | '1M';
+
+const assets = {
+    BTC: {
+        symbol: 'BTCUSDT',
+        taSymbol: 'BINANCE:BTCUSDT',
+        name: 'Bitcoin',
+        icon: <FontAwesomeIcon icon={faBitcoin} className="text-[#F7931A] w-6 h-6" />,
+        color: 'text-[#F7931A]',
+        bg: 'bg-[#F7931A]/10',
+        border: 'border-[#F7931A]/20'
+    },
+    ETH: {
+        symbol: 'ETHUSDT',
+        taSymbol: 'BINANCE:ETHUSDT',
+        name: 'Ethereum',
+        icon: <FontAwesomeIcon icon={faEthereum} className="text-[#627EEA] w-6 h-6" />,
+        color: 'text-[#627EEA]',
+        bg: 'bg-[#627EEA]/10',
+        border: 'border-[#627EEA]/20'
+    },
+    SOL: {
+        symbol: 'SOLUSDT',
+        taSymbol: 'BINANCE:SOLUSDT',
+        name: 'Solana',
+        icon: <TokenSOL size={24} variant="branded" />,
+        color: 'text-[#14F195]',
+        bg: 'bg-[#14F195]/10',
+        border: 'border-[#14F195]/20'
+    }
+};
 
 export default function CryptoAnalyzer() {
     const [activeAsset, setActiveAsset] = useState<Asset>('BTC');
-    const [timeframe, setTimeframe] = useState<any>('4h');
+    const [timeframe, setTimeframe] = useState<Timeframe>('4h');
     const [trendColor, setTrendColor] = useState<string | undefined>(undefined);
 
-    const assets = {
-        BTC: {
-            symbol: 'BTCUSDT',
-            taSymbol: 'BINANCE:BTCUSDT',
-            name: 'Bitcoin',
-            icon: <FontAwesomeIcon icon={faBitcoin} className="text-[#F7931A] w-6 h-6" />,
-            color: 'text-[#F7931A]',
-            bg: 'bg-[#F7931A]/10',
-            border: 'border-[#F7931A]/20'
-        },
-        ETH: {
-            symbol: 'ETHUSDT',
-            taSymbol: 'BINANCE:ETHUSDT',
-            name: 'Ethereum',
-            icon: <FontAwesomeIcon icon={faEthereum} className="text-[#627EEA] w-6 h-6" />,
-            color: 'text-[#627EEA]',
-            bg: 'bg-[#627EEA]/10',
-            border: 'border-[#627EEA]/20'
-        },
-        SOL: {
-            symbol: 'SOLUSDT',
-            taSymbol: 'BINANCE:SOLUSDT',
-            name: 'Solana',
-            icon: <TokenSOL size={24} variant="branded" />,
-            color: 'text-[#14F195]',
-            bg: 'bg-[#14F195]/10',
-            border: 'border-[#14F195]/20'
-        }
-    };
+    return (
+        <BinanceDataProvider
+            key={`${assets[activeAsset].symbol}-${timeframe}`}
+            initialSymbol={assets[activeAsset].symbol}
+            initialInterval={timeframe}
+        >
+            <CryptoAnalyzerContent
+                activeAsset={activeAsset}
+                setActiveAsset={setActiveAsset}
+                timeframe={timeframe}
+                setTimeframe={setTimeframe}
+                trendColor={trendColor}
+                setTrendColor={setTrendColor}
+            />
+        </BinanceDataProvider>
+    );
+}
 
+interface CryptoAnalyzerContentProps {
+    activeAsset: Asset;
+    setActiveAsset: (asset: Asset) => void;
+    timeframe: Timeframe;
+    setTimeframe: (tf: Timeframe) => void;
+    trendColor: string | undefined;
+    setTrendColor: (color: string | undefined) => void;
+}
+
+function CryptoAnalyzerContent({
+    activeAsset,
+    setActiveAsset,
+    timeframe,
+    setTimeframe,
+    trendColor,
+    setTrendColor,
+}: CryptoAnalyzerContentProps) {
     return (
         <div className="space-y-6">
             {/* Tabs */}
@@ -115,7 +151,7 @@ export default function CryptoAnalyzer() {
                                     return (
                                         <button
                                             key={tf}
-                                            onClick={() => setTimeframe(tf)}
+                                            onClick={() => setTimeframe(tf as Timeframe)}
                                             className={`px-2 py-1 text-xs font-bold rounded transition-all ${timeframe === tf
                                                 ? 'bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm'
                                                 : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'

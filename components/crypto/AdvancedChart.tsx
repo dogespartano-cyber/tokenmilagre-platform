@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { createChart, ColorType, ISeriesApi, CandlestickSeries, LineSeries, Time } from 'lightweight-charts';
+import { useEffect, useRef, useState, useMemo } from 'react';
+import { createChart, ColorType, ISeriesApi, IChartApi, CandlestickSeries, LineSeries, Time } from 'lightweight-charts';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useBinanceContext } from '@/contexts/BinanceDataContext';
 import { calculateSMA, calculateRSI, calculateBollingerBands } from '@/lib/shared/utils/technical-analysis';
 
 type Timeframe = '15m' | '4h' | '1d' | '1w' | '1M';
@@ -17,21 +18,104 @@ interface AdvancedChartProps {
 
 export default function AdvancedChart({ symbol, name, timeframe: controlledTimeframe, onTimeframeChange, trendColor }: AdvancedChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
-  const [internalTimeframe, setInternalTimeframe] = useState<Timeframe>('4h');
-  const timeframe = controlledTimeframe || internalTimeframe;
-  const chartRef = useRef<any>(null); // Ref to hold chart instance
+  const timeframe = controlledTimeframe || '4h';
+  const chartRef = useRef<IChartApi | null>(null);
   const candlestickSeriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
-
-  const handleTimeframeChange = (newTimeframe: Timeframe) => {
-    if (onTimeframeChange) {
-      onTimeframeChange(newTimeframe);
-    } else {
-      setInternalTimeframe(newTimeframe);
-    }
-  };
+  const seriesRefs = useRef<{
+    sma20: ISeriesApi<'Line'> | null;
+    sma50: ISeriesApi<'Line'> | null;
+    sma200: ISeriesApi<'Line'> | null;
+    rsi: ISeriesApi<'Line'> | null;
+    bbUpper: ISeriesApi<'Line'> | null;
+    bbMiddle: ISeriesApi<'Line'> | null;
+    bbLower: ISeriesApi<'Line'> | null;
+  }>({
+    sma20: null,
+    sma50: null,
+    sma200: null,
+    rsi: null,
+    bbUpper: null,
+    bbMiddle: null,
+    bbLower: null,
+  });
 
   const [currentPrice, setCurrentPrice] = useState<number | null>(null);
+  const [chartReady, setChartReady] = useState(false);
   const { theme } = useTheme();
+
+  // Get data from shared context
+  const { data: binanceData, loading } = useBinanceContext();
+
+  // Memoize chart data transformation
+  const chartData = useMemo(() => {
+    if (!binanceData || binanceData.length === 0) return null;
+
+    const candleData = binanceData.map((candle) => ({
+      time: candle.time as Time,
+      open: candle.open,
+      high: candle.high,
+      low: candle.low,
+      close: candle.close,
+    }));
+
+    const closes = binanceData.map((d) => d.close);
+
+    // Calculate indicators
+    const sma20Data = calculateSMA(closes, 20).map((value, index) => ({
+      time: candleData[index].time,
+      value,
+    })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
+
+    const sma50Data = calculateSMA(closes, 50).map((value, index) => ({
+      time: candleData[index].time,
+      value,
+    })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
+
+    const sma200Data = calculateSMA(closes, 200).map((value, index) => ({
+      time: candleData[index].time,
+      value,
+    })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
+
+    const rsiData = calculateRSI(closes, 14).map((value, index) => ({
+      time: candleData[index].time,
+      value,
+    })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
+
+    const bollingerBands = calculateBollingerBands(closes, 20, 2);
+    const bbUpperData = bollingerBands.upper.map((value, index) => ({
+      time: candleData[index].time,
+      value,
+    })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
+
+    const bbMiddleData = bollingerBands.middle.map((value, index) => ({
+      time: candleData[index].time,
+      value,
+    })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
+
+    const bbLowerData = bollingerBands.lower.map((value, index) => ({
+      time: candleData[index].time,
+      value,
+    })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
+
+    return {
+      candleData,
+      sma20Data,
+      sma50Data,
+      sma200Data,
+      rsiData,
+      bbUpperData,
+      bbMiddleData,
+      bbLowerData,
+      lastPrice: candleData[candleData.length - 1]?.close || null,
+    };
+  }, [binanceData]);
+
+  // Update current price when data changes
+  useEffect(() => {
+    if (chartData?.lastPrice) {
+      setCurrentPrice(chartData.lastPrice);
+    }
+  }, [chartData]);
 
   // Apply trend color updates
   useEffect(() => {
@@ -45,7 +129,6 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
         wickDownColor: trendColor,
       });
     } else if (candlestickSeriesRef.current && !trendColor) {
-      // Default Style (Gray almost white)
       candlestickSeriesRef.current.applyOptions({
         upColor: 'transparent',
         downColor: '#E5E7EB',
@@ -57,114 +140,25 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
     }
   }, [trendColor]);
 
+  // Update chart data when context data changes
+  useEffect(() => {
+    if (!chartReady) return;
+    if (!chartData) return;
+    if (!candlestickSeriesRef.current) return;
+
+    candlestickSeriesRef.current.setData(chartData.candleData);
+    seriesRefs.current.sma20?.setData(chartData.sma20Data);
+    seriesRefs.current.sma50?.setData(chartData.sma50Data);
+    seriesRefs.current.sma200?.setData(chartData.sma200Data);
+    seriesRefs.current.rsi?.setData(chartData.rsiData);
+    seriesRefs.current.bbUpper?.setData(chartData.bbUpperData);
+    seriesRefs.current.bbMiddle?.setData(chartData.bbMiddleData);
+    seriesRefs.current.bbLower?.setData(chartData.bbLowerData);
+  }, [chartReady, chartData]);
+
+  // Create chart on mount
   useEffect(() => {
     if (!chartContainerRef.current) return;
-
-    const fetchDataAndCalculateIndicators = async (
-      symbol: string,
-      timeframe: Timeframe,
-      series: {
-        candlestick: ISeriesApi<'Candlestick'>;
-        sma20: ISeriesApi<'Line'>;
-        sma50: ISeriesApi<'Line'>;
-        rsi: ISeriesApi<'Line'>;
-        bbUpper: ISeriesApi<'Line'>;
-        bbMiddle: ISeriesApi<'Line'>;
-        bbLower: ISeriesApi<'Line'>;
-      }
-    ) => {
-      try {
-        const intervalMap: Record<Timeframe, string> = {
-          '15m': '15m',
-          '4h': '4h',
-          '1d': '1d',
-          '1w': '1w',
-          '1M': '1M',
-        };
-
-        const limitMap: Record<Timeframe, number> = {
-          '15m': 500,  // ~5 dias (500 velas de 15min)
-          '4h': 500,   // ~83 dias (500 velas de 4h)
-          '1d': 500,   // 500 dias (~1.4 anos)
-          '1w': 200,   // ~4 anos (200 velas semanais)
-          '1M': 100,   // ~8 anos (100 velas mensais)
-        };
-
-        const interval = intervalMap[timeframe];
-        const limit = limitMap[timeframe];
-
-        const response = await fetch(
-          `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`
-        );
-        const data: Array<Array<string | number>> = await response.json();
-
-        // Formatar dados de candlestick
-        const candleData = data.map((candle) => ({
-          time: ((candle[0] as number) / 1000) as Time,
-          open: parseFloat(candle[1] as string),
-          high: parseFloat(candle[2] as string),
-          low: parseFloat(candle[3] as string),
-          close: parseFloat(candle[4] as string),
-        }));
-
-        series.candlestick.setData(candleData);
-
-        // Atualizar preço atual (último candle)
-        if (candleData.length > 0) {
-          const lastCandle = candleData[candleData.length - 1];
-          setCurrentPrice(lastCandle.close);
-        }
-
-        // Calcular indicadores
-        const closes = candleData.map((d) => d.close);
-
-        // SMA 20
-        const sma20Data = calculateSMA(closes, 20).map((value, index) => ({
-          time: candleData[index].time,
-          value,
-        })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
-
-        // SMA 50
-        const sma50Data = calculateSMA(closes, 50).map((value, index) => ({
-          time: candleData[index].time,
-          value,
-        })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
-
-        // RSI
-        const rsiData = calculateRSI(closes, 14).map((value, index) => ({
-          time: candleData[index].time,
-          value,
-        })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
-
-        // Bandas de Bollinger
-        const bollingerBands = calculateBollingerBands(closes, 20, 2);
-        const bbUpperData = bollingerBands.upper.map((value, index) => ({
-          time: candleData[index].time,
-          value,
-        })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
-
-        const bbMiddleData = bollingerBands.middle.map((value, index) => ({
-          time: candleData[index].time,
-          value,
-        })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
-
-        const bbLowerData = bollingerBands.lower.map((value, index) => ({
-          time: candleData[index].time,
-          value,
-        })).filter((d) => d.value !== null) as Array<{ time: Time; value: number }>;
-
-        // Aplicar dados aos gráficos
-        series.sma20.setData(sma20Data);
-        series.sma50.setData(sma50Data);
-        series.rsi.setData(rsiData);
-        series.bbUpper.setData(bbUpperData);
-        series.bbMiddle.setData(bbMiddleData);
-        series.bbLower.setData(bbLowerData);
-
-      } catch (error) {
-        console.error('Erro ao buscar dados da Binance:', error);
-      }
-    };
 
     // Obter cor do texto do tema atual
     const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim();
@@ -246,6 +240,13 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
       title: 'SMA 50',
     });
 
+    // SMA 200 (Roxo)
+    const sma200Series = chart.addSeries(LineSeries, {
+      color: '#8B5CF6',
+      lineWidth: 2,
+      title: 'SMA 200',
+    });
+
     // Bandas de Bollinger (Cinza/Slate - Sutil)
     const bbUpperSeries = chart.addSeries(LineSeries, {
       color: '#94A3B8',
@@ -283,16 +284,19 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
       },
     });
 
-    // Buscar dados da Binance e calcular indicadores
-    fetchDataAndCalculateIndicators(symbol, timeframe, {
-      candlestick: candlestickSeries,
+    // Store series references for data updates from context
+    seriesRefs.current = {
       sma20: sma20Series,
       sma50: sma50Series,
+      sma200: sma200Series,
       rsi: rsiSeries,
       bbUpper: bbUpperSeries,
       bbMiddle: bbMiddleSeries,
       bbLower: bbLowerSeries,
-    });
+    };
+
+    // Signal that chart is ready for data
+    setChartReady(true);
 
     // Responsivo com ResizeObserver
     const resizeObserver = new ResizeObserver((entries) => {
@@ -305,18 +309,17 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
     resizeObserver.observe(chartContainerRef.current);
 
     return () => {
+      setChartReady(false);
       resizeObserver.disconnect();
       chart.remove();
     };
-  }, [symbol, timeframe, theme]);
+  }, [theme]); // Only recreate chart on theme change
 
   return (
     <div
       className="rounded-2xl overflow-hidden"
       style={{
-        backgroundColor: 'transparent',
-        opacity: trendColor ? 1 : 0,
-        transition: 'opacity 0.3s ease-in-out'
+        backgroundColor: 'transparent'
       }}
     >
       {/* Título, Preço e Timeframe - Responsivo */}
@@ -337,30 +340,7 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
           </div>
         )}
 
-        {/* Direita: Timeframe Selector */}
-        <div className="flex flex-wrap gap-1 rounded-lg p-1 w-full md:w-auto overflow-x-auto no-scrollbar" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-          {['15m', '4h', '1d', '1w', '1M'].map((tf) => {
-            const displayLabel: Record<string, string> = {
-              '15m': '15M',
-              '4h': '4H',
-              '1d': '1D',
-              '1w': '1S',
-              '1M': '1M',
-            };
-            return (
-              <button
-                key={tf}
-                onClick={() => handleTimeframeChange(tf as Timeframe)}
-                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${timeframe === tf
-                  ? 'bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm'
-                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-                  }`}
-              >
-                {displayLabel[tf]}
-              </button>
-            );
-          })}
-        </div>
+
       </div>
 
       {/* Legenda compacta */}
@@ -373,6 +353,10 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-0.5" style={{ backgroundColor: '#3B82F6' }}></div>
             <span style={{ color: 'var(--text-secondary)' }}>SMA 50</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-0.5" style={{ backgroundColor: '#8B5CF6' }}></div>
+            <span style={{ color: 'var(--text-secondary)' }}>SMA 200</span>
           </div>
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-0.5" style={{ backgroundColor: '#94A3B8' }}></div>

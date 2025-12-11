@@ -198,13 +198,19 @@ export const calculateTrendSignal = (
         return { score: 0, exactScore: 0, label: 'Neutro - Aguardar Definição' };
     }
 
+    // RSI Thresholds
+    const RSI_OVERSOLD = 30;
+    const RSI_LOW = 45;
+    const RSI_HIGH = 55;
+    const RSI_OVERBOUGHT = 70;
+
     let rsiScore = 0;
     // INVERTED LOGIC: High RSI (Price High) -> Positive Score
     // Low RSI (Price Low) -> Negative Score
-    if (rsi < 30) rsiScore = -2;      // Sobrevendido -> Low Score
-    else if (rsi < 45) rsiScore = -1; // Baixo
-    else if (rsi > 70) rsiScore = 2;  // Sobrecomprado -> High Score
-    else if (rsi > 55) rsiScore = 1;  // Alto
+    if (rsi < RSI_OVERSOLD) rsiScore = -2;      // Sobrevendido -> Low Score
+    else if (rsi < RSI_LOW) rsiScore = -1;       // Baixo
+    else if (rsi > RSI_OVERBOUGHT) rsiScore = 2; // Sobrecomprado -> High Score
+    else if (rsi > RSI_HIGH) rsiScore = 1;       // Alto
 
     let macdScore = 0;
     if (macdHist > 0) macdScore = 1;

@@ -94,8 +94,12 @@ export const useBinanceData = (symbol: string, interval: string = '4h'): UseBina
                 });
 
             } catch (err) {
-                setError(err instanceof Error ? err.message : 'Unknown error');
-                console.error('Error fetching Binance data:', err);
+                const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+                setError(errorMessage);
+                // Only log in development
+                if (process.env.NODE_ENV === 'development') {
+                    console.error('Error fetching Binance data:', err);
+                }
             } finally {
                 setLoading(false);
             }

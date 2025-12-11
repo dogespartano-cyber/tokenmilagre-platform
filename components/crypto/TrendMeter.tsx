@@ -1,6 +1,6 @@
 'use client';
 
-import { useBinanceData } from '@/hooks/useBinanceData';
+import { useBinanceContext } from '@/contexts/BinanceDataContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faExclamationTriangle, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,8 @@ interface TrendMeterProps {
 }
 
 export default function TrendMeter({ symbol, interval = '4h', onColorChange }: TrendMeterProps) {
-    const { indicators, loading, error } = useBinanceData(symbol, interval);
+    // Using shared context instead of separate fetch
+    const { indicators, loading, error } = useBinanceContext();
     const [gaugeValue, setGaugeValue] = useState(50); // 0 to 100
     const [displayScore, setDisplayScore] = useState(0);
 
@@ -244,18 +245,24 @@ export default function TrendMeter({ symbol, interval = '4h', onColorChange }: T
                     <div className="text-xs font-medium text-gray-500 text-right">Momentum</div>
                 </div>
 
-                {/* Moving Averages */}
+                {/* Moving Averages - Golden Cross / Death Cross */}
                 <div className="col-span-2 flex justify-between items-center pt-4 border-t border-gray-200 dark:border-white/5">
                     <span className="text-sm font-bold text-gray-700 dark:text-gray-400">Médias Móveis</span>
                     <div className="flex gap-8">
-                        <div className="flex items-center gap-2">
-                            <div className={`w-2 h-2 rounded-full ${sma50 && indicators.sma50 && indicators.sma50 < (indicators.sma200 || 0) ? 'bg-red-500' : 'bg-green-500'}`} />
-                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">SMA 50</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className={`w-2 h-2 rounded-full ${sma200 && indicators.sma200 && indicators.sma200 < (indicators.sma50 || 0) ? 'bg-green-500' : 'bg-gray-500'}`} />
-                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">SMA 200</span>
-                        </div>
+                        {/* Golden Cross: SMA50 > SMA200 = bullish (verde) */}
+                        {/* Death Cross: SMA50 < SMA200 = bearish (vermelho) */}
+                        {(() => {
+                            const isGoldenCross = sma50 && sma200 && sma50 > sma200;
+                            const crossLabel = isGoldenCross ? 'Golden Cross' : 'Death Cross';
+                            const crossColor = isGoldenCross ? 'bg-green-500' : 'bg-red-500';
+                            const textColor = isGoldenCross ? 'text-green-500' : 'text-red-500';
+                            return (
+                                <div className="flex items-center gap-2">
+                                    <div className={`w-2 h-2 rounded-full ${crossColor}`} />
+                                    <span className={`text-sm font-medium ${textColor}`}>{crossLabel}</span>
+                                </div>
+                            );
+                        })()}
                     </div>
                 </div>
             </div>
@@ -324,20 +331,24 @@ function ScoreItem({ label, score, type = 'general' }: { label: string, score: n
 
     const getColor = (s: number, t: string) => {
         /**
-         * TODO: Dúvida pendente para futuras sessões
-         * ==========================================
-         * Atualmente há duas perspectivas de cor:
+         * DECISÃO DE DESIGN: Cores por Tipo de Indicador
+         * ===============================================
          * 
-         * 1) RSI/Bollinger (Mean Reversion):
-         *    - score negativo = preço baixo = VERDE (oportunidade)
-         *    - score positivo = preço alto = VERMELHO (caro)
+         * Mantemos duas filosofias de cor propositalmente:
          * 
-         * 2) SMA/Cross (Trend Following):
-         *    - score positivo = tendência alta = VERDE (bom)
-         *    - score negativo = tendência baixa = VERMELHO (ruim)
+         * 1) RSI/Bollinger → Mean Reversion (Comprar Barato)
+         *    - Score negativo = preço baixo = VERDE (oportunidade)
+         *    - Score positivo = preço alto = VERMELHO (caro)
          * 
-         * DECISÃO PENDENTE: Unificar todos para Mean Reversion?
-         * Se sim, TUDO negativo seria verde (oportunidade de comprar barato)
+         * 2) SMA/Cross/MACD → Trend Following (Seguir Tendência)
+         *    - Score positivo = tendência alta = VERDE (bullish)
+         *    - Score negativo = tendência baixa = VERMELHO (bearish)
+         * 
+         * Esta separação é INTENCIONAL pois cada indicador tem
+         * interpretação diferente. Os labels descritivos ajudam
+         * o usuário a entender o contexto de cada cor.
+         * 
+         * Revisado: 2025-12-11
          */
 
         // RSI e Bollinger: score negativo = bom (verde), score positivo = ruim (vermelho)
