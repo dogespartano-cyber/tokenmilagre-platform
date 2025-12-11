@@ -70,7 +70,8 @@ export const useBinanceData = (symbol: string, interval: string = '4h'): UseBina
                     rsiValues,
                     macdValues.histogram,
                     sma50Values,
-                    sma200Values
+                    sma200Values,
+                    { upper: bollingerValues.upper, lower: bollingerValues.lower }
                 );
 
                 const lastIndex = closes.length - 1;

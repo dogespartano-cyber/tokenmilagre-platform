@@ -51,6 +51,7 @@ export interface TechnicalIndicators {
             sma50Score: number;
             sma200Score: number;
             crossScore: number;
+            bollingerScore: number;
         };
     };
 }

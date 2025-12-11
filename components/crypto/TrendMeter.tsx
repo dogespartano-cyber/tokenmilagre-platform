@@ -95,7 +95,7 @@ export default function TrendMeter({ symbol, interval = '4h', onColorChange }: T
     const trendColor = getTrendColor(displayScore);
 
     return (
-        <div className="flex flex-col h-full w-full">
+        <div className="flex flex-col h-full w-full glass-card rounded-2xl border border-[var(--border-light)] p-4">
             {/* Gauge Graphic */}
             <div className="relative flex items-center justify-center py-6">
                 <svg
@@ -190,12 +190,23 @@ export default function TrendMeter({ symbol, interval = '4h', onColorChange }: T
             </div>
 
             {/* Trend Label */}
-            <div className="text-center mb-8">
+            <div className="text-center mb-6">
                 <div className="inline-block px-6 py-2 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 backdrop-blur-sm">
                     <span className="text-base font-bold" style={{ color: trendColor }}>
                         {trend.label}
                     </span>
                 </div>
+            </div>
+
+            {/* Legenda Educativa */}
+            <div className="text-center mb-6 px-4">
+                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                    {displayScore <= -2 && '🟢 Indicadores sugerem que o preço está baixo. Pode ser uma boa hora para considerar compra.'}
+                    {displayScore > -2 && displayScore < 0 && '🟢 Preço levemente abaixo da média. Momento interessante para observar.'}
+                    {displayScore >= 0 && displayScore <= 1 && '🟡 Mercado neutro. Aguarde uma melhor definição de tendência.'}
+                    {displayScore > 1 && displayScore < 3 && '🟠 Preço acima da média. Cuidado ao entrar agora.'}
+                    {displayScore >= 3 && '🔴 Indicadores sugerem preço elevado. Risco de correção no curto prazo.'}
+                </p>
             </div>
 
             {/* Indicators Grid */}
@@ -252,12 +263,16 @@ export default function TrendMeter({ symbol, interval = '4h', onColorChange }: T
             {/* Breakdown Details */}
             {trend.breakdown && (
                 <div className="mt-6 pt-6 border-t border-gray-200 dark:border-white/5 px-2">
-                    <div className="grid grid-cols-5 gap-2 text-center">
+                    <div className="text-xs text-gray-500 dark:text-gray-400 text-center mb-4 font-medium">
+                        Breakdown dos Indicadores
+                    </div>
+                    <div className="grid grid-cols-3 gap-3 text-center">
                         <ScoreItem label="RSI" score={trend.breakdown.rsiScore} type="rsi" />
                         <ScoreItem label="MACD" score={trend.breakdown.macdScore} type="macd" />
                         <ScoreItem label="SMA50" score={trend.breakdown.sma50Score} type="sma" />
                         <ScoreItem label="SMA200" score={trend.breakdown.sma200Score} type="sma" />
                         <ScoreItem label="Cross" score={trend.breakdown.crossScore} type="cross" />
+                        <ScoreItem label="Bollinger" score={trend.breakdown.bollingerScore} type="bollinger" />
                     </div>
                 </div>
             )}
@@ -265,14 +280,16 @@ export default function TrendMeter({ symbol, interval = '4h', onColorChange }: T
     );
 }
 
-function ScoreItem({ label, score, type = 'general' }: { label: string, score: number, type?: 'rsi' | 'macd' | 'sma' | 'cross' | 'general' }) {
+function ScoreItem({ label, score, type = 'general' }: { label: string, score: number, type?: 'rsi' | 'macd' | 'sma' | 'cross' | 'bollinger' | 'general' }) {
     const getLabel = (s: number, t: string) => {
         if (t === 'rsi') {
-            if (s >= 2) return 'Oportunidade'; // RSI < 30
-            if (s === 1) return 'Barato';      // RSI < 45
+            // score negativo = RSI baixo (preço baixo) = oportunidade
+            // score positivo = RSI alto (preço alto) = arriscado
+            if (s <= -2) return 'Oportunidade'; // RSI < 30 → score -2
+            if (s === -1) return 'Barato';      // RSI < 45 → score -1
             if (s === 0) return 'Neutro';
-            if (s === -1) return 'Caro';       // RSI > 55
-            if (s <= -2) return 'Arriscado';   // RSI > 70
+            if (s === 1) return 'Caro';         // RSI > 55 → score +1
+            if (s >= 2) return 'Arriscado';     // RSI > 70 → score +2
         }
 
         if (t === 'macd') {
@@ -293,22 +310,54 @@ function ScoreItem({ label, score, type = 'general' }: { label: string, score: n
             return 'Neutro';
         }
 
+        if (t === 'bollinger') {
+            if (s < 0) return 'Banda ↓';  // Preço na banda inferior = oportunidade
+            if (s > 0) return 'Banda ↑';  // Preço na banda superior = caro
+            return 'Meio';
+        }
+
         // General fallback
         if (s > 0) return 'Positivo';
         if (s < 0) return 'Negativo';
         return 'Neutro';
     };
 
-    const getColor = (s: number) => {
+    const getColor = (s: number, t: string) => {
+        /**
+         * TODO: Dúvida pendente para futuras sessões
+         * ==========================================
+         * Atualmente há duas perspectivas de cor:
+         * 
+         * 1) RSI/Bollinger (Mean Reversion):
+         *    - score negativo = preço baixo = VERDE (oportunidade)
+         *    - score positivo = preço alto = VERMELHO (caro)
+         * 
+         * 2) SMA/Cross (Trend Following):
+         *    - score positivo = tendência alta = VERDE (bom)
+         *    - score negativo = tendência baixa = VERMELHO (ruim)
+         * 
+         * DECISÃO PENDENTE: Unificar todos para Mean Reversion?
+         * Se sim, TUDO negativo seria verde (oportunidade de comprar barato)
+         */
+
+        // RSI e Bollinger: score negativo = bom (verde), score positivo = ruim (vermelho)
+        // Porque RSI baixo = preço barato = oportunidade
+        if (t === 'rsi' || t === 'bollinger') {
+            if (s < 0) return 'text-green-500';  // RSI baixo / Banda inferior = bom
+            if (s > 0) return 'text-red-500';    // RSI alto / Banda superior = ruim
+            return 'text-gray-500';
+        }
+
+        // Outros indicadores: score positivo = bom (verde), score negativo = ruim (vermelho)
         if (s > 0) return 'text-green-500';
         if (s < 0) return 'text-red-500';
         return 'text-gray-500';
     };
 
     return (
-        <div className="flex flex-col items-center gap-1.5">
-            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">{label}</span>
-            <span className={`text-xs font-bold ${getColor(score)}`}>
+        <div className="flex flex-col items-center gap-1.5 p-2 rounded-lg bg-gray-50/50 dark:bg-white/5">
+            <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{label}</span>
+            <span className={`text-xs font-bold ${getColor(score, type)}`}>
                 {getLabel(score, type)}
             </span>
         </div>

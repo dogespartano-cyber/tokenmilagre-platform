@@ -5,7 +5,7 @@ import { createChart, ColorType, ISeriesApi, CandlestickSeries, LineSeries, Time
 import { useTheme } from '@/contexts/ThemeContext';
 import { calculateSMA, calculateRSI, calculateBollingerBands } from '@/lib/shared/utils/technical-analysis';
 
-type Timeframe = '15m' | '4h' | '1d';
+type Timeframe = '15m' | '4h' | '1d' | '1w' | '1M';
 
 interface AdvancedChartProps {
   symbol: string;
@@ -74,16 +74,20 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
       }
     ) => {
       try {
-        const intervalMap = {
+        const intervalMap: Record<Timeframe, string> = {
           '15m': '15m',
           '4h': '4h',
           '1d': '1d',
+          '1w': '1w',
+          '1M': '1M',
         };
 
-        const limitMap = {
+        const limitMap: Record<Timeframe, number> = {
           '15m': 500,  // ~5 dias (500 velas de 15min)
           '4h': 500,   // ~83 dias (500 velas de 4h)
           '1d': 500,   // 500 dias (~1.4 anos)
+          '1w': 200,   // ~4 anos (200 velas semanais)
+          '1M': 100,   // ~8 anos (100 velas mensais)
         };
 
         const interval = intervalMap[timeframe];
@@ -334,19 +338,28 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
         )}
 
         {/* Direita: Timeframe Selector */}
-        <div className="flex gap-1 rounded-lg p-1 w-full md:w-auto overflow-x-auto no-scrollbar" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-          {['15m', '4h', '1d'].map((tf) => (
-            <button
-              key={tf}
-              onClick={() => handleTimeframeChange(tf as Timeframe)}
-              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${timeframe === tf
-                ? 'bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm'
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-                }`}
-            >
-              {tf.toUpperCase()}
-            </button>
-          ))}
+        <div className="flex flex-wrap gap-1 rounded-lg p-1 w-full md:w-auto overflow-x-auto no-scrollbar" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+          {['15m', '4h', '1d', '1w', '1M'].map((tf) => {
+            const displayLabel: Record<string, string> = {
+              '15m': '15M',
+              '4h': '4H',
+              '1d': '1D',
+              '1w': '1S',
+              '1M': '1M',
+            };
+            return (
+              <button
+                key={tf}
+                onClick={() => handleTimeframeChange(tf as Timeframe)}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${timeframe === tf
+                  ? 'bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm'
+                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+              >
+                {displayLabel[tf]}
+              </button>
+            );
+          })}
         </div>
       </div>
 

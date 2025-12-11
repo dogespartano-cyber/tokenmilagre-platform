@@ -167,7 +167,8 @@ export const calculateTrendSignal = (
     rsiValues: (number | null)[],
     macdHistogram: (number | null)[],
     sma50: (number | null)[],
-    sma200: (number | null)[]
+    sma200: (number | null)[],
+    bollingerBands?: { upper: (number | null)[]; lower: (number | null)[] }
 ): {
     score: number;
     exactScore: number;
@@ -178,6 +179,7 @@ export const calculateTrendSignal = (
         sma50Score: number;
         sma200Score: number;
         crossScore: number;
+        bollingerScore: number;
     }
 } => {
     const lastIndex = closes.length - 1;
@@ -220,14 +222,25 @@ export const calculateTrendSignal = (
     if (sma50Val > sma200Val) crossScore = 1;
     else crossScore = -1;
 
-    const score = rsiScore + macdScore + sma50Score + sma200Score + crossScore;
+    // Bollinger Bands Score: Preço na banda inferior = oportunidade, superior = caro
+    let bollingerScore = 0;
+    if (bollingerBands) {
+        const upperBand = bollingerBands.upper[lastIndex];
+        const lowerBand = bollingerBands.lower[lastIndex];
+        if (upperBand !== null && lowerBand !== null) {
+            if (currentPrice <= lowerBand) bollingerScore = -1;      // Banda inferior = oportunidade
+            else if (currentPrice >= upperBand) bollingerScore = 1;  // Banda superior = caro
+        }
+    }
 
-    // Normalize Score (-6 to +6) to Label
-    // Range: -6 to -3: Strong Buy (Oversold)
+    const score = rsiScore + macdScore + sma50Score + sma200Score + crossScore + bollingerScore;
+
+    // Normalize Score (-7 to +7) to Label
+    // Range: -7 to -3: Strong Buy (Oversold)
     //        -2 to -1: Buy
     //         0: Neutral
     //         1 to 2: Sell
-    //         3 to 6: Strong Sell (Overbought)
+    //         3 to 7: Strong Sell (Overbought)
 
     let label: TrendSignal = 'Neutro - Aguardar Definição';
     if (score <= -3) label = 'Sobrevendido - Forte Oportunidade';
@@ -237,16 +250,10 @@ export const calculateTrendSignal = (
     else label = 'Sobrecomprado - Risco de Correção';
 
     // Calculate Exact Score for Gauge (Smoother)
-    // RSI: Continuous
-    // Previously: (50 - rsi) / 10. Low RSI (30) -> +2. High RSI (70) -> -2.
-    // New Logic: Low RSI (30) -> -2. High RSI (70) -> +2.
-    // So: (rsi - 50) / 10.
+    // RSI: Continuous - Low RSI (30) -> -2. High RSI (70) -> +2.
     const rsiExact = (rsi - 50) / 10;
 
-    // MACD: Use normalized histogram strength? 
-    // For now keep it binary but maybe add slight variation based on strength?
-    // Let's keep others binary to avoid noise.
-    const exactScore = rsiExact + macdScore + sma50Score + sma200Score + crossScore;
+    const exactScore = rsiExact + macdScore + sma50Score + sma200Score + crossScore + bollingerScore;
 
     return {
         score,
@@ -257,7 +264,8 @@ export const calculateTrendSignal = (
             macdScore,
             sma50Score,
             sma200Score,
-            crossScore
+            crossScore,
+            bollingerScore
         }
     };
 };
