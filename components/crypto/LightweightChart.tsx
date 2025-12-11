@@ -20,15 +20,16 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
   useEffect(() => {
     if (!chartContainerRef.current) return;
 
-    // Obter cores do tema atual
-    const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim();
-    const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--border-medium').trim();
+    // Cores explícitas baseadas no tema para garantir legibilidade
+    const isDark = theme === 'dark';
+    const textColor = isDark ? '#E5E7EB' : '#111827'; // Gray-200 (Dark) vs Gray-900 (Light)
+    const gridColor = 'transparent'; // Sem grid
 
     // Criar gráfico com fundo transparente sem grade
     const chart = createChart(chartContainerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
-        textColor: textColor || '#ffffff',
+        textColor: textColor,
       },
       grid: {
         vertLines: { visible: false },
@@ -37,24 +38,32 @@ export default function LightweightChart({ symbol, name }: LightweightChartProps
       width: chartContainerRef.current.clientWidth,
       height: 500,
       timeScale: {
-        borderColor: borderColor || 'rgba(255, 255, 255, 0.2)',
+        borderColor: 'transparent', // Ocultar linha da borda inferior
+        borderVisible: false,       // Garantir que não apareça
         timeVisible: true,
         secondsVisible: false,
-        rightOffset: 12, // Espaço entre último candle e borda direita (aproximadamente 55px)
+        rightOffset: 12,
       },
       rightPriceScale: {
-        borderColor: borderColor || 'rgba(255, 255, 255, 0.2)',
+        borderColor: 'transparent', // Ocultar linha da borda direita
+        borderVisible: false,       // Garantir que não apareça
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
       },
       crosshair: {
         vertLine: {
-          color: textColor || 'rgba(255, 255, 255, 0.4)',
+          color: isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)',
           width: 1,
           style: 1,
+          labelBackgroundColor: isDark ? '#374151' : '#E5E7EB',
         },
         horzLine: {
-          color: textColor || 'rgba(255, 255, 255, 0.4)',
+          color: isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)',
           width: 1,
           style: 1,
+          labelBackgroundColor: isDark ? '#374151' : '#E5E7EB',
         },
       },
     });

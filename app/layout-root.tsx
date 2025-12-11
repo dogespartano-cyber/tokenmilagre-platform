@@ -78,7 +78,7 @@ export default function RootLayoutNav({
   const headerConfig = dashboardHeaderConfig[pathname];
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
+    <div className="min-h-screen">
       {/* Sidebar Component */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 

@@ -160,15 +160,15 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
   useEffect(() => {
     if (!chartContainerRef.current) return;
 
-    // Obter cor do texto do tema atual
-    const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim();
-    const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--border-medium').trim();
+    // Cores explícitas baseadas no tema para garantir legibilidade
+    const isDark = theme === 'dark';
+    const textColor = isDark ? '#E5E7EB' : '#111827'; // Gray-200 (Dark) vs Gray-900 (Light)
 
     // Criar gráfico principal com fundo transparente
     const chart = createChart(chartContainerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
-        textColor: textColor || '#ffffff',
+        textColor: textColor,
       },
       grid: {
         vertLines: { visible: false },
@@ -178,24 +178,28 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
       height: 600,
       autoSize: true, // Enable autoSize
       timeScale: {
-        borderColor: borderColor || 'rgba(255, 255, 255, 0.2)',
+        borderColor: 'transparent', // Ocultar linha
+        borderVisible: false,       // Garantir que não apareça
         timeVisible: true,
         secondsVisible: false,
         rightOffset: 12,
       },
       rightPriceScale: {
-        borderColor: borderColor || 'rgba(255, 255, 255, 0.2)',
+        borderColor: 'transparent', // Ocultar linha
+        borderVisible: false,       // Garantir que não apareça
       },
       crosshair: {
         vertLine: {
-          color: textColor || 'rgba(255, 255, 255, 0.4)',
+          color: isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)',
           width: 1,
           style: 1,
+          labelBackgroundColor: isDark ? '#374151' : '#E5E7EB',
         },
         horzLine: {
-          color: textColor || 'rgba(255, 255, 255, 0.4)',
+          color: isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)',
           width: 1,
           style: 1,
+          labelBackgroundColor: isDark ? '#374151' : '#E5E7EB',
         },
       },
     });

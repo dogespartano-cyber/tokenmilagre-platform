@@ -15,6 +15,10 @@ const TrendMeter = dynamic(() => import('./TrendMeter'), {
     ssr: false,
 });
 
+const CryptoEducator = dynamic(() => import('./CryptoEducator'), {
+    ssr: false,
+});
+
 type Asset = 'BTC' | 'ETH' | 'SOL';
 type Timeframe = '15m' | '4h' | '1d' | '1w' | '1M';
 
@@ -176,119 +180,9 @@ function CryptoAnalyzerContent({
                 </div>
             </div>
 
-            {/* Seção Educativa - Duas Colunas */}
-            <div className="mt-8">
-                <p className="text-lg font-bold text-gray-900 dark:text-white mb-6">
-                    Observe a Estrutura do Gráfico
-                </p>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Coluna Esquerda: SVGs de Estrutura */}
-                    <div className="flex flex-col gap-4">
-                        {/* Tendência de Alta */}
-                        <div className="flex flex-col items-center gap-3 p-4 rounded-xl bg-green-50/50 dark:bg-green-500/5 border border-green-200 dark:border-green-500/20">
-                            <svg viewBox="0 0 200 100" className="w-full max-w-[200px] h-24">
-                                {/* Linha de tendência de alta */}
-                                <path
-                                    d="M 10 80 L 40 60 L 70 70 L 100 45 L 130 55 L 160 30 L 190 40"
-                                    fill="none"
-                                    stroke="#22C55E"
-                                    strokeWidth="3"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                                {/* Pontos de topo */}
-                                <circle cx="40" cy="60" r="4" fill="#22C55E" />
-                                <circle cx="100" cy="45" r="4" fill="#22C55E" />
-                                <circle cx="160" cy="30" r="4" fill="#22C55E" />
-                                {/* Pontos de fundo */}
-                                <circle cx="70" cy="70" r="4" fill="#16A34A" />
-                                <circle cx="130" cy="55" r="4" fill="#16A34A" />
-                                {/* Labels */}
-                                <text x="40" y="52" fontSize="8" fill="#22C55E" textAnchor="middle">T1</text>
-                                <text x="100" y="37" fontSize="8" fill="#22C55E" textAnchor="middle">T2</text>
-                                <text x="160" y="22" fontSize="8" fill="#22C55E" textAnchor="middle">T3</text>
-                                <text x="70" y="82" fontSize="8" fill="#16A34A" textAnchor="middle">F1</text>
-                                <text x="130" y="67" fontSize="8" fill="#16A34A" textAnchor="middle">F2</text>
-                                {/* Seta de direção */}
-                                <path d="M 175 35 L 185 25 L 185 32" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            <div className="text-center">
-                                <p className="text-sm font-bold text-green-600 dark:text-green-400">Tendência de Alta</p>
-                                <p className="text-xs text-gray-500 dark:text-gray-400">Topos e fundos ascendentes</p>
-                            </div>
-                        </div>
-
-                        {/* Tendência de Baixa */}
-                        <div className="flex flex-col items-center gap-3 p-4 rounded-xl bg-red-50/50 dark:bg-red-500/5 border border-red-200 dark:border-red-500/20">
-                            <svg viewBox="0 0 200 100" className="w-full max-w-[200px] h-24">
-                                {/* Linha de tendência de baixa */}
-                                <path
-                                    d="M 10 20 L 40 35 L 70 25 L 100 50 L 130 40 L 160 65 L 190 55"
-                                    fill="none"
-                                    stroke="#EF4444"
-                                    strokeWidth="3"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                                {/* Pontos de topo */}
-                                <circle cx="40" cy="35" r="4" fill="#EF4444" />
-                                <circle cx="100" cy="50" r="4" fill="#EF4444" />
-                                <circle cx="160" cy="65" r="4" fill="#EF4444" />
-                                {/* Pontos de fundo */}
-                                <circle cx="70" cy="25" r="4" fill="#DC2626" />
-                                <circle cx="130" cy="40" r="4" fill="#DC2626" />
-                                {/* Labels */}
-                                <text x="40" y="48" fontSize="8" fill="#EF4444" textAnchor="middle">T1</text>
-                                <text x="100" y="63" fontSize="8" fill="#EF4444" textAnchor="middle">T2</text>
-                                <text x="160" y="78" fontSize="8" fill="#EF4444" textAnchor="middle">T3</text>
-                                <text x="70" y="18" fontSize="8" fill="#DC2626" textAnchor="middle">F1</text>
-                                <text x="130" y="33" fontSize="8" fill="#DC2626" textAnchor="middle">F2</text>
-                                {/* Seta de direção */}
-                                <path d="M 175 60 L 185 70 L 185 63" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            <div className="text-center">
-                                <p className="text-sm font-bold text-red-500 dark:text-red-400">Tendência de Baixa</p>
-                                <p className="text-xs text-gray-500 dark:text-gray-400">Topos e fundos descendentes</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Coluna Direita: Limitações e Avisos */}
-                    <div className="flex flex-col justify-center p-5 rounded-xl bg-amber-50/30 dark:bg-amber-500/5 border border-amber-200/50 dark:border-amber-500/20">
-                        <p className="text-base font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2 mb-4">
-                            ⚠️ Limitações e Avisos
-                        </p>
-                        <ul className="space-y-4 text-sm text-gray-500 dark:text-gray-400">
-                            <li className="flex items-start gap-2">
-                                <span className="text-amber-500 mt-0.5">•</span>
-                                <span><strong>Não é conselho de investimento</strong> — Os indicadores são ferramentas educacionais</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-amber-500 mt-0.5">•</span>
-                                <span><strong>Timeframe importa</strong> — 15m é muito volátil, 1D é mais confiável</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-amber-500 mt-0.5">•</span>
-                                <span><strong>Falsos sinais existem</strong> — RSI pode ficar sobrevendido por semanas em bear markets</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-amber-500 mt-0.5">•</span>
-                                <span><strong>Contexto macro</strong> — Eventos externos (regulação, hacks) não são capturados</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            {/* Regra de Ouro - Card Separado */}
-            <div className="mt-6 p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 to-yellow-500/10 dark:from-amber-500/5 dark:to-yellow-500/5 border border-amber-200 dark:border-amber-500/20">
-                <p className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-                    💡 Regra de Ouro
-                </p>
-                <p className="text-base text-gray-600 dark:text-gray-300 italic">
-                    "Compre quando todos estão com medo, venda quando todos estão eufóricos."
-                </p>
+            {/* Seção Educativa Modularizada */}
+            <div className="mt-12">
+                <CryptoEducator />
             </div>
         </div>
     );

@@ -20,7 +20,7 @@ export default function GlobalBackground() {
     if (!mounted) {
         return (
             <div
-                className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
+                className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden"
                 style={{ backgroundColor: 'var(--bg-primary)' }}
             />
         );
@@ -30,43 +30,25 @@ export default function GlobalBackground() {
 
     return (
         <div
-            className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
+            className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden"
             style={{ backgroundColor: 'var(--bg-primary)' }}
         >
             {isDark ? (
                 // DARK MODE: Glows sutis estilo Binance/Zenith
                 <>
-                    {/* Solar Gold Glow (Top Left) */}
+                    {/* Solar Gold Blob (Top Left) */}
                     <div
-                        className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] rounded-full blur-[140px] animate-pulse-slow"
-                        style={{
-                            backgroundColor: '#FCD535',
-                            opacity: 0.08,
-                            animationDuration: '10s',
-                            mixBlendMode: 'screen'
-                        }}
+                        className="absolute top-0 left-[-10%] w-[600px] h-[600px] rounded-full blur-[100px] mix-blend-screen opacity-10 animate-blob"
+                        style={{ backgroundColor: '#FCD535' }}
                     />
 
-                    {/* Secondary Tech Beam (Bottom Right) */}
+                    {/* Secondary Tech Blob (Bottom Right) - Legacy Color Restored */}
                     <div
-                        className="absolute bottom-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full blur-[120px] animate-pulse-slow"
-                        style={{
-                            backgroundColor: '#1E2329',
-                            opacity: 0.6,
-                            animationDelay: '2s',
-                            mixBlendMode: 'overlay'
-                        }}
+                        className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full blur-[100px] mix-blend-overlay opacity-50 animate-blob animation-delay-2000"
+                        style={{ backgroundColor: '#1E2329' }}
                     />
 
-                    {/* Central Gold Haze */}
-                    <div
-                        className="absolute top-[30%] left-[20%] w-[600px] h-[600px] rounded-full blur-[100px] animate-pulse-slow"
-                        style={{
-                            backgroundColor: '#FCD535',
-                            opacity: 0.03,
-                            animationDelay: '5s'
-                        }}
-                    />
+                    {/* Deep Blue Blob (Bottom Right) - Removed to restore original look */}
                 </>
             ) : (
                 // LIGHT MODE: Clean e minimalista - sem glows
