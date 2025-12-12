@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../lib/core/theme/accents/index.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
@@ -287,6 +288,17 @@ html {
   --brand-border: #99F6E4;
   /* Teal 200 */
 
+  /* Accent Colors (for theme variants - defaults to brand) */
+  --accent-primary: var(--brand-primary);
+  --accent-hover: var(--brand-hover);
+  --accent-light: var(--brand-light);
+
+  /* Gradients (for accent themes) */
+  --gradient-start: #0D9488;
+  /* Teal 600 */
+  --gradient-end: #14B8A6;
+  /* Teal 500 */
+
   /* Functional Colors - WCAG AAA Compliant */
   --success: #047857;
   /* Green 700 - 7.1:1 */
@@ -340,7 +352,7 @@ html {
 
   /* Link Color */
   --text-link: #0D9488;
-  
+
   /* Modal Overlay */
   --modal-overlay: rgba(0, 0, 0, 0.5);
 
@@ -432,6 +444,17 @@ html {
   --brand-border: #B8860B;
   /* Dark Goldenrod */
 
+  /* Accent Colors (for theme variants - defaults to brand) */
+  --accent-primary: var(--brand-primary);
+  --accent-hover: var(--brand-hover);
+  --accent-light: var(--brand-light);
+
+  /* Gradients (for accent themes) */
+  --gradient-start: #FFD700;
+  /* Solar Gold */
+  --gradient-end: #FDB931;
+  /* Rich Gold */
+
   /* Functional Colors */
   --success: #00FF9D;
   /* Neon Emerald */
@@ -473,7 +496,7 @@ html {
 
   /* Link Color */
   --text-link: #FFD700;
-  
+
   /* Modal Overlay */
   --modal-overlay: rgba(5, 10, 20, 0.85);
 

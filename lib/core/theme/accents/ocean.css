@@ -1,0 +1,22 @@
+/**
+ * Ocean Accent Theme
+ * 
+ * Blue-cyan palette for a cool, professional look.
+ * Apply via: <html data-accent="ocean">
+ */
+
+[data-accent="ocean"] {
+    /* Accent Colors - Ocean Blue Palette */
+    --accent-primary: #0EA5E9;
+    /* Sky 500 */
+    --accent-hover: #0284C7;
+    /* Sky 600 */
+    --accent-light: #38BDF8;
+    /* Sky 400 */
+
+    /* Gradients */
+    --gradient-start: #0EA5E9;
+    /* Sky 500 */
+    --gradient-end: #06B6D4;
+    /* Cyan 500 */
+}

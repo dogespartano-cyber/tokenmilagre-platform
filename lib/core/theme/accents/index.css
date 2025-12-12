@@ -1,0 +1,16 @@
+/**
+ * Theme Accents - Index
+ * 
+ * This file imports all accent theme CSS files.
+ * Import this single file in globals.css to enable all accents.
+ * 
+ * Usage in globals.css:
+ *   @import '../lib/core/theme/accents/index.css';
+ * 
+ * Apply in HTML:
+ *   <html data-theme="dark" data-accent="ocean">
+ */
+
+@import './ocean.css';
+@import './forest.css';
+@import './sunset.css';

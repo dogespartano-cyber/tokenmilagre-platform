@@ -20,7 +20,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, useCallback, ReactNode, useRef } from 'react';
-import type { Theme, ThemeContextType } from './types';
+import type { Theme, ThemeAccent, ThemeContextType } from './types';
 import {
     THEME_STORAGE_KEY,
     DEFAULT_THEME,
@@ -31,12 +31,20 @@ import {
     TOAST_POSITION,
 } from './constants';
 
+/** Storage key for accent preference */
+const ACCENT_STORAGE_KEY = 'theme-accent';
+
+/** Default accent when none is saved */
+const DEFAULT_ACCENT: ThemeAccent = 'default';
+
 // Context com valores padrão
 const ThemeContext = createContext<ThemeContextType>({
     theme: DEFAULT_THEME,
     toggleTheme: () => { },
     mounted: false,
     setTheme: () => { },
+    accent: DEFAULT_ACCENT,
+    setAccent: () => { },
 });
 
 /**
@@ -73,6 +81,22 @@ function applyThemeToDocument(theme: Theme): void {
         root.classList.add('dark');
     } else {
         root.classList.remove('dark');
+    }
+}
+
+/**
+ * Aplica a variante de accent no documento HTML
+ * 
+ * @param accent - A variante a ser aplicada ('default' | 'ocean' | 'forest' | 'sunset')
+ * @internal
+ */
+function applyAccentToDocument(accent: ThemeAccent): void {
+    const root = document.documentElement;
+
+    if (accent === 'default') {
+        root.removeAttribute('data-accent');
+    } else {
+        root.setAttribute('data-accent', accent);
     }
 }
 
@@ -146,6 +170,7 @@ export function ThemeProvider({
     followSystemPreference = false,
 }: ThemeProviderProps) {
     const [theme, setThemeState] = useState<Theme>(defaultTheme || DEFAULT_THEME);
+    const [accent, setAccentState] = useState<ThemeAccent>(DEFAULT_ACCENT);
     const [mounted, setMounted] = useState(false);
     const [showToastState, setShowToastState] = useState(false);
     const toastRef = useRef<HTMLDivElement>(null);
@@ -171,6 +196,13 @@ export function ThemeProvider({
 
             setThemeState(initialTheme);
             applyThemeToDocument(initialTheme);
+
+            // Load saved accent
+            const savedAccent = localStorage.getItem(ACCENT_STORAGE_KEY) as ThemeAccent | null;
+            if (savedAccent && ['default', 'ocean', 'forest', 'sunset'].includes(savedAccent)) {
+                setAccentState(savedAccent);
+                applyAccentToDocument(savedAccent);
+            }
         } catch (e) {
             // localStorage não disponível (SSR, private mode, etc)
             console.warn('[ThemeProvider] Could not access localStorage:', e);
@@ -237,8 +269,22 @@ export function ThemeProvider({
         setTheme(newTheme);
     }, [theme, setTheme]);
 
+    const setAccent = useCallback((newAccent: ThemeAccent) => {
+        enableThemeTransition();
+        setAccentState(newAccent);
+        applyAccentToDocument(newAccent);
+
+        try {
+            localStorage.setItem(ACCENT_STORAGE_KEY, newAccent);
+        } catch (e) {
+            console.warn('[ThemeProvider] Could not save accent to localStorage:', e);
+        }
+
+        disableThemeTransition();
+    }, []);
+
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme, mounted, setTheme }}>
+        <ThemeContext.Provider value={{ theme, toggleTheme, mounted, setTheme, accent, setAccent }}>
             {children}
 
             {/* Theme Change Toast */}

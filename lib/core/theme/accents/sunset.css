@@ -1,0 +1,22 @@
+/**
+ * Sunset Accent Theme
+ * 
+ * Orange-pink palette for a warm, creative look.
+ * Apply via: <html data-accent="sunset">
+ */
+
+[data-accent="sunset"] {
+    /* Accent Colors - Sunset Orange Palette */
+    --accent-primary: #F97316;
+    /* Orange 500 */
+    --accent-hover: #EA580C;
+    /* Orange 600 */
+    --accent-light: #FB923C;
+    /* Orange 400 */
+
+    /* Gradients */
+    --gradient-start: #F97316;
+    /* Orange 500 */
+    --gradient-end: #EC4899;
+    /* Pink 500 */
+}

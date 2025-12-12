@@ -104,14 +104,34 @@ Definidas em `globals.css`:
 
 ## Escalabilidade (Temas Alternativos)
 
-O sistema está preparado para temas alternativos via ThemeAccent:
+O sistema suporta variantes de accent via `data-accent`:
 
 ```typescript
-type ThemeAccent = 'default' | 'ocean' | 'forest' | 'sunset';
+// Usando setAccent para mudar variante
+const { accent, setAccent } = useTheme();
 
-// Futuro: no CSS
+setAccent('ocean');  // Aplica tema Ocean Blue
+setAccent('forest'); // Aplica tema Forest Green
+setAccent('sunset'); // Aplica tema Sunset Orange
+setAccent('default'); // Retorna ao tema padrão (brand colors)
+```
+
+### Variantes Disponíveis
+
+| Accent | Cores | Uso |
+|--------|-------|-----|
+| `default` | Brand (Teal/Gold) | Padrão do projeto |
+| `ocean` | Sky Blue/Cyan | Visual profissional |
+| `forest` | Emerald/Teal | Visual natural |
+| `sunset` | Orange/Pink | Visual criativo |
+
+### CSS (data-accent)
+```css
+/* Exemplo: lib/core/theme/accents/ocean.css */
 [data-accent="ocean"] {
   --accent-primary: #0EA5E9;
+  --accent-hover: #0284C7;
+  --accent-light: #38BDF8;
   --gradient-start: #0EA5E9;
   --gradient-end: #06B6D4;
 }

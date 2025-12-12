@@ -1,0 +1,22 @@
+/**
+ * Forest Accent Theme
+ * 
+ * Green-emerald palette for a natural, growth-focused look.
+ * Apply via: <html data-accent="forest">
+ */
+
+[data-accent="forest"] {
+    /* Accent Colors - Forest Green Palette */
+    --accent-primary: #10B981;
+    /* Emerald 500 */
+    --accent-hover: #059669;
+    /* Emerald 600 */
+    --accent-light: #34D399;
+    /* Emerald 400 */
+
+    /* Gradients */
+    --gradient-start: #10B981;
+    /* Emerald 500 */
+    --gradient-end: #14B8A6;
+    /* Teal 500 */
+}

@@ -12,7 +12,7 @@ import { useTheme } from '@/lib/core/theme';
 export default function CustomUserButton() {
     const { user, isLoaded } = useUser();
     const { signOut, openUserProfile } = useClerk();
-    const { theme, toggleTheme, mounted } = useTheme();
+    const { theme, toggleTheme, mounted, setTheme, accent, setAccent } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -158,25 +158,76 @@ export default function CustomUserButton() {
 
                         </div>
 
-                        {/* Theme Toggle */}
+                        {/* Theme & Accent Selection */}
                         {mounted && (
-                            <div className="px-6 py-3 border-t" style={{ borderColor: 'var(--border-modal)' }}>
-                                <button
-                                    onClick={toggleTheme}
-                                    className="flex w-full cursor-pointer items-center gap-4 px-0 min-h-[48px] justify-between hover:opacity-80 transition-opacity"
-                                >
-                                    <div className="flex items-center gap-4">
-                                        <div className="text-[var(--brand-primary)] flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--brand-primary)]/10">
-                                            <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="text-xl" />
-                                        </div>
-                                        <p className="text-base font-medium leading-normal" style={{ color: 'var(--text-modal)' }}>
-                                            {theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}
-                                        </p>
+                            <div className="px-6 py-4 border-t" style={{ borderColor: 'var(--border-modal)' }}>
+                                {/* Light/Dark Toggle */}
+                                <div className="flex items-center justify-between mb-4">
+                                    <p className="text-sm font-medium" style={{ color: 'var(--text-modal-muted)' }}>
+                                        Aparência
+                                    </p>
+                                    <div className="flex items-center gap-1 p-1 rounded-lg" style={{ backgroundColor: 'var(--bg-modal-input)' }}>
+                                        <button
+                                            onClick={() => setTheme('light')}
+                                            className={`flex items-center justify-center w-8 h-8 rounded-md transition-all ${theme === 'light'
+                                                ? 'bg-[var(--brand-primary)] text-white shadow-sm'
+                                                : 'hover:bg-[var(--bg-modal-hover)]'
+                                                }`}
+                                            style={{ color: theme === 'light' ? 'white' : 'var(--text-modal-muted)' }}
+                                            title="Modo Claro"
+                                        >
+                                            <FontAwesomeIcon icon={faSun} className="text-sm" />
+                                        </button>
+                                        <button
+                                            onClick={() => setTheme('dark')}
+                                            className={`flex items-center justify-center w-8 h-8 rounded-md transition-all ${theme === 'dark'
+                                                ? 'bg-[var(--brand-primary)] text-white shadow-sm'
+                                                : 'hover:bg-[var(--bg-modal-hover)]'
+                                                }`}
+                                            style={{ color: theme === 'dark' ? 'white' : 'var(--text-modal-muted)' }}
+                                            title="Modo Escuro"
+                                        >
+                                            <FontAwesomeIcon icon={faMoon} className="text-sm" />
+                                        </button>
                                     </div>
-                                    <div className="shrink-0" style={{ color: 'var(--text-modal-muted)' }}>
-                                        <FontAwesomeIcon icon={faChevronRight} />
+                                </div>
+
+                                {/* Accent Colors */}
+                                <div className="flex items-center justify-between">
+                                    <p className="text-sm font-medium" style={{ color: 'var(--text-modal-muted)' }}>
+                                        Cor de Destaque
+                                    </p>
+                                    <div className="flex items-center gap-2">
+                                        {/* Default (Brand) */}
+                                        <button
+                                            onClick={() => setAccent('default')}
+                                            className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'default' ? 'ring-2 ring-offset-2 ring-[var(--brand-primary)]' : ''}`}
+                                            style={{ backgroundColor: theme === 'dark' ? '#FFD700' : '#0D9488' }}
+                                            title="Padrão"
+                                        />
+                                        {/* Ocean */}
+                                        <button
+                                            onClick={() => setAccent('ocean')}
+                                            className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'ocean' ? 'ring-2 ring-offset-2 ring-[#0EA5E9]' : ''}`}
+                                            style={{ backgroundColor: '#0EA5E9' }}
+                                            title="Oceano"
+                                        />
+                                        {/* Forest */}
+                                        <button
+                                            onClick={() => setAccent('forest')}
+                                            className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'forest' ? 'ring-2 ring-offset-2 ring-[#10B981]' : ''}`}
+                                            style={{ backgroundColor: '#10B981' }}
+                                            title="Floresta"
+                                        />
+                                        {/* Sunset */}
+                                        <button
+                                            onClick={() => setAccent('sunset')}
+                                            className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'sunset' ? 'ring-2 ring-offset-2 ring-[#F97316]' : ''}`}
+                                            style={{ backgroundColor: '#F97316' }}
+                                            title="Pôr do Sol"
+                                        />
                                     </div>
-                                </button>
+                                </div>
                             </div>
                         )}
 

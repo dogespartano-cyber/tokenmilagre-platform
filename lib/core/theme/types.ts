@@ -29,8 +29,8 @@ export interface ThemeContextType {
     mounted: boolean;
     /** Define um tema específico */
     setTheme: (theme: Theme) => void;
-    /** Variante de acento atual (futuro) */
-    accent?: ThemeAccent;
-    /** Define variante de acento (futuro) */
-    setAccent?: (accent: ThemeAccent) => void;
+    /** Variante de acento atual */
+    accent: ThemeAccent;
+    /** Define variante de acento */
+    setAccent: (accent: ThemeAccent) => void;
 }

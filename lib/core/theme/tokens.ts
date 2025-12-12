@@ -91,15 +91,15 @@ export const tokens = {
     // === ACCENT (Para temas alternativos - Ocean, Forest, etc.) ===
     accent: {
         /** Cor de acento primária */
-        primary: 'var(--accent-primary, var(--brand-primary))',
+        primary: 'var(--accent-primary)',
         /** Cor de acento hover */
-        hover: 'var(--accent-hover, var(--brand-hover))',
+        hover: 'var(--accent-hover)',
         /** Cor de acento leve */
-        light: 'var(--accent-light, var(--brand-light))',
+        light: 'var(--accent-light)',
         /** Gradiente de acento */
         gradient: {
-            start: 'var(--gradient-start, #8B5CF6)',
-            end: 'var(--gradient-end, #EC4899)',
+            start: 'var(--gradient-start)',
+            end: 'var(--gradient-end)',
         },
     },
 
