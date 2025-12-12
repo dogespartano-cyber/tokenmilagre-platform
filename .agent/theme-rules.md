@@ -1,8 +1,8 @@
 ---
-description: Regras obrigatórias para o sistema de temas (light/dark mode) - v2.0 Escalável
+description: Regras obrigatórias para o sistema de temas (light/dark mode) - v2.1 Multi-Theme
 ---
 
-# 🎨 Regras de Design: Sistema de Tema (v2.0)
+# 🎨 Regras de Design: Sistema de Tema (v2.1)
 
 > **Prioridade: CRÍTICA** - Seguir estas regras evita bugs visuais intermitentes.
 
@@ -13,10 +13,15 @@ O sistema de tema está centralizado em `lib/core/theme/`. Este é o **ÚNICO** 
 ```
 lib/core/theme/
 ├── index.ts          # Re-exports (ponto de entrada)
-├── ThemeProvider.tsx # Provider unificado
-├── tokens.ts         # 🆕 Tokens semânticos escaláveis
+├── ThemeProvider.tsx # Provider unificado (theme + accent)
+├── tokens.ts         # Tokens semânticos escaláveis
 ├── constants.ts      # Constantes
-└── types.ts          # Types (Theme, ThemeAccent, ThemeConfig)
+├── types.ts          # Types (Theme, ThemeAccent, ThemeConfig)
+└── accents/          # 🆕 Variantes de tema completas
+    ├── index.css     # Aggregator de imports
+    ├── ocean.css     # Ocean Dark + Light
+    ├── forest.css    # Forest Dark + Light
+    └── sunset.css    # Sunset Dark + Light
 ```
 
 ## Regras Obrigatórias
@@ -76,8 +81,8 @@ import { tokens, cssVar } from '@/lib/core/theme';
 | `--text-primary` | Texto principal |
 | `--text-secondary` | Texto secundário |
 | `--brand-primary` | Cor da marca |
-| `--accent-primary` | 🆕 Cor de acento (para temas alternativos) |
-| `--gradient-start/end` | 🆕 Cores de gradiente (escalável) |
+| `--accent-primary` | Cor de acento (sobrescrita por variantes) |
+| `--gradient-start/end` | Cores de gradiente |
 | `--border-light` | Bordas suaves |
 
 ### 5. Evitar Hydration Mismatch
@@ -102,40 +107,63 @@ Definidas em `globals.css`:
 - `.bg-theme-*` / `.text-theme-*` - Cores adaptativas
 - `.shadow-theme-*` - Sombras adaptativas
 
-## Escalabilidade (Temas Alternativos)
+## Sistema de Variantes (v2.1)
 
-O sistema suporta variantes de accent via `data-accent`:
+### 6 Temas Completos Disponíveis
+
+| Variante | Modo Claro | Modo Escuro |
+|----------|------------|-------------|
+| **Padrão** | Teal (#0D9488) | Gold (#FFD700) |
+| **Ocean** 🔵 | Sky Blue (#F0F9FF bg) | Deep Blue (#020617 bg) |
+| **Forest** 🟢 | Emerald (#ECFDF5 bg) | Deep Green (#020A07 bg) |
+| **Sunset** 🟠 | Orange (#FFF7ED bg) | Wine Dark (#0A0506 bg) |
+
+### Usando setAccent
 
 ```typescript
-// Usando setAccent para mudar variante
-const { accent, setAccent } = useTheme();
+const { theme, setTheme, accent, setAccent } = useTheme();
 
-setAccent('ocean');  // Aplica tema Ocean Blue
-setAccent('forest'); // Aplica tema Forest Green
-setAccent('sunset'); // Aplica tema Sunset Orange
-setAccent('default'); // Retorna ao tema padrão (brand colors)
+// Mudar modo (light/dark)
+setTheme('light');
+setTheme('dark');
+
+// Mudar variante de cor
+setAccent('ocean');   // Aplica tema Ocean (funciona em light E dark)
+setAccent('forest');  // Aplica tema Forest
+setAccent('sunset');  // Aplica tema Sunset  
+setAccent('default'); // Retorna ao tema padrão
 ```
 
-### Variantes Disponíveis
+### Estrutura CSS das Variantes
 
-| Accent | Cores | Uso |
-|--------|-------|-----|
-| `default` | Brand (Teal/Gold) | Padrão do projeto |
-| `ocean` | Sky Blue/Cyan | Visual profissional |
-| `forest` | Emerald/Teal | Visual natural |
-| `sunset` | Orange/Pink | Visual criativo |
-
-### CSS (data-accent)
 ```css
-/* Exemplo: lib/core/theme/accents/ocean.css */
-[data-accent="ocean"] {
-  --accent-primary: #0EA5E9;
-  --accent-hover: #0284C7;
-  --accent-light: #38BDF8;
-  --gradient-start: #0EA5E9;
-  --gradient-end: #06B6D4;
+/* Cada variante tem DUAS regras: Dark + Light */
+
+/* Dark mode variant */
+[data-theme="dark"][data-accent="ocean"] {
+  --bg-primary: #020617;
+  --text-primary: #F0F9FF;
+  --brand-primary: #0EA5E9;
+  /* ... todas as 50+ variáveis */
+}
+
+/* Light mode variant */
+[data-theme="light"][data-accent="ocean"] {
+  --bg-primary: #F0F9FF;
+  --text-primary: #0C4A6E;
+  --brand-primary: #0284C7;
+  /* ... todas as 50+ variáveis */
 }
 ```
+
+### Criando Nova Variante
+
+1. Criar arquivo `lib/core/theme/accents/nova-variante.css`
+2. Definir `[data-theme="dark"][data-accent="nova"]` com TODAS as variáveis
+3. Definir `[data-theme="light"][data-accent="nova"]` com TODAS as variáveis
+4. Importar em `accents/index.css`
+5. Adicionar tipo em `types.ts`: `ThemeAccent`
+6. Adicionar cor no seletor em `CustomUserButton.tsx`
 
 ## ESLint: Regra no-hardcoded-colors
 
@@ -150,21 +178,24 @@ warning  Cor hardcoded "#ff0000" detectada.
 
 ## Por que estas regras?
 
-O sistema usa **DOIS** mecanismos em paralelo:
-1. `data-theme="dark"` - Para CSS Variables
+O sistema usa **TRÊS** mecanismos em paralelo:
+1. `data-theme="dark"` - Para CSS Variables (light/dark base)
 2. `.dark` class - Para Tailwind `dark:` prefix
+3. `data-accent="ocean"` - Para variantes de cor (sobrescreve brand/accent)
 
-O `ThemeProvider` sincroniza ambos automaticamente. Quebrar esta sincronização causa bugs visuais.
+O `ThemeProvider` sincroniza todos automaticamente. Quebrar esta sincronização causa bugs visuais.
 
 ## Arquivos Relacionados
 
 - [ThemeProvider.tsx](file:///home/zenfoco/LLM/tokenmilagre-platform/tokenmilagre-platform/lib/core/theme/ThemeProvider.tsx)
-- [tokens.ts](file:///home/zenfoco/LLM/tokenmilagre-platform/tokenmilagre-platform/lib/core/theme/tokens.ts) 🆕
+- [tokens.ts](file:///home/zenfoco/LLM/tokenmilagre-platform/tokenmilagre-platform/lib/core/theme/tokens.ts)
 - [types.ts](file:///home/zenfoco/LLM/tokenmilagre-platform/tokenmilagre-platform/lib/core/theme/types.ts)
+- [accents/](file:///home/zenfoco/LLM/tokenmilagre-platform/tokenmilagre-platform/lib/core/theme/accents/) 🆕
 - [globals.css](file:///home/zenfoco/LLM/tokenmilagre-platform/tokenmilagre-platform/app/globals.css)
-- [GlobalBackground.tsx](file:///home/zenfoco/LLM/tokenmilagre-platform/tokenmilagre-platform/components/layout/GlobalBackground.tsx)
-- [eslint-plugins/theme.mjs](file:///home/zenfoco/LLM/tokenmilagre-platform/tokenmilagre-platform/eslint-plugins/theme.mjs) 🆕
+- [CustomUserButton.tsx](file:///home/zenfoco/LLM/tokenmilagre-platform/tokenmilagre-platform/components/shared/CustomUserButton.tsx)
+- [eslint-plugins/theme.mjs](file:///home/zenfoco/LLM/tokenmilagre-platform/tokenmilagre-platform/eslint-plugins/theme.mjs)
 
 ---
 
-*Última atualização: 12/12/2025 - v2.0 Escalável*
+*Última atualização: 12/12/2025 - v2.1 Multi-Theme*
+
