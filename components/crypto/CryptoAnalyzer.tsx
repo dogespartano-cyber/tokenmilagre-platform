@@ -124,6 +124,7 @@ function CryptoAnalyzerContent({
                     <div className="p-1 rounded-2xl overflow-hidden">
                         <div className="h-auto min-h-[600px] w-full">
                             <AdvancedChart
+                                key={`${assets[activeAsset].symbol}-${timeframe}`}
                                 symbol={assets[activeAsset].symbol}
                                 name={`${assets[activeAsset].name} / Tether US`}
                                 timeframe={timeframe}

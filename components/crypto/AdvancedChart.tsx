@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { createChart, ColorType, ISeriesApi, IChartApi, CandlestickSeries, LineSeries, Time } from 'lightweight-charts';
-import { useTheme } from '@/contexts/ThemeContext';
+import { useTheme } from '@/lib/core/theme';
 import { useBinanceContext } from '@/contexts/BinanceDataContext';
 import { calculateSMA, calculateRSI, calculateBollingerBands } from '@/lib/shared/utils/technical-analysis';
 
@@ -317,7 +317,31 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
       resizeObserver.disconnect();
       chart.remove();
     };
-  }, [theme]); // Only recreate chart on theme change
+  }, []); // Create chart only once on mount
+
+  // Update theme colors without recreating chart
+  useEffect(() => {
+    if (!chartRef.current) return;
+
+    const isDark = theme === 'dark';
+    const textColor = isDark ? '#E5E7EB' : '#111827';
+
+    chartRef.current.applyOptions({
+      layout: {
+        textColor: textColor,
+      },
+      crosshair: {
+        vertLine: {
+          color: isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)',
+          labelBackgroundColor: isDark ? '#374151' : '#E5E7EB',
+        },
+        horzLine: {
+          color: isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)',
+          labelBackgroundColor: isDark ? '#374151' : '#E5E7EB',
+        },
+      },
+    });
+  }, [theme]); // Update theme colors without recreation
 
   return (
     <div
