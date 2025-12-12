@@ -338,6 +338,12 @@ html {
   /* Focus Ring (alias) */
   --focus-ring: var(--border-focus);
 
+  /* Link Color */
+  --text-link: #0D9488;
+  
+  /* Modal Overlay */
+  --modal-overlay: rgba(0, 0, 0, 0.5);
+
   /* Legacy fallbacks */
   --background: #F3F4F6;
   /* Matches bg-primary */
@@ -464,6 +470,12 @@ html {
 
   /* Focus Ring (alias) */
   --focus-ring: var(--border-focus);
+
+  /* Link Color */
+  --text-link: #FFD700;
+  
+  /* Modal Overlay */
+  --modal-overlay: rgba(5, 10, 20, 0.85);
 
   /* Legacy fallbacks */
   --background: #050A14;

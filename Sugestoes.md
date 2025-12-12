@@ -860,3 +860,34 @@ interface ThemeConfig {
 
 
 
+
+---
+
+## ✅ Concluído (Sessão 12/12/2025 - Tarde) - Refatoração Hardcoded Colors
+
+### 🔧 Correção de Cores Hardcoded em Componentes
+
+**Objetivo:** Corrigir problemas identificados na auditoria de temas para garantir compatibilidade 100% light/dark.
+
+#### Tokens CSS Adicionados
+
+| Token | Light | Dark |
+|-------|-------|------|
+| `--text-link` | `#0D9488` | `#FFD700` |
+| `--modal-overlay` | `rgba(0,0,0,0.5)` | `rgba(5,10,20,0.85)` |
+
+#### Componentes Refatorados
+
+| Componente | Cores |
+|------------|-------|
+| `verificador-url/page.tsx` | 9 hardcoded → CSS vars |
+| `CustomUserButton.tsx` | 20+ → modal tokens |
+| `BuildInfoBadge.tsx` | 20+ → modal tokens |
+
+#### Resultados
+
+| Métrica | Antes | Depois |
+|---------|-------|--------|
+| Nota estimada | 7.75 | 8.5+ |
+| Build | ✅ | ✅ |
+

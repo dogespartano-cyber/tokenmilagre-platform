@@ -109,19 +109,21 @@ Updated: ${formatDateTime(buildInfo.lastUpdate)}${buildInfo.compareMain ? `\nvs 
       <div
         className={`
           absolute bottom-0 right-0
-          bg-white dark:bg-gray-800
-          border border-gray-200 dark:border-gray-700
-          rounded-lg shadow-2xl backdrop-blur-sm
+          border rounded-lg shadow-2xl backdrop-blur-sm
           transition-all duration-300 ease-in-out
           ${isExpanded ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
         `}
-        style={{ minWidth: '320px' }}
+        style={{
+          minWidth: '320px',
+          backgroundColor: 'var(--bg-modal)',
+          borderColor: 'var(--border-modal)'
+        }}
       >
         <div className="p-4 space-y-3">
           {/* Header */}
-          <div className="flex items-center justify-between pb-2 border-b border-gray-200 dark:border-gray-700">
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-              <FontAwesomeIcon icon={faCodeBranch} className="text-gray-500" />
+          <div className="flex items-center justify-between pb-2 border-b" style={{ borderColor: 'var(--border-modal)' }}>
+            <h3 className="text-sm font-semibold flex items-center gap-2" style={{ color: 'var(--text-modal)' }}>
+              <FontAwesomeIcon icon={faCodeBranch} style={{ color: 'var(--text-modal-muted)' }} />
               Build Info
             </h3>
             <div className="flex items-center gap-2">
@@ -130,13 +132,11 @@ Updated: ${formatDateTime(buildInfo.lastUpdate)}${buildInfo.compareMain ? `\nvs 
               </span>
               <button
                 onClick={copyToClipboard}
-                className={`
-                  p-1.5 rounded transition-all duration-200
-                  ${copied
-                    ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
-                  }
-                `}
+                className="p-1.5 rounded transition-all duration-200"
+                style={{
+                  backgroundColor: copied ? 'var(--success-bg)' : 'var(--bg-modal-input)',
+                  color: copied ? 'var(--success)' : 'var(--text-modal-muted)'
+                }}
                 title={copied ? 'Copiado!' : 'Copiar informações'}
               >
                 <FontAwesomeIcon
@@ -149,17 +149,17 @@ Updated: ${formatDateTime(buildInfo.lastUpdate)}${buildInfo.compareMain ? `\nvs 
 
           {/* Branch */}
           <div>
-            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Branch</div>
-            <div className="text-sm font-mono text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+            <div className="text-xs mb-1" style={{ color: 'var(--text-modal-muted)' }}>Branch</div>
+            <div className="text-sm font-mono px-2 py-1 rounded" style={{ backgroundColor: 'var(--bg-modal-input)', color: 'var(--text-modal)' }}>
               {buildInfo.branch}
             </div>
           </div>
 
           {/* Commit */}
           <div>
-            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Commit</div>
-            <div className="text-xs font-mono text-gray-700 dark:text-gray-300">
-              <span className="text-blue-600 dark:text-blue-400 font-semibold">{buildInfo.commitHash}</span>
+            <div className="text-xs mb-1" style={{ color: 'var(--text-modal-muted)' }}>Commit</div>
+            <div className="text-xs font-mono" style={{ color: 'var(--text-modal)' }}>
+              <span style={{ color: 'var(--info)' }} className="font-semibold">{buildInfo.commitHash}</span>
               {' - '}
               {buildInfo.commitMessage}
             </div>
@@ -167,11 +167,8 @@ Updated: ${formatDateTime(buildInfo.lastUpdate)}${buildInfo.compareMain ? `\nvs 
 
           {/* Git Status */}
           <div className="flex items-center justify-between">
-            <div className="text-xs text-gray-500 dark:text-gray-400">Status</div>
-            <div className={`text-xs flex items-center gap-1 ${buildInfo.gitStatus === 'Clean'
-                ? 'text-green-600 dark:text-green-400'
-                : 'text-yellow-600 dark:text-yellow-400'
-              }`}>
+            <div className="text-xs" style={{ color: 'var(--text-modal-muted)' }}>Status</div>
+            <div className="text-xs flex items-center gap-1" style={{ color: buildInfo.gitStatus === 'Clean' ? 'var(--success)' : 'var(--warning)' }}>
               <FontAwesomeIcon
                 icon={buildInfo.gitStatus === 'Clean' ? faCircleCheck : faTriangleExclamation}
                 className="text-xs"
@@ -185,20 +182,20 @@ Updated: ${formatDateTime(buildInfo.lastUpdate)}${buildInfo.compareMain ? `\nvs 
 
           {/* Última atualização */}
           <div className="flex items-center justify-between">
-            <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+            <div className="text-xs flex items-center gap-1" style={{ color: 'var(--text-modal-muted)' }}>
               <FontAwesomeIcon icon={faClock} className="text-xs" />
               Updated
             </div>
-            <div className="text-xs text-gray-700 dark:text-gray-300">
+            <div className="text-xs" style={{ color: 'var(--text-modal)' }}>
               {formatDateTime(buildInfo.lastUpdate)}
             </div>
           </div>
 
           {/* Comparação com main */}
           {buildInfo.compareMain && (
-            <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
-              <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">vs Production</div>
-              <div className="text-xs font-medium text-gray-700 dark:text-gray-300">
+            <div className="pt-2 border-t" style={{ borderColor: 'var(--border-modal)' }}>
+              <div className="text-xs mb-1" style={{ color: 'var(--text-modal-muted)' }}>vs Production</div>
+              <div className="text-xs font-medium" style={{ color: 'var(--text-modal)' }}>
                 {buildInfo.compareMain}
               </div>
             </div>

@@ -145,12 +145,12 @@ export default function VerificadorURLPage() {
             <div
               className="mt-4 p-4 rounded-lg border flex items-start gap-3"
               style={{
-                backgroundColor: '#fef2f2',
-                borderColor: '#ef4444',
+                backgroundColor: 'var(--error-bg)',
+                borderColor: 'var(--error-border)',
               }}
             >
-              <FontAwesomeIcon icon={faExclamationCircle} className="w-5 h-5 text-red-500 mt-0.5" />
-              <p className="text-red-700">{error}</p>
+              <FontAwesomeIcon icon={faExclamationCircle} className="w-5 h-5 mt-0.5" style={{ color: 'var(--error)' }} />
+              <p style={{ color: 'var(--error)' }}>{error}</p>
             </div>
           )}
 
@@ -162,21 +162,21 @@ export default function VerificadorURLPage() {
                 <div
                   className="p-6 rounded-xl border"
                   style={{
-                    backgroundColor: '#f0fdf4',
-                    borderColor: '#22c55e',
+                    backgroundColor: 'var(--success-bg)',
+                    borderColor: 'var(--success-border)',
                   }}
                 >
                   <div className="flex items-start gap-4">
-                    <FontAwesomeIcon icon={faCheckCircle} className="w-8 h-8 text-green-600 mt-1" />
+                    <FontAwesomeIcon icon={faCheckCircle} className="w-8 h-8 mt-1" style={{ color: 'var(--success)' }} />
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-green-900 mb-2">
+                      <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--success)' }}>
                         Link Seguro ✅
                       </h3>
-                      <p className="text-green-700">
+                      <p style={{ color: 'var(--success)' }}>
                         Nenhuma ameaça detectada. Este link parece ser seguro para acessar.
                       </p>
                       {result.cached && (
-                        <p className="text-sm text-green-600 mt-2">
+                        <p className="text-sm mt-2" style={{ color: 'var(--success-light)' }}>
                           Resultado do cache • Verificado em {new Date(result.checkedAt).toLocaleString('pt-BR')}
                         </p>
                       )}
@@ -188,22 +188,20 @@ export default function VerificadorURLPage() {
                 <div
                   className="p-6 rounded-xl border"
                   style={{
-                    backgroundColor: result.threat?.level === 'critical' ? '#fef2f2' : '#fefce8',
-                    borderColor: result.threat?.level === 'critical' ? '#ef4444' : '#eab308',
+                    backgroundColor: result.threat?.level === 'critical' ? 'var(--error-bg)' : 'var(--warning-bg)',
+                    borderColor: result.threat?.level === 'critical' ? 'var(--error-border)' : 'var(--warning-border)',
                   }}
                 >
                   <div className="flex items-start gap-4">
                     <FontAwesomeIcon
                       icon={result.threat?.level === 'critical' ? faTimesCircle : faExclamationTriangle}
-                      className={`w-8 h-8 mt-1 ${
-                        result.threat?.level === 'critical' ? 'text-red-600' : 'text-yellow-600'
-                      }`}
+                      className="w-8 h-8 mt-1"
+                      style={{ color: result.threat?.level === 'critical' ? 'var(--error)' : 'var(--warning)' }}
                     />
                     <div className="flex-1">
                       <h3
-                        className={`text-xl font-bold mb-2 ${
-                          result.threat?.level === 'critical' ? 'text-red-900' : 'text-yellow-900'
-                        }`}
+                        className="text-xl font-bold mb-2"
+                        style={{ color: result.threat?.level === 'critical' ? 'var(--error)' : 'var(--warning)' }}
                       >
                         {result.threat?.level === 'critical' ? '🔴 SITE PERIGOSO DETECTADO' : '⚠️ SITE SUSPEITO'}
                       </h3>
@@ -212,9 +210,8 @@ export default function VerificadorURLPage() {
                         {/* Reasons */}
                         <div>
                           <p
-                            className={`font-semibold mb-2 ${
-                              result.threat?.level === 'critical' ? 'text-red-800' : 'text-yellow-800'
-                            }`}
+                            className="font-semibold mb-2"
+                            style={{ color: result.threat?.level === 'critical' ? 'var(--error)' : 'var(--warning)' }}
                           >
                             Ameaças detectadas:
                           </p>
@@ -222,7 +219,7 @@ export default function VerificadorURLPage() {
                             {result.threat?.reasons.map((reason, idx) => (
                               <li
                                 key={idx}
-                                className={result.threat?.level === 'critical' ? 'text-red-700' : 'text-yellow-700'}
+                                style={{ color: result.threat?.level === 'critical' ? 'var(--error)' : 'var(--warning)' }}
                               >
                                 {reason}
                               </li>
@@ -253,11 +250,11 @@ export default function VerificadorURLPage() {
                           <div
                             className="p-4 rounded-lg border"
                             style={{
-                              backgroundColor: '#f0fdf4',
-                              borderColor: '#22c55e',
+                              backgroundColor: 'var(--success-bg)',
+                              borderColor: 'var(--success-border)',
                             }}
                           >
-                            <p className="text-green-800">
+                            <p style={{ color: 'var(--success)' }}>
                               <FontAwesomeIcon icon={faCheckCircle} className="mr-2" />
                               <strong>Você quis dizer:</strong>{' '}
                               <a
