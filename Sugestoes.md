@@ -799,5 +799,64 @@ $ npx eslint components/shared/TransparencyNote.tsx
 | `#627EEA` | Ethereum |
 | `#9945FF` | Solana |
 
+---
+
+## ✅ Concluído (Sessão 12/12/2025) - Theme System v2.0 Escalável
+
+### 🚀 Sistema de Tokens Semânticos
+
+**Objetivo:** Preparar sistema de temas para múltiplas variantes (ocean, forest, sunset).
+
+#### Implementação
+
+**Arquivo criado:** `lib/core/theme/tokens.ts`
+
+Sistema hierárquico de tokens:
+```typescript
+import { tokens, cssVar } from '@/lib/core/theme';
+
+// Uso direto
+tokens.bg.primary      // 'var(--bg-primary)'
+tokens.text.secondary  // 'var(--text-secondary)'
+tokens.accent.primary  // 'var(--accent-primary)'
+
+// Via helper
+cssVar('bg.elevated')  // 'var(--bg-elevated)'
+```
+
+#### Types Expandidos
+
+```typescript
+// types.ts
+type Theme = 'light' | 'dark';
+type ThemeAccent = 'default' | 'ocean' | 'forest' | 'sunset';
+
+interface ThemeConfig {
+  mode: Theme;
+  accent?: ThemeAccent;
+}
+```
+
+#### Preparado para Temas Futuros
+
+```css
+/* globals.css - Quando implementar */
+[data-accent="ocean"] {
+  --accent-primary: #0EA5E9;
+  --gradient-start: #0EA5E9;
+  --gradient-end: #06B6D4;
+}
+```
+
+#### Arquivos Modificados
+
+| Arquivo | Ação |
+|---------|------|
+| `lib/core/theme/tokens.ts` | 🆕 Criado |
+| `lib/core/theme/types.ts` | Expandido |
+| `lib/core/theme/index.ts` | Novos exports |
+| `.agent/theme-rules.md` | v2.0 |
+
+
 
 

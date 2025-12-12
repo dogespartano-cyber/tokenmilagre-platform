@@ -1,5 +1,5 @@
 /**
- * Theme Module - Ponto de Entrada
+ * Theme Module - Ponto de Entrada (v2.0 - Scalable)
  * 
  * @agi-module: core/theme
  * @description Sistema unificado de tema seguindo Lei de Potência.
@@ -15,9 +15,13 @@
  * </ThemeProvider>
  * 
  * // Em componentes
- * import { useTheme } from '@/lib/core/theme';
+ * import { useTheme, tokens, cssVar } from '@/lib/core/theme';
  * 
  * const { theme, toggleTheme } = useTheme();
+ * 
+ * // Usando tokens
+ * <div style={{ backgroundColor: tokens.bg.primary }} />
+ * <div style={{ color: cssVar('text.secondary') }} />
  * ```
  */
 
@@ -25,7 +29,11 @@
 export { ThemeProvider, useTheme } from './ThemeProvider';
 
 // Types
-export type { Theme, ThemeContextType } from './types';
+export type { Theme, ThemeContextType, ThemeAccent, ThemeConfig } from './types';
+
+// Tokens - Sistema de Design Escalável
+export { tokens, cssVar, themeAccents } from './tokens';
+export type { TokenPath } from './tokens';
 
 // Constants
 export {
