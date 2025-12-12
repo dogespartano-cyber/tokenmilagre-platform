@@ -324,6 +324,20 @@ html {
   --info-border: #BFDBFE;
   /* Blue 200 */
 
+  /* Icons */
+  --icon: #374151;
+  /* Gray 700 */
+  --icon-muted: #9CA3AF;
+  /* Gray 400 */
+  --icon-inverse: #FFFFFF;
+
+  /* Dividers */
+  --divider: #E5E7EB;
+  /* Gray 200 */
+
+  /* Focus Ring (alias) */
+  --focus-ring: var(--border-focus);
+
   /* Legacy fallbacks */
   --background: #F3F4F6;
   /* Matches bg-primary */
@@ -436,6 +450,20 @@ html {
   --info-light: #7DD3FC;
   --info-bg: #082F49;
   --info-border: #0369A1;
+
+  /* Icons */
+  --icon: #94A3B8;
+  /* Slate 400 */
+  --icon-muted: #64748B;
+  /* Slate 500 */
+  --icon-inverse: #050A14;
+
+  /* Dividers */
+  --divider: #1E293B;
+  /* Slate 800 */
+
+  /* Focus Ring (alias) */
+  --focus-ring: var(--border-focus);
 
   /* Legacy fallbacks */
   --background: #050A14;
@@ -1069,6 +1097,7 @@ body {
 .text-adaptive {
   color: var(--text-primary);
 }
+
 /* ==================================================
    GLOBAL BACKGROUND - OPTIMIZED CSS-ONLY VERSION
    ================================================== */
@@ -1151,4 +1180,3 @@ body {
   background: radial-gradient(circle at 50% 50%, transparent 40%, var(--bg-primary) 100%);
   pointer-events: none;
 }
-

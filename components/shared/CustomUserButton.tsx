@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useUser, useClerk } from "@clerk/nextjs";
@@ -6,11 +5,14 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faUser, faCog, faQuestionCircle, faSignOutAlt, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faUser, faCog, faQuestionCircle, faSignOutAlt, faChevronRight, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { useTheme } from '@/lib/core/theme';
+
 
 export default function CustomUserButton() {
     const { user, isLoaded } = useUser();
     const { signOut, openUserProfile } = useClerk();
+    const { theme, toggleTheme, mounted } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -142,6 +144,28 @@ export default function CustomUserButton() {
                             </div>
 
                         </div>
+
+                        {/* Theme Toggle */}
+                        {mounted && (
+                            <div className="px-6 py-3 border-t border-gray-200 dark:border-gray-700">
+                                <button
+                                    onClick={toggleTheme}
+                                    className="flex w-full cursor-pointer items-center gap-4 px-0 min-h-[48px] justify-between hover:opacity-80 transition-opacity"
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className="text-[var(--brand-primary)] flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--brand-primary)]/10">
+                                            <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} className="text-xl" />
+                                        </div>
+                                        <p className="text-[#111418] dark:text-gray-100 text-base font-medium leading-normal">
+                                            {theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}
+                                        </p>
+                                    </div>
+                                    <div className="shrink-0 text-[#617589] dark:text-gray-400">
+                                        <FontAwesomeIcon icon={faChevronRight} />
+                                    </div>
+                                </button>
+                            </div>
+                        )}
 
                         {/* Divider */}
                         <div className="h-px bg-gray-200 dark:bg-gray-700 mx-6"></div>

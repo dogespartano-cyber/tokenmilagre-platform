@@ -56,8 +56,6 @@ export const AVAILABLE_THEMES: Theme[] = ['light', 'dark'];
 /**
  * Labels localizados para exibição de temas na UI
  * 
- * Usado no Toast de feedback e em controles de seleção de tema.
- * 
  * @constant
  * @type {Record<Theme, string>}
  */
@@ -68,8 +66,6 @@ export const THEME_LABELS: Record<Theme, string> = {
 
 /**
  * Emojis para feedback visual no Toast de mudança de tema
- * 
- * Fornece confirmação visual instantânea da mudança de tema.
  * 
  * @constant
  * @type {Record<Theme, string>}

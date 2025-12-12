@@ -128,6 +128,12 @@ export default function RootLayout({
                   var savedTheme = localStorage.getItem('theme');
                   var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                   
+                  // Fallback: convert legacy themes to dark
+                  if (savedTheme && savedTheme !== 'light' && savedTheme !== 'dark') {
+                    savedTheme = 'dark';
+                    localStorage.setItem('theme', 'dark');
+                  }
+                  
                   if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
                     document.documentElement.setAttribute('data-theme', 'dark');
                     document.documentElement.classList.add('dark');
