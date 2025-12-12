@@ -12,16 +12,16 @@
      SUNSET DARK MODE - Twilight Warmth
      ============================================ */
 
-    /* Background Colors - Deep Purple/Wine */
-    --bg-primary: #1C1016;
-    /* Custom dark wine */
-    --bg-secondary: #2D1B24;
-    /* Dark rose */
-    --bg-tertiary: #3D2536;
-    /* Warmer purple */
-    --bg-elevated: #4A2C3E;
-    /* Elevated wine */
-    --bg-overlay: rgba(28, 16, 22, 0.9);
+    /* Background Colors - Deep Sunset (DARKER) */
+    --bg-primary: #0A0506;
+    /* Very dark wine-black */
+    --bg-secondary: #120A0D;
+    /* Dark wine */
+    --bg-tertiary: #1A1014;
+    /* Deep twilight */
+    --bg-elevated: #22151A;
+    /* Slightly elevated */
+    --bg-overlay: rgba(10, 5, 6, 0.95);
 
     /* RGB values for transparency */
     --bg-elevated-rgb: 74, 44, 62;
@@ -130,4 +130,126 @@
     --bg-article-tag: rgba(249, 115, 22, 0.15);
     --bg-article-quote: rgba(255, 255, 255, 0.03);
     --border-article: rgba(249, 115, 22, 0.2);
+}
+
+/* ================================================
+   SUNSET LIGHT MODE
+   ================================================ */
+[data-theme="light"][data-accent="sunset"] {
+    /* Background Colors - Light Sunset */
+    --bg-primary: #FFF7ED;
+    /* Orange 50 */
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #FFEDD5;
+    /* Orange 100 */
+    --bg-elevated: #FFFFFF;
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+
+    /* RGB values for transparency */
+    --bg-elevated-rgb: 255, 255, 255;
+    --bg-secondary-rgb: 255, 255, 255;
+
+    /* Text Colors */
+    --text-primary: #7C2D12;
+    /* Orange 900 */
+    --text-secondary: #9A3412;
+    /* Orange 800 */
+    --text-tertiary: #C2410C;
+    /* Orange 700 */
+    --text-muted: #EA580C;
+    /* Orange 600 */
+    --text-inverse: #FFFFFF;
+    --text-disabled: #FED7AA;
+
+    /* Border Colors */
+    --border-light: #FED7AA;
+    /* Orange 200 */
+    --border-medium: #FDBA74;
+    /* Orange 300 */
+    --border-strong: #FB923C;
+    /* Orange 400 */
+    --border-focus: #F97316;
+
+    /* Shadows */
+    --shadow-xs: 0 1px 2px 0 rgba(249, 115, 22, 0.08);
+    --shadow-sm: 0 1px 3px 0 rgba(249, 115, 22, 0.12), 0 1px 2px -1px rgba(249, 115, 22, 0.08);
+    --shadow-md: 0 4px 6px -1px rgba(249, 115, 22, 0.12), 0 2px 4px -2px rgba(249, 115, 22, 0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(249, 115, 22, 0.12), 0 4px 6px -4px rgba(249, 115, 22, 0.08);
+    --shadow-xl: 0 20px 25px -5px rgba(249, 115, 22, 0.12), 0 8px 10px -6px rgba(249, 115, 22, 0.08);
+    --shadow-2xl: 0 25px 50px -12px rgba(249, 115, 22, 0.25);
+    --shadow-inner: inset 0 2px 4px 0 rgba(249, 115, 22, 0.08);
+
+    /* Brand - Sunset Orange */
+    --brand-primary: #EA580C;
+    /* Orange 600 */
+    --brand-hover: #C2410C;
+    /* Orange 700 */
+    --brand-light: #F97316;
+    /* Orange 500 */
+    --brand-lighter: #FB923C;
+    --brand-bg: #FFF7ED;
+    /* Orange 50 */
+    --brand-border: #FDBA74;
+    /* Orange 300 */
+
+    /* Accent */
+    --accent-primary: #EA580C;
+    --accent-hover: #C2410C;
+    --accent-light: #F97316;
+
+    /* Gradients */
+    --gradient-start: #F97316;
+    --gradient-end: #EC4899;
+
+    /* Functional Colors */
+    --success: #047857;
+    --success-light: #10B981;
+    --success-bg: #ECFDF5;
+    --success-border: #A7F3D0;
+
+    --error: #B91C1C;
+    --error-light: #EF4444;
+    --error-bg: #FEF2F2;
+    --error-border: #FECACA;
+
+    --warning: #B45309;
+    --warning-light: #F59E0B;
+    --warning-bg: #FFFBEB;
+    --warning-border: #FDE68A;
+
+    --info: #C2410C;
+    --info-light: #F97316;
+    --info-bg: #FFF7ED;
+    --info-border: #FED7AA;
+
+    /* Icons */
+    --icon: #C2410C;
+    --icon-muted: #EA580C;
+    --icon-inverse: #FFFFFF;
+
+    /* Dividers */
+    --divider: #FED7AA;
+
+    /* Focus Ring */
+    --focus-ring: #F97316;
+
+    /* Link Color */
+    --text-link: #EA580C;
+
+    /* Modal */
+    --modal-overlay: rgba(0, 0, 0, 0.5);
+    --bg-modal: #FFFFFF;
+    --text-modal: #7C2D12;
+    --text-modal-muted: #C2410C;
+    --border-modal: #FED7AA;
+    --bg-modal-input: #FFF7ED;
+    --bg-modal-hover: #FFEDD5;
+
+    /* Article */
+    --text-article-title: #7C2D12;
+    --text-article-body: #9A3412;
+    --text-article-muted: #C2410C;
+    --bg-article-tag: #FFEDD5;
+    --bg-article-quote: #FFF7ED;
+    --border-article: #FED7AA;
 }

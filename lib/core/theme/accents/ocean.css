@@ -12,16 +12,16 @@
      OCEAN DARK MODE - Deep Sea
      ============================================ */
 
-    /* Background Colors - Deep Ocean */
+    /* Background Colors - Deep Ocean (DARKER) */
     --bg-primary: #020617;
-    /* Slate 950 */
-    --bg-secondary: #0F172A;
-    /* Slate 900 */
-    --bg-tertiary: #1E293B;
-    /* Slate 800 */
-    --bg-elevated: #1E3A5F;
-    /* Dark Blue */
-    --bg-overlay: rgba(2, 6, 23, 0.9);
+    /* Slate 950 - very dark */
+    --bg-secondary: #0A0F1A;
+    /* Darker than slate 900 */
+    --bg-tertiary: #0F1629;
+    /* Dark blue-gray */
+    --bg-elevated: #141D30;
+    /* Slightly elevated */
+    --bg-overlay: rgba(2, 6, 23, 0.95);
 
     /* RGB values for transparency */
     --bg-elevated-rgb: 30, 58, 95;
@@ -138,4 +138,126 @@
     --bg-article-tag: rgba(14, 165, 233, 0.15);
     --bg-article-quote: rgba(255, 255, 255, 0.03);
     --border-article: rgba(14, 165, 233, 0.2);
+}
+
+/* ================================================
+   OCEAN LIGHT MODE
+   ================================================ */
+[data-theme="light"][data-accent="ocean"] {
+    /* Background Colors - Light Ocean */
+    --bg-primary: #F0F9FF;
+    /* Sky 50 */
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #E0F2FE;
+    /* Sky 100 */
+    --bg-elevated: #FFFFFF;
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+
+    /* RGB values for transparency */
+    --bg-elevated-rgb: 255, 255, 255;
+    --bg-secondary-rgb: 255, 255, 255;
+
+    /* Text Colors */
+    --text-primary: #0C4A6E;
+    /* Sky 900 */
+    --text-secondary: #075985;
+    /* Sky 800 */
+    --text-tertiary: #0369A1;
+    /* Sky 700 */
+    --text-muted: #0284C7;
+    /* Sky 600 */
+    --text-inverse: #FFFFFF;
+    --text-disabled: #BAE6FD;
+
+    /* Border Colors */
+    --border-light: #BAE6FD;
+    /* Sky 200 */
+    --border-medium: #7DD3FC;
+    /* Sky 300 */
+    --border-strong: #38BDF8;
+    /* Sky 400 */
+    --border-focus: #0EA5E9;
+
+    /* Shadows */
+    --shadow-xs: 0 1px 2px 0 rgba(14, 165, 233, 0.08);
+    --shadow-sm: 0 1px 3px 0 rgba(14, 165, 233, 0.12), 0 1px 2px -1px rgba(14, 165, 233, 0.08);
+    --shadow-md: 0 4px 6px -1px rgba(14, 165, 233, 0.12), 0 2px 4px -2px rgba(14, 165, 233, 0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(14, 165, 233, 0.12), 0 4px 6px -4px rgba(14, 165, 233, 0.08);
+    --shadow-xl: 0 20px 25px -5px rgba(14, 165, 233, 0.12), 0 8px 10px -6px rgba(14, 165, 233, 0.08);
+    --shadow-2xl: 0 25px 50px -12px rgba(14, 165, 233, 0.25);
+    --shadow-inner: inset 0 2px 4px 0 rgba(14, 165, 233, 0.08);
+
+    /* Brand - Ocean Blue */
+    --brand-primary: #0284C7;
+    /* Sky 600 */
+    --brand-hover: #0369A1;
+    /* Sky 700 */
+    --brand-light: #0EA5E9;
+    /* Sky 500 */
+    --brand-lighter: #38BDF8;
+    --brand-bg: #F0F9FF;
+    /* Sky 50 */
+    --brand-border: #7DD3FC;
+    /* Sky 300 */
+
+    /* Accent */
+    --accent-primary: #0284C7;
+    --accent-hover: #0369A1;
+    --accent-light: #0EA5E9;
+
+    /* Gradients */
+    --gradient-start: #0EA5E9;
+    --gradient-end: #06B6D4;
+
+    /* Functional Colors */
+    --success: #047857;
+    --success-light: #10B981;
+    --success-bg: #ECFDF5;
+    --success-border: #A7F3D0;
+
+    --error: #B91C1C;
+    --error-light: #EF4444;
+    --error-bg: #FEF2F2;
+    --error-border: #FECACA;
+
+    --warning: #B45309;
+    --warning-light: #F59E0B;
+    --warning-bg: #FFFBEB;
+    --warning-border: #FDE68A;
+
+    --info: #0369A1;
+    --info-light: #0EA5E9;
+    --info-bg: #F0F9FF;
+    --info-border: #BAE6FD;
+
+    /* Icons */
+    --icon: #0369A1;
+    --icon-muted: #0284C7;
+    --icon-inverse: #FFFFFF;
+
+    /* Dividers */
+    --divider: #BAE6FD;
+
+    /* Focus Ring */
+    --focus-ring: #0EA5E9;
+
+    /* Link Color */
+    --text-link: #0284C7;
+
+    /* Modal */
+    --modal-overlay: rgba(0, 0, 0, 0.5);
+    --bg-modal: #FFFFFF;
+    --text-modal: #0C4A6E;
+    --text-modal-muted: #0369A1;
+    --border-modal: #BAE6FD;
+    --bg-modal-input: #F0F9FF;
+    --bg-modal-hover: #E0F2FE;
+
+    /* Article */
+    --text-article-title: #0C4A6E;
+    --text-article-body: #075985;
+    --text-article-muted: #0369A1;
+    --bg-article-tag: #E0F2FE;
+    --bg-article-quote: #F0F9FF;
+    --border-article: #BAE6FD;
 }

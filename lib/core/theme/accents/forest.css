@@ -12,16 +12,16 @@
      FOREST DARK MODE - Deep Woods
      ============================================ */
 
-    /* Background Colors - Deep Forest */
-    --bg-primary: #022C22;
-    /* Custom dark emerald */
-    --bg-secondary: #064E3B;
-    /* Emerald 900 */
-    --bg-tertiary: #065F46;
-    /* Emerald 800 */
-    --bg-elevated: #047857;
-    /* Emerald 700 */
-    --bg-overlay: rgba(2, 44, 34, 0.9);
+    /* Background Colors - Deep Forest (DARKER) */
+    --bg-primary: #020A07;
+    /* Very dark green-black */
+    --bg-secondary: #051410;
+    /* Dark forest floor */
+    --bg-tertiary: #0A1F18;
+    /* Deep woods */
+    --bg-elevated: #0F2A20;
+    /* Slightly elevated */
+    --bg-overlay: rgba(2, 10, 7, 0.95);
 
     /* RGB values for transparency */
     --bg-elevated-rgb: 4, 120, 87;
@@ -127,4 +127,126 @@
     --bg-article-tag: rgba(16, 185, 129, 0.15);
     --bg-article-quote: rgba(255, 255, 255, 0.03);
     --border-article: rgba(16, 185, 129, 0.2);
+}
+
+/* ================================================
+   FOREST LIGHT MODE
+   ================================================ */
+[data-theme="light"][data-accent="forest"] {
+    /* Background Colors - Light Forest */
+    --bg-primary: #ECFDF5;
+    /* Emerald 50 */
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #D1FAE5;
+    /* Emerald 100 */
+    --bg-elevated: #FFFFFF;
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+
+    /* RGB values for transparency */
+    --bg-elevated-rgb: 255, 255, 255;
+    --bg-secondary-rgb: 255, 255, 255;
+
+    /* Text Colors */
+    --text-primary: #064E3B;
+    /* Emerald 900 */
+    --text-secondary: #047857;
+    /* Emerald 700 */
+    --text-tertiary: #059669;
+    /* Emerald 600 */
+    --text-muted: #10B981;
+    /* Emerald 500 */
+    --text-inverse: #FFFFFF;
+    --text-disabled: #A7F3D0;
+
+    /* Border Colors */
+    --border-light: #A7F3D0;
+    /* Emerald 200 */
+    --border-medium: #6EE7B7;
+    /* Emerald 300 */
+    --border-strong: #34D399;
+    /* Emerald 400 */
+    --border-focus: #10B981;
+
+    /* Shadows */
+    --shadow-xs: 0 1px 2px 0 rgba(16, 185, 129, 0.08);
+    --shadow-sm: 0 1px 3px 0 rgba(16, 185, 129, 0.12), 0 1px 2px -1px rgba(16, 185, 129, 0.08);
+    --shadow-md: 0 4px 6px -1px rgba(16, 185, 129, 0.12), 0 2px 4px -2px rgba(16, 185, 129, 0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(16, 185, 129, 0.12), 0 4px 6px -4px rgba(16, 185, 129, 0.08);
+    --shadow-xl: 0 20px 25px -5px rgba(16, 185, 129, 0.12), 0 8px 10px -6px rgba(16, 185, 129, 0.08);
+    --shadow-2xl: 0 25px 50px -12px rgba(16, 185, 129, 0.25);
+    --shadow-inner: inset 0 2px 4px 0 rgba(16, 185, 129, 0.08);
+
+    /* Brand - Forest Green */
+    --brand-primary: #059669;
+    /* Emerald 600 */
+    --brand-hover: #047857;
+    /* Emerald 700 */
+    --brand-light: #10B981;
+    /* Emerald 500 */
+    --brand-lighter: #34D399;
+    --brand-bg: #ECFDF5;
+    /* Emerald 50 */
+    --brand-border: #6EE7B7;
+    /* Emerald 300 */
+
+    /* Accent */
+    --accent-primary: #059669;
+    --accent-hover: #047857;
+    --accent-light: #10B981;
+
+    /* Gradients */
+    --gradient-start: #10B981;
+    --gradient-end: #14B8A6;
+
+    /* Functional Colors */
+    --success: #047857;
+    --success-light: #10B981;
+    --success-bg: #ECFDF5;
+    --success-border: #A7F3D0;
+
+    --error: #B91C1C;
+    --error-light: #EF4444;
+    --error-bg: #FEF2F2;
+    --error-border: #FECACA;
+
+    --warning: #B45309;
+    --warning-light: #F59E0B;
+    --warning-bg: #FFFBEB;
+    --warning-border: #FDE68A;
+
+    --info: #047857;
+    --info-light: #10B981;
+    --info-bg: #ECFDF5;
+    --info-border: #A7F3D0;
+
+    /* Icons */
+    --icon: #047857;
+    --icon-muted: #059669;
+    --icon-inverse: #FFFFFF;
+
+    /* Dividers */
+    --divider: #A7F3D0;
+
+    /* Focus Ring */
+    --focus-ring: #10B981;
+
+    /* Link Color */
+    --text-link: #059669;
+
+    /* Modal */
+    --modal-overlay: rgba(0, 0, 0, 0.5);
+    --bg-modal: #FFFFFF;
+    --text-modal: #064E3B;
+    --text-modal-muted: #059669;
+    --border-modal: #A7F3D0;
+    --bg-modal-input: #ECFDF5;
+    --bg-modal-hover: #D1FAE5;
+
+    /* Article */
+    --text-article-title: #064E3B;
+    --text-article-body: #047857;
+    --text-article-muted: #059669;
+    --bg-article-tag: #D1FAE5;
+    --bg-article-quote: #ECFDF5;
+    --border-article: #A7F3D0;
 }
