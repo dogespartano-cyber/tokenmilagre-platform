@@ -1,22 +1,133 @@
 /**
- * Sunset Accent Theme
+ * Sunset Dark - Complete Theme Variant
  * 
- * Orange-pink palette for a warm, creative look.
- * Apply via: <html data-accent="sunset">
+ * A full dark theme alternative with sunset/orange-pink color palette.
+ * Overrides ALL visual tokens, not just accent colors.
+ * 
+ * Apply via: <html data-theme="dark" data-accent="sunset">
  */
 
-[data-accent="sunset"] {
-    /* Accent Colors - Sunset Orange Palette */
-    --accent-primary: #F97316;
-    /* Orange 500 */
-    --accent-hover: #EA580C;
-    /* Orange 600 */
-    --accent-light: #FB923C;
-    /* Orange 400 */
+[data-theme="dark"][data-accent="sunset"] {
+    /* ============================================
+     SUNSET DARK MODE - Twilight Warmth
+     ============================================ */
 
-    /* Gradients */
-    --gradient-start: #F97316;
+    /* Background Colors - Deep Purple/Wine */
+    --bg-primary: #1C1016;
+    /* Custom dark wine */
+    --bg-secondary: #2D1B24;
+    /* Dark rose */
+    --bg-tertiary: #3D2536;
+    /* Warmer purple */
+    --bg-elevated: #4A2C3E;
+    /* Elevated wine */
+    --bg-overlay: rgba(28, 16, 22, 0.9);
+
+    /* RGB values for transparency */
+    --bg-elevated-rgb: 74, 44, 62;
+    --bg-secondary-rgb: 45, 27, 36;
+
+    /* Text Colors */
+    --text-primary: #FFF7ED;
+    /* Orange 50 */
+    --text-secondary: #FED7AA;
+    /* Orange 200 */
+    --text-tertiary: #FDBA74;
+    /* Orange 300 */
+    --text-muted: #FB923C;
+    /* Orange 400 */
+    --text-inverse: #1C1016;
+    --text-disabled: #6B7280;
+
+    /* Border Colors */
+    --border-light: #4A2C3E;
+    --border-medium: #C2410C;
+    /* Orange 700 */
+    --border-strong: #F97316;
     /* Orange 500 */
+    --border-focus: #F97316;
+
+    /* Shadows - Orange tinted */
+    --shadow-xs: 0 1px 2px 0 rgba(249, 115, 22, 0.1);
+    --shadow-sm: 0 1px 3px 0 rgba(249, 115, 22, 0.15), 0 1px 2px -1px rgba(249, 115, 22, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(249, 115, 22, 0.15), 0 2px 4px -2px rgba(249, 115, 22, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(249, 115, 22, 0.2), 0 4px 6px -4px rgba(249, 115, 22, 0.15);
+    --shadow-xl: 0 20px 25px -5px rgba(249, 115, 22, 0.2), 0 8px 10px -6px rgba(249, 115, 22, 0.15);
+    --shadow-2xl: 0 25px 50px -12px rgba(249, 115, 22, 0.35);
+    --shadow-inner: inset 0 2px 4px 0 rgba(249, 115, 22, 0.1);
+
+    /* Brand - Sunset Orange */
+    --brand-primary: #F97316;
+    /* Orange 500 */
+    --brand-hover: #EA580C;
+    /* Orange 600 */
+    --brand-light: #FB923C;
+    /* Orange 400 */
+    --brand-lighter: #FDBA74;
+    --brand-bg: #7C2D12;
+    /* Orange 900 */
+    --brand-border: #C2410C;
+    /* Orange 700 */
+
+    /* Accent */
+    --accent-primary: #F97316;
+    --accent-hover: #EA580C;
+    --accent-light: #FB923C;
+
+    /* Gradients - Orange to Pink */
+    --gradient-start: #F97316;
     --gradient-end: #EC4899;
     /* Pink 500 */
+
+    /* Functional Colors */
+    --success: #4ADE80;
+    --success-light: #86EFAC;
+    --success-bg: #14532D;
+    --success-border: #22C55E;
+
+    --error: #FB7185;
+    --error-light: #FDA4AF;
+    --error-bg: #4C0519;
+    --error-border: #F43F5E;
+
+    --warning: #FCD34D;
+    --warning-light: #FDE68A;
+    --warning-bg: #78350F;
+    --warning-border: #FBBF24;
+
+    --info: #38BDF8;
+    --info-light: #7DD3FC;
+    --info-bg: #0C4A6E;
+    --info-border: #0EA5E9;
+
+    /* Icons */
+    --icon: #FDBA74;
+    --icon-muted: #FB923C;
+    --icon-inverse: #1C1016;
+
+    /* Dividers */
+    --divider: #4A2C3E;
+
+    /* Focus Ring */
+    --focus-ring: #F97316;
+
+    /* Link Color */
+    --text-link: #FB923C;
+
+    /* Modal */
+    --modal-overlay: rgba(28, 16, 22, 0.9);
+    --bg-modal: #2D1B24;
+    --text-modal: #FFF7ED;
+    --text-modal-muted: #FDBA74;
+    --border-modal: #4A2C3E;
+    --bg-modal-input: #3D2536;
+    --bg-modal-hover: #4A2C3E;
+
+    /* Article */
+    --text-article-title: #FFF7ED;
+    --text-article-body: #FED7AA;
+    --text-article-muted: #FDBA74;
+    --bg-article-tag: rgba(249, 115, 22, 0.15);
+    --bg-article-quote: rgba(255, 255, 255, 0.03);
+    --border-article: rgba(249, 115, 22, 0.2);
 }

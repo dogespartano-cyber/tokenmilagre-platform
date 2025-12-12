@@ -1,22 +1,141 @@
 /**
- * Ocean Accent Theme
+ * Ocean Dark - Complete Theme Variant
  * 
- * Blue-cyan palette for a cool, professional look.
- * Apply via: <html data-accent="ocean">
+ * A full dark theme alternative with ocean/blue color palette.
+ * Overrides ALL visual tokens, not just accent colors.
+ * 
+ * Apply via: <html data-theme="dark" data-accent="ocean">
  */
 
-[data-accent="ocean"] {
-    /* Accent Colors - Ocean Blue Palette */
-    --accent-primary: #0EA5E9;
-    /* Sky 500 */
-    --accent-hover: #0284C7;
-    /* Sky 600 */
-    --accent-light: #38BDF8;
+[data-theme="dark"][data-accent="ocean"] {
+    /* ============================================
+     OCEAN DARK MODE - Deep Sea
+     ============================================ */
+
+    /* Background Colors - Deep Ocean */
+    --bg-primary: #020617;
+    /* Slate 950 */
+    --bg-secondary: #0F172A;
+    /* Slate 900 */
+    --bg-tertiary: #1E293B;
+    /* Slate 800 */
+    --bg-elevated: #1E3A5F;
+    /* Dark Blue */
+    --bg-overlay: rgba(2, 6, 23, 0.9);
+
+    /* RGB values for transparency */
+    --bg-elevated-rgb: 30, 58, 95;
+    --bg-secondary-rgb: 15, 23, 42;
+
+    /* Text Colors */
+    --text-primary: #F0F9FF;
+    /* Sky 50 */
+    --text-secondary: #BAE6FD;
+    /* Sky 200 */
+    --text-tertiary: #7DD3FC;
+    /* Sky 300 */
+    --text-muted: #38BDF8;
     /* Sky 400 */
+    --text-inverse: #020617;
+    --text-disabled: #475569;
+
+    /* Border Colors */
+    --border-light: #1E3A5F;
+    /* Navy */
+    --border-medium: #0369A1;
+    /* Sky 700 */
+    --border-strong: #0EA5E9;
+    /* Sky 500 */
+    --border-focus: #0EA5E9;
+    /* Sky 500 */
+
+    /* Shadows - Blue tinted */
+    --shadow-xs: 0 1px 2px 0 rgba(14, 165, 233, 0.1);
+    --shadow-sm: 0 1px 3px 0 rgba(14, 165, 233, 0.15), 0 1px 2px -1px rgba(14, 165, 233, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(14, 165, 233, 0.15), 0 2px 4px -2px rgba(14, 165, 233, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(14, 165, 233, 0.2), 0 4px 6px -4px rgba(14, 165, 233, 0.15);
+    --shadow-xl: 0 20px 25px -5px rgba(14, 165, 233, 0.2), 0 8px 10px -6px rgba(14, 165, 233, 0.15);
+    --shadow-2xl: 0 25px 50px -12px rgba(14, 165, 233, 0.35);
+    --shadow-inner: inset 0 2px 4px 0 rgba(14, 165, 233, 0.1);
+
+    /* Brand - Ocean Blue */
+    --brand-primary: #0EA5E9;
+    /* Sky 500 */
+    --brand-hover: #0284C7;
+    /* Sky 600 */
+    --brand-light: #38BDF8;
+    /* Sky 400 */
+    --brand-lighter: #7DD3FC;
+    /* Sky 300 */
+    --brand-bg: #0C4A6E;
+    /* Sky 900 */
+    --brand-border: #0369A1;
+    /* Sky 700 */
+
+    /* Accent (same as brand in this theme) */
+    --accent-primary: #0EA5E9;
+    --accent-hover: #0284C7;
+    --accent-light: #38BDF8;
 
     /* Gradients */
     --gradient-start: #0EA5E9;
     /* Sky 500 */
     --gradient-end: #06B6D4;
     /* Cyan 500 */
+
+    /* Functional Colors - Ocean tinted */
+    --success: #34D399;
+    /* Emerald 400 */
+    --success-light: #6EE7B7;
+    --success-bg: #064E3B;
+    --success-border: #059669;
+
+    --error: #FB7185;
+    /* Rose 400 */
+    --error-light: #FDA4AF;
+    --error-bg: #4C0519;
+    --error-border: #E11D48;
+
+    --warning: #FBBF24;
+    /* Amber 400 */
+    --warning-light: #FCD34D;
+    --warning-bg: #78350F;
+    --warning-border: #D97706;
+
+    --info: #22D3EE;
+    /* Cyan 400 */
+    --info-light: #67E8F9;
+    --info-bg: #164E63;
+    --info-border: #06B6D4;
+
+    /* Icons */
+    --icon: #7DD3FC;
+    --icon-muted: #38BDF8;
+    --icon-inverse: #020617;
+
+    /* Dividers */
+    --divider: #1E3A5F;
+
+    /* Focus Ring */
+    --focus-ring: #0EA5E9;
+
+    /* Link Color */
+    --text-link: #38BDF8;
+
+    /* Modal */
+    --modal-overlay: rgba(2, 6, 23, 0.9);
+    --bg-modal: #0F172A;
+    --text-modal: #F0F9FF;
+    --text-modal-muted: #7DD3FC;
+    --border-modal: #1E3A5F;
+    --bg-modal-input: #1E293B;
+    --bg-modal-hover: #1E3A5F;
+
+    /* Article */
+    --text-article-title: #F0F9FF;
+    --text-article-body: #BAE6FD;
+    --text-article-muted: #7DD3FC;
+    --bg-article-tag: rgba(14, 165, 233, 0.15);
+    --bg-article-quote: rgba(255, 255, 255, 0.03);
+    --border-article: rgba(14, 165, 233, 0.2);
 }
