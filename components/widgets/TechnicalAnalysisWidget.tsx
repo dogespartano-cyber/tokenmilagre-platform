@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, memo } from 'react';
+import { useTheme } from '@/lib/core/theme';
 
 interface TechnicalAnalysisWidgetProps {
   symbol?: string;
@@ -8,9 +9,10 @@ interface TechnicalAnalysisWidgetProps {
 
 function TechnicalAnalysisWidget({ symbol = "BINANCE:BTCUSDT" }: TechnicalAnalysisWidgetProps) {
   const container = useRef<HTMLDivElement>(null);
+  const { theme, mounted } = useTheme();
 
   useEffect(() => {
-    if (!container.current) return;
+    if (!container.current || !mounted) return;
 
     // Limpa conteúdo anterior
     container.current.innerHTML = '';
@@ -28,14 +30,17 @@ function TechnicalAnalysisWidget({ symbol = "BINANCE:BTCUSDT" }: TechnicalAnalys
       showIntervalTabs: true,
       displayMode: "single",
       locale: "br",
-      colorTheme: "dark"
+      colorTheme: theme === 'dark' ? 'dark' : 'light'
     });
 
     container.current.appendChild(script);
-  }, [symbol]);
+  }, [symbol, theme, mounted]);
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden max-w-full" style={{ height: "500px" }}>
+    <div
+      className="backdrop-blur-lg rounded-2xl border shadow-xl overflow-hidden max-w-full bg-[var(--bg-elevated)] border-[var(--border-light)]"
+      style={{ height: "500px" }}
+    >
       <div
         className="tradingview-widget-container"
         ref={container}

@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useRef, memo } from 'react';
+import { useTheme } from '@/lib/core/theme';
 
 function CryptoScreenerWidget() {
   const container = useRef<HTMLDivElement>(null);
+  const { theme, mounted } = useTheme();
 
   useEffect(() => {
-    if (!container.current) return;
+    if (!container.current || !mounted) return;
 
     // Limpa conteúdo anterior
     container.current.innerHTML = '';
@@ -21,16 +23,19 @@ function CryptoScreenerWidget() {
       defaultColumn: "overview",
       screener_type: "crypto_mkt",
       displayCurrency: "USD",
-      colorTheme: "dark",
+      colorTheme: theme === 'dark' ? 'dark' : 'light',
       locale: "br",
       isTransparent: false
     });
 
     container.current.appendChild(script);
-  }, []);
+  }, [theme, mounted]);
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl border-2 border-white/30 shadow-xl overflow-hidden" style={{ height: "650px" }}>
+    <div
+      className="backdrop-blur-lg rounded-2xl border shadow-xl overflow-hidden bg-[var(--bg-elevated)] border-[var(--border-light)]"
+      style={{ height: "650px" }}
+    >
       <div
         className="tradingview-widget-container"
         ref={container}

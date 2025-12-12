@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useRef, memo } from 'react';
+import { useTheme } from '@/lib/core/theme';
 
 function CryptoHeatmapWidget() {
   const container = useRef<HTMLDivElement>(null);
+  const { theme, mounted } = useTheme();
 
   useEffect(() => {
-    if (!container.current) return;
+    if (!container.current || !mounted) return;
 
     // Limpa conteúdo anterior
     container.current.innerHTML = '';
@@ -21,7 +23,7 @@ function CryptoHeatmapWidget() {
       blockColor: "change",
       locale: "br",
       symbolUrl: "",
-      colorTheme: "dark",
+      colorTheme: theme === 'dark' ? 'dark' : 'light',
       hasTopBar: false,
       isDataSetEnabled: false,
       isZoomEnabled: true,
@@ -37,10 +39,13 @@ function CryptoHeatmapWidget() {
         container.current.innerHTML = '';
       }
     };
-  }, []);
+  }, [theme, mounted]);
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl overflow-hidden" style={{ height: "100%" }}>
+    <div
+      className="backdrop-blur-lg rounded-2xl shadow-xl overflow-hidden border bg-[var(--bg-elevated)] border-[var(--border-light)]"
+      style={{ height: "100%" }}
+    >
       <div
         className="tradingview-widget-container"
         ref={container}

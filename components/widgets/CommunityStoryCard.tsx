@@ -28,17 +28,17 @@ const categoryConfig = {
     transformation: {
         label: 'Transformação',
         icon: TrendingUp,
-        color: 'text-green-600 bg-green-50',
+        color: 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30',
     },
     social_project: {
         label: 'Projeto Social',
         icon: Users,
-        color: 'text-blue-600 bg-blue-50',
+        color: 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30',
     },
     achievement: {
         label: 'Conquista',
         icon: Award,
-        color: 'text-yellow-600 bg-yellow-50',
+        color: 'text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/30',
     },
 };
 
@@ -51,7 +51,7 @@ export default function CommunityStoryCard({ story }: CommunityStoryCardProps) {
 
     return (
         <Link href={`/comunidade/historias/${story.slug}`}>
-            <div className="group relative bg-white rounded-lg border border-gray-200 hover:border-purple-300 hover:shadow-lg transition-all duration-300 p-6">
+            <div className="group relative rounded-lg border transition-all duration-300 p-6 bg-[var(--bg-secondary)] border-[var(--border-light)] hover:border-purple-400 dark:hover:border-purple-500 hover:shadow-lg">
                 {/* Badge de destaque */}
                 {story.featured && (
                     <div className="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
@@ -78,13 +78,13 @@ export default function CommunityStoryCard({ story }: CommunityStoryCardProps) {
                         {/* Nome e pontos */}
                         <div>
                             <div className="flex items-center gap-2">
-                                <p className="font-semibold text-gray-900">{story.authorName}</p>
+                                <p className="font-semibold text-[var(--text-primary)]">{story.authorName}</p>
                                 {story.verified && (
-                                    <CheckCircle2 className="w-4 h-4 text-blue-500" aria-label="Verificado" />
+                                    <CheckCircle2 className="w-4 h-4 text-blue-500 dark:text-blue-400" aria-label="Verificado" />
                                 )}
                             </div>
                             {story.user?.points !== undefined && (
-                                <p className="text-xs text-gray-500">{story.user.points} pontos</p>
+                                <p className="text-xs text-[var(--text-tertiary)]">{story.user.points} pontos</p>
                             )}
                         </div>
                     </div>
@@ -97,21 +97,21 @@ export default function CommunityStoryCard({ story }: CommunityStoryCardProps) {
                 </div>
 
                 {/* Título */}
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
+                <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                     {story.title}
                 </h3>
 
                 {/* Resumo */}
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">{excerpt}</p>
+                <p className="text-[var(--text-secondary)] text-sm mb-4 line-clamp-3">{excerpt}</p>
 
                 {/* Footer */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                    <div className="flex items-center gap-2 text-gray-500">
+                <div className="flex items-center justify-between pt-4 border-t border-[var(--border-light)]">
+                    <div className="flex items-center gap-2 text-[var(--text-tertiary)]">
                         <Heart className="w-4 h-4" />
                         <span className="text-sm">{story.likes} curtidas</span>
                     </div>
 
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-[var(--text-muted)]">
                         {new Date(story.createdAt).toLocaleDateString('pt-BR')}
                     </span>
                 </div>

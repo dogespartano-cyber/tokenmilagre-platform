@@ -107,7 +107,7 @@ export default function InteractiveTool({ config }: InteractiveToolProps) {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden">
+    <div className="rounded-xl border shadow-lg overflow-hidden bg-[var(--bg-secondary)] border-[var(--border-light)]">
       {/* Header */}
       <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6">
         <div className="flex items-center gap-3 mb-2">
@@ -122,12 +122,12 @@ export default function InteractiveTool({ config }: InteractiveToolProps) {
         {config.fields.map((field) => (
           <div key={field.id} className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="font-medium text-gray-900 flex items-center gap-2">
+              <label className="font-medium text-[var(--text-primary)] flex items-center gap-2">
                 {field.label}
                 {field.info && (
                   <div className="group relative">
                     <Info className="w-4 h-4 text-gray-400 cursor-help" />
-                    <div className="absolute left-0 top-6 w-64 bg-gray-900 text-white text-xs p-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none">
+                    <div className="absolute left-0 top-6 w-64 bg-gray-900 dark:bg-gray-800 text-white text-xs p-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none">
                       {field.info}
                     </div>
                   </div>
@@ -150,7 +150,7 @@ export default function InteractiveTool({ config }: InteractiveToolProps) {
                 min={field.min}
                 max={field.max}
                 step={field.step}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-[var(--bg-secondary)] border-[var(--border-medium)] text-[var(--text-primary)]"
               />
             )}
 
@@ -162,7 +162,7 @@ export default function InteractiveTool({ config }: InteractiveToolProps) {
                 min={field.min || 0}
                 max={field.max || 100}
                 step={field.step || 1}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-purple-600"
               />
             )}
 
@@ -184,11 +184,11 @@ export default function InteractiveTool({ config }: InteractiveToolProps) {
       </div>
 
       {/* Resultado */}
-      <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 border-t border-gray-200">
+      <div className="p-6 border-t bg-purple-50/50 dark:bg-purple-900/10 border-[var(--border-light)]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <TrendingUp className="w-6 h-6 text-purple-600" />
-            <span className="font-medium text-gray-700">{config.resultLabel}</span>
+            <span className="font-medium text-[var(--text-secondary)]">{config.resultLabel}</span>
           </div>
 
           <div className="text-right">
@@ -196,9 +196,9 @@ export default function InteractiveTool({ config }: InteractiveToolProps) {
               {config.resultSuffix && config.resultSuffix === '%'
                 ? result?.toFixed(2)
                 : result?.toLocaleString('pt-BR', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               {config.resultSuffix && ` ${config.resultSuffix}`}
             </div>
           </div>

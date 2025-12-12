@@ -24,10 +24,10 @@ interface SocialProjectCardProps {
 }
 
 const categoryConfig = {
-    donations: { label: 'Doações', color: 'bg-green-100 text-green-700' },
-    microcredit: { label: 'Microcrédito', color: 'bg-blue-100 text-blue-700' },
-    education: { label: 'Educação', color: 'bg-purple-100 text-purple-700' },
-    infrastructure: { label: 'Infraestrutura', color: 'bg-orange-100 text-orange-700' },
+    donations: { label: 'Doações', color: 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' },
+    microcredit: { label: 'Microcrédito', color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' },
+    education: { label: 'Educação', color: 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400' },
+    infrastructure: { label: 'Infraestrutura', color: 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400' },
 };
 
 const currencySymbol: Record<string, string> = {
@@ -55,7 +55,7 @@ export default function SocialProjectCard({ project }: SocialProjectCardProps) {
 
     return (
         <Link href={`/comunidade/projetos/${project.slug}`}>
-            <div className="group relative bg-white rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-xl transition-all duration-300 overflow-hidden">
+            <div className="group relative rounded-xl border transition-all duration-300 overflow-hidden bg-[var(--bg-secondary)] border-[var(--border-light)] hover:border-purple-400 dark:hover:border-purple-500 hover:shadow-xl">
                 {/* Badge de destaque */}
                 {project.featured && (
                     <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">
@@ -79,7 +79,7 @@ export default function SocialProjectCard({ project }: SocialProjectCardProps) {
 
                     {/* Status badge */}
                     {!project.active && (
-                        <div className="absolute top-4 left-4 bg-gray-800 text-white text-xs font-medium px-3 py-1 rounded-full">
+                        <div className="absolute top-4 left-4 bg-gray-800 dark:bg-gray-700 text-white text-xs font-medium px-3 py-1 rounded-full">
                             Encerrado
                         </div>
                     )}
@@ -100,7 +100,7 @@ export default function SocialProjectCard({ project }: SocialProjectCardProps) {
                         </span>
 
                         {project.verified && (
-                            <div className="flex items-center gap-1 text-blue-600 text-xs">
+                            <div className="flex items-center gap-1 text-blue-600 dark:text-blue-400 text-xs">
                                 <CheckCircle2 className="w-4 h-4" />
                                 <span>Verificado</span>
                             </div>
@@ -108,16 +108,16 @@ export default function SocialProjectCard({ project }: SocialProjectCardProps) {
                     </div>
 
                     {/* Título */}
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors line-clamp-2">
+                    <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-2">
                         {project.name}
                     </h3>
 
                     {/* Descrição */}
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">{project.description}</p>
+                    <p className="text-[var(--text-secondary)] text-sm mb-4 line-clamp-2">{project.description}</p>
 
                     {/* Localização */}
                     {project.location && (
-                        <div className="flex items-center gap-2 text-gray-500 text-sm mb-4">
+                        <div className="flex items-center gap-2 text-[var(--text-tertiary)] text-sm mb-4">
                             <MapPin className="w-4 h-4" />
                             <span>{project.location}</span>
                         </div>
@@ -126,22 +126,22 @@ export default function SocialProjectCard({ project }: SocialProjectCardProps) {
                     {/* Barra de progresso */}
                     <div className="mb-3">
                         <div className="flex items-center justify-between text-sm mb-2">
-                            <span className="font-semibold text-gray-900">
+                            <span className="font-semibold text-[var(--text-primary)]">
                                 {symbol} {project.currentFunding.toLocaleString('pt-BR')}
                             </span>
-                            <span className="text-gray-500">
+                            <span className="text-[var(--text-tertiary)]">
                                 Meta: {symbol} {project.fundingGoal.toLocaleString('pt-BR')}
                             </span>
                         </div>
 
-                        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
                             <div
                                 className="bg-gradient-to-r from-purple-500 to-pink-500 h-full rounded-full transition-all duration-500"
                                 style={{ width: `${progressPercentage}%` }}
                             />
                         </div>
 
-                        <div className="flex items-center justify-between text-xs text-gray-500 mt-1">
+                        <div className="flex items-center justify-between text-xs text-[var(--text-tertiary)] mt-1">
                             <span>{progressPercentage.toFixed(1)}% alcançado</span>
                             {daysLeft !== null && daysLeft > 0 && (
                                 <span>{daysLeft} dias restantes</span>
@@ -150,13 +150,13 @@ export default function SocialProjectCard({ project }: SocialProjectCardProps) {
                     </div>
 
                     {/* Footer */}
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center justify-between pt-4 border-t border-[var(--border-light)]">
+                        <div className="flex items-center gap-2 text-[var(--text-secondary)]">
                             <Users className="w-4 h-4" />
                             <span className="text-sm font-medium">{project.supporters} apoiadores</span>
                         </div>
 
-                        <button className="text-purple-600 hover:text-purple-700 font-medium text-sm flex items-center gap-1 group">
+                        <button className="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium text-sm flex items-center gap-1 group">
                             Apoiar
                             <TrendingUp className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>

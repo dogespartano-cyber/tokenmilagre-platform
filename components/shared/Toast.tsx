@@ -15,12 +15,10 @@ import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
 /**
- * Color configuration for toast variants
+ * Style configuration for toast variants (Tailwind classes)
  */
-interface ToastColors {
-  bg: string;
-  border: string;
-  text: string;
+interface ToastStyles {
+  container: string;
   icon: string;
 }
 
@@ -96,45 +94,35 @@ const Toast = memo<ToastProps>(({ id, type, message, duration = 5000, onClose })
   }, [type]);
 
   /**
-   * Get color configuration for the toast type
-   * Memoized to avoid recalculation on every render
+   * Get Tailwind classes for the toast type
+   * Uses CSS variables and Tailwind dark: prefix for theme compatibility
    */
-  const colors = useMemo<ToastColors>(() => {
+  const styles = useMemo<ToastStyles>(() => {
     switch (type) {
       case 'success':
         return {
-          bg: '#d1fae5',
-          border: '#10b981',
-          text: '#065f46',
-          icon: '#10b981'
+          container: 'bg-green-50 dark:bg-green-900/30 border-green-500 dark:border-green-600 text-green-800 dark:text-green-200',
+          icon: 'text-green-500 dark:text-green-400'
         };
       case 'error':
         return {
-          bg: '#fee2e2',
-          border: '#ef4444',
-          text: '#991b1b',
-          icon: '#ef4444'
+          container: 'bg-red-50 dark:bg-red-900/30 border-red-500 dark:border-red-600 text-red-800 dark:text-red-200',
+          icon: 'text-red-500 dark:text-red-400'
         };
       case 'warning':
         return {
-          bg: '#fef3c7',
-          border: '#f59e0b',
-          text: '#92400e',
-          icon: '#f59e0b'
+          container: 'bg-amber-50 dark:bg-amber-900/30 border-amber-500 dark:border-amber-600 text-amber-800 dark:text-amber-200',
+          icon: 'text-amber-500 dark:text-amber-400'
         };
       case 'info':
         return {
-          bg: '#dbeafe',
-          border: '#3b82f6',
-          text: '#1e40af',
-          icon: '#3b82f6'
+          container: 'bg-blue-50 dark:bg-blue-900/30 border-blue-500 dark:border-blue-600 text-blue-800 dark:text-blue-200',
+          icon: 'text-blue-500 dark:text-blue-400'
         };
       default:
         return {
-          bg: '#dbeafe',
-          border: '#3b82f6',
-          text: '#1e40af',
-          icon: '#3b82f6'
+          container: 'bg-blue-50 dark:bg-blue-900/30 border-blue-500 dark:border-blue-600 text-blue-800 dark:text-blue-200',
+          icon: 'text-blue-500 dark:text-blue-400'
         };
     }
   }, [type]);
@@ -144,18 +132,12 @@ const Toast = memo<ToastProps>(({ id, type, message, duration = 5000, onClose })
       role="alert"
       aria-live="polite"
       aria-atomic="true"
-      className="flex items-start gap-3 p-4 rounded-lg border shadow-lg animate-slide-in-right min-w-[300px] max-w-md"
-      style={{
-        backgroundColor: colors.bg,
-        borderColor: colors.border,
-        color: colors.text
-      }}
+      className={`flex items-start gap-3 p-4 rounded-lg border shadow-lg animate-slide-in-right min-w-[300px] max-w-md ${styles.container}`}
     >
       {/* Icon */}
       <FontAwesomeIcon
         icon={icon}
-        className="w-5 h-5 mt-0.5 flex-shrink-0"
-        style={{ color: colors.icon }}
+        className={`w-5 h-5 mt-0.5 flex-shrink-0 ${styles.icon}`}
         aria-hidden="true"
       />
 

@@ -1,5 +1,6 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
 import storybook from "eslint-plugin-storybook";
+import themePlugin from "./eslint-plugins/theme.mjs";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -25,6 +26,16 @@ const eslintConfig = [
       "lib/generated/**",
       "**/*.js"
     ],
+  },
+  // Plugin customizado para regras de tema
+  {
+    plugins: {
+      theme: themePlugin,
+    },
+    rules: {
+      // Warn sobre cores hardcoded (não bloqueia build, mas avisa)
+      "theme/no-hardcoded-colors": "warn",
+    },
   },
   ...storybook.configs["flat/recommended"]
 ];
