@@ -570,3 +570,132 @@ lib/
 
 - [ ] **PWA** - tornar app instalável
 
+
+---
+
+## ✅ Concluído (Sessão 11/12/2025 - Noite 2) - Consolidação do Sistema de Temas
+
+### 🧹 Operação de Limpeza: Apenas Light e Dark
+
+**Objetivo:** Eliminar temas extras (Ocean, Forest, Sunset) e consolidar o sistema para apenas 2 temas (Light e Dark), mantendo funcionalidade existente.
+
+#### Fase 1: Bug Fix - Gráfico Desaparecendo
+
+**Problema:** Gráfico na página `/graficos` desaparecia em 3 cenários:
+1. Navegação SPA (`/graficos` → outra página → `/graficos`)
+2. Auto-refresh da API (a cada 60s)
+3. Mudança de tema
+
+**Soluções Implementadas:**
+- ✅ **Key prop no AdvancedChart:** Força remontagem na navegação SPA
+- ✅ **Loading state condicional:** `if (loading && !chartData)` - só mostra spinner na carga inicial
+- ✅ **Separação de efeitos:** Chart creation vs theme update em useEffects separados
+- ✅ **applyOptions():** Atualiza tema sem recriar o gráfico
+
+**Arquivos Modificados:**
+- `components/crypto/CryptoAnalyzer.tsx` - Key prop adicionado
+- `components/crypto/AdvancedChart.tsx` - Loading state e separação de efeitos
+
+#### Fase 2: Tentativa de Multi-Temas (Revertida)
+
+**Implementação Inicial:**
+- ✅ 5 temas criados: Light, Dark, Ocean, Forest, Sunset
+- ✅ ThemeSelector com círculos coloridos
+- ✅ ~300 linhas CSS para novos temas
+- ✅ Integração no menu Clerk
+
+**Problemas Encontrados:**
+- ❌ Componentes não adaptavam corretamente
+- ❌ Texto/botões ficavam pretos (faltava .dark class)
+- ❌ Complexidade excessiva para manter
+
+**Decisão:** Reverter para apenas Light e Dark
+
+#### Fase 3: Consolidação Final
+
+**Removidos:**
+- ✅ `components/shared/ThemeSelector.tsx` - DELETADO
+- ✅ Temas Ocean, Forest, Sunset de `types.ts`
+- ✅ Constantes extras de `constants.ts` (THEME_COLORS, etc.)
+- ✅ ~300 linhas CSS dos novos temas
+
+**Adicionados:**
+- ✅ **Toggle simples** no CustomUserButton (☀️ Modo Claro / 🌙 Modo Escuro)
+- ✅ **Fallback para temas legados:** Se localStorage tem tema inválido → converte para 'dark'
+- ✅ **Novos tokens CSS:**
+  - `--icon` / `--icon-muted` / `--icon-inverse`
+  - `--divider`
+  - `--focus-ring` (alias de border-focus)
+
+**Modificados:**
+- ✅ `lib/core/theme/types.ts` - `Theme = 'light' | 'dark'`
+- ✅ `lib/core/theme/constants.ts` - Apenas 2 temas
+- ✅ `lib/core/theme/index.ts` - Removido THEME_COLORS export
+- ✅ `lib/core/theme/ThemeProvider.tsx` - Simplificado applyThemeToDocument
+- ✅ `app/layout.tsx` - Script inline com fallback
+- ✅ `app/globals.css` - Limpeza + novos tokens
+- ✅ `components/shared/CustomUserButton.tsx` - Toggle com useTheme
+
+#### Fase 4: Auditoria Completa
+
+**Relatório de Auditoria Gerado:**
+1. **Inventário:** Fonte da verdade em `lib/core/theme/`
+2. **Verificação:** Apenas Light/Dark confirmado
+3. **Tokens:** 50+ variáveis CSS, lacunas corrigidas
+4. **Inconsistências:** Maioria usa var(--token) corretamente
+5. **Plano de Migração:** 7 etapas definidas
+6. **QA:** Checklist manual + recomendações de automação
+7. **Arquitetura Final:** Diagrama documentado
+
+#### Resultados
+
+| Métrica | Antes | Depois | Mudança |
+|---------|-------|--------|---------|
+| Temas disponíveis | 5 | 2 | -60% |
+| globals.css (linhas) | ~1450 | ~1180 | -270 linhas |
+| Tokens CSS | ~45 | ~50 | +5 tokens |
+| Complexidade | Alta | Baixa | ↓ |
+| Manutenibilidade | Média | Alta | ↑ |
+
+#### Commits Realizados
+
+| Hash | Mensagem |
+|------|----------|
+| `89a26a2` | fix(chart): Corrige desaparecimento do gráfico ao mudar tema |
+| `3f9b195` | feat(theme): Consolidar sistema para apenas Light e Dark |
+
+#### Arquitetura Final
+
+```
+┌─────────────────────────────────────────┐
+│           app/layout.tsx                 │
+│  ┌─────────────────────────────────────┐│
+│  │ <script> Anti-FOUC + Fallback       ││
+│  └─────────────────────────────────────┘│
+│  ┌─────────────────────────────────────┐│
+│  │ <ThemeProvider>                      ││
+│  │   theme: 'light' | 'dark'           ││
+│  │   toggleTheme(), setTheme()         ││
+│  └─────────────────────────────────────┘│
+└─────────────────────────────────────────┘
+                    │
+                    ▼
+┌─────────────────────────────────────────┐
+│   <html data-theme="dark" class="dark"> │
+└─────────────────────────────────────────┘
+                    │
+        ┌───────────┴───────────┐
+        ▼                       ▼
+┌─────────────────┐   ┌─────────────────┐
+│  CSS Variables  │   │  Tailwind dark: │
+│  var(--token)   │   │  dark:class     │
+└─────────────────┘   └─────────────────┘
+```
+
+#### Próximos Passos Recomendados
+
+- [ ] Revisar componentes com hardcodes (prioridade: Cards genéricos)
+- [ ] Adicionar visual regression tests (Playwright)
+- [ ] Implementar ESLint rule para proibir cores hardcoded
+- [ ] Testar em produção com usuários reais
+
