@@ -3,6 +3,20 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/* Default (Light Mode) Variables */
+:root {
+  /* ... exist */
+  --sidebar-bg: rgba(255, 255, 255, 0.1);
+  --sidebar-border: rgba(148, 163, 184, 0.15);
+  /* Static Neutral (Slate-400), NO transition needed */
+}
+
+[data-theme="dark"] {
+  --sidebar-bg: rgba(var(--bg-primary-rgb), 0.4);
+  /* Keep border strictly distinct but compatible to avoid hue jumps */
+  --sidebar-border: rgba(148, 163, 184, 0.15);
+}
+
 /* Smooth theme transitions */
 html.theme-transition,
 html.theme-transition *,

@@ -242,8 +242,14 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             />
 
             {/* Sidebar */}
-            <aside className={`fixed top-0 left-0 h-full w-72 z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
-                } lg:translate-x-0 bg-white dark:bg-[var(--bg-elevated)]/30 backdrop-blur-xl lg:bg-transparent lg:glass shadow-2xl lg:shadow-none`}>
+            <aside
+                className={`fixed top-0 left-0 h-full w-72 z-50 transition-[transform,background-color] duration-500 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
+                    } lg:translate-x-0 backdrop-blur-2xl shadow-2xl lg:shadow-none`}
+                style={{
+                    backgroundColor: 'var(--sidebar-bg)',
+                    borderRight: '1px solid var(--sidebar-border)'
+                }}
+            >
                 <div className="flex flex-col h-full">
                     {/* Sidebar Header */}
                     <div className="h-[88px] flex items-center px-6">
