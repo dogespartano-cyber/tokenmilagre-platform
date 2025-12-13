@@ -52,8 +52,8 @@ const dashboardHeaderConfig: Record<string, { title: string; description: string
     description: 'Resumos inteligentes das principais notícias do mercado'
   },
   '/educacao': {
-    title: 'Domine o Mercado Cripto',
-    description: 'Artigos e tutoriais descomplicados para todos os níveis.'
+    title: 'Aprenda Cripto do Zero ao Avançado',
+    description: 'Artigos e tutoriais gratuitos criados pela comunidade. Sem promessas falsas, apenas conhecimento real.'
   },
   '/recursos': {
     title: 'Ferramentas e Links Seguros',

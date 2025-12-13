@@ -36,8 +36,8 @@ const initialCards = [
         id: 'invest',
         href: '/comece-aqui',
         icon: faGraduationCap,
-        title: 'Como Investir',
-        description: 'Guia passo a passo para iniciantes',
+        title: 'Comece Aqui',
+        description: 'Seu ponto de partida no mundo cripto',
         bgImage: '/assets/zenith/card-invest.webp',
         theme: 'success'
     },
