@@ -9,255 +9,251 @@
 
 [data-theme="dark"][data-accent="ocean"] {
     /* ============================================
-     OCEAN DARK MODE - Deep Sea
+     OCEAN DARK MODE - Deep Mare Incognitum
      ============================================ */
 
-    /* Background Colors - Deep Ocean (DARKER) */
-    --bg-primary: #020617;
-    /* Slate 950 - very dark */
-    --bg-secondary: #0A0F1A;
-    /* Darker than slate 900 */
-    --bg-tertiary: #0F1629;
-    /* Dark blue-gray */
-    --bg-elevated: #141D30;
-    /* Slightly elevated */
-    --bg-overlay: rgba(2, 6, 23, 0.95);
+    /* Background Colors - Deepest Abyssal Blue */
+    --bg-primary: #02040a;
+    /* Almost pure black blue */
+    --bg-secondary: #080c14;
+    /* Deep navy */
+    --bg-tertiary: #0f172a;
+    /* Dark slate */
+    --bg-elevated: #162032;
+    --bg-overlay: rgba(2, 4, 10, 0.85);
 
     /* RGB values for transparency */
-    --bg-elevated-rgb: 30, 58, 95;
-    --bg-secondary-rgb: 15, 23, 42;
+    --bg-elevated-rgb: 22, 32, 50;
+    --bg-secondary-rgb: 8, 12, 20;
 
     /* Text Colors */
-    --text-primary: #F0F9FF;
+    --text-primary: #f0f9ff;
     /* Sky 50 */
-    --text-secondary: #BAE6FD;
+    --text-secondary: #bae6fd;
     /* Sky 200 */
-    --text-tertiary: #7DD3FC;
+    --text-tertiary: #7dd3fc;
     /* Sky 300 */
-    --text-muted: #38BDF8;
+    --text-muted: #38bdf8;
     /* Sky 400 */
-    --text-inverse: #020617;
-    --text-disabled: #475569;
+    --text-inverse: #02040a;
+    --text-disabled: #334155;
 
     /* Border Colors */
-    --border-light: #1E3A5F;
-    /* Navy */
-    --border-medium: #0369A1;
-    /* Sky 700 */
-    --border-strong: #0EA5E9;
+    --border-light: #1e293b;
+    --border-medium: #334155;
+    --border-strong: #0ea5e9;
     /* Sky 500 */
-    --border-focus: #0EA5E9;
-    /* Sky 500 */
+    --border-focus: #38bdf8;
+    /* Sky 400 - Neon Glow */
 
-    /* Shadows - Blue tinted */
-    --shadow-xs: 0 1px 2px 0 rgba(14, 165, 233, 0.1);
-    --shadow-sm: 0 1px 3px 0 rgba(14, 165, 233, 0.15), 0 1px 2px -1px rgba(14, 165, 233, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(14, 165, 233, 0.15), 0 2px 4px -2px rgba(14, 165, 233, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(14, 165, 233, 0.2), 0 4px 6px -4px rgba(14, 165, 233, 0.15);
-    --shadow-xl: 0 20px 25px -5px rgba(14, 165, 233, 0.2), 0 8px 10px -6px rgba(14, 165, 233, 0.15);
-    --shadow-2xl: 0 25px 50px -12px rgba(14, 165, 233, 0.35);
-    --shadow-inner: inset 0 2px 4px 0 rgba(14, 165, 233, 0.1);
+    /* Shadows - Bio-Luminescent */
+    --shadow-xs: 0 1px 2px 0 rgba(56, 189, 248, 0.1);
+    --shadow-sm: 0 1px 3px 0 rgba(56, 189, 248, 0.15), 0 1px 2px -1px rgba(56, 189, 248, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(56, 189, 248, 0.15), 0 2px 4px -2px rgba(56, 189, 248, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(14, 165, 233, 0.2), 0 4px 6px -4px rgba(14, 165, 233, 0.2);
+    --shadow-xl: 0 20px 25px -5px rgba(2, 132, 199, 0.3), 0 8px 10px -6px rgba(2, 132, 199, 0.2);
+    --shadow-2xl: 0 25px 50px -12px rgba(2, 6, 23, 0.9);
+    --shadow-inner: inset 0 2px 4px 0 rgba(56, 189, 248, 0.1);
 
-    /* Brand - Ocean Blue */
-    --brand-primary: #0EA5E9;
+    /* Brand - Electric Ocean */
+    --brand-primary: #38bdf8;
+    /* Sky 400 - Constant Glow */
+    --brand-hover: #0ea5e9;
     /* Sky 500 */
-    --brand-hover: #0284C7;
-    /* Sky 600 */
-    --brand-light: #38BDF8;
-    /* Sky 400 */
-    --brand-lighter: #7DD3FC;
+    --brand-light: #7dd3fc;
     /* Sky 300 */
-    --brand-bg: #0C4A6E;
+    --brand-lighter: #e0f2fe;
+    --brand-bg: #0c4a6e;
     /* Sky 900 */
-    --brand-border: #0369A1;
-    /* Sky 700 */
+    --brand-border: #0284c7;
+    /* Sky 600 */
 
-    /* Accent (same as brand in this theme) */
-    --accent-primary: #0EA5E9;
-    --accent-hover: #0284C7;
-    --accent-light: #38BDF8;
+    /* Accent */
+    --accent-primary: #06b6d4;
+    /* Cyan 500 */
+    --accent-hover: #0891b2;
+    /* Cyan 600 */
+    --accent-light: #22d3ee;
+    /* Cyan 400 */
 
     /* Gradients */
-    --gradient-start: #0EA5E9;
-    /* Sky 500 */
-    --gradient-end: #06B6D4;
-    /* Cyan 500 */
+    --gradient-start: #38bdf8;
+    /* Sky 400 */
+    --gradient-end: #22d3ee;
+    /* Cyan 400 - Electric Flow */
 
-    /* Functional Colors - Ocean tinted */
-    --success: #34D399;
-    /* Emerald 400 */
-    --success-light: #6EE7B7;
-    --success-bg: #064E3B;
+    /* Functional Colors */
+    --success: #34d399;
+    --success-light: #6ee7b7;
+    --success-bg: #064e3b;
     --success-border: #059669;
 
-    --error: #FB7185;
-    /* Rose 400 */
-    --error-light: #FDA4AF;
-    --error-bg: #4C0519;
-    --error-border: #E11D48;
+    --error: #fb7185;
+    --error-light: #fda4af;
+    --error-bg: #4c0519;
+    --error-border: #e11d48;
 
-    --warning: #FBBF24;
-    /* Amber 400 */
-    --warning-light: #FCD34D;
-    --warning-bg: #78350F;
-    --warning-border: #D97706;
+    --warning: #fbbf24;
+    --warning-light: #fcd34d;
+    --warning-bg: #78350f;
+    --warning-border: #d97706;
 
-    --info: #22D3EE;
-    /* Cyan 400 */
-    --info-light: #67E8F9;
-    --info-bg: #164E63;
-    --info-border: #06B6D4;
+    --info: #38bdf8;
+    --info-light: #7dd3fc;
+    --info-bg: #0c4a6e;
+    --info-border: #0ea5e9;
 
     /* Icons */
-    --icon: #7DD3FC;
-    --icon-muted: #38BDF8;
+    --icon: #7dd3fc;
+    --icon-muted: #38bdf8;
     --icon-inverse: #020617;
 
     /* Dividers */
-    --divider: #1E3A5F;
+    --divider: #1e293b;
 
     /* Focus Ring */
-    --focus-ring: #0EA5E9;
+    --focus-ring: #38bdf8;
 
     /* Link Color */
-    --text-link: #38BDF8;
+    --text-link: #38bdf8;
 
     /* Modal */
-    --modal-overlay: rgba(2, 6, 23, 0.9);
-    --bg-modal: #0F172A;
-    --text-modal: #F0F9FF;
-    --text-modal-muted: #7DD3FC;
-    --border-modal: #1E3A5F;
-    --bg-modal-input: #1E293B;
-    --bg-modal-hover: #1E3A5F;
+    --modal-overlay: rgba(2, 4, 10, 0.9);
+    --bg-modal: #0f172a;
+    --text-modal: #f0f9ff;
+    --text-modal-muted: #bae6fd;
+    --border-modal: #1e293b;
+    --bg-modal-input: #1e293b;
+    --bg-modal-hover: #334155;
 
     /* Article */
-    --text-article-title: #F0F9FF;
-    --text-article-body: #BAE6FD;
-    --text-article-muted: #7DD3FC;
-    --bg-article-tag: rgba(14, 165, 233, 0.15);
+    --text-article-title: #f0f9ff;
+    --text-article-body: #bae6fd;
+    --text-article-muted: #7dd3fc;
+    --bg-article-tag: rgba(56, 189, 248, 0.1);
     --bg-article-quote: rgba(255, 255, 255, 0.03);
-    --border-article: rgba(14, 165, 233, 0.2);
+    --border-article: rgba(56, 189, 248, 0.2);
 }
 
 /* ================================================
-   OCEAN LIGHT MODE
+   OCEAN LIGHT MODE - Crystal Water
    ================================================ */
 [data-theme="light"][data-accent="ocean"] {
-    /* Background Colors - Light Ocean */
-    --bg-primary: #F0F9FF;
-    /* Sky 50 */
-    --bg-secondary: #FFFFFF;
-    --bg-tertiary: #E0F2FE;
-    /* Sky 100 */
-    --bg-elevated: #FFFFFF;
-    --bg-overlay: rgba(0, 0, 0, 0.5);
+    /* Background Colors - Crisp White & Blue Tint */
+    --bg-primary: #f8fafc;
+    /* Slate 50 - Brighter */
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f1f5f9;
+    /* Slate 100 */
+    --bg-elevated: #ffffff;
+    --bg-overlay: rgba(15, 23, 42, 0.4);
 
     /* RGB values for transparency */
     --bg-elevated-rgb: 255, 255, 255;
     --bg-secondary-rgb: 255, 255, 255;
 
     /* Text Colors */
-    --text-primary: #0C4A6E;
-    /* Sky 900 */
-    --text-secondary: #075985;
-    /* Sky 800 */
-    --text-tertiary: #0369A1;
-    /* Sky 700 */
-    --text-muted: #0284C7;
-    /* Sky 600 */
-    --text-inverse: #FFFFFF;
-    --text-disabled: #BAE6FD;
+    --text-primary: #0f172a;
+    /* Slate 900 */
+    --text-secondary: #334155;
+    /* Slate 700 */
+    --text-tertiary: #475569;
+    /* Slate 600 */
+    --text-muted: #64748b;
+    /* Slate 500 */
+    --text-inverse: #ffffff;
+    --text-disabled: #cbd5e1;
 
     /* Border Colors */
-    --border-light: #BAE6FD;
-    /* Sky 200 */
-    --border-medium: #7DD3FC;
-    /* Sky 300 */
-    --border-strong: #38BDF8;
-    /* Sky 400 */
-    --border-focus: #0EA5E9;
+    --border-light: #e2e8f0;
+    --border-medium: #cbd5e1;
+    --border-strong: #94a3b8;
+    --border-focus: #0ea5e9;
 
-    /* Shadows */
-    --shadow-xs: 0 1px 2px 0 rgba(14, 165, 233, 0.08);
-    --shadow-sm: 0 1px 3px 0 rgba(14, 165, 233, 0.12), 0 1px 2px -1px rgba(14, 165, 233, 0.08);
-    --shadow-md: 0 4px 6px -1px rgba(14, 165, 233, 0.12), 0 2px 4px -2px rgba(14, 165, 233, 0.08);
-    --shadow-lg: 0 10px 15px -3px rgba(14, 165, 233, 0.12), 0 4px 6px -4px rgba(14, 165, 233, 0.08);
-    --shadow-xl: 0 20px 25px -5px rgba(14, 165, 233, 0.12), 0 8px 10px -6px rgba(14, 165, 233, 0.08);
+    /* Shadows - Clean Blue */
+    --shadow-xs: 0 1px 2px 0 rgba(14, 165, 233, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(14, 165, 233, 0.1), 0 1px 2px -1px rgba(14, 165, 233, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(14, 165, 233, 0.1), 0 2px 4px -2px rgba(14, 165, 233, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(14, 165, 233, 0.1), 0 4px 6px -4px rgba(14, 165, 233, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(14, 165, 233, 0.1), 0 8px 10px -6px rgba(14, 165, 233, 0.05);
     --shadow-2xl: 0 25px 50px -12px rgba(14, 165, 233, 0.25);
-    --shadow-inner: inset 0 2px 4px 0 rgba(14, 165, 233, 0.08);
+    --shadow-inner: inset 0 2px 4px 0 rgba(14, 165, 233, 0.06);
 
-    /* Brand - Ocean Blue */
-    --brand-primary: #0284C7;
-    /* Sky 600 */
-    --brand-hover: #0369A1;
-    /* Sky 700 */
-    --brand-light: #0EA5E9;
+    /* Brand - Vivid Ocean */
+    --brand-primary: #0ea5e9;
     /* Sky 500 */
-    --brand-lighter: #38BDF8;
-    --brand-bg: #F0F9FF;
+    --brand-hover: #0284c7;
+    /* Sky 600 */
+    --brand-light: #38bdf8;
+    /* Sky 400 */
+    --brand-lighter: #e0f2fe;
+    /* Sky 100 */
+    --brand-bg: #f0f9ff;
     /* Sky 50 */
-    --brand-border: #7DD3FC;
+    --brand-border: #7dd3fc;
     /* Sky 300 */
 
     /* Accent */
-    --accent-primary: #0284C7;
-    --accent-hover: #0369A1;
-    --accent-light: #0EA5E9;
+    --accent-primary: #06b6d4;
+    /* Cyan 500 */
+    --accent-hover: #0891b2;
+    /* Cyan 600 */
+    --accent-light: #22d3ee;
+    /* Cyan 400 */
 
     /* Gradients */
-    --gradient-start: #0EA5E9;
-    --gradient-end: #06B6D4;
+    --gradient-start: #0ea5e9;
+    --gradient-end: #06b6d4;
 
     /* Functional Colors */
-    --success: #047857;
-    --success-light: #10B981;
-    --success-bg: #ECFDF5;
-    --success-border: #A7F3D0;
+    --success: #059669;
+    --success-light: #34d399;
+    --success-bg: #ecfdf5;
+    --success-border: #a7f3d0;
 
-    --error: #B91C1C;
-    --error-light: #EF4444;
-    --error-bg: #FEF2F2;
-    --error-border: #FECACA;
+    --error: #dc2626;
+    --error-light: #f87171;
+    --error-bg: #fef2f2;
+    --error-border: #fecaca;
 
-    --warning: #B45309;
-    --warning-light: #F59E0B;
-    --warning-bg: #FFFBEB;
-    --warning-border: #FDE68A;
+    --warning: #d97706;
+    --warning-light: #fbbf24;
+    --warning-bg: #fffbeb;
+    --warning-border: #fde68a;
 
-    --info: #0369A1;
-    --info-light: #0EA5E9;
-    --info-bg: #F0F9FF;
-    --info-border: #BAE6FD;
+    --info: #0284c7;
+    --info-light: #38bdf8;
+    --info-bg: #f0f9ff;
+    --info-border: #bae6fd;
 
     /* Icons */
-    --icon: #0369A1;
-    --icon-muted: #0284C7;
-    --icon-inverse: #FFFFFF;
+    --icon: #0ea5e9;
+    --icon-muted: #64748b;
+    --icon-inverse: #ffffff;
 
     /* Dividers */
-    --divider: #BAE6FD;
+    --divider: #e2e8f0;
 
     /* Focus Ring */
-    --focus-ring: #0EA5E9;
+    --focus-ring: #0ea5e9;
 
     /* Link Color */
-    --text-link: #0284C7;
+    --text-link: #0ea5e9;
 
     /* Modal */
-    --modal-overlay: rgba(0, 0, 0, 0.5);
-    --bg-modal: #FFFFFF;
-    --text-modal: #0C4A6E;
-    --text-modal-muted: #0369A1;
-    --border-modal: #BAE6FD;
-    --bg-modal-input: #F0F9FF;
-    --bg-modal-hover: #E0F2FE;
+    --modal-overlay: rgba(15, 23, 42, 0.5);
+    --bg-modal: #ffffff;
+    --text-modal: #0f172a;
+    --text-modal-muted: #64748b;
+    --border-modal: #e2e8f0;
+    --bg-modal-input: #f8fafc;
+    --bg-modal-hover: #f1f5f9;
 
     /* Article */
-    --text-article-title: #0C4A6E;
-    --text-article-body: #075985;
-    --text-article-muted: #0369A1;
-    --bg-article-tag: #E0F2FE;
-    --bg-article-quote: #F0F9FF;
-    --border-article: #BAE6FD;
+    --text-article-title: #0f172a;
+    --text-article-body: #334155;
+    --text-article-muted: #64748b;
+    --bg-article-tag: #f1f5f9;
+    --bg-article-quote: #f8fafc;
+    --border-article: #e2e8f0;
 }

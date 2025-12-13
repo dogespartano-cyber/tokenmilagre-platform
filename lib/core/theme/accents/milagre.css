@@ -1,0 +1,200 @@
+/**
+ * Theme Variant: Milagre (Screen-matched)
+ * 
+ * Dark Mode: Dark Slate (#020617) + Teal (#14B8A6)
+ * Light Mode: Zinc + Teal
+ */
+
+/* ============================================
+   DARK MODE - Production Slate/Teal Identity
+   ============================================ */
+[data-theme="dark"][data-accent="milagre"] {
+    /* Background Colors - Neutral Deep Dark (No Blue Tint) */
+    --bg-primary: #050505;
+    /* Neutral Black */
+    --bg-secondary: #0A0A0A;
+    /* Neutral Dark Gray */
+    --bg-tertiary: #171717;
+    /* Neutral Gray 900 */
+    --bg-elevated: #171717;
+    /* Neutral Gray 900 */
+    --bg-overlay: rgba(0, 0, 0, 0.85);
+
+    /* RGB values for transparency */
+    --bg-elevated-rgb: 23, 23, 23;
+    --bg-secondary-rgb: 10, 10, 10;
+
+    /* Text Colors */
+    --text-primary: #F8FAFC;
+    /* Slate 50 */
+    --text-secondary: #CBD5E1;
+    /* Slate 300 */
+    --text-tertiary: #94A3B8;
+    /* Slate 400 */
+    --text-muted: #64748B;
+    /* Slate 500 */
+    --text-inverse: #020617;
+    --text-disabled: #475569;
+
+    /* Border Colors */
+    --border-light: #1E293B;
+    /* Slate 800 */
+    --border-medium: #334155;
+    /* Slate 700 */
+    --border-strong: #475569;
+    /* Slate 600 */
+    --border-focus: #14B8A6;
+    /* Teal 500 */
+
+    /* Shadows - Teal Tint */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+    /* Brand - Teal (Matching Screenshot Logo) */
+    --brand-primary: #14B8A6;
+    /* Teal 500 */
+    --brand-hover: #0D9488;
+    /* Teal 600 */
+    --brand-light: #2DD4BF;
+    /* Teal 400 */
+    --brand-lighter: #5EEAD4;
+    /* Teal 300 */
+    --brand-bg: #042F2E;
+    /* Teal 950 */
+    --brand-border: #115E59;
+    /* Teal 800 */
+
+    /* Accent Colors */
+    --accent-primary: var(--brand-primary);
+    --accent-hover: var(--brand-hover);
+    --accent-light: var(--brand-light);
+
+    /* Gradients */
+    --gradient-start: #14B8A6;
+    --gradient-end: #0D9488;
+
+    /* Functional Colors */
+    --success: #10B981;
+    /* Emerald 500 */
+    --success-light: #34D399;
+    --success-bg: #064E3B;
+    --success-border: #065F46;
+
+    --error: #EF4444;
+    /* Red 500 */
+    --error-light: #F87171;
+    --error-bg: #450A0A;
+    --error-border: #7F1D1D;
+
+    --warning: #F59E0B;
+    /* Amber 500 */
+    --warning-light: #FBBF24;
+    --warning-bg: #451A03;
+    --warning-border: #78350F;
+
+    --info: #3B82F6;
+    /* Blue 500 */
+    --info-light: #60A5FA;
+    --info-bg: #172554;
+    --info-border: #1E3A8A;
+
+    /* Icons */
+    --icon: #94A3B8;
+    --icon-muted: #64748B;
+    --icon-inverse: #020617;
+
+    /* Dividers */
+    --divider: #1E293B;
+
+    /* Focus Ring */
+    --focus-ring: var(--border-focus);
+
+    /* Link Color */
+    --text-link: #14B8A6;
+
+    /* Modal Overlay */
+    --modal-overlay: rgba(2, 6, 23, 0.85);
+}
+
+/* ============================================
+   LIGHT MODE - Teal/Zinc (Unchanged)
+   ============================================ */
+[data-theme="light"][data-accent="milagre"] {
+    /* ... (Same as standard Teal) ... */
+    --bg-primary: #F3F4F6;
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #E5E7EB;
+    --bg-elevated: #FFFFFF;
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+
+    --bg-elevated-rgb: 255, 255, 255;
+    --bg-secondary-rgb: 255, 255, 255;
+
+    --text-primary: #111827;
+    --text-secondary: #374151;
+    --text-tertiary: #6B7280;
+    --text-muted: #9CA3AF;
+    --text-inverse: #FFFFFF;
+    --text-disabled: #D1D5DB;
+
+    --border-light: #E5E7EB;
+    --border-medium: #D1D5DB;
+    --border-strong: #9CA3AF;
+    --border-focus: #0D9488;
+
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.08);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px -1px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.12), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.12), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+
+    --brand-primary: #0D9488;
+    --brand-hover: #0F766E;
+    --brand-light: #14B8A6;
+    --brand-lighter: #5EEAD4;
+    --brand-bg: #F0FDFA;
+    --brand-border: #99F6E4;
+
+    --accent-primary: var(--brand-primary);
+    --accent-hover: var(--brand-hover);
+    --accent-light: var(--brand-light);
+
+    --gradient-start: #0D9488;
+    --gradient-end: #14B8A6;
+
+    --success: #047857;
+    --success-light: #10B981;
+    --success-bg: #ECFDF5;
+    --success-border: #A7F3D0;
+
+    --error: #B91C1C;
+    --error-light: #EF4444;
+    --error-bg: #FEF2F2;
+    --error-border: #FECACA;
+
+    --warning: #B45309;
+    --warning-light: #F59E0B;
+    --warning-bg: #FFFBEB;
+    --warning-border: #FDE68A;
+
+    --info: #1D4ED8;
+    --info-light: #3B82F6;
+    --info-bg: #EFF6FF;
+    --info-border: #BFDBFE;
+
+    --icon: #374151;
+    --icon-muted: #9CA3AF;
+    --icon-inverse: #FFFFFF;
+
+    --divider: #E5E7EB;
+    --focus-ring: var(--border-focus);
+    --text-link: #0D9488;
+    --modal-overlay: rgba(0, 0, 0, 0.5);
+}

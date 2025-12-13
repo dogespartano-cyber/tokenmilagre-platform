@@ -41,7 +41,7 @@ export default function CustomCryptoScreener() {
   }
 
   return (
-    <div className="glass-card rounded-2xl border border-[var(--border-light)] shadow-xl overflow-hidden">
+    <div className="glass-card static-glass-card rounded-2xl border border-[var(--border-light)] shadow-xl overflow-hidden">
       <CryptoSearch value={globalFilter} onChange={setGlobalFilter} />
       <CryptoTable table={table} />
       <CryptoPagination table={table} />

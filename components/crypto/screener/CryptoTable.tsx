@@ -42,14 +42,8 @@ export function CryptoTable({ table }: CryptoTableProps) {
                     {table.getRowModel().rows.map(row => (
                         <tr
                             key={row.id}
-                            className="border-b transition-colors duration-200"
+                            className="border-b transition-colors duration-200 hover:bg-[var(--bg-secondary)]"
                             style={{ borderColor: 'var(--border-light)' }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.backgroundColor = 'var(--bg-secondary)';
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.backgroundColor = 'transparent';
-                            }}
                         >
                             {row.getVisibleCells().map(cell => (
                                 <td key={cell.id} className="px-4 py-4">

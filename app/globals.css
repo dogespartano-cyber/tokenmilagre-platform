@@ -8,8 +8,39 @@ html.theme-transition,
 html.theme-transition *,
 html.theme-transition *:before,
 html.theme-transition *:after {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, fill 0.3s ease, stroke 0.3s ease !important;
   transition-delay: 0s !important;
+}
+
+/* ============================================
+   GLOBAL POLISH - Scrollbar & Selection
+   ============================================ */
+
+/* Custom Scrollbar - Sleek & Minimal */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 5px;
+  border: 2px solid var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Text Selection - Brand Aware */
+::selection {
+  background: var(--brand-primary);
+  color: var(--text-inverse);
+  text-shadow: none;
 }
 
 /* Toast animation */
@@ -422,14 +453,14 @@ html {
   --border-focus: #FFD700;
   /* Zenith Gold Focus */
 
-  /* Shadows */
-  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px -1px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.6);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
-  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  /* Shadows - Zenith Gold Tint (Cyber-Prosperity Glow) */
+  --shadow-xs: 0 1px 2px 0 rgba(255, 215, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(255, 215, 0, 0.1), 0 1px 2px -1px rgba(255, 215, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(255, 215, 0, 0.1), 0 2px 4px -2px rgba(255, 215, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(255, 215, 0, 0.1), 0 4px 6px -4px rgba(255, 215, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(255, 215, 0, 0.1), 0 8px 10px -6px rgba(255, 215, 0, 0.05);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  --shadow-inner: inset 0 2px 4px 0 rgba(255, 215, 0, 0.05);
 
   /* Brand Zenith - Solar Gold & Neon Emerald */
   --brand-primary: #FFD700;
@@ -1054,6 +1085,42 @@ body {
   }
 }
 
+/* MILAGRE Theme Glass Card Override - Transparent */
+[data-theme="dark"][data-accent="milagre"] .glass-card {
+  /* Fully Transparent Background */
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+[data-theme="dark"][data-accent="milagre"] .glass-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(20, 184, 166, 0.4);
+  box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(20, 184, 166, 0.05);
+}
+
+/* Static Glass Card - No Hover/Movement (For CryptoScreener) */
+.glass-card.static-glass-card {
+  background: transparent !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.glass-card.static-glass-card:hover {
+  background: transparent !important;
+  transform: none !important;
+  border-color: var(--border-light) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="dark"] .glass-card.static-glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+
+
 /* Sidebar Active State - Fix for residual borders */
 .sidebar-active {
   background: rgba(255, 255, 255, 0.1);
@@ -1113,6 +1180,25 @@ body {
     0 20px 40px -5px rgba(0, 0, 0, 0.4),
     inset 0 0 20px rgba(255, 215, 0, 0.02);
   /* Gold inner ambience */
+}
+
+/* MILAGRE Theme Card Override */
+/* MILAGRE Theme Card Override - Transparent Glass Test */
+[data-theme="dark"][data-accent="milagre"] .zenith-card {
+  /* Fully Transparent Background (Testing Only Blur + Border) */
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+[data-theme="dark"][data-accent="milagre"] .zenith-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+  /* Minimal hover hint */
+  border-color: rgba(20, 184, 166, 0.4);
+  /* Teal border on hover */
+  box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(20, 184, 166, 0.05);
 }
 
 .zenith-featured {
@@ -1214,4 +1300,36 @@ body {
   inset: 0;
   background: radial-gradient(circle at 50% 50%, transparent 40%, var(--bg-primary) 100%);
   pointer-events: none;
+}
+
+/* =================================
+   MILAGRE THEME SPECIAL ATMOSPHERE
+   matches production screenshot
+   ================================= */
+[data-theme="dark"][data-accent="milagre"] .global-background-effects::before {
+  /* Remove Gold Mesh */
+  background-image: none;
+}
+
+/* Top-Left Green/Teal Glow */
+[data-theme="dark"][data-accent="milagre"] .global-background-effects::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vh;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.15) 0%, transparent 70%);
+  filter: blur(80px);
+  z-index: -1;
+  animation: pulse-slow 8s infinite ease-in-out;
+}
+
+/* Bottom-Right Green Glow (Requested adjustment) */
+[data-theme="dark"][data-accent="milagre"] .global-background-effects {
+  background-image:
+    /* Green Glow at Bottom-Right */
+    radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.15) 0%, transparent 60%),
+    /* Existing Top-Left Teal Hint (kept as is) */
+    radial-gradient(circle at 10% 10%, rgba(20, 184, 166, 0.15) 0%, transparent 60%);
 }

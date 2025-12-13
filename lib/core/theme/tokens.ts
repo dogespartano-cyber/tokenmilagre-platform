@@ -193,31 +193,8 @@ export function cssVar(path: string): string {
  *              as cores de acento que sobrescrevem os defaults.
  */
 export const themeAccents = {
-    // Tema padrão - usa brand colors
-    default: {
-        primary: '#8B5CF6',
-        hover: '#7C3AED',
-        light: '#A78BFA',
-        gradientStart: '#8B5CF6',
-        gradientEnd: '#EC4899',
-    },
-
     // Preparado para temas futuros
-    // ocean: {
-    //   primary: '#0EA5E9',
-    //   hover: '#0284C7',
-    //   light: '#38BDF8',
-    //   gradientStart: '#0EA5E9',
-    //   gradientEnd: '#06B6D4',
-    // },
-
-    // forest: {
-    //   primary: '#10B981',
-    //   hover: '#059669',
-    //   light: '#34D399',
-    //   gradientStart: '#10B981',
-    //   gradientEnd: '#14B8A6',
-    // },
+    // adicionar novas chaves aqui quando necessário (ex: 'ocean', 'forest')
 } as const;
 
 export type ThemeAccent = keyof typeof themeAccents;

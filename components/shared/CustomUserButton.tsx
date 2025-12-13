@@ -198,6 +198,13 @@ export default function CustomUserButton() {
                                         Cor de Destaque
                                     </p>
                                     <div className="flex items-center gap-2">
+                                        {/* Milagre (Original) - Default/First */}
+                                        <button
+                                            onClick={() => setAccent('milagre')}
+                                            className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'milagre' ? 'ring-2 ring-offset-2 ring-[#0D9488]' : ''}`}
+                                            style={{ background: 'linear-gradient(135deg, #14B8A6, #0D9488)' }}
+                                            title="Milagre (Original)"
+                                        />
                                         {/* Default (Brand) */}
                                         <button
                                             onClick={() => setAccent('default')}

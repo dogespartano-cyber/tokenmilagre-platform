@@ -35,7 +35,7 @@ import {
 const ACCENT_STORAGE_KEY = 'theme-accent';
 
 /** Default accent when none is saved */
-const DEFAULT_ACCENT: ThemeAccent = 'default';
+const DEFAULT_ACCENT: ThemeAccent = 'milagre';
 
 // Context com valores padrão
 const ThemeContext = createContext<ThemeContextType>({
@@ -46,6 +46,8 @@ const ThemeContext = createContext<ThemeContextType>({
     accent: DEFAULT_ACCENT,
     setAccent: () => { },
 });
+
+
 
 /**
  * Aplica o tema no documento HTML de forma sincronizada
@@ -199,7 +201,7 @@ export function ThemeProvider({
 
             // Load saved accent
             const savedAccent = localStorage.getItem(ACCENT_STORAGE_KEY) as ThemeAccent | null;
-            if (savedAccent && ['default', 'ocean', 'forest', 'sunset'].includes(savedAccent)) {
+            if (savedAccent && ['default', 'ocean', 'forest', 'sunset', 'milagre'].includes(savedAccent)) {
                 setAccentState(savedAccent);
                 applyAccentToDocument(savedAccent);
             }

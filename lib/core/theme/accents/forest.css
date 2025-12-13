@@ -9,244 +9,250 @@
 
 [data-theme="dark"][data-accent="forest"] {
     /* ============================================
-     FOREST DARK MODE - Deep Woods
+     FOREST DARK MODE - Midnight Canopy
      ============================================ */
 
-    /* Background Colors - Deep Forest (DARKER) */
-    --bg-primary: #020A07;
-    /* Very dark green-black */
-    --bg-secondary: #051410;
-    /* Dark forest floor */
-    --bg-tertiary: #0A1F18;
-    /* Deep woods */
-    --bg-elevated: #0F2A20;
-    /* Slightly elevated */
-    --bg-overlay: rgba(2, 10, 7, 0.95);
+    /* Background Colors - Deepest Forest */
+    --bg-primary: #020604;
+    /* Almost black green */
+    --bg-secondary: #05100a;
+    /* Deep pine */
+    --bg-tertiary: #0a1f13;
+    /* Night canopy */
+    --bg-elevated: #0d2618;
+    --bg-overlay: rgba(2, 6, 4, 0.9);
 
     /* RGB values for transparency */
-    --bg-elevated-rgb: 4, 120, 87;
-    --bg-secondary-rgb: 6, 78, 59;
+    --bg-elevated-rgb: 13, 38, 24;
+    --bg-secondary-rgb: 5, 16, 10;
 
     /* Text Colors */
-    --text-primary: #ECFDF5;
+    --text-primary: #f0fdf4;
     /* Emerald 50 */
-    --text-secondary: #A7F3D0;
+    --text-secondary: #a7f3d0;
     /* Emerald 200 */
-    --text-tertiary: #6EE7B7;
+    --text-tertiary: #6ee7b7;
     /* Emerald 300 */
-    --text-muted: #34D399;
+    --text-muted: #34d399;
     /* Emerald 400 */
-    --text-inverse: #022C22;
-    --text-disabled: #4B5563;
+    --text-inverse: #022c22;
+    --text-disabled: #374151;
 
     /* Border Colors */
-    --border-light: #065F46;
-    --border-medium: #059669;
-    --border-strong: #10B981;
-    --border-focus: #10B981;
+    --border-light: #064e3b;
+    --border-medium: #065f46;
+    --border-strong: #10b981;
     /* Emerald 500 */
+    --border-focus: #34d399;
+    /* Neon Emerald */
 
-    /* Shadows - Green tinted */
-    --shadow-xs: 0 1px 2px 0 rgba(16, 185, 129, 0.1);
-    --shadow-sm: 0 1px 3px 0 rgba(16, 185, 129, 0.15), 0 1px 2px -1px rgba(16, 185, 129, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(16, 185, 129, 0.15), 0 2px 4px -2px rgba(16, 185, 129, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(16, 185, 129, 0.2), 0 4px 6px -4px rgba(16, 185, 129, 0.15);
-    --shadow-xl: 0 20px 25px -5px rgba(16, 185, 129, 0.2), 0 8px 10px -6px rgba(16, 185, 129, 0.15);
-    --shadow-2xl: 0 25px 50px -12px rgba(16, 185, 129, 0.35);
-    --shadow-inner: inset 0 2px 4px 0 rgba(16, 185, 129, 0.1);
+    /* Shadows - Bio-Luminescent Green */
+    --shadow-xs: 0 1px 2px 0 rgba(52, 211, 153, 0.1);
+    --shadow-sm: 0 1px 3px 0 rgba(52, 211, 153, 0.15), 0 1px 2px -1px rgba(52, 211, 153, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(52, 211, 153, 0.15), 0 2px 4px -2px rgba(52, 211, 153, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(16, 185, 129, 0.2), 0 4px 6px -4px rgba(16, 185, 129, 0.2);
+    --shadow-xl: 0 20px 25px -5px rgba(5, 150, 105, 0.3), 0 8px 10px -6px rgba(5, 150, 105, 0.2);
+    --shadow-2xl: 0 25px 50px -12px rgba(2, 6, 4, 0.9);
+    --shadow-inner: inset 0 2px 4px 0 rgba(52, 211, 153, 0.1);
 
-    /* Brand - Forest Green */
-    --brand-primary: #10B981;
+    /* Brand - Neon Forest */
+    --brand-primary: #34d399;
+    /* Emerald 400 - Constant Glow */
+    --brand-hover: #10b981;
     /* Emerald 500 */
-    --brand-hover: #059669;
+    --brand-light: #6ee7b7;
+    /* Emerald 300 */
+    --brand-lighter: #d1fae5;
+    --brand-bg: #064e3b;
+    /* Emerald 900 */
+    --brand-border: #059669;
     /* Emerald 600 */
-    --brand-light: #34D399;
-    /* Emerald 400 */
-    --brand-lighter: #6EE7B7;
-    --brand-bg: #064E3B;
-    --brand-border: #047857;
 
     /* Accent */
-    --accent-primary: #10B981;
-    --accent-hover: #059669;
-    --accent-light: #34D399;
+    --accent-primary: #22c55e;
+    /* Green 500 */
+    --accent-hover: #16a34a;
+    /* Green 600 */
+    --accent-light: #4ade80;
+    /* Green 400 */
 
     /* Gradients */
-    --gradient-start: #10B981;
-    --gradient-end: #14B8A6;
-    /* Teal 500 */
+    --gradient-start: #34d399;
+    /* Emerald 400 */
+    --gradient-end: #4ade80;
+    /* Green 400 - Vibrant Life */
 
     /* Functional Colors */
-    --success: #22C55E;
-    --success-light: #4ADE80;
-    --success-bg: #14532D;
-    --success-border: #16A34A;
+    --success: #22c55e;
+    --success-light: #4ade80;
+    --success-bg: #14532d;
+    --success-border: #16a34a;
 
-    --error: #F87171;
-    --error-light: #FCA5A5;
-    --error-bg: #450A0A;
-    --error-border: #DC2626;
+    --error: #f87171;
+    --error-light: #fca5a5;
+    --error-bg: #450a0a;
+    --error-border: #b91c1c;
 
-    --warning: #FBBF24;
-    --warning-light: #FCD34D;
-    --warning-bg: #713F12;
-    --warning-border: #D97706;
+    --warning: #fbbf24;
+    --warning-light: #fcd34d;
+    --warning-bg: #78350f;
+    --warning-border: #d97706;
 
-    --info: #22D3EE;
-    --info-light: #67E8F9;
-    --info-bg: #155E75;
-    --info-border: #06B6D4;
+    --info: #38bdf8;
+    --info-light: #7dd3fc;
+    --info-bg: #0c4a6e;
+    --info-border: #0ea5e9;
 
     /* Icons */
-    --icon: #6EE7B7;
-    --icon-muted: #34D399;
-    --icon-inverse: #022C22;
+    --icon: #6ee7b7;
+    --icon-muted: #34d399;
+    --icon-inverse: #022c22;
 
     /* Dividers */
-    --divider: #065F46;
+    --divider: #064e3b;
 
     /* Focus Ring */
-    --focus-ring: #10B981;
+    --focus-ring: #34d399;
 
     /* Link Color */
-    --text-link: #34D399;
+    --text-link: #34d399;
 
     /* Modal */
-    --modal-overlay: rgba(2, 44, 34, 0.9);
-    --bg-modal: #064E3B;
-    --text-modal: #ECFDF5;
-    --text-modal-muted: #6EE7B7;
-    --border-modal: #065F46;
-    --bg-modal-input: #047857;
-    --bg-modal-hover: #065F46;
+    --modal-overlay: rgba(2, 6, 4, 0.9);
+    --bg-modal: #0a1f13;
+    --text-modal: #f0fdf4;
+    --text-modal-muted: #a7f3d0;
+    --border-modal: #064e3b;
+    --bg-modal-input: #064e3b;
+    --bg-modal-hover: #065f46;
 
     /* Article */
-    --text-article-title: #ECFDF5;
-    --text-article-body: #A7F3D0;
-    --text-article-muted: #6EE7B7;
-    --bg-article-tag: rgba(16, 185, 129, 0.15);
+    --text-article-title: #f0fdf4;
+    --text-article-body: #a7f3d0;
+    --text-article-muted: #6ee7b7;
+    --bg-article-tag: rgba(52, 211, 153, 0.1);
     --bg-article-quote: rgba(255, 255, 255, 0.03);
-    --border-article: rgba(16, 185, 129, 0.2);
+    --border-article: rgba(52, 211, 153, 0.2);
 }
 
 /* ================================================
-   FOREST LIGHT MODE
+   FOREST LIGHT MODE - Morning Dew
    ================================================ */
 [data-theme="light"][data-accent="forest"] {
-    /* Background Colors - Light Forest */
-    --bg-primary: #ECFDF5;
+    /* Background Colors - Crisp Mint */
+    --bg-primary: #f2fcf5;
+    /* Minty White */
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #ecfdf5;
     /* Emerald 50 */
-    --bg-secondary: #FFFFFF;
-    --bg-tertiary: #D1FAE5;
-    /* Emerald 100 */
-    --bg-elevated: #FFFFFF;
-    --bg-overlay: rgba(0, 0, 0, 0.5);
+    --bg-elevated: #ffffff;
+    --bg-overlay: rgba(6, 78, 59, 0.4);
 
     /* RGB values for transparency */
     --bg-elevated-rgb: 255, 255, 255;
     --bg-secondary-rgb: 255, 255, 255;
 
     /* Text Colors */
-    --text-primary: #064E3B;
+    --text-primary: #064e3b;
     /* Emerald 900 */
-    --text-secondary: #047857;
+    --text-secondary: #065f46;
+    /* Emerald 800 */
+    --text-tertiary: #047857;
     /* Emerald 700 */
-    --text-tertiary: #059669;
-    /* Emerald 600 */
-    --text-muted: #10B981;
+    --text-muted: #10b981;
     /* Emerald 500 */
-    --text-inverse: #FFFFFF;
-    --text-disabled: #A7F3D0;
+    --text-inverse: #ffffff;
+    --text-disabled: #a7f3d0;
 
     /* Border Colors */
-    --border-light: #A7F3D0;
-    /* Emerald 200 */
-    --border-medium: #6EE7B7;
-    /* Emerald 300 */
-    --border-strong: #34D399;
-    /* Emerald 400 */
-    --border-focus: #10B981;
+    --border-light: #d1fae5;
+    --border-medium: #a7f3d0;
+    --border-strong: #6ee7b7;
+    --border-focus: #10b981;
 
-    /* Shadows */
-    --shadow-xs: 0 1px 2px 0 rgba(16, 185, 129, 0.08);
-    --shadow-sm: 0 1px 3px 0 rgba(16, 185, 129, 0.12), 0 1px 2px -1px rgba(16, 185, 129, 0.08);
-    --shadow-md: 0 4px 6px -1px rgba(16, 185, 129, 0.12), 0 2px 4px -2px rgba(16, 185, 129, 0.08);
-    --shadow-lg: 0 10px 15px -3px rgba(16, 185, 129, 0.12), 0 4px 6px -4px rgba(16, 185, 129, 0.08);
-    --shadow-xl: 0 20px 25px -5px rgba(16, 185, 129, 0.12), 0 8px 10px -6px rgba(16, 185, 129, 0.08);
+    /* Shadows - Fresh Green */
+    --shadow-xs: 0 1px 2px 0 rgba(16, 185, 129, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(16, 185, 129, 0.1), 0 1px 2px -1px rgba(16, 185, 129, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(16, 185, 129, 0.1), 0 2px 4px -2px rgba(16, 185, 129, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(16, 185, 129, 0.1), 0 4px 6px -4px rgba(16, 185, 129, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(16, 185, 129, 0.1), 0 8px 10px -6px rgba(16, 185, 129, 0.05);
     --shadow-2xl: 0 25px 50px -12px rgba(16, 185, 129, 0.25);
-    --shadow-inner: inset 0 2px 4px 0 rgba(16, 185, 129, 0.08);
+    --shadow-inner: inset 0 2px 4px 0 rgba(16, 185, 129, 0.06);
 
     /* Brand - Forest Green */
     --brand-primary: #059669;
     /* Emerald 600 */
     --brand-hover: #047857;
     /* Emerald 700 */
-    --brand-light: #10B981;
+    --brand-light: #10b981;
     /* Emerald 500 */
-    --brand-lighter: #34D399;
-    --brand-bg: #ECFDF5;
+    --brand-lighter: #6ee7b7;
+    --brand-bg: #ecfdf5;
     /* Emerald 50 */
-    --brand-border: #6EE7B7;
-    /* Emerald 300 */
+    --brand-border: #a7f3d0;
+    /* Emerald 200 */
 
     /* Accent */
-    --accent-primary: #059669;
-    --accent-hover: #047857;
-    --accent-light: #10B981;
+    --accent-primary: #15803d;
+    /* Green 700 */
+    --accent-hover: #166534;
+    /* Green 800 */
+    --accent-light: #16a34a;
+    /* Green 600 */
 
     /* Gradients */
-    --gradient-start: #10B981;
-    --gradient-end: #14B8A6;
+    --gradient-start: #059669;
+    --gradient-end: #10b981;
 
     /* Functional Colors */
-    --success: #047857;
-    --success-light: #10B981;
-    --success-bg: #ECFDF5;
-    --success-border: #A7F3D0;
+    --success: #059669;
+    --success-light: #10b981;
+    --success-bg: #ecfdf5;
+    --success-border: #a7f3d0;
 
-    --error: #B91C1C;
-    --error-light: #EF4444;
-    --error-bg: #FEF2F2;
-    --error-border: #FECACA;
+    --error: #dc2626;
+    --error-light: #f87171;
+    --error-bg: #fef2f2;
+    --error-border: #fecaca;
 
-    --warning: #B45309;
-    --warning-light: #F59E0B;
-    --warning-bg: #FFFBEB;
-    --warning-border: #FDE68A;
+    --warning: #d97706;
+    --warning-light: #fbbf24;
+    --warning-bg: #fffbeb;
+    --warning-border: #fde68a;
 
-    --info: #047857;
-    --info-light: #10B981;
-    --info-bg: #ECFDF5;
-    --info-border: #A7F3D0;
+    --info: #0284c7;
+    --info-light: #38bdf8;
+    --info-bg: #f0f9ff;
+    --info-border: #bae6fd;
 
     /* Icons */
-    --icon: #047857;
-    --icon-muted: #059669;
-    --icon-inverse: #FFFFFF;
+    --icon: #059669;
+    --icon-muted: #34d399;
+    --icon-inverse: #ffffff;
 
     /* Dividers */
-    --divider: #A7F3D0;
+    --divider: #d1fae5;
 
     /* Focus Ring */
-    --focus-ring: #10B981;
+    --focus-ring: #059669;
 
     /* Link Color */
     --text-link: #059669;
 
     /* Modal */
     --modal-overlay: rgba(0, 0, 0, 0.5);
-    --bg-modal: #FFFFFF;
-    --text-modal: #064E3B;
+    --bg-modal: #ffffff;
+    --text-modal: #064e3b;
     --text-modal-muted: #059669;
-    --border-modal: #A7F3D0;
-    --bg-modal-input: #ECFDF5;
-    --bg-modal-hover: #D1FAE5;
+    --border-modal: #d1fae5;
+    --bg-modal-input: #ecfdf5;
+    --bg-modal-hover: #d1fae5;
 
     /* Article */
-    --text-article-title: #064E3B;
-    --text-article-body: #047857;
-    --text-article-muted: #059669;
-    --bg-article-tag: #D1FAE5;
-    --bg-article-quote: #ECFDF5;
-    --border-article: #A7F3D0;
+    --text-article-title: #064e3b;
+    --text-article-body: #065f46;
+    --text-article-muted: #10b981;
+    --bg-article-tag: #d1fae5;
+    --bg-article-quote: #ecfdf5;
+    --border-article: #a7f3d0;
 }

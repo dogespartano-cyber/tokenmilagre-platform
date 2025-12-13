@@ -10,7 +10,7 @@
 export type Theme = 'light' | 'dark';
 
 /** Variantes de acento para temas alternativos (futuro) */
-export type ThemeAccent = 'default' | 'ocean' | 'forest' | 'sunset';
+export type ThemeAccent = 'default' | 'ocean' | 'forest' | 'sunset' | 'milagre';
 
 /** Configuração completa de tema */
 export interface ThemeConfig {

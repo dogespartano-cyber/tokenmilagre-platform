@@ -126,9 +126,10 @@ export default function RootLayout({
               (function() {
                 try {
                   var savedTheme = localStorage.getItem('theme');
+                  var savedAccent = localStorage.getItem('theme-accent');
                   var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                   
-                  // Fallback: convert legacy themes to dark
+                  // Handle Theme
                   if (savedTheme && savedTheme !== 'light' && savedTheme !== 'dark') {
                     savedTheme = 'dark';
                     localStorage.setItem('theme', 'dark');
@@ -140,6 +141,17 @@ export default function RootLayout({
                   } else {
                     document.documentElement.setAttribute('data-theme', 'light');
                     document.documentElement.classList.remove('dark');
+                  }
+
+                  // Handle Accent (Fix FOUC)
+                  // Default to 'milagre' if no accent is saved
+                  if (!savedAccent) {
+                    savedAccent = 'milagre';
+                    localStorage.setItem('theme-accent', 'milagre');
+                  }
+                  
+                  if (savedAccent && savedAccent !== 'default') {
+                    document.documentElement.setAttribute('data-accent', savedAccent);
                   }
                 } catch (e) {}
               })();

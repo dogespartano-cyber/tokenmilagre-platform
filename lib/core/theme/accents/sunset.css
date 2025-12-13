@@ -9,247 +9,256 @@
 
 [data-theme="dark"][data-accent="sunset"] {
     /* ============================================
-     SUNSET DARK MODE - Twilight Warmth
+     SUNSET DARK MODE - Obsidian Twilight
      ============================================ */
 
-    /* Background Colors - Deep Sunset (DARKER) */
-    --bg-primary: #0A0506;
+    /* Background Colors - Deepest Wine */
+    --bg-primary: #0a0506;
     /* Very dark wine-black */
-    --bg-secondary: #120A0D;
-    /* Dark wine */
-    --bg-tertiary: #1A1014;
+    --bg-secondary: #120a0d;
+    /* Dark vibrant wine */
+    --bg-tertiary: #190e12;
     /* Deep twilight */
-    --bg-elevated: #22151A;
-    /* Slightly elevated */
-    --bg-overlay: rgba(10, 5, 6, 0.95);
+    --bg-elevated: #261218;
+    /* Vibrant elevated wine */
+    --bg-overlay: rgba(10, 5, 6, 0.9);
 
     /* RGB values for transparency */
-    --bg-elevated-rgb: 74, 44, 62;
-    --bg-secondary-rgb: 45, 27, 36;
+    --bg-elevated-rgb: 38, 18, 24;
+    --bg-secondary-rgb: 18, 10, 13;
 
     /* Text Colors */
-    --text-primary: #FFF7ED;
-    /* Orange 50 */
-    --text-secondary: #FED7AA;
-    /* Orange 200 */
-    --text-tertiary: #FDBA74;
-    /* Orange 300 */
-    --text-muted: #FB923C;
-    /* Orange 400 */
-    --text-inverse: #1C1016;
-    --text-disabled: #6B7280;
+    --text-primary: #fff1f2;
+    /* Rose 50 */
+    --text-secondary: #fecdd3;
+    /* Rose 200 */
+    --text-tertiary: #fda4af;
+    /* Rose 300 */
+    --text-muted: #fb7185;
+    /* Rose 400 */
+    --text-inverse: #1c1016;
+    --text-disabled: #4a2c3e;
 
     /* Border Colors */
-    --border-light: #4A2C3E;
-    --border-medium: #C2410C;
-    /* Orange 700 */
-    --border-strong: #F97316;
-    /* Orange 500 */
-    --border-focus: #F97316;
+    --border-light: #4a2c3e;
+    --border-medium: #831843;
+    /* Pink 800 */
+    --border-strong: #be123c;
+    /* Pink 700 */
+    --border-focus: #f43f5e;
+    /* Rose 500 */
 
-    /* Shadows - Orange tinted */
-    --shadow-xs: 0 1px 2px 0 rgba(249, 115, 22, 0.1);
-    --shadow-sm: 0 1px 3px 0 rgba(249, 115, 22, 0.15), 0 1px 2px -1px rgba(249, 115, 22, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(249, 115, 22, 0.15), 0 2px 4px -2px rgba(249, 115, 22, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(249, 115, 22, 0.2), 0 4px 6px -4px rgba(249, 115, 22, 0.15);
-    --shadow-xl: 0 20px 25px -5px rgba(249, 115, 22, 0.2), 0 8px 10px -6px rgba(249, 115, 22, 0.15);
-    --shadow-2xl: 0 25px 50px -12px rgba(249, 115, 22, 0.35);
-    --shadow-inner: inset 0 2px 4px 0 rgba(249, 115, 22, 0.1);
+    /* Shadows - Glowing Ember */
+    --shadow-xs: 0 1px 2px 0 rgba(244, 63, 94, 0.1);
+    --shadow-sm: 0 1px 3px 0 rgba(244, 63, 94, 0.15), 0 1px 2px -1px rgba(244, 63, 94, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(244, 63, 94, 0.15), 0 2px 4px -2px rgba(244, 63, 94, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(225, 29, 72, 0.2), 0 4px 6px -4px rgba(225, 29, 72, 0.15);
+    --shadow-xl: 0 20px 25px -5px rgba(225, 29, 72, 0.2), 0 8px 10px -6px rgba(225, 29, 72, 0.15);
+    --shadow-2xl: 0 25px 50px -12px rgba(10, 5, 6, 0.9);
+    --shadow-inner: inset 0 2px 4px 0 rgba(244, 63, 94, 0.1);
 
-    /* Brand - Sunset Orange */
-    --brand-primary: #F97316;
+    /* Brand - Solar Orange */
+    --brand-primary: #f97316;
     /* Orange 500 */
-    --brand-hover: #EA580C;
+    --brand-hover: #ea580c;
     /* Orange 600 */
-    --brand-light: #FB923C;
+    --brand-light: #fb923c;
     /* Orange 400 */
-    --brand-lighter: #FDBA74;
-    --brand-bg: #7C2D12;
-    /* Orange 900 */
-    --brand-border: #C2410C;
-    /* Orange 700 */
+    --brand-lighter: #fdba74;
+    --brand-bg: #4c0519;
+    /* Rose 950 */
+    --brand-border: #9f1239;
+    /* Rose 800 */
 
     /* Accent */
-    --accent-primary: #F97316;
-    --accent-hover: #EA580C;
-    --accent-light: #FB923C;
+    --accent-primary: #f43f5e;
+    /* Rose 500 */
+    --accent-hover: #e11d48;
+    /* Rose 600 */
+    --accent-light: #fb7185;
+    /* Rose 400 */
 
-    /* Gradients - Orange to Pink */
-    --gradient-start: #F97316;
-    --gradient-end: #EC4899;
-    /* Pink 500 */
+    /* Gradients */
+    --gradient-start: #f97316;
+    /* Orange 500 */
+    --gradient-end: #ec4899;
+    /* Pink 500 - Sunset Horizon */
 
     /* Functional Colors */
-    --success: #4ADE80;
-    --success-light: #86EFAC;
-    --success-bg: #14532D;
-    --success-border: #22C55E;
+    --success: #34d399;
+    --success-light: #6ee7b7;
+    --success-bg: #064e3b;
+    --success-border: #059669;
 
-    --error: #FB7185;
-    --error-light: #FDA4AF;
-    --error-bg: #4C0519;
-    --error-border: #F43F5E;
+    --error: #f43f5e;
+    --error-light: #fb7185;
+    --error-bg: #4c0519;
+    --error-border: #e11d48;
 
-    --warning: #FCD34D;
-    --warning-light: #FDE68A;
-    --warning-bg: #78350F;
-    --warning-border: #FBBF24;
+    --warning: #fbbf24;
+    --warning-light: #fcd34d;
+    --warning-bg: #78350f;
+    --warning-border: #d97706;
 
-    --info: #38BDF8;
-    --info-light: #7DD3FC;
-    --info-bg: #0C4A6E;
-    --info-border: #0EA5E9;
+    --info: #38bdf8;
+    --info-light: #7dd3fc;
+    --info-bg: #0c4a6e;
+    --info-border: #0ea5e9;
 
     /* Icons */
-    --icon: #FDBA74;
-    --icon-muted: #FB923C;
-    --icon-inverse: #1C1016;
+    --icon: #fb7185;
+    --icon-muted: #e11d48;
+    --icon-inverse: #ffffff;
 
     /* Dividers */
-    --divider: #4A2C3E;
+    --divider: #4a2c3e;
 
     /* Focus Ring */
-    --focus-ring: #F97316;
+    --focus-ring: #f43f5e;
 
     /* Link Color */
-    --text-link: #FB923C;
+    --text-link: #fb7185;
 
     /* Modal */
-    --modal-overlay: rgba(28, 16, 22, 0.9);
-    --bg-modal: #2D1B24;
-    --text-modal: #FFF7ED;
-    --text-modal-muted: #FDBA74;
-    --border-modal: #4A2C3E;
-    --bg-modal-input: #3D2536;
-    --bg-modal-hover: #4A2C3E;
+    --modal-overlay: rgba(10, 5, 6, 0.9);
+    --bg-modal: #190e12;
+    --text-modal: #fff1f2;
+    --text-modal-muted: #fda4af;
+    --border-modal: #4a2c3e;
+    --bg-modal-input: #261218;
+    --bg-modal-hover: #4a2c3e;
 
     /* Article */
-    --text-article-title: #FFF7ED;
-    --text-article-body: #FED7AA;
-    --text-article-muted: #FDBA74;
-    --bg-article-tag: rgba(249, 115, 22, 0.15);
+    --text-article-title: #fff1f2;
+    --text-article-body: #fecdd3;
+    --text-article-muted: #fda4af;
+    --bg-article-tag: rgba(244, 63, 94, 0.1);
     --bg-article-quote: rgba(255, 255, 255, 0.03);
-    --border-article: rgba(249, 115, 22, 0.2);
+    --border-article: rgba(244, 63, 94, 0.2);
 }
 
 /* ================================================
-   SUNSET LIGHT MODE
+   SUNSET LIGHT MODE - Golden Hour
    ================================================ */
 [data-theme="light"][data-accent="sunset"] {
-    /* Background Colors - Light Sunset */
-    --bg-primary: #FFF7ED;
+    /* Background Colors - Warm Peach */
+    --bg-primary: #fff7ed;
     /* Orange 50 */
-    --bg-secondary: #FFFFFF;
-    --bg-tertiary: #FFEDD5;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #ffedd5;
     /* Orange 100 */
-    --bg-elevated: #FFFFFF;
-    --bg-overlay: rgba(0, 0, 0, 0.5);
+    --bg-elevated: #ffffff;
+    --bg-overlay: rgba(67, 20, 7, 0.4);
 
     /* RGB values for transparency */
     --bg-elevated-rgb: 255, 255, 255;
     --bg-secondary-rgb: 255, 255, 255;
 
     /* Text Colors */
-    --text-primary: #7C2D12;
+    --text-primary: #7c2d12;
     /* Orange 900 */
-    --text-secondary: #9A3412;
+    --text-secondary: #9a3412;
     /* Orange 800 */
-    --text-tertiary: #C2410C;
+    --text-tertiary: #c2410c;
     /* Orange 700 */
-    --text-muted: #EA580C;
+    --text-muted: #ea580c;
     /* Orange 600 */
-    --text-inverse: #FFFFFF;
-    --text-disabled: #FED7AA;
+    --text-inverse: #ffffff;
+    --text-disabled: #fed7aa;
 
     /* Border Colors */
-    --border-light: #FED7AA;
+    --border-light: #fed7aa;
     /* Orange 200 */
-    --border-medium: #FDBA74;
+    --border-medium: #fdba74;
     /* Orange 300 */
-    --border-strong: #FB923C;
+    --border-strong: #fb923c;
     /* Orange 400 */
-    --border-focus: #F97316;
+    --border-focus: #f97316;
 
-    /* Shadows */
-    --shadow-xs: 0 1px 2px 0 rgba(249, 115, 22, 0.08);
-    --shadow-sm: 0 1px 3px 0 rgba(249, 115, 22, 0.12), 0 1px 2px -1px rgba(249, 115, 22, 0.08);
-    --shadow-md: 0 4px 6px -1px rgba(249, 115, 22, 0.12), 0 2px 4px -2px rgba(249, 115, 22, 0.08);
-    --shadow-lg: 0 10px 15px -3px rgba(249, 115, 22, 0.12), 0 4px 6px -4px rgba(249, 115, 22, 0.08);
-    --shadow-xl: 0 20px 25px -5px rgba(249, 115, 22, 0.12), 0 8px 10px -6px rgba(249, 115, 22, 0.08);
+    /* Shadows - Warm Glow */
+    --shadow-xs: 0 1px 2px 0 rgba(249, 115, 22, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(249, 115, 22, 0.1), 0 1px 2px -1px rgba(249, 115, 22, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(249, 115, 22, 0.1), 0 2px 4px -2px rgba(249, 115, 22, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(249, 115, 22, 0.1), 0 4px 6px -4px rgba(249, 115, 22, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(249, 115, 22, 0.1), 0 8px 10px -6px rgba(249, 115, 22, 0.05);
     --shadow-2xl: 0 25px 50px -12px rgba(249, 115, 22, 0.25);
-    --shadow-inner: inset 0 2px 4px 0 rgba(249, 115, 22, 0.08);
+    --shadow-inner: inset 0 2px 4px 0 rgba(249, 115, 22, 0.06);
 
     /* Brand - Sunset Orange */
-    --brand-primary: #EA580C;
+    --brand-primary: #ea580c;
     /* Orange 600 */
-    --brand-hover: #C2410C;
+    --brand-hover: #c2410c;
     /* Orange 700 */
-    --brand-light: #F97316;
+    --brand-light: #f97316;
     /* Orange 500 */
-    --brand-lighter: #FB923C;
-    --brand-bg: #FFF7ED;
+    --brand-lighter: #fb923c;
+    /* Orange 400 */
+    --brand-bg: #fff7ed;
     /* Orange 50 */
-    --brand-border: #FDBA74;
-    /* Orange 300 */
+    --brand-border: #fed7aa;
+    /* Orange 200 */
 
     /* Accent */
-    --accent-primary: #EA580C;
-    --accent-hover: #C2410C;
-    --accent-light: #F97316;
+    --accent-primary: #db2777;
+    /* Pink 600 */
+    --accent-hover: #be185d;
+    /* Pink 700 */
+    --accent-light: #e11d48;
+    /* Rose 600 */
 
     /* Gradients */
-    --gradient-start: #F97316;
-    --gradient-end: #EC4899;
+    --gradient-start: #f97316;
+    --gradient-end: #ec4899;
 
     /* Functional Colors */
-    --success: #047857;
-    --success-light: #10B981;
-    --success-bg: #ECFDF5;
-    --success-border: #A7F3D0;
+    --success: #059669;
+    --success-light: #34d399;
+    --success-bg: #ecfdf5;
+    --success-border: #a7f3d0;
 
-    --error: #B91C1C;
-    --error-light: #EF4444;
-    --error-bg: #FEF2F2;
-    --error-border: #FECACA;
+    --error: #dc2626;
+    --error-light: #f87171;
+    --error-bg: #fef2f2;
+    --error-border: #fecaca;
 
-    --warning: #B45309;
-    --warning-light: #F59E0B;
-    --warning-bg: #FFFBEB;
-    --warning-border: #FDE68A;
+    --warning: #d97706;
+    --warning-light: #fbbf24;
+    --warning-bg: #fffbeb;
+    --warning-border: #fde68a;
 
-    --info: #C2410C;
-    --info-light: #F97316;
-    --info-bg: #FFF7ED;
-    --info-border: #FED7AA;
+    --info: #0284c7;
+    --info-light: #38bdf8;
+    --info-bg: #f0f9ff;
+    --info-border: #bae6fd;
 
     /* Icons */
-    --icon: #C2410C;
-    --icon-muted: #EA580C;
-    --icon-inverse: #FFFFFF;
+    --icon: #ea580c;
+    --icon-muted: #f97316;
+    --icon-inverse: #ffffff;
 
     /* Dividers */
-    --divider: #FED7AA;
+    --divider: #fed7aa;
 
     /* Focus Ring */
-    --focus-ring: #F97316;
+    --focus-ring: #ea580c;
 
     /* Link Color */
-    --text-link: #EA580C;
+    --text-link: #ea580c;
 
     /* Modal */
     --modal-overlay: rgba(0, 0, 0, 0.5);
-    --bg-modal: #FFFFFF;
-    --text-modal: #7C2D12;
-    --text-modal-muted: #C2410C;
-    --border-modal: #FED7AA;
-    --bg-modal-input: #FFF7ED;
-    --bg-modal-hover: #FFEDD5;
+    --bg-modal: #ffffff;
+    --text-modal: #7c2d12;
+    --text-modal-muted: #ea580c;
+    --border-modal: #fed7aa;
+    --bg-modal-input: #fff7ed;
+    --bg-modal-hover: #ffedd5;
 
     /* Article */
-    --text-article-title: #7C2D12;
-    --text-article-body: #9A3412;
-    --text-article-muted: #C2410C;
-    --bg-article-tag: #FFEDD5;
-    --bg-article-quote: #FFF7ED;
-    --border-article: #FED7AA;
+    --text-article-title: #7c2d12;
+    --text-article-body: #9a3412;
+    --text-article-muted: #ea580c;
+    --bg-article-tag: #ffedd5;
+    --bg-article-quote: #fff7ed;
+    --border-article: #fed7aa;
 }
