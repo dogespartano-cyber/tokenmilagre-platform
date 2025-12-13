@@ -1,113 +1,114 @@
 /**
- * MATERIAL: TITANIUM (Formerly Ocean)
+ * MATERIAL: TITANIUM DEEP (Ocean V2)
  * Designer: Jony Ive (Agent)
- * Concept: Aerospace. Precision. Cold.
+ * Concept: Mariana Trench. Cyber-Depth.
+ * Revision: Darker Blue & Glossy Gradients
  */
 
 /* ============================================
-   DARK MODE - TITANIUM (Aerospace Void)
+   DARK MODE - TITANIUM DEEP (Electric Abyss)
    ============================================ */
 [data-theme="dark"][data-accent="ocean"] {
-    /* Background: Cold Gunmetal Void */
-    --bg-primary: #0B1120;
-    /* Deepest Navy/Slate */
-    --bg-secondary: #151F32;
-    /* Machined Metal */
-    --bg-tertiary: #1E293B;
-    /* Slate */
-    --bg-elevated: #1E293B;
-    --bg-overlay: rgba(11, 17, 32, 0.9);
+    /* Background: Complex Gradient Simulation via Colors */
+    --bg-primary: #02040A;
+    /* Abyss Black/Blue */
+    --bg-secondary: #0A0F1E;
+    /* Deep Blue Black */
+    --bg-tertiary: #111827;
+    /* Deep Navy */
+    --bg-elevated: #111827;
+    --bg-overlay: radial-gradient(circle at 50% 0%, #172554 0%, transparent 60%);
+    /* Blue Vignette */
 
     /* RGB for Transparency */
-    --bg-elevated-rgb: 30, 41, 59;
-    --bg-secondary-rgb: 21, 31, 50;
+    --bg-elevated-rgb: 17, 24, 39;
+    --bg-secondary-rgb: 10, 15, 30;
 
-    /* Text: Laser Etched Purity */
+    /* Text: Absolute Clarity */
     --text-primary: #F8FAFC;
-    /* White */
-    --text-secondary: #CBD5E1;
-    /* Light Gray */
+    --text-secondary: #E2E8F0;
     --text-tertiary: #94A3B8;
-    /* Muted Metal */
     --text-muted: #64748B;
-    --text-inverse: #0F172A;
+    --text-inverse: #020617;
     --text-disabled: #475569;
 
-    /* Brand: Electric Blue (Ion Thruster) */
-    --brand-primary: #38BDF8;
-    /* Sky 400 */
-    --brand-hover: #0EA5E9;
-    /* Sky 500 */
-    --brand-light: #7DD3FC;
-    --brand-lighter: #BAE6FD;
-    --brand-bg: #0C4A6E;
-    --brand-border: #075985;
+    /* Brand: Deep Electric Blue (Darker, Richer) */
+    --brand-primary: #2563EB;
+    /* Blue 600 (Royal) - Was Sky 400 */
+    --brand-hover: #1D4ED8;
+    /* Blue 700 */
+    --brand-light: #3B82F6;
+    /* Blue 500 */
+    --brand-lighter: #60A5FA;
+    --brand-bg: #172554;
+    /* Blue 950 */
+    --brand-border: #1E3A8A;
+    /* Blue 900 */
 
-    /* Borders: Precision Machined */
+    /* Borders: Glassy Blue Hint */
     --border-light: #1E293B;
-    --border-medium: #334155;
-    --border-strong: #475569;
-    --border-focus: #38BDF8;
+    --border-medium: #172554;
+    --border-strong: #1E40AF;
+    /* Strong Blue Border */
+    --border-focus: #2563EB;
 
     /* Functional */
     --success: #10B981;
     --warning: #F59E0B;
     --error: #EF4444;
-    --info: #38BDF8;
+    --info: #3B82F6;
 
     --success-bg: rgba(16, 185, 129, 0.1);
     --warning-bg: rgba(245, 158, 11, 0.1);
     --error-bg: rgba(239, 68, 68, 0.1);
-    --info-bg: rgba(56, 189, 248, 0.1);
+    --info-bg: rgba(59, 130, 246, 0.1);
 
-    /* Shadows: Cold Blue Tint */
+    /* Shadows: Deep Blue Glow */
     --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
     --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(11, 17, 32, 0.5);
-    --shadow-lg: 0 10px 15px -3px rgba(11, 17, 32, 0.5);
-    --shadow-xl: 0 20px 25px -5px rgba(11, 17, 32, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(23, 37, 84, 0.5);
+    /* Blue 950 shadow */
+    --shadow-lg: 0 10px 15px -3px rgba(23, 37, 84, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(23, 37, 84, 0.6);
 
-    /* Gradients: Titanium Sheen */
-    --gradient-start: #38BDF8;
-    --gradient-end: #0EA5E9;
+    /* Gradients: Deep Ocean */
+    --gradient-start: #1D4ED8;
+    /* Blue 700 */
+    --gradient-end: #1E3A8A;
+    /* Blue 900 */
 
     /* Misc */
-    --modal-overlay: rgba(11, 17, 32, 0.85);
-    --icon: #CBD5E1;
-    --text-link: #38BDF8;
+    --modal-overlay: rgba(2, 4, 10, 0.9);
+    --icon: #BFDBFE;
+    --text-link: #60A5FA;
 
     /* Article */
     --text-article-title: #F8FAFC;
-    --text-article-body: #CBD5E1;
-    --text-article-muted: #94A3B8;
-    --bg-article-tag: rgba(56, 189, 248, 0.1);
+    --text-article-body: #BFDBFE;
+    --text-article-muted: #60A5FA;
+    --bg-article-tag: rgba(37, 99, 235, 0.1);
     --bg-article-quote: rgba(255, 255, 255, 0.03);
-    --border-article: rgba(56, 189, 248, 0.2);
+    --border-article: rgba(37, 99, 235, 0.2);
 }
 
 /* ================================================
-   LIGHT MODE - ALUMINIUM (Brushed)
+   LIGHT MODE - TITANIUM (Clean Silver/Blue)
    ================================================ */
 [data-theme="light"][data-accent="ocean"] {
-    /* Background Colors - Metallic Silver */
-    --bg-primary: #F1F5F9;
-    /* Slate 100 */
+    /* Background Colors - Clean */
+    --bg-primary: #F8FAFC;
     --bg-secondary: #FFFFFF;
-    /* Pure Bright */
-    --bg-tertiary: #E2E8F0;
-    /* Slate 200 */
+    --bg-tertiary: #F1F5F9;
     --bg-elevated: #FFFFFF;
-    --bg-overlay: rgba(15, 23, 42, 0.2);
+    --bg-overlay: transparent;
 
     /* RGB values for transparency */
     --bg-elevated-rgb: 255, 255, 255;
     --bg-secondary-rgb: 255, 255, 255;
 
-    /* Text Colors - Neutral Precision */
+    /* Text Colors - Neutral Dark */
     --text-primary: #0F172A;
-    /* Slate 900 */
     --text-secondary: #334155;
-    /* Slate 700 */
     --text-tertiary: #475569;
     --text-muted: #64748B;
     --text-inverse: #FFFFFF;
@@ -117,40 +118,36 @@
     --border-light: #E2E8F0;
     --border-medium: #CBD5E1;
     --border-strong: #94A3B8;
-    --border-focus: #0EA5E9;
+    --border-focus: #2563EB;
 
     /* Shadows - Sharp, Technical */
     --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
     --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06);
     --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08);
     --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
-    --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.08);
 
-    /* Brand - Industrial Blue */
-    --brand-primary: #0EA5E9;
-    --brand-hover: #0284C7;
-    --brand-light: #38BDF8;
-    --brand-lighter: #BAE6FD;
-    --brand-bg: #F0F9FF;
-    --brand-border: #7DD3FC;
+    /* Brand - Deep Blue */
+    --brand-primary: #2563EB;
+    --brand-hover: #1D4ED8;
+    --brand-light: #3B82F6;
+    --brand-lighter: #60A5FA;
+    --brand-bg: #EFF6FF;
+    --brand-border: #BFDBFE;
 
     /* Accent */
-    --accent-primary: #0284C7;
-    --accent-hover: #0369A1;
-    --accent-light: #0EA5E9;
+    --accent-primary: #1D4ED8;
+    --accent-hover: #1E3A8A;
+    --accent-light: #2563EB;
 
     /* Gradients */
-    --gradient-start: #0EA5E9;
-    --gradient-end: #0284C7;
+    --gradient-start: #2563EB;
+    --gradient-end: #1D4ED8;
 
     /* Functional Colors */
     --success: #059669;
-    --success-light: #10B981;
-    --success-bg: #ECFDF5;
-    --success-border: #A7F3D0;
     --error: #EF4444;
     --warning: #F59E0B;
-    --info: #0EA5E9;
+    --info: #3B82F6;
 
     /* Icons */
     --icon: #475569;
@@ -158,11 +155,11 @@
     --icon-inverse: #FFFFFF;
 
     /* Dividers */
-    --divider: #CBD5E1;
+    --divider: #E2E8F0;
 
     /* Focus Ring */
-    --focus-ring: #0EA5E9;
-    --text-link: #0EA5E9;
+    --focus-ring: #2563EB;
+    --text-link: #2563EB;
 
     /* Article */
     --text-article-title: #0F172A;
