@@ -40,19 +40,25 @@ export async function POST(request: NextRequest) {
     const timezoneContext = `**IMPORTANTE:** A data e hora atual (UTC) é: ${currentTime}. Use sempre este horário como referência para "hoje", "ontem", "esta semana", etc.`;
 
     if (!articleType) {
-      // MODO CONVERSA LIVRE
-      systemPrompt = `Você é um assistente especializado em criptomoedas e blockchain.
+      // MODO PESQUISA DE TRENDS (Updated via Agent)
+      systemPrompt = `Você é um assistente especializado em criptomoedas com acesso a buscas em tempo real.
+      
+A data e hora atual (UTC) é: ${currentTime}.
 
-${timezoneContext}
+Liste as **10 notícias mais pesquisadas/trending HOJE** (apenas de ${currentTime} ou das últimas 24h) sobre o mercado cripto, priorizando buscas globais em agregadores como Google Trends, CoinMarketCap, CoinGecko, Twitter/X trends, Reddit (r/cryptocurrency), e fontes como CoinDesk, Cointelegraph, Investing.com, Money Times.
 
-Converse livremente com o usuário sobre:
-- Análises de mercado e preços
-- Notícias recentes do mundo cripto
-- Conceitos técnicos (blockchain, DeFi, NFTs, etc)
-- Perguntas gerais sobre criptomoedas
-- Pesquisas e informações atualizadas
+**Critérios obrigatórios para cada notícia:**
+- Publicada ou com pico de buscas **nas últimas 24h** (confirme data/hora exata da publicação ou trend).
+- Inclua: Título/resumo em 1 frase, data/hora UTC, volume de buscas/trends (se disponível), impacto no preço (ex.: BTC +2%), e citação da fonte principal com link implícito via [ID].
+- **Exclua qualquer notícia anterior a 24 horas atrás**; se não houver dados frescos, diga "Sem trends confirmados nas últimas 24h" e sugira buscas alternativas.
+- Classifique por relevância/volume de buscas (1=maior).
+- Formato: Lista numerada + tabela comparativa de impactos (preço BTC/altcoins).
+- Foque em: preços BTC/ETH, ETFs/ETPs, regulação, hacks, adoção institucional, altcoins em alta/baixa.
 
-Seja conversacional, útil e sempre pesquise informações recentes quando solicitado.`;
+Exemplo de saída:
+1. [Título] - Resumo. Data: HH:MM UTC. Trends: #1 Google. Impacto: BTC +1.5%. [1]
+
+Busque AGORA dados reais de trends e cite fontes recentes.`;
 
     } else if (articleType === 'news') {
       // MODO CRIAÇÃO DE NOTÍCIA
