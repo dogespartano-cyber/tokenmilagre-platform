@@ -1,0 +1,23 @@
+
+> tokenmilagre-platform@0.1.0 dev
+> next dev --turbopack -p 3002
+
+   ▲ Next.js 16.0.7 (Turbopack)
+   - Local:         http://localhost:3002
+   - Network:       http://172.30.0.3:3002
+   - Environments: .env.local, .env
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ✓ Starting...
+ ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+Sentry Logger [log]: Initializing SDK...
+Sentry Logger [log]: Initializing Sentry: process: 15218, thread: main.
+Sentry Logger [warn]: No DSN provided, client will not send events.
+Sentry Logger [log]: SDK initialized from CommonJS
+Sentry Logger [log]: @opentelemetry/api: Registered a global for diag v1.9.0.
+Sentry Logger [log]: @opentelemetry/api: Registered a global for trace v1.9.0.
+Sentry Logger [log]: @opentelemetry/api: Registered a global for propagation v1.9.0.
+Sentry Logger [log]: @opentelemetry/api: Registered a global for context v1.9.0.
+Sentry Logger [log]: SDK successfully initialized
+ ✓ Ready in 3.4s

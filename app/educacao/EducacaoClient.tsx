@@ -166,44 +166,57 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { icon: BookOpen, title: 'Comece pelo Básico', desc: 'Entenda o que é cripto e onde as pessoas mais erram' },
-                { icon: Shield, title: 'Segurança Primeiro', desc: 'Seed phrase, golpes e hábitos que protegem você' },
-                { icon: FileQuestion, title: 'Glossário Essencial', desc: 'Termos explicados com exemplos e armadilhas comuns' },
-                { icon: Search, title: 'Como Pesquisar um Projeto', desc: 'Checklist de transparência: time, tokenomics, auditoria' },
-                { icon: Wallet, title: 'Carteiras e Custódia', desc: 'Hot vs cold wallet, autocustódia e boas práticas' },
-                { icon: Coins, title: 'Taxas e Redes', desc: 'O que são taxas (gas), confirmações e congestionamento' },
-                { icon: AlertTriangle, title: 'Golpes Comuns', desc: 'Phishing, airdrop falso, links maliciosos e aprovações' },
-                { icon: TrendingUp, title: 'Trilhas por Nível', desc: 'Iniciante, intermediário ou avançado — escolha seu caminho' },
+                { icon: BookOpen, title: 'Comece pelo Básico', desc: 'Entenda o que é cripto e onde as pessoas mais erram', slug: null },
+                { icon: Shield, title: 'Segurança Primeiro', desc: 'Seed phrase, golpes e hábitos que protegem você', slug: 'seguranca-primeiro' },
+                { icon: FileQuestion, title: 'Glossário Essencial', desc: 'Termos explicados com exemplos e armadilhas comuns', slug: null },
+                { icon: Search, title: 'Como Pesquisar um Projeto', desc: 'Checklist de transparência: time, tokenomics, auditoria', slug: null },
+                { icon: Wallet, title: 'Carteiras e Custódia', desc: 'Hot vs cold wallet, autocustódia e boas práticas', slug: null },
+                { icon: Coins, title: 'Taxas e Redes', desc: 'O que são taxas (gas), confirmações e congestionamento', slug: null },
+                { icon: AlertTriangle, title: 'Golpes Comuns', desc: 'Phishing, airdrop falso, links maliciosos e aprovações', slug: null },
+                { icon: TrendingUp, title: 'Trilhas por Nível', desc: 'Iniciante, intermediário ou avançado — escolha seu caminho', slug: null },
               ].map((card, index) => {
                 const Icon = card.icon;
+                const cardContent = (
+                  <div className="relative z-10">
+                    {/* Icon Container */}
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center mb-5 bg-[var(--bg-page)] text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] group-hover:scale-110 transition-all duration-300">
+                      <Icon className="w-5 h-5" />
+                    </div>
 
-                return (
-                  <div
-                    key={index}
-                    className="
-                      group p-6 rounded-2xl border text-left relative overflow-hidden transition-all duration-300
-                      bg-transparent backdrop-blur-2xl border-[var(--border-light)]
-                      hover:border-[var(--brand-primary)]/30 hover:shadow-lg hover:-translate-y-1
-                    "
-                  >
-                    <div className="relative z-10">
-                      {/* Icon Container */}
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center mb-5 bg-[var(--bg-page)] text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] group-hover:scale-110 transition-all duration-300">
-                        <Icon className="w-5 h-5" />
-                      </div>
+                    <h3 className="font-bold text-lg text-[var(--text-primary)] mb-2 group-hover:text-[var(--brand-primary)] transition-colors">
+                      {card.title}
+                    </h3>
 
-                      <h3 className="font-bold text-lg text-[var(--text-primary)] mb-2 group-hover:text-[var(--brand-primary)] transition-colors">
-                        {card.title}
-                      </h3>
+                    <p className="text-sm text-[var(--text-secondary)] mb-4 leading-relaxed line-clamp-2">
+                      {card.desc}
+                    </p>
 
-                      <p className="text-sm text-[var(--text-secondary)] mb-4 leading-relaxed line-clamp-2">
-                        {card.desc}
-                      </p>
-
+                    {card.slug ? (
+                      <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] transition-colors">
+                        Ler artigo <ArrowRight className="w-3 h-3 ml-1" />
+                      </span>
+                    ) : (
                       <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-[var(--bg-page)] text-[var(--text-tertiary)] group-hover:bg-[var(--brand-primary)]/10 group-hover:text-[var(--brand-primary)] transition-colors">
                         Em breve
                       </span>
-                    </div>
+                    )}
+                  </div>
+                );
+
+                const cardClassName = `
+                  group p-6 rounded-2xl border text-left relative overflow-hidden transition-all duration-300
+                  bg-transparent backdrop-blur-2xl border-[var(--border-light)]
+                  hover:border-[var(--brand-primary)]/30 hover:shadow-lg hover:-translate-y-1
+                  ${card.slug ? 'cursor-pointer' : ''}
+                `;
+
+                return card.slug ? (
+                  <Link key={index} href={`/educacao/${card.slug}`} className={cardClassName}>
+                    {cardContent}
+                  </Link>
+                ) : (
+                  <div key={index} className={cardClassName}>
+                    {cardContent}
                   </div>
                 );
               })}

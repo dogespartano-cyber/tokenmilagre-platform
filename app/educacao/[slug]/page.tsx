@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ArtigoEducacionalClient from './ArtigoEducacionalClient';
+import GuiaEssencialClient from './GuiaEssencialClient';
+import { isGuiaEssencialSlug } from '@/lib/education/guia-essencial';
 import { prisma } from '@/lib/core/prisma';
 
 // Cache ISR: Revalida a cada 1 hora (artigos educacionais mudam raramente)
@@ -140,6 +142,15 @@ export default async function ArtigoEducacionalPage({ params }: { params: Promis
     notFound();
   }
 
+  // Verificar se é artigo da trilha "Comece por Aqui"
+  const isGuiaEssencial = isGuiaEssencialSlug(slug);
+
+  if (isGuiaEssencial) {
+    // Renderizar template simplificado para trilha de iniciantes
+    return <GuiaEssencialClient article={article} />;
+  }
+
+  // Renderizar template completo para artigos normais
   const relatedArticles = await getRelatedArticles(article.category, slug);
 
   return (
@@ -149,3 +160,4 @@ export default async function ArtigoEducacionalPage({ params }: { params: Promis
     />
   );
 }
+

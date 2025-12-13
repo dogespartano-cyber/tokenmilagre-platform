@@ -23,7 +23,8 @@ import {
     faGraduationCap,
     faStore,
     faBitcoinSign,
-    faRotateRight
+    faRotateRight,
+    faArrowLeft
 } from '@fortawesome/free-solid-svg-icons';
 import {
     DndContext,
@@ -44,6 +45,8 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useTheme } from '@/contexts/ThemeContext';
+import { GUIA_ESSENCIAL_TRILHA, isGuiaEssencialSlug } from '@/lib/education/guia-essencial';
+import { CheckCircle2, ChevronRight } from 'lucide-react';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -122,6 +125,15 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     const [mounted, setMounted] = useState(false);
 
     const STORAGE_KEY = 'zenith_sidebar_order';
+
+    // Detectar se está em modo trilha "Comece por Aqui"
+    const currentSlug = pathname?.startsWith('/educacao/')
+        ? pathname.replace('/educacao/', '').split('/')[0]
+        : null;
+    const isTrilhaMode = currentSlug ? isGuiaEssencialSlug(currentSlug) : false;
+    const currentTrilhaIndex = isTrilhaMode
+        ? GUIA_ESSENCIAL_TRILHA.findIndex(t => t.slug === currentSlug)
+        : -1;
 
     useEffect(() => {
         setMounted(true);
@@ -285,53 +297,121 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                     </div>
 
                     {/* Sidebar Navigation */}
-                    {/* Sidebar Navigation */}
                     <nav className="flex-1 p-4 overflow-y-auto flex flex-col">
-                        <div className="flex-1">
-                            <DndContext
-                                sensors={sensors}
-                                collisionDetection={closestCenter}
-                                onDragEnd={handleDragEnd}
-                            >
-                                <SortableContext
-                                    items={items.map(i => i.id)}
-                                    strategy={verticalListSortingStrategy}
+                        {isTrilhaMode ? (
+                            /* Modo Trilha: Navegação "Comece por Aqui" */
+                            <>
+                                {/* Botão Voltar ao Menu */}
+                                <Link
+                                    href="/educacao"
+                                    onClick={onClose}
+                                    className="group flex items-center gap-3 px-4 py-3 mb-4 rounded-xl font-semibold text-sm text-[var(--text-secondary)] hover:text-[var(--brand-primary)] hover:bg-[var(--bg-secondary)] transition-all duration-300 border border-[var(--border-light)]"
                                 >
-                                    <div className="space-y-2">
-                                        {items.map((item) => {
-                                            const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
-                                            return (
-                                                <SortableMenuItem
-                                                    key={item.id}
-                                                    item={item}
-                                                    onClose={onClose}
-                                                    isActive={isActive}
-                                                    theme={theme}
-                                                />
-                                            );
-                                        })}
-                                    </div>
-                                </SortableContext>
-                            </DndContext>
-                        </div>
+                                    <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
+                                    <span>Voltar ao Menu</span>
+                                </Link>
 
-                        {/* Reset Interface Button */}
-                        <div className="pt-2 mt-2 border-t border-[var(--border-light)] dark:border-white/5">
-                            <button
-                                onClick={() => {
-                                    if (window.confirm('Deseja resetar a organização da interface para o padrão?')) {
-                                        localStorage.removeItem('zenith_home_sections_order');
-                                        localStorage.removeItem('zenith_sidebar_order');
-                                        localStorage.removeItem('zenith_ticker_order');
-                                        window.location.reload();
-                                    }
-                                }}
-                                className="w-full group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base text-[var(--text-tertiary)] hover:text-[var(--brand-primary)] hover:bg-[var(--bg-secondary)] transition-all duration-300"
-                            >
-                                <FontAwesomeIcon icon={faRotateRight} className="w-5 h-5 transition-transform duration-500 group-hover:rotate-180" />
-                                <span>Resetar Interface</span>
-                            </button>
-                        </div>
+                                {/* Lista de Artigos da Trilha */}
+                                <div className="flex-1 space-y-1">
+                                    {GUIA_ESSENCIAL_TRILHA.map((item, index) => {
+                                        const Icon = item.icon;
+                                        const isCurrent = item.slug === currentSlug;
+                                        const isPast = index < currentTrilhaIndex;
+
+                                        return (
+                                            <Link
+                                                key={item.slug}
+                                                href={`/educacao/${item.slug}`}
+                                                onClick={onClose}
+                                                className={`
+                                                    group flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all duration-300
+                                                    ${isCurrent
+                                                        ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] font-semibold'
+                                                        : isPast
+                                                            ? 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]'
+                                                            : 'text-[var(--text-tertiary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-secondary)]'
+                                                    }
+                                                `}
+                                            >
+                                                <Icon className="w-4 h-4 shrink-0" />
+                                                <span className="truncate flex-1">{item.title}</span>
+                                                {isPast && (
+                                                    <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+                                                )}
+                                                {isCurrent && (
+                                                    <ChevronRight className="w-4 h-4 shrink-0" />
+                                                )}
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
+
+                                {/* Progresso Visual */}
+                                <div className="mt-4 pt-4 border-t border-[var(--border-light)]">
+                                    <div className="px-4">
+                                        <div className="flex justify-between text-xs text-[var(--text-tertiary)] mb-2">
+                                            <span>Progresso</span>
+                                            <span>{Math.round(((currentTrilhaIndex + 1) / GUIA_ESSENCIAL_TRILHA.length) * 100)}%</span>
+                                        </div>
+                                        <div className="h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+                                            <div
+                                                className="h-full bg-[var(--brand-primary)] rounded-full transition-all duration-500"
+                                                style={{ width: `${((currentTrilhaIndex + 1) / GUIA_ESSENCIAL_TRILHA.length) * 100}%` }}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        ) : (
+                            /* Modo Normal: Menu padrão com DnD */
+                            <>
+                                <div className="flex-1">
+                                    <DndContext
+                                        sensors={sensors}
+                                        collisionDetection={closestCenter}
+                                        onDragEnd={handleDragEnd}
+                                    >
+                                        <SortableContext
+                                            items={items.map(i => i.id)}
+                                            strategy={verticalListSortingStrategy}
+                                        >
+                                            <div className="space-y-2">
+                                                {items.map((item) => {
+                                                    const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
+                                                    return (
+                                                        <SortableMenuItem
+                                                            key={item.id}
+                                                            item={item}
+                                                            onClose={onClose}
+                                                            isActive={isActive}
+                                                            theme={theme}
+                                                        />
+                                                    );
+                                                })}
+                                            </div>
+                                        </SortableContext>
+                                    </DndContext>
+                                </div>
+
+                                {/* Reset Interface Button */}
+                                <div className="pt-2 mt-2 border-t border-[var(--border-light)] dark:border-white/5">
+                                    <button
+                                        onClick={() => {
+                                            if (window.confirm('Deseja resetar a organização da interface para o padrão?')) {
+                                                localStorage.removeItem('zenith_home_sections_order');
+                                                localStorage.removeItem('zenith_sidebar_order');
+                                                localStorage.removeItem('zenith_ticker_order');
+                                                window.location.reload();
+                                            }
+                                        }}
+                                        className="w-full group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base text-[var(--text-tertiary)] hover:text-[var(--brand-primary)] hover:bg-[var(--bg-secondary)] transition-all duration-300"
+                                    >
+                                        <FontAwesomeIcon icon={faRotateRight} className="w-5 h-5 transition-transform duration-500 group-hover:rotate-180" />
+                                        <span>Resetar Interface</span>
+                                    </button>
+                                </div>
+                            </>
+                        )}
                     </nav>
                 </div>
             </aside>

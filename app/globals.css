@@ -1396,3 +1396,171 @@ body {
   opacity: 0.3;
   /* Stronger visibility */
 }
+/* ============================================
+   PROSE STYLES - Article Typography (Tailwind v4 Compatible)
+   ============================================ */
+
+/* Base prose container */
+.prose {
+  color: var(--text-article-body);
+  line-height: 1.8;
+  font-size: 1.125rem;
+}
+
+.prose-lg {
+  font-size: 1.125rem;
+}
+
+/* Headings */
+.prose h1 {
+  color: var(--text-article-title);
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
+}
+
+.prose h2 {
+  color: var(--text-article-title);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-article);
+  letter-spacing: -0.025em;
+}
+
+.prose h3 {
+  color: var(--text-article-title);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose h4 {
+  color: var(--text-article-title);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Paragraphs */
+.prose p {
+  margin-bottom: 1.5rem;
+  color: var(--text-article-body);
+}
+
+/* Strong and emphasis */
+.prose strong {
+  color: var(--text-article-title);
+  font-weight: 600;
+}
+
+.prose em {
+  font-style: italic;
+}
+
+/* Links */
+.prose a {
+  color: var(--brand-primary);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.prose a:hover {
+  text-decoration: underline;
+}
+
+/* Lists */
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-article-body);
+  padding-left: 0.5rem;
+}
+
+.prose ul > li::marker {
+  color: var(--brand-primary);
+}
+
+.prose ol > li::marker {
+  color: var(--brand-primary);
+  font-weight: 600;
+}
+
+/* Blockquotes */
+.prose blockquote {
+  border-left: 4px solid var(--brand-primary);
+  background: var(--bg-article-quote);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 0.75rem 0.75rem 0;
+  font-style: normal;
+}
+
+.prose blockquote p {
+  margin-bottom: 0;
+  color: var(--text-article-body);
+}
+
+/* Code inline */
+.prose code {
+  color: var(--brand-primary);
+  background: var(--bg-article-tag);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+/* Code blocks */
+.prose pre {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-article);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background: transparent;
+  padding: 0;
+  color: var(--text-article-body);
+}
+
+/* Horizontal rules */
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--border-article);
+  margin: 2.5rem 0;
+}
+
+/* Images */
+.prose img {
+  border-radius: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+/* Max width none override */
+.prose.max-w-none {
+  max-width: none;
+}
