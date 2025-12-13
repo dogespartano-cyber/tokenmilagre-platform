@@ -29,13 +29,13 @@ export function LearnCryptoSection({ education }: LearnCryptoSectionProps) {
                     <Link
                         key={item.id}
                         href={`/educacao/${item.slug}`}
-                        className="group relative overflow-hidden rounded-3xl backdrop-blur-md bg-gradient-to-br from-gray-500/10 to-slate-500/5 border border-gray-500/20 hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300"
+                        className="group relative overflow-hidden rounded-3xl backdrop-blur-md bg-gradient-to-br from-gray-500/10 to-slate-500/5 border border-gray-500/20 hover:border-[var(--brand-primary)]/50 hover:shadow-xl hover:shadow-[var(--brand-primary)]/10 transition-all duration-300"
                     >
-                        <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-orange-500 to-amber-500" style={{ boxShadow: '0 0 20px #f9731640' }} />
+                        <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-light)]" style={{ boxShadow: '0 0 20px var(--brand-primary)' }} />
                         {/* Inner padding container */}
                         <div className="p-6 h-full flex flex-col gap-4 relative z-10">
                             <div className="flex flex-col gap-3">
-                                <h3 className="text-xl font-bold leading-tight text-[var(--text-primary)] font-[family-name:var(--font-poppins)] group-hover:text-orange-500 transition-colors line-clamp-2">
+                                <h3 className="text-xl font-bold leading-tight text-[var(--text-primary)] font-[family-name:var(--font-poppins)] group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2">
                                     {item.title}
                                 </h3>
 
@@ -44,7 +44,7 @@ export function LearnCryptoSection({ education }: LearnCryptoSectionProps) {
                                 </p>
                             </div>
 
-                            <div className="pt-4 border-t border-gray-500/20 flex items-center gap-2 text-[var(--text-tertiary)] group-hover:text-orange-500 text-xs font-bold uppercase tracking-wider transition-colors">
+                            <div className="pt-4 border-t border-gray-500/20 flex items-center gap-2 text-[var(--text-tertiary)] group-hover:text-[var(--brand-primary)] text-xs font-bold uppercase tracking-wider transition-colors">
                                 Ler Guia <FontAwesomeIcon icon={faArrowRight} />
                             </div>
                         </div>

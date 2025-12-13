@@ -197,43 +197,34 @@ export default function CustomUserButton() {
                                     <p className="text-sm font-medium" style={{ color: 'var(--text-modal-muted)' }}>
                                         Cor de Destaque
                                     </p>
-                                    <div className="flex items-center gap-2">
-                                        {/* Milagre (Original) - Default/First */}
-                                        <button
-                                            onClick={() => setAccent('milagre')}
-                                            className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'milagre' ? 'ring-2 ring-offset-2 ring-[#0D9488]' : ''}`}
-                                            style={{ background: 'linear-gradient(135deg, #14B8A6, #0D9488)' }}
-                                            title="Milagre (Original)"
-                                        />
-                                        {/* Default (Brand) */}
-                                        <button
-                                            onClick={() => setAccent('default')}
-                                            className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'default' ? 'ring-2 ring-offset-2 ring-[var(--brand-primary)]' : ''}`}
-                                            style={{ backgroundColor: theme === 'dark' ? '#FFD700' : '#0D9488' }}
-                                            title="Padrão"
-                                        />
-                                        {/* Ocean */}
-                                        <button
-                                            onClick={() => setAccent('ocean')}
-                                            className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'ocean' ? 'ring-2 ring-offset-2 ring-[#0EA5E9]' : ''}`}
-                                            style={{ backgroundColor: '#0EA5E9' }}
-                                            title="Oceano"
-                                        />
-                                        {/* Forest */}
-                                        <button
-                                            onClick={() => setAccent('forest')}
-                                            className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'forest' ? 'ring-2 ring-offset-2 ring-[#10B981]' : ''}`}
-                                            style={{ backgroundColor: '#10B981' }}
-                                            title="Floresta"
-                                        />
-                                        {/* Sunset */}
-                                        <button
-                                            onClick={() => setAccent('sunset')}
-                                            className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'sunset' ? 'ring-2 ring-offset-2 ring-[#F97316]' : ''}`}
-                                            style={{ backgroundColor: '#F97316' }}
-                                            title="Pôr do Sol"
-                                        />
-                                    </div>
+                                    {/* Milagre (Original) - Default/First */}
+                                    <button
+                                        onClick={() => setAccent('milagre')}
+                                        className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'milagre' ? 'ring-2 ring-offset-2 ring-[#0D9488]' : ''}`}
+                                        style={{ background: 'linear-gradient(135deg, #14B8A6, #0D9488)' }}
+                                        title="Milagre (Teal)"
+                                    />
+                                    {/* Titanium (Blue/Silver) */}
+                                    <button
+                                        onClick={() => setAccent('ocean')}
+                                        className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'ocean' ? 'ring-2 ring-offset-2 ring-[#38BDF8]' : ''}`}
+                                        style={{ background: 'linear-gradient(135deg, #94A3B8, #0EA5E9)' }}
+                                        title="Titanium (Blue)"
+                                    />
+                                    {/* Amethyst (Purple/Violet) */}
+                                    <button
+                                        onClick={() => setAccent('forest')}
+                                        className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'forest' ? 'ring-2 ring-offset-2 ring-[#8B5CF6]' : ''}`}
+                                        style={{ background: 'linear-gradient(135deg, #A78BFA, #7C3AED)' }}
+                                        title="Amethyst (Purple)"
+                                    />
+                                    {/* Copper (Orange/Bronze) */}
+                                    <button
+                                        onClick={() => setAccent('sunset')}
+                                        className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'sunset' ? 'ring-2 ring-offset-2 ring-[#F97316]' : ''}`}
+                                        style={{ background: 'linear-gradient(135deg, #FDBA74, #EA580C)' }}
+                                        title="Copper (Orange)"
+                                    />
                                 </div>
                             </div>
                         )}

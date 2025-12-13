@@ -1,258 +1,172 @@
 /**
- * Forest Dark - Complete Theme Variant
- * 
- * A full dark theme alternative with forest/green color palette.
- * Overrides ALL visual tokens, not just accent colors.
- * 
- * Apply via: <html data-theme="dark" data-accent="forest">
+ * MATERIAL: AMETHYST (Formerly Forest/Obsidian)
+ * Designer: Jony Ive (Agent)
+ * Concept: Crystalline Void. Royal Mystery.
+ * Revision: Absolute Neutral Backgrounds (No Tint)
  */
 
+/* ============================================
+   DARK MODE - AMETHYST (Deep Neutral Void)
+   ============================================ */
 [data-theme="dark"][data-accent="forest"] {
-    /* ============================================
-     FOREST DARK MODE - Midnight Canopy
-     ============================================ */
+    /* Background: Pure Deep Neural Gray/Black - NO PURPLE TINT */
+    --bg-primary: #020617;
+    /* Slate 950 */
+    --bg-secondary: #0F172A;
+    /* Slate 900 */
+    --bg-tertiary: #1E293B;
+    /* Slate 800 */
+    --bg-elevated: #1E293B;
+    --bg-overlay: transparent;
+    /* REMOVED TINT OVERLAY */
 
-    /* Background Colors - Deepest Forest */
-    --bg-primary: #020604;
-    /* Almost black green */
-    --bg-secondary: #05100a;
-    /* Deep pine */
-    --bg-tertiary: #0a1f13;
-    /* Night canopy */
-    --bg-elevated: #0d2618;
-    --bg-overlay: rgba(2, 6, 4, 0.9);
+    /* RGB for Transparency */
+    --bg-elevated-rgb: 30, 41, 59;
+    --bg-secondary-rgb: 15, 23, 42;
 
-    /* RGB values for transparency */
-    --bg-elevated-rgb: 13, 38, 24;
-    --bg-secondary-rgb: 5, 16, 10;
+    /* Text: Absolute Clarity */
+    --text-primary: #F8FAFC;
+    --text-secondary: #E2E8F0;
+    --text-tertiary: #94A3B8;
+    --text-muted: #64748B;
+    --text-inverse: #020617;
+    --text-disabled: #475569;
 
-    /* Text Colors */
-    --text-primary: #f0fdf4;
-    /* Emerald 50 */
-    --text-secondary: #a7f3d0;
-    /* Emerald 200 */
-    --text-tertiary: #6ee7b7;
-    /* Emerald 300 */
-    --text-muted: #34d399;
-    /* Emerald 400 */
-    --text-inverse: #022c22;
-    --text-disabled: #374151;
+    /* Brand: Amethyst Crystal - ACCENTS ONLY */
+    --brand-primary: #8B5CF6;
+    /* Violet 500 */
+    --brand-hover: #7C3AED;
+    /* Violet 600 */
+    --brand-light: #A78BFA;
+    --brand-lighter: #DDD6FE;
+    --brand-bg: #2E1065;
+    --brand-border: #5B21B6;
 
-    /* Border Colors */
-    --border-light: #064e3b;
-    --border-medium: #065f46;
-    --border-strong: #10b981;
-    /* Emerald 500 */
-    --border-focus: #34d399;
-    /* Neon Emerald */
+    /* Borders: Neutral with hint */
+    --border-light: #1E293B;
+    --border-medium: #334155;
+    --border-strong: #4C1D95;
+    /* Deep purple hint only on strong borders */
+    --border-focus: #8B5CF6;
 
-    /* Shadows - Bio-Luminescent Green */
-    --shadow-xs: 0 1px 2px 0 rgba(52, 211, 153, 0.1);
-    --shadow-sm: 0 1px 3px 0 rgba(52, 211, 153, 0.15), 0 1px 2px -1px rgba(52, 211, 153, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(52, 211, 153, 0.15), 0 2px 4px -2px rgba(52, 211, 153, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(16, 185, 129, 0.2), 0 4px 6px -4px rgba(16, 185, 129, 0.2);
-    --shadow-xl: 0 20px 25px -5px rgba(5, 150, 105, 0.3), 0 8px 10px -6px rgba(5, 150, 105, 0.2);
-    --shadow-2xl: 0 25px 50px -12px rgba(2, 6, 4, 0.9);
-    --shadow-inner: inset 0 2px 4px 0 rgba(52, 211, 153, 0.1);
+    /* Functional */
+    --success: #10B981;
+    --warning: #F59E0B;
+    --error: #EF4444;
+    --info: #3B82F6;
 
-    /* Brand - Neon Forest */
-    --brand-primary: #34d399;
-    /* Emerald 400 - Constant Glow */
-    --brand-hover: #10b981;
-    /* Emerald 500 */
-    --brand-light: #6ee7b7;
-    /* Emerald 300 */
-    --brand-lighter: #d1fae5;
-    --brand-bg: #064e3b;
-    /* Emerald 900 */
-    --brand-border: #059669;
-    /* Emerald 600 */
+    --success-bg: rgba(16, 185, 129, 0.1);
+    --warning-bg: rgba(245, 158, 11, 0.1);
+    --error-bg: rgba(239, 68, 68, 0.1);
+    --info-bg: rgba(59, 130, 246, 0.1);
 
-    /* Accent */
-    --accent-primary: #22c55e;
-    /* Green 500 */
-    --accent-hover: #16a34a;
-    /* Green 600 */
-    --accent-light: #4ade80;
-    /* Green 400 */
+    /* Shadows */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(2, 6, 23, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(2, 6, 23, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(2, 6, 23, 0.5);
 
-    /* Gradients */
-    --gradient-start: #34d399;
-    /* Emerald 400 */
-    --gradient-end: #4ade80;
-    /* Green 400 - Vibrant Life */
+    /* Gradients: Amethyst Facets */
+    --gradient-start: #8B5CF6;
+    --gradient-end: #6D28D9;
 
-    /* Functional Colors */
-    --success: #22c55e;
-    --success-light: #4ade80;
-    --success-bg: #14532d;
-    --success-border: #16a34a;
-
-    --error: #f87171;
-    --error-light: #fca5a5;
-    --error-bg: #450a0a;
-    --error-border: #b91c1c;
-
-    --warning: #fbbf24;
-    --warning-light: #fcd34d;
-    --warning-bg: #78350f;
-    --warning-border: #d97706;
-
-    --info: #38bdf8;
-    --info-light: #7dd3fc;
-    --info-bg: #0c4a6e;
-    --info-border: #0ea5e9;
-
-    /* Icons */
-    --icon: #6ee7b7;
-    --icon-muted: #34d399;
-    --icon-inverse: #022c22;
-
-    /* Dividers */
-    --divider: #064e3b;
-
-    /* Focus Ring */
-    --focus-ring: #34d399;
-
-    /* Link Color */
-    --text-link: #34d399;
-
-    /* Modal */
-    --modal-overlay: rgba(2, 6, 4, 0.9);
-    --bg-modal: #0a1f13;
-    --text-modal: #f0fdf4;
-    --text-modal-muted: #a7f3d0;
-    --border-modal: #064e3b;
-    --bg-modal-input: #064e3b;
-    --bg-modal-hover: #065f46;
+    /* Misc */
+    --modal-overlay: rgba(2, 6, 23, 0.85);
+    --icon: #E2E8F0;
+    --text-link: #A78BFA;
 
     /* Article */
-    --text-article-title: #f0fdf4;
-    --text-article-body: #a7f3d0;
-    --text-article-muted: #6ee7b7;
-    --bg-article-tag: rgba(52, 211, 153, 0.1);
+    --text-article-title: #F8FAFC;
+    --text-article-body: #E2E8F0;
+    --text-article-muted: #94A3B8;
+    --bg-article-tag: rgba(139, 92, 246, 0.1);
     --bg-article-quote: rgba(255, 255, 255, 0.03);
-    --border-article: rgba(52, 211, 153, 0.2);
+    --border-article: rgba(139, 92, 246, 0.2);
 }
 
 /* ================================================
-   FOREST LIGHT MODE - Morning Dew
+   LIGHT MODE - LILAC (Clean Neutral)
    ================================================ */
 [data-theme="light"][data-accent="forest"] {
-    /* Background Colors - Crisp Mint */
-    --bg-primary: #f2fcf5;
-    /* Minty White */
-    --bg-secondary: #ffffff;
-    --bg-tertiary: #ecfdf5;
-    /* Emerald 50 */
-    --bg-elevated: #ffffff;
-    --bg-overlay: rgba(6, 78, 59, 0.4);
+    /* Background Colors - PURE WHITE / NEUTRAL - NO LILAC TINT */
+    --bg-primary: #F8FAFC;
+    /* Slate 50 */
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #F1F5F9;
+    /* Slate 100 */
+    --bg-elevated: #FFFFFF;
+    --bg-overlay: transparent;
+    /* REMOVED TINT OVERLAY */
 
     /* RGB values for transparency */
     --bg-elevated-rgb: 255, 255, 255;
     --bg-secondary-rgb: 255, 255, 255;
 
-    /* Text Colors */
-    --text-primary: #064e3b;
-    /* Emerald 900 */
-    --text-secondary: #065f46;
-    /* Emerald 800 */
-    --text-tertiary: #047857;
-    /* Emerald 700 */
-    --text-muted: #10b981;
-    /* Emerald 500 */
-    --text-inverse: #ffffff;
-    --text-disabled: #a7f3d0;
+    /* Text Colors - Neutral Dark */
+    --text-primary: #020617;
+    /* Slate 950 */
+    --text-secondary: #334155;
+    /* Slate 700 */
+    --text-tertiary: #475569;
+    --text-muted: #64748B;
+    --text-inverse: #FFFFFF;
+    --text-disabled: #CBD5E1;
 
     /* Border Colors */
-    --border-light: #d1fae5;
-    --border-medium: #a7f3d0;
-    --border-strong: #6ee7b7;
-    --border-focus: #10b981;
+    --border-light: #E2E8F0;
+    --border-medium: #CBD5E1;
+    --border-strong: #94A3B8;
+    --border-focus: #8B5CF6;
 
-    /* Shadows - Fresh Green */
-    --shadow-xs: 0 1px 2px 0 rgba(16, 185, 129, 0.05);
-    --shadow-sm: 0 1px 3px 0 rgba(16, 185, 129, 0.1), 0 1px 2px -1px rgba(16, 185, 129, 0.06);
-    --shadow-md: 0 4px 6px -1px rgba(16, 185, 129, 0.1), 0 2px 4px -2px rgba(16, 185, 129, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(16, 185, 129, 0.1), 0 4px 6px -4px rgba(16, 185, 129, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(16, 185, 129, 0.1), 0 8px 10px -6px rgba(16, 185, 129, 0.05);
-    --shadow-2xl: 0 25px 50px -12px rgba(16, 185, 129, 0.25);
-    --shadow-inner: inset 0 2px 4px 0 rgba(16, 185, 129, 0.06);
+    /* Shadows - Neutral */
+    --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
 
-    /* Brand - Forest Green */
-    --brand-primary: #059669;
-    /* Emerald 600 */
-    --brand-hover: #047857;
-    /* Emerald 700 */
-    --brand-light: #10b981;
-    /* Emerald 500 */
-    --brand-lighter: #6ee7b7;
-    --brand-bg: #ecfdf5;
-    /* Emerald 50 */
-    --brand-border: #a7f3d0;
-    /* Emerald 200 */
+    /* Brand - Amethyst Accents Only */
+    --brand-primary: #8B5CF6;
+    --brand-hover: #7C3AED;
+    --brand-light: #A78BFA;
+    --brand-lighter: #DDD6FE;
+    --brand-bg: #F5F3FF;
+    /* Very subtle tint allowed only on brand backgrounds */
+    --brand-border: #DDD6FE;
 
     /* Accent */
-    --accent-primary: #15803d;
-    /* Green 700 */
-    --accent-hover: #166534;
-    /* Green 800 */
-    --accent-light: #16a34a;
-    /* Green 600 */
+    --accent-primary: #7C3AED;
+    --accent-hover: #6D28D9;
+    --accent-light: #A78BFA;
 
     /* Gradients */
-    --gradient-start: #059669;
-    --gradient-end: #10b981;
+    --gradient-start: #8B5CF6;
+    --gradient-end: #7C3AED;
 
     /* Functional Colors */
-    --success: #059669;
-    --success-light: #10b981;
-    --success-bg: #ecfdf5;
-    --success-border: #a7f3d0;
-
-    --error: #dc2626;
-    --error-light: #f87171;
-    --error-bg: #fef2f2;
-    --error-border: #fecaca;
-
-    --warning: #d97706;
-    --warning-light: #fbbf24;
-    --warning-bg: #fffbeb;
-    --warning-border: #fde68a;
-
-    --info: #0284c7;
-    --info-light: #38bdf8;
-    --info-bg: #f0f9ff;
-    --info-border: #bae6fd;
+    --success: #16A34A;
+    --error: #DC2626;
+    --warning: #D97706;
+    --info: #2563EB;
 
     /* Icons */
-    --icon: #059669;
-    --icon-muted: #34d399;
-    --icon-inverse: #ffffff;
+    --icon: #475569;
+    --icon-muted: #64748B;
+    --icon-inverse: #FFFFFF;
 
     /* Dividers */
-    --divider: #d1fae5;
+    --divider: #E2E8F0;
 
     /* Focus Ring */
-    --focus-ring: #059669;
-
-    /* Link Color */
-    --text-link: #059669;
-
-    /* Modal */
-    --modal-overlay: rgba(0, 0, 0, 0.5);
-    --bg-modal: #ffffff;
-    --text-modal: #064e3b;
-    --text-modal-muted: #059669;
-    --border-modal: #d1fae5;
-    --bg-modal-input: #ecfdf5;
-    --bg-modal-hover: #d1fae5;
+    --focus-ring: #8B5CF6;
+    --text-link: #7C3AED;
 
     /* Article */
-    --text-article-title: #064e3b;
-    --text-article-body: #065f46;
-    --text-article-muted: #10b981;
-    --bg-article-tag: #d1fae5;
-    --bg-article-quote: #ecfdf5;
-    --border-article: #a7f3d0;
+    --text-article-title: #020617;
+    --text-article-body: #334155;
+    --text-article-muted: #64748B;
+    --bg-article-tag: #F1F5F9;
+    --bg-article-quote: #F8FAFC;
+    --border-article: #E2E8F0;
+    --modal-overlay: rgba(15, 23, 42, 0.4);
 }

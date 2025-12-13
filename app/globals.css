@@ -1140,6 +1140,7 @@ body {
 /* 
    CRYSTAL SYSTEM - Holistic Glass Design 
    Unified class for the premium "Crystal Minimalist" aesthetic.
+   Updated: Material Revolution Force Rebuild
 */
 /* 
    ZENITH SYSTEM - Cyber-Prosperity Architecture
@@ -1184,7 +1185,10 @@ body {
 
 /* MILAGRE Theme Card Override */
 /* MILAGRE Theme Card Override - Transparent Glass Test */
-[data-theme="dark"][data-accent="milagre"] .zenith-card {
+[data-theme="dark"][data-accent="milagre"] .zenith-card,
+[data-theme="dark"][data-accent="ocean"] .zenith-card,
+[data-theme="dark"][data-accent="forest"] .zenith-card,
+[data-theme="dark"][data-accent="sunset"] .zenith-card {
   /* Fully Transparent Background (Testing Only Blur + Border) */
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1193,11 +1197,14 @@ body {
   -webkit-backdrop-filter: blur(20px);
 }
 
-[data-theme="dark"][data-accent="milagre"] .zenith-card:hover {
+[data-theme="dark"][data-accent="milagre"] .zenith-card:hover,
+[data-theme="dark"][data-accent="ocean"] .zenith-card:hover,
+[data-theme="dark"][data-accent="forest"] .zenith-card:hover,
+[data-theme="dark"][data-accent="sunset"] .zenith-card:hover {
   background: rgba(255, 255, 255, 0.03);
   /* Minimal hover hint */
-  border-color: rgba(20, 184, 166, 0.4);
-  /* Teal border on hover */
+  border-color: var(--border-focus);
+  /* Match variant accent color */
   box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(20, 184, 166, 0.05);
 }
 
@@ -1306,30 +1313,48 @@ body {
    MILAGRE THEME SPECIAL ATMOSPHERE
    matches production screenshot
    ================================= */
-[data-theme="dark"][data-accent="milagre"] .global-background-effects::before {
-  /* Remove Gold Mesh */
+/* =================================
+   VOID COLLECTION ATMOSPHERE
+   Adaptive Glows using CSS Variables
+   ================================= */
+
+/* 1. Remove Gold Mesh for all "Void" variants */
+[data-theme="dark"][data-accent="milagre"] .global-background-effects::before,
+[data-theme="dark"][data-accent="ocean"] .global-background-effects::before,
+[data-theme="dark"][data-accent="forest"] .global-background-effects::before,
+[data-theme="dark"][data-accent="sunset"] .global-background-effects::before {
   background-image: none;
 }
 
-/* Top-Left Green/Teal Glow */
-[data-theme="dark"][data-accent="milagre"] .global-background-effects::after {
+/* 2. Adaptive Top-Left Glow */
+[data-theme="dark"][data-accent="milagre"] .global-background-effects::after,
+[data-theme="dark"][data-accent="ocean"] .global-background-effects::after,
+[data-theme="dark"][data-accent="forest"] .global-background-effects::after,
+[data-theme="dark"][data-accent="sunset"] .global-background-effects::after {
   content: '';
   position: absolute;
   top: -10%;
   left: -10%;
   width: 50vw;
   height: 50vh;
-  background: radial-gradient(circle, rgba(20, 184, 166, 0.15) 0%, transparent 70%);
+  /* Use gradient-start variable for adaptive color, low opacity */
+  background: radial-gradient(circle, var(--gradient-start) 0%, transparent 70%);
+  opacity: 0.15;
   filter: blur(80px);
   z-index: -1;
   animation: pulse-slow 8s infinite ease-in-out;
 }
 
 /* Bottom-Right Green Glow (Requested adjustment) */
-[data-theme="dark"][data-accent="milagre"] .global-background-effects {
+/* 3. Adaptive Bottom-Right Glow */
+[data-theme="dark"][data-accent="milagre"] .global-background-effects,
+[data-theme="dark"][data-accent="ocean"] .global-background-effects,
+[data-theme="dark"][data-accent="forest"] .global-background-effects,
+[data-theme="dark"][data-accent="sunset"] .global-background-effects {
   background-image:
-    /* Green Glow at Bottom-Right */
-    radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.15) 0%, transparent 60%),
-    /* Existing Top-Left Teal Hint (kept as is) */
-    radial-gradient(circle at 10% 10%, rgba(20, 184, 166, 0.15) 0%, transparent 60%);
+    /* Bottom-Right Glow (using gradient-start) */
+    radial-gradient(circle at 100% 100%, var(--gradient-start) 0%, transparent 60%),
+    /* Top-Left Hint (using gradient-end) */
+    radial-gradient(circle at 10% 10%, var(--gradient-end) 0%, transparent 60%);
+  opacity: 0.15;
 }

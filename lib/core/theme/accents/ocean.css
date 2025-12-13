@@ -1,259 +1,175 @@
 /**
- * Ocean Dark - Complete Theme Variant
- * 
- * A full dark theme alternative with ocean/blue color palette.
- * Overrides ALL visual tokens, not just accent colors.
- * 
- * Apply via: <html data-theme="dark" data-accent="ocean">
+ * MATERIAL: TITANIUM (Formerly Ocean)
+ * Designer: Jony Ive (Agent)
+ * Concept: Aerospace. Precision. Cold.
  */
 
+/* ============================================
+   DARK MODE - TITANIUM (Aerospace Void)
+   ============================================ */
 [data-theme="dark"][data-accent="ocean"] {
-    /* ============================================
-     OCEAN DARK MODE - Deep Mare Incognitum
-     ============================================ */
+    /* Background: Cold Gunmetal Void */
+    --bg-primary: #0B1120;
+    /* Deepest Navy/Slate */
+    --bg-secondary: #151F32;
+    /* Machined Metal */
+    --bg-tertiary: #1E293B;
+    /* Slate */
+    --bg-elevated: #1E293B;
+    --bg-overlay: rgba(11, 17, 32, 0.9);
 
-    /* Background Colors - Deepest Abyssal Blue */
-    --bg-primary: #02040a;
-    /* Almost pure black blue */
-    --bg-secondary: #080c14;
-    /* Deep navy */
-    --bg-tertiary: #0f172a;
-    /* Dark slate */
-    --bg-elevated: #162032;
-    --bg-overlay: rgba(2, 4, 10, 0.85);
+    /* RGB for Transparency */
+    --bg-elevated-rgb: 30, 41, 59;
+    --bg-secondary-rgb: 21, 31, 50;
 
-    /* RGB values for transparency */
-    --bg-elevated-rgb: 22, 32, 50;
-    --bg-secondary-rgb: 8, 12, 20;
+    /* Text: Laser Etched Purity */
+    --text-primary: #F8FAFC;
+    /* White */
+    --text-secondary: #CBD5E1;
+    /* Light Gray */
+    --text-tertiary: #94A3B8;
+    /* Muted Metal */
+    --text-muted: #64748B;
+    --text-inverse: #0F172A;
+    --text-disabled: #475569;
 
-    /* Text Colors */
-    --text-primary: #f0f9ff;
-    /* Sky 50 */
-    --text-secondary: #bae6fd;
-    /* Sky 200 */
-    --text-tertiary: #7dd3fc;
-    /* Sky 300 */
-    --text-muted: #38bdf8;
+    /* Brand: Electric Blue (Ion Thruster) */
+    --brand-primary: #38BDF8;
     /* Sky 400 */
-    --text-inverse: #02040a;
-    --text-disabled: #334155;
+    --brand-hover: #0EA5E9;
+    /* Sky 500 */
+    --brand-light: #7DD3FC;
+    --brand-lighter: #BAE6FD;
+    --brand-bg: #0C4A6E;
+    --brand-border: #075985;
 
-    /* Border Colors */
-    --border-light: #1e293b;
+    /* Borders: Precision Machined */
+    --border-light: #1E293B;
     --border-medium: #334155;
-    --border-strong: #0ea5e9;
-    /* Sky 500 */
-    --border-focus: #38bdf8;
-    /* Sky 400 - Neon Glow */
+    --border-strong: #475569;
+    --border-focus: #38BDF8;
 
-    /* Shadows - Bio-Luminescent */
-    --shadow-xs: 0 1px 2px 0 rgba(56, 189, 248, 0.1);
-    --shadow-sm: 0 1px 3px 0 rgba(56, 189, 248, 0.15), 0 1px 2px -1px rgba(56, 189, 248, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(56, 189, 248, 0.15), 0 2px 4px -2px rgba(56, 189, 248, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(14, 165, 233, 0.2), 0 4px 6px -4px rgba(14, 165, 233, 0.2);
-    --shadow-xl: 0 20px 25px -5px rgba(2, 132, 199, 0.3), 0 8px 10px -6px rgba(2, 132, 199, 0.2);
-    --shadow-2xl: 0 25px 50px -12px rgba(2, 6, 23, 0.9);
-    --shadow-inner: inset 0 2px 4px 0 rgba(56, 189, 248, 0.1);
+    /* Functional */
+    --success: #10B981;
+    --warning: #F59E0B;
+    --error: #EF4444;
+    --info: #38BDF8;
 
-    /* Brand - Electric Ocean */
-    --brand-primary: #38bdf8;
-    /* Sky 400 - Constant Glow */
-    --brand-hover: #0ea5e9;
-    /* Sky 500 */
-    --brand-light: #7dd3fc;
-    /* Sky 300 */
-    --brand-lighter: #e0f2fe;
-    --brand-bg: #0c4a6e;
-    /* Sky 900 */
-    --brand-border: #0284c7;
-    /* Sky 600 */
+    --success-bg: rgba(16, 185, 129, 0.1);
+    --warning-bg: rgba(245, 158, 11, 0.1);
+    --error-bg: rgba(239, 68, 68, 0.1);
+    --info-bg: rgba(56, 189, 248, 0.1);
 
-    /* Accent */
-    --accent-primary: #06b6d4;
-    /* Cyan 500 */
-    --accent-hover: #0891b2;
-    /* Cyan 600 */
-    --accent-light: #22d3ee;
-    /* Cyan 400 */
+    /* Shadows: Cold Blue Tint */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(11, 17, 32, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(11, 17, 32, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(11, 17, 32, 0.5);
 
-    /* Gradients */
-    --gradient-start: #38bdf8;
-    /* Sky 400 */
-    --gradient-end: #22d3ee;
-    /* Cyan 400 - Electric Flow */
+    /* Gradients: Titanium Sheen */
+    --gradient-start: #38BDF8;
+    --gradient-end: #0EA5E9;
 
-    /* Functional Colors */
-    --success: #34d399;
-    --success-light: #6ee7b7;
-    --success-bg: #064e3b;
-    --success-border: #059669;
-
-    --error: #fb7185;
-    --error-light: #fda4af;
-    --error-bg: #4c0519;
-    --error-border: #e11d48;
-
-    --warning: #fbbf24;
-    --warning-light: #fcd34d;
-    --warning-bg: #78350f;
-    --warning-border: #d97706;
-
-    --info: #38bdf8;
-    --info-light: #7dd3fc;
-    --info-bg: #0c4a6e;
-    --info-border: #0ea5e9;
-
-    /* Icons */
-    --icon: #7dd3fc;
-    --icon-muted: #38bdf8;
-    --icon-inverse: #020617;
-
-    /* Dividers */
-    --divider: #1e293b;
-
-    /* Focus Ring */
-    --focus-ring: #38bdf8;
-
-    /* Link Color */
-    --text-link: #38bdf8;
-
-    /* Modal */
-    --modal-overlay: rgba(2, 4, 10, 0.9);
-    --bg-modal: #0f172a;
-    --text-modal: #f0f9ff;
-    --text-modal-muted: #bae6fd;
-    --border-modal: #1e293b;
-    --bg-modal-input: #1e293b;
-    --bg-modal-hover: #334155;
+    /* Misc */
+    --modal-overlay: rgba(11, 17, 32, 0.85);
+    --icon: #CBD5E1;
+    --text-link: #38BDF8;
 
     /* Article */
-    --text-article-title: #f0f9ff;
-    --text-article-body: #bae6fd;
-    --text-article-muted: #7dd3fc;
+    --text-article-title: #F8FAFC;
+    --text-article-body: #CBD5E1;
+    --text-article-muted: #94A3B8;
     --bg-article-tag: rgba(56, 189, 248, 0.1);
     --bg-article-quote: rgba(255, 255, 255, 0.03);
     --border-article: rgba(56, 189, 248, 0.2);
 }
 
 /* ================================================
-   OCEAN LIGHT MODE - Crystal Water
+   LIGHT MODE - ALUMINIUM (Brushed)
    ================================================ */
 [data-theme="light"][data-accent="ocean"] {
-    /* Background Colors - Crisp White & Blue Tint */
-    --bg-primary: #f8fafc;
-    /* Slate 50 - Brighter */
-    --bg-secondary: #ffffff;
-    --bg-tertiary: #f1f5f9;
+    /* Background Colors - Metallic Silver */
+    --bg-primary: #F1F5F9;
     /* Slate 100 */
-    --bg-elevated: #ffffff;
-    --bg-overlay: rgba(15, 23, 42, 0.4);
+    --bg-secondary: #FFFFFF;
+    /* Pure Bright */
+    --bg-tertiary: #E2E8F0;
+    /* Slate 200 */
+    --bg-elevated: #FFFFFF;
+    --bg-overlay: rgba(15, 23, 42, 0.2);
 
     /* RGB values for transparency */
     --bg-elevated-rgb: 255, 255, 255;
     --bg-secondary-rgb: 255, 255, 255;
 
-    /* Text Colors */
-    --text-primary: #0f172a;
+    /* Text Colors - Neutral Precision */
+    --text-primary: #0F172A;
     /* Slate 900 */
     --text-secondary: #334155;
     /* Slate 700 */
     --text-tertiary: #475569;
-    /* Slate 600 */
-    --text-muted: #64748b;
-    /* Slate 500 */
-    --text-inverse: #ffffff;
-    --text-disabled: #cbd5e1;
+    --text-muted: #64748B;
+    --text-inverse: #FFFFFF;
+    --text-disabled: #CBD5E1;
 
     /* Border Colors */
-    --border-light: #e2e8f0;
-    --border-medium: #cbd5e1;
-    --border-strong: #94a3b8;
-    --border-focus: #0ea5e9;
+    --border-light: #E2E8F0;
+    --border-medium: #CBD5E1;
+    --border-strong: #94A3B8;
+    --border-focus: #0EA5E9;
 
-    /* Shadows - Clean Blue */
-    --shadow-xs: 0 1px 2px 0 rgba(14, 165, 233, 0.05);
-    --shadow-sm: 0 1px 3px 0 rgba(14, 165, 233, 0.1), 0 1px 2px -1px rgba(14, 165, 233, 0.06);
-    --shadow-md: 0 4px 6px -1px rgba(14, 165, 233, 0.1), 0 2px 4px -2px rgba(14, 165, 233, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(14, 165, 233, 0.1), 0 4px 6px -4px rgba(14, 165, 233, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(14, 165, 233, 0.1), 0 8px 10px -6px rgba(14, 165, 233, 0.05);
-    --shadow-2xl: 0 25px 50px -12px rgba(14, 165, 233, 0.25);
-    --shadow-inner: inset 0 2px 4px 0 rgba(14, 165, 233, 0.06);
+    /* Shadows - Sharp, Technical */
+    --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
+    --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.08);
 
-    /* Brand - Vivid Ocean */
-    --brand-primary: #0ea5e9;
-    /* Sky 500 */
-    --brand-hover: #0284c7;
-    /* Sky 600 */
-    --brand-light: #38bdf8;
-    /* Sky 400 */
-    --brand-lighter: #e0f2fe;
-    /* Sky 100 */
-    --brand-bg: #f0f9ff;
-    /* Sky 50 */
-    --brand-border: #7dd3fc;
-    /* Sky 300 */
+    /* Brand - Industrial Blue */
+    --brand-primary: #0EA5E9;
+    --brand-hover: #0284C7;
+    --brand-light: #38BDF8;
+    --brand-lighter: #BAE6FD;
+    --brand-bg: #F0F9FF;
+    --brand-border: #7DD3FC;
 
     /* Accent */
-    --accent-primary: #06b6d4;
-    /* Cyan 500 */
-    --accent-hover: #0891b2;
-    /* Cyan 600 */
-    --accent-light: #22d3ee;
-    /* Cyan 400 */
+    --accent-primary: #0284C7;
+    --accent-hover: #0369A1;
+    --accent-light: #0EA5E9;
 
     /* Gradients */
-    --gradient-start: #0ea5e9;
-    --gradient-end: #06b6d4;
+    --gradient-start: #0EA5E9;
+    --gradient-end: #0284C7;
 
     /* Functional Colors */
     --success: #059669;
-    --success-light: #34d399;
-    --success-bg: #ecfdf5;
-    --success-border: #a7f3d0;
-
-    --error: #dc2626;
-    --error-light: #f87171;
-    --error-bg: #fef2f2;
-    --error-border: #fecaca;
-
-    --warning: #d97706;
-    --warning-light: #fbbf24;
-    --warning-bg: #fffbeb;
-    --warning-border: #fde68a;
-
-    --info: #0284c7;
-    --info-light: #38bdf8;
-    --info-bg: #f0f9ff;
-    --info-border: #bae6fd;
+    --success-light: #10B981;
+    --success-bg: #ECFDF5;
+    --success-border: #A7F3D0;
+    --error: #EF4444;
+    --warning: #F59E0B;
+    --info: #0EA5E9;
 
     /* Icons */
-    --icon: #0ea5e9;
-    --icon-muted: #64748b;
-    --icon-inverse: #ffffff;
+    --icon: #475569;
+    --icon-muted: #64748B;
+    --icon-inverse: #FFFFFF;
 
     /* Dividers */
-    --divider: #e2e8f0;
+    --divider: #CBD5E1;
 
     /* Focus Ring */
-    --focus-ring: #0ea5e9;
-
-    /* Link Color */
-    --text-link: #0ea5e9;
-
-    /* Modal */
-    --modal-overlay: rgba(15, 23, 42, 0.5);
-    --bg-modal: #ffffff;
-    --text-modal: #0f172a;
-    --text-modal-muted: #64748b;
-    --border-modal: #e2e8f0;
-    --bg-modal-input: #f8fafc;
-    --bg-modal-hover: #f1f5f9;
+    --focus-ring: #0EA5E9;
+    --text-link: #0EA5E9;
 
     /* Article */
-    --text-article-title: #0f172a;
+    --text-article-title: #0F172A;
     --text-article-body: #334155;
-    --text-article-muted: #64748b;
-    --bg-article-tag: #f1f5f9;
-    --bg-article-quote: #f8fafc;
-    --border-article: #e2e8f0;
+    --text-article-muted: #64748B;
+    --bg-article-tag: #E2E8F0;
+    --bg-article-quote: #F8FAFC;
+    --border-article: #CBD5E1;
+    --modal-overlay: rgba(15, 23, 42, 0.4);
 }

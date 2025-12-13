@@ -1,264 +1,171 @@
 /**
- * Sunset Dark - Complete Theme Variant
- * 
- * A full dark theme alternative with sunset/orange-pink color palette.
- * Overrides ALL visual tokens, not just accent colors.
- * 
- * Apply via: <html data-theme="dark" data-accent="sunset">
+ * MATERIAL: COPPER (Formerly Sunset)
+ * Designer: Jony Ive (Agent)
+ * Concept: Conductive Warmth. Industrial Luxury.
+ * Revision: Absolute Neutral Backgrounds (No Tint)
  */
 
+/* ============================================
+   DARK MODE - COPPER (Deep Neutral Void)
+   ============================================ */
 [data-theme="dark"][data-accent="sunset"] {
-    /* ============================================
-     SUNSET DARK MODE - Obsidian Twilight
-     ============================================ */
+    /* Background: Pure Deep Neural Gray/Black - NO RED/BRONZE TINT */
+    --bg-primary: #020617;
+    /* Slate 950 */
+    --bg-secondary: #0F172A;
+    /* Slate 900 */
+    --bg-tertiary: #1E293B;
+    /* Slate 800 */
+    --bg-elevated: #1E293B;
+    --bg-overlay: transparent;
+    /* REMOVED TINT OVERLAY */
 
-    /* Background Colors - Deepest Wine */
-    --bg-primary: #0a0506;
-    /* Very dark wine-black */
-    --bg-secondary: #120a0d;
-    /* Dark vibrant wine */
-    --bg-tertiary: #190e12;
-    /* Deep twilight */
-    --bg-elevated: #261218;
-    /* Vibrant elevated wine */
-    --bg-overlay: rgba(10, 5, 6, 0.9);
+    /* RGB for Transparency */
+    --bg-elevated-rgb: 30, 41, 59;
+    --bg-secondary-rgb: 15, 23, 42;
 
-    /* RGB values for transparency */
-    --bg-elevated-rgb: 38, 18, 24;
-    --bg-secondary-rgb: 18, 10, 13;
+    /* Text: Absolute Clarity */
+    --text-primary: #F8FAFC;
+    --text-secondary: #E2E8F0;
+    --text-tertiary: #94A3B8;
+    --text-muted: #64748B;
+    --text-inverse: #020617;
+    --text-disabled: #475569;
 
-    /* Text Colors */
-    --text-primary: #fff1f2;
-    /* Rose 50 */
-    --text-secondary: #fecdd3;
-    /* Rose 200 */
-    --text-tertiary: #fda4af;
-    /* Rose 300 */
-    --text-muted: #fb7185;
-    /* Rose 400 */
-    --text-inverse: #1c1016;
-    --text-disabled: #4a2c3e;
-
-    /* Border Colors */
-    --border-light: #4a2c3e;
-    --border-medium: #831843;
-    /* Pink 800 */
-    --border-strong: #be123c;
-    /* Pink 700 */
-    --border-focus: #f43f5e;
-    /* Rose 500 */
-
-    /* Shadows - Glowing Ember */
-    --shadow-xs: 0 1px 2px 0 rgba(244, 63, 94, 0.1);
-    --shadow-sm: 0 1px 3px 0 rgba(244, 63, 94, 0.15), 0 1px 2px -1px rgba(244, 63, 94, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(244, 63, 94, 0.15), 0 2px 4px -2px rgba(244, 63, 94, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(225, 29, 72, 0.2), 0 4px 6px -4px rgba(225, 29, 72, 0.15);
-    --shadow-xl: 0 20px 25px -5px rgba(225, 29, 72, 0.2), 0 8px 10px -6px rgba(225, 29, 72, 0.15);
-    --shadow-2xl: 0 25px 50px -12px rgba(10, 5, 6, 0.9);
-    --shadow-inner: inset 0 2px 4px 0 rgba(244, 63, 94, 0.1);
-
-    /* Brand - Solar Orange */
-    --brand-primary: #f97316;
+    /* Brand: Molten Copper - ACCENTS ONLY */
+    --brand-primary: #F97316;
     /* Orange 500 */
-    --brand-hover: #ea580c;
+    --brand-hover: #EA580C;
     /* Orange 600 */
-    --brand-light: #fb923c;
-    /* Orange 400 */
-    --brand-lighter: #fdba74;
-    --brand-bg: #4c0519;
-    /* Rose 950 */
-    --brand-border: #9f1239;
-    /* Rose 800 */
+    --brand-light: #FB923C;
+    --brand-lighter: #FDBA74;
+    --brand-bg: #431407;
+    --brand-border: #9A3412;
 
-    /* Accent */
-    --accent-primary: #f43f5e;
-    /* Rose 500 */
-    --accent-hover: #e11d48;
-    /* Rose 600 */
-    --accent-light: #fb7185;
-    /* Rose 400 */
+    /* Borders: Neutral with hint */
+    --border-light: #1E293B;
+    --border-medium: #334155;
+    --border-strong: #7C2D12;
+    /* Copper hint only on strong borders */
+    --border-focus: #F97316;
 
-    /* Gradients */
-    --gradient-start: #f97316;
-    /* Orange 500 */
-    --gradient-end: #ec4899;
-    /* Pink 500 - Sunset Horizon */
+    /* Functional */
+    --success: #10B981;
+    --warning: #F59E0B;
+    --error: #EF4444;
+    --info: #3B82F6;
 
-    /* Functional Colors */
-    --success: #34d399;
-    --success-light: #6ee7b7;
-    --success-bg: #064e3b;
-    --success-border: #059669;
+    --success-bg: rgba(16, 185, 129, 0.1);
+    --warning-bg: rgba(245, 158, 11, 0.1);
+    --error-bg: rgba(239, 68, 68, 0.1);
+    --info-bg: rgba(59, 130, 246, 0.1);
 
-    --error: #f43f5e;
-    --error-light: #fb7185;
-    --error-bg: #4c0519;
-    --error-border: #e11d48;
+    /* Shadows: Neutral */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(2, 6, 23, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(2, 6, 23, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(2, 6, 23, 0.5);
 
-    --warning: #fbbf24;
-    --warning-light: #fcd34d;
-    --warning-bg: #78350f;
-    --warning-border: #d97706;
+    /* Gradients: Copper Sheen */
+    --gradient-start: #F97316;
+    --gradient-end: #C2410C;
 
-    --info: #38bdf8;
-    --info-light: #7dd3fc;
-    --info-bg: #0c4a6e;
-    --info-border: #0ea5e9;
-
-    /* Icons */
-    --icon: #fb7185;
-    --icon-muted: #e11d48;
-    --icon-inverse: #ffffff;
-
-    /* Dividers */
-    --divider: #4a2c3e;
-
-    /* Focus Ring */
-    --focus-ring: #f43f5e;
-
-    /* Link Color */
-    --text-link: #fb7185;
-
-    /* Modal */
-    --modal-overlay: rgba(10, 5, 6, 0.9);
-    --bg-modal: #190e12;
-    --text-modal: #fff1f2;
-    --text-modal-muted: #fda4af;
-    --border-modal: #4a2c3e;
-    --bg-modal-input: #261218;
-    --bg-modal-hover: #4a2c3e;
+    /* Misc */
+    --modal-overlay: rgba(2, 6, 23, 0.85);
+    --icon: #E2E8F0;
+    --text-link: #FB923C;
 
     /* Article */
-    --text-article-title: #fff1f2;
-    --text-article-body: #fecdd3;
-    --text-article-muted: #fda4af;
-    --bg-article-tag: rgba(244, 63, 94, 0.1);
+    --text-article-title: #F8FAFC;
+    --text-article-body: #E2E8F0;
+    --text-article-muted: #94A3B8;
+    --bg-article-tag: rgba(249, 115, 22, 0.1);
     --bg-article-quote: rgba(255, 255, 255, 0.03);
-    --border-article: rgba(244, 63, 94, 0.2);
+    --border-article: rgba(249, 115, 22, 0.2);
 }
 
 /* ================================================
-   SUNSET LIGHT MODE - Golden Hour
+   LIGHT MODE - ROSE GOLD (Clean Neutral)
    ================================================ */
 [data-theme="light"][data-accent="sunset"] {
-    /* Background Colors - Warm Peach */
-    --bg-primary: #fff7ed;
-    /* Orange 50 */
-    --bg-secondary: #ffffff;
-    --bg-tertiary: #ffedd5;
-    /* Orange 100 */
-    --bg-elevated: #ffffff;
-    --bg-overlay: rgba(67, 20, 7, 0.4);
+    /* Background Colors - PURE WHITE / NEUTRAL - NO ORANGE/BLUSH TINT */
+    --bg-primary: #F8FAFC;
+    /* Slate 50 */
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #F1F5F9;
+    /* Slate 100 */
+    --bg-elevated: #FFFFFF;
+    --bg-overlay: transparent;
+    /* REMOVED TINT OVERLAY */
 
     /* RGB values for transparency */
     --bg-elevated-rgb: 255, 255, 255;
     --bg-secondary-rgb: 255, 255, 255;
 
-    /* Text Colors */
-    --text-primary: #7c2d12;
-    /* Orange 900 */
-    --text-secondary: #9a3412;
-    /* Orange 800 */
-    --text-tertiary: #c2410c;
-    /* Orange 700 */
-    --text-muted: #ea580c;
-    /* Orange 600 */
-    --text-inverse: #ffffff;
-    --text-disabled: #fed7aa;
+    /* Text Colors - Neutral Dark */
+    --text-primary: #020617;
+    /* Slate 950 */
+    --text-secondary: #334155;
+    /* Slate 700 */
+    --text-tertiary: #475569;
+    --text-muted: #64748B;
+    --text-inverse: #FFFFFF;
+    --text-disabled: #CBD5E1;
 
     /* Border Colors */
-    --border-light: #fed7aa;
-    /* Orange 200 */
-    --border-medium: #fdba74;
-    /* Orange 300 */
-    --border-strong: #fb923c;
-    /* Orange 400 */
-    --border-focus: #f97316;
+    --border-light: #E2E8F0;
+    --border-medium: #CBD5E1;
+    --border-strong: #94A3B8;
+    --border-focus: #F97316;
 
-    /* Shadows - Warm Glow */
-    --shadow-xs: 0 1px 2px 0 rgba(249, 115, 22, 0.05);
-    --shadow-sm: 0 1px 3px 0 rgba(249, 115, 22, 0.1), 0 1px 2px -1px rgba(249, 115, 22, 0.06);
-    --shadow-md: 0 4px 6px -1px rgba(249, 115, 22, 0.1), 0 2px 4px -2px rgba(249, 115, 22, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(249, 115, 22, 0.1), 0 4px 6px -4px rgba(249, 115, 22, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(249, 115, 22, 0.1), 0 8px 10px -6px rgba(249, 115, 22, 0.05);
-    --shadow-2xl: 0 25px 50px -12px rgba(249, 115, 22, 0.25);
-    --shadow-inner: inset 0 2px 4px 0 rgba(249, 115, 22, 0.06);
+    /* Shadows - Neutral */
+    --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
 
-    /* Brand - Sunset Orange */
-    --brand-primary: #ea580c;
-    /* Orange 600 */
-    --brand-hover: #c2410c;
-    /* Orange 700 */
-    --brand-light: #f97316;
-    /* Orange 500 */
-    --brand-lighter: #fb923c;
-    /* Orange 400 */
-    --brand-bg: #fff7ed;
-    /* Orange 50 */
-    --brand-border: #fed7aa;
-    /* Orange 200 */
+    /* Brand - Copper Accents Only */
+    --brand-primary: #F97316;
+    --brand-hover: #C2410C;
+    --brand-light: #FB923C;
+    --brand-lighter: #FDBA74;
+    --brand-bg: #FFF7ED;
+    --brand-border: #FED7AA;
 
     /* Accent */
-    --accent-primary: #db2777;
-    /* Pink 600 */
-    --accent-hover: #be185d;
-    /* Pink 700 */
-    --accent-light: #e11d48;
-    /* Rose 600 */
+    --accent-primary: #C2410C;
+    --accent-hover: #9A3412;
+    --accent-light: #EA580C;
 
     /* Gradients */
-    --gradient-start: #f97316;
-    --gradient-end: #ec4899;
+    --gradient-start: #F97316;
+    --gradient-end: #C2410C;
 
     /* Functional Colors */
-    --success: #059669;
-    --success-light: #34d399;
-    --success-bg: #ecfdf5;
-    --success-border: #a7f3d0;
-
-    --error: #dc2626;
-    --error-light: #f87171;
-    --error-bg: #fef2f2;
-    --error-border: #fecaca;
-
-    --warning: #d97706;
-    --warning-light: #fbbf24;
-    --warning-bg: #fffbeb;
-    --warning-border: #fde68a;
-
-    --info: #0284c7;
-    --info-light: #38bdf8;
-    --info-bg: #f0f9ff;
-    --info-border: #bae6fd;
+    --success: #16A34A;
+    --error: #DC2626;
+    --warning: #D97706;
+    --info: #2563EB;
 
     /* Icons */
-    --icon: #ea580c;
-    --icon-muted: #f97316;
-    --icon-inverse: #ffffff;
+    --icon: #475569;
+    --icon-muted: #64748B;
+    --icon-inverse: #FFFFFF;
 
     /* Dividers */
-    --divider: #fed7aa;
+    --divider: #E2E8F0;
 
     /* Focus Ring */
-    --focus-ring: #ea580c;
-
-    /* Link Color */
-    --text-link: #ea580c;
-
-    /* Modal */
-    --modal-overlay: rgba(0, 0, 0, 0.5);
-    --bg-modal: #ffffff;
-    --text-modal: #7c2d12;
-    --text-modal-muted: #ea580c;
-    --border-modal: #fed7aa;
-    --bg-modal-input: #fff7ed;
-    --bg-modal-hover: #ffedd5;
+    --focus-ring: #F97316;
+    --text-link: #C2410C;
 
     /* Article */
-    --text-article-title: #7c2d12;
-    --text-article-body: #9a3412;
-    --text-article-muted: #ea580c;
-    --bg-article-tag: #ffedd5;
-    --bg-article-quote: #fff7ed;
-    --border-article: #fed7aa;
+    --text-article-title: #020617;
+    --text-article-body: #334155;
+    --text-article-muted: #64748B;
+    --bg-article-tag: #F1F5F9;
+    --bg-article-quote: #F8FAFC;
+    --border-article: #E2E8F0;
+    --modal-overlay: rgba(15, 23, 42, 0.4);
 }
