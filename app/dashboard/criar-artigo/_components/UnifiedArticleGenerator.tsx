@@ -648,7 +648,7 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
 
       // Identificar qual campo precisa ser corrigido
       const needsContent = !article.content || article.content.length < 100;
-      const needsExcerpt = !article.excerpt || article.excerpt.length < 50 || article.excerpt.length > 300;
+      const needsExcerpt = !article.excerpt || article.excerpt.length < 50 || article.excerpt.length > 160;
 
       console.log(`🤖 Corrigindo artigo "${article.title}" com Gemini:`, {
         needsContent,
@@ -681,7 +681,7 @@ APENAS GERE O CAMPO "content". NÃO REESCREVA O ARTIGO INTEIRO.`;
 
 **INSTRUÇÕES CRÍTICAS:**
 - Crie um resumo conciso e atrativo
-- Mínimo 50 caracteres, máximo 300 caracteres
+- Mínimo 50 caracteres, máximo 160 caracteres (SEO)
 - Seja objetivo e profissional
 - NÃO altere outros campos (title, content, category, tags, etc)
 - Preserve TODOS os outros campos existentes
@@ -903,15 +903,15 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
             }
           } else {
             // Fallback: usar título como excerpt
-            payload.excerpt = (payload.title || 'Artigo gerado por IA').substring(0, 297) + '...';
+            payload.excerpt = (payload.title || 'Artigo gerado por IA').substring(0, 157) + '...';
             console.warn(`⚠️ [${i + 1}] Excerpt gerado do título (fallback - sem conteúdo)`);
             wasCorrected = true;
           }
-        } else if (payload.excerpt.length > 300) {
-          // Se excerpt existe mas é muito longo, truncar
+        } else if (payload.excerpt.length > 160) {
+          // Se excerpt existe mas é muito longo, truncar (SEO max 160)
           const originalLength = payload.excerpt.length;
-          payload.excerpt = payload.excerpt.substring(0, 297) + '...';
-          console.warn(`⚠️ [${i + 1}] Excerpt truncado: ${originalLength} → 300 chars`);
+          payload.excerpt = payload.excerpt.substring(0, 157) + '...';
+          console.warn(`⚠️ [${i + 1}] Excerpt truncado: ${originalLength} → 160 chars (SEO)`);
           wasCorrected = true;
         } else if (payload.excerpt.length < 50) {
           // Se excerpt é muito curto, tentar gerar do content
@@ -1067,28 +1067,9 @@ APENAS GERE O CAMPO "excerpt". NÃO REESCREVA O ARTIGO INTEIRO.`;
 
   const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-  const generateSlug = (title: string, addDate: boolean = false): string => {
-    let slug = title
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-+|-+$/g, '');
-
-    if (addDate) {
-      const date = new Date();
-      const dateStr = date.toISOString().split('T')[0].replace(/-/g, '');
-      slug = `${slug}-${dateStr}`;
-    } else {
-      // Adicionar timestamp para garantir unicidade
-      const timestamp = Date.now().toString(36);
-      slug = `${slug}-${timestamp}`;
-    }
-
-    return slug.substring(0, 100);
-  };
+  // NOTE: generateSlug removido aqui em 2025-12-13
+  // Agora usa a versão importada de @/lib/shared/utils/slug-utils via article-processor-client
+  // A versão local era diferente (usava dateStr), a versão compartilhada usa timestamp base-36
 
   const getTypeConfig = (type: string) => {
     switch (type) {

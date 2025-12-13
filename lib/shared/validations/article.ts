@@ -26,7 +26,21 @@ export const createArticleSchema = z.object({
     .max(50000, 'Conteúdo muito longo (máximo 50.000 caracteres)'),
 
   category: z.enum(
-    ['bitcoin', 'ethereum', 'defi', 'politica', 'nfts', 'altcoins', 'blockchain', 'trading', 'seguranca', 'desenvolvimento'],
+    [
+      // Criptomoedas principais
+      'bitcoin', 'ethereum', 'solana', 'altcoins',
+      // Setores
+      'defi', 'nfts', 'stablecoins', 'memecoins', 'layer2', 'gaming',
+      'metaverse', 'dao', 'web3', 'ai', 'privacidade',
+      // Infraestrutura
+      'exchanges', 'mining', 'staking', 'airdrops', 'derivativos', 'hacks', 'wallets',
+      // Educacional
+      'blockchain', 'trading', 'seguranca', 'desenvolvimento',
+      // Institucional e macro
+      'institucional', 'regulacao', 'politica', 'cbdc', 'macroeconomia',
+      // Geral
+      'adocao', 'tecnologia'
+    ],
     { message: 'Categoria inválida' }
   ),
 

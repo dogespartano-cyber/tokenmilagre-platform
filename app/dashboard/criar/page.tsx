@@ -204,6 +204,12 @@ function ManualModeContent() {
         if (hadFallback) {
             addMessage({ role: 'assistant', content: `ℹ️ A categoria foi ajustada para "${normalizedCategory}".` });
         }
+        // Auto-truncate excerpt se necessário (SEO max 160)
+        if (articleToValidate.excerpt && articleToValidate.excerpt.length > 160) {
+            const originalLength = articleToValidate.excerpt.length;
+            articleToValidate.excerpt = articleToValidate.excerpt.substring(0, 157) + '...';
+            console.log(`✂️ Excerpt truncado automaticamente: ${originalLength} → 160 chars`);
+        }
         const validation = validateArticle(articleToValidate, selectedType);
         if (!validation.success) {
             alert(`❌ Erros de validação:\n\n${validation.errors.join('\n')}`);

@@ -17,7 +17,28 @@ export type Category =
   | 'solana'
   | 'altcoins'
   | 'politica'
-  | 'regulacao';
+  | 'regulacao'
+  | 'stablecoins'
+  | 'institucional'
+  | 'layer2'
+  | 'memecoins'
+  | 'mining'
+  | 'exchanges'
+  | 'adocao'
+  | 'tecnologia'
+  | 'ai'
+  | 'web3'
+  | 'gaming'
+  | 'metaverse'
+  | 'privacidade'
+  | 'cbdc'
+  | 'airdrops'
+  | 'staking'
+  | 'dao'
+  | 'derivativos'
+  | 'macroeconomia'
+  | 'hacks'
+  | 'wallets';
 
 /**
  * Configuração completa de uma categoria
@@ -120,6 +141,157 @@ const CATEGORY_CONFIG: Record<Category, CategoryConfig> = {
     color: '#059669',
     description: 'Regulamentações e compliance',
     type: 'news'
+  },
+
+  // === Novas categorias de notícias ===
+  stablecoins: {
+    label: 'Stablecoins',
+    icon: '💵',
+    color: '#26A17B',
+    description: 'USDT, USDC, DAI e volume on-chain',
+    type: 'news'
+  },
+  institucional: {
+    label: 'Institucional',
+    icon: '🏛️',
+    color: '#1E3A8A',
+    description: 'ETFs, fundos e adoção institucional',
+    type: 'news'
+  },
+  layer2: {
+    label: 'Layer 2',
+    icon: '⚡',
+    color: '#7C3AED',
+    description: 'Arbitrum, Optimism, Base, zkSync',
+    type: 'news'
+  },
+  memecoins: {
+    label: 'Memecoins',
+    icon: '🐸',
+    color: '#F59E0B',
+    description: 'DOGE, SHIB, PEPE e comunidades',
+    type: 'news'
+  },
+  mining: {
+    label: 'Mineração',
+    icon: '⛏️',
+    color: '#78716C',
+    description: 'Mineração, hash rate e halving',
+    type: 'news'
+  },
+  exchanges: {
+    label: 'Exchanges',
+    icon: '🏢',
+    color: '#0EA5E9',
+    description: 'Corretoras e listagens',
+    type: 'both'
+  },
+  adocao: {
+    label: 'Adoção',
+    icon: '🌍',
+    color: '#10B981',
+    description: 'Adoção global e casos de uso',
+    type: 'news'
+  },
+  tecnologia: {
+    label: 'Tecnologia',
+    icon: '💡',
+    color: '#6366F1',
+    description: 'Inovações e atualizações técnicas',
+    type: 'both'
+  },
+
+  // === Novas categorias expandidas ===
+  ai: {
+    label: 'IA & Crypto',
+    icon: '🤖',
+    color: '#8B5CF6',
+    description: 'Inteligência artificial e criptomoedas',
+    type: 'news'
+  },
+  web3: {
+    label: 'Web3',
+    icon: '🌐',
+    color: '#06B6D4',
+    description: 'Web descentralizada e dApps',
+    type: 'both'
+  },
+  gaming: {
+    label: 'Gaming',
+    icon: '🎮',
+    color: '#EC4899',
+    description: 'GameFi e play-to-earn',
+    type: 'news'
+  },
+  metaverse: {
+    label: 'Metaverso',
+    icon: '🥽',
+    color: '#A855F7',
+    description: 'Mundos virtuais e realidade imersiva',
+    type: 'news'
+  },
+  privacidade: {
+    label: 'Privacidade',
+    icon: '🕵️',
+    color: '#374151',
+    description: 'Privacy coins e anonimato',
+    type: 'news'
+  },
+  cbdc: {
+    label: 'CBDC',
+    icon: '🏦',
+    color: '#0284C7',
+    description: 'Moedas digitais de bancos centrais',
+    type: 'news'
+  },
+  airdrops: {
+    label: 'Airdrops',
+    icon: '🎁',
+    color: '#22C55E',
+    description: 'Distribuições gratuitas de tokens',
+    type: 'news'
+  },
+  staking: {
+    label: 'Staking',
+    icon: '💰',
+    color: '#14B8A6',
+    description: 'Staking e rendimentos passivos',
+    type: 'both'
+  },
+  dao: {
+    label: 'DAOs',
+    icon: '🗳️',
+    color: '#6366F1',
+    description: 'Organizações autônomas descentralizadas',
+    type: 'news'
+  },
+  derivativos: {
+    label: 'Derivativos',
+    icon: '📉',
+    color: '#F97316',
+    description: 'Futuros, opções e perpétuos',
+    type: 'news'
+  },
+  macroeconomia: {
+    label: 'Macro',
+    icon: '🌎',
+    color: '#64748B',
+    description: 'Fed, juros, inflação e economia global',
+    type: 'news'
+  },
+  hacks: {
+    label: 'Hacks',
+    icon: '⚠️',
+    color: '#DC2626',
+    description: 'Incidentes de segurança e exploits',
+    type: 'news'
+  },
+  wallets: {
+    label: 'Wallets',
+    icon: '👛',
+    color: '#8B5CF6',
+    description: 'Carteiras e custódia',
+    type: 'both'
   }
 };
 

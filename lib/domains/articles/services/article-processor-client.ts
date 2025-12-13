@@ -5,6 +5,10 @@
  * OBJETIVO: Processar artigos do Perplexity instantaneamente sem custos de API
  */
 
+// Importar e re-exportar generateSlug do utilitário compartilhado (unificado 2025-12-13)
+import { generateSlug } from '@/lib/shared/utils/slug-utils';
+export { generateSlug };
+
 /**
  * Remove referências numéricas do texto
  * Exemplos: [1], [2], [3], [1][5], [10], etc
@@ -69,45 +73,8 @@ export function removeSourcesSection(text: string): string {
   return processed.trim();
 }
 
-/**
- * Gera slug a partir do título
- */
-export function generateSlug(title: string, addDate: boolean = false): string {
-  if (!title) return '';
-
-  let slug = title
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Remove acentos
-    .replace(/[^\w\s-]/g, '') // Remove caracteres especiais (incluindo $)
-    .replace(/\s+/g, ' ')     // 🔧 FIX: Normaliza espaços múltiplos ANTES de converter
-    .trim()                    // Remove espaços do início/fim
-    .replace(/\s+/g, '-')     // Substitui espaços por hífens
-    .replace(/-+/g, '-')       // Remove hífens duplicados
-    .replace(/^-+|-+$/g, ''); // Remove hífens do início/fim
-
-  // 🔧 FIX: Usa timestamp para garantir unicidade, não apenas data
-  if (addDate) {
-    const timestamp = Date.now().toString(36); // Base-36 ~10 chars
-    const timestampLength = timestamp.length + 1; // +1 para o hífen
-    const maxBaseSlugLength = 100 - timestampLength; // Reservar espaço para timestamp
-
-    // Truncar slug base para caber com timestamp
-    if (slug.length > maxBaseSlugLength) {
-      slug = slug.substring(0, maxBaseSlugLength);
-    }
-
-    slug = `${slug}-${timestamp}`;
-  } else {
-    // Truncar para 100 caracteres (limite do banco)
-    slug = slug.substring(0, 100);
-  }
-
-  // 🔧 FIX: Limpar hífens duplicados/finais APÓS todas as operações
-  return slug
-    .replace(/-+/g, '-')       // Remove hífens duplicados (novamente, após truncamento)
-    .replace(/^-+|-+$/g, '');  // Remove hífens do início/fim
-}
+// NOTE: generateSlug foi movido para @/lib/shared/utils/slug-utils.ts
+// Re-exportado acima para manter compatibilidade de imports existentes
 
 /**
  * Calcula tempo de leitura baseado em palavras

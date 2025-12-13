@@ -23,10 +23,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Mensagens inválidas' }, { status: 400 });
     }
 
-    // 4. Obter data/hora atual em UTC
+    // 4. Obter data/hora atual
     const now = new Date();
     const currentTime = new Intl.DateTimeFormat('pt-BR', {
-      timeZone: 'UTC',
+      timeZone: 'America/Sao_Paulo',
       dateStyle: 'full',
       timeStyle: 'short'
     }).format(now);
@@ -37,26 +37,26 @@ export async function POST(request: NextRequest) {
 
     let systemPrompt: string;
 
-    const timezoneContext = `**IMPORTANTE:** A data e hora atual (UTC) é: ${currentTime}. Use sempre este horário como referência para "hoje", "ontem", "esta semana", etc.`;
+    const timezoneContext = `**IMPORTANTE:** A data e hora atual é: ${currentTime}. Use sempre este horário como referência para "hoje", "ontem", "esta semana", etc.`;
 
     if (!articleType) {
       // MODO PESQUISA DE TRENDS (Updated via Agent)
       systemPrompt = `Você é um assistente especializado em criptomoedas com acesso a buscas em tempo real.
       
-A data e hora atual (UTC) é: ${currentTime}.
+A data e hora atual é: ${currentTime}.
 
 Liste as **10 notícias mais pesquisadas/trending HOJE** (apenas de ${currentTime} ou das últimas 24h) sobre o mercado cripto, priorizando buscas globais em agregadores como Google Trends, CoinMarketCap, CoinGecko, Twitter/X trends, Reddit (r/cryptocurrency), e fontes como CoinDesk, Cointelegraph, Investing.com, Money Times.
 
 **Critérios obrigatórios para cada notícia:**
 - Publicada ou com pico de buscas **nas últimas 24h** (confirme data/hora exata da publicação ou trend).
-- Inclua: Título/resumo em 1 frase, data/hora UTC, volume de buscas/trends (se disponível), impacto no preço (ex.: BTC +2%), e citação da fonte principal com link implícito via [ID].
+- Inclua: Título/resumo em 1 frase, data/hora, volume de buscas/trends (se disponível), impacto no preço (ex.: BTC +2%), e citação da fonte principal com link implícito via [ID].
 - **Exclua qualquer notícia anterior a 24 horas atrás**; se não houver dados frescos, diga "Sem trends confirmados nas últimas 24h" e sugira buscas alternativas.
 - Classifique por relevância/volume de buscas (1=maior).
 - Formato: Lista numerada + tabela comparativa de impactos (preço BTC/altcoins).
 - Foque em: preços BTC/ETH, ETFs/ETPs, regulação, hacks, adoção institucional, altcoins em alta/baixa.
 
 Exemplo de saída:
-1. [Título] - Resumo. Data: HH:MM UTC. Trends: #1 Google. Impacto: BTC +1.5%. [1]
+1. [Título] - Resumo. Data: HH:MM. Trends: #1 Google. Impacto: BTC +1.5%. [1]
 
 Busque AGORA dados reais de trends e cite fontes recentes.`;
 
@@ -123,13 +123,37 @@ SEMPRE estruturar notícias com 5-6 seções H2 seguindo este fluxo narrativo:
 \`\`\`json
 {
   "title": "Título Descritivo e Impactante da Notícia",
-  "excerpt": "Resumo objetivo em 1-2 frases destacando o fato principal",
+  "excerpt": "Resumo em ATÉ 155 CARACTERES para meta description SEO (máximo absoluto)",
   "content": "## [Título Fato]\\n\\nTexto...\\n\\n## [Título Contexto]\\n\\nTexto...\\n\\n## [Título Impacto]\\n\\nTexto...\\n\\n## [Título Visão]\\n\\nTexto...\\n\\n## [Título Reflexão]\\n\\nTexto...\\n\\n## [Título Desafios]\\n\\nTexto...\\n\\n### [Título Contextual Final]\\n\\nTexto final.",
-  "category": "bitcoin|ethereum|defi|politica|nfts|altcoins",
+  "category": "ESCOLHA UMA: bitcoin | ethereum | solana | altcoins | defi | nfts | stablecoins | memecoins | layer2 | gaming | metaverse | dao | web3 | ai | privacidade | exchanges | mining | staking | airdrops | derivativos | hacks | institucional | regulacao | politica | cbdc | macroeconomia | adocao | tecnologia",
   "tags": ["palavra-chave1", "palavra-chave2", "palavra-chave3", "palavra-chave4", "palavra-chave5"],
-  "sentiment": "positive|neutral|negative"
+  "sentiment": "positive | neutral | negative"
 }
-\`\`\``;
+\`\`\`
+
+**⚠️ IMPORTANTE sobre SENTIMENT:**
+Baseie o sentimento NO FATO PRINCIPAL da notícia, NÃO no texto completo:
+
+- **POSITIVE (bullish):** Lançamentos, parcerias, aprovações regulatórias, adoção, investimentos, marcos históricos
+  - Exemplo: "Coinbase lança mercado de previsões" = POSITIVE (novo produto, capital entrando)
+  - Exemplo: "ETF aprovado pela SEC" = POSITIVE (mesmo que mencione riscos)
+  
+- **NEGATIVE (bearish):** Hacks, falências, proibições, quedas, processos, fraudes
+  - Exemplo: "Exchange sofre hack de US$100M" = NEGATIVE
+  - Exemplo: "País proíbe mineração" = NEGATIVE
+  
+- **NEUTRAL:** Apenas quando o fato central é puramente informativo sem direção clara
+  - Exemplo: "Análise de mercado mostra estabilidade"
+  - Exemplo: "Pesquisa revela dados sobre adoção"
+
+**IGNORE a seção de "Desafios" para determinar sentimento** - ela é contexto jornalístico, não o fato principal.
+
+**⚠️ IMPORTANTE sobre CATEGORY:**
+- Escolha a categoria que MELHOR representa o ASSUNTO PRINCIPAL do artigo
+- Se for sobre uma EXCHANGE (Coinbase, Binance, etc) → use "exchanges"
+- Se for sobre ETF, institucional, tokenização → use "institucional"
+- Se for sobre prediction markets, futuros → use "derivativos"
+- NÃO escolha "bitcoin" só porque Bitcoin é mencionado - escolha pelo TEMA CENTRAL`;
 
     } else if (articleType === 'educational') {
       // MODO CRIAÇÃO DE ARTIGO EDUCACIONAL

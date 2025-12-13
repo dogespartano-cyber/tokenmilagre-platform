@@ -1,7 +1,65 @@
 # 📋 Sugestões e Ideias - $MILAGRE Platform
 
-> **Última atualização:** 2025-12-12  
+> **Última atualização:** 2025-12-13  
 > **Formato:** Use `[ ]`, `[/]`, `[x]` para status de cada item
+
+---
+
+## ✅ Concluído (Sessão 13/12/2025) - Article Creation Workflow Fix & Code Cleanup
+
+### 🔧 Correção de Bugs no Sistema de Criação de Artigos
+
+**Objetivo:** Investigar e corrigir bugs no workflow de criação de artigos, especialmente categorização e sentimento.
+
+#### Bugs Corrigidos
+
+| Bug | Causa | Solução |
+|-----|-------|---------|
+| Categoria `exchanges` rejeitada | `NEWS_CATEGORIES` tinha só 9 categorias (faltavam 18) | Expandido para 27 categorias |
+| Sentimento sempre "neutral" | IA considerava seção "Desafios" | Prompt alterado: basear no FATO PRINCIPAL |
+| Excerpt > 160 chars bloqueava | Validação antes do auto-truncate | Auto-truncate adicionado ANTES da validação |
+| Prompt sem limite de excerpt | "1-2 frases" era vago | Agora: "ATÉ 155 CARACTERES para SEO" |
+
+#### Arquivos Modificados
+
+| Arquivo | Alteração |
+|---------|-----------|
+| `constants.ts` | +18 categorias em NEWS_CATEGORIES |
+| `chat-perplexity/route.ts` | Prompt com 27 categorias + instruções de sentimento |
+| `criar/page.tsx` | Auto-truncate excerpt antes de validateArticle() |
+
+### 🧹 Limpeza de Código Morto (-294 linhas)
+
+**Objetivo:** Remover código duplicado e não utilizado identificado na investigação.
+
+#### Removidos
+
+| Item | Linhas | Motivo |
+|------|--------|--------|
+| `CATEGORY_FALLBACK_MAP` | -45 | Map não usado após bypass |
+| `app/api/process-news/` | -275 | API sem nenhuma referência (dead code) |
+| `generateSlug` duplicado | -40 | Existia em 2 lugares diferentes |
+| `generateSlug` local | -24 | Shadowing da função importada |
+
+#### Criados
+
+| Item | Linhas | Propósito |
+|------|--------|-----------|
+| `lib/shared/utils/slug-utils.ts` | +90 | Single source of truth para slugs |
+
+**Net:** -294 linhas de código
+
+### 📊 Resultados Verificados
+
+```
+✅ Categoria: 'exchanges' (correto!)
+✅ Sentimento: 'positive' (baseado no lançamento)
+✅ Excerpt: Auto-truncado 162 → 160 chars
+✅ Slug: gerado com timestamp base-36
+✅ Validação: passed
+✅ Publicação: success
+✅ TypeScript: 0 errors
+```
 
 ---
 

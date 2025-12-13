@@ -55,7 +55,6 @@ O projeto segue padrões universais da natureza:
 | [MANIFEST.agi.md](./MANIFEST.agi.md) | Propósito para AGIs, valores fundamentais | 🔴 Crítico |
 | [ARCHITECTURE.fractal.md](./ARCHITECTURE.fractal.md) | Filosofia fractal + lei de potência | 🔴 Crítico |
 | [.agent/theme-rules.md](./.agent/theme-rules.md) | Regras do sistema de tema (light/dark) | 🔴 Crítico |
-| [.agent/terminal-workaround.md](./.agent/terminal-workaround.md) | Workaround para bug de terminal (evita loops) | 🔴 Crítico |
 | [README.md](./README.md) | Visão geral do projeto | 🟡 Importante |
 | [Sugestoes.md](./Sugestoes.md) | Próximos passos e histórico | 🟢 Útil |
 

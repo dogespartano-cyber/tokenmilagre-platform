@@ -41,13 +41,41 @@ export const ARTICLE_TYPE_CONFIG = {
 // ============================================================================
 
 export const NEWS_CATEGORIES = [
+  // Criptomoedas principais
   'bitcoin',
   'ethereum',
-  'defi',
-  'politica',
-  'nfts',
+  'solana',
   'altcoins',
+
+  // Setores/Verticais
+  'defi',
+  'nfts',
+  'stablecoins',
+  'memecoins',
+  'layer2',
+  'gaming',
+  'metaverse',
+  'dao',
+  'web3',
+  'ai',
+  'privacidade',
+
+  // Infraestrutura e operações
+  'exchanges',
+  'mining',
+  'staking',
+  'airdrops',
+  'derivativos',
+  'hacks',
+
+  // Institucional e macro
+  'institucional',
   'regulacao',
+  'politica',
+  'cbdc',
+  'macroeconomia',
+
+  // Geral
   'adocao',
   'tecnologia'
 ] as const;
@@ -104,8 +132,8 @@ export const VALIDATION_RULES = {
     maxLength: 200
   },
   excerpt: {
-    minLength: 100,
-    maxLength: 300
+    minLength: 50,   // Flexível para permitir resumos concisos
+    maxLength: 160   // SEO optimal (Google trunca em ~155-160)
   },
   content: {
     minLength: 500
@@ -325,57 +353,13 @@ export function isValidLevel(level: string): level is Level {
 // ============================================================================
 // Category Normalization & Fallback
 // ============================================================================
+// NOTE: CATEGORY_FALLBACK_MAP REMOVIDO em 2025-12-13
+// O mapa antigo de 45 linhas foi deletado pois:
+// 1. A IA Perplexity agora recebe lista completa de 27 categorias no prompt
+// 2. normalizeCategoryWithFallback() foi simplificado para confiar na IA
+// 3. Só usamos fallback simples se a categoria for realmente inválida
+// ============================================================================
 
-/**
- * Mapeia categorias genéricas da IA para categorias válidas do sistema
- * Usado para blindar contra erros de validação quando a IA sugere categorias inválidas
- */
-const CATEGORY_FALLBACK_MAP: Record<string, { news: string; educational: string }> = {
-  // Economia e mercado
-  'economia': { news: 'bitcoin', educational: 'trading' },
-  'mercado': { news: 'bitcoin', educational: 'trading' },
-  'investimentos': { news: 'bitcoin', educational: 'trading' },
-  'financas': { news: 'defi', educational: 'defi' },
-
-  // Tecnologia
-  'tecnologia': { news: 'tecnologia', educational: 'blockchain' },
-  'tech': { news: 'tecnologia', educational: 'blockchain' },
-  'inovacao': { news: 'tecnologia', educational: 'blockchain' },
-
-  // Dicas e guias
-  'dicas': { news: 'adocao', educational: 'seguranca' },
-  'guias': { news: 'adocao', educational: 'wallets' },
-  'tutorial': { news: 'adocao', educational: 'desenvolvimento' },
-  'iniciantes': { news: 'adocao', educational: 'wallets' },
-
-  // Segurança
-  'seguranca': { news: 'regulacao', educational: 'seguranca' },
-  'protecao': { news: 'regulacao', educational: 'seguranca' },
-  'golpes': { news: 'regulacao', educational: 'seguranca' },
-  'scams': { news: 'regulacao', educational: 'seguranca' },
-
-  // Política e regulação
-  'politica': { news: 'politica', educational: 'blockchain' },
-  'regulacao': { news: 'regulacao', educational: 'blockchain' },
-  'governo': { news: 'politica', educational: 'blockchain' },
-
-  // Criptomoedas específicas
-  'btc': { news: 'bitcoin', educational: 'trading' },
-  'eth': { news: 'ethereum', educational: 'blockchain' },
-  'cripto': { news: 'altcoins', educational: 'trading' },
-  'criptomoedas': { news: 'altcoins', educational: 'trading' },
-  'moedas': { news: 'altcoins', educational: 'trading' },
-
-  // DeFi e NFTs
-  'defi': { news: 'defi', educational: 'defi' },
-  'nft': { news: 'nfts', educational: 'nfts' },
-  'nfts': { news: 'nfts', educational: 'nfts' },
-
-  // Análise
-  'analise': { news: 'bitcoin', educational: 'trading' },
-  'previsoes': { news: 'bitcoin', educational: 'trading' },
-  'tendencias': { news: 'altcoins', educational: 'trading' },
-};
 
 /**
  * Normaliza categoria da IA para uma categoria válida do sistema
@@ -443,14 +427,12 @@ export function normalizeCategoryWithFallback(
     return { category: 'tools', hadFallback: true };
   }
 
-  // Para News/Educational: usar mapa existente
-  const fallbackEntry = CATEGORY_FALLBACK_MAP[normalized];
-  if (fallbackEntry) {
-    return {
-      category: fallbackEntry[type as 'news' | 'educational'],
-      hadFallback: true
-    };
-  }
+  // ============================================================================
+  // SIMPLIFIED 2025-12-13: Confiar 100% na escolha da IA
+  // Se a categoria for inválida, apenas log e fallback simples
+  // REMOVIDO: Uso do CATEGORY_FALLBACK_MAP (era desnecessário e causava overrides)
+  // ============================================================================
+  console.warn(`⚠️ Categoria inválida: "${category}" para tipo "${type}". Usando fallback.`);
 
   // Fallback final por tipo
   const defaultCategories = {
