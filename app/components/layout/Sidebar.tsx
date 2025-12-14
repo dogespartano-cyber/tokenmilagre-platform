@@ -788,15 +788,15 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                             }
                                         }}
                                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all group ${selectedCategory === cat.id
-                                                ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)]'
-                                                : 'text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1'
+                                            ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)]'
+                                            : 'text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1'
                                             }`}
                                     >
                                         <FontAwesomeIcon
                                             icon={categoryIcons[cat.id] || faStore}
                                             className={`w-5 h-5 transition-colors ${selectedCategory === cat.id
-                                                    ? 'text-[var(--brand-primary)]'
-                                                    : 'text-white/70 group-hover:text-[var(--brand-primary)]'
+                                                ? 'text-[var(--brand-primary)]'
+                                                : 'text-white/70 group-hover:text-[var(--brand-primary)]'
                                                 }`}
                                         />
                                         <span className="font-semibold text-base">{cat.label}</span>
@@ -828,7 +828,120 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         );
     }
 
-    // 5. Default Mode (Standard Menu & Education Filters)
+    // 5. Recurso Detalhe Mode (Related Resources from Same Category)
+    if (mode === 'recurso-detalhe' && config) {
+        const { currentResource, relatedResources, categoryLabel } = config;
+
+        return (
+            <>
+                {/* Sidebar Overlay */}
+                <div
+                    className={`fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+                    onClick={onClose}
+                />
+
+                {/* Sidebar */}
+                <aside
+                    className={`fixed top-0 left-0 h-full w-72 z-50 transition-[transform,background-color] duration-500 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 backdrop-blur-2xl shadow-2xl lg:shadow-none`}
+                    style={{
+                        backgroundColor: 'var(--sidebar-bg)',
+                        borderRight: '1px solid var(--sidebar-border)'
+                    }}
+                >
+                    <div className="flex flex-col h-full">
+                        {/* Sidebar Header */}
+                        <div className="h-[88px] flex items-center px-6">
+                            <div className="flex items-center justify-between w-full">
+                                <Link
+                                    href="/"
+                                    className="flex items-center gap-3 hover:opacity-100 transition-all duration-300 group px-2 py-1 rounded-xl"
+                                    onClick={onClose}
+                                >
+                                    <div
+                                        className="relative w-10 h-10 rounded-full shadow-[0_0_15px_rgba(var(--brand-primary-rgb),0.3)] border-2 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(var(--brand-primary-rgb),0.6)]"
+                                        style={{ borderColor: 'var(--brand-primary)' }}
+                                    >
+                                        <Image
+                                            src="/images/TOKEN-MILAGRE-Hero.webp"
+                                            alt="$MILAGRE"
+                                            width={40}
+                                            height={40}
+                                            className="w-full h-full object-cover rounded-full"
+                                        />
+                                    </div>
+                                    <div className="text-xl font-bold drop-shadow-[0_0_10px_rgba(var(--brand-primary-rgb),0.5)] transition-all duration-300 font-[family-name:var(--font-poppins)] text-theme-primary group-hover:text-brand-primary group-hover:scale-105 group-hover:drop-shadow-[0_0_15px_rgba(var(--brand-primary-rgb),0.8)]">
+                                        $MILAGRE
+                                    </div>
+                                </Link>
+                                <button
+                                    onClick={onClose}
+                                    className="group lg:hidden p-2 rounded-lg transition-all duration-300 hover:scale-110 hover:bg-opacity-50 text-[var(--text-primary)]"
+                                >
+                                    <FontAwesomeIcon icon={faTimes} className="w-5 h-5 transition-transform duration-300 group-hover:rotate-90" />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Sidebar Navigation */}
+                        <nav className="flex-1 p-4 overflow-y-auto flex flex-col no-scrollbar">
+                            {/* Voltar a Recursos */}
+                            <Link
+                                href="/recursos"
+                                onClick={onClose}
+                                className="flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group mb-4"
+                            >
+                                <FontAwesomeIcon
+                                    icon={faArrowLeft}
+                                    className="w-5 h-5 text-white/70 group-hover:text-[var(--brand-primary)] transition-colors"
+                                />
+                                <span className="font-semibold text-base">Voltar a Recursos</span>
+                            </Link>
+
+                            {/* Category Title */}
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-white/50 mb-3 px-2">
+                                Mais {categoryLabel || 'Recursos'}
+                            </h3>
+
+                            {/* Related Resources Links */}
+                            <div className="space-y-1">
+                                {relatedResources?.slice(0, 8).map((res: any) => (
+                                    <Link
+                                        key={res.slug}
+                                        href={`/recursos/${res.slug}`}
+                                        onClick={onClose}
+                                        className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all group ${currentResource?.slug === res.slug
+                                                ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)]'
+                                                : 'text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1'
+                                            }`}
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faStore}
+                                            className={`w-4 h-4 transition-colors ${currentResource?.slug === res.slug
+                                                    ? 'text-[var(--brand-primary)]'
+                                                    : 'text-white/70 group-hover:text-[var(--brand-primary)]'
+                                                }`}
+                                        />
+                                        <span className="font-medium text-sm truncate">{res.name}</span>
+                                    </Link>
+                                ))}
+                            </div>
+
+                            {/* Ver Todos Link */}
+                            <Link
+                                href={`/recursos?category=${currentResource?.category || ''}`}
+                                onClick={onClose}
+                                className="flex items-center gap-3 px-4 py-3 mt-4 rounded-xl text-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/10 transition-all group border-t border-white/10 pt-4"
+                            >
+                                <span className="font-semibold text-sm">Ver todos os {categoryLabel || 'recursos'} →</span>
+                            </Link>
+                        </nav>
+                    </div>
+                </aside>
+            </>
+        );
+    }
+
+    // 6. Default Mode (Standard Menu & Education Filters)
     return (
         <>
             {/* Sidebar Overlay */}

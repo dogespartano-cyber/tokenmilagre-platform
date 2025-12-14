@@ -17,7 +17,7 @@ import RelatedResources from './components/RelatedResources';
 import { useState, useEffect } from 'react';
 import TransparencyNote from '@/components/shared/TransparencyNote';
 import { useSidebar } from '@/contexts/SidebarContext';
-import { getAllCategories } from '@/lib/shared/utils/categories';
+import { getCategoryLabel } from '@/lib/shared/utils/categories';
 
 interface ResourceDetailClientProps {
   resource: Resource;
@@ -33,32 +33,19 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
   const router = useRouter();
   const [activeSection, setActiveSection] = useState<string>('');
   const [currentUrl, setCurrentUrl] = useState<string>('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
 
-  const categories = getAllCategories();
-  const { setSidebarMode, resetSidebar, updateConfig } = useSidebar();
+  const { setSidebarMode, resetSidebar } = useSidebar();
 
-  // Configure sidebar for recursos mode
+  // Configure sidebar for recurso-detalhe mode with related resources
   useEffect(() => {
-    setSidebarMode('recursos', {
-      categories,
-      selectedCategory,
-      setSelectedCategory,
-      searchTerm,
-      setSearchTerm,
+    setSidebarMode('recurso-detalhe', {
+      currentResource: resource,
+      relatedResources: relatedResources,
+      categoryLabel: getCategoryLabel(resource.category),
     });
 
     return () => resetSidebar();
-  }, [setSidebarMode, resetSidebar]);
-
-  // Update sidebar config when filters change
-  useEffect(() => {
-    updateConfig({
-      selectedCategory,
-      searchTerm,
-    });
-  }, [selectedCategory, searchTerm, updateConfig]);
+  }, [setSidebarMode, resetSidebar, resource, relatedResources]);
 
   // Define URL atual
   useEffect(() => {
