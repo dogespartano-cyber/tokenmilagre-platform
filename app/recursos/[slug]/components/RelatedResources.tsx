@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { Resource } from '@/lib/domains/resources/legacy-api';
+import { useState, useEffect, useRef } from 'react';
 
 interface RelatedResourcesProps {
   relatedResources: Resource[];
@@ -10,21 +11,54 @@ interface RelatedResourcesProps {
 export default function RelatedResources({ relatedResources }: RelatedResourcesProps) {
   if (!relatedResources || relatedResources.length === 0) return null;
 
+  // Limit to 6 items
+  const displayResources = relatedResources.slice(0, 6);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Auto-scroll effect
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container || displayResources.length <= 3) return;
+
+    let scrollAmount = 0;
+    const cardWidth = 320; // Approximate card width + gap
+    const maxScroll = container.scrollWidth - container.clientWidth;
+
+    const interval = setInterval(() => {
+      if (!isPaused && container) {
+        scrollAmount += cardWidth;
+        if (scrollAmount > maxScroll) {
+          scrollAmount = 0;
+        }
+        container.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isPaused, displayResources.length]);
+
   return (
     <>
       <section className="space-y-8">
         <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
           Você Também Pode Gostar
         </h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          {relatedResources.map((relatedResource) => (
+        <div
+          ref={scrollRef}
+          className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-4"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {displayResources.map((relatedResource) => (
             <Link
               key={relatedResource.slug}
               href={`/recursos/${relatedResource.slug}`}
-              className="group block h-full"
+              className="group block flex-shrink-0 w-[280px]"
               aria-label={`Ver detalhes de ${relatedResource.name}`}
             >
-              <div className="space-y-4 h-full flex flex-col">
+              <div className="space-y-4 h-full flex flex-col p-4 rounded-2xl border border-[var(--border-light)] hover:border-[var(--brand-primary)]/50 transition-all backdrop-blur-xl bg-white/5 hover:bg-white/10">
                 <div className="flex items-center justify-between">
                   <span
                     className="px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wide"

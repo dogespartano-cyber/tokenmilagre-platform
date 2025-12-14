@@ -494,11 +494,11 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                     <Link
                                         href="/"
                                         onClick={onClose}
-                                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group mb-2"
+                                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group mb-2"
                                     >
                                         <FontAwesomeIcon
                                             icon={faArrowLeft}
-                                            className="w-5 h-5 text-white/70 group-hover:text-[var(--brand-primary)] transition-colors"
+                                            className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] transition-colors"
                                         />
                                         <span className="font-semibold text-base">Voltar ao Início</span>
                                     </Link>
@@ -519,15 +519,15 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                                                 artigosElement.scrollIntoView({ behavior: 'smooth' });
                                                             }
                                                         }}
-                                                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group"
+                                                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group"
                                                     >
                                                         <FontAwesomeIcon
                                                             icon={sectionIcons[section.icon] || faFile}
-                                                            className="w-5 h-5 text-white/70 group-hover:text-[var(--brand-primary)] transition-colors"
+                                                            className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] transition-colors"
                                                         />
                                                         <span className="font-semibold text-base flex-1 text-left">{section.title}</span>
                                                         <ChevronDown
-                                                            className={`w-4 h-4 text-white/50 transition-transform duration-300 ${config.artigosExpanded ? 'rotate-180' : ''}`}
+                                                            className={`w-4 h-4 text-[var(--text-tertiary)] transition-transform duration-300 ${config.artigosExpanded ? 'rotate-180' : ''}`}
                                                         />
                                                     </button>
                                                     {/* Submenu with animation */}
@@ -543,7 +543,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                                                 }
                                                                 toggleFilters();
                                                             }}
-                                                            className="w-full flex items-center gap-3 pl-12 pr-4 py-2.5 text-white/60 hover:text-[var(--brand-primary)] transition-all text-left"
+                                                            className="w-full flex items-center gap-3 pl-12 pr-4 py-2.5 text-[var(--text-secondary)] hover:text-[var(--brand-primary)] transition-all text-left"
                                                         >
                                                             <FontAwesomeIcon icon={faFilter} className="w-4 h-4" />
                                                             <span className="text-sm font-medium">Filtrar Artigos</span>
@@ -555,11 +555,11 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                                 <a
                                                     href={`#${section.id}`}
                                                     onClick={onClose}
-                                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group"
+                                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group"
                                                 >
                                                     <FontAwesomeIcon
                                                         icon={sectionIcons[section.icon] || faFile}
-                                                        className="w-5 h-5 text-white/70 group-hover:text-[var(--brand-primary)] transition-colors"
+                                                        className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] transition-colors"
                                                     />
                                                     <span className="font-semibold text-base">{section.title}</span>
                                                 </a>
@@ -643,11 +643,11 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                             <Link
                                 href="/"
                                 onClick={onClose}
-                                className="flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group mb-2"
+                                className="flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group mb-2"
                             >
                                 <FontAwesomeIcon
                                     icon={faArrowLeft}
-                                    className="w-5 h-5 text-white/70 group-hover:text-[var(--brand-primary)] transition-colors"
+                                    className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] transition-colors"
                                 />
                                 <span className="font-semibold text-base">Voltar ao Início</span>
                             </Link>
@@ -659,11 +659,11 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                         key={section.id}
                                         href={`#${section.id}`}
                                         onClick={onClose}
-                                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group"
+                                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group"
                                     >
                                         <FontAwesomeIcon
                                             icon={sectionIcons[section.icon] || faChartLine}
-                                            className="w-5 h-5 text-white/70 group-hover:text-[var(--brand-primary)] transition-colors"
+                                            className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] transition-colors"
                                         />
                                         <span className="font-semibold text-base">{section.title}</span>
                                     </a>
@@ -750,11 +750,11 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                             <Link
                                 href="/"
                                 onClick={onClose}
-                                className="flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group mb-4"
+                                className="flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group mb-4"
                             >
                                 <FontAwesomeIcon
                                     icon={faArrowLeft}
-                                    className="w-5 h-5 text-white/70 group-hover:text-[var(--brand-primary)] transition-colors"
+                                    className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] transition-colors"
                                 />
                                 <span className="font-semibold text-base">Voltar ao Início</span>
                             </Link>
@@ -772,7 +772,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                             </div>
 
                             {/* Categories Title */}
-                            <h3 className="text-xs font-bold uppercase tracking-wider text-white/50 mb-3 px-2">
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-tertiary)] mb-3 px-2">
                                 Categorias
                             </h3>
 
@@ -789,14 +789,14 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                         }}
                                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all group ${selectedCategory === cat.id
                                             ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)]'
-                                            : 'text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1'
+                                            : 'text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1'
                                             }`}
                                     >
                                         <FontAwesomeIcon
                                             icon={categoryIcons[cat.id] || faStore}
                                             className={`w-5 h-5 transition-colors ${selectedCategory === cat.id
                                                 ? 'text-[var(--brand-primary)]'
-                                                : 'text-white/70 group-hover:text-[var(--brand-primary)]'
+                                                : 'text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)]'
                                                 }`}
                                         />
                                         <span className="font-semibold text-base">{cat.label}</span>
@@ -811,7 +811,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                             if (setSearchTerm) setSearchTerm('');
                                             onClose();
                                         }}
-                                        className="w-full flex items-center gap-3 px-4 py-3 mt-3 rounded-xl text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all group border-t border-white/10 pt-4"
+                                        className="w-full flex items-center gap-3 px-4 py-3 mt-3 rounded-xl text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all group border-t border-[var(--border-light)] pt-4"
                                     >
                                         <FontAwesomeIcon
                                             icon={faTimes}
@@ -888,17 +888,17 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                             <Link
                                 href="/recursos"
                                 onClick={onClose}
-                                className="flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group mb-4"
+                                className="flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group mb-4"
                             >
                                 <FontAwesomeIcon
                                     icon={faArrowLeft}
-                                    className="w-5 h-5 text-white/70 group-hover:text-[var(--brand-primary)] transition-colors"
+                                    className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] transition-colors"
                                 />
                                 <span className="font-semibold text-base">Voltar a Recursos</span>
                             </Link>
 
                             {/* Category Title */}
-                            <h3 className="text-xs font-bold uppercase tracking-wider text-white/50 mb-3 px-2">
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-tertiary)] mb-3 px-2">
                                 Mais {categoryLabel || 'Recursos'}
                             </h3>
 
@@ -910,15 +910,14 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                         href={`/recursos/${res.slug}`}
                                         onClick={onClose}
                                         className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all group ${currentResource?.slug === res.slug
-                                                ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)]'
-                                                : 'text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1'
+                                            ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)]'
+                                            : 'text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1'
                                             }`}
                                     >
-                                        <FontAwesomeIcon
-                                            icon={faStore}
-                                            className={`w-4 h-4 transition-colors ${currentResource?.slug === res.slug
-                                                    ? 'text-[var(--brand-primary)]'
-                                                    : 'text-white/70 group-hover:text-[var(--brand-primary)]'
+                                        <div
+                                            className={`w-2 h-2 rounded-full flex-shrink-0 ${currentResource?.slug === res.slug
+                                                ? 'bg-[var(--brand-primary)]'
+                                                : 'bg-green-500'
                                                 }`}
                                         />
                                         <span className="font-medium text-sm truncate">{res.name}</span>
