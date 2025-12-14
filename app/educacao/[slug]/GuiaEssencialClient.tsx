@@ -118,7 +118,7 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
                 <div className="flex gap-0 lg:gap-16">
 
                     {/* Conteúdo Principal */}
-                    <main className="flex-1 min-w-0 bg-[var(--bg-elevated)]/50 backdrop-blur-sm lg:rounded-2xl lg:border border-[var(--border-light)]/50 p-4 lg:p-12">
+                    <main className="flex-1 min-w-0 bg-transparent backdrop-blur-2xl lg:rounded-2xl lg:border border-[var(--border-light)]/50 p-4 lg:p-12">
                         {/* Header */}
                         <header className="mb-10">
                             <div className="flex items-center justify-between mb-4">

@@ -5,6 +5,36 @@
 
 ---
 
+## 🔜 Backlog Prioritário: SEO (Schema.org)
+
+> **Origem:** Adiado da Fase 4 de Refinamento Educacional (13/12/2025)
+
+### Objetivo
+Implementar dados estruturados (JSON-LD) para melhorar a visibilidade nos motores de busca e garantir *rich snippets* para o conteúdo educacional.
+
+### Detalhes Técnicos Planejados
+
+#### 1. Componente Global de Schema
+Criar um componente reutilizável `JsonLd.tsx` que recebe dados e renderiza o script tag.
+
+#### 2. Schema de Artigo (`/educacao/[slug]`)
+Mapear os dados do `content` e metadata do artigo:
+- `headline`: Título
+- `description`: Descrição curta
+- `author`: "Token Milagre" (ou autor específico)
+- `datePublished`: Data de criação
+- `dateModified`: Data de atualização
+- `image`: URL da imagem de capa (se houver)
+
+#### 3. Schema de Lista/Curso (`/educacao`)
+Descrever as "Trilhas" como um `Course` ou `ItemList` ordenado.
+- *Iniciante* -> *Intermediário* -> *Avançado*
+
+### Arquivos Afetados
+- `[NEW] app/components/seo/JsonLd.tsx`
+- `[MODIFY] app/educacao/[slug]/page.tsx`
+- `[MODIFY] app/educacao/page.tsx`
+
 ## ✅ Concluído (Sessão 13/12/2025) - Article Creation Workflow Fix & Code Cleanup
 
 ### 🔧 Correção de Bugs no Sistema de Criação de Artigos
