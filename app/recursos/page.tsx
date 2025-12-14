@@ -2,8 +2,9 @@ import Script from 'next/script';
 import { getAllResources } from '@/lib/domains/resources/legacy-api';
 import RecursosClient from './RecursosClient';
 
-// Dynamic rendering - fetch data at request time
-export const dynamic = 'force-dynamic';
+// ISR: Cache data for 60 seconds to reduce database queries
+// This avoids slow remote DB calls on every request
+export const revalidate = 60;
 
 export default async function RecursosPage() {
   const resources = await getAllResources({ verified: true });

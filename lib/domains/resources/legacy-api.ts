@@ -3,6 +3,7 @@
  * This file is kept for backward compatibility only.
  */
 import { prisma } from '@/lib/core/prisma';
+import { unstable_cache } from 'next/cache';
 
 // Safe JSON parser with fallback
 function safeJSONParse<T>(json: string, fallback: T, fieldName?: string): T {
@@ -154,12 +155,8 @@ function parseResource(dbResource: ResourceFromDB): Resource {
   };
 }
 
-/**
- * Get all resources
- * @param filters Optional filters (category, verified)
- * @returns Array of all resources
- */
-export async function getAllResources(filters?: {
+// Internal function to fetch resources from DB
+async function fetchResourcesFromDB(filters?: {
   category?: string;
   verified?: boolean;
 }): Promise<Resource[]> {
@@ -181,6 +178,28 @@ export async function getAllResources(filters?: {
   });
 
   return dbResources.map(parseResource);
+}
+
+// Cached version of getAllResources - 5 minutes cache
+const getCachedResources = unstable_cache(
+  async (category?: string, verified?: boolean) => {
+    console.log('[resources] Cache MISS - fetching from DB...');
+    return fetchResourcesFromDB({ category, verified });
+  },
+  ['all-resources'],
+  { revalidate: 300, tags: ['resources'] } // 5 minutes cache
+);
+
+/**
+ * Get all resources with caching
+ * @param filters Optional filters (category, verified)
+ * @returns Array of all resources
+ */
+export async function getAllResources(filters?: {
+  category?: string;
+  verified?: boolean;
+}): Promise<Resource[]> {
+  return getCachedResources(filters?.category, filters?.verified);
 }
 
 /**
