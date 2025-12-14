@@ -16,6 +16,8 @@ import ResourceSecurityTips from './components/ResourceSecurityTips';
 import RelatedResources from './components/RelatedResources';
 import { useState, useEffect } from 'react';
 import TransparencyNote from '@/components/shared/TransparencyNote';
+import { useSidebar } from '@/contexts/SidebarContext';
+import { getAllCategories } from '@/lib/shared/utils/categories';
 
 interface ResourceDetailClientProps {
   resource: Resource;
@@ -31,6 +33,32 @@ export default function ResourceDetailClient({ resource, relatedResources }: Res
   const router = useRouter();
   const [activeSection, setActiveSection] = useState<string>('');
   const [currentUrl, setCurrentUrl] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const categories = getAllCategories();
+  const { setSidebarMode, resetSidebar, updateConfig } = useSidebar();
+
+  // Configure sidebar for recursos mode
+  useEffect(() => {
+    setSidebarMode('recursos', {
+      categories,
+      selectedCategory,
+      setSelectedCategory,
+      searchTerm,
+      setSearchTerm,
+    });
+
+    return () => resetSidebar();
+  }, [setSidebarMode, resetSidebar]);
+
+  // Update sidebar config when filters change
+  useEffect(() => {
+    updateConfig({
+      selectedCategory,
+      searchTerm,
+    });
+  }, [selectedCategory, searchTerm, updateConfig]);
 
   // Define URL atual
   useEffect(() => {

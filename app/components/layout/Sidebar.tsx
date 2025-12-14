@@ -778,7 +778,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
                             {/* Category Filters */}
                             <div className="space-y-1">
-                                {categories?.map((cat: any) => (
+                                {categories?.filter((cat: any) => !['news', 'education'].includes(cat.id)).map((cat: any) => (
                                     <button
                                         key={cat.id}
                                         onClick={() => {
@@ -802,6 +802,24 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                         <span className="font-semibold text-base">{cat.label}</span>
                                     </button>
                                 ))}
+
+                                {/* Limpar Filtros */}
+                                {(selectedCategory !== 'all' || searchTerm) && (
+                                    <button
+                                        onClick={() => {
+                                            if (setSelectedCategory) setSelectedCategory('all');
+                                            if (setSearchTerm) setSearchTerm('');
+                                            onClose();
+                                        }}
+                                        className="w-full flex items-center gap-3 px-4 py-3 mt-3 rounded-xl text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all group border-t border-white/10 pt-4"
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faTimes}
+                                            className="w-5 h-5"
+                                        />
+                                        <span className="font-semibold text-base">Limpar Filtros</span>
+                                    </button>
+                                )}
                             </div>
                         </nav>
                     </div>
