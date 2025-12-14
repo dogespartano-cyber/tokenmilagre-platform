@@ -261,9 +261,8 @@ export function QuickStartGrid() {
         // Render static grid for SSR/initial load to avoid hydration mismatch
         return (
             <section className="py-8">
-                <div className="flex items-center gap-3 mb-8">
+                <div className="mb-8">
                     <h2 className="text-2xl font-bold text-[var(--text-primary)]">Comece por Aqui</h2>
-                    <div className="h-1 flex-1 bg-[var(--border-light)] rounded-full opacity-20" />
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4">
                     {initialCards.map((card) => (
@@ -280,11 +279,10 @@ export function QuickStartGrid() {
 
     return (
         <section className="py-8">
-            <div className="flex items-center gap-3 mb-8">
+            <div className="mb-8">
                 <h2 className="text-2xl font-bold text-[var(--text-primary)]">
                     Comece por Aqui
                 </h2>
-                <div className="h-1 flex-1 bg-[var(--border-light)] rounded-full opacity-20" />
             </div>
 
             <DndContext

@@ -22,6 +22,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
+import PageWrapper from '@/components/layout/PageWrapper';
 import {
   useHomeData,
   useFearGreed,
@@ -33,6 +34,12 @@ import {
   PriceChartSection,
   LoadingSkeleton,
 } from './components/home';
+
+// Header config - inline para IA reconhecer
+const pageHeader = {
+  title: '$MILAGRE',
+  description: 'Em busca de uma comunidade com prosperidade.'
+};
 
 const initialSections = [
   'ticker',
@@ -179,7 +186,7 @@ export default function HomePage() {
   if (!mounted) {
     // Server-side / Initial render matches default order to prevent hydration mismatch
     return (
-      <div className="min-h-screen relative">
+      <PageWrapper header={pageHeader}>
         <div className="container mx-auto px-6 md:px-10 py-8 relative z-10">
           {loading ? (
             <LoadingSkeleton />
@@ -193,12 +200,12 @@ export default function HomePage() {
             </div>
           )}
         </div>
-      </div>
+      </PageWrapper>
     )
   }
 
   return (
-    <div className="min-h-screen relative">
+    <PageWrapper header={pageHeader}>
       <div className="container mx-auto px-6 md:px-10 py-8 relative z-10">
         {loading ? (
           <LoadingSkeleton />
@@ -222,9 +229,7 @@ export default function HomePage() {
             </SortableContext>
           </DndContext>
         )}
-
-
       </div>
-    </div >
+    </PageWrapper>
   );
 }

@@ -14,11 +14,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faArrowRight, faSearch, faTimes, faArrowUp, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/shared/utils/level-helpers';
 import { getCategoryIcon } from '@/lib/shared/utils/category-helpers';
-import PageHeader from '@/components/shared/PageHeader';
 import TruthDetector from '@/components/education/TruthDetector';
 import SocialLinks from '@/components/shared/SocialLinks';
 import { useEducationFilters, categories, levels } from '@/contexts/EducationFilterContext';
 import { useSidebar } from '@/contexts/SidebarContext';
+import PageWrapper from '@/components/layout/PageWrapper';
+
+// Header config - inline para IA reconhecer
+const pageHeader = {
+  title: 'Aprenda Cripto do Zero ao Avançado',
+  description: 'Artigos e tutoriais gratuitos criados pela comunidade. Sem promessas falsas, apenas conhecimento real.'
+};
 
 interface Resource {
   id: string;
@@ -127,7 +133,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
 
   return (
-    <>
+    <PageWrapper header={pageHeader}>
       {/* Schema.org JSON-LD */}
       <Script id="educacao-schema" type="application/ld+json" strategy="afterInteractive">
         {JSON.stringify({
@@ -141,9 +147,6 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
       <div className="container mx-auto px-4 py-8 relative">
         <div className="space-y-8">
-          {/* Header with Discord/Telegram Buttons */}
-          {/* Header with Discord/Telegram Buttons - REMOVIDO (Agora gerenciado pelo layout-root) */}
-
           {/* Banner de Aviso de Risco */}
           <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300">
             <p className="text-sm">
@@ -448,6 +451,6 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
           </section>
         </div>
       </div>
-    </>
+    </PageWrapper>
   );
 }

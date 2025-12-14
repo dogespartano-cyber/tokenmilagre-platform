@@ -3,7 +3,11 @@
  * Orquestrador que usa componentes extraídos
  * 
  * @agi-module: layout-root
- * @refactored De 591 para ~200 linhas
+ * @refactored De 591 para ~180 linhas
+ * 
+ * NOTA: O PageHeader NÃO é mais renderizado aqui.
+ * Cada página usa <PageWrapper header={...}> para seu header.
+ * Veja: components/layout/PageWrapper.tsx
  */
 
 'use client';
@@ -17,8 +21,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon, faBars, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@/contexts/ThemeContext';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
-import PageHeader from '@/components/shared/PageHeader';
-import { getPageConfig } from '@/lib/core/constants/page-config';
 import NavbarCryptoTicker from '@/components/crypto/NavbarCryptoTicker';
 import GlobalBackground from '@/components/layout/GlobalBackground';
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
@@ -44,8 +46,6 @@ export default function RootLayoutNav({
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const { fearGreed, gaugeValue } = useFearGreedNavbar();
-
-  const headerConfig = getPageConfig(pathname);
 
   return (
     <SidebarProvider>
@@ -145,28 +145,20 @@ export default function RootLayoutNav({
               <Breadcrumbs inline={true} />
             </div>
 
-            {/* Page Header */}
-            {headerConfig && (
-              <div className="container mx-auto px-4 py-8 relative z-10">
-                <PageHeader
-                  title={headerConfig.title}
-                  description={headerConfig.description}
-                />
-              </div>
-            )}
-
-            {/* Ticker Tape - Desktop Only */}
-            {headerConfig && (
+            {/* TODO: Ticker Tape desabilitado - revisar se continuar usando
+            {!pathname.startsWith('/educacao') && !pathname.startsWith('/recursos') && (
               <div
                 suppressHydrationWarning={true}
-                className="container mx-auto px-4 mb-8 relative z-10 hidden lg:block"
+                className="container mx-auto px-4 my-8 relative z-10 hidden lg:block"
               >
                 <div className="rounded-2xl overflow-hidden glass-card">
                   <TickerTapeWidget />
                 </div>
               </div>
             )}
+            */}
 
+            {/* Page Content - PageHeader agora é renderizado dentro de cada página via PageWrapper */}
             <div className="relative z-10">
               {children}
             </div>

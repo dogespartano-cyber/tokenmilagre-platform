@@ -8,7 +8,13 @@ import { SEARCH_DEBOUNCE_MS } from '@/lib/core/constants/ui';
 import ResourceGrid from './components/ResourceGrid';
 import SecurityTips from './components/SecurityTips';
 import { useSidebar } from '@/contexts/SidebarContext';
+import PageWrapper from '@/components/layout/PageWrapper';
 
+// Header config - inline para IA reconhecer
+const pageHeader = {
+  title: 'Ferramentas e Links Seguros',
+  description: 'Acesse exchanges, carteiras e sites oficiais com tranquilidade.'
+};
 
 interface RecursosClientProps {
   resources: Resource[];
@@ -82,24 +88,26 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 relative">
-      <div className="space-y-8">
+    <PageWrapper header={pageHeader}>
+      <div className="container mx-auto px-4 py-8 relative">
+        <div className="space-y-8">
 
-        {/* Grid de Recursos */}
-        <ResourceGrid
-          resources={filteredResources}
-          searchTerm={debouncedSearchTerm}
-          onClearFilters={clearAllFilters}
-        />
+          {/* Grid de Recursos */}
+          <ResourceGrid
+            resources={filteredResources}
+            searchTerm={debouncedSearchTerm}
+            onClearFilters={clearAllFilters}
+          />
 
-        {/* Divider */}
-        <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
+          {/* Divider */}
+          <div className="border-t" style={{ borderColor: 'var(--border-light)' }}></div>
 
-        {/* Dicas de Segurança */}
-        <SecurityTips />
+          {/* Dicas de Segurança */}
+          <SecurityTips />
 
 
+        </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 }

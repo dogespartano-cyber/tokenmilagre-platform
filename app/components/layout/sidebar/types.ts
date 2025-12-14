@@ -72,6 +72,11 @@ export interface RecursoDetalheModeConfig {
     categoryLabel: string;
 }
 
+/** Config para modo comece-aqui */
+export interface ComeceAquiModeConfig {
+    sections: SidebarSection[];
+}
+
 // ============================================================
 // MENU ITEM TYPES
 // ============================================================

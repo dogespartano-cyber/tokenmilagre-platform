@@ -125,6 +125,14 @@ Nível 3: Recurso (service, hooks, types)
 Se precisar de nível 4 → repensar a arquitetura
 ```
 
+### Regra do PageHeader
+```
+O sistema usa PageWrapper para renderizar headers.
+Cada página declara seu header inline via prop.
+
+Configuração: components/layout/PageWrapper.tsx
+```
+
 ---
 
 ## Como Continuar o Trabalho

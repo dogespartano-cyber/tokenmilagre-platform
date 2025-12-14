@@ -1,12 +1,8 @@
 /**
- * 📄 Page Configuration
+ * 📄 Page Configuration (DEPRECATED)
  * 
- * @agi-purpose: Centralized config for page headers (title + description)
- * @agi-pattern: constants
- * @agi-trust: HIGH
- * 
- * Defines header content for each route. Following power-law:
- * this is a core config used across all pages.
+ * @deprecated Use PageWrapper com header inline em cada página
+ * @see components/layout/PageWrapper.tsx
  */
 
 export interface PageConfig {

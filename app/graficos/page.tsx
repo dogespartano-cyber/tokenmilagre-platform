@@ -7,6 +7,13 @@ import CryptoAnalyzer from '@/components/crypto/CryptoAnalyzer';
 import MarketFlow from '@/components/crypto/MarketFlow';
 import SocialLinks from '@/components/shared/SocialLinks';
 import { useSidebar } from '@/contexts/SidebarContext';
+import PageWrapper from '@/components/layout/PageWrapper';
+
+// Header config - inline para IA reconhecer
+const pageHeader = {
+  title: 'Gráficos e Análises de Mercado',
+  description: 'Acompanhe o mercado em tempo real com gráficos avançados, análise técnica e indicadores profissionais'
+};
 
 const CryptoHeatmapWidget = dynamic(() => import('@/components/widgets/CryptoHeatmapWidget'), {
   ssr: false,
@@ -35,7 +42,7 @@ export default function GraficosPage() {
   }, [setSidebarMode, resetSidebar]);
 
   return (
-    <>
+    <PageWrapper header={pageHeader}>
       {/* Schema.org JSON-LD */}
       <Script id="graficos-schema" type="application/ld+json" strategy="afterInteractive">
         {JSON.stringify({
@@ -125,6 +132,6 @@ export default function GraficosPage() {
           </div>
         </div>
       </div>
-    </>
+    </PageWrapper>
   );
 }

@@ -5,6 +5,13 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faNewspaper, faClock } from '@fortawesome/free-solid-svg-icons';
 import CustomCryptoScreener from '@/components/crypto/CustomCryptoScreener';
+import PageWrapper from '@/components/layout/PageWrapper';
+
+// Header config - inline para IA reconhecer
+const pageHeader = {
+  title: 'Cotações em Tempo Real',
+  description: 'Acompanhe o preço, volume e tendências das principais criptomoedas do mercado.'
+};
 
 interface NewsItem {
   id: string;
@@ -80,7 +87,7 @@ export default function CriptomoedasPage() {
   };
 
   return (
-    <>
+    <PageWrapper header={pageHeader}>
       <div className="container mx-auto px-4 py-8">
         <div className="space-y-16">
           {/* Rastreador de Mercado */}
@@ -160,6 +167,6 @@ export default function CriptomoedasPage() {
           </div>
         </div>
       </div>
-    </>
+    </PageWrapper>
   );
 }

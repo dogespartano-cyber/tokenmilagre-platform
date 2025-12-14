@@ -100,47 +100,40 @@ export default function CryptoEducator() {
                 {/* Coluna Direita: Limitações e Regras */}
                 <div className="space-y-6">
                     {/* Limitações */}
-                    <div className="zenith-card p-6 h-fit">
-                        <div className="flex items-center gap-2 mb-4 text-[var(--warning)]">
-                            <FontAwesomeIcon icon={faExclamationTriangle} />
-                            <h3 className="font-bold text-[var(--text-primary)]">Limitações Importantes</h3>
-                        </div>
+                    <div className="zenith-card p-6 relative overflow-hidden group flex-1 flex flex-col justify-center">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
 
-                        <ul className="space-y-4">
-                            {[
-                                { title: 'Não é conselho', desc: 'Estes indicadores são ferramentas estritamente educacionais.' },
-                                { title: 'Timeframe', desc: '15m é volátil (ruído). 1D é mais confiável para tendências.' },
-                                { title: 'Falsos Sinais', desc: 'RSI pode ficar "sobrevendido" por semanas em Bear Markets.' },
-                                { title: 'Macroeconomia', desc: 'Gráficos não prevêem hacks, regulação ou guerras.' }
-                            ].map((item, idx) => (
-                                <li key={idx} className="flex gap-3 text-sm group">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-tertiary)] mt-1.5 group-hover:bg-[var(--brand-primary)] transition-colors"></span>
-                                    <p className="text-[var(--text-secondary)]">
-                                        <strong className="text-[var(--text-primary)]">{item.title}</strong> — {item.desc}
-                                    </p>
-                                </li>
-                            ))}
-                        </ul>
+                        <div className="relative z-10">
+                            <p className="text-lg font-bold text-amber-500 mb-4">Entenda o que os indicadores não fazem</p>
+
+                            <ul className="space-y-3">
+                                {[
+                                    { title: 'Não é conselho', desc: 'Estes indicadores são ferramentas estritamente educacionais.' },
+                                    { title: 'Timeframe', desc: '15m é volátil (ruído). 1D é mais confiável para tendências.' },
+                                    { title: 'Falsos Sinais', desc: 'RSI pode ficar "sobrevendido" por semanas em Bear Markets.' },
+                                    { title: 'Macroeconomia', desc: 'Gráficos não prevêem hacks, regulação ou guerras.' }
+                                ].map((item, idx) => (
+                                    <li key={idx} className="flex gap-3 text-sm group">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500/50 mt-1.5 group-hover:bg-amber-500 transition-colors"></span>
+                                        <p className="text-[var(--text-secondary)]">
+                                            <strong className="text-[var(--text-primary)]">{item.title}</strong> — {item.desc}
+                                        </p>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
 
                     {/* Regra de Ouro */}
-                    <div className="zenith-featured p-6 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-48 h-48 bg-yellow-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+                    <div className="zenith-card p-6 relative overflow-hidden group flex-1 flex flex-col justify-center">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--brand-primary)]/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
 
                         <div className="relative z-10">
-                            <div className="flex items-center gap-2 mb-3 text-[var(--brand-primary)]">
-                                <FontAwesomeIcon icon={faLightbulb} className="animate-pulse" />
-                                <h3 className="font-bold uppercase tracking-wider text-xs">Regra de Ouro</h3>
-                            </div>
+                            <p className="text-lg font-bold text-[var(--brand-primary)] mb-4">Princípio de Investimento Contrário</p>
 
                             <blockquote className="text-xl font-medium text-[var(--text-primary)] italic leading-relaxed">
                                 "Compre quando todos estão com medo, venda quando todos estão eufóricos."
                             </blockquote>
-
-                            <div className="mt-4 flex items-center gap-2 text-xs text-[var(--text-tertiary)]">
-                                <FontAwesomeIcon icon={faShieldAlt} className="text-[var(--success)]" />
-                                <span>Princípio de Investimento Contrário</span>
-                            </div>
                         </div>
                     </div>
                 </div>
