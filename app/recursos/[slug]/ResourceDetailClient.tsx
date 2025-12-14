@@ -22,6 +22,7 @@ import { getCategoryLabel } from '@/lib/shared/utils/categories';
 interface ResourceDetailClientProps {
   resource: Resource;
   relatedResources: Resource[];
+  categoryResources: Resource[];
 }
 
 interface TableOfContentsItem {
@@ -29,23 +30,23 @@ interface TableOfContentsItem {
   text: string;
 }
 
-export default function ResourceDetailClient({ resource, relatedResources }: ResourceDetailClientProps) {
+export default function ResourceDetailClient({ resource, relatedResources, categoryResources }: ResourceDetailClientProps) {
   const router = useRouter();
   const [activeSection, setActiveSection] = useState<string>('');
   const [currentUrl, setCurrentUrl] = useState<string>('');
 
   const { setSidebarMode, resetSidebar } = useSidebar();
 
-  // Configure sidebar for recurso-detalhe mode with related resources
+  // Configure sidebar for recurso-detalhe mode with category resources
   useEffect(() => {
     setSidebarMode('recurso-detalhe', {
       currentResource: resource,
-      relatedResources: relatedResources,
+      relatedResources: categoryResources,
       categoryLabel: getCategoryLabel(resource.category),
     });
 
     return () => resetSidebar();
-  }, [setSidebarMode, resetSidebar, resource, relatedResources]);
+  }, [setSidebarMode, resetSidebar, resource, categoryResources]);
 
   // Define URL atual
   useEffect(() => {

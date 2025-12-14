@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
-import { getResourceBySlug, getAllResourceSlugs, getResourcesByCategory } from '@/lib/domains/resources/legacy-api';
+import { getResourceBySlug, getAllResourceSlugs, getResourcesByCategory, getResourcesBySlugs } from '@/lib/domains/resources/legacy-api';
 import ResourceDetailClient from './ResourceDetailClient';
 
 // Cache ISR: Revalida a cada 1 hora
@@ -45,6 +45,11 @@ export default async function ResourceDetailPage({ params }: { params: Promise<{
   // Load all resources from same category for sidebar navigation
   const categoryResources = await getResourcesByCategory(resource.category);
 
+  // Load specific related resources for "Você Também Pode Gostar" section
+  const relatedResources = resource.relatedResources
+    ? await getResourcesBySlugs(resource.relatedResources)
+    : [];
+
   return (
     <>
       {/* Schema.org JSON-LD */}
@@ -64,7 +69,11 @@ export default async function ResourceDetailPage({ params }: { params: Promise<{
         })}
       </Script>
 
-      <ResourceDetailClient resource={resource} relatedResources={categoryResources} />
+      <ResourceDetailClient
+        resource={resource}
+        relatedResources={relatedResources}
+        categoryResources={categoryResources}
+      />
     </>
   );
 }
