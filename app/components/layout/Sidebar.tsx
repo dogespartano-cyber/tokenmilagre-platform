@@ -904,7 +904,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
                             {/* Related Resources Links */}
                             <div className="space-y-1">
-                                {relatedResources?.slice(0, 8).map((res: any) => (
+                                {relatedResources?.map((res: any) => (
                                     <Link
                                         key={res.slug}
                                         href={`/recursos/${res.slug}`}
@@ -925,15 +925,6 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                     </Link>
                                 ))}
                             </div>
-
-                            {/* Ver Todos Link */}
-                            <Link
-                                href={`/recursos?category=${currentResource?.category || ''}`}
-                                onClick={onClose}
-                                className="flex items-center gap-3 px-4 py-3 mt-4 rounded-xl text-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/10 transition-all group border-t border-white/10 pt-4"
-                            >
-                                <span className="font-semibold text-sm">Ver todos os {categoryLabel || 'recursos'} →</span>
-                            </Link>
                         </nav>
                     </div>
                 </aside>
