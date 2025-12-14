@@ -107,12 +107,12 @@ Este artigo foi baseado em padrões técnicos e relatórios de segurança, inclu
     warningLevel: 'info',
     securityTips: JSON.stringify([
         {
-            icon: '🔐',
+            icon: '',
             title: 'Seed Phrase em Papel',
             description: 'Nunca armazene digitalmente. Papel em cofre é mais seguro que nuvem.',
         },
         {
-            icon: '🚫',
+            icon: '',
             title: 'Ignore DMs de Suporte',
             description: 'Empresas legítimas nunca pedem suas chaves por mensagem.',
         },
