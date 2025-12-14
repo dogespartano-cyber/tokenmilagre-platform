@@ -12,6 +12,19 @@ import { slugify } from '@/lib/shared/utils/content-helpers';
 import QuizComponent from '@/components/education/QuizComponent';
 import TransparencyNote from '@/components/shared/TransparencyNote';
 
+// Custom unique ID generation for Markdown headers
+const slugRegistry = new Map<string, number>();
+const getUniqueId = (text: string) => {
+  const id = slugify(text);
+  if (slugRegistry.has(id)) {
+    const count = slugRegistry.get(id)!;
+    slugRegistry.set(id, count + 1);
+    return `${id}-${count}`;
+  }
+  slugRegistry.set(id, 1);
+  return id;
+};
+
 interface EducationalArticle {
   id: string;
   slug: string;
@@ -78,16 +91,28 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
 
     const headings: TableOfContentsItem[] = [];
     const lines = article.content.split('\n');
+    const usedIds = new Set<string>();
 
     lines.forEach((line) => {
       const h2Match = line.match(/^## (.+)$/);
-      if (h2Match) {
-        const text = h2Match[1].trim();
-        headings.push({
-          id: slugify(text),
-          text,
-          level: 2
-        });
+      const h3Match = line.match(/^### (.+)$/);
+
+      if (h2Match || h3Match) {
+        const text = (h2Match ? h2Match[1] : h3Match![1]).trim();
+        const level = h2Match ? 2 : 3;
+        let id = slugify(text);
+
+        // Ensure uniqueness matching renderer logic
+        if (usedIds.has(id)) {
+          let counter = 1;
+          while (usedIds.has(`${id}-${counter}`)) {
+            counter++;
+          }
+          id = `${id}-${counter}`;
+        }
+
+        usedIds.add(id);
+        headings.push({ id, text, level });
       }
     });
 
@@ -168,20 +193,47 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
         <div className="container mx-auto px-6 md:px-10 relative z-10">
           <div className="max-w-6xl">
 
-            {/* Meta Badges */}
-            <div className="flex flex-wrap items-center gap-3 mb-6">
-              <div className="inline-flex items-center gap-2">
-                <span className="text-[10px] font-bold text-zinc-700 dark:text-white/90 uppercase tracking-wider drop-shadow-md">
-                  Nível
-                </span>
-                <div className="w-1 h-1 rounded-full bg-zinc-700/50 dark:bg-white/50 shadow-sm" />
-                <span className="text-sm font-extrabold uppercase tracking-wide drop-shadow-md" style={{ color: getLevelColor(article.level) }}>
-                  {getLevelLabel(article.level)}
+            {/* Meta Badges + Share Actions */}
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <div className="flex items-center gap-3">
+                <div className="inline-flex items-center gap-2">
+                  <span className="text-[10px] font-bold text-zinc-700 dark:text-white/90 uppercase tracking-wider drop-shadow-md">
+                    Nível
+                  </span>
+                  <div className="w-1 h-1 rounded-full bg-zinc-700/50 dark:bg-white/50 shadow-sm" />
+                  <span className="text-sm font-extrabold uppercase tracking-wide drop-shadow-md" style={{ color: getLevelColor(article.level) }}>
+                    {getLevelLabel(article.level)}
+                  </span>
+                </div>
+                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] border border-[var(--border-article)]">
+                  {article.category}
                 </span>
               </div>
-              <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] border border-[var(--border-article)]">
-                {article.category}
-              </span>
+
+              {/* Share Buttons (Header) */}
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(article.title + ' ' + currentUrl)}`, '_blank')}
+                  className="text-[var(--text-article-muted)] hover:text-[#25D366] transition-all hover:scale-110"
+                  title="Compartilhar no WhatsApp"
+                >
+                  <FontAwesomeIcon icon={faWhatsapp} className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={() => window.open(`https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(article.title)}`, '_blank')}
+                  className="text-[var(--text-article-muted)] hover:text-[#0088cc] transition-all hover:scale-110"
+                  title="Compartilhar no Telegram"
+                >
+                  <FontAwesomeIcon icon={faTelegram} className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(currentUrl)}`, '_blank')}
+                  className="text-[var(--text-article-muted)] hover:text-black dark:hover:text-white transition-all hover:scale-110"
+                  title="Compartilhar no X (Twitter)"
+                >
+                  <FontAwesomeIcon icon={faXTwitter} className="w-6 h-6" />
+                </button>
+              </div>
             </div>
 
             {/* Title */}
@@ -215,8 +267,8 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
           {/* Coluna Principal (Artigo) */}
           <div className="lg:col-span-8 space-y-8">
 
-            {/* Card Principal do Artigo - Estilo removido conforme solicitado */}
-            <div className="overflow-hidden">
+            {/* Card Principal do Artigo - Novo Template Glassmorphism */}
+            <div className="overflow-hidden bg-transparent backdrop-blur-2xl lg:rounded-2xl lg:border border-[var(--border-light)]/50 p-4 lg:p-10">
 
               <div className="py-4 space-y-8">
 
@@ -227,12 +279,12 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                       h1: ({ children }) => <h1 className="text-3xl font-bold mt-10 mb-6 text-[var(--text-article-title)]">{children}</h1>,
                       h2: ({ children }) => {
                         const text = String(children);
-                        const id = slugify(text);
+                        const id = getUniqueId(text);
                         return <h2 id={id} className="text-2xl font-bold mt-10 mb-5 text-[var(--text-article-title)] scroll-mt-32 border-b border-[var(--border-article)] pb-2">{children}</h2>;
                       },
                       h3: ({ children }) => {
                         const text = String(children);
-                        const id = slugify(text);
+                        const id = getUniqueId(text);
                         return <h3 id={id} className="text-xl font-bold mt-8 mb-4 text-[var(--text-article-title)] scroll-mt-32">{children}</h3>;
                       },
                       ul: ({ children }) => <ul className="mb-6 space-y-2 list-disc list-inside text-[var(--text-article-body)] marker:text-[var(--brand-primary)]">{children}</ul>,
