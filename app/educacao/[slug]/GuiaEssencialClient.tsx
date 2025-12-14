@@ -3,7 +3,9 @@
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, CheckCircle2, Shield, BookOpen, Share2, MessageCircle, Send, Twitter } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, Shield, BookOpen } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWhatsapp, faTelegram, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { slugify } from '@/lib/shared/utils/content-helpers';
 import { GUIA_ESSENCIAL_TRILHA } from '@/lib/education/guia-essencial';
 
@@ -177,21 +179,21 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
                                             className="p-2 rounded-lg bg-[var(--bg-secondary)] hover:bg-[#25D366]/10 text-[var(--text-tertiary)] hover:text-[#25D366] transition-colors"
                                             title="Compartilhar no WhatsApp"
                                         >
-                                            <MessageCircle className="w-4 h-4" />
+                                            <FontAwesomeIcon icon={faWhatsapp} className="w-5 h-5" />
                                         </button>
                                         <button
                                             onClick={() => handleShare('telegram')}
                                             className="p-2 rounded-lg bg-[var(--bg-secondary)] hover:bg-[#0088cc]/10 text-[var(--text-tertiary)] hover:text-[#0088cc] transition-colors"
                                             title="Compartilhar no Telegram"
                                         >
-                                            <Send className="w-4 h-4" />
+                                            <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
                                         </button>
                                         <button
                                             onClick={() => handleShare('twitter')}
-                                            className="p-2 rounded-lg bg-[var(--bg-secondary)] hover:bg-[#1DA1F2]/10 text-[var(--text-tertiary)] hover:text-[#1DA1F2] transition-colors"
+                                            className="p-2 rounded-lg bg-[var(--bg-secondary)] hover:bg-black/10 dark:hover:bg-white/10 text-[var(--text-tertiary)] hover:text-black dark:hover:text-white transition-colors"
                                             title="Compartilhar no X (Twitter)"
                                         >
-                                            <Twitter className="w-4 h-4" />
+                                            <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
                                         </button>
                                     </div>
 
