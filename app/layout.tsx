@@ -8,6 +8,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 config.autoAddCss = false;
 
 import { ThemeProvider } from "@/lib/core/theme";
+import { EducationFilterProvider } from "@/contexts/EducationFilterContext";
 import RootLayoutNav from "./layout-root";
 import { GoogleAnalytics } from '@next/third-parties/google';
 
@@ -212,9 +213,11 @@ export default function RootLayout({
           </Script>
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />
           <ThemeProvider>
-            <RootLayoutNav>
-              {children}
-            </RootLayoutNav>
+            <EducationFilterProvider>
+              <RootLayoutNav>
+                {children}
+              </RootLayoutNav>
+            </EducationFilterProvider>
           </ThemeProvider>
         </body>
       </html>

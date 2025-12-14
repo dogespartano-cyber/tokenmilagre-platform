@@ -45,8 +45,10 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useEducationFiltersOptional, categories, levels } from '@/contexts/EducationFilterContext';
 import { GUIA_ESSENCIAL_TRILHA, isGuiaEssencialSlug } from '@/lib/education/guia-essencial';
-import { CheckCircle2, ChevronRight } from 'lucide-react';
+import { CheckCircle2, ChevronRight, X } from 'lucide-react';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -134,6 +136,10 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     const currentTrilhaIndex = isTrilhaMode
         ? GUIA_ESSENCIAL_TRILHA.findIndex(t => t.slug === currentSlug)
         : -1;
+
+    // Detectar se está na página principal de /educacao (para mostrar filtros)
+    const isEducacaoPage = pathname === '/educacao';
+    const educationFilters = useEducationFiltersOptional();
 
     useEffect(() => {
         setMounted(true);
@@ -298,7 +304,97 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
                     {/* Sidebar Navigation */}
                     <nav className="flex-1 p-4 overflow-y-auto flex flex-col">
-                        {isTrilhaMode ? (
+                        {isEducacaoPage && educationFilters ? (
+                            /* Modo Educacao: Filtros de Busca */
+                            <>
+                                {/* Botão Voltar ao Menu - Consistente com modo Trilha */}
+                                <Link
+                                    href="/"
+                                    onClick={onClose}
+                                    className="group flex items-center gap-3 px-4 py-3 mb-4 rounded-xl font-semibold text-sm text-[var(--text-secondary)] hover:text-[var(--brand-primary)] hover:bg-[var(--bg-secondary)] transition-all duration-300 border border-[var(--border-light)]"
+                                >
+                                    <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
+                                    <span>Voltar ao Menu</span>
+                                </Link>
+
+                                {/* Busca */}
+                                <div className="mb-5">
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            placeholder="Título, tag..."
+                                            value={educationFilters.searchTerm}
+                                            onChange={(e) => educationFilters.setSearchTerm(e.target.value)}
+                                            className="w-full pl-10 pr-8 py-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-light)] text-[var(--text-primary)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-all placeholder-[var(--text-tertiary)]"
+                                        />
+                                        <FontAwesomeIcon
+                                            icon={faSearch}
+                                            className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] w-4 h-4"
+                                        />
+                                        {educationFilters.searchTerm && (
+                                            <button
+                                                onClick={() => educationFilters.setSearchTerm('')}
+                                                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
+                                            >
+                                                <X className="w-4 h-4" />
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Níveis */}
+                                <div className="mb-5">
+                                    <label className="text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-wider mb-2 block">Nível</label>
+                                    <div className="space-y-1">
+                                        {levels.map((level) => (
+                                            <button
+                                                key={level.id}
+                                                onClick={() => educationFilters.setSelectedLevel(level.id)}
+                                                className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all ${educationFilters.selectedLevel === level.id
+                                                    ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'
+                                                    : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]'
+                                                    }`}
+                                            >
+                                                {level.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Categorias */}
+                                <div className="mb-5">
+                                    <label className="text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-wider mb-2 block">Categoria</label>
+                                    <div className="space-y-1">
+                                        {categories.map((cat) => (
+                                            <button
+                                                key={cat.id}
+                                                onClick={() => educationFilters.setSelectedCategory(cat.id)}
+                                                className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all ${educationFilters.selectedCategory === cat.id
+                                                    ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'
+                                                    : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]'
+                                                    }`}
+                                            >
+                                                {cat.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Limpar Filtros */}
+                                {educationFilters.getActiveFiltersCount() > 0 && (
+                                    <button
+                                        onClick={educationFilters.clearAllFilters}
+                                        className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-red-500 hover:bg-red-500/10 transition-all flex items-center gap-2 justify-center border border-red-500/20"
+                                    >
+                                        <X className="w-3 h-3" />
+                                        Limpar Filtros ({educationFilters.getActiveFiltersCount()})
+                                    </button>
+                                )}
+
+                                {/* Spacer */}
+                                <div className="flex-1" />
+                            </>
+                        ) : isTrilhaMode ? (
                             /* Modo Trilha: Navegação "Comece por Aqui" */
                             <>
                                 {/* Botão Voltar ao Menu */}

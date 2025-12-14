@@ -17,6 +17,7 @@ import { getCategoryIcon } from '@/lib/shared/utils/category-helpers';
 import DashboardHeader from '@/components/shared/DashboardHeader';
 import TruthDetector from '@/components/education/TruthDetector';
 import SocialLinks from '@/components/shared/SocialLinks';
+import { useEducationFilters, categories, levels } from '@/contexts/EducationFilterContext';
 
 interface Resource {
   id: string;
@@ -53,28 +54,19 @@ interface RawArticleData {
 
 export default function EducacaoClient({ resources, stats }: EducacaoClientProps) {
 
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedLevel, setSelectedLevel] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
+  // Usar filtros do Context (compartilhado com Sidebar)
+  const {
+    searchTerm,
+    setSearchTerm,
+    selectedCategory,
+    setSelectedCategory,
+    selectedLevel,
+    setSelectedLevel,
+    clearAllFilters,
+    getActiveFiltersCount
+  } = useEducationFilters();
+
   const debouncedSearchTerm = useDebouncedValue(searchTerm, 500);
-  const [showFilters, setShowFilters] = useState(false);
-
-  const categories = [
-    { id: 'all', label: 'Todos' },
-    { id: 'blockchain', label: 'Blockchain' },
-    { id: 'trading', label: 'Trading' },
-    { id: 'defi', label: 'DeFi' },
-    { id: 'nfts', label: 'NFTs' },
-    { id: 'seguranca', label: 'Segurança' },
-    { id: 'desenvolvimento', label: 'Dev Web3' },
-  ];
-
-  const levels = [
-    { id: 'all', label: 'Todos os Níveis' },
-    { id: 'iniciante', label: 'Iniciante' },
-    { id: 'intermediario', label: 'Intermediário' },
-    { id: 'avancado', label: 'Avançado' },
-  ];
 
   // Hook de paginação com data fetching
   const {
@@ -111,19 +103,6 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
 
 
-  const clearAllFilters = () => {
-    setSearchTerm('');
-    setSelectedCategory('all');
-    setSelectedLevel('all');
-  };
-
-  const getActiveFiltersCount = () => {
-    let count = 0;
-    if (searchTerm) count++;
-    if (selectedCategory !== 'all') count++;
-    if (selectedLevel !== 'all') count++;
-    return count;
-  };
 
 
 
@@ -166,14 +145,14 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { icon: BookOpen, title: 'Comece pelo Básico', desc: 'Entenda o que é cripto e onde as pessoas mais erram', slug: null },
+                { icon: BookOpen, title: 'Comece pelo Básico', desc: 'Entenda o que é cripto e onde as pessoas mais erram', slug: 'fundamentos-cripto' },
                 { icon: Shield, title: 'Segurança Primeiro', desc: 'Seed phrase, golpes e hábitos que protegem você', slug: 'seguranca-primeiro' },
-                { icon: FileQuestion, title: 'Glossário Essencial', desc: 'Termos explicados com exemplos e armadilhas comuns', slug: null },
-                { icon: Search, title: 'Como Pesquisar um Projeto', desc: 'Checklist de transparência: time, tokenomics, auditoria', slug: null },
-                { icon: Wallet, title: 'Carteiras e Custódia', desc: 'Hot vs cold wallet, autocustódia e boas práticas', slug: null },
-                { icon: Coins, title: 'Taxas e Redes', desc: 'O que são taxas (gas), confirmações e congestionamento', slug: null },
-                { icon: AlertTriangle, title: 'Golpes Comuns', desc: 'Phishing, airdrop falso, links maliciosos e aprovações', slug: null },
-                { icon: TrendingUp, title: 'Trilhas por Nível', desc: 'Iniciante, intermediário ou avançado — escolha seu caminho', slug: null },
+                { icon: FileQuestion, title: 'Glossário Essencial', desc: 'Termos explicados com exemplos e armadilhas comuns', slug: 'glossario-essencial' },
+                { icon: Search, title: 'Como Pesquisar um Projeto', desc: 'Checklist de transparência: time, tokenomics, auditoria', slug: 'como-pesquisar-projeto' },
+                { icon: Wallet, title: 'Carteiras e Custódia', desc: 'Hot vs cold wallet, autocustódia e boas práticas', slug: 'carteiras-e-custodia' },
+                { icon: Coins, title: 'Taxas e Redes', desc: 'O que são taxas (gas), confirmações e congestionamento', slug: 'taxas-gas-e-redes' },
+                { icon: AlertTriangle, title: 'Golpes Comuns', desc: 'Phishing, airdrop falso, links maliciosos e aprovações', slug: 'golpes-comuns-cripto' },
+                { icon: TrendingUp, title: 'Trilhas por Nível', desc: 'Iniciante, intermediário ou avançado — escolha seu caminho', slug: 'trilhas-por-nivel' },
               ].map((card, index) => {
                 const Icon = card.icon;
                 const cardContent = (
@@ -238,173 +217,97 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
             </div>
 
             <div className="space-y-6">
-              {getActiveFiltersCount() > 0 && (
-                <div className="flex items-center justify-end mb-4">
-                  <button
-                    onClick={clearAllFilters}
-                    className="text-sm font-bold text-red-500 hover:text-red-600 px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors flex items-center gap-2"
+
+
+              {/* Lista de Recursos - NOVO DESIGN COM GLASSMORPHISM */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {filteredResources.map((resource) => (
+                  <Link
+                    key={resource.id}
+                    href={`/educacao/${resource.slug}`}
+                    className="glass-card group relative flex flex-col p-6 rounded-2xl border border-[var(--border-light)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl overflow-hidden"
                   >
-                    <FontAwesomeIcon icon={faTimes} />
-                    Limpar Filtros
-                  </button>
-                </div>
-              )}
-
-              <div className="grid lg:grid-cols-12 gap-6">
-                {/* Busca */}
-                <div className="lg:col-span-12">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      placeholder="Buscar por título, descrição ou tag..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3 rounded-xl bg-[var(--bg-page)] border border-[var(--border-article)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-all placeholder-[var(--text-secondary)]"
+                    {/* Hover Glow Effect */}
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"
+                      style={{
+                        background: getLevelColor(resource.level)
+                      }}
                     />
-                    <FontAwesomeIcon
-                      icon={faSearch}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]"
-                    />
-                    {searchTerm && (
-                      <button
-                        onClick={() => setSearchTerm('')}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                      >
-                        <FontAwesomeIcon icon={faTimes} />
-                      </button>
-                    )}
-                  </div>
-                </div>
 
-                {/* Categorias */}
-                <div className="lg:col-span-7 space-y-3">
-                  <label className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Categorias</label>
-                  <div className="flex flex-wrap gap-2">
-                    {categories.map((cat) => (
-                      <button
-                        key={cat.id}
-                        onClick={() => setSelectedCategory(cat.id)}
-                        className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all border hover:scale-105 active:scale-95 ${selectedCategory === cat.id
-                          ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)] border-[var(--brand-primary)]/30 shadow-sm hover:bg-[var(--brand-primary)]/30'
-                          : 'bg-[var(--bg-page)] hover:bg-[var(--bg-hover)] border-[var(--border-article)] text-[var(--text-secondary)] hover:border-[var(--brand-primary)]/50 hover:text-[var(--text-primary)]'
-                          }`}
-                      >
-                        {cat.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                    <div className="relative z-10 flex flex-col h-full">
+                      {/* Header: Level & Read Time */}
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-1.5">
+                          <FontAwesomeIcon
+                            icon={getLevelIcon(resource.level)}
+                            className="w-2.5 h-2.5"
+                            style={{ color: getLevelColor(resource.level) }}
+                          />
+                          <span className="text-[10px] font-bold tracking-wide" style={{
+                            color: getLevelColor(resource.level)
+                          }}>
+                            {resource.level === 'iniciante' ? 'Iniciante' : resource.level === 'intermediario' ? 'Intermediário' : resource.level === 'avancado' ? 'Avançado' : 'Geral'}
+                          </span>
+                        </div>
 
-                {/* Níveis */}
-                <div className="lg:col-span-5 space-y-3">
-                  <label className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Nível</label>
-                  <div className="flex flex-wrap gap-2">
-                    {levels.map((level) => (
-                      <button
-                        key={level.id}
-                        onClick={() => setSelectedLevel(level.id)}
-                        className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all border hover:scale-105 active:scale-95 ${selectedLevel === level.id
-                          ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)] border-[var(--brand-primary)]/30 shadow-sm hover:bg-[var(--brand-primary)]/30'
-                          : 'bg-[var(--bg-page)] hover:bg-[var(--bg-hover)] border-[var(--border-article)] text-[var(--text-secondary)] hover:border-[var(--brand-primary)]/50 hover:text-[var(--text-primary)]'
-                          }`}
-                      >
-                        {level.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-            {/* Lista de Recursos - NOVO DESIGN COM GLASSMORPHISM */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredResources.map((resource) => (
-                <Link
-                  key={resource.id}
-                  href={`/educacao/${resource.slug}`}
-                  className="glass-card group relative flex flex-col p-6 rounded-2xl border border-[var(--border-light)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl overflow-hidden"
-                >
-                  {/* Hover Glow Effect */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"
-                    style={{
-                      background: getLevelColor(resource.level)
-                    }}
-                  />
-
-                  <div className="relative z-10 flex flex-col h-full">
-                    {/* Header: Level & Read Time */}
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-1.5">
-                        <FontAwesomeIcon
-                          icon={getLevelIcon(resource.level)}
-                          className="w-2.5 h-2.5"
-                          style={{ color: getLevelColor(resource.level) }}
-                        />
-                        <span className="text-[10px] font-bold tracking-wide" style={{
-                          color: getLevelColor(resource.level)
-                        }}>
-                          {resource.level === 'iniciante' ? 'Iniciante' : resource.level === 'intermediario' ? 'Intermediário' : resource.level === 'avancado' ? 'Avançado' : 'Geral'}
+                        <span className="text-xs font-medium flex items-center gap-1.5 text-[var(--text-tertiary)]">
+                          <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
+                          {resource.readTime || '5 min'}
                         </span>
                       </div>
 
-                      <span className="text-xs font-medium flex items-center gap-1.5 text-[var(--text-tertiary)]">
-                        <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
-                        {resource.readTime || '5 min'}
-                      </span>
+                      {/* Title */}
+                      <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-[var(--brand-primary)] transition-colors text-[var(--text-primary)]">
+                        {resource.title}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="text-sm mb-4 line-clamp-3 leading-relaxed text-[var(--text-secondary)]">
+                        {resource.description}
+                      </p>
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-2">
+                        {resource.tags.slice(0, 2).map((tag, index) => (
+                          <span
+                            key={index}
+                            className="text-xs font-medium text-[var(--text-tertiary)]"
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
+                  </Link>
+                ))}
 
-                    {/* Title */}
-                    <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-[var(--brand-primary)] transition-colors text-[var(--text-primary)]">
-                      {resource.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-sm mb-4 line-clamp-3 leading-relaxed text-[var(--text-secondary)]">
-                      {resource.description}
-                    </p>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2">
-                      {resource.tags.slice(0, 2).map((tag, index) => (
-                        <span
-                          key={index}
-                          className="text-xs font-medium text-[var(--text-tertiary)]"
-                        >
-                          #{tag}
-                        </span>
-                      ))}
-                    </div>
+                {/* Loader minimalista (centralizado) */}
+                {isLoading && filteredResources.length === 0 && (
+                  <div className="col-span-full flex justify-center py-12">
+                    <div className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin border-[var(--border-article)] border-t-[var(--brand-primary)]" />
                   </div>
-                </Link>
-              ))}
+                )}
 
-              {/* Loader minimalista (centralizado) */}
-              {isLoading && filteredResources.length === 0 && (
-                <div className="col-span-full flex justify-center py-12">
-                  <div className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin border-[var(--border-article)] border-t-[var(--brand-primary)]" />
-                </div>
-              )}
+                {/* Mensagem de vazio */}
+                {!isLoading && filteredResources.length === 0 && (
+                  <div className="col-span-full text-center py-12 text-[var(--text-secondary)]">
+                    Nenhum artigo encontrado com esses filtros.
+                  </div>
+                )}
+              </div>
 
-              {/* Mensagem de vazio */}
-              {!isLoading && filteredResources.length === 0 && (
-                <div className="col-span-full text-center py-12 text-[var(--text-secondary)]">
-                  Nenhum artigo encontrado com esses filtros.
+              {/* Paginação */}
+              {!isLoading && filteredResources.length > 0 && (
+                <div className="mt-8 flex justify-center">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={goToPage}
+                  />
                 </div>
               )}
             </div>
-
-            {/* Paginação */}
-            {!isLoading && filteredResources.length > 0 && (
-              <div className="mt-8 flex justify-center">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={goToPage}
-                />
-              </div>
-            )}
           </section>
 
           {/* Divider */}
