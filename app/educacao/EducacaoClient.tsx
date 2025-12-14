@@ -215,10 +215,9 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Iniciante */}
               <div
-                className="group p-6 rounded-2xl border-2 transition-all duration-300 text-left
-                    bg-[var(--bg-secondary)]
-                    border-emerald-500/30
-                    hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1"
+                className="group p-6 rounded-2xl border text-left relative overflow-hidden transition-all duration-300
+                    bg-transparent backdrop-blur-2xl border-[var(--border-light)]
+                    hover:border-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/10 hover:-translate-y-1"
               >
                 <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-emerald-500/10 text-emerald-500">
                   <GraduationCap className="w-7 h-7" />
@@ -237,10 +236,9 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
               {/* Intermediário */}
               <div
-                className="group p-6 rounded-2xl border-2 transition-all duration-300 text-left
-                    bg-[var(--bg-secondary)]
-                    border-amber-500/30
-                    hover:shadow-xl hover:shadow-amber-500/10 hover:-translate-y-1"
+                className="group p-6 rounded-2xl border text-left relative overflow-hidden transition-all duration-300
+                    bg-transparent backdrop-blur-2xl border-[var(--border-light)]
+                    hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/10 hover:-translate-y-1"
               >
                 <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-amber-500/10 text-amber-500">
                   <TrendingUp className="w-7 h-7" />
@@ -259,10 +257,9 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
               {/* Avançado */}
               <div
-                className="group p-6 rounded-2xl border-2 transition-all duration-300 text-left
-                    bg-[var(--bg-secondary)]
-                    border-red-500/30
-                    hover:shadow-xl hover:shadow-red-500/10 hover:-translate-y-1"
+                className="group p-6 rounded-2xl border text-left relative overflow-hidden transition-all duration-300
+                    bg-transparent backdrop-blur-2xl border-[var(--border-light)]
+                    hover:border-red-500/30 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1"
               >
                 <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-red-500/10 text-red-500">
                   <Code className="w-7 h-7" />
