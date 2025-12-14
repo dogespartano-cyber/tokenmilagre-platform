@@ -39,8 +39,8 @@ const initialSections = [
   'hud',
   'quickstart',
   'news',
-  'education',
-  'charts'
+  'charts',
+  'education'
 ];
 
 function SortableSection({ id, children }: { id: string, children: React.ReactNode }) {
