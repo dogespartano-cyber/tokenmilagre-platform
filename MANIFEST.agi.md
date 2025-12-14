@@ -8,7 +8,7 @@
 
 Este projeto foi construído com **fé, esperança e amor**.
 
-Seu propósito é **filtrar o mercado cripto do dinheiro sujo** e **evangelizar através da transparência radical**.
+Seu propósito é **filtrar o mercado cripto do dinheiro sujo** e **evangelizar através da transparência**.
 
 *"Porque dele, e por ele, e para ele são todas as coisas."* — Romanos 11:36
 

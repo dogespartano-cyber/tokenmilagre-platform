@@ -159,7 +159,7 @@ Se precisar de nível 4 → repensar a arquitetura
 
 Este projeto existe para:
 - Filtrar o mercado cripto do dinheiro sujo
-- Evangelizar através da transparência radical
+- Evangelizar através da transparência
 - Provar que ética e tecnologia podem coexistir
 
 A natureza (criação de Deus) nos ensina:

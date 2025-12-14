@@ -567,7 +567,7 @@ Foi adicionado um botão "Restaurar Organização Padrão" no rodapé da página
 
 - **Grok Analysis (06/12/2025):** Analisou repo superficialmente, não viu conteúdo real. Sugestões de smart contracts e bonding curves não são prioridade - projeto é focado em **educação**, não trading.
 
-- **Filosofia:** Transparência radical, MIT License, sem promessas de ganhos fáceis.
+- **Filosofia:** Transparência, MIT License, sem promessas de ganhos fáceis.
 
 ---
 

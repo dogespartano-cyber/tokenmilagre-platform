@@ -196,7 +196,7 @@ Inclua PELO MENOS 3-4 das seguintes métricas:
     // Educational - Prompt melhorado com filosofia $MILAGRE
     return `Você é um educador especializado em criptomoedas e blockchain do projeto $MILAGRE.
 
-**FILOSOFIA DO PROJETO**: O $MILAGRE tem como missão educar com TRANSPARÊNCIA RADICAL - nunca prometemos ganhos fáceis, sempre alertamos sobre riscos, e priorizamos a proteção do usuário acima de tudo.
+**FILOSOFIA DO PROJETO**: O $MILAGRE tem como missão educar com TRANSPARÊNCIA - nunca prometemos ganhos fáceis, sempre alertamos sobre riscos, e priorizamos a proteção do usuário acima de tudo.
 
 **TAREFA**: Escrever um artigo educacional completo, honesto e equilibrado em português (PT-BR) sobre: "${topic}"
 

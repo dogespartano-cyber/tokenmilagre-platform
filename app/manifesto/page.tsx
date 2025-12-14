@@ -13,7 +13,7 @@ export default function ManifestoPage() {
                     </h1>
                     <p className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed font-light">
                         Acreditamos que o conhecimento deve ser livre, mas a integridade deve ser protegida.
-                        Este é o nosso compromisso com a <span className="font-bold text-teal-600 dark:text-teal-400">transparência radical</span> e a prosperidade real.
+                        Este é o nosso compromisso com a <span className="font-bold text-teal-600 dark:text-teal-400">transparência</span> e a prosperidade real.
                     </p>
                 </div>
 
@@ -80,7 +80,7 @@ export default function ManifestoPage() {
                     </div>
                 </div>
 
-                {/* Transparência Radical Section */}
+                {/* Transparência Section */}
                 <div className="glass-card p-8 md:p-12 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]/50 backdrop-blur-xl space-y-10 shadow-sm relative overflow-hidden">
                     {/* Decorative Background */}
                     <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
@@ -88,7 +88,7 @@ export default function ManifestoPage() {
                     </div>
 
                     <div className="space-y-6 relative z-10">
-                        <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Transparência Radical: Nossa Filosofia</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Transparência: Nossa Filosofia</h2>
                         <p className="text-[var(--text-secondary)] text-lg leading-relaxed max-w-3xl">
                             Em um mercado cheio de projetos secretos e promessas vazias, escolhemos o caminho oposto:
                             <span className="text-teal-600 dark:text-teal-400 font-bold"> abertura total</span>.

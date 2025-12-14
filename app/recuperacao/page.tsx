@@ -130,7 +130,7 @@ export default function ComeceAquiPage() {
                             <div className="w-14 h-14 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-6 text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform">
                                 <Search className="w-7 h-7" />
                             </div>
-                            <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">Transparência Radical</h3>
+                            <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">Transparência</h3>
                             <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
                                 Ferramentas como o "Verificador de URL" e nosso código aberto garantem que você saiba exatamente onde está pisando. Sem caixas pretas.
                             </p>

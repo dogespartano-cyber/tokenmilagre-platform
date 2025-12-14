@@ -6,7 +6,7 @@ import TransparencyStats from '@/components/shared/TransparencyStats';
 import { SOCIAL_LINKS } from '@/lib/core/constants/social';
 
 export const metadata = {
-    title: 'Transparência Radical | $MILAGRE',
+    title: 'Transparência | $MILAGRE',
     description: 'Acompanhe nosso desenvolvimento, métricas e código em tempo real. Sem segredos.',
 };
 
@@ -18,7 +18,7 @@ export default function TransparenciaPage() {
                 {/* Header */}
                 <div className="text-center space-y-6 pt-10 animate-fade-in">
                     <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] via-teal-500 to-cyan-500 tracking-tight">
-                        Transparência Radical
+                        Transparência
                     </h1>
                     <p className="text-xl text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed font-light">
                         A confiança não se pede, se prova. Acompanhe nossas métricas, status e desenvolvimento em tempo real.

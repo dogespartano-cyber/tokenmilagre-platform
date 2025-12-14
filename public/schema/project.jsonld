@@ -4,7 +4,7 @@
     "@id": "https://tokenmilagre.xyz",
     "name": "$MILAGRE Platform",
     "alternateName": "Token Milagre",
-    "description": "Plataforma educacional de criptomoedas com transparência radical. Filtrando o mercado cripto do dinheiro sujo através de educação ética e verificação de fatos.",
+    "description": "Plataforma educacional de criptomoedas com transparência. Filtrando o mercado cripto do dinheiro sujo através de educação ética e verificação de fatos.",
     "url": "https://tokenmilagre.xyz",
     "applicationCategory": "FinanceApplication",
     "applicationSubCategory": "CryptocurrencyEducation",
@@ -28,7 +28,7 @@
         "description": "Comunidade dedicada à educação ética sobre criptomoedas",
         "foundingDate": "2024",
         "ethicalPrinciples": [
-            "Transparência Radical",
+            "Transparência",
             "Verdade Verificável",
             "Fé como Bússola",
             "Amor à Comunidade",
