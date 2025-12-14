@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 
 // Tipos de modos suportados
-export type SidebarMode = 'default' | 'trilha' | 'educacao' | 'graficos' | 'custom';
+export type SidebarMode = 'default' | 'trilha' | 'educacao' | 'graficos' | 'recursos' | 'custom';
 
 // Config para modo educacao
 export interface SidebarEducacaoConfig {

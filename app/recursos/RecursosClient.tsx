@@ -11,6 +11,7 @@ import { faFilter, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
 import ResourceGrid from './components/ResourceGrid';
 import SecurityTips from './components/SecurityTips';
 import DashboardHeader from '@/components/shared/DashboardHeader';
+import { useSidebar } from '@/contexts/SidebarContext';
 
 
 interface RecursosClientProps {
@@ -23,6 +24,28 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
   const [showFilters, setShowFilters] = useState(false);
 
   const categories = getAllCategories();
+  const { setSidebarMode, resetSidebar, updateConfig } = useSidebar();
+
+  // Configure sidebar for recursos mode
+  useEffect(() => {
+    setSidebarMode('recursos', {
+      categories,
+      selectedCategory,
+      setSelectedCategory,
+      searchTerm,
+      setSearchTerm,
+    });
+
+    return () => resetSidebar();
+  }, [setSidebarMode, resetSidebar]);
+
+  // Update sidebar config when filters change
+  useEffect(() => {
+    updateConfig({
+      selectedCategory,
+      searchTerm,
+    });
+  }, [selectedCategory, searchTerm, updateConfig]);
 
   // Debounce search term - only filter after user stops typing
   const debouncedSearchTerm = useDebouncedValue(searchTerm, SEARCH_DEBOUNCE_MS);
