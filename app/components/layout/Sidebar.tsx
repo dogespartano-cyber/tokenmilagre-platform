@@ -24,7 +24,8 @@ import {
     faStore,
     faBitcoinSign,
     faRotateRight,
-    faArrowLeft
+    faArrowLeft,
+    faSearch
 } from '@fortawesome/free-solid-svg-icons';
 import {
     DndContext,
@@ -46,9 +47,9 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useEducationFiltersOptional, categories, levels } from '@/contexts/EducationFilterContext';
+import { useSidebar } from '@/contexts/SidebarContext';
 import { GUIA_ESSENCIAL_TRILHA, isGuiaEssencialSlug } from '@/lib/education/guia-essencial';
-import { CheckCircle2, ChevronRight, X } from 'lucide-react';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { CheckCircle2, ChevronRight, X, PlayCircle, Clock } from 'lucide-react';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -120,136 +121,188 @@ function SortableMenuItem({ item, onClose, isActive, theme }: { item: typeof ini
     );
 }
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+export function Sidebar({ isOpen, onClose }: SidebarProps) {
+    const { mode, config } = useSidebar();
     const pathname = usePathname();
     const { theme } = useTheme();
-    const [items, setItems] = useState(initialMenuItems);
+
+    // Default mode states
+    const [menuItems, setMenuItems] = useState(initialMenuItems);
     const [mounted, setMounted] = useState(false);
 
-    const STORAGE_KEY = 'zenith_sidebar_order';
-
-    // Detectar se está em modo trilha "Comece por Aqui"
-    const currentSlug = pathname?.startsWith('/educacao/')
-        ? pathname.replace('/educacao/', '').split('/')[0]
-        : null;
-    const isTrilhaMode = currentSlug ? isGuiaEssencialSlug(currentSlug) : false;
-    const currentTrilhaIndex = isTrilhaMode
-        ? GUIA_ESSENCIAL_TRILHA.findIndex(t => t.slug === currentSlug)
-        : -1;
-
-    // Detectar se está na página principal de /educacao (para mostrar filtros)
+    // Filter Logic States
     const isEducacaoPage = pathname === '/educacao';
     const educationFilters = useEducationFiltersOptional();
 
-    useEffect(() => {
-        setMounted(true);
-        const savedOrder = localStorage.getItem(STORAGE_KEY);
-        if (savedOrder) {
-            try {
-                const orderIds = JSON.parse(savedOrder);
-                const reordered = orderIds
-                    .map((id: string) => initialMenuItems.find(i => i.id === id))
-                    .filter((i: any) => i !== undefined);
-
-                const newItems = initialMenuItems.filter(i => !orderIds.includes(i.id));
-
-                if (reordered.length > 0) {
-                    setItems([...reordered, ...newItems] as typeof initialMenuItems);
-                }
-            } catch (e) {
-                console.error('Failed to parse saved sidebar order', e);
-            }
-        }
-    }, []);
+    // Legacy Trilha detection (fallback or parallel use)
+    const currentSlug = pathname?.startsWith('/educacao/')
+        ? pathname.replace('/educacao/', '').split('/')[0]
+        : null;
+    const isTrilhaModeFallback = currentSlug ? isGuiaEssencialSlug(currentSlug) : false;
+    const currentTrilhaIndex = isTrilhaModeFallback
+        ? GUIA_ESSENCIAL_TRILHA.findIndex(t => t.slug === currentSlug)
+        : -1;
 
     const sensors = useSensors(
-        useSensor(PointerSensor, {
-            activationConstraint: {
-                distance: 8,
-            },
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
         }),
         useSensor(TouchSensor, {
             activationConstraint: {
                 delay: 250,
                 tolerance: 5,
             },
-        }),
-        useSensor(KeyboardSensor, {
-            coordinateGetter: sortableKeyboardCoordinates,
         })
     );
 
-    function handleDragEnd(event: DragEndEvent) {
+    // Initial load from localStorage
+    useEffect(() => {
+        setMounted(true);
+        const savedOrder = localStorage.getItem('sidebarOrder');
+        if (savedOrder) {
+            try {
+                const orderIds = JSON.parse(savedOrder);
+                const reorderedItems = orderIds
+                    .map((id: string) => initialMenuItems.find(item => item.id === id))
+                    .filter(Boolean) as typeof initialMenuItems;
+
+                // Add any new items that weren't in saved order
+                const missingItems = initialMenuItems.filter(item => !orderIds.includes(item.id));
+                setMenuItems([...reorderedItems, ...missingItems]);
+            } catch (e) {
+                console.error('Error loading sidebar order:', e);
+            }
+        }
+    }, []);
+
+    const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
 
         if (active.id !== over?.id) {
-            setItems((items) => {
+            setMenuItems((items) => {
                 const oldIndex = items.findIndex((item) => item.id === active.id);
                 const newIndex = items.findIndex((item) => item.id === over?.id);
-                const newOrder = arrayMove(items, oldIndex, newIndex);
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(newOrder.map(i => i.id)));
-                return newOrder;
+
+                const newItems = arrayMove(items, oldIndex, newIndex);
+                localStorage.setItem('sidebarOrder', JSON.stringify(newItems.map(i => i.id)));
+                return newItems;
             });
         }
-    }
+    };
 
-    if (!mounted) {
+    if (!mounted) return null;
+
+    // --- Render Logic ---
+
+    // 1. Render Trilha/Course Mode (Context Driven)
+    if (mode === 'trilha' && config) {
         return (
             <>
-                <div
-                    className={`fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-                    onClick={onClose}
-                />
-                <aside className={`fixed top-0 left-0 h-full w-72 z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 bg-white dark:bg-[var(--bg-elevated)]/30 backdrop-blur-xl lg:bg-transparent lg:glass shadow-2xl lg:shadow-none`}>
-                    <div className="flex flex-col h-full">
-                        <div className="h-[88px] flex items-center px-6">
-                            <div className="flex items-center justify-between w-full">
-                                <Link
-                                    href="/"
-                                    className="flex items-center gap-3 hover:opacity-100 transition-all duration-300 group px-2 py-1 rounded-xl"
-                                    onClick={onClose}
-                                >
-                                    <div
-                                        className="relative w-10 h-10 rounded-full shadow-[0_0_15px_rgba(var(--brand-primary-rgb),0.3)] border-2 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(var(--brand-primary-rgb),0.6)]"
-                                        style={{ borderColor: 'var(--brand-primary)' }}
-                                    >
-                                        <Image
-                                            src="/images/TOKEN-MILAGRE-Hero.webp"
-                                            alt="$MILAGRE"
-                                            width={40}
-                                            height={40}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-                                    <div className="text-xl font-bold drop-shadow-[0_0_10px_rgba(var(--brand-primary-rgb),0.5)] transition-all duration-300 font-[family-name:var(--font-poppins)] text-theme-primary group-hover:text-brand-primary group-hover:scale-105 group-hover:drop-shadow-[0_0_15px_rgba(var(--brand-primary-rgb),0.8)]">
-                                        $MILAGRE
-                                    </div>
-                                </Link>
-                                <button onClick={onClose} className="group lg:hidden p-2 rounded-lg transition-all duration-300 hover:scale-110 hover:bg-opacity-50 text-[var(--text-primary)]">
-                                    <FontAwesomeIcon icon={faTimes} className="w-5 h-5 transition-transform duration-300 group-hover:rotate-90" />
+                {isOpen && (
+                    <div
+                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+                        onClick={onClose}
+                    />
+                )}
+
+                <aside className={`
+                    fixed top-0 left-0 h-full w-72 z-50 transform transition-transform duration-300 ease-in-out 
+                    ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 
+                    bg-white dark:bg-[var(--bg-elevated)]/30 backdrop-blur-xl lg:bg-transparent lg:glass shadow-2xl lg:shadow-none
+                `}>
+                    <div className="flex flex-col h-full bg-[var(--bg-card)] lg:bg-transparent">
+                        {/* Header */}
+                        <div className="p-6 border-b border-[var(--border-light)]/50">
+                            <div className="flex items-center justify-between mb-4 lg:hidden">
+                                <span className="font-bold text-lg">Menu do Curso</span>
+                                <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-lg">
+                                    <X className="w-5 h-5" />
                                 </button>
                             </div>
-                        </div>
-                        <nav className="flex-1 p-4 overflow-y-auto">
-                            <div className="space-y-2">
-                                {initialMenuItems.map((item) => (
-                                    <Link
-                                        key={item.href}
-                                        href={item.href}
-                                        className="group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base text-[var(--text-primary)]"
-                                    >
-                                        <FontAwesomeIcon icon={item.icon} className="w-5 h-5" />
-                                        <span>{item.label}</span>
-                                    </Link>
-                                ))}
+
+                            <div className="mb-4">
+                                <span className="text-xs font-bold uppercase tracking-wider text-[var(--brand-primary)] block mb-1">
+                                    {config.title || 'Trilha de Aprendizado'}
+                                </span>
+                                <h2 className="text-xl font-bold leading-tight text-[var(--text-primary)]">
+                                    {config.subtitle || 'Fundamentos'}
+                                </h2>
                             </div>
-                        </nav>
+
+                            {/* Progress Bar */}
+                            {config.progress !== undefined && (
+                                <div className="w-full bg-[var(--bg-tertiary)] h-2 rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full bg-[var(--brand-primary)] transition-all duration-500 ease-out"
+                                        style={{ width: `${config.progress}%` }}
+                                    />
+                                </div>
+                            )}
+                            <div className="flex justify-between mt-2 text-xs text-[var(--text-tertiary)]">
+                                <span>{config.progress}% Concluído</span>
+                                <span>{Math.round((config.progress || 0) / 100 * (config.steps?.length || 0))}/{config.steps?.length || 0} Aulas</span>
+                            </div>
+                        </div>
+
+                        {/* Content List */}
+                        <div className="flex-1 overflow-y-auto p-4 space-y-2 no-scrollbar">
+                            <Link
+                                href="/educacao"
+                                className="flex items-center gap-2 text-sm text-[var(--text-tertiary)] hover:text-[var(--text-primary)] mb-6 px-2 transition-colors"
+                            >
+                                <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
+                                Voltar para Educação
+                            </Link>
+
+                            {config.steps?.map((step: any, index: number) => {
+                                const isCompleted = config.currentSlug !== step.slug && index < config.steps.findIndex((s: any) => s.slug === config.currentSlug);
+                                const isCurrent = config.currentSlug === step.slug;
+
+                                return (
+                                    <Link
+                                        key={step.slug}
+                                        href={`/educacao/${step.slug}`}
+                                        onClick={() => onClose()}
+                                        className={`
+                                            group flex items-start gap-3 p-3 rounded-xl transition-all border
+                                            ${isCurrent
+                                                ? 'bg-[var(--brand-primary)]/10 border-[var(--brand-primary)]/30'
+                                                : 'bg-transparent border-transparent hover:bg-[var(--bg-secondary)]'
+                                            }
+                                        `}
+                                    >
+                                        <div className="mt-0.5 min-w-[20px]">
+                                            {isCompleted ? (
+                                                <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                                            ) : isCurrent ? (
+                                                <PlayCircle className="w-5 h-5 text-[var(--brand-primary)] animate-pulse" />
+                                            ) : (
+                                                <div className="w-5 h-5 rounded-full border-2 border-[var(--text-tertiary)] text-[var(--text-tertiary)] flex items-center justify-center text-[10px] font-bold">
+                                                    {index + 1}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <h4 className={`text-sm font-medium leading-snug mb-1 ${isCurrent ? 'text-[var(--brand-primary)]' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]'}`}>
+                                                {step.title}
+                                            </h4>
+                                            <div className="flex items-center gap-2 text-[10px] text-[var(--text-tertiary)]">
+                                                <Clock className="w-3 h-3" />
+                                                {step.duration || '5 min'}
+                                            </div>
+                                        </div>
+                                    </Link>
+                                );
+                            })}
+                        </div>
                     </div>
                 </aside>
             </>
-        )
+        );
     }
 
+    // 2. Default Mode (Standard Menu & Education Filters)
     return (
         <>
             {/* Sidebar Overlay */}
@@ -394,8 +447,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                 {/* Spacer */}
                                 <div className="flex-1" />
                             </>
-                        ) : isTrilhaMode ? (
-                            /* Modo Trilha: Navegação "Comece por Aqui" */
+                        ) : isTrilhaModeFallback ? (
+                            /* Modo Trilha Legacy Fallback (para rotas não migradas) */
                             <>
                                 {/* Botão Voltar ao Menu */}
                                 <Link
@@ -468,11 +521,11 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                         onDragEnd={handleDragEnd}
                                     >
                                         <SortableContext
-                                            items={items.map(i => i.id)}
+                                            items={menuItems.map(i => i.id)}
                                             strategy={verticalListSortingStrategy}
                                         >
                                             <div className="space-y-2">
-                                                {items.map((item) => {
+                                                {menuItems.map((item) => {
                                                     const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
                                                     return (
                                                         <SortableMenuItem
@@ -495,7 +548,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                         onClick={() => {
                                             if (window.confirm('Deseja resetar a organização da interface para o padrão?')) {
                                                 localStorage.removeItem('zenith_home_sections_order');
-                                                localStorage.removeItem('zenith_sidebar_order');
+                                                localStorage.removeItem('sidebarOrder');
                                                 localStorage.removeItem('zenith_ticker_order');
                                                 window.location.reload();
                                             }

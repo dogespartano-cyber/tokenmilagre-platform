@@ -2,12 +2,15 @@
 
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, ArrowRight, CheckCircle2, Shield, BookOpen } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp, faTelegram, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { slugify } from '@/lib/shared/utils/content-helpers';
 import { GUIA_ESSENCIAL_TRILHA } from '@/lib/education/guia-essencial';
+import { useSidebar } from '@/contexts/SidebarContext';
 
 interface EducationalArticle {
     id: string;
@@ -38,6 +41,8 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
     const [readingProgress, setReadingProgress] = useState(0);
     const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
     const [activeSection, setActiveSection] = useState<string>('');
+
+    const { setSidebarMode, resetSidebar } = useSidebar();
 
     // Encontrar posição atual na trilha
     const currentIndex = GUIA_ESSENCIAL_TRILHA.findIndex(t => t.slug === article.slug);
@@ -78,6 +83,24 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
 
         setTableOfContents(headings);
     }, [article]);
+
+    useEffect(() => {
+        // Find current step index and calculate course progress
+        const currentIndex = GUIA_ESSENCIAL_TRILHA.findIndex(step => step.slug === article.slug);
+        const courseProgress = Math.round(((currentIndex + 1) / GUIA_ESSENCIAL_TRILHA.length) * 100);
+
+        setSidebarMode('trilha', {
+            title: 'Trilha de Aprendizado',
+            subtitle: 'Comece por Aqui',
+            steps: GUIA_ESSENCIAL_TRILHA,
+            currentSlug: article.slug,
+            progress: courseProgress
+        });
+
+        return () => {
+            resetSidebar();
+        };
+    }, [article.slug, setSidebarMode, resetSidebar]);
 
     // Calcula progresso de leitura e seção ativa
     useEffect(() => {
