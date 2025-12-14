@@ -284,34 +284,6 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
           {/* Divider */}
           <div className="border-t border-[var(--border-light)]"></div>
 
-          {/* O Método de Ensino */}
-          <section className="space-y-6">
-            <h2 className="text-2xl font-bold text-[var(--text-primary)]">
-              O Método de Ensino do $MILAGRE
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-6 rounded-xl bg-[var(--bg-elevated)/30] backdrop-blur-sm border border-[var(--border-light)]">
-                <h3 className="font-bold text-[var(--text-primary)] mb-3">Como as aulas são construídas</h3>
-                <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
-                  <li><strong>80/20 primeiro:</strong> você entende o essencial rápido</li>
-                  <li><strong>Quizzes curtos:</strong> para fixar (não para "pegar" você)</li>
-                  <li><strong>Exemplos práticos:</strong> para reduzir erro e ansiedade</li>
-                  <li><strong>Fontes visíveis:</strong> você vê de onde saiu cada informação</li>
-                </ul>
-              </div>
-              <div className="p-6 rounded-xl bg-[var(--bg-elevated)/30] backdrop-blur-sm border border-[var(--border-light)]">
-                <h3 className="font-bold text-red-600 dark:text-red-400 mb-3">Pilares de Segurança</h3>
-                <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
-                  <li>Nunca compartilhe sua <strong>seed phrase</strong> com ninguém</li>
-                  <li>Desconfie de urgência, promessas e "suporte" no privado</li>
-                  <li>Antes de assinar, entenda <strong>o que está sendo autorizado</strong></li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* Divider */}
-          <div className="border-t border-[var(--border-light)]"></div>
 
           {/* Filtros e Artigos - Título adicionado */}
           <section className="space-y-6">
