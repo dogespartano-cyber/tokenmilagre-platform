@@ -147,12 +147,8 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
               {[
                 { icon: BookOpen, title: 'Comece pelo Básico', desc: 'Entenda o que é cripto e onde as pessoas mais erram', slug: 'fundamentos-cripto' },
                 { icon: Shield, title: 'Segurança Primeiro', desc: 'Seed phrase, golpes e hábitos que protegem você', slug: 'seguranca-primeiro' },
-                { icon: FileQuestion, title: 'Glossário Essencial', desc: 'Termos explicados com exemplos e armadilhas comuns', slug: 'glossario-essencial' },
-                { icon: Search, title: 'Como Pesquisar um Projeto', desc: 'Checklist de transparência: time, tokenomics, auditoria', slug: 'como-pesquisar-projeto' },
                 { icon: Wallet, title: 'Carteiras e Custódia', desc: 'Hot vs cold wallet, autocustódia e boas práticas', slug: 'carteiras-e-custodia' },
-                { icon: Coins, title: 'Taxas e Redes', desc: 'O que são taxas (gas), confirmações e congestionamento', slug: 'taxas-gas-e-redes' },
                 { icon: AlertTriangle, title: 'Golpes Comuns', desc: 'Phishing, airdrop falso, links maliciosos e aprovações', slug: 'golpes-comuns-cripto' },
-                { icon: TrendingUp, title: 'Trilhas por Nível', desc: 'Iniciante, intermediário ou avançado — escolha seu caminho', slug: 'trilhas-por-nivel' },
               ].map((card, index) => {
                 const Icon = card.icon;
                 const cardContent = (
@@ -267,16 +263,9 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                         {resource.description}
                       </p>
 
-                      {/* Tags */}
-                      <div className="flex flex-wrap gap-2">
-                        {resource.tags.slice(0, 2).map((tag, index) => (
-                          <span
-                            key={index}
-                            className="text-xs font-medium text-[var(--text-tertiary)]"
-                          >
-                            #{tag}
-                          </span>
-                        ))}
+                      {/* CTA */}
+                      <div className="flex items-center text-sm font-bold text-[var(--brand-primary)] opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                        Ler artigo <ArrowRight className="w-4 h-4 ml-1" />
                       </div>
                     </div>
                   </Link>
@@ -320,17 +309,16 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                 Trilhas de Aprendizado
               </h2>
               <p className="text-[var(--text-secondary)] mt-1">
-                Escolha uma trilha. Você ganha clareza, não "emoção".
+                Escolha uma trilha. Ganhe clareza sobre qual nível de conhecimento você está.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Iniciante */}
-              <button
-                onClick={() => { setSelectedLevel('iniciante'); setSelectedCategory('all'); }}
+              <div
                 className="group p-6 rounded-2xl border-2 transition-all duration-300 text-left
-                    bg-[var(--bg-secondary)] hover:bg-emerald-500/5
-                    border-emerald-500/30 hover:border-emerald-500/60
+                    bg-[var(--bg-secondary)]
+                    border-emerald-500/30
                     hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1"
               >
                 <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-emerald-500/10 text-emerald-500">
@@ -346,18 +334,13 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   <li>• Redes e taxas</li>
                   <li>• DYOR e transparência</li>
                 </ul>
-                <span className="text-sm font-bold text-emerald-500 flex items-center gap-1">
-                  Ver artigos iniciantes
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </button>
+              </div>
 
               {/* Intermediário */}
-              <button
-                onClick={() => { setSelectedLevel('intermediario'); setSelectedCategory('all'); }}
+              <div
                 className="group p-6 rounded-2xl border-2 transition-all duration-300 text-left
-                    bg-[var(--bg-secondary)] hover:bg-amber-500/5
-                    border-amber-500/30 hover:border-amber-500/60
+                    bg-[var(--bg-secondary)]
+                    border-amber-500/30
                     hover:shadow-xl hover:shadow-amber-500/10 hover:-translate-y-1"
               >
                 <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-amber-500/10 text-amber-500">
@@ -373,18 +356,13 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   <li>• Leitura de notícias</li>
                   <li>• Gestão de risco</li>
                 </ul>
-                <span className="text-sm font-bold text-amber-500 flex items-center gap-1">
-                  Ver artigos intermediários
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </button>
+              </div>
 
               {/* Avançado */}
-              <button
-                onClick={() => { setSelectedLevel('avancado'); setSelectedCategory('all'); }}
+              <div
                 className="group p-6 rounded-2xl border-2 transition-all duration-300 text-left
-                    bg-[var(--bg-secondary)] hover:bg-red-500/5
-                    border-red-500/30 hover:border-red-500/60
+                    bg-[var(--bg-secondary)]
+                    border-red-500/30
                     hover:shadow-xl hover:shadow-red-500/10 hover:-translate-y-1"
               >
                 <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-red-500/10 text-red-500">
@@ -400,11 +378,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   <li>• Segurança avançada</li>
                   <li>• Leitura de contratos</li>
                 </ul>
-                <span className="text-sm font-bold text-red-500 flex items-center gap-1">
-                  Ver artigos avançados
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </button>
+              </div>
             </div>
           </section>
 
