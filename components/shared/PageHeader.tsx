@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import SocialLinks from '@/components/shared/SocialLinks';
 
-interface DashboardHeaderProps {
+interface PageHeaderProps {
   title: string;
   description: string;
 }
@@ -14,7 +14,7 @@ interface FearGreedData {
   value_classification: string;
 }
 
-export default function DashboardHeader({ title, description }: DashboardHeaderProps) {
+export default function PageHeader({ title, description }: PageHeaderProps) {
   const pathname = usePathname();
   const [fearGreed, setFearGreed] = useState<FearGreedData | null>(null);
   const [gaugeValue, setGaugeValue] = useState(0);

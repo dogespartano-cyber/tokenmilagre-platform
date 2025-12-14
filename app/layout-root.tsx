@@ -17,7 +17,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon, faBars, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@/contexts/ThemeContext';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
-import DashboardHeader from '@/components/shared/DashboardHeader';
+import PageHeader from '@/components/shared/PageHeader';
+import { getPageConfig } from '@/lib/core/constants/page-config';
 import NavbarCryptoTicker from '@/components/crypto/NavbarCryptoTicker';
 import GlobalBackground from '@/components/layout/GlobalBackground';
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
@@ -34,38 +35,6 @@ const TickerTapeWidget = dynamic(() => import('@/components/widgets/TickerTapeWi
   ssr: false,
 });
 
-// Configuração do DashboardHeader por pathname
-const dashboardHeaderConfig: Record<string, { title: string; description: string }> = {
-  '/': {
-    title: '$MILAGRE',
-    description: 'Em busca de uma comunidade com prosperidade.'
-  },
-  '/graficos': {
-    title: 'Gráficos e Análises de Mercado',
-    description: 'Acompanhe o mercado em tempo real com gráficos avançados, análise técnica e indicadores profissionais'
-  },
-  '/criptomoedas': {
-    title: 'Cotações em Tempo Real',
-    description: 'Acompanhe o preço, volume e tendências das principais criptomoedas do mercado.'
-  },
-  '/noticias': {
-    title: 'Notícias Cripto',
-    description: 'Resumos inteligentes das principais notícias do mercado'
-  },
-  '/educacao': {
-    title: 'Aprenda Cripto do Zero ao Avançado',
-    description: 'Artigos e tutoriais gratuitos criados pela comunidade. Sem promessas falsas, apenas conhecimento real.'
-  },
-  '/recursos': {
-    title: 'Ferramentas e Links Seguros',
-    description: 'Acesse exchanges, carteiras e sites oficiais com tranquilidade.'
-  },
-  '/dashboard': {
-    title: 'Painel Administrativo',
-    description: 'Gerencie todo o conteúdo e configurações da plataforma'
-  }
-};
-
 export default function RootLayoutNav({
   children,
 }: {
@@ -76,7 +45,7 @@ export default function RootLayoutNav({
   const { theme, toggleTheme } = useTheme();
   const { fearGreed, gaugeValue } = useFearGreedNavbar();
 
-  const headerConfig = dashboardHeaderConfig[pathname];
+  const headerConfig = getPageConfig(pathname);
 
   return (
     <SidebarProvider>
@@ -176,10 +145,10 @@ export default function RootLayoutNav({
               <Breadcrumbs inline={true} />
             </div>
 
-            {/* Dashboard Header */}
+            {/* Page Header */}
             {headerConfig && (
               <div className="container mx-auto px-4 py-8 relative z-10">
-                <DashboardHeader
+                <PageHeader
                   title={headerConfig.title}
                   description={headerConfig.description}
                 />
