@@ -201,6 +201,118 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
           {/* Divider */}
           <div className="border-t border-[var(--border-light)]"></div>
 
+          {/* Trilhas de Aprendizado */}
+          <section id="trilhas" className="space-y-8 scroll-mt-24">
+            <div className="text-left">
+              <h2 className="text-2xl font-bold text-[var(--text-primary)]">
+                Trilhas de Aprendizado
+              </h2>
+              <p className="text-[var(--text-secondary)] mt-1">
+                Escolha uma trilha. Ganhe clareza sobre qual nível de conhecimento você está.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Iniciante */}
+              <div
+                className="group p-6 rounded-2xl border-2 transition-all duration-300 text-left
+                    bg-[var(--bg-secondary)]
+                    border-emerald-500/30
+                    hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1"
+              >
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-emerald-500/10 text-emerald-500">
+                  <GraduationCap className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">Iniciante</h3>
+                <p className="text-sm text-[var(--text-secondary)] mb-4">
+                  Para quem quer entender o básico com segurança e evitar armadilhas.
+                </p>
+                <ul className="text-xs text-[var(--text-tertiary)] space-y-1 mb-4">
+                  <li>• Fundamentos do Bitcoin</li>
+                  <li>• Segurança e autocustódia</li>
+                  <li>• Redes e taxas</li>
+                  <li>• DYOR e transparência</li>
+                </ul>
+              </div>
+
+              {/* Intermediário */}
+              <div
+                className="group p-6 rounded-2xl border-2 transition-all duration-300 text-left
+                    bg-[var(--bg-secondary)]
+                    border-amber-500/30
+                    hover:shadow-xl hover:shadow-amber-500/10 hover:-translate-y-1"
+              >
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-amber-500/10 text-amber-500">
+                  <TrendingUp className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold text-amber-600 dark:text-amber-400 mb-2">Intermediário</h3>
+                <p className="text-sm text-[var(--text-secondary)] mb-4">
+                  Para quem já entende o básico e quer operar com mais consciência.
+                </p>
+                <ul className="text-xs text-[var(--text-tertiary)] space-y-1 mb-4">
+                  <li>• Stablecoins e riscos reais</li>
+                  <li>• DeFi com prudência</li>
+                  <li>• Leitura de notícias</li>
+                  <li>• Gestão de risco</li>
+                </ul>
+              </div>
+
+              {/* Avançado */}
+              <div
+                className="group p-6 rounded-2xl border-2 transition-all duration-300 text-left
+                    bg-[var(--bg-secondary)]
+                    border-red-500/30
+                    hover:shadow-xl hover:shadow-red-500/10 hover:-translate-y-1"
+              >
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-red-500/10 text-red-500">
+                  <Code className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold text-red-600 dark:text-red-400 mb-2">Avançado</h3>
+                <p className="text-sm text-[var(--text-secondary)] mb-4">
+                  Para quem quer profundidade técnica e pensamento crítico.
+                </p>
+                <ul className="text-xs text-[var(--text-tertiary)] space-y-1 mb-4">
+                  <li>• Análise on-chain</li>
+                  <li>• Tokenomics e incentivos</li>
+                  <li>• Segurança avançada</li>
+                  <li>• Leitura de contratos</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Divider */}
+          <div className="border-t border-[var(--border-light)]"></div>
+
+          {/* O Método de Ensino */}
+          <section className="space-y-6">
+            <h2 className="text-2xl font-bold text-[var(--text-primary)]">
+              O Método de Ensino do $MILAGRE
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 rounded-xl bg-[var(--bg-elevated)/30] backdrop-blur-sm border border-[var(--border-light)]">
+                <h3 className="font-bold text-[var(--text-primary)] mb-3">Como as aulas são construídas</h3>
+                <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
+                  <li><strong>80/20 primeiro:</strong> você entende o essencial rápido</li>
+                  <li><strong>Quizzes curtos:</strong> para fixar (não para "pegar" você)</li>
+                  <li><strong>Exemplos práticos:</strong> para reduzir erro e ansiedade</li>
+                  <li><strong>Fontes visíveis:</strong> você vê de onde saiu cada informação</li>
+                </ul>
+              </div>
+              <div className="p-6 rounded-xl bg-[var(--bg-elevated)/30] backdrop-blur-sm border border-[var(--border-light)]">
+                <h3 className="font-bold text-red-600 dark:text-red-400 mb-3">Pilares de Segurança</h3>
+                <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
+                  <li>Nunca compartilhe sua <strong>seed phrase</strong> com ninguém</li>
+                  <li>Desconfie de urgência, promessas e "suporte" no privado</li>
+                  <li>Antes de assinar, entenda <strong>o que está sendo autorizado</strong></li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Divider */}
+          <div className="border-t border-[var(--border-light)]"></div>
+
           {/* Filtros e Artigos - Título adicionado */}
           <section className="space-y-6">
             <div className="text-left">
@@ -299,117 +411,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
             </div>
           </section>
 
-          {/* Divider */}
-          <div className="border-t border-[var(--border-article)]"></div>
 
-          {/* Trilhas de Aprendizado */}
-          <section id="trilhas" className="space-y-8 scroll-mt-24">
-            <div className="text-left">
-              <h2 className="text-2xl font-bold text-[var(--text-primary)]">
-                Trilhas de Aprendizado
-              </h2>
-              <p className="text-[var(--text-secondary)] mt-1">
-                Escolha uma trilha. Ganhe clareza sobre qual nível de conhecimento você está.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Iniciante */}
-              <div
-                className="group p-6 rounded-2xl border-2 transition-all duration-300 text-left
-                    bg-[var(--bg-secondary)]
-                    border-emerald-500/30
-                    hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1"
-              >
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-emerald-500/10 text-emerald-500">
-                  <GraduationCap className="w-7 h-7" />
-                </div>
-                <h3 className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">Iniciante</h3>
-                <p className="text-sm text-[var(--text-secondary)] mb-4">
-                  Para quem quer entender o básico com segurança e evitar armadilhas.
-                </p>
-                <ul className="text-xs text-[var(--text-tertiary)] space-y-1 mb-4">
-                  <li>• Fundamentos do Bitcoin</li>
-                  <li>• Segurança e autocustódia</li>
-                  <li>• Redes e taxas</li>
-                  <li>• DYOR e transparência</li>
-                </ul>
-              </div>
-
-              {/* Intermediário */}
-              <div
-                className="group p-6 rounded-2xl border-2 transition-all duration-300 text-left
-                    bg-[var(--bg-secondary)]
-                    border-amber-500/30
-                    hover:shadow-xl hover:shadow-amber-500/10 hover:-translate-y-1"
-              >
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-amber-500/10 text-amber-500">
-                  <TrendingUp className="w-7 h-7" />
-                </div>
-                <h3 className="text-xl font-bold text-amber-600 dark:text-amber-400 mb-2">Intermediário</h3>
-                <p className="text-sm text-[var(--text-secondary)] mb-4">
-                  Para quem já entende o básico e quer operar com mais consciência.
-                </p>
-                <ul className="text-xs text-[var(--text-tertiary)] space-y-1 mb-4">
-                  <li>• Stablecoins e riscos reais</li>
-                  <li>• DeFi com prudência</li>
-                  <li>• Leitura de notícias</li>
-                  <li>• Gestão de risco</li>
-                </ul>
-              </div>
-
-              {/* Avançado */}
-              <div
-                className="group p-6 rounded-2xl border-2 transition-all duration-300 text-left
-                    bg-[var(--bg-secondary)]
-                    border-red-500/30
-                    hover:shadow-xl hover:shadow-red-500/10 hover:-translate-y-1"
-              >
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-red-500/10 text-red-500">
-                  <Code className="w-7 h-7" />
-                </div>
-                <h3 className="text-xl font-bold text-red-600 dark:text-red-400 mb-2">Avançado</h3>
-                <p className="text-sm text-[var(--text-secondary)] mb-4">
-                  Para quem quer profundidade técnica e pensamento crítico.
-                </p>
-                <ul className="text-xs text-[var(--text-tertiary)] space-y-1 mb-4">
-                  <li>• Análise on-chain</li>
-                  <li>• Tokenomics e incentivos</li>
-                  <li>• Segurança avançada</li>
-                  <li>• Leitura de contratos</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* Divider */}
-          <div className="border-t border-[var(--border-article)]"></div>
-
-          {/* O Método de Ensino */}
-          <section className="space-y-6">
-            <h2 className="text-2xl font-bold text-[var(--text-primary)]">
-              O Método de Ensino do $MILAGRE
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-6 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-light)]">
-                <h3 className="font-bold text-[var(--text-primary)] mb-3">Como as aulas são construídas</h3>
-                <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
-                  <li>✓ <strong>80/20 primeiro:</strong> você entende o essencial rápido</li>
-                  <li>✓ <strong>Quizzes curtos:</strong> para fixar (não para "pegar" você)</li>
-                  <li>✓ <strong>Exemplos práticos:</strong> para reduzir erro e ansiedade</li>
-                  <li>✓ <strong>Fontes visíveis:</strong> você vê de onde saiu cada informação</li>
-                </ul>
-              </div>
-              <div className="p-6 rounded-xl bg-red-500/5 border border-red-500/20">
-                <h3 className="font-bold text-red-600 dark:text-red-400 mb-3">Pilares de Segurança</h3>
-                <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
-                  <li>🔒 Nunca compartilhe sua <strong>seed phrase</strong> com ninguém</li>
-                  <li>⚠️ Desconfie de urgência, promessas e "suporte" no privado</li>
-                  <li>🔍 Antes de assinar, entenda <strong>o que está sendo autorizado</strong></li>
-                </ul>
-              </div>
-            </div>
-          </section>
 
           {/* FAQ */}
           <section className="space-y-6">
