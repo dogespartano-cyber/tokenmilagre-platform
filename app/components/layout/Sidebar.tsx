@@ -25,7 +25,13 @@ import {
     faBitcoinSign,
     faRotateRight,
     faArrowLeft,
-    faSearch
+    faSearch,
+    faFilter,
+    faBook,
+    faFile,
+    faQuestion,
+    faShield,
+    faHeart
 } from '@fortawesome/free-solid-svg-icons';
 import {
     DndContext,
@@ -49,7 +55,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useEducationFiltersOptional, categories, levels } from '@/contexts/EducationFilterContext';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { GUIA_ESSENCIAL_TRILHA, isGuiaEssencialSlug } from '@/lib/education/guia-essencial';
-import { CheckCircle2, ChevronRight, X, PlayCircle, Clock } from 'lucide-react';
+import { CheckCircle2, ChevronRight, ChevronDown, X, PlayCircle, Clock } from 'lucide-react';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -85,18 +91,21 @@ function SortableMenuItem({ item, onClose, isActive, theme }: { item: typeof ini
     };
 
     return (
-        <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+        <div ref={setNodeRef} style={style} className="relative group/item">
+            {/* Drag Handle - only this listens to drag events */}
+            <div
+                {...attributes}
+                {...listeners}
+                className="absolute left-0 top-0 bottom-0 w-8 cursor-grab active:cursor-grabbing z-20 opacity-0 group-hover/item:opacity-50 transition-opacity flex items-center justify-center"
+            >
+                <div className="w-1 h-6 bg-[var(--text-tertiary)]/30 rounded-full" />
+            </div>
+
+            {/* Link - handles navigation */}
             <Link
                 href={item.href}
-                onClick={(e) => {
-                    if (isDragging) {
-                        e.preventDefault();
-                    } else {
-                        onClose();
-                    }
-                }}
-                style={{ pointerEvents: isDragging ? 'none' : 'auto' }}
-                className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base transition-all duration-300 relative overflow-hidden select-none touch-manipulation ${isActive
+                onClick={onClose}
+                className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base transition-all duration-300 relative overflow-hidden select-none ${isActive
                     ? 'sidebar-active'
                     : 'text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1'
                     }`}
@@ -121,8 +130,8 @@ function SortableMenuItem({ item, onClose, isActive, theme }: { item: typeof ini
     );
 }
 
-export function Sidebar({ isOpen, onClose }: SidebarProps) {
-    const { mode, config } = useSidebar();
+export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+    const { mode, config, updateConfig } = useSidebar();
     const pathname = usePathname();
     const { theme } = useTheme();
 
@@ -212,15 +221,41 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                     bg-white dark:bg-[var(--bg-elevated)]/30 backdrop-blur-xl lg:bg-transparent lg:glass shadow-2xl lg:shadow-none
                 `}>
                     <div className="flex flex-col h-full bg-[var(--bg-card)] lg:bg-transparent">
-                        {/* Header */}
-                        <div className="p-6 border-b border-[var(--border-light)]/50">
-                            <div className="flex items-center justify-between mb-4 lg:hidden">
-                                <span className="font-bold text-lg">Menu do Curso</span>
-                                <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-lg">
-                                    <X className="w-5 h-5" />
+                        {/* Header with Logo */}
+                        <div className="h-[88px] flex items-center px-6">
+                            <div className="flex items-center justify-between w-full">
+                                <Link
+                                    href="/"
+                                    className="flex items-center gap-3 hover:opacity-100 transition-all duration-300 group px-2 py-1 rounded-xl"
+                                    onClick={onClose}
+                                >
+                                    <div
+                                        className="relative w-10 h-10 rounded-full shadow-[0_0_15px_rgba(var(--brand-primary-rgb),0.3)] border-2 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(var(--brand-primary-rgb),0.6)]"
+                                        style={{ borderColor: 'var(--brand-primary)' }}
+                                    >
+                                        <Image
+                                            src="/images/TOKEN-MILAGRE-Hero.webp"
+                                            alt="$MILAGRE"
+                                            width={40}
+                                            height={40}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <div className="text-xl font-bold drop-shadow-[0_0_10px_rgba(var(--brand-primary-rgb),0.5)] transition-all duration-300 font-[family-name:var(--font-poppins)] text-theme-primary group-hover:text-brand-primary group-hover:scale-105 group-hover:drop-shadow-[0_0_15px_rgba(var(--brand-primary-rgb),0.8)]">
+                                        $MILAGRE
+                                    </div>
+                                </Link>
+                                <button
+                                    onClick={onClose}
+                                    className="group lg:hidden p-2 rounded-lg transition-all duration-300 hover:scale-110 hover:bg-opacity-50 text-[var(--text-primary)]"
+                                >
+                                    <FontAwesomeIcon icon={faTimes} className="w-5 h-5 transition-transform duration-300 group-hover:rotate-90" />
                                 </button>
                             </div>
+                        </div>
 
+                        {/* Trilha Info Section */}
+                        <div className="px-6 py-4 border-b border-[var(--border-light)]/50">
                             <div className="mb-4">
                                 <span className="text-xs font-bold uppercase tracking-wider text-[var(--brand-primary)] block mb-1">
                                     {config.title || 'Trilha de Aprendizado'}
@@ -302,7 +337,243 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         );
     }
 
-    // 2. Default Mode (Standard Menu & Education Filters)
+    // 2. Educacao Mode (Page Sections TOC + Filters Toggle)
+    if (mode === 'educacao' && config) {
+        const { showFilters, sections } = config;
+
+        const sectionIcons: Record<string, any> = {
+            book: faBook,
+            graduation: faGraduationCap,
+            file: faFile,
+            question: faQuestion,
+            shield: faShield,
+            heart: faHeart,
+        };
+
+        const toggleFilters = () => {
+            // Use updateConfig from sidebar context to toggle showFilters
+            updateConfig({ showFilters: !showFilters });
+        };
+
+        return (
+            <>
+                {/* Sidebar Overlay */}
+                <div
+                    className={`fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+                    onClick={onClose}
+                />
+
+                {/* Sidebar */}
+                <aside
+                    className={`fixed top-0 left-0 h-full w-72 z-50 transition-[transform,background-color] duration-500 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 backdrop-blur-2xl shadow-2xl lg:shadow-none`}
+                    style={{
+                        backgroundColor: 'var(--sidebar-bg)',
+                        borderRight: '1px solid var(--sidebar-border)'
+                    }}
+                >
+                    <div className="flex flex-col h-full">
+                        {/* Sidebar Header - Same as default mode */}
+                        <div className="h-[88px] flex items-center px-6">
+                            <div className="flex items-center justify-between w-full">
+                                <Link
+                                    href="/"
+                                    className="flex items-center gap-3 hover:opacity-100 transition-all duration-300 group px-2 py-1 rounded-xl"
+                                    onClick={onClose}
+                                >
+                                    <div
+                                        className="relative w-10 h-10 rounded-full shadow-[0_0_15px_rgba(var(--brand-primary-rgb),0.3)] border-2 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(var(--brand-primary-rgb),0.6)]"
+                                        style={{ borderColor: 'var(--brand-primary)' }}
+                                    >
+                                        <Image
+                                            src="/images/TOKEN-MILAGRE-Hero.webp"
+                                            alt="$MILAGRE"
+                                            width={40}
+                                            height={40}
+                                            className="w-full h-full object-cover rounded-full"
+                                        />
+                                    </div>
+                                    <div className="text-xl font-bold drop-shadow-[0_0_10px_rgba(var(--brand-primary-rgb),0.5)] transition-all duration-300 font-[family-name:var(--font-poppins)] text-theme-primary group-hover:text-brand-primary group-hover:scale-105 group-hover:drop-shadow-[0_0_15px_rgba(var(--brand-primary-rgb),0.8)]">
+                                        $MILAGRE
+                                    </div>
+                                </Link>
+                                <button
+                                    onClick={onClose}
+                                    className="group lg:hidden p-2 rounded-lg transition-all duration-300 hover:scale-110 hover:bg-opacity-50 text-[var(--text-primary)]"
+                                >
+                                    <FontAwesomeIcon icon={faTimes} className="w-5 h-5 transition-transform duration-300 group-hover:rotate-90" />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Sidebar Navigation */}
+                        <nav className="flex-1 p-4 overflow-y-auto flex flex-col no-scrollbar">
+                            {/* Back button - only visible when in filters mode */}
+                            {showFilters && (
+                                <button
+                                    onClick={toggleFilters}
+                                    className="flex items-center gap-2 px-4 py-2 mb-3 text-[var(--text-tertiary)] hover:text-[var(--brand-primary)] transition-all"
+                                >
+                                    <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
+                                    <span className="text-sm font-medium">Voltar às Seções</span>
+                                </button>
+                            )}
+
+                            {showFilters ? (
+                                /* Filters View */
+                                <div className="space-y-5">
+                                    {/* Search */}
+                                    {educationFilters && (
+                                        <>
+                                            <div className="relative">
+                                                <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" />
+                                                <input
+                                                    type="text"
+                                                    placeholder="Buscar artigos..."
+                                                    value={educationFilters.searchTerm}
+                                                    onChange={(e) => educationFilters.setSearchTerm(e.target.value)}
+                                                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-light)] text-sm placeholder:text-[var(--text-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/50"
+                                                />
+                                            </div>
+
+                                            {/* Category Filter */}
+                                            <div>
+                                                <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-tertiary)] mb-3">Categoria</h3>
+                                                <div className="space-y-1">
+                                                    {categories.map((cat) => (
+                                                        <button
+                                                            key={cat.id}
+                                                            onClick={() => educationFilters.setSelectedCategory(educationFilters.selectedCategory === cat.id ? '' : cat.id)}
+                                                            className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${educationFilters.selectedCategory === cat.id
+                                                                ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'
+                                                                : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]'
+                                                                }`}
+                                                        >
+                                                            {cat.label}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Level Filter */}
+                                            <div>
+                                                <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-tertiary)] mb-3">Nível</h3>
+                                                <div className="space-y-1">
+                                                    {levels.map((level) => (
+                                                        <button
+                                                            key={level.id}
+                                                            onClick={() => educationFilters.setSelectedLevel(educationFilters.selectedLevel === level.id ? '' : level.id)}
+                                                            className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${educationFilters.selectedLevel === level.id
+                                                                ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'
+                                                                : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]'
+                                                                }`}
+                                                        >
+                                                            {level.label}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Clear Filters */}
+                                            {educationFilters.getActiveFiltersCount() > 0 && (
+                                                <button
+                                                    onClick={educationFilters.clearAllFilters}
+                                                    className="w-full py-2 text-sm font-medium text-[var(--text-tertiary)] hover:text-[var(--brand-primary)] transition-colors"
+                                                >
+                                                    Limpar filtros ({educationFilters.getActiveFiltersCount()})
+                                                </button>
+                                            )}
+                                        </>
+                                    )}
+                                </div>
+                            ) : (
+                                /* Sections TOC View */
+                                <div className="space-y-1">
+                                    {/* Voltar ao Início */}
+                                    <Link
+                                        href="/"
+                                        onClick={onClose}
+                                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group mb-2"
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faArrowLeft}
+                                            className="w-5 h-5 text-white/70 group-hover:text-[var(--brand-primary)] transition-colors"
+                                        />
+                                        <span className="font-semibold text-base">Voltar ao Início</span>
+                                    </Link>
+
+                                    {sections?.map((section: any) => (
+                                        <div key={section.id}>
+                                            {section.id === 'artigos' ? (
+                                                /* Artigos item with expandable submenu */
+                                                <>
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            // Toggle submenu visibility
+                                                            updateConfig({ artigosExpanded: !config.artigosExpanded });
+                                                            // Scroll to artigos section
+                                                            const artigosElement = document.getElementById('artigos');
+                                                            if (artigosElement) {
+                                                                artigosElement.scrollIntoView({ behavior: 'smooth' });
+                                                            }
+                                                        }}
+                                                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group"
+                                                    >
+                                                        <FontAwesomeIcon
+                                                            icon={sectionIcons[section.icon] || faFile}
+                                                            className="w-5 h-5 text-white/70 group-hover:text-[var(--brand-primary)] transition-colors"
+                                                        />
+                                                        <span className="font-semibold text-base flex-1 text-left">{section.title}</span>
+                                                        <ChevronDown
+                                                            className={`w-4 h-4 text-white/50 transition-transform duration-300 ${config.artigosExpanded ? 'rotate-180' : ''}`}
+                                                        />
+                                                    </button>
+                                                    {/* Submenu with animation */}
+                                                    <div
+                                                        className={`overflow-hidden transition-all duration-300 ease-in-out ${config.artigosExpanded ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'
+                                                            }`}
+                                                    >
+                                                        <button
+                                                            onClick={() => {
+                                                                const artigosElement = document.getElementById('artigos');
+                                                                if (artigosElement) {
+                                                                    artigosElement.scrollIntoView({ behavior: 'smooth' });
+                                                                }
+                                                                toggleFilters();
+                                                            }}
+                                                            className="w-full flex items-center gap-3 pl-12 pr-4 py-2.5 text-white/60 hover:text-[var(--brand-primary)] transition-all text-left"
+                                                        >
+                                                            <FontAwesomeIcon icon={faFilter} className="w-4 h-4" />
+                                                            <span className="text-sm font-medium">Filtrar Artigos</span>
+                                                        </button>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                /* Regular section link */
+                                                <a
+                                                    href={`#${section.id}`}
+                                                    onClick={onClose}
+                                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group"
+                                                >
+                                                    <FontAwesomeIcon
+                                                        icon={sectionIcons[section.icon] || faFile}
+                                                        className="w-5 h-5 text-white/70 group-hover:text-[var(--brand-primary)] transition-colors"
+                                                    />
+                                                    <span className="font-semibold text-base">{section.title}</span>
+                                                </a>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </nav>
+                    </div>
+                </aside>
+            </>
+        );
+    }
+
+    // 3. Default Mode (Standard Menu & Education Filters)
     return (
         <>
             {/* Sidebar Overlay */}

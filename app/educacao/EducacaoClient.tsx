@@ -18,6 +18,7 @@ import DashboardHeader from '@/components/shared/DashboardHeader';
 import TruthDetector from '@/components/education/TruthDetector';
 import SocialLinks from '@/components/shared/SocialLinks';
 import { useEducationFilters, categories, levels } from '@/contexts/EducationFilterContext';
+import { useSidebar } from '@/contexts/SidebarContext';
 
 interface Resource {
   id: string;
@@ -101,7 +102,26 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
     }
   });
 
+  // Configurar sidebar com as seções da página
+  const { setSidebarMode, resetSidebar } = useSidebar();
 
+  useEffect(() => {
+    setSidebarMode('educacao', {
+      showFilters: false,
+      sections: [
+        { id: 'comece-por-aqui', title: 'Comece por aqui', icon: 'book' },
+        { id: 'trilhas', title: 'Trilhas de Aprendizado', icon: 'graduation' },
+        { id: 'artigos', title: 'Todos os Artigos', icon: 'file' },
+        { id: 'faq', title: 'Perguntas Frequentes', icon: 'question' },
+        { id: 'truth-detector', title: 'Detector de Mentiras', icon: 'shield' },
+        { id: 'contribua', title: 'Contribua', icon: 'heart' },
+      ]
+    });
+
+    return () => {
+      resetSidebar();
+    };
+  }, [setSidebarMode, resetSidebar]);
 
 
 
@@ -133,7 +153,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
           </div>
 
           {/* Cards Introdutórios - 8 Temas (Estáticos) */}
-          <section className="space-y-6">
+          <section id="comece-por-aqui" className="space-y-6 scroll-mt-24">
             <div className="text-left">
               <h2 className="text-2xl font-bold text-[var(--text-primary)]">
                 Comece por aqui
@@ -283,7 +303,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
 
           {/* Filtros e Artigos - Título adicionado */}
-          <section className="space-y-6">
+          <section id="artigos" className="space-y-6 scroll-mt-24">
             <div className="text-left">
               <h2 className="text-2xl font-bold text-[var(--text-primary)]">
                 Todos os Artigos
@@ -383,7 +403,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
 
           {/* FAQ */}
-          <section className="space-y-6">
+          <section id="faq" className="space-y-6 scroll-mt-24">
             <h2 className="text-2xl font-bold text-[var(--text-primary)]">
               Perguntas Frequentes
             </h2>
@@ -410,10 +430,12 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
           {/* Detector de Mentiras (Operação Êxodo) */}
           {/* Detector de Mentiras (TruthDetector) */}
-          <TruthDetector />
+          <section id="truth-detector" className="scroll-mt-24">
+            <TruthDetector />
+          </section>
 
           {/* CTA */}
-          <div className="space-y-6 py-8">
+          <section id="contribua" className="space-y-6 py-8 scroll-mt-24">
             <h2 className="text-3xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-article-title)]">
               Contribua com a Comunidade
             </h2>
@@ -423,7 +445,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
             <div className="flex flex-wrap gap-4">
               <SocialLinks variant="buttons" platforms={['discord', 'telegram']} />
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </>

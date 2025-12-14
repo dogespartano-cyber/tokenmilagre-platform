@@ -158,15 +158,20 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
     };
 
     // Registry for unique IDs in Markdown render to match TOC generation
-    const slugRegistry = new Map<string, number>();
+    // Use useMemo to ensure the same IDs are generated on server and client
+    const slugRegistry = useRef(new Map<string, number>());
+
+    // Reset registry on each render to ensure consistent ordering
+    slugRegistry.current.clear();
+
     const getUniqueId = (text: string) => {
         const id = slugify(text);
-        if (slugRegistry.has(id)) {
-            const count = slugRegistry.get(id)!;
-            slugRegistry.set(id, count + 1);
+        if (slugRegistry.current.has(id)) {
+            const count = slugRegistry.current.get(id)!;
+            slugRegistry.current.set(id, count + 1);
             return `${id}-${count}`;
         }
-        slugRegistry.set(id, 1);
+        slugRegistry.current.set(id, 1);
         return id;
     };
 

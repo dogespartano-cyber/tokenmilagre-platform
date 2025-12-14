@@ -1,9 +1,15 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 
 // Tipos de modos suportados
-export type SidebarMode = 'default' | 'trilha' | 'custom';
+export type SidebarMode = 'default' | 'trilha' | 'educacao' | 'custom';
+
+// Config para modo educacao
+export interface SidebarEducacaoConfig {
+    showFilters: boolean;
+    sections: { id: string; title: string; icon?: string }[];
+}
 
 // Tipos de configuração para cada modo
 export interface SidebarTrilhaConfig {
@@ -19,8 +25,9 @@ export interface SidebarCustomConfig {
 
 interface SidebarContextType {
     mode: SidebarMode;
-    config: any; // Pode ser tipado melhor com Generics ou Union Types
+    config: any;
     setSidebarMode: (mode: SidebarMode, config?: any) => void;
+    updateConfig: (updates: Partial<any>) => void;
     resetSidebar: () => void;
 }
 
@@ -30,18 +37,22 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
     const [mode, setMode] = useState<SidebarMode>('default');
     const [config, setConfig] = useState<any>(null);
 
-    const setSidebarMode = (newMode: SidebarMode, newConfig?: any) => {
+    const setSidebarMode = useCallback((newMode: SidebarMode, newConfig?: any) => {
         setMode(newMode);
         setConfig(newConfig || null);
-    };
+    }, []);
 
-    const resetSidebar = () => {
+    const updateConfig = useCallback((updates: Partial<any>) => {
+        setConfig((prev: any) => ({ ...prev, ...updates }));
+    }, []);
+
+    const resetSidebar = useCallback(() => {
         setMode('default');
         setConfig(null);
-    };
+    }, []);
 
     return (
-        <SidebarContext.Provider value={{ mode, config, setSidebarMode, resetSidebar }}>
+        <SidebarContext.Provider value={{ mode, config, setSidebarMode, updateConfig, resetSidebar }}>
             {children}
         </SidebarContext.Provider>
     );
