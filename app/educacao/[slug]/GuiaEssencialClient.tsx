@@ -173,27 +173,27 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
 
                                 {/* Share Buttons & Badge */}
                                 <div className="flex items-center gap-4">
-                                    <div className="hidden lg:flex items-center gap-2">
+                                    <div className="hidden lg:flex items-center gap-4">
                                         <button
                                             onClick={() => handleShare('whatsapp')}
-                                            className="p-2 rounded-lg bg-[var(--bg-secondary)] hover:bg-[#25D366]/10 text-[var(--text-tertiary)] hover:text-[#25D366] transition-colors"
+                                            className="text-[var(--text-tertiary)] hover:text-[#25D366] transition-all hover:scale-110"
                                             title="Compartilhar no WhatsApp"
                                         >
-                                            <FontAwesomeIcon icon={faWhatsapp} className="w-5 h-5" />
+                                            <FontAwesomeIcon icon={faWhatsapp} className="w-6 h-6" />
                                         </button>
                                         <button
                                             onClick={() => handleShare('telegram')}
-                                            className="p-2 rounded-lg bg-[var(--bg-secondary)] hover:bg-[#0088cc]/10 text-[var(--text-tertiary)] hover:text-[#0088cc] transition-colors"
+                                            className="text-[var(--text-tertiary)] hover:text-[#0088cc] transition-all hover:scale-110"
                                             title="Compartilhar no Telegram"
                                         >
-                                            <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
+                                            <FontAwesomeIcon icon={faTelegram} className="w-6 h-6" />
                                         </button>
                                         <button
                                             onClick={() => handleShare('twitter')}
-                                            className="p-2 rounded-lg bg-[var(--bg-secondary)] hover:bg-black/10 dark:hover:bg-white/10 text-[var(--text-tertiary)] hover:text-black dark:hover:text-white transition-colors"
+                                            className="text-[var(--text-tertiary)] hover:text-black dark:hover:text-white transition-all hover:scale-110"
                                             title="Compartilhar no X (Twitter)"
                                         >
-                                            <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
+                                            <FontAwesomeIcon icon={faXTwitter} className="w-6 h-6" />
                                         </button>
                                     </div>
 
