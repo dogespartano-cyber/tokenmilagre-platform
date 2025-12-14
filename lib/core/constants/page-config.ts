@@ -46,6 +46,10 @@ export const PAGE_HEADER_CONFIG: Record<string, PageConfig> = {
     '/dashboard': {
         title: 'Painel Administrativo',
         description: 'Gerencie todo o conteúdo e configurações da plataforma'
+    },
+    '/comece-aqui': {
+        title: 'Comece Aqui',
+        description: 'Seu ponto de partida no mundo cripto. Educação sem promessas falsas, conhecimento real.'
     }
 };
 
