@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, CheckCircle2, Shield, BookOpen } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, Shield, BookOpen, Share2, MessageCircle, Send, Twitter } from 'lucide-react';
 import { slugify } from '@/lib/shared/utils/content-helpers';
 import { GUIA_ESSENCIAL_TRILHA } from '@/lib/education/guia-essencial';
 
@@ -106,6 +106,22 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
         return () => window.removeEventListener('scroll', handleScroll);
     }, [tableOfContents]);
 
+    const handleShare = (platform: 'whatsapp' | 'telegram' | 'twitter') => {
+        const url = encodeURIComponent(window.location.href);
+        const text = encodeURIComponent(`Confira este artigo: ${article.title}`);
+
+        let shareUrl = '';
+        if (platform === 'whatsapp') {
+            shareUrl = `https://wa.me/?text=${text}%20${url}`;
+        } else if (platform === 'telegram') {
+            shareUrl = `https://t.me/share/url?url=${url}&text=${text}`;
+        } else if (platform === 'twitter') {
+            shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+        }
+
+        window.open(shareUrl, '_blank');
+    };
+
     const scrollToSection = (id: string) => {
         const element = document.getElementById(id);
         if (element) {
@@ -153,11 +169,38 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
                                     {article.category}
                                 </div>
 
-                                {/* Badge Mobile */}
-                                <div className="lg:hidden text-right">
-                                    <span className="text-xs font-bold text-[var(--brand-primary)]">
-                                        {currentIndex + 1}/{GUIA_ESSENCIAL_TRILHA.length}
-                                    </span>
+                                {/* Share Buttons & Badge */}
+                                <div className="flex items-center gap-4">
+                                    <div className="hidden lg:flex items-center gap-2">
+                                        <button
+                                            onClick={() => handleShare('whatsapp')}
+                                            className="p-2 rounded-lg bg-[var(--bg-secondary)] hover:bg-[#25D366]/10 text-[var(--text-tertiary)] hover:text-[#25D366] transition-colors"
+                                            title="Compartilhar no WhatsApp"
+                                        >
+                                            <MessageCircle className="w-4 h-4" />
+                                        </button>
+                                        <button
+                                            onClick={() => handleShare('telegram')}
+                                            className="p-2 rounded-lg bg-[var(--bg-secondary)] hover:bg-[#0088cc]/10 text-[var(--text-tertiary)] hover:text-[#0088cc] transition-colors"
+                                            title="Compartilhar no Telegram"
+                                        >
+                                            <Send className="w-4 h-4" />
+                                        </button>
+                                        <button
+                                            onClick={() => handleShare('twitter')}
+                                            className="p-2 rounded-lg bg-[var(--bg-secondary)] hover:bg-[#1DA1F2]/10 text-[var(--text-tertiary)] hover:text-[#1DA1F2] transition-colors"
+                                            title="Compartilhar no X (Twitter)"
+                                        >
+                                            <Twitter className="w-4 h-4" />
+                                        </button>
+                                    </div>
+
+                                    {/* Badge Mobile */}
+                                    <div className="lg:hidden text-right">
+                                        <span className="text-xs font-bold text-[var(--brand-primary)]">
+                                            {currentIndex + 1}/{GUIA_ESSENCIAL_TRILHA.length}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
