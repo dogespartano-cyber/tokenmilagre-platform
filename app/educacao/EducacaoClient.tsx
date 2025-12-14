@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faArrowRight, faSearch, faTimes, faArrowUp, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/shared/utils/level-helpers';
 import { getCategoryIcon } from '@/lib/shared/utils/category-helpers';
-import DashboardHeader from '@/components/shared/DashboardHeader';
+import PageHeader from '@/components/shared/PageHeader';
 import TruthDetector from '@/components/education/TruthDetector';
 import SocialLinks from '@/components/shared/SocialLinks';
 import { useEducationFilters, categories, levels } from '@/contexts/EducationFilterContext';
