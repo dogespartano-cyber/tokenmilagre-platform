@@ -49,15 +49,28 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
         const headings: TableOfContentsItem[] = [];
         const lines = article.content.split('\n');
 
+        const usedIds = new Set<string>();
+
         lines.forEach((line) => {
             const h2Match = line.match(/^## (.+)$/);
             const h3Match = line.match(/^### (.+)$/);
-            if (h2Match) {
-                const text = h2Match[1].trim();
-                headings.push({ id: slugify(text), text, level: 2 });
-            } else if (h3Match) {
-                const text = h3Match[1].trim();
-                headings.push({ id: slugify(text), text, level: 3 });
+
+            if (h2Match || h3Match) {
+                const text = (h2Match ? h2Match[1] : h3Match![1]).trim();
+                const level = h2Match ? 2 : 3;
+                let id = slugify(text);
+
+                // Ensure uniqueness
+                if (usedIds.has(id)) {
+                    let counter = 1;
+                    while (usedIds.has(`${id}-${counter}`)) {
+                        counter++;
+                    }
+                    id = `${id}-${counter}`;
+                }
+
+                usedIds.add(id);
+                headings.push({ id, text, level });
             }
         });
 
@@ -101,6 +114,19 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
             const offsetPosition = elementPosition + window.pageYOffset - offset;
             window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
         }
+    };
+
+    // Registry for unique IDs in Markdown render to match TOC generation
+    const slugRegistry = new Map<string, number>();
+    const getUniqueId = (text: string) => {
+        const id = slugify(text);
+        if (slugRegistry.has(id)) {
+            const count = slugRegistry.get(id)!;
+            slugRegistry.set(id, count + 1);
+            return `${id}-${count}`;
+        }
+        slugRegistry.set(id, 1);
+        return id;
     };
 
     return (
@@ -175,12 +201,12 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
                                     h1: ({ children }) => <h1 className="sr-only">{children}</h1>,
                                     h2: ({ children }) => {
                                         const text = String(children);
-                                        const id = slugify(text);
+                                        const id = getUniqueId(text);
                                         return <h2 id={id} className="scroll-mt-28">{children}</h2>;
                                     },
                                     h3: ({ children }) => {
                                         const text = String(children);
-                                        const id = slugify(text);
+                                        const id = getUniqueId(text);
                                         return <h3 id={id} className="scroll-mt-28">{children}</h3>;
                                     },
                                 }}
