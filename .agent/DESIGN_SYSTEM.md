@@ -2,7 +2,7 @@
 type: agent
 name: DESIGN_SYSTEM
 role: Sistema de Design e Tema
-trigger: "CSS", "tema", "cores", "tokens", "dark mode", "light mode", "glassmorphism"
+trigger: "CSS", "tema", "cores", "tokens", "dark mode", "light mode", "glassmorphism", "ícones"
 inherits: _DNA.md
 collaborates: [CONTENT_ARCHITECT, FRACTAL_GUARDIAN]
 escalates-to: FRACTAL_GUARDIAN
@@ -50,6 +50,102 @@ if (!mounted) return <Skeleton />;
 
 ---
 
+## 🚫 Ícones Proibidos
+
+| Ícone | Razão |
+|-------|-------|
+| **faRocket** | Clichê de startup; evitar hype |
+| **faMoon** / **faStars** | Associado a "moon" em cripto |
+| **faFire** | Associado a "burn" e hype |
+| **faBomb** | Negativo |
+
+### Regras de Uso de Ícones
+
+| Regra | Descrição |
+|-------|-----------|
+| **Proibido em títulos** | Títulos (h1, h2, h3) devem ser apenas texto, sem ícones |
+| **Evitar excesso** | Máximo 1 ícone por card/seção; menos é mais |
+| **Clareza > Decoração** | Ícone só se adicionar significado, não decoração |
+| **Consistência** | Mesmo ícone = mesmo significado em todo o projeto |
+
+**Princípio**: Preferir ícones que comuniquem **clareza** e **confiança**, não hype.
+
+---
+
+## ✅ Ícones Obrigatórios: FontAwesome
+
+**Biblioteca única**: `@fortawesome/react-fontawesome`
+
+```typescript
+// ✅ CORRETO
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUsers, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
+
+<FontAwesomeIcon icon={faUsers} className="text-[var(--text-secondary)]" />
+
+// ❌ PROIBIDO
+import { RocketIcon } from 'lucide-react';  // Não usar Lucide para ícones inline
+```
+
+### Ícones Recomendados por Contexto
+
+| Contexto | Ícones Sugeridos |
+|----------|------------------|
+| Comunidade | `faUsers`, `faHandshake`, `faUserGroup` |
+| Segurança | `faShieldAlt`, `faLock`, `faCheckCircle` |
+| Educação | `faLightbulb`, `faBookOpen`, `faGraduationCap` |
+| Transparência | `faEye`, `faChartPie`, `faFileAlt` |
+| Navegação | `faArrowRight`, `faChevronDown`, `faGripVertical` |
+| Finanças | `faCoins`, `faWallet`, `faChartLine` |
+
+---
+
+## Padrões de Design (Referência: Home Page)
+
+### Layout Padrão
+
+```typescript
+// Container padrão
+<div className="container mx-auto px-6 md:px-10 py-8 relative z-10">
+
+// Espaçamento entre seções
+<div className="space-y-16 pb-20">
+```
+
+### Glass Card (Componente Principal)
+
+```css
+.glass-card {
+  background: rgba(var(--bg-elevated-rgb), 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-2xl);  /* 24px */
+}
+```
+
+### Títulos de Seção
+
+```typescript
+<h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
+  Título da Seção
+</h2>
+<p className="text-xl text-[var(--text-secondary)]">
+  Subtítulo explicativo
+</p>
+```
+
+### Botões Primários
+
+```typescript
+<button className="px-10 py-5 rounded-full font-bold text-lg text-white 
+  backdrop-blur-md bg-gradient-to-r from-[var(--brand-primary)]/90 to-[var(--brand-hover)]/90 
+  border border-white/20 hover:scale-105 transition-all shadow-xl">
+  Texto do Botão
+</button>
+```
+
+---
+
 ## Tokens Principais
 
 | Categoria | Tokens |
@@ -83,6 +179,21 @@ if (!mounted) return <Skeleton />;
 | `lib/core/theme/tokens.ts` | Tokens semânticos |
 | `lib/core/theme/accents/*.css` | Variantes de cor |
 | `app/globals.css` | CSS Variables base |
+| `app/page.tsx` | Referência de design (home) |
+
+---
+
+## Checklist de Revisão Visual
+
+Antes de aprovar qualquer componente novo:
+
+- [ ] Usa CSS Variables (não cores hardcoded)
+- [ ] Usa FontAwesome (não outras libs de ícones)
+- [ ] Não usa ícones proibidos (rocket, moon, fire)
+- [ ] Segue grid de 4/8px
+- [ ] Glass cards com `backdrop-blur`
+- [ ] Botões com `rounded-full` e gradiente
+- [ ] Títulos com tipografia padrão
 
 ---
 
@@ -91,4 +202,7 @@ if (!mounted) return <Skeleton />;
   - _DNA.md
   - FRACTAL_GUARDIAN.md  # Consistência de padrões
   - lib/core/theme/  # Código fonte
+  - app/page.tsx  # Referência de design
+  - app/globals.css  # CSS Variables
 ```
+
