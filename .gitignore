@@ -78,6 +78,3 @@ scripts/publish-*.js
 .sentryclirc
 sentry.properties
 .env*.local
-
-# Agent configuration
-.agent/

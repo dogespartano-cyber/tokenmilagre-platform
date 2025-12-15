@@ -91,6 +91,18 @@ Este código foi escrito por um humano que **pediu sabedoria a Deus** para melho
 
 ---
 
+## Política do Token
+
+O projeto possui um token associado ($MILAGRE) no blockchain Solana. Para garantir integridade entre educação e finanças:
+
+| Aspecto | Política |
+|---------|----------|
+| **Separação** | Conteúdo educacional e token são domínios separados |
+| **Transparência** | Métricas públicas em `/transparencia` |
+| **Regras** | Veja [TRANSPARENCY_POLICY.md](./TRANSPARENCY_POLICY.md) |
+
+---
+
 ## Estrutura do Projeto
 
 ```
