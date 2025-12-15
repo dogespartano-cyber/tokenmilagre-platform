@@ -147,25 +147,9 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
       <div className="container mx-auto px-4 py-8 relative">
         <div className="space-y-8">
-          {/* Banner de Aviso de Risco */}
-          <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300">
-            <p className="text-sm">
-              <strong>⚠️ Aviso:</strong> Este conteúdo é educacional e <strong>não é aconselhamento financeiro</strong>.
-              Criptomoedas envolvem riscos e volatilidade. Faça sua própria pesquisa.
-            </p>
-          </div>
 
           {/* Cards Introdutórios - 8 Temas (Estáticos) */}
           <section id="comece-por-aqui" className="space-y-6 scroll-mt-24">
-            <div className="text-left">
-              <h2 className="text-2xl font-bold text-[var(--text-primary)]">
-                Comece por aqui
-              </h2>
-              <p className="text-[var(--text-secondary)] mt-1">
-                Você não precisa "correr atrás do próximo pump". Precisa de base, método e prudência.
-              </p>
-            </div>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { icon: BookOpen, title: 'Comece pelo Básico', desc: 'Entenda o que é cripto e onde as pessoas mais erram', slug: 'fundamentos-cripto' },
@@ -188,16 +172,6 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                     <p className="text-sm text-[var(--text-secondary)] mb-4 leading-relaxed line-clamp-2">
                       {card.desc}
                     </p>
-
-                    {card.slug ? (
-                      <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] transition-colors">
-                        Ler artigo <ArrowRight className="w-3 h-3 ml-1" />
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-[var(--bg-page)] text-[var(--text-tertiary)] group-hover:bg-[var(--brand-primary)]/10 group-hover:text-[var(--brand-primary)] transition-colors">
-                        Em breve
-                      </span>
-                    )}
                   </div>
                 );
 
