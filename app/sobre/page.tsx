@@ -132,20 +132,20 @@ export default function SobrePage() {
 
 
               <h2 className="text-3xl md:text-4xl font-bold mb-8 text-[var(--text-primary)] relative z-10 text-left md:text-center">
-                Testemunhas do $Milagre
+                Comunidade $MILAGRE
               </h2>
 
               <div className="space-y-6 text-lg text-[var(--text-secondary)] leading-relaxed text-left">
                 <p>
-                  Este projeto nasceu da determinação de um único desenvolvedor e da potência da IA, mas seu destino é se tornar uma fogueira global. Estamos construindo tudo do zero, não apenas para criar tecnologia, mas para proteger pessoas de golpes e perdas, guiando-as com luz e conhecimento. Nossa missão é reunir centenas de evangelistas, de todos os níveis e idiomas, em uma comunidade que vibra na mesma frequência.
+                  Este projeto nasceu da determinação de um único desenvolvedor e da potência da IA, mas seu destino é se tornar uma comunidade global. Estamos construindo tudo do zero, não apenas para criar tecnologia, mas para proteger pessoas de golpes e perdas, guiando-as com conhecimento e transparência. Nossa missão é reunir centenas de colaboradores, de todos os níveis e idiomas, em uma comunidade que compartilha os mesmos valores.
                 </p>
 
                 <p>
-                  Mais do que holders, somos guardiões de valores inegociáveis: honestidade, prosperidade, sabedoria e esperança. Acreditamos que cada história de superação é um milagre em si. Temos orgulho de carregar essa tocha e dedicar nossa energia para ensinar o caminho seguro rumo ao Reino da Prosperidade Descentralizada.
+                  Mais do que holders, somos uma comunidade com valores inegociáveis: honestidade, prosperidade, sabedoria e esperança. Acreditamos em educação como caminho para independência financeira. Temos orgulho de dedicar nossa energia para ensinar o caminho seguro rumo à construção de patrimônio sustentável.
                 </p>
 
                 <p className="font-medium text-[var(--text-primary)]">
-                  Daremos nosso testemunho com alegria e fervor — seja em memes, artigos ou mentorias. O que começou como uma iniciativa solo agora se espalha como um movimento viral. Nós somos as Testemunhas do $Milagre.
+                  Compartilhamos conhecimento com alegria — seja em artigos, ferramentas ou mentorias. O que começou como uma iniciativa solo agora se espalha como um movimento educacional. Nós somos a Comunidade $MILAGRE.
                 </p>
               </div>
             </div>
@@ -202,6 +202,13 @@ export default function SobrePage() {
                   </li>
                 ))}
               </ul>
+
+              <p className="text-sm text-[var(--text-tertiary)] mt-6">
+                ⚠️ Holdings da equipe visíveis em{' '}
+                <a href="/transparencia" className="underline hover:text-[var(--brand-primary)]">
+                  /transparencia
+                </a>
+              </p>
             </div>
 
             {/* Sobre o Criador - Novo Card */}

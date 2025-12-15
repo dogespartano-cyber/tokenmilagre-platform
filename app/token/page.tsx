@@ -137,7 +137,7 @@ export default function TokenPage() {
             </h1>
 
             <p className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed font-light">
-              Não somos apenas holders. Somos Testemunhas do $Milagre.
+              Não somos apenas holders. Somos uma comunidade com propósito.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
@@ -147,7 +147,7 @@ export default function TokenPage() {
                 rel="noopener noreferrer"
                 className="px-10 py-5 rounded-full font-bold text-lg text-white backdrop-blur-md bg-gradient-to-r from-teal-500/90 to-green-500/90 border border-white/20 hover:from-teal-600/90 hover:to-green-600/90 shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex items-center gap-3"
               >
-                <span>Testemunhe Conosco</span>
+                <span>Junte-se à Comunidade</span>
                 <FontAwesomeIcon icon={faHandshake} className="w-5 h-5" />
               </a>
 
@@ -164,7 +164,7 @@ export default function TokenPage() {
           <section id="saiba-mais" className="mb-32">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
-                Os Pilares da Nossa Fé
+                Nossos Princípios
               </h2>
               <p className="text-xl text-[var(--text-secondary)]">Por que estamos aqui?</p>
             </div>
@@ -239,10 +239,10 @@ export default function TokenPage() {
 
               <div className="text-center mb-16 relative z-10">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
-                  O Livro Aberto
+                  Tokenomics Transparente
                 </h2>
                 <p className="text-xl text-[var(--text-secondary)]">
-                  A verdade gravada na história.
+                  100% na blockchain, verificável por todos.
                 </p>
               </div>
 
@@ -335,10 +335,10 @@ export default function TokenPage() {
           <section className="mb-32">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
-                O Caminho da Ascensão
+                Nosso Roadmap
               </h2>
               <p className="text-xl text-[var(--text-secondary)]">
-                Nossa jornada rumo ao topo.
+                Nossa jornada de desenvolvimento.
               </p>
             </div>
 
@@ -408,15 +408,47 @@ export default function TokenPage() {
             </div>
           </section>
 
-          {/* Como Se Unir à Aliança */}
+          {/* Utilidade em Desenvolvimento */}
+          <section className="mb-32">
+            <div className="glass-card p-8 md:p-12 rounded-3xl border-l-4 border-amber-500">
+              <h3 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-6">
+                Utilidade em Desenvolvimento
+              </h3>
+
+              <p className="text-[var(--text-secondary)] mb-6 text-lg leading-relaxed">
+                Atualmente, o $MILAGRE é um token de comunidade e apoio à educação.
+                Estamos desenvolvendo utilidades reais que serão anunciadas com total transparência.
+              </p>
+
+              <div className="grid md:grid-cols-3 gap-4 mb-6">
+                {[
+                  { text: 'Acesso a conteúdo exclusivo', icon: faLightbulb },
+                  { text: 'Governança comunitária', icon: faUsers },
+                  { text: 'Benefícios para holders', icon: faCoins }
+                ].map((item, index) => (
+                  <div key={index} className="flex items-center gap-3 p-4 rounded-xl bg-[var(--bg-primary)]">
+                    <FontAwesomeIcon icon={item.icon} className="text-amber-500" />
+                    <span className="text-[var(--text-secondary)]">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+
+              <p className="text-sm text-[var(--text-tertiary)] italic">
+                Nota: Utilidades são planos em desenvolvimento, não promessas. Acompanhe atualizações em{' '}
+                <a href="/roadmap" className="underline hover:text-[var(--brand-primary)]">/roadmap</a>.
+              </p>
+            </div>
+          </section>
+
+          {/* Como Participar */}
           <section className="mb-32">
             <div>
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
-                  Como Se Unir à Aliança
+                  Como Participar
                 </h2>
                 <p className="text-xl text-[var(--text-secondary)]">
-                  Seu convite para fazer parte da história.
+                  Seu convite para fazer parte da comunidade.
                 </p>
               </div>
 
@@ -424,7 +456,7 @@ export default function TokenPage() {
                 {[
                   {
                     step: '01',
-                    title: 'Prepare seu Coração',
+                    title: 'Prepare sua Carteira',
                     desc: 'Use Phantom ou Solflare. Você é o único guardião de suas chaves.',
                     icon: faWallet,
                     color: 'text-purple-500'
@@ -438,8 +470,8 @@ export default function TokenPage() {
                   },
                   {
                     step: '03',
-                    title: 'Faça o Voto',
-                    desc: 'Acesse o Pump.fun oficial e troque valor por propósito.',
+                    title: 'Adquira $MILAGRE',
+                    desc: 'Acesse o Pump.fun oficial e apoie o projeto.',
                     icon: faExchangeAlt,
                     color: 'text-blue-500'
                   }
@@ -531,6 +563,13 @@ export default function TokenPage() {
 
             <p className="text-sm mt-12 max-w-2xl mx-auto leading-relaxed text-[var(--text-tertiary)]">
               Isenção de Responsabilidade: O $MILAGRE é um token de utilidade comunitária focado em educação e pertencimento. O valor financeiro é consequência do nosso trabalho, não uma promessa garantida. Faça sua própria pesquisa e participe com consciência.
+            </p>
+
+            <p className="text-sm mt-6 text-center text-[var(--text-tertiary)]">
+              ⚠️ Holdings da equipe visíveis em{' '}
+              <a href="/transparencia" className="underline hover:text-[var(--brand-primary)] transition-colors">
+                /transparencia
+              </a>
             </p>
           </section>
 
