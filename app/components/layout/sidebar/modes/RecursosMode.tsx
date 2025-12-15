@@ -10,38 +10,12 @@
 
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faArrowLeft,
-    faSearch,
-    faStore,
-    faCoins,
-    faBitcoinSign,
-    faChartLine,
-    faGlobe,
-    faInfoCircle,
-    faNewspaper,
-    faGraduationCap,
-    faTimes,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import type { SidebarModeProps, RecursosModeConfig } from '../types';
 
 interface RecursosModeProps extends SidebarModeProps {
     config: RecursosModeConfig;
 }
-
-const categoryIcons: Record<string, any> = {
-    all: faStore,
-    wallet: faCoins,
-    exchange: faBitcoinSign,
-    'defi-protocol': faChartLine,
-    explorers: faSearch,
-    browsers: faGlobe,
-    analytics: faChartLine,
-    'portfolio-tracker': faCoins,
-    'development-tools': faInfoCircle,
-    news: faNewspaper,
-    education: faGraduationCap,
-};
 
 export default function RecursosMode({ onClose, config }: RecursosModeProps) {
     const { categories, selectedCategory, setSelectedCategory, searchTerm, setSearchTerm } = config;
@@ -52,13 +26,13 @@ export default function RecursosMode({ onClose, config }: RecursosModeProps) {
             <Link
                 href="/"
                 onClick={onClose}
-                className="flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group mb-4"
+                className="sidebar-back-link mb-4"
             >
                 <FontAwesomeIcon
                     icon={faArrowLeft}
-                    className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] transition-colors"
+                    className="sidebar-icon"
                 />
-                <span className="font-semibold text-base">Voltar ao Início</span>
+                <span className="sidebar-text-lg">Voltar ao Início</span>
             </Link>
 
             {/* Search */}
@@ -89,19 +63,9 @@ export default function RecursosMode({ onClose, config }: RecursosModeProps) {
                                 onClose();
                             }
                         }}
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all group ${selectedCategory === cat.id
-                                ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)]'
-                                : 'text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1'
-                            }`}
+                        className={`w-full sidebar-item ${selectedCategory === cat.id ? 'sidebar-item-active' : ''}`}
                     >
-                        <FontAwesomeIcon
-                            icon={categoryIcons[cat.id] || faStore}
-                            className={`w-5 h-5 transition-colors ${selectedCategory === cat.id
-                                    ? 'text-[var(--brand-primary)]'
-                                    : 'text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)]'
-                                }`}
-                        />
-                        <span className="font-semibold text-base">{cat.label}</span>
+                        <span className="sidebar-text">{cat.label}</span>
                     </button>
                 ))}
 
@@ -113,13 +77,13 @@ export default function RecursosMode({ onClose, config }: RecursosModeProps) {
                             if (setSearchTerm) setSearchTerm('');
                             onClose();
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-3 mt-3 rounded-xl text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all group border-t border-[var(--border-light)] pt-4"
+                        className="w-full flex items-center gap-3 px-4 py-3 mt-3 rounded-xl text-red-300 bg-red-500/10 hover:bg-red-500/20 transition-all group border-t border-[var(--border-light)] pt-4"
                     >
                         <FontAwesomeIcon
                             icon={faTimes}
                             className="w-5 h-5"
                         />
-                        <span className="font-semibold text-base">Limpar Filtros</span>
+                        <span className="sidebar-text">Limpar Filtros</span>
                     </button>
                 )}
             </div>

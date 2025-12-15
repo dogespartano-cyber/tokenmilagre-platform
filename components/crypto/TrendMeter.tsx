@@ -96,7 +96,7 @@ export default function TrendMeter({ symbol, interval = '4h', onColorChange }: T
     const trendColor = getTrendColor(displayScore);
 
     return (
-        <div className="flex flex-col h-full w-full glass-card rounded-2xl border border-[var(--border-light)] p-4">
+        <div className="flex flex-col h-full w-full glass-card static-glass-card rounded-2xl border border-[var(--border-light)] p-4">
             {/* Gauge Graphic */}
             <div className="relative flex items-center justify-center py-6">
                 <svg

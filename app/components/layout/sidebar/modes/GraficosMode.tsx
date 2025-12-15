@@ -10,26 +10,12 @@
 
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faArrowLeft,
-    faChartLine,
-    faGlobe,
-    faFire,
-    faHeart,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import type { SidebarModeProps, GraficosModeConfig } from '../types';
 
 interface GraficosModeProps extends SidebarModeProps {
     config: GraficosModeConfig;
 }
-
-const sectionIcons: Record<string, any> = {
-    chart: faChartLine,
-    globe: faGlobe,
-    fire: faFire,
-    bubble: faChartLine,
-    heart: faHeart,
-};
 
 export default function GraficosMode({ onClose, config }: GraficosModeProps) {
     const { sections } = config;
@@ -40,13 +26,13 @@ export default function GraficosMode({ onClose, config }: GraficosModeProps) {
             <Link
                 href="/"
                 onClick={onClose}
-                className="flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group mb-2"
+                className="sidebar-back-link"
             >
                 <FontAwesomeIcon
                     icon={faArrowLeft}
-                    className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] transition-colors"
+                    className="sidebar-icon"
                 />
-                <span className="font-semibold text-base">Voltar ao Início</span>
+                <span className="sidebar-text-lg">Voltar ao Início</span>
             </Link>
 
             {/* Sections TOC */}
@@ -56,13 +42,9 @@ export default function GraficosMode({ onClose, config }: GraficosModeProps) {
                         key={section.id}
                         href={`#${section.id}`}
                         onClick={onClose}
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group"
+                        className="sidebar-item"
                     >
-                        <FontAwesomeIcon
-                            icon={sectionIcons[section.icon || ''] || faChartLine}
-                            className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] transition-colors"
-                        />
-                        <span className="font-semibold text-base">{section.title}</span>
+                        <span className="sidebar-text">{section.title}</span>
                     </a>
                 ))}
             </div>

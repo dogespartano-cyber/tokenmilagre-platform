@@ -26,13 +26,13 @@ export default function RecursoDetalheMode({ onClose, config }: RecursoDetalheMo
             <Link
                 href="/recursos"
                 onClick={onClose}
-                className="flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group mb-4"
+                className="sidebar-back-link"
             >
                 <FontAwesomeIcon
                     icon={faArrowLeft}
-                    className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] transition-colors"
+                    className="sidebar-icon"
                 />
-                <span className="font-semibold text-base">Voltar a Recursos</span>
+                <span className="sidebar-text-lg">Voltar a Recursos</span>
             </Link>
 
             {/* Category Title */}
@@ -47,18 +47,15 @@ export default function RecursoDetalheMode({ onClose, config }: RecursoDetalheMo
                         key={res.slug}
                         href={`/recursos/${res.slug}`}
                         onClick={onClose}
-                        className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all group ${currentResource?.slug === res.slug
-                                ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)]'
-                                : 'text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1'
-                            }`}
+                        className={`sidebar-item ${currentResource?.slug === res.slug ? 'sidebar-item-active' : ''}`}
                     >
                         <div
                             className={`w-2 h-2 rounded-full flex-shrink-0 ${currentResource?.slug === res.slug
-                                    ? 'bg-[var(--brand-primary)]'
-                                    : 'bg-green-500'
+                                ? 'bg-[var(--brand-primary)]'
+                                : 'bg-green-500'
                                 }`}
                         />
-                        <span className="font-medium text-sm truncate">{res.name}</span>
+                        <span className="sidebar-text truncate">{res.name}</span>
                     </Link>
                 ))}
             </div>

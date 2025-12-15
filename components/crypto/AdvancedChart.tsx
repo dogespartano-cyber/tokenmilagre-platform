@@ -10,13 +10,14 @@ type Timeframe = '15m' | '4h' | '1d' | '1w' | '1M';
 
 interface AdvancedChartProps {
   symbol: string;
-  name: string;
+  name?: string;
   timeframe?: Timeframe;
   onTimeframeChange?: (timeframe: Timeframe) => void;
   trendColor?: string;
+  headerLeft?: React.ReactNode;
 }
 
-export default function AdvancedChart({ symbol, name, timeframe: controlledTimeframe, onTimeframeChange, trendColor }: AdvancedChartProps) {
+export default function AdvancedChart({ symbol, name, timeframe: controlledTimeframe, onTimeframeChange, trendColor, headerLeft }: AdvancedChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const timeframe = controlledTimeframe || '4h';
   const chartRef = useRef<IChartApi | null>(null);
@@ -350,29 +351,29 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
         backgroundColor: 'transparent'
       }}
     >
-      {/* Título, Preço e Timeframe - Responsivo */}
-      <div className="px-4 pt-4 pb-2 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        {/* Esquerda: Título + Preço */}
-        {name && (
-          <div className="flex flex-wrap items-center gap-3">
-            <h4 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>{name}</h4>
-            {currentPrice && (
-              <div className="px-3 py-1 rounded-lg font-bold text-lg border" style={{
-                backgroundColor: 'var(--bg-secondary)',
-                borderColor: 'var(--border-medium)',
-                color: 'var(--text-primary)'
-              }}>
-                ${currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-              </div>
-            )}
+      {/* Header do gráfico - Seletor à esquerda, Preço à direita */}
+      <div className="px-4 pt-4 pb-2 flex items-center justify-between">
+        {/* Slot para seletor */}
+        <div>{headerLeft}</div>
+
+        {/* Preço à direita */}
+        {currentPrice && (
+          <div className="px-4 py-2 rounded-lg font-bold text-xl border" style={{
+            backgroundColor: 'var(--bg-secondary)',
+            borderColor: 'var(--border-medium)',
+            color: 'var(--text-primary)'
+          }}>
+            ${currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </div>
         )}
-
-
       </div>
 
-      {/* Legenda compacta */}
-      <div className="px-4 pb-2">
+      <div className="px-4 pb-4">
+        <div ref={chartContainerRef} />
+      </div>
+
+      {/* Legenda compacta - abaixo do gráfico */}
+      <div className="px-4 pb-4">
         <div className="flex flex-wrap gap-3 text-xs">
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-0.5" style={{ backgroundColor: '#EAB308' }}></div>
@@ -395,10 +396,6 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
             <span style={{ color: 'var(--text-secondary)' }}>RSI</span>
           </div>
         </div>
-      </div>
-
-      <div className="px-4 pb-4">
-        <div ref={chartContainerRef} />
       </div>
     </div>
   );

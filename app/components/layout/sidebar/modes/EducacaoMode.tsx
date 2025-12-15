@@ -10,17 +10,7 @@
 
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faArrowLeft,
-    faSearch,
-    faFilter,
-    faBook,
-    faGraduationCap,
-    faFile,
-    faQuestion,
-    faShield,
-    faHeart,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { ChevronDown } from 'lucide-react';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { useEducationFiltersOptional, categories, levels } from '@/contexts/EducationFilterContext';
@@ -29,15 +19,6 @@ import type { SidebarModeProps, EducacaoModeConfig } from '../types';
 interface EducacaoModeProps extends SidebarModeProps {
     config: EducacaoModeConfig;
 }
-
-const sectionIcons: Record<string, any> = {
-    book: faBook,
-    graduation: faGraduationCap,
-    file: faFile,
-    question: faQuestion,
-    shield: faShield,
-    heart: faHeart,
-};
 
 export default function EducacaoMode({ onClose, config }: EducacaoModeProps) {
     const { updateConfig } = useSidebar();
@@ -87,8 +68,8 @@ export default function EducacaoMode({ onClose, config }: EducacaoModeProps) {
                                             key={cat.id}
                                             onClick={() => educationFilters.setSelectedCategory(educationFilters.selectedCategory === cat.id ? '' : cat.id)}
                                             className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${educationFilters.selectedCategory === cat.id
-                                                    ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'
-                                                    : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]'
+                                                ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'
+                                                : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]'
                                                 }`}
                                         >
                                             {cat.label}
@@ -106,8 +87,8 @@ export default function EducacaoMode({ onClose, config }: EducacaoModeProps) {
                                             key={level.id}
                                             onClick={() => educationFilters.setSelectedLevel(educationFilters.selectedLevel === level.id ? '' : level.id)}
                                             className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${educationFilters.selectedLevel === level.id
-                                                    ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'
-                                                    : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]'
+                                                ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'
+                                                : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]'
                                                 }`}
                                         >
                                             {level.label}
@@ -160,11 +141,7 @@ export default function EducacaoMode({ onClose, config }: EducacaoModeProps) {
                                         }}
                                         className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group"
                                     >
-                                        <FontAwesomeIcon
-                                            icon={sectionIcons[section.icon || ''] || faFile}
-                                            className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] transition-colors"
-                                        />
-                                        <span className="font-semibold text-base flex-1 text-left">{section.title}</span>
+                                        <span className="font-semibold text-sm flex-1 text-left">{section.title}</span>
                                         <ChevronDown
                                             className={`w-4 h-4 text-[var(--text-tertiary)] transition-transform duration-300 ${config.artigosExpanded ? 'rotate-180' : ''}`}
                                         />
@@ -184,7 +161,6 @@ export default function EducacaoMode({ onClose, config }: EducacaoModeProps) {
                                             }}
                                             className="w-full flex items-center gap-3 pl-12 pr-4 py-2.5 text-[var(--text-secondary)] hover:text-[var(--brand-primary)] transition-all text-left"
                                         >
-                                            <FontAwesomeIcon icon={faFilter} className="w-4 h-4" />
                                             <span className="text-sm font-medium">Filtrar Artigos</span>
                                         </button>
                                     </div>
@@ -196,11 +172,7 @@ export default function EducacaoMode({ onClose, config }: EducacaoModeProps) {
                                     onClick={onClose}
                                     className="flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1 transition-all group"
                                 >
-                                    <FontAwesomeIcon
-                                        icon={sectionIcons[section.icon || ''] || faFile}
-                                        className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] transition-colors"
-                                    />
-                                    <span className="font-semibold text-base">{section.title}</span>
+                                    <span className="font-semibold text-sm">{section.title}</span>
                                 </a>
                             )}
                         </div>

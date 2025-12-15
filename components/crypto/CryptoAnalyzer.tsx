@@ -94,30 +94,6 @@ function CryptoAnalyzerContent({
 }: CryptoAnalyzerContentProps) {
     return (
         <div className="space-y-6">
-            {/* Tabs */}
-            <div className="flex flex-nowrap overflow-x-auto no-scrollbar w-full md:w-fit gap-2 md:gap-4 p-1 bg-gray-100/50 dark:bg-white/5 rounded-xl backdrop-blur-sm border border-gray-200 dark:border-white/10">
-                {(Object.keys(assets) as Asset[]).map((asset) => (
-                    <button
-                        key={asset}
-                        onClick={() => {
-                            setActiveAsset(asset);
-                            setTrendColor(undefined); // Reset color on asset change
-                        }}
-                        className={`
-              flex items-center justify-center gap-2 px-4 py-2 md:px-6 md:py-2.5 rounded-lg font-semibold transition-all duration-300 flex-1 md:flex-none whitespace-nowrap
-              ${activeAsset === asset
-                                ? 'bg-white dark:bg-white/10 shadow-md scale-105 ' + assets[asset].color
-                                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5'
-                            }
-            `}
-                    >
-                        <span className="shrink-0 hidden md:flex items-center">{assets[asset].icon}</span>
-                        <span className="md:hidden">{asset}</span>
-                        <span className="hidden md:inline">{assets[asset].name}</span>
-                    </button>
-                ))}
-            </div>
-
             <div className="grid lg:grid-cols-3 gap-6 animate-fade-in-up">
                 {/* Main Chart - Spans 2 columns */}
                 <div className="lg:col-span-2 space-y-4">
@@ -126,10 +102,32 @@ function CryptoAnalyzerContent({
                             <AdvancedChart
                                 key={`${assets[activeAsset].symbol}-${timeframe}`}
                                 symbol={assets[activeAsset].symbol}
-                                name={`${assets[activeAsset].name} / Tether US`}
                                 timeframe={timeframe}
                                 onTimeframeChange={setTimeframe}
                                 trendColor={trendColor}
+                                headerLeft={
+                                    <div className="flex flex-nowrap gap-2">
+                                        {(Object.keys(assets) as Asset[]).map((asset) => (
+                                            <button
+                                                key={asset}
+                                                onClick={() => {
+                                                    setActiveAsset(asset);
+                                                    setTrendColor(undefined);
+                                                }}
+                                                className={`
+                                                    flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-300 whitespace-nowrap
+                                                    ${activeAsset === asset
+                                                        ? 'bg-white/10 shadow-md ' + assets[asset].color
+                                                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/5'
+                                                    }
+                                                `}
+                                            >
+                                                <span className="shrink-0">{assets[asset].icon}</span>
+                                                <span className="hidden sm:inline">{assets[asset].name}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                }
                             />
                         </div>
                     </div>
@@ -137,7 +135,7 @@ function CryptoAnalyzerContent({
 
                 {/* Technical Analysis - Spans 1 column */}
                 <div className="space-y-4">
-                    <div className="p-4 rounded-2xl h-full flex flex-col transition-colors duration-500">
+                    <div className="p-4 rounded-2xl h-full flex flex-col">
                         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
                             <h3 className="text-lg font-bold flex items-center gap-2 text-gray-900 dark:text-white">
                                 <span>Análise Técnica ({timeframe.toUpperCase()})</span>
