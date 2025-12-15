@@ -1,5 +1,5 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faSeedling, faBook, faRocket, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
+import { faSeedling, faBook, faCode, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Tipos de nível de dificuldade para conteúdo educacional
@@ -39,7 +39,7 @@ const LEVEL_CONFIG: Record<Level, LevelConfig> = {
     label: 'Avançado',
     color: '#ef4444', // red-500
     gradient: 'rgba(239, 68, 68, 0.08)',
-    icon: faRocket,
+    icon: faCode,
     description: 'Técnicas avançadas e desenvolvimento'
   }
 };

@@ -281,13 +281,81 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
           {/* Filtros e Artigos - Título adicionado */}
           <section id="artigos" className="space-y-6 scroll-mt-24">
-            <div className="text-left">
-              <h2 className="text-2xl font-bold text-[var(--text-primary)]">
-                Todos os Artigos
-              </h2>
-              <p className="text-[var(--text-secondary)] mt-1">
-                Explore todos os conteúdos educacionais ou filtre por categoria e nível.
-              </p>
+            <div className="flex items-center justify-between">
+              <div className="text-left">
+                <h2 className="text-2xl font-bold text-[var(--text-primary)]">
+                  Todos os Artigos
+                </h2>
+                <p className="text-[var(--text-secondary)] mt-1">
+                  Explore todos os conteúdos educacionais ou filtre por categoria e nível.
+                </p>
+              </div>
+
+              {/* Search + Levels + Clear */}
+              <div className="flex items-center gap-3">
+                {/* Search input - always visible */}
+                <div className="relative">
+                  <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" />
+                  <input
+                    type="text"
+                    placeholder="Buscar artigos..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-48 pl-10 pr-8 py-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-light)] text-sm placeholder:text-[var(--text-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/50"
+                  />
+                  {searchTerm && (
+                    <button
+                      onClick={() => setSearchTerm('')}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] transition-colors"
+                    >
+                      <FontAwesomeIcon icon={faTimes} className="w-3 h-3" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Separator */}
+                <div className="w-px h-6 bg-[var(--border-light)]" />
+
+
+                {/* Level icons - 3 separate buttons using original FontAwesome icons */}
+                <button
+                  onClick={() => setSelectedLevel(selectedLevel === 'iniciante' ? '' : 'iniciante')}
+                  className={`p-2.5 rounded-xl border transition-all ${selectedLevel === 'iniciante' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500' : 'bg-[var(--bg-secondary)] border-[var(--border-light)] text-[var(--text-tertiary)] hover:text-emerald-500 hover:border-emerald-500/30'}`}
+                  title="Iniciante"
+                >
+                  <FontAwesomeIcon icon={getLevelIcon('iniciante')} className="w-4 h-4" />
+                </button>
+
+                <button
+                  onClick={() => setSelectedLevel(selectedLevel === 'intermediario' ? '' : 'intermediario')}
+                  className={`p-2.5 rounded-xl border transition-all ${selectedLevel === 'intermediario' ? 'bg-amber-500/10 border-amber-500/30 text-amber-500' : 'bg-[var(--bg-secondary)] border-[var(--border-light)] text-[var(--text-tertiary)] hover:text-amber-500 hover:border-amber-500/30'}`}
+                  title="Intermediário"
+                >
+                  <FontAwesomeIcon icon={getLevelIcon('intermediario')} className="w-4 h-4" />
+                </button>
+
+                <button
+                  onClick={() => setSelectedLevel(selectedLevel === 'avancado' ? '' : 'avancado')}
+                  className={`p-2.5 rounded-xl border transition-all ${selectedLevel === 'avancado' ? 'bg-red-500/10 border-red-500/30 text-red-500' : 'bg-[var(--bg-secondary)] border-[var(--border-light)] text-[var(--text-tertiary)] hover:text-red-500 hover:border-red-500/30'}`}
+                  title="Avançado"
+                >
+                  <FontAwesomeIcon icon={getLevelIcon('avancado')} className="w-4 h-4" />
+                </button>
+
+                {/* Clear level filter - only show when level active */}
+                {selectedLevel && (
+                  <>
+                    <div className="w-px h-6 bg-[var(--border-light)]" />
+                    <button
+                      onClick={() => setSelectedLevel('')}
+                      className="p-2.5 rounded-xl border bg-[var(--error)]/10 border-[var(--error)]/30 text-[var(--error)] hover:bg-[var(--error)]/20 transition-all"
+                      title="Limpar nível"
+                    >
+                      <FontAwesomeIcon icon={faTimes} className="w-4 h-4" />
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
 
             <div className="space-y-6">

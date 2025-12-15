@@ -10,7 +10,7 @@
 
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faSearch, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { useEducationFiltersOptional, categories, levels } from '@/contexts/EducationFilterContext';
 import type { SidebarModeProps, EducacaoModeConfig } from '../types';
@@ -51,7 +51,13 @@ export default function EducacaoMode({ onClose, config }: EducacaoModeProps) {
                             /* Todos os Artigos - Expandable with filters */
                             <>
                                 <button
-                                    onClick={toggleArtigos}
+                                    onClick={() => {
+                                        toggleArtigos();
+                                        const artigosElement = document.getElementById('artigos');
+                                        if (artigosElement) {
+                                            artigosElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                        }
+                                    }}
                                     className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-all"
                                 >
                                     <span className="font-semibold text-sm flex-1 text-left">{section.title}</span>
@@ -66,20 +72,6 @@ export default function EducacaoMode({ onClose, config }: EducacaoModeProps) {
                                     className={`overflow-hidden transition-all duration-300 ease-in-out ${artigosExpanded ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}
                                 >
                                     <div className="pl-4 pr-2 py-3 space-y-4">
-                                        {/* Search */}
-                                        {educationFilters && (
-                                            <div className="relative">
-                                                <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" />
-                                                <input
-                                                    type="text"
-                                                    placeholder="Buscar artigos..."
-                                                    value={educationFilters.searchTerm}
-                                                    onChange={(e) => educationFilters.setSearchTerm(e.target.value)}
-                                                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-light)] text-sm placeholder:text-[var(--text-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/50"
-                                                />
-                                            </div>
-                                        )}
-
                                         {/* Category Filter */}
                                         {educationFilters && (
                                             <div>
@@ -95,27 +87,6 @@ export default function EducacaoMode({ onClose, config }: EducacaoModeProps) {
                                                                 }`}
                                                         >
                                                             {cat.label}
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {/* Level Filter */}
-                                        {educationFilters && (
-                                            <div>
-                                                <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-tertiary)] mb-2">Nível</h3>
-                                                <div className="space-y-1">
-                                                    {levels.map((level) => (
-                                                        <button
-                                                            key={level.id}
-                                                            onClick={() => educationFilters.setSelectedLevel(educationFilters.selectedLevel === level.id ? '' : level.id)}
-                                                            className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${educationFilters.selectedLevel === level.id
-                                                                ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'
-                                                                : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]'
-                                                                }`}
-                                                        >
-                                                            {level.label}
                                                         </button>
                                                     ))}
                                                 </div>
