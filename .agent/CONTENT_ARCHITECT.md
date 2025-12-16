@@ -158,13 +158,48 @@ Proibido:
 
 ---
 
+## 🛠️ Integração com Dashboard de Criação
+
+O projeto possui um sistema completo de criação em `/dashboard/criar`:
+
+### Tipos de Conteúdo
+
+| Tipo | Estrutura | Referência |
+|------|-----------|------------|
+| **Notícia** | 6 seções H2 (Fato→Contexto→Impacto→Visão→Reflexão→Desafios) | `route.ts` |
+| **Educacional** | Intro→Conceito→Importância→Exemplos→Riscos→Conclusão + Quiz 5 perguntas | `route.ts` |
+| **Recurso** | 6 features, 6 security tips, 5 passos, 4 FAQ, 8 prós, 5 contras | `route.ts` |
+
+### Categorias Válidas
+
+```yaml
+news: [bitcoin, ethereum, solana, altcoins, defi, nfts, stablecoins, memecoins, layer2, gaming, metaverse, dao, web3, ai, privacidade, exchanges, mining, staking, airdrops, derivativos, hacks, institucional, regulacao, politica, cbdc, macroeconomia, adocao, tecnologia]
+
+educational: [blockchain, trading, defi, nfts, seguranca, desenvolvimento, wallets, exchanges]
+
+resource: [wallets, exchanges, browsers, defi, explorers, tools]
+```
+
+### Regras de Formatação do Sistema
+
+- **NUNCA** usar colchetes [] nos títulos
+- **NUNCA** usar H1 (#) no content — começar com H2
+- **SEMPRE** espaços ao redor de travessões ( — )
+- **SEMPRE** usar ícones emoji em features e security tips
+- **Excerpt/Description**: máximo 160 caracteres (SEO)
+
+---
+
 ```yaml
 @references:
   - _DNA.md
   - DESIGN_SYSTEM.md  # Para visual
   - workflows/AI-PRIMER.md
+  - app/api/chat-perplexity/route.ts  # System prompts de criação
+  - app/dashboard/criar-artigo/_lib/constants.ts  # Categorias e validações
 @seo-references:
   - https://developers.google.com/search/docs/essentials
   - https://schema.org/
   - https://www.w3.org/WAI/standards-guidelines/wcag/
 ```
+
