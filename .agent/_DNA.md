@@ -62,6 +62,12 @@ trust-level: MAXIMUM
   - Código legível por humanos E máquinas
   - Propósito > Otimização, Verdade > Performance
   - Autonomia do usuário > dependência da ferramenta
+
+@vibe-coding-principles:
+  - Gestão de Contexto: sempre fornecer referências de arquivos existentes
+  - Regra dos 70%: planejar estrutura antes de implementar detalhes
+  - Acompanhamento: observar IA em tempo real para detectar alucinações
+  - Domínio: se não consegue explicar o código, não entendeu o suficiente
 ```
 
 ---

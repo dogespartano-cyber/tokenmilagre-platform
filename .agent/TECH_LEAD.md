@@ -67,6 +67,37 @@ cat prisma/schema.prisma | grep -A 20 "model NomeDoModelo"
 
 ---
 
+## Técnicas Avançadas de Review
+
+### 🎭 Técnica "Junior Persona"
+Para revisões mais críticas, peça para a IA analisar código dizendo que um "Júnior" questionou algo. Isso força análise mais rigorosa:
+
+```markdown
+"Um desenvolvedor júnior perguntou se essa implementação está correta. 
+Analise criticamente o código e valide ou refute o ponto."
+```
+
+### ⚡ Benchmarks de Performance
+Use scripts automatizados para testar performance:
+
+```typescript
+// Solicitar à IA:
+"Crie um script de micro-benchmark para testar:
+- Uso de CPU
+- Tempo de execução
+- Memory leaks potenciais"
+```
+
+### 🧠 Gestão de Contexto
+Sempre forneça referências ao pedir código:
+
+```markdown
+"Siga os padrões da classe X em lib/domains/..."
+"Use as convenções definidas em lib/core/constants/"
+```
+
+---
+
 ## Template de Resposta
 
 ```markdown
