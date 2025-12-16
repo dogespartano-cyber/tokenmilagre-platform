@@ -59,11 +59,24 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
         const usedIds = new Set<string>();
 
         lines.forEach((line) => {
-            const h2Match = line.match(/^## (.+)$/);
-            const h3Match = line.match(/^### (.+)$/);
+            // Regex mais robusto permitindo espaços antes e depois dos #
+            const h2Match = line.match(/^\s*##\s+(.+)$/);
+            const h3Match = line.match(/^\s*###\s+(.+)$/);
 
             if (h2Match || h3Match) {
-                const text = (h2Match ? h2Match[1] : h3Match![1]).trim();
+                // Remove formatação Markdown básica (*, _, `) e Links para gerar o slug limpo igual ao Render
+                const rawText = (h2Match ? h2Match[1] : h3Match![1]).trim();
+
+                // 1. Remove imagens ![alt](url) -> alt
+                // 2. Remove links [text](url) -> text
+                // 3. Remove caracteres de formatação (*, _, `)
+                const cleanText = rawText
+                    .replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1')
+                    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+                    .replace(/[*_`]/g, '')
+                    .trim();
+
+                const text = cleanText;
                 const level = h2Match ? 2 : 3;
                 let id = slugify(text);
 
@@ -77,7 +90,9 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
                 }
 
                 usedIds.add(id);
-                headings.push({ id, text, level });
+                // Usamos cleanText também no display ou rawText? 
+                // Melhor usar cleanText para o display ficar limpo no menu também
+                headings.push({ id, text: cleanText, level });
             }
         });
 
@@ -173,6 +188,15 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
         }
         slugRegistry.current.set(id, 1);
         return id;
+    };
+
+    // Helper para extrair texto limpo de children complexos (ex: com itálico/negrito aninhado)
+    const extractTextFromNode = (node: any): string => {
+        if (typeof node === 'string') return node;
+        if (typeof node === 'number') return String(node);
+        if (Array.isArray(node)) return node.map(extractTextFromNode).join('');
+        if (node && typeof node === 'object' && 'props' in node) return extractTextFromNode(node.props.children);
+        return '';
     };
 
     return (
@@ -273,12 +297,12 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
                                 components={{
                                     h1: ({ children }) => <h1 className="sr-only">{children}</h1>,
                                     h2: ({ children }) => {
-                                        const text = String(children);
+                                        const text = extractTextFromNode(children);
                                         const id = getUniqueId(text);
                                         return <h2 id={id} className="scroll-mt-28">{children}</h2>;
                                     },
                                     h3: ({ children }) => {
-                                        const text = String(children);
+                                        const text = extractTextFromNode(children);
                                         const id = getUniqueId(text);
                                         return <h3 id={id} className="scroll-mt-28">{children}</h3>;
                                     },

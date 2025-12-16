@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useSidebar } from '@/contexts/SidebarContext';
-import { useEducationFiltersOptional, categories, levels } from '@/contexts/EducationFilterContext';
+import { useEducationFiltersOptional, categories } from '@/contexts/EducationFilterContext';
 import type { SidebarModeProps, EducacaoModeConfig } from '../types';
 
 interface EducacaoModeProps extends SidebarModeProps {
