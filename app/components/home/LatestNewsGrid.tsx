@@ -7,7 +7,7 @@
 
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNewspaper } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faNewspaper } from '@fortawesome/free-solid-svg-icons';
 import type { NewsItem } from './types';
 
 interface LatestNewsGridProps {

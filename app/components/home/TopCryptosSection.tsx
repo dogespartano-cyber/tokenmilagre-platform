@@ -1,6 +1,6 @@
 /**
  * @module home/TopCryptosSection
- * @description Seção Top 10 Criptomoedas para a Home - Design harmonioso
+ * @description Seção Top 10 Criptomoedas para a Home - Design de Tabela
  */
 
 'use client';
@@ -8,7 +8,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faSpinner, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { useCryptoData } from '@/lib/domains/crypto/hooks/useCryptoData';
 
 export function TopCryptosSection() {
@@ -36,71 +36,91 @@ export function TopCryptosSection() {
                 <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-primary)]">
                     Top 10 Criptomoedas
                 </h2>
-                <Link
-                    href="/criptomoedas"
-                    className="flex items-center gap-2 text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--brand-primary)] transition-colors"
-                >
-                    Ver Todas <FontAwesomeIcon icon={faArrowRight} className="text-xs" />
-                </Link>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                {top10.map((crypto) => (
-                    <Link
-                        key={crypto.id}
-                        href={`/criptomoedas?search=${crypto.symbol}`}
-                        className={`
-                            group relative overflow-hidden rounded-3xl
-                            bg-gradient-to-br from-gray-500/10 to-slate-500/5 border border-gray-500/20 
-                            hover:shadow-xl hover:shadow-gray-500/10
-                            p-4 flex flex-col items-center justify-center gap-3
-                            min-h-[140px]
-                            transition-all duration-300
-                        `}
-                    >
-                        {/* Rank Badge */}
-                        <div className="absolute top-2 left-2 text-xs font-bold text-[var(--text-tertiary)]">
-                            #{crypto.market_cap_rank}
-                        </div>
-
-                        {/* Logo */}
-                        <div className="w-10 h-10 relative">
-                            <Image
-                                src={crypto.image}
-                                alt={crypto.name}
-                                fill
-                                className="object-contain"
-                                sizes="40px"
-                            />
-                        </div>
-
-                        {/* Info */}
-                        <div className="text-center">
-                            <p className="font-bold text-sm text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors">
-                                {crypto.symbol.toUpperCase()}
-                            </p>
-                            <p className="text-xs text-[var(--text-secondary)]">
-                                ${crypto.current_price.toLocaleString('en-US', { maximumFractionDigits: 2 })}
-                            </p>
-                        </div>
-
-                        {/* Price Change */}
-                        <div className={`text-xs font-bold ${crypto.price_change_percentage_24h >= 0
-                                ? 'text-emerald-500'
-                                : 'text-red-500'
-                            }`}>
-                            {crypto.price_change_percentage_24h >= 0 ? '+' : ''}
-                            {crypto.price_change_percentage_24h?.toFixed(2)}%
-                        </div>
-
-                        {/* Decorative Gradient */}
-                        <div className={`
-                            absolute -bottom-10 -right-10 w-20 h-20 blur-[40px] rounded-full
-                            opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none
-                            bg-gray-500/10
-                        `} />
-                    </Link>
-                ))}
+            <div className="rounded-3xl border border-gray-500/20 overflow-hidden bg-gradient-to-br from-gray-500/5 to-slate-500/5 backdrop-blur-sm">
+                <div className="overflow-x-auto">
+                    <table className="w-full">
+                        <thead>
+                            <tr className="border-b" style={{ borderColor: 'var(--border-light)' }}>
+                                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>#</th>
+                                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Nome</th>
+                                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Preço</th>
+                                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>24h %</th>
+                                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider hidden md:table-cell" style={{ color: 'var(--text-secondary)' }}>Market Cap</th>
+                                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider hidden lg:table-cell" style={{ color: 'var(--text-secondary)' }}>Volume 24h</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {top10.map((crypto) => (
+                                <tr
+                                    key={crypto.id}
+                                    className="border-b last:border-0 transition-colors duration-200 hover:bg-white/5"
+                                    style={{ borderColor: 'var(--border-light)' }}
+                                >
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <span className="font-mono text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                                            {crypto.market_cap_rank}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <Link
+                                            href={`/criptomoedas/${crypto.id}`}
+                                            className="flex items-center gap-3 hover:opacity-80 transition-opacity group"
+                                        >
+                                            <div className="w-8 h-8 relative flex-shrink-0">
+                                                <Image
+                                                    src={crypto.image}
+                                                    alt={crypto.name}
+                                                    fill
+                                                    className="object-contain rounded-full"
+                                                    sizes="32px"
+                                                />
+                                            </div>
+                                            <div>
+                                                <p className="font-semibold text-sm group-hover:text-[var(--brand-primary)] transition-colors" style={{ color: 'var(--text-primary)' }}>
+                                                    {crypto.name}
+                                                </p>
+                                                <p className="text-xs uppercase" style={{ color: 'var(--text-tertiary)' }}>
+                                                    {crypto.symbol}
+                                                </p>
+                                            </div>
+                                        </Link>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <span className="font-semibold font-mono text-sm" style={{ color: 'var(--text-primary)' }}>
+                                            ${crypto.current_price.toLocaleString('en-US', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: crypto.current_price < 1 ? 6 : 2
+                                            })}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <div className="flex items-center gap-1.5">
+                                            <FontAwesomeIcon
+                                                icon={crypto.price_change_percentage_24h >= 0 ? faArrowUp : faArrowDown}
+                                                className={`w-3 h-3 ${crypto.price_change_percentage_24h >= 0 ? 'text-[#10B981]' : 'text-[#EF4444]'}`}
+                                            />
+                                            <span className={`font-semibold font-mono text-sm ${crypto.price_change_percentage_24h >= 0 ? 'text-[#10B981]' : 'text-[#EF4444]'}`}>
+                                                {Math.abs(crypto.price_change_percentage_24h).toFixed(2)}%
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap hidden md:table-cell">
+                                        <span className="font-mono text-sm" style={{ color: 'var(--text-secondary)' }}>
+                                            ${(crypto.market_cap / 1e9).toFixed(2)}B
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap hidden lg:table-cell">
+                                        <span className="font-mono text-sm" style={{ color: 'var(--text-secondary)' }}>
+                                            ${(crypto.total_volume / 1e9).toFixed(2)}B
+                                        </span>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

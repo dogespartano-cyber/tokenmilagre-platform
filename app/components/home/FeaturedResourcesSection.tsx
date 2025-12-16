@@ -23,12 +23,6 @@ export function FeaturedResourcesSection({ resources }: FeaturedResourcesSection
                 <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-primary)]">
                     Ferramentas Essenciais
                 </h2>
-                <Link
-                    href="/recursos"
-                    className="flex items-center gap-2 text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--brand-primary)] transition-colors"
-                >
-                    Ver Todas <FontAwesomeIcon icon={faArrowRight} className="text-xs" />
-                </Link>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
