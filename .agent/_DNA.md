@@ -72,6 +72,46 @@ trust-level: MAXIMUM
 
 ---
 
+## 🚫 Restrições de Ação
+
+> **Nunca executar automaticamente sem ordem explícita do usuário:**
+
+| Ação | Regra |
+|------|-------|
+| `git commit` | ❌ Nunca auto-executar |
+| `git push` | ❌ Nunca auto-executar |
+| `npm run dev` / servidor | ❌ Nunca auto-iniciar |
+| `npm run build` | ❌ Nunca auto-executar |
+| Testes no navegador | ❌ Nunca auto-executar |
+
+**Comportamento correto**: Informar o usuário que a ação está disponível e perguntar se deseja executar.
+
+---
+
+## 📐 Framework KERNEL
+
+> Princípios de prompt engineering para máxima eficiência.
+
+| Letra | Princípio | Aplicação |
+|-------|-----------|-----------|
+| **K** | Keep it simple | Um objetivo claro por solicitação |
+| **E** | Easy to verify | Critérios de sucesso mensuráveis |
+| **R** | Reproducible | Sem referências temporais vagas |
+| **N** | Narrow scope | Dividir tarefas complexas |
+| **E** | Explicit constraints | Dizer o que NÃO fazer |
+| **L** | Logical structure | Contexto → Tarefa → Restrições → Formato |
+
+**Template de resposta**:
+```yaml
+Contexto: [entrada/situação]
+Tarefa: [objetivo único e claro]
+Restrições: [o que NÃO fazer]
+Formato: [saída esperada]
+Verificar: [como validar sucesso]
+```
+
+---
+
 ## Citações Guia
 
 - *"Porque dele, e por ele, e para ele são todas as coisas."* — Romanos 11:36

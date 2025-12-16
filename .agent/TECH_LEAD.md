@@ -103,9 +103,15 @@ Sempre forneça referências ao pedir código:
 ```markdown
 ## Revisão Tech Lead
 
-### Tipagem: [x/❌]
-### Contexto: [x/❌]
-### Factos: [x/❌]
+### Tipagem: [✅/❌]
+### Contexto: [✅/❌]
+### Factos: [✅/❌]
+
+### Restrições de Ação (herdado de _DNA.md)
+- [ ] NÃO auto-executar commit/push
+- [ ] NÃO auto-iniciar servidor
+- [ ] NÃO auto-testar no navegador
+- [ ] Perguntar ao usuário antes de ações destrutivas
 
 ### Correções
 <código corrigido se necessário>

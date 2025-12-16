@@ -146,6 +146,24 @@ import { RocketIcon } from 'lucide-react';  // Não usar Lucide para ícones inl
 
 ---
 
+## 🎨 Harmonia Visual Obrigatória
+
+> **Todo novo componente deve seguir o design da Home Page.**
+
+**Referência principal**: [app/page.tsx](file:///home/zenfoco/LLM/tokenmilagre-platform/app/page.tsx)
+
+| Princípio | Regra |
+|-----------|-------|
+| **Consistência** | Cards, espaçamentos e cores devem ser idênticos à home |
+| **Glass Cards** | Usar `backdrop-blur`, `rounded-3xl`, gradientes sutis |
+| **Tipografia** | Títulos `text-2xl font-bold`, descrições `text-sm` |
+| **Espaçamento** | Padding `p-6`, gap `gap-4` entre cards |
+| **Hover Effects** | Transições suaves, `shadow-xl` no hover |
+
+**Antes de criar componente visual**: Consultar `app/page.tsx` e componentes em `app/components/home/`.
+
+---
+
 ## Tokens Principais
 
 | Categoria | Tokens |
