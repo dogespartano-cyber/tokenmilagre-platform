@@ -213,7 +213,7 @@ export function useHomeData(): UseHomeDataReturn {
             const data = await response.json();
 
             if (data.success && data.data && data.data.length > 0) {
-                const topResources = data.data.slice(0, 4).map((r: Record<string, unknown>) => ({
+                const topResources = data.data.slice(0, 6).map((r: Record<string, unknown>) => ({
                     name: r.name as string,
                     category: ((r.category as string).charAt(0).toUpperCase() + (r.category as string).slice(1)),
                     description: r.shortDescription as string,

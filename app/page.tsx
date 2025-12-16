@@ -31,7 +31,9 @@ import {
   QuickStartGrid,
   LatestNewsGrid,
   LearnCryptoSection,
+  FeaturedResourcesSection,
   PriceChartSection,
+  TopCryptosSection,
   LoadingSkeleton,
 } from './components/home';
 
@@ -47,7 +49,9 @@ const initialSections = [
   'quickstart',
   'news',
   'charts',
-  'education'
+  'topcryptos',
+  'education',
+  'resources'
 ];
 
 function SortableSection({ id, children }: { id: string, children: React.ReactNode }) {
@@ -93,7 +97,7 @@ function SortableSection({ id, children }: { id: string, children: React.ReactNo
 }
 
 export default function HomePage() {
-  const { marketData, news, education, dailyAnalysis, loading } = useHomeData();
+  const { marketData, news, education, resources, dailyAnalysis, loading } = useHomeData();
   const { fearGreed, gaugeValue } = useFearGreed();
 
   const [sections, setSections] = useState(initialSections);
@@ -176,8 +180,12 @@ export default function HomePage() {
         return <LatestNewsGrid news={news} />;
       case 'education':
         return <LearnCryptoSection education={education} />;
+      case 'resources':
+        return <FeaturedResourcesSection resources={resources} />;
       case 'charts':
         return <PriceChartSection />;
+      case 'topcryptos':
+        return <TopCryptosSection />;
       default:
         return null;
     }

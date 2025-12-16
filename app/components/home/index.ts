@@ -19,8 +19,10 @@ export { QuickStartGrid } from './QuickStartGrid';
 export { LatestNewsGrid } from './LatestNewsGrid';
 export { LearnCryptoSection } from './LearnCryptoSection';
 export { PriceChartSection } from './PriceChartSection';
+export { TopCryptosSection } from './TopCryptosSection';
 export { LoadingSkeleton } from './LoadingSkeleton';
 export { ZenithHeroHUD } from './ZenithHeroHUD';
 export { ZenithMarketTicker } from './ZenithMarketTicker';
+export { FeaturedResourcesSection } from './FeaturedResourcesSection';
 
 
