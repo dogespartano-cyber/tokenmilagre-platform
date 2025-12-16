@@ -116,6 +116,9 @@ SOLANA_ARCHITECT
 | [workflows/MANIFEST.agi.md](./workflows/MANIFEST.agi.md) | Missão e propósito |
 | [workflows/ARCHITECTURE.fractal.md](./workflows/ARCHITECTURE.fractal.md) | Filosofia fractal |
 | [workflows/TRANSPARENCY_POLICY.md](./workflows/TRANSPARENCY_POLICY.md) | Política ética do token |
+| [workflows/BACKLOG.md](./workflows/BACKLOG.md) | Tarefas pendentes |
+| [workflows/CHANGELOG.md](./workflows/CHANGELOG.md) | Histórico de sessões |
+| [workflows/IDEAS.md](./workflows/IDEAS.md) | Ideias para avaliar |
 
 ---
 

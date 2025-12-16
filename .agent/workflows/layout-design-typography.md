@@ -1,4 +1,7 @@
 ---
+type: workflow
+version: 1.0.0
+inherits: _DNA.md
 description: Guia de resolução de problemas de layout, tipografia e markdown no projeto
 ---
 

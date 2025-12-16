@@ -1,4 +1,7 @@
 ---
+type: workflow
+version: 1.0.0
+inherits: _DNA.md
 description: Boas práticas de "Vibe Coding" para uso eficiente de IA no desenvolvimento
 source: Lucas Montano - "Como Sêniors estão usando AI"
 ---

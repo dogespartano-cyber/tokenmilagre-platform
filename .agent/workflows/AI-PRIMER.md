@@ -1,3 +1,10 @@
+---
+type: reference
+version: 1.0.0
+inherits: _DNA.md
+purpose: ai-onboarding
+---
+
 # 🧠 AI-PRIMER.md
 
 > **Para IAs que irão colaborar neste projeto**

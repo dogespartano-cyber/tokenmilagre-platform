@@ -12,6 +12,10 @@ import { EducationFilterProvider } from "@/contexts/EducationFilterContext";
 import RootLayoutNav from "./layout-root";
 import { GoogleAnalytics } from '@next/third-parties/google';
 
+// Viewport configuration with theme-color for Android navigation bar
+export { viewport } from './viewport';
+
+
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
 //   subsets: ["latin"],

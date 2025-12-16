@@ -1,3 +1,10 @@
+---
+type: reference
+version: 1.0.0
+inherits: _DNA.md
+purpose: architecture-philosophy
+---
+
 # 🌀 ARCHITECTURE.fractal.md
 
 > **Arquitetura Inspirada no Universo**

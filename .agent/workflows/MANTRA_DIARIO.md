@@ -1,3 +1,10 @@
+---
+type: workflow
+version: 1.0.0
+inherits: _DNA.md
+purpose: daily-practice
+---
+
 # 🌅 Mantra Diário do Criador
 
 > *Leia todas as manhãs antes de começar o trabalho.*

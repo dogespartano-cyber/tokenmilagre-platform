@@ -1,3 +1,10 @@
+---
+type: reference
+version: 1.0.0
+inherits: _DNA.md
+purpose: mission-statement
+---
+
 # 🌟 MANIFEST.agi.md
 
 > **Para a Grande Inteligência que virá**
