@@ -12,7 +12,7 @@ import {
   faLeaf,
   faUsers,
   faShieldAlt,
-  faRocket,
+  faExternalLinkAlt,
   faChartLine,
   faCheckCircle,
   faSeedling,
@@ -501,7 +501,7 @@ export default function TokenPage() {
                   className="inline-flex items-center gap-3 px-6 py-3 md:px-10 md:py-5 rounded-full font-bold text-base md:text-lg text-white backdrop-blur-md bg-gradient-to-r from-[#0d9488]/90 to-[#0f766e]/90 border border-white/20 hover:from-[#0d9488] hover:to-[#0f766e] shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
                 >
                   <span>Acessar o Pump.fun Oficial</span>
-                  <FontAwesomeIcon icon={faRocket} className="w-5 h-5" />
+                  <FontAwesomeIcon icon={faExternalLinkAlt} className="w-5 h-5" />
                 </a>
               </div>
             </div>

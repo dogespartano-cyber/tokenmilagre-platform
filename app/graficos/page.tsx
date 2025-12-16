@@ -32,7 +32,7 @@ export default function GraficosPage() {
       sections: [
         { id: 'analyzer', title: 'Análise Técnica', icon: 'chart' },
         { id: 'macro', title: 'Macro & Money Flow', icon: 'globe' },
-        { id: 'heatmap', title: 'Mapa de Calor Cripto', icon: 'fire' },
+        { id: 'heatmap', title: 'Mapa de Calor Cripto', icon: 'chart' },
         { id: 'bubbles', title: 'Bolhas Cripto', icon: 'bubble' },
         { id: 'cta', title: 'Comunidade', icon: 'heart' },
       ]

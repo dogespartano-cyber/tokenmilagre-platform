@@ -1,9 +1,5 @@
 'use client';
 
-import {
-  BookOpen, Shield, FileQuestion, Search, Wallet, Coins, AlertTriangle,
-  TrendingUp, GraduationCap, Code, ChevronDown, ArrowRight
-} from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Script from 'next/script';
 import Link from 'next/link';
@@ -11,7 +7,11 @@ import { usePaginationData } from '@/lib/shared/hooks/usePaginationData';
 import Pagination from '@/components/shared/Pagination';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faArrowRight, faSearch, faTimes, faArrowUp, faFilter } from '@fortawesome/free-solid-svg-icons';
+import {
+  faClock, faArrowRight, faSearch, faTimes, faArrowUp, faFilter,
+  faBookOpen, faShield, faQuestionCircle, faWallet, faCoins, faExclamationTriangle,
+  faChartLine, faGraduationCap, faCode, faChevronDown
+} from '@fortawesome/free-solid-svg-icons';
 import { getLevelGradient, getLevelColor, getLevelIcon } from '@/lib/shared/utils/level-helpers';
 import { getCategoryIcon } from '@/lib/shared/utils/category-helpers';
 import TruthDetector from '@/components/education/TruthDetector';
@@ -152,17 +152,16 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
           <section id="comece-por-aqui" className="space-y-6 scroll-mt-24">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { icon: BookOpen, title: 'Comece pelo Básico', desc: 'Entenda o que é cripto e onde as pessoas mais erram', slug: 'fundamentos-cripto' },
-                { icon: Shield, title: 'Segurança Primeiro', desc: 'Seed phrase, golpes e hábitos que protegem você', slug: 'seguranca-primeiro' },
-                { icon: Wallet, title: 'Carteiras e Custódia', desc: 'Hot vs cold wallet, autocustódia e boas práticas', slug: 'carteiras-e-custodia' },
-                { icon: AlertTriangle, title: 'Golpes Comuns', desc: 'Phishing, airdrop falso, links maliciosos e aprovações', slug: 'golpes-comuns-cripto' },
+                { icon: faBookOpen, title: 'Comece pelo Básico', desc: 'Entenda o que é cripto e onde as pessoas mais erram', slug: 'fundamentos-cripto' },
+                { icon: faShield, title: 'Segurança Primeiro', desc: 'Seed phrase, golpes e hábitos que protegem você', slug: 'seguranca-primeiro' },
+                { icon: faWallet, title: 'Carteiras e Custódia', desc: 'Hot vs cold wallet, autocustódia e boas práticas', slug: 'carteiras-e-custodia' },
+                { icon: faExclamationTriangle, title: 'Golpes Comuns', desc: 'Phishing, airdrop falso, links maliciosos e aprovações', slug: 'golpes-comuns-cripto' },
               ].map((card, index) => {
-                const Icon = card.icon;
                 const cardContent = (
                   <div className="relative z-10">
                     {/* Icon Container */}
                     <div className="w-12 h-12 rounded-full flex items-center justify-center mb-5 bg-[var(--bg-page)] text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] group-hover:scale-110 transition-all duration-300">
-                      <Icon className="w-5 h-5" />
+                      <FontAwesomeIcon icon={card.icon} className="w-5 h-5" />
                     </div>
 
                     <h3 className="font-bold text-lg text-[var(--text-primary)] mb-2 group-hover:text-[var(--brand-primary)] transition-colors">
@@ -217,7 +216,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                     hover:border-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/10 hover:-translate-y-1"
               >
                 <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-emerald-500/10 text-emerald-500">
-                  <GraduationCap className="w-7 h-7" />
+                  <FontAwesomeIcon icon={faGraduationCap} className="w-7 h-7" />
                 </div>
                 <h3 className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">Iniciante</h3>
                 <p className="text-sm text-[var(--text-secondary)] mb-4">
@@ -238,7 +237,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                     hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/10 hover:-translate-y-1"
               >
                 <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-amber-500/10 text-amber-500">
-                  <TrendingUp className="w-7 h-7" />
+                  <FontAwesomeIcon icon={faChartLine} className="w-7 h-7" />
                 </div>
                 <h3 className="text-xl font-bold text-amber-600 dark:text-amber-400 mb-2">Intermediário</h3>
                 <p className="text-sm text-[var(--text-secondary)] mb-4">
@@ -259,7 +258,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                     hover:border-red-500/30 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1"
               >
                 <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-red-500/10 text-red-500">
-                  <Code className="w-7 h-7" />
+                  <FontAwesomeIcon icon={faCode} className="w-7 h-7" />
                 </div>
                 <h3 className="text-xl font-bold text-red-600 dark:text-red-400 mb-2">Avançado</h3>
                 <p className="text-sm text-[var(--text-secondary)] mb-4">
@@ -411,7 +410,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
                       {/* CTA */}
                       <div className="flex items-center text-sm font-bold text-[var(--brand-primary)] opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                        Ler artigo <ArrowRight className="w-4 h-4 ml-1" />
+                        Ler artigo <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 ml-1" />
                       </div>
                     </div>
                   </Link>
@@ -462,7 +461,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                 <details key={i} className="group p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-light)]">
                   <summary className="font-bold text-[var(--text-primary)] cursor-pointer list-none flex items-center justify-between">
                     {faq.q}
-                    <ChevronDown className="w-5 h-5 text-[var(--text-tertiary)] group-open:rotate-180 transition-transform" />
+                    <FontAwesomeIcon icon={faChevronDown} className="w-5 h-5 text-[var(--text-tertiary)] group-open:rotate-180 transition-transform" />
                   </summary>
                   <p className="mt-3 text-sm text-[var(--text-secondary)]">{faq.a}</p>
                 </details>
