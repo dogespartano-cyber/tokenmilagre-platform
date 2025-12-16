@@ -86,6 +86,78 @@ status: VERIFICADO | NÃO VERIFICADO
 
 ---
 
+## 📖 Storytelling + Story Selling
+
+> Narrativa ética que conecta, educa e transforma — sem manipular.
+
+### Frameworks de Narrativa
+
+| Framework | Estrutura | Quando Usar |
+|-----------|-----------|-------------|
+| **Jornada do Herói** | Mundo Comum → Chamado → Provação → Transformação → Retorno | Artigos longos, trilhas educacionais |
+| **PAS** | Problema → Agitação → Solução | Landing pages, CTAs diretos |
+| **AIDA** | Atenção → Interesse → Desejo → Ação | Headlines, emails, social media |
+| **Before-After-Bridge** | Antes (dor) → Depois (sonho) → Ponte (como chegar) | Cases, depoimentos, recursos |
+
+### Técnicas de Conexão Emocional
+
+1. **Gancho nos primeiros 7 segundos** — Pergunta provocativa, dado surpreendente ou história pessoal
+2. **Protagonista = Leitor** — O usuário é o herói, $MILAGRE é o mentor/guia
+3. **Tensão e Resolução** — Apresentar obstáculo antes da solução
+4. **Metáforas tangíveis** — Conceitos abstratos (blockchain) → imagens concretas (cofre digital)
+5. **Loop aberto** — Criar curiosidade que só se resolve lendo até o fim
+
+### Story Selling Ético
+
+```yaml
+Permitido:
+  - Mostrar transformação real de usuários (com consentimento)
+  - Usar emoção para EDUCAR, não para pressionar
+  - Criar urgência baseada em FATOS (deadline real, vagas limitadas reais)
+  - Conectar produto a valores genuínos do leitor
+
+Proibido:
+  - Fabricar escassez falsa ("só hoje!", se não for verdade)
+  - Explorar medo ou vergonha para forçar decisão
+  - Prometer resultados sem base verificável
+  - Usar gatilhos de culpa ou manipulação emocional
+```
+
+### Estrutura Narrativa para Conteúdo $MILAGRE
+
+```
+1. ABERTURA (Gancho)
+   └─ Pergunta, estatística chocante ou mini-história
+
+2. CONTEXTO (Mundo do Leitor)
+   └─ Validar a dor/desejo do leitor — "Você provavelmente já..."
+
+3. CONFLITO (O Problema Real)
+   └─ Nomear o inimigo (desinformação, golpes, complexidade)
+
+4. VIRADA (A Descoberta)
+   └─ Introduzir a solução/conceito de forma natural
+
+5. JORNADA (Como Funciona)
+   └─ Passo a passo educativo — estrutura fractal (O que → Por que → Como)
+
+6. PROVA (Credibilidade)
+   └─ Dados, fontes, cases reais (sempre verificados)
+
+7. CHAMADO (CTA)
+   └─ Ação clara, sem pressão — respeitar autonomia do leitor
+```
+
+### Checklist de Narrativa Ética
+
+- [ ] O leitor é tratado como protagonista inteligente?
+- [ ] A emoção serve para EDUCAR ou para PRESSIONAR?
+- [ ] Urgência é baseada em fatos reais?
+- [ ] Transformação prometida é realista e verificável?
+- [ ] O CTA respeita a autonomia do leitor?
+
+---
+
 ```yaml
 @references:
   - _DNA.md

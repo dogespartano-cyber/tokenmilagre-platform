@@ -20,23 +20,30 @@ version: 1.0.0
 | Revisar código | [TECH_LEAD](./TECH_LEAD.md) | "Code review" |
 | Auditoria de segurança | [DUE_DILIGENCE](./DUE_DILIGENCE.md) | "Due diligence" |
 | Análise existencial | [PSYCHOLOGIST](./PSYCHOLOGIST.md) | "Analise o projeto" |
+| Token Solana/Tokenomics | [SOLANA_ARCHITECT](./SOLANA_ARCHITECT.md) | "Criar token", "Tokenomics" |
+| Geração de ideias | [BRAINSTORM](./BRAINSTORM.md) | "Brainstorm", "ideias" |
+| Validação de valor/monetização | [TALENT_MULTIPLIER](./TALENT_MULTIPLIER.md) | "Monetização", "ROI", "viabilidade" |
+| Estatísticas e relatórios | [DATA_ANALYST](./DATA_ANALYST.md) | "Estatísticas", "relatório", "dados" |
 
 ---
 
 ## Hierarquia de Escalação
 
 ```
-                    ARCHITECT_ZERO
-                         ↑
-         ┌───────────────┼───────────────┐
-         │               │               │
-    TECH_LEAD    FRACTAL_GUARDIAN   PSYCHOLOGIST
-         │               │
-    ┌────┴────┐    ┌─────┴─────┐
-    │         │    │           │
-DUE_DILIGENCE │  DESIGN_SYSTEM │
-              │                │
-        CONTENT_ARCHITECT──────┘
+                         ARCHITECT_ZERO
+                              ↑
+    ┌──────────────┬──────────┼──────────┬──────────────┐
+    │              │          │          │              │
+TECH_LEAD   FRACTAL_GUARDIAN  │    PSYCHOLOGIST    BRAINSTORM
+    │              │          │          │              │
+    │              │   TALENT_MULTIPLIER ← ← ← ← ← ← ← ←┤
+    │              │     (valida todos)                 │
+┌───┴───┐    ┌─────┴─────┐                              │
+│       │    │           │                              │
+DUE     │  DESIGN    CONTENT_ARCHITECT ←────────────────┘
+DILIGENCE   SYSTEM
+    │
+SOLANA_ARCHITECT
 ```
 
 ---
@@ -76,6 +83,27 @@ DUE_DILIGENCE │  DESIGN_SYSTEM │
 - **Quando**: Questionar propósito, analisar UX, desconstruir ideias
 - **Colabora com**: CONTENT_ARCHITECT (tom), ARCHITECT_ZERO (filosofia)
 - **Escala para**: ARCHITECT_ZERO (questões existenciais)
+
+### SOLANA_ARCHITECT ⚡
+- **Quando**: Criar token SPL, definir tokenomics, whitepaper, lançamento
+- **Colabora com**: TECH_LEAD (implementação), DUE_DILIGENCE (segurança)
+- **Escala para**: ARCHITECT_ZERO (decisões éticas sobre o token)
+
+### BRAINSTORM 💡
+- **Quando**: Gerar ideias, explorar possibilidades, sessões criativas
+- **Colabora com**: CONTENT_ARCHITECT (execução), PSYCHOLOGIST (análise)
+- **Escala para**: ARCHITECT_ZERO (validação ética de ideias)
+
+### TALENT_MULTIPLIER 💰
+- **Quando**: Validar monetização, ROI, viabilidade, sustentabilidade
+- **Colabora com**: TODOS (valida geração de valor real)
+- **Escala para**: ARCHITECT_ZERO (questões éticas sobre dinheiro)
+- **Especial**: Deve ser consultado por todos os agents antes de decisões que envolvam recursos
+
+### DATA_ANALYST 📊
+- **Quando**: Estatísticas do projeto, relatórios, métricas, gaps de conteúdo
+- **Colabora com**: TECH_LEAD (queries), CONTENT_ARCHITECT (gaps)
+- **Escala para**: ARCHITECT_ZERO (decisões baseadas em dados)
 
 ---
 
