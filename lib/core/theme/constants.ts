@@ -31,6 +31,24 @@ export const THEME_STORAGE_KEY = 'theme';
 export const DEFAULT_THEME: Theme = 'dark';
 
 /**
+ * Chave usada no localStorage para persistir a profundidade do tema
+ * 
+ * @constant
+ * @type {string}
+ * @default 'theme-depth'
+ */
+export const DEPTH_STORAGE_KEY = 'theme-depth';
+
+/**
+ * Profundidade padrão (0%)
+ * 
+ * @constant
+ * @type {number}
+ * @default 0
+ */
+export const DEFAULT_DEPTH = 0;
+
+/**
  * Duração da animação de transição de tema em milissegundos
  * 
  * Controla quanto tempo a classe `.theme-transition` permanece ativa

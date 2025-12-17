@@ -33,4 +33,8 @@ export interface ThemeContextType {
     accent: ThemeAccent;
     /** Define variante de acento */
     setAccent: (accent: ThemeAccent) => void;
+    /** Profundidade do background (0-100) */
+    depth: number;
+    /** Define a profundidade do background */
+    setDepth: (depth: number) => void;
 }

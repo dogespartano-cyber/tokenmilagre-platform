@@ -137,7 +137,7 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
                 href={card.href}
                 className={`
                     group relative overflow-hidden rounded-3xl
-                    bg-gradient-to-br from-gray-500/10 to-slate-500/5 border border-gray-500/20 hover:shadow-xl hover:shadow-gray-500/10
+                    zenith-glass hover:shadow-xl hover:shadow-gray-500/10
                     p-6 flex flex-col justify-between
                     h-full min-h-[220px] select-none touch-manipulation
                 `}

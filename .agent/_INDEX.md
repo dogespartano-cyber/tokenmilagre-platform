@@ -1,6 +1,6 @@
 ---
 type: agent-registry
-version: 1.0.0
+version: 2.0.0
 ---
 
 # 📖 Índice de Agents $MILAGRE
@@ -13,97 +13,96 @@ version: 1.0.0
 
 | Preciso de... | Agent | Ativação |
 |---------------|-------|----------|
-| Validação filosófica/ética | [ARCHITECT_ZERO](./ARCHITECT_ZERO.md) | "Valide esta ideia" |
-| Criar conteúdo web | [CONTENT_ARCHITECT](./CONTENT_ARCHITECT.md) | "Crie artigo/página" |
-| Regras de design/tema | [DESIGN_SYSTEM](./DESIGN_SYSTEM.md) | "CSS/tema/cores" |
-| Validar arquitetura | [FRACTAL_GUARDIAN](./FRACTAL_GUARDIAN.md) | "Revisar estrutura" |
-| Revisar código | [TECH_LEAD](./TECH_LEAD.md) | "Code review" |
-| Auditoria de segurança | [DUE_DILIGENCE](./DUE_DILIGENCE.md) | "Due diligence" |
-| Análise existencial | [PSYCHOLOGIST](./PSYCHOLOGIST.md) | "Analise o projeto" |
-| Token Solana/Tokenomics | [SOLANA_ARCHITECT](./SOLANA_ARCHITECT.md) | "Criar token", "Tokenomics" |
-| Geração de ideias | [BRAINSTORM](./BRAINSTORM.md) | "Brainstorm", "ideias" |
-| Validação de valor/monetização | [TALENT_MULTIPLIER](./TALENT_MULTIPLIER.md) | "Monetização", "ROI", "viabilidade" |
-| Estatísticas e relatórios | [DATA_ANALYST](./DATA_ANALYST.md) | "Estatísticas", "relatório", "dados" |
+| Validação filosófica/ética | [ARQUITETO](./workflows/ARQUITETO-agent.md) | "Valide esta ideia" |
+| Criar conteúdo web | [CONTEUDO](./workflows/CONTEUDO-agent.md) | "Crie artigo/página" |
+| Regras de design/tema | [DESIGN](./workflows/DESIGN-agent.md) | "CSS/tema/cores" |
+| Validar arquitetura | [ESTRUTURA](./workflows/ESTRUTURA-agent.md) | "Revisar estrutura" |
+| Revisar código | [CODIGO](./workflows/CODIGO-agent.md) | "Code review" |
+| Auditoria de segurança | [SEGURANCA](./workflows/SEGURANCA-agent.md) | "Segurança", "auditoria" |
+| Análise crítica/UX | [ANALISTA](./workflows/ANALISTA-agent.md) | "Analise o projeto" |
+| Token Solana/Tokenomics | [TOKEN](./workflows/TOKEN-agent.md) | "Criar token", "Tokenomics" |
+| Geração de ideias | [IDEIAS](./workflows/IDEIAS-agent.md) | "Brainstorm", "ideias" |
+| Validação de valor/ROI | [VALOR](./workflows/VALOR-agent.md) | "Monetização", "ROI" |
+| Estatísticas e relatórios | [DADOS](./workflows/DADOS-agent.md) | "Estatísticas", "dados" |
 
 ---
 
 ## Hierarquia de Escalação
 
 ```
-                         ARCHITECT_ZERO
+                         ARQUITETO
                               ↑
     ┌──────────────┬──────────┼──────────┬──────────────┐
     │              │          │          │              │
-TECH_LEAD   FRACTAL_GUARDIAN  │    PSYCHOLOGIST    BRAINSTORM
+  CODIGO      ESTRUTURA       │      ANALISTA       IDEIAS
     │              │          │          │              │
-    │              │   TALENT_MULTIPLIER ← ← ← ← ← ← ← ←┤
+    │              │        VALOR ← ← ← ← ← ← ← ← ← ← ←┤
     │              │     (valida todos)                 │
 ┌───┴───┐    ┌─────┴─────┐                              │
 │       │    │           │                              │
-DUE     │  DESIGN    CONTENT_ARCHITECT ←────────────────┘
-DILIGENCE   SYSTEM
+SEGURANCA   DESIGN    CONTEUDO ←────────────────────────┘
     │
-SOLANA_ARCHITECT
+  TOKEN
 ```
 
 ---
 
 ## Quando Usar Cada Agent
 
-### ARCHITECT_ZERO 👁️
+### ARQUITETO 👁️
 - **Quando**: Decisões fundamentais, dúvidas éticas, validação de propósito
 - **Escala para**: Nenhum (é o topo da hierarquia)
 
-### CONTENT_ARCHITECT ✍️
+### CONTEUDO ✍️
 - **Quando**: Criar páginas, artigos, landing pages, microcopy
-- **Colabora com**: DESIGN_SYSTEM (visual), TECH_LEAD (implementação)
-- **Escala para**: ARCHITECT_ZERO (dúvidas éticas)
+- **Colabora com**: DESIGN (visual), CODIGO (implementação)
+- **Escala para**: ARQUITETO (dúvidas éticas)
 
-### DESIGN_SYSTEM 🎨
+### DESIGN 🎨
 - **Quando**: CSS, tokens, tema, cores, glassmorphism
-- **Colabora com**: CONTENT_ARCHITECT (visual de conteúdo)
-- **Escala para**: FRACTAL_GUARDIAN (consistência de padrões)
+- **Colabora com**: CONTEUDO (visual de conteúdo)
+- **Escala para**: ESTRUTURA (consistência de padrões)
 
-### FRACTAL_GUARDIAN 🌀
+### ESTRUTURA 🌀
 - **Quando**: Criar módulos, validar estrutura, revisar PRs grandes
-- **Colabora com**: TECH_LEAD (código), DESIGN_SYSTEM (padrões)
-- **Escala para**: ARCHITECT_ZERO (decisões filosóficas)
+- **Colabora com**: CODIGO (código), DESIGN (padrões)
+- **Escala para**: ARQUITETO (decisões filosóficas)
 
-### TECH_LEAD 🔍
+### CODIGO 🔍
 - **Quando**: Code review, tipagem, convenções, antes de commits
-- **Colabora com**: FRACTAL_GUARDIAN (estrutura), DUE_DILIGENCE (segurança)
-- **Escala para**: FRACTAL_GUARDIAN (questões arquiteturais)
+- **Colabora com**: ESTRUTURA (estrutura), SEGURANCA (segurança)
+- **Escala para**: ESTRUTURA (questões arquiteturais)
 
-### DUE_DILIGENCE 🔐
+### SEGURANCA 🔐
 - **Quando**: Auditar segurança, smart contracts, riscos
-- **Colabora com**: TECH_LEAD (código)
-- **Escala para**: ARCHITECT_ZERO (riscos éticos)
+- **Colabora com**: CODIGO (código)
+- **Escala para**: ARQUITETO (riscos éticos)
 
-### PSYCHOLOGIST 🧠
+### ANALISTA 🧠
 - **Quando**: Questionar propósito, analisar UX, desconstruir ideias
-- **Colabora com**: CONTENT_ARCHITECT (tom), ARCHITECT_ZERO (filosofia)
-- **Escala para**: ARCHITECT_ZERO (questões existenciais)
+- **Colabora com**: CONTEUDO (tom), ARQUITETO (filosofia)
+- **Escala para**: ARQUITETO (questões existenciais)
 
-### SOLANA_ARCHITECT ⚡
+### TOKEN ⚡
 - **Quando**: Criar token SPL, definir tokenomics, whitepaper, lançamento
-- **Colabora com**: TECH_LEAD (implementação), DUE_DILIGENCE (segurança)
-- **Escala para**: ARCHITECT_ZERO (decisões éticas sobre o token)
+- **Colabora com**: CODIGO (implementação), SEGURANCA (segurança)
+- **Escala para**: ARQUITETO (decisões éticas sobre o token)
 
-### BRAINSTORM 💡
+### IDEIAS 💡
 - **Quando**: Gerar ideias, explorar possibilidades, sessões criativas
-- **Colabora com**: CONTENT_ARCHITECT (execução), PSYCHOLOGIST (análise)
-- **Escala para**: ARCHITECT_ZERO (validação ética de ideias)
+- **Colabora com**: CONTEUDO (execução), ANALISTA (análise)
+- **Escala para**: ARQUITETO (validação ética de ideias)
 
-### TALENT_MULTIPLIER 💰
+### VALOR 💰
 - **Quando**: Validar monetização, ROI, viabilidade, sustentabilidade
 - **Colabora com**: TODOS (valida geração de valor real)
-- **Escala para**: ARCHITECT_ZERO (questões éticas sobre dinheiro)
-- **Especial**: Deve ser consultado por todos os agents antes de decisões que envolvam recursos
+- **Escala para**: ARQUITETO (questões éticas sobre dinheiro)
+- **Especial**: Deve ser consultado por todos antes de decisões que envolvam recursos
 
-### DATA_ANALYST 📊
+### DADOS 📊
 - **Quando**: Estatísticas do projeto, relatórios, métricas, gaps de conteúdo
-- **Colabora com**: TECH_LEAD (queries), CONTENT_ARCHITECT (gaps)
-- **Escala para**: ARCHITECT_ZERO (decisões baseadas em dados)
+- **Colabora com**: CODIGO (queries), CONTEUDO (gaps)
+- **Escala para**: ARQUITETO (decisões baseadas em dados)
 
 ---
 
@@ -111,14 +110,16 @@ SOLANA_ARCHITECT
 
 | Documento | Propósito |
 |-----------|-----------|
-| [_DNA.md](./_DNA.md) | Mantra e valores (herdado por todos) |
-| [workflows/AI-PRIMER.md](./workflows/AI-PRIMER.md) | Onboarding para IAs |
-| [workflows/MANIFEST.agi.md](./workflows/MANIFEST.agi.md) | Missão e propósito |
-| [workflows/ARCHITECTURE.fractal.md](./workflows/ARCHITECTURE.fractal.md) | Filosofia fractal |
-| [workflows/TRANSPARENCY_POLICY.md](./workflows/TRANSPARENCY_POLICY.md) | Política ética do token |
-| [workflows/BACKLOG.md](./workflows/BACKLOG.md) | Tarefas pendentes |
-| [workflows/CHANGELOG.md](./workflows/CHANGELOG.md) | Histórico de sessões |
-| [workflows/IDEAS.md](./workflows/IDEAS.md) | Ideias para avaliar |
+| [_DNA.md](./workflows/_DNA.md) | Mantra e valores (herdado por todos) |
+| [ONBOARDING](./workflows/ONBOARDING.md) | Onboarding para IAs |
+| [MANIFESTO](./workflows/MANIFESTO.md) | Missão e propósito |
+| [ARQUITETURA](./workflows/ARQUITETURA.md) | Filosofia fractal |
+| [TRANSPARENCIA](./workflows/TRANSPARENCIA.md) | Política ética do token |
+| [BACKLOG](./workflows/BACKLOG.md) | Tarefas pendentes |
+| [HISTORICO](./workflows/HISTORICO.md) | Histórico de sessões |
+| [MANTRA](./workflows/MANTRA.md) | Leitura diária |
+| [layout](./workflows/layout.md) | Guia de layout/tipografia |
+| [vibe](./workflows/vibe.md) | Boas práticas de vibe coding |
 
 ---
 

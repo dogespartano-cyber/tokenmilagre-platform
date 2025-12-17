@@ -32,8 +32,7 @@ export function FeaturedResourcesSection({ resources }: FeaturedResourcesSection
                         href={resource.url}
                         className={`
                             group relative overflow-hidden rounded-3xl
-                            bg-gradient-to-br from-gray-500/10 to-slate-500/5 border border-gray-500/20 
-                            hover:shadow-xl hover:shadow-gray-500/10
+                            zenith-glass
                             p-6 flex flex-col justify-between
                             h-full min-h-[180px]
                             transition-all duration-300
@@ -61,6 +60,7 @@ export function FeaturedResourcesSection({ resources }: FeaturedResourcesSection
 
                         {/* Decorative Gradient */}
                         <div className={`
+                            hidden dark:block
                             absolute -bottom-20 -right-20 w-40 h-40 blur-[60px] rounded-full
                             opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none
                             bg-gray-500/10

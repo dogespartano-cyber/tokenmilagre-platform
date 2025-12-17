@@ -123,9 +123,9 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
             case 'marketCap':
                 const isPositive = marketData.marketCapChange24h >= 0;
                 return (
-                    <div className={`group relative p-6 rounded-2xl border backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl cursor-default h-full flex flex-col justify-center min-h-[140px] ${isPositive
-                        ? 'bg-gradient-to-br from-green-500/10 to-emerald-500/5 border-green-500/20 hover:shadow-green-500/10'
-                        : 'bg-gradient-to-br from-red-500/10 to-rose-500/5 border-red-500/20 hover:shadow-red-500/10'
+                    <div className={`group relative p-6 rounded-2xl border dark:backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl cursor-default h-full flex flex-col justify-center min-h-[140px] ${isPositive
+                        ? 'bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-green-500/10 dark:to-emerald-500/5 border-green-200 dark:border-green-500/20 hover:shadow-green-500/10'
+                        : 'bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-red-500/10 dark:to-rose-500/5 border-red-200 dark:border-red-500/20 hover:shadow-red-500/10'
                         }`}>
                         {/* Glow */}
                         <div
@@ -137,8 +137,8 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className={`hidden lg:block p-2 rounded-xl transition-transform duration-300 group-hover:scale-110 ${isPositive
-                                ? 'bg-green-500/10 text-green-600 dark:text-green-400'
-                                : 'bg-red-500/10 text-red-600 dark:text-red-400'
+                                ? 'bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-400'
+                                : 'bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400'
                                 }`}>
                                 <FontAwesomeIcon icon={faChartLine} className="w-5 h-5" />
                             </div>
@@ -160,9 +160,9 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
             case 'volume':
                 const isPositiveVolume = (marketData.volumeChange24h || 0) >= 0;
                 return (
-                    <div className={`group relative p-6 rounded-2xl border backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl cursor-default h-full flex flex-col justify-center min-h-[140px] ${isPositiveVolume
-                        ? 'bg-gradient-to-br from-green-500/10 to-emerald-500/5 border-green-500/20 hover:shadow-green-500/10'
-                        : 'bg-gradient-to-br from-red-500/10 to-rose-500/5 border-red-500/20 hover:shadow-red-500/10'
+                    <div className={`group relative p-6 rounded-2xl border dark:backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl cursor-default h-full flex flex-col justify-center min-h-[140px] ${isPositiveVolume
+                        ? 'bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-green-500/10 dark:to-emerald-500/5 border-green-200 dark:border-green-500/20 hover:shadow-green-500/10'
+                        : 'bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-red-500/10 dark:to-rose-500/5 border-red-200 dark:border-red-500/20 hover:shadow-red-500/10'
                         }`}>
                         {/* Glow */}
                         <div
@@ -174,8 +174,8 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className={`hidden lg:block p-2 rounded-xl transition-transform duration-300 group-hover:scale-110 ${isPositiveVolume
-                                ? 'bg-green-500/10 text-green-600 dark:text-green-400'
-                                : 'bg-red-500/10 text-red-600 dark:text-red-400'
+                                ? 'bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-400'
+                                : 'bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400'
                                 }`}>
                                 <FontAwesomeIcon icon={faRightLeft} className="w-5 h-5 rotate-90" />
                             </div>
@@ -196,13 +196,13 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                 );
             case 'btcDom':
                 return (
-                    <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-orange-500/10 to-amber-500/5 border border-orange-500/20 backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/10 cursor-default h-full flex flex-col justify-center min-h-[140px]">
+                    <div className="group relative p-6 rounded-2xl bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-orange-500/10 dark:to-amber-500/5 border border-orange-200 dark:border-orange-500/20 dark:backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/10 cursor-default h-full flex flex-col justify-center min-h-[140px]">
                         {/* Glow */}
                         <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-orange-500 to-amber-500" style={{ boxShadow: '0 0 20px #f59e0b40' }} />
 
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
-                            <div className="hidden lg:block p-2 bg-orange-500/10 rounded-xl text-orange-600 dark:text-orange-400 transition-transform duration-300 group-hover:scale-110">
+                            <div className="hidden lg:block p-2 bg-orange-50 dark:bg-orange-500/10 rounded-xl text-orange-700 dark:text-orange-400 transition-transform duration-300 group-hover:scale-110">
                                 <TokenBTC className="w-5 h-5" variant="branded" />
                             </div>
                             <h3 className="font-bold text-orange-600 dark:text-orange-400 text-sm lg:text-base">Dominância BTC</h3>
@@ -221,13 +221,13 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                 );
             case 'ethDom':
                 return (
-                    <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/5 border border-indigo-500/20 backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/10 cursor-default h-full flex flex-col justify-center min-h-[140px]">
+                    <div className="group relative p-6 rounded-2xl bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-indigo-500/10 dark:to-purple-500/5 border border-indigo-200 dark:border-indigo-500/20 dark:backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/10 cursor-default h-full flex flex-col justify-center min-h-[140px]">
                         {/* Glow */}
                         <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-indigo-500 to-purple-500" style={{ boxShadow: '0 0 20px #6366f140' }} />
 
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
-                            <div className="hidden lg:block p-2 bg-indigo-500/10 rounded-xl text-indigo-600 dark:text-indigo-400 transition-transform duration-300 group-hover:scale-110">
+                            <div className="hidden lg:block p-2 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl text-indigo-700 dark:text-indigo-400 transition-transform duration-300 group-hover:scale-110">
                                 <TokenETH className="w-5 h-5" variant="branded" />
                             </div>
                             <h3 className="font-bold text-indigo-600 dark:text-indigo-400 text-sm lg:text-base">Dominância ETH</h3>

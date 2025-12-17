@@ -43,21 +43,21 @@ export function LatestNewsGrid({ news }: LatestNewsGridProps) {
                     const isFeatured = index === 0;
 
                     // Definir estilo baseado no sentimento
-                    let cardStyle = isFeatured ? 'zenith-featured' : 'zenith-card';
+                    let cardStyle = isFeatured ? 'bg-white dark:bg-zinc-900/50' : 'bg-white dark:bg-zinc-900/50';
                     let sentimentBorder = '';
                     let sentimentGlow = '';
 
                     if (item.sentiment === 'positive') {
-                        cardStyle = 'bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-green-500/20 hover:shadow-xl hover:shadow-green-500/10';
-                        sentimentBorder = 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20';
+                        cardStyle = 'bg-green-50 dark:bg-transparent dark:bg-gradient-to-br dark:from-green-500/10 dark:to-emerald-500/5 border border-green-200 dark:border-green-500/20 hover:shadow-xl hover:shadow-green-500/10';
+                        sentimentBorder = 'bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400 border-green-200 dark:border-green-500/20';
                         sentimentGlow = 'bg-green-500/20';
                     } else if (item.sentiment === 'negative') {
-                        cardStyle = 'bg-gradient-to-br from-red-500/10 to-rose-500/5 border border-red-500/20 hover:shadow-xl hover:shadow-red-500/10';
-                        sentimentBorder = 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20';
+                        cardStyle = 'bg-red-50 dark:bg-transparent dark:bg-gradient-to-br dark:from-red-500/10 dark:to-rose-500/5 border border-red-200 dark:border-red-500/20 hover:shadow-xl hover:shadow-red-500/10';
+                        sentimentBorder = 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400 border-red-200 dark:border-red-500/20';
                         sentimentGlow = 'bg-red-500/20';
                     } else if (item.sentiment === 'neutral') {
-                        cardStyle = 'bg-gradient-to-br from-yellow-500/10 to-amber-500/5 border border-yellow-500/20 hover:shadow-xl hover:shadow-yellow-500/10';
-                        sentimentBorder = 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border-yellow-500/20';
+                        cardStyle = 'bg-yellow-50 dark:bg-transparent dark:bg-gradient-to-br dark:from-yellow-500/10 dark:to-amber-500/5 border border-yellow-200 dark:border-yellow-500/20 hover:shadow-xl hover:shadow-yellow-500/10';
+                        sentimentBorder = 'bg-yellow-100 dark:bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-200 dark:border-yellow-500/20';
                         sentimentGlow = 'bg-yellow-500/20';
                     }
 

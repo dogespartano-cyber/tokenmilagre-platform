@@ -30,7 +30,7 @@ export function LearnCryptoSection({ education }: LearnCryptoSectionProps) {
                         href={`/educacao/${item.slug}`}
                         className={`
                             group relative overflow-hidden rounded-3xl
-                            bg-gradient-to-br from-gray-500/10 to-slate-500/5 border border-gray-500/20 
+                            bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-gray-500/10 dark:to-slate-500/5 border border-gray-200 dark:border-gray-500/20 
                             hover:shadow-xl hover:shadow-gray-500/10
                             p-6 flex flex-col justify-center
                             h-full min-h-[180px]
@@ -49,6 +49,7 @@ export function LearnCryptoSection({ education }: LearnCryptoSectionProps) {
 
                         {/* Decorative Gradient */}
                         <div className={`
+                            hidden dark:block
                             absolute -bottom-20 -right-20 w-40 h-40 blur-[60px] rounded-full
                             opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none
                             bg-gray-500/10

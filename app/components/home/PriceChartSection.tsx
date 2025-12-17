@@ -30,7 +30,7 @@ export function PriceChartSection() {
                 <h2 className="text-2xl font-bold text-[var(--text-primary)]">Gráfico de Preços</h2>
             </div>
 
-            <div className="glass-card rounded-2xl p-6 overflow-hidden">
+            <div className="bg-white dark:bg-white/5 dark:backdrop-blur-md rounded-2xl p-6 overflow-hidden border border-gray-200 dark:border-white/5">
                 <div className="flex items-center justify-end mb-6">
                     <div className="flex gap-2">
                         {cryptoOptions.map((option) => (
@@ -55,7 +55,7 @@ export function PriceChartSection() {
                 <div className="mt-6 flex justify-center lg:justify-end">
                     <Link
                         href="/graficos"
-                        className="glass-card inline-flex items-center gap-2 px-6 py-3 rounded-xl text-[var(--text-primary)] font-semibold transition-all duration-300 hover:scale-105 hover:border-[var(--brand-primary)] group"
+                        className="bg-white dark:bg-transparent dark:glass-card border border-gray-200 dark:border-transparent inline-flex items-center gap-2 px-6 py-3 rounded-xl text-[var(--text-primary)] font-semibold transition-all duration-300 hover:scale-105 hover:border-[var(--brand-primary)] group"
                     >
                         Ver Análise Técnica Completa
                         <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform text-[var(--brand-primary)]" />

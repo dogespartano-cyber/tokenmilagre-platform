@@ -12,7 +12,7 @@ import { useTheme } from '@/lib/core/theme';
 export default function CustomUserButton() {
     const { user, isLoaded } = useUser();
     const { signOut, openUserProfile } = useClerk();
-    const { theme, toggleTheme, mounted, setTheme, accent, setAccent } = useTheme();
+    const { theme, toggleTheme, mounted, setTheme, accent, setAccent, depth, setDepth } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -224,6 +224,29 @@ export default function CustomUserButton() {
                                         className={`w-7 h-7 rounded-full transition-all hover:scale-110 ring-offset-[var(--bg-modal)] ${accent === 'sunset' ? 'ring-2 ring-offset-2 ring-[#F97316]' : ''}`}
                                         style={{ background: 'linear-gradient(135deg, #FDBA74, #EA580C)' }}
                                         title="Copper (Orange)"
+                                    />
+                                </div>
+
+                                {/* Depth Slider */}
+                                <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--border-modal)' }}>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <p className="text-sm font-medium" style={{ color: 'var(--text-modal-muted)' }}>
+                                            Profundidade
+                                        </p>
+                                        <span className="text-xs font-mono" style={{ color: 'var(--text-modal-muted)' }}>
+                                            {depth}%
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="100"
+                                        value={depth}
+                                        onChange={(e) => setDepth(parseInt(e.target.value))}
+                                        className="w-full h-2 rounded-lg appearance-none cursor-pointer"
+                                        style={{
+                                            background: `linear-gradient(to right, var(--brand-primary) ${depth}%, var(--bg-modal-input) ${depth}%)`
+                                        }}
                                     />
                                 </div>
                             </div>

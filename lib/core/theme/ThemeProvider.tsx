@@ -29,6 +29,8 @@ import {
     THEME_EMOJIS,
     TOAST_DURATION,
     TOAST_POSITION,
+    DEFAULT_DEPTH,
+    DEPTH_STORAGE_KEY,
 } from './constants';
 
 /** Storage key for accent preference */
@@ -45,6 +47,8 @@ const ThemeContext = createContext<ThemeContextType>({
     setTheme: () => { },
     accent: DEFAULT_ACCENT,
     setAccent: () => { },
+    depth: DEFAULT_DEPTH,
+    setDepth: () => { },
 });
 
 
@@ -100,6 +104,19 @@ function applyAccentToDocument(accent: ThemeAccent): void {
     } else {
         root.setAttribute('data-accent', accent);
     }
+}
+
+/**
+ * Aplica a profundidade do tema (color mix)
+ * 
+ * @param depth - Valor de 0 a 100
+ * @internal
+ */
+function applyDepthToDocument(depth: number): void {
+    const root = document.documentElement;
+    // Usamos mix percentage para color-mix no CSS
+    const mixPercentage = Math.min(Math.max(depth, 0), 100);
+    root.style.setProperty('--theme-depth-mix', `${mixPercentage}%`);
 }
 
 /**
@@ -173,6 +190,7 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
     const [theme, setThemeState] = useState<Theme>(defaultTheme || DEFAULT_THEME);
     const [accent, setAccentState] = useState<ThemeAccent>(DEFAULT_ACCENT);
+    const [depth, setDepthState] = useState<number>(DEFAULT_DEPTH);
     const [mounted, setMounted] = useState(false);
     const [showToastState, setShowToastState] = useState(false);
     const toastRef = useRef<HTMLDivElement>(null);
@@ -204,6 +222,17 @@ export function ThemeProvider({
             if (savedAccent && ['default', 'ocean', 'forest', 'sunset', 'milagre'].includes(savedAccent)) {
                 setAccentState(savedAccent);
                 applyAccentToDocument(savedAccent);
+            }
+
+            // Load saved depth
+            const savedDepth = localStorage.getItem(DEPTH_STORAGE_KEY);
+            if (savedDepth) {
+                const depthValue = parseInt(savedDepth, 10);
+                if (!isNaN(depthValue)) {
+                    setDepthState(depthValue);
+                    applyDepthToDocument(depthValue);
+                    console.debug('[Theme] Depth restored:', depthValue);
+                }
             }
         } catch (e) {
             // localStorage não disponível (SSR, private mode, etc)
@@ -285,8 +314,20 @@ export function ThemeProvider({
         disableThemeTransition();
     }, []);
 
+    const setDepth = useCallback((newDepth: number) => {
+        console.log('[Theme] Setting depth:', newDepth);
+        setDepthState(newDepth);
+        applyDepthToDocument(newDepth);
+
+        try {
+            localStorage.setItem(DEPTH_STORAGE_KEY, String(newDepth));
+        } catch (e) {
+            console.warn('[ThemeProvider] Could not save depth to localStorage:', e);
+        }
+    }, []);
+
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme, mounted, setTheme, accent, setAccent }}>
+        <ThemeContext.Provider value={{ theme, toggleTheme, mounted, setTheme, accent, setAccent, depth, setDepth }}>
             {children}
 
             {/* Theme Change Toast */}

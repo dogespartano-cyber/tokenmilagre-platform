@@ -20478,7 +20478,7 @@ export namespace Prisma {
     address?: string | null
     city: string
     state: string
-    country?: string
+    country: string
     markerColor?: string
     markerIcon?: string | null
     createdAt?: Date | string
@@ -20494,7 +20494,7 @@ export namespace Prisma {
     address?: string | null
     city: string
     state: string
-    country?: string
+    country: string
     markerColor?: string
     markerIcon?: string | null
     createdAt?: Date | string
@@ -20539,7 +20539,7 @@ export namespace Prisma {
     address?: string | null
     city: string
     state: string
-    country?: string
+    country: string
     markerColor?: string
     markerIcon?: string | null
     createdAt?: Date | string
@@ -23482,7 +23482,7 @@ export namespace Prisma {
     address?: string | null
     city: string
     state: string
-    country?: string
+    country: string
     markerColor?: string
     markerIcon?: string | null
     createdAt?: Date | string
@@ -23496,7 +23496,7 @@ export namespace Prisma {
     address?: string | null
     city: string
     state: string
-    country?: string
+    country: string
     markerColor?: string
     markerIcon?: string | null
     createdAt?: Date | string
