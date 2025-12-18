@@ -60,7 +60,7 @@ export const DEFAULT_DEPTH = 0;
  * @see {@link enableThemeTransition}
  * @see {@link disableThemeTransition}
  */
-export const THEME_TRANSITION_DURATION = 300;
+export const THEME_TRANSITION_DURATION = 500;
 
 /**
  * Lista de todos os temas disponíveis no sistema

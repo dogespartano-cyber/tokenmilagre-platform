@@ -1,6 +1,6 @@
 /**
  * @module home/TopCryptosSection
- * @description Seção Top 10 Criptomoedas - Design "Floating Rows" (Linhas Flutuantes)
+ * @description Seção Top 10 Criptomoedas - Design "Unified Zenith Table" com Gráficos Sparkline
  */
 
 'use client';
@@ -11,19 +11,69 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faArrowUp, faArrowDown, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useCryptoData } from '@/lib/domains/crypto/hooks/useCryptoData';
 
+// --- Sparkline Component ---
+function SimpleSparkline({ data, isUp }: { data: number[]; isUp: boolean }) {
+    if (!data || data.length === 0) return null;
+
+    const width = 120;
+    const height = 40;
+    const min = Math.min(...data);
+    const max = Math.max(...data);
+    const range = max - min;
+
+    // Normalize data points to fit SVG size
+    const points = data.map((d, i) => {
+        const x = (i / (data.length - 1)) * width;
+        // Invert Y because SVG 0 is top
+        const y = height - ((d - min) / range) * height;
+        return `${x},${y}`;
+    }).join(' ');
+
+    const color = isUp ? '#10B981' : '#EF4444'; // Green-500 : Red-500 to match Tailwind vars
+
+    return (
+        <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} className="overflow-visible">
+            <polyline
+                points={points}
+                fill="none"
+                stroke={color}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                vectorEffect="non-scaling-stroke"
+            />
+        </svg>
+    );
+}
+
+// Helper for percent color
+const getPercentColor = (val: number) => {
+    if (val >= 0) return 'text-green-500';
+    return 'text-red-500';
+};
+
 export function TopCryptosSection() {
     const { data, loading } = useCryptoData();
 
     // Top 10 apenas
     const top10 = data.slice(0, 10);
 
+    // Grid Layout - New Density
+    // LG Desktop (12) : # (1) | Name (2) | Price (2) | 1h (1) | 24h (1) | 7d (1) | MCap (2) | Chart (2)
+    // MD Tablet (12)  : # (1) | Name (3) | Price (2) | 24h (2) | 7d (2) | Chart (2)
+    // Mobile (12)     : # (2) | Name (5) | Price (5)
+
+    const gridCols = "grid grid-cols-12 gap-4 px-6 items-center";
+
     if (loading && data.length === 0) {
         return (
             <div className="space-y-6">
-                <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-primary)]">
-                    Top 10 Criptomoedas
-                </h2>
-                <div className="flex items-center justify-center p-12 rounded-3xl bg-white dark:zenith-glass">
+                <div className="flex items-center justify-between px-2">
+                    <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-primary)]">
+                        Top 10 Criptomoedas
+                    </h2>
+                </div>
+                <div className="flex items-center justify-center p-20 rounded-3xl zenith-glass">
                     <FontAwesomeIcon icon={faSpinner} className="w-8 h-8 animate-spin text-[var(--brand-primary)]" />
                 </div>
             </div>
@@ -33,135 +83,143 @@ export function TopCryptosSection() {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between px-2">
-                <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-primary)]">
-                    Top 10 Criptomoedas
-                </h2>
+                <Link
+                    href="/criptomoedas"
+                    className="group inline-flex items-center gap-3 hover:opacity-80 transition-opacity w-fit"
+                    title="Ver Todas as Criptomoedas"
+                >
+                    <div className="w-8 h-8 rounded-full bg-[var(--brand-primary)]/10 flex items-center justify-center text-[var(--brand-primary)] group-hover:scale-110 transition-transform">
+                        <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />
+                    </div>
+                    <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors">
+                        Top 10 Criptomoedas
+                    </h2>
+                </Link>
             </div>
 
-            {/* Grid Header labels (Desktop only, subtle) */}
-            <div className="hidden md:grid grid-cols-12 gap-4 px-6 text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)] select-none">
-                <div className="col-span-1">#</div>
-                <div className="col-span-4 lg:col-span-3">Nome</div>
-                <div className="col-span-3 lg:col-span-2 text-right">Preço</div>
-                <div className="col-span-2 text-right">24h %</div>
-                <div className="col-span-2 text-right hidden lg:block">Market Cap</div>
-                <div className="col-span-2 text-right hidden lg:block">Volume 24h</div>
-            </div>
+            {/* Unified Glass Table Container */}
+            <div className="rounded-3xl zenith-glass overflow-hidden flex flex-col shadow-lg">
 
-            {/* Rows Stack */}
-            <div className="space-y-3">
-                {top10.map((crypto) => (
-                    <Link
-                        key={crypto.id}
-                        href={`/criptomoedas/${crypto.id}`}
-                        className="
-                            group block
-                            relative overflow-hidden rounded-2xl
-                            bg-white dark:bg-zinc-900/40 dark:backdrop-blur-md
-                            border border-zinc-100 dark:border-white/5
-                            transition-all duration-300
-                            hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20
-                            hover:border-zinc-200 dark:hover:border-white/10
-                        "
-                    >
-                        {/* Interactive row content */}
-                        <div className="grid grid-cols-12 gap-4 items-center p-4">
+                {/* Table Header */}
+                <div className={`${gridCols} py-4 border-b border-[var(--border-light)] bg-[var(--bg-tertiary)]/30 text-xs font-semibold uppercase tracking-wide text-[var(--text-tertiary)] select-none`}>
+                    <div className="col-span-2 md:col-span-1 text-center md:text-left">#</div>
+                    <div className="col-span-5 md:col-span-3 lg:col-span-2">Nome</div>
+                    <div className="col-span-5 md:col-span-2 lg:col-span-2 text-right">Preço</div>
 
-                            {/* Rank */}
-                            <div className="col-span-2 md:col-span-1 font-mono text-sm text-[var(--text-tertiary)] group-hover:text-[var(--brand-primary)] transition-colors">
-                                {crypto.market_cap_rank}
-                            </div>
+                    {/* 1h - Desktop Only */}
+                    <div className="col-span-1 text-right hidden lg:block">1h</div>
 
-                            {/* Name & Icon */}
-                            <div className="col-span-6 md:col-span-4 lg:col-span-3 flex items-center gap-3">
-                                <div className="w-8 h-8 relative flex-shrink-0 transition-transform group-hover:scale-110">
-                                    <Image
-                                        src={crypto.image}
-                                        alt={crypto.name}
-                                        fill
-                                        className="object-contain rounded-full"
-                                        sizes="32px"
-                                    />
+                    {/* 24h - Tablet/Desktop */}
+                    <div className="col-span-2 md:col-span-2 lg:col-span-1 text-right hidden md:block">24h</div>
+
+                    {/* 7d - Tablet/Desktop */}
+                    <div className="col-span-2 md:col-span-2 lg:col-span-1 text-right hidden md:block">7d</div>
+
+                    {/* MCap - Desktop Only */}
+                    <div className="col-span-2 text-right hidden lg:block">M.Cap</div>
+
+                    {/* Chart - Tablet/Desktop */}
+                    <div className="col-span-2 md:col-span-2 text-right hidden md:block">Últimos 7 dias</div>
+                </div>
+
+                {/* Rows Container */}
+                <div className="divide-y divide-[var(--border-light)]">
+                    {top10.map((crypto) => {
+                        const priceData = crypto.sparkline_in_7d?.price || [];
+                        const isUp = priceData.length > 1 ? priceData[priceData.length - 1] >= priceData[0] : true;
+                        const change1h = crypto.price_change_percentage_1h_in_currency || 0;
+                        const change24h = crypto.price_change_percentage_24h || 0;
+                        const change7d = crypto.price_change_percentage_7d_in_currency || 0;
+
+                        return (
+                            <Link
+                                key={crypto.id}
+                                href={`/criptomoedas/${crypto.id}`}
+                                className={`
+                                    ${gridCols} py-4
+                                    group
+                                    hover:bg-[var(--brand-primary)]/5 
+                                    transition-colors duration-200
+                                `}
+                            >
+                                {/* Rank */}
+                                <div className="col-span-2 md:col-span-1 font-mono text-sm text-[var(--text-tertiary)] text-center md:text-left group-hover:text-[var(--brand-primary)] transition-colors">
+                                    {crypto.market_cap_rank}
                                 </div>
-                                <div>
-                                    <p className="font-bold text-sm text-[var(--text-primary)] leading-tight">
-                                        {crypto.name}
-                                    </p>
-                                    <p className="text-xs text-[var(--text-tertiary)] uppercase font-medium">
-                                        {crypto.symbol}
-                                    </p>
+
+                                {/* Name & Icon */}
+                                <div className="col-span-5 md:col-span-3 lg:col-span-2 flex items-center gap-3">
+                                    <div className="w-8 h-8 relative flex-shrink-0 transition-transform group-hover:scale-110">
+                                        <Image
+                                            src={crypto.image}
+                                            alt={crypto.name}
+                                            fill
+                                            className="object-contain rounded-full"
+                                            sizes="32px"
+                                        />
+                                    </div>
+                                    <div className="min-w-0">
+                                        <p className="font-bold text-sm text-[var(--text-primary)] leading-tight truncate">
+                                            {crypto.name}
+                                        </p>
+                                        <p className="text-xs text-[var(--text-tertiary)] uppercase font-medium">
+                                            {crypto.symbol}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Price (Right aligned on mobile to match expected reading pattern) */}
-                            <div className="col-span-4 md:col-span-3 lg:col-span-2 text-right">
-                                <span className="font-bold font-mono text-sm text-[var(--text-primary)]">
-                                    ${crypto.current_price.toLocaleString('en-US', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: crypto.current_price < 1 ? 6 : 2
-                                    })}
-                                </span>
-                            </div>
+                                {/* Price */}
+                                <div className="col-span-5 md:col-span-2 lg:col-span-2 text-right">
+                                    <span className="font-bold font-mono text-sm text-[var(--text-primary)]">
+                                        ${crypto.current_price.toLocaleString('en-US', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: crypto.current_price < 1 ? 6 : 2
+                                        })}
+                                    </span>
+                                    {/* Mobile Only: 24h indicator below price */}
+                                    <div className="md:hidden flex justify-end items-center gap-1 mt-1">
+                                        <FontAwesomeIcon
+                                            icon={change24h >= 0 ? faArrowUp : faArrowDown}
+                                            className={`w-2 h-2 ${change24h >= 0 ? 'text-green-500' : 'text-red-500'}`}
+                                        />
+                                        <span className={`text-xs font-mono font-medium ${change24h >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                            {Math.abs(change24h).toFixed(2)}%
+                                        </span>
+                                    </div>
+                                </div>
 
-                            {/* 24h Change */}
-                            <div className="col-span-4 md:col-span-2 text-right hidden md:block">
-                                <div className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-lg ${crypto.price_change_percentage_24h >= 0
-                                    ? 'bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-400'
-                                    : 'bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400'
-                                    }`}>
-                                    <FontAwesomeIcon
-                                        icon={crypto.price_change_percentage_24h >= 0 ? faArrowUp : faArrowDown}
-                                        className="w-3 h-3"
-                                    />
-                                    <span className="font-bold font-mono text-xs">
-                                        {Math.abs(crypto.price_change_percentage_24h).toFixed(2)}%
+                                {/* 1h (LG) */}
+                                <div className={`col-span-1 text-right hidden lg:block font-mono text-sm font-medium ${getPercentColor(change1h)}`}>
+                                    {change1h > 0 ? '+' : ''}{change1h.toFixed(1)}%
+                                </div>
+
+                                {/* 24h (MD/LG) */}
+                                <div className={`col-span-2 md:col-span-2 lg:col-span-1 text-right hidden md:block font-mono text-sm font-medium ${getPercentColor(change24h)}`}>
+                                    {change24h > 0 ? '+' : ''}{change24h.toFixed(1)}%
+                                </div>
+
+                                {/* 7d (MD/LG) */}
+                                <div className={`col-span-2 md:col-span-2 lg:col-span-1 text-right hidden md:block font-mono text-sm font-medium ${getPercentColor(change7d)}`}>
+                                    {change7d > 0 ? '+' : ''}{change7d.toFixed(1)}%
+                                </div>
+
+                                {/* Market Cap (LG) */}
+                                <div className="col-span-2 text-right hidden lg:block">
+                                    <span className="font-mono text-sm text-[var(--text-secondary)]">
+                                        ${(crypto.market_cap / 1e9).toFixed(2)}B
                                     </span>
                                 </div>
-                            </div>
 
-                            {/* Mobile 24h Change (Visible only on small screens, below price maybe? or absolute? 
-                                Actually, in the grid above, mobile takes 2+6+4=12 cols. 
-                                Rank(2) + Name(6) + Price(4). 
-                                Where does 24h go on mobile?
-                                Let's put it under price or name? 
-                                Usually separate col is best.
-                                Let's adjust mobile grid: Rank(1) Name(5) Price(3) 24h(3)?
-                             */}
-                            <div className="col-span-12 md:hidden flex justify-end mt-2 gap-4 border-t border-zinc-50 dark:border-white/5 pt-2">
-                                <span className="text-xs text-[var(--text-tertiary)]">24h:</span>
-                                <div className={`flex items-center gap-1 ${crypto.price_change_percentage_24h >= 0 ? 'text-green-600' : 'text-red-600'
-                                    }`}>
-                                    <FontAwesomeIcon
-                                        icon={crypto.price_change_percentage_24h >= 0 ? faArrowUp : faArrowDown}
-                                        className="w-3 h-3"
-                                    />
-                                    <span className="font-bold font-mono text-xs">
-                                        {Math.abs(crypto.price_change_percentage_24h).toFixed(2)}%
-                                    </span>
+                                {/* Sparkline Chart */}
+                                <div className="col-span-2 md:col-span-2 lg:col-span-2 flex justify-end items-center hidden md:flex h-12">
+                                    <SimpleSparkline data={priceData} isUp={isUp} />
                                 </div>
-                            </div>
 
-
-                            {/* Market Cap */}
-                            <div className="col-span-2 text-right hidden lg:block">
-                                <span className="font-mono text-sm text-[var(--text-secondary)]">
-                                    ${(crypto.market_cap / 1e9).toFixed(2)}B
-                                </span>
-                            </div>
-
-                            {/* Volume */}
-                            <div className="col-span-2 text-right hidden lg:block">
-                                <span className="font-mono text-sm text-[var(--text-secondary)]">
-                                    ${(crypto.total_volume / 1e9).toFixed(2)}B
-                                </span>
-                            </div>
-
-                        </div>
-                    </Link>
-                ))}
+                            </Link>
+                        );
+                    })}
+                </div>
             </div>
-
-
         </div>
     );
 }

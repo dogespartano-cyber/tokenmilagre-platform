@@ -20,9 +20,18 @@ export function FeaturedResourcesSection({ resources }: FeaturedResourcesSection
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-primary)]">
-                    Ferramentas Essenciais
-                </h2>
+                <Link
+                    href="/recursos"
+                    className="group inline-flex items-center gap-3 hover:opacity-80 transition-opacity w-fit"
+                    title="Ver Todas as Ferramentas"
+                >
+                    <div className="w-8 h-8 rounded-full bg-[var(--brand-primary)]/10 flex items-center justify-center text-[var(--brand-primary)] group-hover:scale-110 transition-transform">
+                        <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />
+                    </div>
+                    <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors">
+                        Ferramentas Essenciais
+                    </h2>
+                </Link>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -123,13 +123,8 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
         zIndex: isDragging ? 50 : 'auto',
     };
 
-    // Unified Neutral Theme
-    const neutralTheme = {
-        bg: 'bg-gray-500/10',
-        text: 'text-gray-400',
-        icon: 'text-gray-400 bg-gray-500/10',
-        border: 'border-gray-500/20'
-    };
+    // Get theme colors based on card.theme (default to success if missing)
+    const cardTheme = themeMap[card.theme as keyof typeof themeMap] || themeMap.success;
 
     return (
         <div ref={setNodeRef} style={style} {...attributes} {...listeners} className="h-full">
@@ -137,7 +132,7 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
                 href={card.href}
                 className={`
                     group relative overflow-hidden rounded-3xl
-                    zenith-glass hover:shadow-xl hover:shadow-gray-500/10
+                    zenith-glass hover:shadow-xl hover:shadow-[var(--brand-primary)]/5
                     p-6 flex flex-col justify-between
                     h-full min-h-[220px] select-none touch-manipulation
                 `}
@@ -154,7 +149,7 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
                         <div className={`
                             w-12 h-12 rounded-2xl flex items-center justify-center
                             text-xl transition-all duration-300
-                            ${neutralTheme.icon}
+                            ${cardTheme.icon}
                             shadow-lg
                         `}>
                             <FontAwesomeIcon icon={card.icon} />
@@ -164,7 +159,7 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
                             w-8 h-8 rounded-full flex items-center justify-center
                             border opacity-0 group-hover:opacity-100
                             transition-all duration-300 transform translate-x-4 group-hover:translate-x-0
-                            border-gray-500/20 text-gray-400
+                            border-[var(--border-light)] text-[var(--text-tertiary)]
                         `}>
                             <FontAwesomeIcon icon={faArrowRight} className="text-sm" />
                         </div>
@@ -184,7 +179,7 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
                 <div className={`
                     absolute -bottom-20 -right-20 w-40 h-40 blur-[60px] rounded-full
                     opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none
-                    bg-gray-500/10
+                    ${cardTheme.bg}
                 `} />
             </Link>
         </div>
@@ -262,7 +257,18 @@ export function QuickStartGrid() {
         return (
             <section className="py-8">
                 <div className="mb-8">
-                    <h2 className="text-2xl font-bold text-[var(--text-primary)]">Comece por Aqui</h2>
+                    <Link
+                        href="/comece-aqui"
+                        className="group inline-flex items-center gap-3 hover:opacity-80 transition-opacity w-fit"
+                        title="Ir para Comece Aqui"
+                    >
+                        <div className="w-8 h-8 rounded-full bg-[var(--brand-primary)]/10 flex items-center justify-center text-[var(--brand-primary)] group-hover:scale-110 transition-transform">
+                            <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />
+                        </div>
+                        <h2 className="text-2xl font-bold text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors">
+                            Comece por Aqui
+                        </h2>
+                    </Link>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4">
                     {initialCards.map((card) => (
@@ -280,9 +286,18 @@ export function QuickStartGrid() {
     return (
         <section className="py-8">
             <div className="mb-8">
-                <h2 className="text-2xl font-bold text-[var(--text-primary)]">
-                    Comece por Aqui
-                </h2>
+                <Link
+                    href="/comece-aqui"
+                    className="group inline-flex items-center gap-3 hover:opacity-80 transition-opacity w-fit"
+                    title="Ir para Comece Aqui"
+                >
+                    <div className="w-8 h-8 rounded-full bg-[var(--brand-primary)]/10 flex items-center justify-center text-[var(--brand-primary)] group-hover:scale-110 transition-transform">
+                        <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors">
+                        Comece por Aqui
+                    </h2>
+                </Link>
             </div>
 
             <DndContext

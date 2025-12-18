@@ -2,12 +2,38 @@
 type: changelog
 version: 1.0.0
 inherits: _DNA.md
-updated: 2025-12-16
+updated: 2025-12-18
 ---
 
 # 📜 Changelog $MILAGRE
 
 > Histórico de sessões de trabalho concluídas.
+
+---
+
+
+## 2025-12-18 — Refino da Home e Correção do Ticker Mobile
+
+### Seção "Top 10 Criptomoedas"
+- Layout de grid refinado para 12 colunas (melhor responsividade)
+- Adicionados indicadores de variação de preço 1h, 24h e 7d
+- Header padronizado com link interativo "Ver todas"
+
+### Correção: Ticker Mobile Estático
+- **Problema:** Preços no carrossel mobile do `ZenithMarketTicker` eram estáticos (hardcoded)
+- **Solução:**
+  - Integrado hook `useCryptoData`
+  - Implementada renderização dinâmica para BTC, ETH, XRP, BNB, SOL
+  - Adicionado estado de carregamento
+
+### Otimização de API (Rate Limiting)
+- Refatorado `useCryptoData` para padrão **Singleton**
+- Implementado **Throttling Global** de 60s entre requisições
+- Deduplicação de chamadas simultâneas para evitar erro 429 da CoinGecko
+
+### Melhorias Visuais
+- Padronizados headers de todas as seções (Link+Arrow pattern)
+- Transição de tema suavizada para 0.5s (cubic-bezier)
 
 ---
 

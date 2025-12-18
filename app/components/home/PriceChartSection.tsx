@@ -27,7 +27,18 @@ export function PriceChartSection() {
     return (
         <section className="py-8">
             <div className="mb-8">
-                <h2 className="text-2xl font-bold text-[var(--text-primary)]">Gráfico de Preços</h2>
+                <Link
+                    href="/graficos"
+                    className="group inline-flex items-center gap-3 hover:opacity-80 transition-opacity w-fit"
+                    title="Ver Análise Técnica Completa"
+                >
+                    <div className="w-8 h-8 rounded-full bg-[var(--brand-primary)]/10 flex items-center justify-center text-[var(--brand-primary)] group-hover:scale-110 transition-transform">
+                        <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors">
+                        Gráfico de Preços
+                    </h2>
+                </Link>
             </div>
 
             <div className="bg-white dark:bg-white/5 dark:backdrop-blur-md rounded-2xl p-6 overflow-hidden border border-gray-200 dark:border-white/5">
@@ -52,15 +63,7 @@ export function PriceChartSection() {
                     <LightweightChart symbol={chartSymbol} />
                 </div>
 
-                <div className="mt-6 flex justify-center lg:justify-end">
-                    <Link
-                        href="/graficos"
-                        className="bg-white dark:bg-transparent dark:glass-card border border-gray-200 dark:border-transparent inline-flex items-center gap-2 px-6 py-3 rounded-xl text-[var(--text-primary)] font-semibold transition-all duration-300 hover:scale-105 hover:border-[var(--brand-primary)] group"
-                    >
-                        Ver Análise Técnica Completa
-                        <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 group-hover:translate-x-1 transition-transform text-[var(--brand-primary)]" />
-                    </Link>
-                </div>
+
             </div>
         </section>
     );

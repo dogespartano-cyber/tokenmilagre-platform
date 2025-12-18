@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faRightLeft } from '@fortawesome/free-solid-svg-icons';
 import { TokenBTC, TokenETH } from '@token-icons/react';
 import { FearGreedGauge } from './FearGreedGauge';
+import { useCryptoData } from '@/lib/domains/crypto/hooks/useCryptoData';
 import {
     DndContext,
     closestCenter,
@@ -67,6 +68,10 @@ function SortableCard({ id, children }: { id: string, children: React.ReactNode 
 export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: MarketDataProps) {
     const [items, setItems] = useState(initialItems);
     const [mounted, setMounted] = useState(false);
+
+    // Fetch real crypto data for the mobile ticker
+    const { data: cryptoData } = useCryptoData();
+
     const STORAGE_KEY = 'zenith_ticker_order';
 
     useEffect(() => {
@@ -115,6 +120,12 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
             });
         }
     };
+
+    // Filter coins for mobile ticker: BTC, ETH, XRP, BNB, SOL
+    const targetCoins = ['btc', 'eth', 'xrp', 'bnb', 'sol'];
+    const mobileTickerCoins = targetCoins.map(symbol =>
+        cryptoData?.find(c => c.symbol.toLowerCase() === symbol)
+    ).filter(Boolean);
 
     if (!marketData) return null;
 
@@ -268,28 +279,28 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                 <div className="lg:hidden space-y-6 mb-2">
                     <FearGreedGauge fearGreed={fearGreed} gaugeValue={gaugeValue} />
 
-                    {/* Mobile Price Ticker */}
+                    {/* Mobile Price Ticker - DYNAMIC DATA */}
                     <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-2 pb-4 border-b border-[var(--border-light)]">
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-[var(--text-secondary)]">BTC</span>
-                            <span className="text-sm font-bold text-[var(--text-primary)]">$90,234</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-[var(--text-secondary)]">ETH</span>
-                            <span className="text-sm font-bold text-[var(--text-primary)]">$3,208</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-[var(--text-secondary)]">XRP</span>
-                            <span className="text-sm font-bold text-[var(--text-primary)]">$2.01</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-[var(--text-secondary)]">BNB</span>
-                            <span className="text-sm font-bold text-[var(--text-primary)]">$871</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-[var(--text-secondary)]">SOL</span>
-                            <span className="text-sm font-bold text-[var(--text-primary)]">$131</span>
-                        </div>
+                        {mobileTickerCoins && mobileTickerCoins.length > 0 ? (
+                            mobileTickerCoins.map((coin) => (
+                                <div key={coin!.id} className="flex items-center gap-2">
+                                    <span className="text-sm font-bold text-[var(--text-secondary)]">
+                                        {coin!.symbol.toUpperCase()}
+                                    </span>
+                                    <span className="text-sm font-bold text-[var(--text-primary)]">
+                                        ${coin!.current_price.toLocaleString('en-US', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: coin!.current_price < 1 ? 4 : 2
+                                        })}
+                                    </span>
+                                </div>
+                            ))
+                        ) : (
+                            // Loading State / Fallback
+                            <div className="w-full flex justify-center py-2 text-xs text-[var(--text-tertiary)]">
+                                Carregando preços...
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
