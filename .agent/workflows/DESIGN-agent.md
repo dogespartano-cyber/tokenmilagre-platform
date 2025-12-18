@@ -146,6 +146,49 @@ import { RocketIcon } from 'lucide-react';  // Não usar Lucide para ícones inl
 
 ---
 
+
+---
+
+## 🎨 Componente Padrão: ZenithCard
+
+> **Obrigatório para todos os cards de conteúdo da Home Page.**
+
+### Conceito
+O `ZenithCard` é a fonte única de verdade para design de cards. Ele substitui divs customizados e garante consistência de bordas, fundos e interações.
+
+### Regras de Uso
+| Prop | Valor | Descrição |
+|------|-------|-----------|
+| **Fundo** | `bg-white` (Light) | Modo claro sempre usa fundo branco limpo. |
+| **Borda** | `#e6f4f3` (Base) | Para variantes de navegação (Teal/QuickStart). |
+| **Interação** | `hoverEffect` | `true` para links/botões; `false` para containers de dados (Tabelas/Gráficos). |
+| **Hover** | Ambient Glow | Brilho suave interno + realce de borda. Sem movimento de translação. |
+
+### Variantes Semânticas
+| Variante | Contexto | Cor de Destaque |
+|----------|----------|-----------------|
+| **`teal`** | **Navegação** (QuickStart, Top 10*) | Teal (#0D9488) |
+| **`violet`** | **Educação** (Entenda Cripto) | Violeta |
+| **`slate`** | **Ferramentas** (Recursos) | Slate/Cinza |
+| **`success`** | Mercado/Positivo | Verde |
+| **`danger`** | Mercado/Negativo | Vermelho |
+
+> (*) O card Top 10 usa `variant="teal"` com `hoverEffect={false}` para manter a identidade visual sem conflitar com o hover da tabela.
+
+### Exemplo de Implementação
+```typescript
+<ZenithCard 
+  as={Link} 
+  href="/educacao" 
+  variant="violet" 
+  hoverEffect={true}
+>
+  Conteúdo...
+</ZenithCard>
+```
+
+---
+
 ## 🎨 Harmonia Visual Obrigatória
 
 > **Todo novo componente deve seguir o design da Home Page.**
