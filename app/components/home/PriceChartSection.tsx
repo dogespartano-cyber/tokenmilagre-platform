@@ -10,6 +10,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { ZenithCard } from '../ui/ZenithCard';
 
 const LightweightChart = dynamic(() => import('@/components/crypto/LightweightChart'), {
     ssr: false,
@@ -41,7 +42,7 @@ export function PriceChartSection() {
                 </Link>
             </div>
 
-            <div className="bg-white dark:bg-white/5 dark:backdrop-blur-md rounded-2xl p-6 overflow-hidden border border-gray-200 dark:border-white/5">
+            <ZenithCard variant="default" className="h-[500px] flex flex-col">
                 <div className="flex items-center justify-end mb-6">
                     <div className="flex gap-2">
                         {cryptoOptions.map((option) => (
@@ -64,7 +65,7 @@ export function PriceChartSection() {
                 </div>
 
 
-            </div>
+            </ZenithCard>
         </section>
     );
 }

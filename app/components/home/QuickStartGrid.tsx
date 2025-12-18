@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faGraduationCap, faNewspaper, faArrowRight, faCoins, faTools } from '@fortawesome/free-solid-svg-icons';
+import { ZenithCard } from '../ui/ZenithCard';
 import {
     DndContext,
     closestCenter,
@@ -39,7 +40,7 @@ const initialCards = [
         title: 'Comece Aqui',
         description: 'Seu ponto de partida no mundo cripto',
         bgImage: '/assets/zenith/card-invest.webp',
-        theme: 'success'
+        theme: 'teal'
     },
     {
         id: 'news',
@@ -48,7 +49,7 @@ const initialCards = [
         title: 'Notícias do Mercado',
         description: 'Atualizações em tempo real',
         bgImage: '/assets/zenith/card-news.webp',
-        theme: 'yellow'
+        theme: 'teal'
     },
     {
         id: 'charts',
@@ -57,7 +58,7 @@ const initialCards = [
         title: 'Gráficos Avançados',
         description: 'Análise técnica profissional',
         bgImage: '/assets/zenith/card-charts.webp',
-        theme: 'red'
+        theme: 'teal'
     },
     {
         id: 'tools',
@@ -66,7 +67,7 @@ const initialCards = [
         title: 'Ferramentas',
         description: 'Calculadoras e recursos',
         bgImage: '/assets/zenith/card-tools.webp',
-        theme: 'cyan'
+        theme: 'teal'
     },
     {
         id: 'crypto',
@@ -74,36 +75,11 @@ const initialCards = [
         icon: faCoins,
         title: 'Criptomoedas',
         description: 'Explore o mercado',
-        theme: 'success'
+        theme: 'teal'
     }
 ];
 
-const themeMap = {
-    success: {
-        bg: 'bg-[var(--success-bg)]',
-        text: 'text-[var(--success)]',
-        icon: 'text-[var(--success)] bg-[var(--success)]/10',
-        border: 'border-[var(--success)]/20'
-    },
-    yellow: {
-        bg: 'bg-yellow-500/10',
-        text: 'text-yellow-500',
-        icon: 'text-yellow-500 bg-yellow-500/10',
-        border: 'border-yellow-500/20'
-    },
-    red: {
-        bg: 'bg-red-500/10',
-        text: 'text-red-500',
-        icon: 'text-red-500 bg-red-500/10',
-        border: 'border-red-500/20'
-    },
-    cyan: {
-        bg: 'bg-cyan-500/10',
-        text: 'text-cyan-500',
-        icon: 'text-cyan-500 bg-cyan-500/10',
-        border: 'border-cyan-500/20'
-    }
-};
+
 
 // --- Sortable Item Component ---
 function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }) {
@@ -123,21 +99,45 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
         zIndex: isDragging ? 50 : 'auto',
     };
 
-    // Get theme colors based on card.theme (default to success if missing)
-    const cardTheme = themeMap[card.theme as keyof typeof themeMap] || themeMap.success;
+    // Map legacy themes to ZenithCard variants
+    const variantMap: Record<string, 'success' | 'warning' | 'danger' | 'info' | 'orange' | 'indigo' | 'teal'> = {
+        success: 'success',
+        yellow: 'warning',
+        warning: 'warning',
+        red: 'danger',
+        cyan: 'info',
+        info: 'info',
+        orange: 'orange',
+        indigo: 'indigo',
+        teal: 'teal'
+    };
+
+    // Default to 'success' if theme is missing or invalid, though strict typing should prevent this
+    const variant = variantMap[card.theme as string] || 'success';
+
+    // Icon colors still need to be handled. We can map them based on variant or keep local logic.
+    // Let's keep a simple map for inner content colors to match the variant
+    const colorClasses = {
+        success: 'text-[var(--success)] bg-[var(--success)]/10',
+        warning: 'text-yellow-500 bg-yellow-500/10',
+        danger: 'text-red-500 bg-red-500/10',
+        info: 'text-cyan-500 bg-cyan-500/10',
+        orange: 'text-orange-500 bg-orange-500/10',
+        indigo: 'text-indigo-500 bg-indigo-500/10',
+        teal: 'text-teal-600 bg-teal-500/10'
+    };
+
+    const iconClass = colorClasses[variant] || colorClasses.success;
 
     return (
         <div ref={setNodeRef} style={style} {...attributes} {...listeners} className="h-full">
-            <Link
+            <ZenithCard
+                as={Link}
                 href={card.href}
-                className={`
-                    group relative overflow-hidden rounded-3xl
-                    zenith-glass hover:shadow-xl hover:shadow-[var(--brand-primary)]/5
-                    p-6 flex flex-col justify-between
-                    h-full min-h-[220px] select-none touch-manipulation
-                `}
+                variant={variant}
+                className="h-full min-h-[220px] flex flex-col justify-between select-none touch-manipulation"
                 style={{ pointerEvents: isDragging ? 'none' : 'auto' }}
-                onClick={(e) => {
+                onClick={(e: React.MouseEvent) => {
                     if (isDragging) {
                         e.preventDefault();
                     }
@@ -149,7 +149,7 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
                         <div className={`
                             w-12 h-12 rounded-2xl flex items-center justify-center
                             text-xl transition-all duration-300
-                            ${cardTheme.icon}
+                            ${iconClass}
                             shadow-lg
                         `}>
                             <FontAwesomeIcon icon={card.icon} />
@@ -175,13 +175,10 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
                     </div>
                 </div>
 
-                {/* Decorative Gradient */}
-                <div className={`
-                    absolute -bottom-20 -right-20 w-40 h-40 blur-[60px] rounded-full
-                    opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none
-                    ${cardTheme.bg}
-                `} />
-            </Link>
+                {/* Decorative Gradient handled by ZenithCard variants mostly, but we can keep extra blob if needed. 
+                    ZenithCard has its own glows, so let's try without the extra blob first for cleanliness. 
+                */}
+            </ZenithCard>
         </div>
     );
 }

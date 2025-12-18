@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt, faCheckCircle, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import type { ResourceItem } from './types';
+import { ZenithCard } from '../ui/ZenithCard';
 
 interface FeaturedResourcesSectionProps {
     resources: ResourceItem[];
@@ -36,13 +37,13 @@ export function FeaturedResourcesSection({ resources }: FeaturedResourcesSection
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {resources.map((resource, index) => (
-                    <Link
+                    <ZenithCard
+                        as={Link}
                         key={index}
                         href={resource.url}
+                        variant="teal"
                         className={`
-                            group relative overflow-hidden rounded-3xl
-                            zenith-glass
-                            p-6 flex flex-col justify-between
+                            flex flex-col justify-between
                             h-full min-h-[180px]
                             transition-all duration-300
                         `}
@@ -74,7 +75,7 @@ export function FeaturedResourcesSection({ resources }: FeaturedResourcesSection
                             opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none
                             bg-gray-500/10
                         `} />
-                    </Link>
+                    </ZenithCard>
                 ))}
             </div>
         </div>

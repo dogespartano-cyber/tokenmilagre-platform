@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faNewspaper } from '@fortawesome/free-solid-svg-icons';
 import type { NewsItem } from './types';
+import { ZenithCard } from '../ui/ZenithCard';
 
 interface LatestNewsGridProps {
     news: NewsItem[];
@@ -51,37 +52,41 @@ export function LatestNewsGrid({ news }: LatestNewsGridProps) {
                 {news.map((item, index) => {
                     const isFeatured = index === 0;
 
-                    // Definir estilo baseado no sentimento
-                    let cardStyle = isFeatured ? 'bg-white dark:bg-zinc-900/50' : 'bg-white dark:bg-zinc-900/50';
+                    // Mapeamento de variantes baseado no sentimento
+                    const variantMap: Record<string, 'success' | 'danger' | 'warning' | 'default'> = {
+                        positive: 'success',
+                        negative: 'danger',
+                        neutral: 'warning',
+                    };
+                    const variant = variantMap[item.sentiment] || 'default';
+
+                    // Estilos de badge internos (podem ser movidos para componente separado no futuro)
                     let sentimentBorder = '';
                     let sentimentGlow = '';
 
                     if (item.sentiment === 'positive') {
-                        cardStyle = 'bg-green-50 dark:bg-transparent dark:bg-gradient-to-br dark:from-green-500/10 dark:to-emerald-500/5 border border-green-200 dark:border-green-500/20 hover:shadow-xl hover:shadow-green-500/10';
                         sentimentBorder = 'bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400 border-green-200 dark:border-green-500/20';
                         sentimentGlow = 'bg-green-500/20';
                     } else if (item.sentiment === 'negative') {
-                        cardStyle = 'bg-red-50 dark:bg-transparent dark:bg-gradient-to-br dark:from-red-500/10 dark:to-rose-500/5 border border-red-200 dark:border-red-500/20 hover:shadow-xl hover:shadow-red-500/10';
                         sentimentBorder = 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400 border-red-200 dark:border-red-500/20';
                         sentimentGlow = 'bg-red-500/20';
                     } else if (item.sentiment === 'neutral') {
-                        cardStyle = 'bg-yellow-50 dark:bg-transparent dark:bg-gradient-to-br dark:from-yellow-500/10 dark:to-amber-500/5 border border-yellow-200 dark:border-yellow-500/20 hover:shadow-xl hover:shadow-yellow-500/10';
                         sentimentBorder = 'bg-yellow-100 dark:bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-200 dark:border-yellow-500/20';
                         sentimentGlow = 'bg-yellow-500/20';
                     }
 
                     return (
-                        <Link
+                        <ZenithCard
                             key={item.id}
+                            as={Link}
                             href={`/noticias/${item.slug || item.id}`}
+                            variant={variant}
                             className={`
-                                group relative rounded-3xl overflow-hidden transition-all duration-300
                                 ${isFeatured ? 'md:col-span-2 lg:col-span-2 min-h-[300px]' : 'min-h-[240px]'}
-                                ${cardStyle}
                             `}
                         >
                             {/* Inner padding container */}
-                            <div className={`${isFeatured ? 'p-8' : 'p-6'} h-full flex flex-col justify-between relative z-10`}>
+                            <div className={`${isFeatured ? 'p-2' : ''} h-full flex flex-col justify-between relative z-10`}>
                                 <div className="flex items-start justify-between mb-4">
                                     <div className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wide border ${(item.sentiment === 'positive' || item.sentiment === 'negative' || item.sentiment === 'neutral')
                                         ? sentimentBorder
@@ -113,7 +118,7 @@ export function LatestNewsGrid({ news }: LatestNewsGridProps) {
                                 <div className={`absolute -bottom-20 -right-20 w-64 h-64 blur-[80px] rounded-full pointer-events-none ${(item.sentiment === 'positive' || item.sentiment === 'negative' || item.sentiment === 'neutral') ? sentimentGlow : 'bg-[var(--brand-primary)]/10'
                                     }`} />
                             )}
-                        </Link>
+                        </ZenithCard>
                     )
                 })}
             </div>

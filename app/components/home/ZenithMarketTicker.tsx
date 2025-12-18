@@ -4,6 +4,7 @@ import { faChartLine, faRightLeft } from '@fortawesome/free-solid-svg-icons';
 import { TokenBTC, TokenETH } from '@token-icons/react';
 import { FearGreedGauge } from './FearGreedGauge';
 import { useCryptoData } from '@/lib/domains/crypto/hooks/useCryptoData';
+import { ZenithCard } from '../ui/ZenithCard';
 import {
     DndContext,
     closestCenter,
@@ -134,17 +135,7 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
             case 'marketCap':
                 const isPositive = marketData.marketCapChange24h >= 0;
                 return (
-                    <div className={`group relative p-6 rounded-2xl border dark:backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl cursor-default h-full flex flex-col justify-center min-h-[140px] ${isPositive
-                        ? 'bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-green-500/10 dark:to-emerald-500/5 border-green-200 dark:border-green-500/20 hover:shadow-green-500/10'
-                        : 'bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-red-500/10 dark:to-rose-500/5 border-red-200 dark:border-red-500/20 hover:shadow-red-500/10'
-                        }`}>
-                        {/* Glow */}
-                        <div
-                            className={`absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r ${isPositive ? 'from-green-500 to-emerald-500' : 'from-red-500 to-rose-500'
-                                }`}
-                            style={{ boxShadow: isPositive ? '0 0 20px #10b98140' : '0 0 20px #ef444440' }}
-                        />
-
+                    <ZenithCard variant={isPositive ? 'success' : 'danger'} className="h-full flex flex-col justify-center min-h-[140px]">
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className={`hidden lg:block p-2 rounded-xl transition-transform duration-300 group-hover:scale-110 ${isPositive
@@ -166,22 +157,12 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                         <span className={`text-xs font-bold ${isPositive ? 'text-[var(--success)]' : 'text-[var(--error)]'} flex items-center gap-1`}>
                             {isPositive ? '▲' : '▼'} {Math.abs(marketData.marketCapChange24h).toFixed(1)}%
                         </span>
-                    </div>
+                    </ZenithCard>
                 );
             case 'volume':
                 const isPositiveVolume = (marketData.volumeChange24h || 0) >= 0;
                 return (
-                    <div className={`group relative p-6 rounded-2xl border dark:backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl cursor-default h-full flex flex-col justify-center min-h-[140px] ${isPositiveVolume
-                        ? 'bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-green-500/10 dark:to-emerald-500/5 border-green-200 dark:border-green-500/20 hover:shadow-green-500/10'
-                        : 'bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-red-500/10 dark:to-rose-500/5 border-red-200 dark:border-red-500/20 hover:shadow-red-500/10'
-                        }`}>
-                        {/* Glow */}
-                        <div
-                            className={`absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r ${isPositiveVolume ? 'from-green-500 to-emerald-500' : 'from-red-500 to-rose-500'
-                                }`}
-                            style={{ boxShadow: isPositiveVolume ? '0 0 20px #10b98140' : '0 0 20px #ef444440' }}
-                        />
-
+                    <ZenithCard variant={isPositiveVolume ? 'success' : 'danger'} className="h-full flex flex-col justify-center min-h-[140px]">
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className={`hidden lg:block p-2 rounded-xl transition-transform duration-300 group-hover:scale-110 ${isPositiveVolume
@@ -199,18 +180,12 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                             <p className="text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight">{formatNumber(marketData.totalVolume)}</p>
                         </div>
 
-                        {/* Footer */}
-                        <span className={`text-xs font-bold ${isPositiveVolume ? 'text-[var(--success)]' : 'text-[var(--error)]'} flex items-center gap-1`}>
-                            {isPositiveVolume ? '▲' : '▼'} {Math.abs(marketData.volumeChange24h || 0).toFixed(1)}%
-                        </span>
-                    </div>
+
+                    </ZenithCard>
                 );
             case 'btcDom':
                 return (
-                    <div className="group relative p-6 rounded-2xl bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-orange-500/10 dark:to-amber-500/5 border border-orange-200 dark:border-orange-500/20 dark:backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/10 cursor-default h-full flex flex-col justify-center min-h-[140px]">
-                        {/* Glow */}
-                        <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-orange-500 to-amber-500" style={{ boxShadow: '0 0 20px #f59e0b40' }} />
-
+                    <ZenithCard variant="orange" className="h-full flex flex-col justify-center min-h-[140px]">
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className="hidden lg:block p-2 bg-orange-50 dark:bg-orange-500/10 rounded-xl text-orange-700 dark:text-orange-400 transition-transform duration-300 group-hover:scale-110">
@@ -228,14 +203,11 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                         <div className="w-full bg-[var(--bg-tertiary)] h-1 rounded-full overflow-hidden mt-2">
                             <div className="bg-orange-500 h-full rounded-full transition-all duration-1000" style={{ width: `${marketData.btcDominance}%` }} />
                         </div>
-                    </div>
+                    </ZenithCard>
                 );
             case 'ethDom':
                 return (
-                    <div className="group relative p-6 rounded-2xl bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-indigo-500/10 dark:to-purple-500/5 border border-indigo-200 dark:border-indigo-500/20 dark:backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/10 cursor-default h-full flex flex-col justify-center min-h-[140px]">
-                        {/* Glow */}
-                        <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-indigo-500 to-purple-500" style={{ boxShadow: '0 0 20px #6366f140' }} />
-
+                    <ZenithCard variant="indigo" className="h-full flex flex-col justify-center min-h-[140px]">
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className="hidden lg:block p-2 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl text-indigo-700 dark:text-indigo-400 transition-transform duration-300 group-hover:scale-110">
@@ -253,7 +225,7 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                         <div className="w-full bg-[var(--bg-tertiary)] h-1 rounded-full overflow-hidden mt-2">
                             <div className="bg-indigo-500 h-full rounded-full transition-all duration-1000" style={{ width: `${marketData.ethDominance}%` }} />
                         </div>
-                    </div>
+                    </ZenithCard>
                 );
             default:
                 return null;

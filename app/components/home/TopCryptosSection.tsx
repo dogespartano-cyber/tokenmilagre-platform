@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faArrowUp, faArrowDown, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useCryptoData } from '@/lib/domains/crypto/hooks/useCryptoData';
+import { ZenithCard } from '../ui/ZenithCard';
 
 // --- Sparkline Component ---
 function SimpleSparkline({ data, isUp }: { data: number[]; isUp: boolean }) {
@@ -98,7 +99,7 @@ export function TopCryptosSection() {
             </div>
 
             {/* Unified Glass Table Container */}
-            <div className="rounded-3xl zenith-glass overflow-hidden flex flex-col shadow-lg">
+            <ZenithCard variant="default" className="!p-0 flex flex-col shadow-lg overflow-hidden">
 
                 {/* Table Header */}
                 <div className={`${gridCols} py-4 border-b border-[var(--border-light)] bg-[var(--bg-tertiary)]/30 text-xs font-semibold uppercase tracking-wide text-[var(--text-tertiary)] select-none`}>
@@ -219,7 +220,7 @@ export function TopCryptosSection() {
                         );
                     })}
                 </div>
-            </div>
+            </ZenithCard>
         </div>
     );
 }

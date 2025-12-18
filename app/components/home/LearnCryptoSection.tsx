@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import type { EducationItem } from './types';
+import { ZenithCard } from '../ui/ZenithCard';
 
 interface LearnCryptoSectionProps {
     education: EducationItem[];
@@ -34,14 +35,13 @@ export function LearnCryptoSection({ education }: LearnCryptoSectionProps) {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {education.slice(0, 6).map((item) => (
-                    <Link
+                    <ZenithCard
+                        as={Link}
                         key={item.id}
                         href={`/educacao/${item.slug}`}
+                        variant="teal"
                         className={`
-                            group relative overflow-hidden rounded-3xl
-                            bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-gray-500/10 dark:to-slate-500/5 border border-gray-200 dark:border-gray-500/20 
-                            hover:shadow-xl hover:shadow-gray-500/10
-                            p-6 flex flex-col justify-center
+                            flex flex-col justify-center
                             h-full min-h-[180px]
                             transition-all duration-300
                         `}
@@ -63,7 +63,7 @@ export function LearnCryptoSection({ education }: LearnCryptoSectionProps) {
                             opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none
                             bg-gray-500/10
                         `} />
-                    </Link>
+                    </ZenithCard>
                 ))}
             </div>
         </div>
