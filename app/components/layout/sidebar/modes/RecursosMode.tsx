@@ -26,13 +26,13 @@ export default function RecursosMode({ onClose, config }: RecursosModeProps) {
             <Link
                 href="/"
                 onClick={onClose}
-                className="sidebar-back-link mb-4"
+                className="group flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--brand-primary)] transition-all mb-4"
             >
                 <FontAwesomeIcon
                     icon={faArrowLeft}
-                    className="sidebar-icon"
+                    className="w-4 h-4 transition-transform duration-300 group-hover:scale-110"
                 />
-                <span className="sidebar-text-lg">Voltar ao Início</span>
+                <span>Voltar ao Início</span>
             </Link>
 
             {/* Search */}
@@ -63,9 +63,16 @@ export default function RecursosMode({ onClose, config }: RecursosModeProps) {
                                 onClose();
                             }
                         }}
-                        className={`w-full sidebar-item ${selectedCategory === cat.id ? 'sidebar-item-active' : ''}`}
+                        className={`group w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition-all text-left ${selectedCategory === cat.id
+                            ? 'bg-[var(--bg-secondary)] text-[var(--brand-primary)]'
+                            : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--brand-primary)]'
+                            }`}
                     >
-                        <span className="sidebar-text">{cat.label}</span>
+                        <div className={`w-1.5 h-1.5 rounded-full transition-colors shrink-0 ${selectedCategory === cat.id
+                            ? 'bg-[var(--brand-primary)]'
+                            : 'bg-zinc-300 dark:bg-zinc-600 group-hover:bg-[var(--brand-primary)]'
+                            }`} />
+                        <span>{cat.label}</span>
                     </button>
                 ))}
 

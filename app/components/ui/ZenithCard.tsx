@@ -127,7 +127,7 @@ export function ZenithCard({
             {/* Ambient Hover Glow (Replaces Top Line) */}
             {hoverEffect && variant !== 'default' && (
                 <div
-                    className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br pointer-events-none ${ambientGradients[variant]}`}
+                    className={`absolute inset-0 opacity-100 dark:opacity-0 dark:group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br pointer-events-none ${ambientGradients[variant]}`}
                 />
             )}
 

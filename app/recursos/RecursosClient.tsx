@@ -65,6 +65,37 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
     return categoryMatch && searchMatch;
   });
 
+  // Ordenação personalizada conforme menu da sidebar
+  const categoryOrder = [
+    'wallet', 'wallets',
+    'exchange', 'exchanges',
+    'defi', 'defi-protocol',
+    'explorers',
+    'browsers',
+    'analytics',
+    'portfolio-tracker',
+    'development-tools', 'tools',
+    'news',
+    'education'
+  ];
+
+  const sortedResources = [...filteredResources].sort((a, b) => {
+    const indexA = categoryOrder.indexOf(a.category);
+    const indexB = categoryOrder.indexOf(b.category);
+
+    // Se ambos estão na lista, ordena pelo índice
+    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+
+    // Se apenas A está na lista, A vem primeiro
+    if (indexA !== -1) return -1;
+
+    // Se apenas B está na lista, B vem primeiro
+    if (indexB !== -1) return 1;
+
+    // Se nenhum está na lista, mantém a ordem original (ou alfabética se preferir)
+    return 0;
+  });
+
   // Read URL params on mount (one-way sync to avoid SSR issues)
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -94,7 +125,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
 
           {/* Grid de Recursos */}
           <ResourceGrid
-            resources={filteredResources}
+            resources={sortedResources}
             searchTerm={debouncedSearchTerm}
             onClearFilters={clearAllFilters}
           />

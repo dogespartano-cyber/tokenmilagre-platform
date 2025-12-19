@@ -26,13 +26,13 @@ export default function GraficosMode({ onClose, config }: GraficosModeProps) {
             <Link
                 href="/"
                 onClick={onClose}
-                className="sidebar-back-link"
+                className="group flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--brand-primary)] transition-all mb-2"
             >
                 <FontAwesomeIcon
                     icon={faArrowLeft}
-                    className="sidebar-icon"
+                    className="w-4 h-4 transition-transform duration-300 group-hover:scale-110"
                 />
-                <span className="sidebar-text-lg">Voltar ao Início</span>
+                <span>Voltar ao Início</span>
             </Link>
 
             {/* Sections TOC */}
@@ -42,9 +42,10 @@ export default function GraficosMode({ onClose, config }: GraficosModeProps) {
                         key={section.id}
                         href={`#${section.id}`}
                         onClick={onClose}
-                        className="sidebar-item"
+                        className="group flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--brand-primary)] transition-all"
                     >
-                        <span className="sidebar-text">{section.title}</span>
+                        <div className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600 group-hover:bg-[var(--brand-primary)] transition-colors shrink-0" />
+                        <span>{section.title}</span>
                     </a>
                 ))}
             </div>

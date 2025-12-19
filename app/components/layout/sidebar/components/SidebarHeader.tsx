@@ -26,16 +26,22 @@ export default function SidebarHeader({ onClose }: SidebarHeaderProps) {
                     className="flex items-center gap-3 hover:opacity-100 transition-all duration-300 group px-2 py-1 rounded-xl"
                     onClick={onClose}
                 >
-                    <div className="relative w-9 h-9 rounded-full border-2 border-teal-500 p-0.5 group-hover:scale-110 transition-transform bg-white">
+                    <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 group-hover:scale-110 transition-all duration-300 group-hover:rotate-12" style={{
+                        borderColor: 'var(--brand-primary)'
+                    }}>
+                        <div className="absolute inset-0 blur-sm" style={{
+                            background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
+                            opacity: 0.2
+                        }}></div>
                         <Image
                             src="/images/TOKEN-MILAGRE-Hero.webp"
                             alt="$MILAGRE"
-                            width={36}
-                            height={36}
-                            className="w-full h-full object-cover rounded-full"
+                            width={40}
+                            height={40}
+                            className="w-full h-full object-cover relative z-10"
                         />
                     </div>
-                    <div className="text-lg font-bold font-[family-name:var(--font-poppins)] text-zinc-800 dark:text-white group-hover:text-teal-600 transition-colors">
+                    <div className="text-xl sm:text-lg font-bold drop-shadow-lg transition-all duration-300 font-[family-name:var(--font-poppins)] text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] group-hover:scale-105">
                         $MILAGRE
                     </div>
                 </Link>

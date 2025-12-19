@@ -1,7 +1,6 @@
 import React from 'react';
-import { AlertTriangle, Search, ShieldCheck, XCircle } from 'lucide-react';
-
-import Link from 'next/link';
+import { ShieldCheck, XCircle } from 'lucide-react';
+import { ZenithCard } from '@/app/components/ui/ZenithCard';
 
 interface TruthDetectorProps {
     frameless?: boolean;
@@ -11,7 +10,7 @@ export default function TruthDetector({ frameless = false }: TruthDetectorProps)
     return (
         <div className="grid md:grid-cols-2 gap-6 p-2">
             {/* Card 1: Red Flags */}
-            <div className={`p-6 rounded-2xl h-full ${frameless ? 'bg-red-500/5 border border-red-500/10' : 'glass-card'}`}>
+            <ZenithCard variant="danger" className="h-full">
                 <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-red-500/10 text-red-500 shrink-0">
                         <XCircle className="w-6 h-6" />
@@ -35,10 +34,10 @@ export default function TruthDetector({ frameless = false }: TruthDetectorProps)
                         </li>
                     ))}
                 </ul>
-            </div>
+            </ZenithCard>
 
             {/* Card 2: Green Flags */}
-            <div className={`p-6 rounded-2xl h-full ${frameless ? 'bg-teal-500/5 border border-teal-500/10' : 'glass-card'}`}>
+            <ZenithCard variant="success" className="h-full">
                 <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-teal-500/10 text-teal-500 shrink-0">
                         <ShieldCheck className="w-6 h-6" />
@@ -62,7 +61,7 @@ export default function TruthDetector({ frameless = false }: TruthDetectorProps)
                         </li>
                     ))}
                 </ul>
-            </div>
+            </ZenithCard>
         </div>
     );
 }

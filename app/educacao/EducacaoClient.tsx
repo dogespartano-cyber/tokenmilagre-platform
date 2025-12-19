@@ -18,6 +18,7 @@ import TruthDetector from '@/components/education/TruthDetector';
 import SocialLinks from '@/components/shared/SocialLinks';
 import { useEducationFilters, categories, levels } from '@/contexts/EducationFilterContext';
 import { useSidebar } from '@/contexts/SidebarContext';
+import { ZenithCard } from '@/app/components/ui/ZenithCard'; // Imported ZenithCard
 import PageWrapper from '@/components/layout/PageWrapper';
 
 // Header config - inline para IA reconhecer
@@ -60,6 +61,7 @@ interface RawArticleData {
 }
 
 export default function EducacaoClient({ resources, stats }: EducacaoClientProps) {
+  const [showCategoryFilter, setShowCategoryFilter] = useState(false);
 
   // Usar filtros do Context (compartilhado com Sidebar)
   const {
@@ -152,12 +154,12 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
           <section id="comece-por-aqui" className="space-y-6 scroll-mt-24">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { icon: faBookOpen, title: 'Comece pelo Básico', desc: 'Entenda o que é cripto e onde as pessoas mais erram', slug: 'fundamentos-cripto' },
-                { icon: faShield, title: 'Segurança Primeiro', desc: 'Seed phrase, golpes e hábitos que protegem você', slug: 'seguranca-primeiro' },
-                { icon: faWallet, title: 'Carteiras e Custódia', desc: 'Hot vs cold wallet, autocustódia e boas práticas', slug: 'carteiras-e-custodia' },
-                { icon: faExclamationTriangle, title: 'Golpes Comuns', desc: 'Phishing, airdrop falso, links maliciosos e aprovações', slug: 'golpes-comuns-cripto' },
+                { icon: faBookOpen, title: 'Comece pelo Básico', desc: 'Entenda o que é cripto e onde as pessoas mais erram', slug: 'fundamentos-cripto', variant: 'teal' },
+                { icon: faShield, title: 'Segurança Primeiro', desc: 'Seed phrase, golpes e hábitos que protegem você', slug: 'seguranca-primeiro', variant: 'teal' },
+                { icon: faWallet, title: 'Carteiras e Custódia', desc: 'Hot vs cold wallet, autocustódia e boas práticas', slug: 'carteiras-e-custodia', variant: 'teal' },
+                { icon: faExclamationTriangle, title: 'Golpes Comuns', desc: 'Phishing, airdrop falso, links maliciosos e aprovações', slug: 'golpes-comuns-cripto', variant: 'teal' },
               ].map((card, index) => {
-                const cardContent = (
+                const CardContent = (
                   <div className="relative z-10">
                     {/* Icon Container */}
                     <div className="w-12 h-12 rounded-full flex items-center justify-center mb-5 bg-[var(--bg-page)] text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] group-hover:scale-110 transition-all duration-300">
@@ -174,21 +176,20 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   </div>
                 );
 
-                const cardClassName = `
-                  group p-6 rounded-2xl border text-left relative overflow-hidden transition-all duration-300
-                  bg-transparent backdrop-blur-2xl border-[var(--border-light)]
-                  hover:border-[var(--brand-primary)]/30 hover:shadow-lg hover:-translate-y-1
-                  ${card.slug ? 'cursor-pointer' : ''}
-                `;
-
                 return card.slug ? (
-                  <Link key={index} href={`/educacao/${card.slug}`} className={cardClassName}>
-                    {cardContent}
-                  </Link>
+                  <ZenithCard
+                    key={index}
+                    as={Link}
+                    href={`/educacao/${card.slug}`}
+                    className="cursor-pointer"
+                    variant={card.variant as any}
+                  >
+                    {CardContent}
+                  </ZenithCard>
                 ) : (
-                  <div key={index} className={cardClassName}>
-                    {cardContent}
-                  </div>
+                  <ZenithCard key={index} variant={card.variant as any}>
+                    {CardContent}
+                  </ZenithCard>
                 );
               })}
             </div>
@@ -210,11 +211,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Iniciante */}
-              <div
-                className="group p-6 rounded-2xl border text-left relative overflow-hidden transition-all duration-300
-                    bg-transparent backdrop-blur-2xl border-[var(--border-light)]
-                    hover:border-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/10 hover:-translate-y-1"
-              >
+              <ZenithCard variant="success">
                 <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-emerald-500/10 text-emerald-500">
                   <FontAwesomeIcon icon={faGraduationCap} className="w-7 h-7" />
                 </div>
@@ -228,14 +225,10 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   <li>• Redes e taxas</li>
                   <li>• DYOR e transparência</li>
                 </ul>
-              </div>
+              </ZenithCard>
 
               {/* Intermediário */}
-              <div
-                className="group p-6 rounded-2xl border text-left relative overflow-hidden transition-all duration-300
-                    bg-transparent backdrop-blur-2xl border-[var(--border-light)]
-                    hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/10 hover:-translate-y-1"
-              >
+              <ZenithCard variant="warning">
                 <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-amber-500/10 text-amber-500">
                   <FontAwesomeIcon icon={faChartLine} className="w-7 h-7" />
                 </div>
@@ -249,14 +242,10 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   <li>• Leitura de notícias</li>
                   <li>• Gestão de risco</li>
                 </ul>
-              </div>
+              </ZenithCard>
 
               {/* Avançado */}
-              <div
-                className="group p-6 rounded-2xl border text-left relative overflow-hidden transition-all duration-300
-                    bg-transparent backdrop-blur-2xl border-[var(--border-light)]
-                    hover:border-red-500/30 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1"
-              >
+              <ZenithCard variant="danger">
                 <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-red-500/10 text-red-500">
                   <FontAwesomeIcon icon={faCode} className="w-7 h-7" />
                 </div>
@@ -270,7 +259,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   <li>• Segurança avançada</li>
                   <li>• Leitura de contratos</li>
                 </ul>
-              </div>
+              </ZenithCard>
             </div>
           </section>
 
@@ -280,8 +269,8 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
 
           {/* Filtros e Artigos - Título adicionado */}
           <section id="artigos" className="space-y-6 scroll-mt-24">
-            <div className="flex items-center justify-between">
-              <div className="text-left">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-0">
+              <div className="text-left w-full md:w-auto">
                 <h2 className="text-2xl font-bold text-[var(--text-primary)]">
                   Todos os Artigos
                 </h2>
@@ -291,8 +280,9 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
               </div>
 
               {/* Search + Levels + Clear */}
-              <div className="flex items-center gap-3">
-                {/* Search input - always visible */}
+              {/* Desktop Only Search & Filters (Hidden on Mobile) */}
+              <div className="hidden md:flex items-center gap-3">
+                {/* Standard Desktop Search */}
                 <div className="relative">
                   <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" />
                   <input
@@ -312,11 +302,9 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   )}
                 </div>
 
-                {/* Separator */}
                 <div className="w-px h-6 bg-[var(--border-light)]" />
 
-
-                {/* Level icons - 3 separate buttons using original FontAwesome icons */}
+                {/* Desktop Level Icons */}
                 <button
                   onClick={() => setSelectedLevel(selectedLevel === 'iniciante' ? '' : 'iniciante')}
                   className={`p-2.5 rounded-xl border transition-all ${selectedLevel === 'iniciante' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500' : 'bg-[var(--bg-secondary)] border-[var(--border-light)] text-[var(--text-tertiary)] hover:text-emerald-500 hover:border-emerald-500/30'}`}
@@ -341,19 +329,147 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                   <FontAwesomeIcon icon={getLevelIcon('avancado')} className="w-4 h-4" />
                 </button>
 
-                {/* Clear level filter - only show when level active */}
-                {selectedLevel && (
-                  <>
-                    <div className="w-px h-6 bg-[var(--border-light)]" />
+                {/* Desktop Category Filter */}
+                <div className="w-px h-6 bg-[var(--border-light)]" />
+
+                <div className="relative">
+                  <button
+                    onClick={() => setShowCategoryFilter(!showCategoryFilter)}
+                    className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border transition-all font-medium text-sm ${selectedCategory !== 'all'
+                      ? 'bg-[var(--brand-primary)]/10 border-[var(--brand-primary)]/30 text-[var(--brand-primary)]'
+                      : 'bg-[var(--bg-secondary)] border-[var(--border-light)] text-[var(--text-secondary)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)]/30'
+                      }`}
+                  >
+                    <FontAwesomeIcon icon={faFilter} className="w-3.5 h-3.5" />
+                    <span>{selectedCategory !== 'all' ? categories.find(c => c.id === selectedCategory)?.label : 'Categorias'}</span>
+                    <FontAwesomeIcon icon={faChevronDown} className={`w-3 h-3 transition-transform duration-300 ${showCategoryFilter ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  {showCategoryFilter && (
+                    <>
+                      <div className="fixed inset-0 z-10" onClick={() => setShowCategoryFilter(false)} />
+                      <div className="absolute right-0 top-full mt-2 w-56 p-2 bg-[var(--bg-elevated)] border border-[var(--border-light)] rounded-xl shadow-xl z-20 animate-fade-in-up flex flex-col gap-1">
+                        {categories.map((cat) => (
+                          <button key={cat.id} onClick={() => { setSelectedCategory(cat.id); setShowCategoryFilter(false); }} className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors flex items-center justify-between group ${selectedCategory === cat.id ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] font-bold' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]'}`}>
+                            <span>{cat.label}</span>
+                            {selectedCategory === cat.id && <div className="w-1.5 h-1.5 rounded-full bg-[var(--brand-primary)]" />}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Mobile-First Search & Filter Section (Visible only on Mobile) */}
+              <div className="flex md:hidden flex-col gap-4 w-full mt-4">
+
+                {/* 1. Search Bar - Full Width & Prominent */}
+                <div className="relative w-full group">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <FontAwesomeIcon icon={faSearch} className="h-4 w-4 text-[var(--text-tertiary)] group-focus-within:text-[var(--brand-primary)] transition-colors" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="O que você quer aprender hoje?"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="block w-full pl-11 pr-10 py-3.5 rounded-xl bg-[var(--bg-secondary)] border-2 border-transparent focus:border-[var(--brand-primary)]/20 focus:bg-[var(--bg-elevated)] text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] transition-all outline-none font-medium text-sm shadow-sm"
+                  />
+                  {searchTerm && (
                     <button
-                      onClick={() => setSelectedLevel('')}
-                      className="p-2.5 rounded-xl border bg-[var(--error)]/10 border-[var(--error)]/30 text-[var(--error)] hover:bg-[var(--error)]/20 transition-all"
-                      title="Limpar nível"
+                      onClick={() => setSearchTerm('')}
+                      className="absolute inset-y-0 right-0 pr-4 flex items-center text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]"
                     >
-                      <FontAwesomeIcon icon={faTimes} className="w-4 h-4" />
+                      <FontAwesomeIcon icon={faTimes} className="h-4 w-4" />
                     </button>
-                  </>
-                )}
+                  )}
+                </div>
+
+                {/* 2. Horizontal Scrollable Filter Row */}
+                <div className="flex flex-wrap items-center gap-2 w-full">
+
+                  {/* Category Filter - Main Pill */}
+                  <div className="relative">
+                    <button
+                      onClick={() => setShowCategoryFilter(!showCategoryFilter)}
+                      className={`flex items-center gap-2 px-4 py-2.5 rounded-full border transition-all font-medium text-sm whitespace-nowrap active:scale-95 touch-manipulation ${selectedCategory !== 'all'
+                        ? 'bg-[var(--brand-primary)] text-white border-transparent shadow-md shadow-[var(--brand-primary)]/20'
+                        : 'bg-[var(--bg-secondary)] border-[var(--border-light)] text-[var(--text-secondary)] hover:border-[var(--brand-primary)]/50'
+                        }`}
+                    >
+                      <FontAwesomeIcon icon={faFilter} className="w-3.5 h-3.5" />
+                      <span>{selectedCategory !== 'all' ? categories.find(c => c.id === selectedCategory)?.label : 'Categorias'}</span>
+                      <FontAwesomeIcon icon={faChevronDown} className={`w-3 h-3 ml-1 transition-transform duration-200 ${showCategoryFilter ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {/* Dropdown - Mobile Optimized Overlay */}
+                    {showCategoryFilter && (
+                      <>
+                        <div className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm" onClick={() => setShowCategoryFilter(false)} />
+                        <div className="absolute top-full left-0 mt-2 w-64 max-w-[90vw] p-2 bg-[var(--bg-elevated)] border border-[var(--border-light)] rounded-2xl shadow-xl z-50 animate-scale-in origin-top-left flex flex-col gap-1">
+                          <div className="px-3 py-2 text-xs font-bold uppercase text-[var(--text-tertiary)] tracking-wider">Filtrar por Categoria</div>
+                          {categories.map((cat) => (
+                            <button
+                              key={cat.id}
+                              onClick={() => {
+                                setSelectedCategory(cat.id);
+                                setShowCategoryFilter(false);
+                              }}
+                              className={`w-full text-left px-4 py-3 rounded-xl text-sm transition-all flex items-center justify-between ${selectedCategory === cat.id
+                                ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] font-bold'
+                                : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]'
+                                }`}
+                            >
+                              <span>{cat.label}</span>
+                              {selectedCategory === cat.id && <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />}
+                            </button>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                  <div className="w-px h-6 bg-[var(--border-light)] mx-1 hidden sm:block" />
+
+                  {/* Level Pills - Visual Selection */}
+                  <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+                    {[
+                      { id: 'iniciante', label: 'Iniciante', icon: 'iniciante', color: 'emerald' },
+                      { id: 'intermediario', label: 'Intermed.', icon: 'intermediario', color: 'amber' },
+                      { id: 'avancado', label: 'Avançado', icon: 'avancado', color: 'red' }
+                    ].map((lvl) => {
+                      const isSelected = selectedLevel === lvl.id;
+                      const activeClass = isSelected
+                        ? lvl.id === 'iniciante' ? 'bg-emerald-500 text-white border-emerald-500 shadow-emerald-500/20 shadow-md'
+                          : lvl.id === 'intermediario' ? 'bg-amber-500 text-white border-amber-500 shadow-amber-500/20 shadow-md'
+                            : 'bg-red-500 text-white border-red-500 shadow-red-500/20 shadow-md'
+                        : 'bg-[var(--bg-secondary)] border-[var(--border-light)] text-[var(--text-tertiary)] hover:bg-[var(--bg-elevated)]';
+
+                      return (
+                        <button
+                          key={lvl.id}
+                          onClick={() => setSelectedLevel(isSelected ? '' : lvl.id)}
+                          className={`px-3 py-2.5 rounded-full border text-xs font-bold transition-all flex items-center gap-2 active:scale-95 touch-manipulation ${activeClass}`}
+                        >
+                          <FontAwesomeIcon icon={getLevelIcon(lvl.id)} className="w-3.5 h-3.5" />
+                          <span className="hidden sm:inline">{lvl.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Clear Filters (Dynamic) */}
+                  {(selectedCategory !== 'all' || selectedLevel || searchTerm) && (
+                    <button
+                      onClick={clearAllFilters}
+                      className="p-2.5 rounded-full text-red-500 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 transition-all ml-auto active:scale-95 flex items-center justify-center"
+                      title="Limpar filtros"
+                    >
+                      <FontAwesomeIcon icon={faTimes} className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -363,18 +479,13 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
               {/* Lista de Recursos - NOVO DESIGN COM GLASSMORPHISM */}
               <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredResources.map((resource) => (
-                  <Link
+                  <ZenithCard
                     key={resource.id}
+                    as={Link}
                     href={`/educacao/${resource.slug}`}
-                    className="glass-card group relative flex flex-col p-6 rounded-2xl border border-[var(--border-light)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl overflow-hidden"
+                    className="flex flex-col h-full"
+                    variant={resource.level === 'iniciante' ? 'success' : resource.level === 'intermediario' ? 'warning' : resource.level === 'avancado' ? 'danger' : 'default'}
                   >
-                    {/* Hover Glow Effect */}
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"
-                      style={{
-                        background: getLevelColor(resource.level)
-                      }}
-                    />
 
                     <div className="relative z-10 flex flex-col h-full">
                       {/* Header: Level & Read Time */}
@@ -413,7 +524,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
                         Ler artigo <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 ml-1" />
                       </div>
                     </div>
-                  </Link>
+                  </ZenithCard>
                 ))}
 
                 {/* Loader minimalista (centralizado) */}

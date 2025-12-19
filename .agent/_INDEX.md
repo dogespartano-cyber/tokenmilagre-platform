@@ -7,6 +7,8 @@ version: 2.0.0
 
 > Quando a IA precisar de contexto especializado, consulte este índice.
 
+> **⚠️ IMPORTANTE:** Nunca faça commit ou push sem solicitação explícita do usuário. Pergunte sempre antes de salvar alterações no repositório.
+
 ---
 
 ## Uso Rápido

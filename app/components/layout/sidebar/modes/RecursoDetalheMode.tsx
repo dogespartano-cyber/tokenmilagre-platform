@@ -26,13 +26,13 @@ export default function RecursoDetalheMode({ onClose, config }: RecursoDetalheMo
             <Link
                 href="/recursos"
                 onClick={onClose}
-                className="sidebar-back-link"
+                className="group flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--brand-primary)] transition-all mb-2"
             >
                 <FontAwesomeIcon
                     icon={faArrowLeft}
-                    className="sidebar-icon"
+                    className="w-4 h-4 transition-transform duration-300 group-hover:scale-110"
                 />
-                <span className="sidebar-text-lg">Voltar a Recursos</span>
+                <span>Voltar a Recursos</span>
             </Link>
 
             {/* Category Title */}
@@ -47,15 +47,16 @@ export default function RecursoDetalheMode({ onClose, config }: RecursoDetalheMo
                         key={res.slug}
                         href={`/recursos/${res.slug}`}
                         onClick={onClose}
-                        className={`sidebar-item ${currentResource?.slug === res.slug ? 'sidebar-item-active' : ''}`}
+                        className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition-all ${currentResource?.slug === res.slug
+                            ? 'bg-[var(--bg-secondary)] text-[var(--brand-primary)]'
+                            : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--brand-primary)]'
+                            }`}
                     >
-                        <div
-                            className={`w-2 h-2 rounded-full flex-shrink-0 ${currentResource?.slug === res.slug
-                                ? 'bg-[var(--brand-primary)]'
-                                : 'bg-green-500'
-                                }`}
-                        />
-                        <span className="sidebar-text truncate">{res.name}</span>
+                        <div className={`w-1.5 h-1.5 rounded-full transition-colors shrink-0 ${currentResource?.slug === res.slug
+                            ? 'bg-[var(--brand-primary)]'
+                            : 'bg-zinc-300 dark:bg-zinc-600 group-hover:bg-[var(--brand-primary)]'
+                            }`} />
+                        <span className="truncate">{res.name}</span>
                     </Link>
                 ))}
             </div>
