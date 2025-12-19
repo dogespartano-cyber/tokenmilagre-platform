@@ -26,7 +26,7 @@ export function ZenithCard({
     // - Border styling with specific opacity
     // - Smooth transitions
 
-    const baseStyles = 'group relative p-6 rounded-2xl border dark:backdrop-blur-md overflow-hidden transition-all duration-500';
+    const baseStyles = 'relative p-6 rounded-2xl border dark:backdrop-blur-md overflow-hidden transition-all duration-500';
 
     // Hover Effects (Optional but default)
     const hoverStyles = hoverEffect
@@ -80,7 +80,7 @@ export function ZenithCard({
 
         teal: `
             bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-teal-500/10 dark:to-emerald-500/5 
-            border-teal-200 dark:border-teal-500/20 group-hover:border-teal-300 dark:group-hover:border-teal-500/40
+            border-[#e6f4f3] dark:border-teal-500/20 group-hover:border-teal-300 dark:group-hover:border-teal-500/40
             hover:shadow-teal-500/10
         `,
 
@@ -111,13 +111,21 @@ export function ZenithCard({
         slate: 'from-slate-500/10 to-transparent'
     };
 
+    const containerClasses = [
+        baseStyles,
+        hoverEffect ? 'group' : '',
+        hoverStyles,
+        variantStyles[variant],
+        className
+    ].filter(Boolean).join(' ');
+
     return (
         <Component
-            className={`${baseStyles} ${hoverStyles} ${variantStyles[variant]} ${className}`}
+            className={containerClasses}
             {...props}
         >
             {/* Ambient Hover Glow (Replaces Top Line) */}
-            {variant !== 'default' && (
+            {hoverEffect && variant !== 'default' && (
                 <div
                     className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br pointer-events-none ${ambientGradients[variant]}`}
                 />

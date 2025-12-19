@@ -352,7 +352,7 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
       }}
     >
       {/* Header do gráfico - Seletor à esquerda, Preço à direita */}
-      <div className="px-4 pt-4 pb-2 flex items-center justify-between">
+      <div className="px-2 md:px-4 pt-4 pb-2 flex items-center justify-between">
         {/* Slot para seletor */}
         <div>{headerLeft}</div>
 
@@ -368,12 +368,12 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
         )}
       </div>
 
-      <div className="px-4 pb-4">
+      <div className="px-2 md:px-4 pb-4">
         <div ref={chartContainerRef} />
       </div>
 
       {/* Legenda compacta - abaixo do gráfico */}
-      <div className="px-4 pb-4">
+      <div className="px-2 md:px-4 pb-4">
         <div className="flex flex-wrap gap-3 text-xs">
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-0.5" style={{ backgroundColor: '#EAB308' }}></div>

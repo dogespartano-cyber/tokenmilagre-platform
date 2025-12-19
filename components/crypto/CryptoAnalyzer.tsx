@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBitcoin, faEthereum } from '@fortawesome/free-brands-svg-icons';
 import { TokenSOL } from '@token-icons/react';
 import { BinanceDataProvider, useBinanceContext } from '@/contexts/BinanceDataContext';
+import { ZenithCard } from '@/app/components/ui/ZenithCard';
 
 const AdvancedChart = dynamic(() => import('./AdvancedChart'), {
     ssr: false,
@@ -94,10 +95,43 @@ function CryptoAnalyzerContent({
 }: CryptoAnalyzerContentProps) {
     return (
         <div className="space-y-6">
-            <div className="grid lg:grid-cols-3 gap-6 animate-fade-in-up">
-                {/* Main Chart - Spans 2 columns */}
-                <div className="lg:col-span-2 space-y-4">
-                    <div className="p-1 rounded-2xl overflow-hidden">
+            {/* Header Extracted from Card */}
+            <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 mb-6">
+                <div>
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Análise Técnica</h2>
+                </div>
+
+                {/* Timeframe Selector */}
+                <div className="flex flex-wrap gap-1 bg-white dark:bg-white/5 p-1 rounded-xl border border-gray-200 dark:border-white/10">
+                    {['15m', '4h', '1d', '1w', '1M'].map((tf) => {
+                        const displayLabel: Record<string, string> = {
+                            '15m': '15M',
+                            '4h': '4H',
+                            '1d': '1D',
+                            '1w': '1S',
+                            '1M': '1M',
+                        };
+                        return (
+                            <button
+                                key={tf}
+                                onClick={() => setTimeframe(tf as Timeframe)}
+                                className={`px-3 py-1.5 text-sm font-bold rounded-lg transition-all ${timeframe === tf
+                                    ? 'bg-teal-500 text-white shadow-lg shadow-teal-500/20'
+                                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5'
+                                    }`}
+                            >
+                                {displayLabel[tf]}
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+
+            <ZenithCard variant="default" hoverEffect={false} className="p-0 overflow-hidden">
+                {/* Dashboard Grid - No internal borders */}
+                <div className="grid lg:grid-cols-3">
+                    {/* Main Chart - Spans 2 columns */}
+                    <div className="lg:col-span-2 flex flex-col items-center justify-center">
                         <div className="h-auto min-h-[600px] w-full">
                             <AdvancedChart
                                 key={`${assets[activeAsset].symbol}-${timeframe}`}
@@ -106,7 +140,7 @@ function CryptoAnalyzerContent({
                                 onTimeframeChange={setTimeframe}
                                 trendColor={trendColor}
                                 headerLeft={
-                                    <div className="flex flex-nowrap gap-2">
+                                    <div className="flex flex-nowrap gap-2 p-2 justify-center sm:justify-start">
                                         {(Object.keys(assets) as Asset[]).map((asset) => (
                                             <button
                                                 key={asset}
@@ -115,10 +149,10 @@ function CryptoAnalyzerContent({
                                                     setTrendColor(undefined);
                                                 }}
                                                 className={`
-                                                    flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-300 whitespace-nowrap
+                                                    flex items-center gap-2 px-3 py-1.5 rounded-lg font-bold text-sm transition-all duration-300 whitespace-nowrap border
                                                     ${activeAsset === asset
-                                                        ? 'bg-white/10 shadow-md ' + assets[asset].color
-                                                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/5'
+                                                        ? 'bg-white dark:bg-white/10 shadow-sm border-transparent ' + assets[asset].color
+                                                        : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5'
                                                     }
                                                 `}
                                             >
@@ -131,43 +165,10 @@ function CryptoAnalyzerContent({
                             />
                         </div>
                     </div>
-                </div>
 
-                {/* Technical Analysis - Spans 1 column */}
-                <div className="space-y-4">
-                    <div className="p-4 rounded-2xl h-full flex flex-col">
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
-                            <h3 className="text-lg font-bold flex items-center gap-2 text-gray-900 dark:text-white">
-                                <span>Análise Técnica ({timeframe.toUpperCase()})</span>
-                            </h3>
-
-                            {/* Timeframe Selector */}
-                            <div className="flex flex-wrap gap-1 bg-gray-100 dark:bg-white/5 p-1 rounded-lg">
-                                {['15m', '4h', '1d', '1w', '1M'].map((tf) => {
-                                    const displayLabel: Record<string, string> = {
-                                        '15m': '15M',
-                                        '4h': '4H',
-                                        '1d': '1D',
-                                        '1w': '1S',
-                                        '1M': '1M',
-                                    };
-                                    return (
-                                        <button
-                                            key={tf}
-                                            onClick={() => setTimeframe(tf as Timeframe)}
-                                            className={`px-2 py-1 text-xs font-bold rounded transition-all ${timeframe === tf
-                                                ? 'bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm'
-                                                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-                                                }`}
-                                        >
-                                            {displayLabel[tf]}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </div>
-
-                        <div className="flex-1 min-h-[500px] rounded-xl p-2">
+                    {/* Trend Meter - Spans 1 column */}
+                    <div className="lg:col-span-1 p-2 flex flex-col items-center justify-center text-center">
+                        <div className="flex-1 min-h-[500px] flex items-center justify-center w-full">
                             <TrendMeter
                                 key={`${assets[activeAsset].symbol}-${timeframe}`}
                                 symbol={assets[activeAsset].symbol}
@@ -177,12 +178,12 @@ function CryptoAnalyzerContent({
                         </div>
                     </div>
                 </div>
-            </div>
+            </ZenithCard>
 
             {/* Seção Educativa Modularizada */}
             <div className="mt-12">
                 <CryptoEducator />
             </div>
-        </div>
+        </div >
     );
 }

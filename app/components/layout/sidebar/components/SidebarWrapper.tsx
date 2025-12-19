@@ -18,11 +18,7 @@ export default function SidebarWrapper({ isOpen, children }: SidebarWrapperProps
     return (
         <aside
             className={`fixed top-0 left-0 h-full w-72 z-50 transition-[transform,background-color] duration-500 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
-                } lg:translate-x-0 backdrop-blur-2xl shadow-2xl lg:shadow-none`}
-            style={{
-                backgroundColor: 'var(--sidebar-bg)',
-                borderRight: '1px solid var(--sidebar-border)'
-            }}
+                } lg:translate-x-0 backdrop-blur-2xl shadow-2xl lg:shadow-none bg-white dark:bg-[#09090b]/95 border-r border-[#e6f4f3] dark:border-white/5`}
         >
             <div className="flex flex-col h-full">
                 {children}

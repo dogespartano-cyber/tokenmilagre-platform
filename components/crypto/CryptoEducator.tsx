@@ -4,6 +4,8 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle, faLightbulb, faShieldAlt, faChartLine } from '@fortawesome/free-solid-svg-icons';
 
+import { ZenithCard } from '@/app/components/ui/ZenithCard';
+
 /**
  * @module crypto/CryptoEducator
  * @description Seção educativa com design premium "Zenith".
@@ -17,7 +19,7 @@ export default function CryptoEducator() {
                 <div className="space-y-6">
                     <div className="flex flex-col gap-6 h-full">
                         {/* Tendência de Alta */}
-                        <div className="zenith-card p-6 relative overflow-hidden group flex-1 flex flex-col justify-center">
+                        <ZenithCard variant="default" hoverEffect={false} className="p-6 relative overflow-hidden group flex-1 flex flex-col justify-center">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
 
                             <div className="flex flex-col lg:flex-row items-center gap-6 relative z-10 w-full h-full">
@@ -57,10 +59,10 @@ export default function CryptoEducator() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </ZenithCard>
 
                         {/* Tendência de Baixa */}
-                        <div className="zenith-card p-6 relative overflow-hidden group flex-1 flex flex-col justify-center">
+                        <ZenithCard variant="default" hoverEffect={false} className="p-6 relative overflow-hidden group flex-1 flex flex-col justify-center">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
 
                             <div className="flex flex-col lg:flex-row items-center gap-6 relative z-10 w-full h-full">
@@ -93,14 +95,14 @@ export default function CryptoEducator() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </ZenithCard>
                     </div>
                 </div>
 
                 {/* Coluna Direita: Limitações e Regras */}
                 <div className="space-y-6">
                     {/* Limitações */}
-                    <div className="zenith-card p-6 relative overflow-hidden group flex-1 flex flex-col justify-center">
+                    <ZenithCard variant="default" hoverEffect={false} className="p-6 relative overflow-hidden group flex-1 flex flex-col justify-center">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
 
                         <div className="relative z-10">
@@ -122,10 +124,10 @@ export default function CryptoEducator() {
                                 ))}
                             </ul>
                         </div>
-                    </div>
+                    </ZenithCard>
 
                     {/* Regra de Ouro */}
-                    <div className="zenith-card p-6 relative overflow-hidden group flex-1 flex flex-col justify-center">
+                    <ZenithCard variant="default" hoverEffect={false} className="p-6 relative overflow-hidden group flex-1 flex flex-col justify-center">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--brand-primary)]/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
 
                         <div className="relative z-10">
@@ -135,7 +137,7 @@ export default function CryptoEducator() {
                                 "Compre quando todos estão com medo, venda quando todos estão eufóricos."
                             </blockquote>
                         </div>
-                    </div>
+                    </ZenithCard>
                 </div>
             </div>
         </div>

@@ -42,7 +42,7 @@ export function PriceChartSection() {
                 </Link>
             </div>
 
-            <ZenithCard variant="default" className="h-[500px] flex flex-col">
+            <ZenithCard variant="teal" hoverEffect={false} className="h-[500px] flex flex-col">
                 <div className="flex items-center justify-end mb-6">
                     <div className="flex gap-2">
                         {cryptoOptions.map((option) => (

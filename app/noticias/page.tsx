@@ -6,6 +6,7 @@ import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faClock, faArrowRight, faFilter } from '@fortawesome/free-solid-svg-icons';
 import PageWrapper from '@/components/layout/PageWrapper';
+import { ZenithCard } from '@/app/components/ui/ZenithCard';
 
 // Header config - inline para IA reconhecer
 const pageHeader = {
@@ -341,12 +342,18 @@ export default function NoticiasPage() {
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredNews.map((item, index) => (
-                  <Link
+                  <ZenithCard
                     key={index}
+                    as={Link}
                     href={`/noticias/${item.slug || item.id}`}
-                    className="glass-card group flex flex-col rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
+                    variant={
+                      item.sentiment === 'positive' ? 'success' :
+                        item.sentiment === 'negative' ? 'danger' :
+                          'warning'
+                    }
+                    className="flex flex-col h-full"
                   >
-                    <div className="p-6 flex flex-col h-full">
+                    <div className="flex flex-col h-full">
                       {/* Header: Categoria e Sentimento */}
                       <div className="flex items-center justify-between mb-4">
                         <span className="text-xs font-bold px-0 py-1 rounded-full text-[var(--text-secondary)] uppercase tracking-wider opacity-70">
@@ -365,28 +372,28 @@ export default function NoticiasPage() {
                       </div>
 
                       {/* Título */}
-                      <h3 className="text-xl font-bold mb-3 leading-tight text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2">
+                      <h3 className="text-xl font-bold mb-3 leading-tight text-zinc-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors line-clamp-2">
                         {item.title}
                       </h3>
 
                       {/* Resumo */}
-                      <p className="text-sm text-[var(--text-secondary)] mb-4 line-clamp-3 flex-grow leading-relaxed">
+                      <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4 line-clamp-3 flex-grow leading-relaxed">
                         {item.summary}
                       </p>
 
                       {/* Footer: Data e Seta */}
-                      <div className="mt-auto pt-4 border-t border-[var(--border-light)] flex items-center justify-between">
-                        <span className="text-xs font-medium text-[var(--text-tertiary)] flex items-center gap-1.5">
+                      <div className="mt-auto pt-4 border-t border-zinc-100 dark:border-white/5 flex items-center justify-between">
+                        <span className="text-xs font-medium text-zinc-500 dark:text-zinc-500 flex items-center gap-1.5">
                           <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
                           {getTimeAgo(item.publishedAt)}
                         </span>
 
-                        <span className="text-[var(--brand-primary)] opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0 duration-300">
+                        <span className="text-teal-600 dark:text-teal-400 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0 duration-300">
                           <FontAwesomeIcon icon={faArrowRight} />
                         </span>
                       </div>
                     </div>
-                  </Link>
+                  </ZenithCard>
                 ))}
 
                 {/* Loader Infinite Scroll */}

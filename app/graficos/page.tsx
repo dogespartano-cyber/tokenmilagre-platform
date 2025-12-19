@@ -8,6 +8,7 @@ import MarketFlow from '@/components/crypto/MarketFlow';
 import SocialLinks from '@/components/shared/SocialLinks';
 import { useSidebar } from '@/contexts/SidebarContext';
 import PageWrapper from '@/components/layout/PageWrapper';
+import { ZenithCard } from '@/app/components/ui/ZenithCard';
 
 // Header config - inline para IA reconhecer
 const pageHeader = {
@@ -67,7 +68,7 @@ export default function GraficosPage() {
 
             {/* Section 2: Macro & Money Flow */}
             <section id="macro" className="space-y-12 animate-fade-in-up delay-100 scroll-mt-24">
-              <div className="p-6">
+              <ZenithCard variant="default" hoverEffect={false}>
                 <div className="mb-6">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Mapa de Calor S&P 500</h2>
                   <p className="text-gray-500 dark:text-gray-400">Visão macro do mercado de ações global</p>
@@ -77,38 +78,42 @@ export default function GraficosPage() {
                 <div className="mt-8">
                   <MarketFlow />
                 </div>
-              </div>
+              </ZenithCard>
             </section>
 
             {/* Section 3: Crypto Overview */}
             <section className="space-y-12 animate-fade-in-up delay-200">
               {/* Heatmap - Full Width */}
-              <div id="heatmap" className="p-6 h-[800px] flex flex-col scroll-mt-24">
-                <div className="mb-4">
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Mapa de Calor Cripto</h2>
-                  <p className="text-gray-500 dark:text-gray-400">Performance do mercado em tempo real</p>
+              <ZenithCard id="heatmap" variant="default" hoverEffect={false} className="h-[800px] scroll-mt-24">
+                <div className="flex flex-col h-full">
+                  <div className="mb-4">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Mapa de Calor Cripto</h2>
+                    <p className="text-gray-500 dark:text-gray-400">Performance do mercado em tempo real</p>
+                  </div>
+                  <div className="flex-1 rounded-xl overflow-hidden">
+                    <CryptoHeatmapWidget />
+                  </div>
                 </div>
-                <div className="flex-1 rounded-xl overflow-hidden">
-                  <CryptoHeatmapWidget />
-                </div>
-              </div>
+              </ZenithCard>
 
               {/* Bubbles - Full Width */}
-              <div id="bubbles" className="p-6 h-[800px] flex flex-col scroll-mt-24">
-                <div className="mb-4">
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Bolhas Cripto</h2>
-                  <p className="text-gray-500 dark:text-gray-400">Visualização interativa de volume e tendência</p>
+              <ZenithCard id="bubbles" variant="default" hoverEffect={false} className="h-[800px] scroll-mt-24">
+                <div className="flex flex-col h-full">
+                  <div className="mb-4">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Bolhas Cripto</h2>
+                    <p className="text-gray-500 dark:text-gray-400">Visualização interativa de volume e tendência</p>
+                  </div>
+                  <div className="flex-1 rounded-xl overflow-hidden">
+                    <iframe
+                      src="https://cryptobubbles.net"
+                      className="w-full h-full"
+                      style={{ border: 'none' }}
+                      loading="lazy"
+                      title="CryptoBubbles"
+                    />
+                  </div>
                 </div>
-                <div className="flex-1 rounded-xl overflow-hidden">
-                  <iframe
-                    src="https://cryptobubbles.net"
-                    className="w-full h-full"
-                    style={{ border: 'none' }}
-                    loading="lazy"
-                    title="CryptoBubbles"
-                  />
-                </div>
-              </div>
+              </ZenithCard>
             </section>
 
 

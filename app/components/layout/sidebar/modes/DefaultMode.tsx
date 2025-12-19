@@ -79,39 +79,29 @@ function SortableMenuItem({ item, onClose, isActive, theme }: {
 
     return (
         <div ref={setNodeRef} style={style} className="relative group/item">
-            {/* Drag Handle */}
+            {/* Drag Handle - Invisible (Functional but hidden) */}
             <div
                 {...attributes}
                 {...listeners}
-                className="absolute left-0 top-0 bottom-0 w-8 cursor-grab active:cursor-grabbing z-20 opacity-0 group-hover/item:opacity-50 transition-opacity flex items-center justify-center"
+                className="absolute left-0 top-0 bottom-0 w-8 cursor-grab active:cursor-grabbing z-20 opacity-0 transition-opacity flex items-center justify-center"
             >
-                <div className="w-1 h-6 bg-[var(--text-tertiary)]/30 rounded-full" />
+                {/* Visual indicator removed per user request */}
             </div>
 
             {/* Link */}
             <Link
                 href={item.href}
                 onClick={onClose}
-                className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-base transition-all duration-300 relative overflow-hidden select-none ${isActive
-                        ? 'sidebar-active'
-                        : 'text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:translate-x-1'
+                className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition-all duration-200 select-none ${isActive
+                    ? 'bg-[#e6f4f3] text-teal-700 dark:bg-teal-500/10 dark:text-teal-400 font-bold shadow-sm'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-teal-600 dark:hover:text-teal-300'
                     }`}
             >
-                {/* Shine Effect */}
-                {isActive && (
-                    <div
-                        className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"
-                        style={{
-                            background: `linear-gradient(90deg, transparent, ${theme === 'light' ? 'rgba(13, 148, 136, 0.2)' : 'rgba(255,255,255,0.1)'}, transparent)`
-                        }}
-                    />
-                )}
-
                 <FontAwesomeIcon
                     icon={item.icon}
-                    className={`w-5 h-5 transition-transform duration-300 relative z-10 ${isActive ? 'scale-110' : 'group-hover:rotate-12'}`}
+                    className={`w-4 h-4 transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}
                 />
-                <span className="relative z-10">{item.label}</span>
+                <span>{item.label}</span>
             </Link>
         </div>
     );

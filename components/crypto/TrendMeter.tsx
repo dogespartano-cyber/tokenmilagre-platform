@@ -96,12 +96,12 @@ export default function TrendMeter({ symbol, interval = '4h', onColorChange }: T
     const trendColor = getTrendColor(displayScore);
 
     return (
-        <div className="flex flex-col h-full w-full glass-card static-glass-card rounded-2xl border border-[var(--border-light)] p-4">
+        <div className="flex flex-col h-full w-full items-center justify-center p-1">
             {/* Gauge Graphic */}
-            <div className="relative flex items-center justify-center py-6">
+            <div className="relative flex items-center justify-center py-6 w-full">
                 <svg
-                    viewBox="0 0 200 120"
-                    className="w-full max-w-[280px] overflow-visible drop-shadow-xl"
+                    viewBox="-30 0 260 125"
+                    className="w-full px-2 overflow-visible drop-shadow-xl"
                 >
                     <defs>
                         <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -211,7 +211,7 @@ export default function TrendMeter({ symbol, interval = '4h', onColorChange }: T
             </div>
 
             {/* Indicators Grid */}
-            <div className="grid grid-cols-2 gap-x-8 gap-y-8 px-4">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-6 px-2 w-full mx-auto">
                 {/* RSI */}
                 <div className="flex flex-col gap-2">
                     <div className="flex justify-between items-end border-b border-gray-200 dark:border-white/10 pb-2">
