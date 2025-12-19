@@ -10,8 +10,13 @@ function CryptoHeatmapWidget() {
   useEffect(() => {
     if (!container.current || !mounted) return;
 
-    // Limpa conteúdo anterior
+    // Limpa conteúdo anterior e recria o placeholder necessário
     container.current.innerHTML = '';
+    const widgetPlaceholder = document.createElement('div');
+    widgetPlaceholder.className = 'tradingview-widget-container__widget';
+    widgetPlaceholder.style.height = '100%';
+    widgetPlaceholder.style.width = '100%';
+    container.current.appendChild(widgetPlaceholder);
 
     const script = document.createElement("script");
     script.src = "https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js";

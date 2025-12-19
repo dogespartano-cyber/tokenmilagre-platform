@@ -308,7 +308,7 @@ export default function AdvancedChart({ symbol, name, timeframe: controlledTimef
       if (entries.length === 0 || !entries[0].target) return;
 
       const newRect = entries[0].contentRect;
-      chart.applyOptions({ width: newRect.width });
+      chart.applyOptions({ width: newRect.width, autoSize: false });
     });
 
     resizeObserver.observe(chartContainerRef.current);

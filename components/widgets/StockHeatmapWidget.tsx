@@ -11,6 +11,13 @@ function StockHeatmapWidget() {
     // Limpa conteúdo anterior
     container.current.innerHTML = '';
 
+    // Create the placeholder div required by TradingView script
+    const widgetPlaceholder = document.createElement('div');
+    widgetPlaceholder.className = 'tradingview-widget-container__widget';
+    widgetPlaceholder.style.height = '100%';
+    widgetPlaceholder.style.width = '100%';
+    container.current.appendChild(widgetPlaceholder);
+
     const script = document.createElement("script");
     script.src = "https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js";
     script.type = "text/javascript";
