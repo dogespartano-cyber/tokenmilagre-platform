@@ -14,7 +14,13 @@ export default function CustomUserButton() {
     const { signOut, openUserProfile } = useClerk();
     const { theme, toggleTheme, mounted, setTheme, accent, setAccent, depth, setDepth } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
+    const [hasMounted, setHasMounted] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+
+    // Marcar como montado após hidratação
+    useEffect(() => {
+        setHasMounted(true);
+    }, []);
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -29,7 +35,15 @@ export default function CustomUserButton() {
         };
     }, []);
 
-    if (!isLoaded || !user) return null;
+    // Skeleton placeholder - sempre renderizado no servidor e até montar no cliente
+    // Isso garante consistência entre SSR e cliente, evitando hydration mismatch
+    if (!hasMounted || !isLoaded || !user) {
+        return (
+            <div className="relative">
+                <div className="w-10 h-10 rounded-full bg-[var(--bg-glass)] animate-pulse border-2 border-[var(--border-glass)]" />
+            </div>
+        );
+    }
 
     return (
         <div className="relative" ref={dropdownRef}>

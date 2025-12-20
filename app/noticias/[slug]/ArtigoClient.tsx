@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import type React from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowUp, faCalendar, faClock, faShareNodes, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { getCitationAwareMarkdownComponents, SourcesSection } from '@/lib/domains/articles/components/citations-processor';
 import TransparencyNote from '@/components/shared/TransparencyNote';
@@ -27,7 +27,7 @@ interface NewsItem {
   factChecked?: boolean;
   factCheckIssues?: string[];
   lastVerified?: string;
-  citations?: string[]; // Array de URLs das fontes
+  citations?: string[];
   coverImage?: string;
   coverImageAlt?: string;
 }
@@ -48,6 +48,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
   const router = useRouter();
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
   const [activeSection, setActiveSection] = useState<string>('');
+
 
   const createSlug = (text: string) => {
     return text
@@ -74,6 +75,8 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
     }
   };
 
+
+
   // Extrair fontes do markdown
   const extractSourcesFromMarkdown = (content: string): { name: string; url: string }[] => {
     const sources: { name: string; url: string }[] = [];
@@ -98,7 +101,7 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
     return sources;
   };
 
-  // Remover H1 do início do conteúdo (título já aparece no header)
+  // Remover H1 do início do conteúdo
   const removeH1FromContent = (content: string): string => {
     const h1Regex = /^#\s+.+?\n+/;
     return content.replace(h1Regex, '').trim();
@@ -113,14 +116,14 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
     return content;
   };
 
-  // Calcular tempo de leitura (250 palavras por minuto)
+  // Calcular tempo de leitura
   const calculateReadingTime = (content: string) => {
     const words = content.split(/\s+/).length;
     const minutes = Math.ceil(words / 250);
     return minutes;
   };
 
-  // Extrai headings do conteúdo para criar índice (apenas H2)
+  // Extrair headings para índice
   useEffect(() => {
     if (!article || !article.content) return;
 
@@ -142,9 +145,10 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
     setTableOfContents(headings);
   }, [article]);
 
-  // Rastreia seção ativa
+  // Rastrear seção ativa e scroll
   useEffect(() => {
     const handleScroll = () => {
+
       const headingElements = tableOfContents.map(item => ({
         id: item.id,
         element: document.getElementById(item.id)
@@ -164,18 +168,6 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
     return () => window.removeEventListener('scroll', handleScroll);
   }, [tableOfContents]);
 
-  const getTimeAgo = (date: string) => {
-    const now = new Date();
-    const published = new Date(date);
-    const diffMs = now.getTime() - published.getTime();
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-
-    if (diffHours < 1) return 'Agora mesmo';
-    if (diffHours < 24) return `Há ${diffHours}h`;
-    const diffDays = Math.floor(diffHours / 24);
-    return `Há ${diffDays}d`;
-  };
-
   const getSentimentLabel = (sentiment: string) => {
     switch (sentiment) {
       case 'positive': return 'Positivo';
@@ -189,14 +181,6 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
       case 'positive': return 'bg-emerald-500 text-white';
       case 'negative': return 'bg-red-500 text-white';
       default: return 'bg-amber-500 text-white';
-    }
-  };
-
-  const getSentimentColorHex = (sentiment: string) => {
-    switch (sentiment) {
-      case 'positive': return '#10B981'; // emerald-500
-      case 'negative': return '#EF4444'; // red-500
-      default: return '#F59E0B'; // amber-500
     }
   };
 
@@ -218,29 +202,40 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
     window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
   };
 
+  // Formatar data no estilo editorial
+  const formatEditorialDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  };
+
   if (!article) {
     return (
-      <div className="container mx-auto px-4 py-12 flex justify-center">
-        <div className="glass-card p-12 max-w-2xl w-full text-center rounded-2xl">
+      <div className="min-h-[60vh] flex items-center justify-center px-4">
+        <div className="text-center max-w-md">
           <div className="text-6xl mb-6">📰</div>
-          <h1 className="text-3xl font-bold mb-4 text-[var(--text-article-title)]">
+          <h1 className="text-2xl md:text-3xl font-bold mb-4 text-[var(--text-article-title)]">
             Notícia não encontrada
           </h1>
-          <p className="mb-8 text-[var(--text-article-muted)] text-lg">
+          <p className="mb-8 text-[var(--text-article-muted)] text-base md:text-lg">
             A notícia que você procura não existe ou foi removida.
           </p>
           <button
             onClick={() => router.push('/noticias')}
-            className="px-8 py-3 rounded-xl font-bold transition-all hover:opacity-90 bg-[var(--brand-primary)] text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all bg-[var(--brand-primary)] text-white hover:opacity-90"
           >
-            ← Voltar para Notícias
+            <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
+            Voltar para Notícias
           </button>
         </div>
       </div>
     );
   }
 
-  const markdownSources = extractSourcesFromMarkdown(article.content || '');
   const contentWithoutH1 = removeH1FromContent(article.content || '');
   const cleanContent = removeSourcesSection(contentWithoutH1);
   const readingTime = calculateReadingTime(cleanContent);
@@ -249,271 +244,372 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
 
   return (
     <>
-      {/* Barra de progresso de leitura */}
-      <div className="relative pt-6 pb-4 md:pt-12 md:pb-8 overflow-hidden">
-        {/* Background Glow Effect - Dark Mode Only */}
-        <div className="absolute top-0 left-0 w-full max-w-4xl h-full opacity-30 pointer-events-none hidden dark:block"
-          style={{
-            background: `radial-gradient(circle at 20% 30%, ${getSentimentColorHex(article.sentiment)}40 0%, transparent 70%)`,
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 20%)',
-            maskImage: 'linear-gradient(to bottom, transparent, black 20%)'
-          }}
-        />
+      {/* ============================================
+          NYT-STYLE EDITORIAL LAYOUT
+          ============================================ */}
+      <div className="min-h-screen">
 
-        <div className="container mx-auto px-6 md:px-10 relative z-10">
-          <div className="max-w-6xl">
+        {/* Main Container */}
+        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
 
-            {/* Meta Badges */}
-            <div className="flex flex-wrap items-center gap-3 mb-6">
-              <div className="inline-flex items-center gap-2">
-                <span className="text-[10px] font-bold text-zinc-700 dark:text-white/90 uppercase tracking-wider drop-shadow-md">
-                  Sentimento
-                </span>
-                <div className="w-1 h-1 rounded-full bg-zinc-700/50 dark:bg-white/50 shadow-sm" />
-                <span className="text-sm font-extrabold uppercase tracking-wide drop-shadow-md" style={{ color: getSentimentColorHex(article.sentiment) }}>
-                  {getSentimentLabel(article.sentiment)}
-                </span>
-              </div>
+          {/* Grid: Sidebar Left + Content Center + Space Right */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-8">
 
-            </div>
+            {/* ========== SIDEBAR (Desktop Only) ========== */}
+            <aside className="hidden lg:block lg:col-span-2 xl:col-span-2">
+              <div className="sticky top-24 pt-8 space-y-8">
 
-            {/* Title */}
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 font-[family-name:var(--font-poppins)] text-[var(--text-article-title)]">
-              {article.title}
-            </h1>
+                {/* Voltar */}
+                <button
+                  onClick={() => router.push('/noticias')}
+                  className="flex items-center gap-2 text-sm text-[var(--text-article-muted)] hover:text-[var(--text-article-title)] transition-colors group"
+                >
+                  <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3 transition-transform group-hover:-translate-x-1" />
+                  <span>Notícias</span>
+                </button>
 
-            {/* Description */}
-            <p className="text-lg md:text-xl leading-relaxed text-[var(--text-article-body)] opacity-90 max-w-2xl">
-              {article.summary}
-            </p>
-
-            {/* Author & Date */}
-            <div className="mt-8 flex items-center gap-6 text-sm text-[var(--text-article-muted)]">
-              <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faCalendar} className="w-3 h-3" />
-                <span>{new Date(article.publishedAt).toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
-                <span>{readingTime} min de leitura</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-6 pt-2 pb-8 lg:pt-4 lg:pb-12">
-
-        {/* Botão Voltar Mobile - REMOVIDO CONFORME SOLICITADO */}
-        {/* <div className="mb-6 lg:hidden">
-          <button
-            onClick={() => router.back()}
-            className="flex items-center gap-2 text-[var(--text-article-muted)] hover:text-[var(--brand-primary)] transition-colors"
-          >
-            <FontAwesomeIcon icon={faArrowLeft} />
-            <span className="font-semibold">Voltar</span>
-          </button>
-        </div> */}
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-
-          {/* Coluna Principal (Artigo) */}
-          <div className="lg:col-span-8 space-y-8">
-
-            {/* Card Principal do Artigo - Estilo removido conforme solicitado */}
-            <div className="overflow-hidden">
-
-              {/* Imagem de Capa */}
-              {(article as any).coverImage && (
-                <div className="relative h-[300px] md:h-[400px] w-full">
-                  <img
-                    src={(article as any).coverImage}
-                    alt={(article as any).coverImageAlt || article.title}
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                </div>
-              )}
-
-              <div className="py-4 space-y-8">
-
-
-
-                {/* Conteúdo Markdown */}
-                <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:font-[family-name:var(--font-poppins)] prose-a:text-[var(--brand-primary)] prose-img:rounded-xl prose-img:shadow-lg">
-                  <ReactMarkdown
-                    components={{
-                      ...citationComponents,
-                      h1: ({ children }) => <h1 className="text-3xl font-bold mt-10 mb-6 text-[var(--text-article-title)]">{children}</h1>,
-                      h2: ({ children }) => {
-                        const text = String(children);
-                        const id = createSlug(text);
-                        return <h2 id={id} className="text-2xl font-bold mt-10 mb-5 text-[var(--text-article-title)] scroll-mt-32 border-b border-[var(--border-article)] pb-2">{children}</h2>;
-                      },
-                      h3: ({ children }) => {
-                        const text = String(children);
-                        const id = createSlug(text);
-                        return <h3 id={id} className="text-xl font-bold mt-8 mb-4 text-[var(--text-article-title)] scroll-mt-32">{children}</h3>;
-                      },
-                      // p removido pois já vem em citationComponents
-                      ul: ({ children }) => <ul className="mb-6 space-y-2 list-disc list-inside text-[var(--text-article-body)] marker:text-[var(--brand-primary)]">{children}</ul>,
-                      ol: ({ children }) => <ol className="mb-6 space-y-2 list-decimal list-inside text-[var(--text-article-body)] marker:text-[var(--brand-primary)]">{children}</ol>,
-                      blockquote: ({ children }) => (
-                        <blockquote className="pl-6 border-l-4 border-[var(--brand-primary)] my-8 italic bg-[var(--bg-article-quote)] p-4 rounded-r-xl text-[var(--text-article-body)]">
-                          {children}
-                        </blockquote>
-                      ),
-                      code: ({ children }) => (
-                        <code className="px-2 py-1 rounded text-sm font-mono bg-[var(--bg-article-tag)] text-[var(--brand-primary)]">
-                          {children}
-                        </code>
-                      ),
-                    }}
-                  >
-                    {cleanContent || 'Conteúdo não disponível.'}
-                  </ReactMarkdown>
-                </article>
-
-                {/* Tags Footer */}
-                <div className="mt-12 pt-8 border-t border-[var(--border-article)]">
-                  <div className="flex flex-wrap gap-2">
-                    {article.keywords.map((keyword, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => router.push(`/noticias?search=${encodeURIComponent(keyword)}`)}
-                        className="px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] lg:hover:bg-[var(--brand-primary)] lg:hover:text-white lg:hover:shadow-md"
-                      >
-                        #{keyword}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Seção de Fontes */}
-                <SourcesSection citations={citations} />
-
+                {/* Divisor */}
                 <div className="h-px bg-[var(--border-article)]" />
 
-                {/* Nota de Transparência */}
-                <TransparencyNote publishedAt={article.publishedAt} />
-
-
-
-              </div>
-            </div>
-
-            {/* Artigos Relacionados */}
-            {relatedArticles.length > 0 && (
-              <div className="space-y-6">
-                <h3 className="text-2xl font-bold text-[var(--text-article-title)] pl-2 border-l-4 border-[var(--brand-primary)]">
-                  Notícias Relacionadas
-                </h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                  {relatedArticles.slice(0, 4).map((related) => (
-                    <Link
-                      key={related.id}
-                      href={`/noticias/${related.slug || related.id}`}
-                      className="glass-card group p-5 rounded-2xl border border-[var(--border-article)] lg:hover:border-[var(--brand-primary)]/50 transition-all lg:hover:-translate-y-1 lg:hover:shadow-xl block"
-                    >
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${getSentimentColorClass(related.sentiment)}`}>
-                          {getSentimentLabel(related.sentiment)}
-                        </span>
-                        <span className="text-xs text-[var(--text-article-muted)]">
-                          {related.category[0]}
-                        </span>
-                      </div>
-                      <h4 className="text-lg font-bold mb-2 text-[var(--text-article-title)] lg:group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2">
-                        {related.title}
-                      </h4>
-                      <p className="text-sm text-[var(--text-article-body)] line-clamp-2">
-                        {related.summary}
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Sidebar (Desktop) */}
-          <div className="hidden lg:block lg:col-span-4 space-y-8">
-            <div className="sticky top-24 space-y-6">
-
-              {/* Botão Voltar Desktop */}
-              <button
-                onClick={() => router.push('/noticias')}
-                className="flex items-center gap-2 text-[var(--text-article-muted)] hover:text-[var(--brand-primary)] transition-colors font-medium mb-2 group"
-              >
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-article-tag)] flex items-center justify-center group-hover:bg-[var(--brand-primary)] group-hover:text-white transition-all">
-                  <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
-                </div>
-                Voltar para Notícias
-              </button>
-
-              {/* Índice */}
-              {tableOfContents.length > 0 && (
-                <div className="glass-card p-6 rounded-2xl border border-[var(--border-article)]">
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--text-article-muted)] mb-4 flex items-center gap-2">
-                    <span className="w-1 h-4 bg-[var(--brand-primary)] rounded-full"></span>
-                    Neste Artigo
-                  </h3>
-                  <nav className="space-y-1 relative">
-                    {/* Linha vertical de progresso visual */}
-                    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-[var(--bg-article-tag)] ml-0.5" />
-
+                {/* Índice */}
+                {tableOfContents.length > 0 && (
+                  <nav className="space-y-1">
+                    <h3 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--text-article-muted)] mb-3">
+                      Neste artigo
+                    </h3>
                     {tableOfContents.map((item, idx) => (
                       <button
                         key={idx}
                         onClick={() => scrollToSection(item.id)}
-                        className={`relative block text-sm text-left transition-all py-2 pl-4 w-full border-l-2 -ml-[1px] ${activeSection === item.id
-                          ? 'border-[var(--brand-primary)] text-[var(--brand-primary)] font-bold bg-[var(--brand-primary)]/5'
-                          : 'border-transparent text-[var(--text-article-muted)] hover:text-[var(--text-article-title)] hover:border-[var(--border-article)]'
+                        className={`block text-left text-sm py-1.5 w-full transition-all leading-snug ${activeSection === item.id
+                          ? 'text-[var(--brand-primary)] font-medium'
+                          : 'text-[var(--text-article-muted)] hover:text-[var(--text-article-title)]'
                           }`}
                       >
                         {item.text}
                       </button>
                     ))}
                   </nav>
+                )}
+
+                {/* Divisor */}
+                <div className="h-px bg-[var(--border-article)]" />
+
+                {/* Compartilhar */}
+                <div className="space-y-3">
+                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--text-article-muted)]">
+                    Compartilhar
+                  </h3>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={shareOnX}
+                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[var(--text-article-title)] hover:text-[var(--text-article-title)] transition-colors"
+                      aria-label="Compartilhar no X"
+                    >
+                      <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={shareOnTelegram}
+                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[#0088cc] hover:text-[#0088cc] transition-colors"
+                      aria-label="Compartilhar no Telegram"
+                    >
+                      <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={shareOnWhatsApp}
+                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[#25D366] hover:text-[#25D366] transition-colors"
+                      aria-label="Compartilhar no WhatsApp"
+                    >
+                      <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
+
+              </div>
+            </aside>
+
+            {/* ========== MAIN CONTENT ========== */}
+            <main className="lg:col-span-7 xl:col-span-7 pt-6 md:pt-12 lg:pt-8">
+
+              {/* Mobile: Voltar */}
+              <div className="lg:hidden mb-6">
+                <button
+                  onClick={() => router.push('/noticias')}
+                  className="inline-flex items-center gap-2 text-sm text-[var(--text-article-muted)]"
+                >
+                  <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
+                  Notícias
+                </button>
+              </div>
+
+              {/* ===== ARTICLE HEADER (NYT Style) ===== */}
+              <header className="mb-10 md:mb-14">
+
+                {/* Category */}
+                <div className="mb-4 md:mb-6">
+                  <span className="text-[var(--brand-primary)] text-xs md:text-sm font-semibold uppercase tracking-[0.15em]">
+                    {article.category[0]}
+                  </span>
+                </div>
+
+                {/* Title - Editorial Typography */}
+                <h1
+                  className="text-[1.75rem] md:text-[2.5rem] lg:text-[2.75rem] font-bold text-[var(--text-article-title)] mb-6 md:mb-8"
+                  style={{
+                    lineHeight: '1.15',
+                    letterSpacing: '-0.02em',
+                    fontFamily: 'var(--font-sans)'
+                  }}
+                >
+                  {article.title}
+                </h1>
+
+                {/* Summary - Elegant Italic */}
+                <p
+                  className="text-lg md:text-xl lg:text-[1.375rem] text-[var(--text-article-body)] font-light italic mb-6 md:mb-8"
+                  style={{ lineHeight: '1.6' }}
+                >
+                  {article.summary}
+                </p>
+
+                {/* Meta Line: Date + Reading Time */}
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[var(--text-article-muted)] pb-6 md:pb-8 border-b border-[var(--border-article)]">
+                  <time dateTime={article.publishedAt} className="capitalize">
+                    {formatEditorialDate(article.publishedAt)}
+                  </time>
+                  <span className="hidden md:inline">•</span>
+                  <span>{readingTime} min de leitura</span>
+                </div>
+
+                {/* Mobile: Share Buttons */}
+                <div className="lg:hidden mt-4 pt-4 flex items-center gap-4">
+                  <span className="text-xs text-[var(--text-article-muted)] uppercase tracking-wider">Compartilhar</span>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={shareOnX}
+                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)]"
+                      aria-label="X"
+                    >
+                      <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={shareOnTelegram}
+                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[#0088cc]"
+                      aria-label="Telegram"
+                    >
+                      <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={shareOnWhatsApp}
+                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[#25D366]"
+                      aria-label="WhatsApp"
+                    >
+                      <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+
+              </header>
+
+              {/* ===== COVER IMAGE ===== */}
+              {(article as any).coverImage && (
+                <figure className="mb-10 md:mb-14 -mx-4 md:mx-0">
+                  <img
+                    src={(article as any).coverImage}
+                    alt={(article as any).coverImageAlt || article.title}
+                    className="w-full h-auto md:rounded-lg"
+                    loading="eager"
+                  />
+                  {(article as any).coverImageAlt && (
+                    <figcaption className="mt-3 px-4 md:px-0 text-sm text-[var(--text-article-muted)] italic">
+                      {(article as any).coverImageAlt}
+                    </figcaption>
+                  )}
+                </figure>
               )}
 
-              {/* Compartilhar (Sidebar) */}
-              <div className="space-y-4 pt-2">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--text-article-muted)] flex items-center gap-2">
-                  <FontAwesomeIcon icon={faShareNodes} />
-                  Compartilhe
+              {/* ===== ARTICLE BODY ===== */}
+              <article
+                className="prose prose-lg max-w-none"
+                style={{
+                  '--tw-prose-body': 'var(--text-article-body)',
+                  '--tw-prose-headings': 'var(--text-article-title)',
+                  '--tw-prose-links': 'var(--brand-primary)',
+                } as React.CSSProperties}
+              >
+                <ReactMarkdown
+                  components={{
+                    ...citationComponents,
+                    h1: ({ children }) => (
+                      <h1 className="text-2xl md:text-3xl font-bold mt-12 md:mt-16 mb-6 text-[var(--text-article-title)]">
+                        {children}
+                      </h1>
+                    ),
+                    h2: ({ children }) => {
+                      const text = String(children);
+                      const id = createSlug(text);
+                      return (
+                        <h2
+                          id={id}
+                          className="text-xl md:text-2xl font-bold mt-14 md:mt-16 mb-5 pt-8 text-[var(--text-article-title)] scroll-mt-28 border-t border-[var(--border-article)]"
+                          style={{ letterSpacing: '-0.01em' }}
+                        >
+                          {children}
+                        </h2>
+                      );
+                    },
+                    h3: ({ children }) => {
+                      const text = String(children);
+                      const id = createSlug(text);
+                      return (
+                        <h3
+                          id={id}
+                          className="text-lg md:text-xl font-semibold mt-10 mb-4 text-[var(--text-article-title)] scroll-mt-28"
+                        >
+                          {children}
+                        </h3>
+                      );
+                    },
+                    p: ({ children }) => (
+                      <p
+                        className="text-[var(--text-article-body)] mb-7 md:mb-8"
+                        style={{
+                          fontSize: 'clamp(1.0625rem, 1vw + 0.9rem, 1.1875rem)',
+                          lineHeight: '1.9'
+                        }}
+                      >
+                        {children}
+                      </p>
+                    ),
+                    ul: ({ children }) => (
+                      <ul className="mb-8 space-y-3 list-disc pl-6 text-[var(--text-article-body)]" style={{ lineHeight: '1.8' }}>
+                        {children}
+                      </ul>
+                    ),
+                    ol: ({ children }) => (
+                      <ol className="mb-8 space-y-3 list-decimal pl-6 text-[var(--text-article-body)]" style={{ lineHeight: '1.8' }}>
+                        {children}
+                      </ol>
+                    ),
+                    li: ({ children }) => (
+                      <li className="pl-1" style={{ lineHeight: '1.8' }}>
+                        {children}
+                      </li>
+                    ),
+                    blockquote: ({ children }) => (
+                      <blockquote
+                        className="pl-6 md:pl-8 border-l-[3px] border-[var(--brand-primary)] my-10 md:my-12 py-2 text-[var(--text-article-body)]"
+                        style={{ fontStyle: 'normal' }}
+                      >
+                        <div className="text-lg md:text-xl" style={{ lineHeight: '1.7' }}>
+                          {children}
+                        </div>
+                      </blockquote>
+                    ),
+                    hr: () => (
+                      <hr className="my-12 md:my-16 border-0 h-px bg-[var(--border-article)]" />
+                    ),
+                    code: ({ children }) => (
+                      <code className="px-1.5 py-0.5 rounded text-sm font-mono bg-[var(--bg-article-tag)] text-[var(--text-article-title)]">
+                        {children}
+                      </code>
+                    ),
+                    strong: ({ children }) => (
+                      <strong className="font-semibold text-[var(--text-article-title)]">
+                        {children}
+                      </strong>
+                    ),
+                    em: ({ children }) => (
+                      <em className="italic">{children}</em>
+                    ),
+                    a: ({ href, children }) => (
+                      <a
+                        href={href}
+                        className="text-[var(--brand-primary)] underline decoration-[var(--brand-primary)]/30 underline-offset-2 hover:decoration-[var(--brand-primary)] transition-colors"
+                        target={href?.startsWith('http') ? '_blank' : undefined}
+                        rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      >
+                        {children}
+                      </a>
+                    ),
+                  }}
+                >
+                  {cleanContent || 'Conteúdo não disponível.'}
+                </ReactMarkdown>
+              </article>
+
+              {/* ===== TAGS ===== */}
+              <div className="mt-12 md:mt-16 pt-8 border-t border-[var(--border-article)]">
+                <h3 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--text-article-muted)] mb-4">
+                  Tópicos relacionados
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  <button
-                    onClick={shareOnX}
-                    className="flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold transition-all bg-black/5 hover:bg-black/10 border border-black/10 text-black dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/10 dark:text-white hover:scale-105 active:scale-95 text-sm"
-                  >
-                    <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
-                    X
-                  </button>
-                  <button
-                    onClick={shareOnTelegram}
-                    className="flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold transition-all bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/20 text-[#0088cc] hover:scale-105 active:scale-95 text-sm"
-                  >
-                    <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
-                    Telegram
-                  </button>
-                  <button
-                    onClick={shareOnWhatsApp}
-                    className="flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold transition-all bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/20 text-[#25D366] hover:scale-105 active:scale-95 text-sm"
-                  >
-                    <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
-                    WhatsApp
-                  </button>
+                  {article.keywords.map((keyword, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => router.push(`/noticias?search=${encodeURIComponent(keyword)}`)}
+                      className="px-3 py-1.5 rounded-full text-sm transition-colors bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] hover:bg-[var(--brand-primary)] hover:text-white"
+                    >
+                      {keyword}
+                    </button>
+                  ))}
                 </div>
               </div>
 
+              {/* ===== SOURCES ===== */}
+              <div className="mt-12">
+                <SourcesSection citations={citations} />
+              </div>
 
-            </div>
+              {/* ===== TRANSPARENCY NOTE ===== */}
+              <div className="mt-12 pt-8 border-t border-[var(--border-article)]">
+                <TransparencyNote publishedAt={article.publishedAt} />
+              </div>
+
+              {/* ===== RELATED ARTICLES ===== */}
+              {relatedArticles.length > 0 && (
+                <div className="mt-16 md:mt-20 pt-10 border-t border-[var(--border-article)]">
+                  <h3 className="text-xl md:text-2xl font-bold text-[var(--text-article-title)] mb-8">
+                    Continue lendo
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {relatedArticles.slice(0, 4).map((related) => (
+                      <Link
+                        key={related.id}
+                        href={`/noticias/${related.slug || related.id}`}
+                        className="group block p-5 rounded-xl border border-[var(--border-article)] hover:border-[var(--brand-primary)]/50 transition-all hover:shadow-lg"
+                      >
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${getSentimentColorClass(related.sentiment)}`}>
+                            {getSentimentLabel(related.sentiment)}
+                          </span>
+                          <span className="text-xs text-[var(--text-article-muted)]">
+                            {related.category[0]}
+                          </span>
+                        </div>
+                        <h4 className="text-base md:text-lg font-semibold mb-2 text-[var(--text-article-title)] group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2">
+                          {related.title}
+                        </h4>
+                        <p className="text-sm text-[var(--text-article-muted)] line-clamp-2">
+                          {related.summary}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Bottom Spacing */}
+              <div className="h-16 md:h-24" />
+
+            </main>
+
+            {/* ========== RIGHT SPACER (Desktop) ========== */}
+            <div className="hidden lg:block lg:col-span-3 xl:col-span-3" />
+
           </div>
         </div>
+
       </div>
     </>
   );

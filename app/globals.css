@@ -443,6 +443,13 @@ html {
   /* gray-50 */
   --border-article: #E5E7EB;
   /* gray-200 */
+
+  /* Editorial Minimalista - Conforto Ocular */
+  --prose-max-width: 680px;
+  --prose-line-height: 2;
+  --prose-font-size: 1.125rem;
+  --prose-font-size-mobile: 1.0625rem;
+  --prose-paragraph-spacing: 1.75rem;
 }
 
 [data-theme="dark"] {

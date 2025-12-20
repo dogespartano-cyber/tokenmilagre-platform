@@ -25,6 +25,7 @@ import NavbarCryptoTicker from '@/components/crypto/NavbarCryptoTicker';
 import GlobalBackground from '@/components/layout/GlobalBackground';
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import CustomUserButton from '@/components/shared/CustomUserButton';
+import ClientOnly from '@/components/shared/ClientOnly';
 import ScrollToTop from '@/components/shared/ScrollToTop';
 import CookieConsent from '@/components/shared/CookieConsent';
 
@@ -104,16 +105,18 @@ export default function RootLayoutNav({
                 {/* Desktop Actions */}
                 <nav className="hidden lg:flex items-center gap-6 pl-8 h-10 my-auto">
                   <div className="mr-4">
-                    <SignedIn>
-                      <CustomUserButton />
-                    </SignedIn>
-                    <SignedOut>
-                      <SignInButton mode="modal">
-                        <button className="px-4 py-2 rounded-lg bg-[var(--brand-primary)] text-white text-sm font-bold hover:bg-[var(--brand-hover)] transition-colors shadow-lg shadow-[var(--brand-primary)]/20">
-                          Entrar
-                        </button>
-                      </SignInButton>
-                    </SignedOut>
+                    <ClientOnly fallback={<div className="w-10 h-10 rounded-full bg-[var(--bg-glass)] animate-pulse border-2 border-[var(--border-glass)]" />}>
+                      <SignedIn>
+                        <CustomUserButton />
+                      </SignedIn>
+                      <SignedOut>
+                        <SignInButton mode="modal">
+                          <button className="px-4 py-2 rounded-lg bg-[var(--brand-primary)] text-white text-sm font-bold hover:bg-[var(--brand-hover)] transition-colors shadow-lg shadow-[var(--brand-primary)]/20">
+                            Entrar
+                          </button>
+                        </SignInButton>
+                      </SignedOut>
+                    </ClientOnly>
                   </div>
 
                   <button

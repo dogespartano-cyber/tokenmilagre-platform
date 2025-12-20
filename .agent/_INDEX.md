@@ -117,11 +117,12 @@ SEGURANCA   DESIGN    CONTEUDO ←───────────────�
 | [MANIFESTO](./workflows/MANIFESTO.md) | Missão e propósito |
 | [ARQUITETURA](./workflows/ARQUITETURA.md) | Filosofia fractal |
 | [TRANSPARENCIA](./workflows/TRANSPARENCIA.md) | Política ética do token |
-| [BACKLOG](./workflows/BACKLOG.md) | Tarefas pendentes |
-| [HISTORICO](./workflows/HISTORICO.md) | Histórico de sessões |
+| [BACKLOG](../Feedback/backlog/BACKLOG.md) | Tarefas pendentes *(local)* |
+| [HISTORICO](../Feedback/logs/HISTORICO.md) | Histórico de sessões *(local)* |
 | [MANTRA](./workflows/MANTRA.md) | Leitura diária |
 | [layout](./workflows/layout.md) | Guia de layout/tipografia |
 | [vibe](./workflows/vibe.md) | Boas práticas de vibe coding |
+| [ANÁLISE HOLÍSTICA](../Feedback/ANALISE-HOLISTICA_2025-12-19.md) | Auditoria multi-agent *(local)* |
 
 ---
 
