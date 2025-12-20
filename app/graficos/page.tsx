@@ -12,7 +12,7 @@ import ZenithCard from '@/components/ui/ZenithCard';
 
 // Header config - inline para IA reconhecer
 const pageHeader = {
-  title: 'Gráficos e Análises de Mercado',
+  title: 'Gráficos',
   description: 'Acompanhe o mercado em tempo real com gráficos avançados, análise técnica e indicadores profissionais',
   shortTitle: 'Gráficos'
 };

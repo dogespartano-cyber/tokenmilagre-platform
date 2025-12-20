@@ -6,12 +6,12 @@ import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faClock, faArrowRight, faFilter } from '@fortawesome/free-solid-svg-icons';
 import PageWrapper from '@/components/layout/PageWrapper';
-import ZenithCard from '@/components/ui/ZenithCard';
+import NewsTimeline from '@/components/news/NewsTimeline';
 
 // Header config - inline para IA reconhecer
 const pageHeader = {
-  title: 'Notícias Cripto',
-  description: 'Resumos inteligentes das principais notícias do mercado',
+  title: 'Notícias',
+  description: 'Análises e atualizações do mercado cripto',
   shortTitle: 'Notícias'
 };
 
@@ -341,70 +341,17 @@ export default function NoticiasPage() {
                 </button>
               </div>
             ) : (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredNews.map((item, index) => (
-                  <ZenithCard
-                    key={index}
-                    as={Link}
-                    href={`/noticias/${item.slug || item.id}`}
-                    variant={
-                      item.sentiment === 'positive' ? 'success' :
-                        item.sentiment === 'negative' ? 'danger' :
-                          'warning'
-                    }
-                    className="flex flex-col h-full"
-                  >
-                    <div className="flex flex-col h-full">
-                      {/* Header: Categoria e Sentimento */}
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-xs font-bold px-0 py-1 rounded-full text-[var(--text-secondary)] uppercase tracking-wider opacity-70">
-                          {item.category[0]}
-                        </span>
-                        <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-md ${item.sentiment === 'positive' ? 'text-emerald-500 bg-emerald-500/10' :
-                          item.sentiment === 'negative' ? 'text-red-500 bg-red-500/10' :
-                            'text-amber-500 bg-amber-500/10'
-                          }`}>
-                          <div className={`w-1.5 h-1.5 rounded-full ${item.sentiment === 'positive' ? 'bg-emerald-500' :
-                            item.sentiment === 'negative' ? 'bg-red-500' :
-                              'bg-amber-500'
-                            }`} />
-                          {item.sentiment === 'positive' ? 'Positivo' : item.sentiment === 'negative' ? 'Negativo' : 'Neutro'}
-                        </div>
-                      </div>
-
-                      {/* Título */}
-                      <h3 className="text-xl font-bold mb-3 leading-tight text-zinc-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors line-clamp-2">
-                        {item.title}
-                      </h3>
-
-                      {/* Resumo */}
-                      <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4 line-clamp-3 flex-grow leading-relaxed">
-                        {item.summary}
-                      </p>
-
-                      {/* Footer: Data e Seta */}
-                      <div className="mt-auto pt-4 border-t border-zinc-100 dark:border-white/5 flex items-center justify-between">
-                        <span className="text-xs font-medium text-zinc-500 dark:text-zinc-500 flex items-center gap-1.5">
-                          <FontAwesomeIcon icon={faClock} className="w-3 h-3" />
-                          {getTimeAgo(item.publishedAt)}
-                        </span>
-
-                        <span className="text-teal-600 dark:text-teal-400 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0 duration-300">
-                          <FontAwesomeIcon icon={faArrowRight} />
-                        </span>
-                      </div>
-                    </div>
-                  </ZenithCard>
-                ))}
+              <>
+                {filteredNews.length > 0 && <NewsTimeline items={filteredNews} />}
 
                 {/* Loader Infinite Scroll */}
-                <div ref={sentinelRef} className="col-span-full h-4" />
+                <div ref={sentinelRef} className="h-4 mt-8" />
                 {(isLoadingMore || loading) && (
-                  <div className="col-span-full flex justify-center py-8">
+                  <div className="flex justify-center py-8">
                     <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin border-[var(--brand-primary)]" />
                   </div>
                 )}
-              </div>
+              </>
             )}
           </main>
 

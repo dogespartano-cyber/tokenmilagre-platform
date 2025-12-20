@@ -40,7 +40,7 @@ export default function TransparencyNote({ publishedAt }: TransparencyNoteProps)
                     </Link>
                 </p>
                 <p className="text-xs text-teal-700/60 dark:text-teal-300/60 mt-2">
-                    Este conteúdo é educacional. Não é aconselhamento financeiro. DYOR.
+                    Este conteúdo é educacional. Não é aconselhamento financeiro. DYOR. Perplexity pode cometer erros. Por isso, é bom checar as respostas.
                 </p>
             </div>
         </ZenithCard>

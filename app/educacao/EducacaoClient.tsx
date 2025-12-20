@@ -23,7 +23,7 @@ import PageWrapper from '@/components/layout/PageWrapper';
 
 // Header config - inline para IA reconhecer
 const pageHeader = {
-  title: 'Aprenda Cripto do Zero ao Avançado',
+  title: 'Educação',
   description: 'Artigos e tutoriais gratuitos criados pela comunidade. Sem promessas falsas, apenas conhecimento real.',
   shortTitle: 'Educação'
 };

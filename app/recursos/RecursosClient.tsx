@@ -12,7 +12,7 @@ import PageWrapper from '@/components/layout/PageWrapper';
 
 // Header config - inline para IA reconhecer
 const pageHeader = {
-  title: 'Ferramentas e Links Seguros',
+  title: 'Recursos',
   description: 'Acesse exchanges, carteiras e sites oficiais com tranquilidade.',
   shortTitle: 'Recursos'
 };

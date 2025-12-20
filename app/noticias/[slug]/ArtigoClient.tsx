@@ -10,7 +10,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { getCitationAwareMarkdownComponents, SourcesSection } from '@/lib/domains/articles/components/citations-processor';
 import TransparencyNote from '@/components/shared/TransparencyNote';
-import PageHeader from '@/components/shared/PageHeader';
+import PageWrapper from '@/components/layout/PageWrapper';
 import { useSidebar } from '@/contexts/SidebarContext';
 
 interface NewsItem {
@@ -228,11 +228,12 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
   const citationComponents = getCitationAwareMarkdownComponents(citations);
 
   return (
-    <>
-      {/* PageHeader com logo, título e Fear & Greed */}
-      <div className="container mx-auto px-4 lg:px-8 py-1 lg:py-4">
-        <PageHeader title="Notícias" description="Análises e atualizações do mercado cripto" />
-      </div>
+    <PageWrapper
+      header={{
+        title: "Notícias",
+        description: "Análises e atualizações do mercado cripto"
+      }}
+    >
 
       {/* ============================================
           NYT-STYLE EDITORIAL LAYOUT
@@ -577,6 +578,6 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
         </div>
 
       </div>
-    </>
+    </PageWrapper>
   );
 }

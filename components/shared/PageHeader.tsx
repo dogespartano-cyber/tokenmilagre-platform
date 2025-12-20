@@ -141,6 +141,7 @@ export default function PageHeader({ title, description, shortTitle }: PageHeade
               src="/images/TOKEN-MILAGRE-Hero.webp"
               alt="$MILAGRE Logo"
               fill
+              sizes="112px"
               className="object-contain transition-transform duration-300 group-hover:scale-110"
               priority
             />
@@ -149,7 +150,7 @@ export default function PageHeader({ title, description, shortTitle }: PageHeade
             {/* Título - sempre clicável, posts de notícias voltam para /noticias */}
             <Link href={pathname.startsWith('/noticias/') && pathname !== '/noticias' ? '/noticias' : pathname}>
               <h1
-                className={`text-4xl font-bold mb-1 font-[family-name:var(--font-poppins)] text-[#ebb60b] cursor-pointer hover:text-[var(--brand-primary)] transition-colors hidden lg:block ${pathname === '/' ? '' : ''}`}
+                className={`text-4xl font-bold mb-1 font-[family-name:var(--font-poppins)] text-[#ebb60b] cursor-pointer hover:text-[var(--brand-primary)] transition-colors hidden lg:block uppercase ${pathname === '/' ? '' : ''}`}
                 style={{
                   opacity: animateTitle ? 1 : 0,
                   transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
@@ -188,7 +189,7 @@ export default function PageHeader({ title, description, shortTitle }: PageHeade
       </div>
 
       {/* Breadcrumbs - última posição do header */}
-      <div className="hidden lg:block">
+      <div className="sr-only">
         <Breadcrumbs inline={true} />
       </div>
     </div>
