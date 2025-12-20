@@ -457,7 +457,7 @@ html {
      ZENITH DARK MODE - Cyber-Prosperity
      ============================================ */
   /* Background Colors - Deep Midnight */
-  --bg-primary-source: #050A14;
+  --bg-primary-source: #181a20;
   --bg-primary: var(--bg-primary-source);
   /* Deepest Obsidian */
 
@@ -1425,36 +1425,8 @@ body {
 }
 
 [data-theme="dark"] .global-background-base {
-  /* Mix from Gradient to Black based on Percentage */
-  /* Note: Gradient mixing is complex, so we mix the colors individually or use an overlay approach if gradient is essential. 
-     User wanted "tons de branco até cinza claro" for light mode.
-     For dark mode efficiency with gradient, we can keep the overlay OR use a dark mix.
-     Given user preference against overlay affecting elements, let's treat Dark Mode similarly:
-     Mix the "start" and "end" of gradient or just background color?
-     The original request implies replacing the "layer above everything".
-     Let's try mixing the background property itself.
-  */
-  --bg-gradient-start: var(--bg-primary);
-  --bg-gradient-end: var(--bg-secondary);
-
-  /* We simulate the gradient by mixing the result, but gradient in color-mix is not standard.
-     Simpler approach: Use a pseudo-element for the "dimmer" that sits BEHIND content (z-index -1)
-     but ON TOP of the background gradient, but this is what we just removed.
-     Wait, the user said "apenas do fundo da página... e não uma camada acima de tudo que muda tbm os cards".
-     The previous overlay WAS z-index -1, but it was darkening the visual perception of white cards because maybe cards were transparent?
-     
-     Let's check card transparency.
-     .zenith-card uses rgba(255, 255, 255, 0.9). It is slightly transparent.
-     If the background behind it gets black, the card looks darker.
-     To fix, cards need to be LESS transparent or opaque if we want them to stay "white".
-     OR we accept that glassmorphism implies environment awareness.
-     
-     However, primarily the user request is about Light Mode "white to gray".
-     So let's implement the Light Mode mix as requested.
-  */
-  background: linear-gradient(to bottom,
-      color-mix(in srgb, var(--bg-primary), black var(--theme-depth-mix)),
-      color-mix(in srgb, var(--bg-secondary), black var(--theme-depth-mix)));
+  /* Cor sólida sem gradiente */
+  background: #181a20;
 }
 
 /* =================
@@ -1478,7 +1450,7 @@ body {
  */
 
 
-/* Efeito 3: Vignette */
+/* Efeito 3: Vignette - DISABLED
 [data-theme="dark"] .global-background-base::before {
   content: '';
   position: absolute;
@@ -1486,6 +1458,7 @@ body {
   background: radial-gradient(circle at 50% 50%, transparent 40%, var(--bg-primary) 100%);
   pointer-events: none;
 }
+*/
 
 /* =================================
    MILAGRE THEME SPECIAL ATMOSPHERE
@@ -1509,7 +1482,8 @@ body {
  */
 
 
-/* 3. Adaptive Bottom-Right Glow */
+/* 3. Adaptive Bottom-Right Glow - DISABLED for cleaner background */
+/*
 [data-theme="dark"][data-accent="milagre"] .global-background-effects,
 [data-theme="dark"][data-accent="forest"] .global-background-effects,
 [data-theme="dark"][data-accent="sunset"] .global-background-effects {
@@ -1518,17 +1492,17 @@ body {
     radial-gradient(circle at 10% 10%, var(--gradient-end) 0%, transparent 60%);
   opacity: 0.15;
 }
+*/
 
-/* SPECIAL: TITANIUM DEEP BOTTOM GLOW */
+/* SPECIAL: TITANIUM DEEP BOTTOM GLOW - DISABLED */
+/*
 [data-theme="dark"][data-accent="ocean"] .global-background-effects {
   background-image:
-    /* Deep Abyss Blue from Bottom */
     radial-gradient(circle at 50% 120%, #1e3a8a 0%, transparent 70%),
-    /* Sharp Electric Blue from Right */
     radial-gradient(circle at 100% 50%, #1d4ed8 0%, transparent 50%);
   opacity: 0.3;
-  /* Stronger visibility */
 }
+*/
 
 /* ============================================
    PROSE STYLES - Article Typography (Tailwind v4 Compatible)

@@ -99,7 +99,7 @@ export function TopCryptosSection() {
             </div>
 
             {/* Unified Glass Table Container */}
-            <ZenithCard variant="teal" hoverEffect={false} className="!p-0 flex flex-col overflow-hidden">
+            <ZenithCard variant="glass" hoverEffect={false} className="!p-0 flex flex-col overflow-hidden">
 
                 {/* Table Header */}
                 <div className={`${gridCols} py-4 border-b border-[var(--border-light)] bg-[var(--bg-tertiary)]/30 text-xs font-semibold uppercase tracking-wide text-[var(--text-tertiary)] select-none`}>

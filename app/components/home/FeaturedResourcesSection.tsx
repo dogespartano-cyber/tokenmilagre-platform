@@ -41,7 +41,7 @@ export function FeaturedResourcesSection({ resources }: FeaturedResourcesSection
                         as={Link}
                         key={index}
                         href={resource.url}
-                        variant="teal"
+                        variant="glass"
                         className={`
                             flex flex-col justify-between
                             h-full min-h-[180px]

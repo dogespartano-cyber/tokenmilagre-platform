@@ -39,7 +39,7 @@ export function LearnCryptoSection({ education }: LearnCryptoSectionProps) {
                         as={Link}
                         key={item.id}
                         href={`/educacao/${item.slug}`}
-                        variant="teal"
+                        variant="glass"
                         className={`
                             flex flex-col justify-center
                             h-full min-h-[180px]
