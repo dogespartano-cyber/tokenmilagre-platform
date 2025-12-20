@@ -35,8 +35,6 @@ interface NewsItem {
 interface ArtigoClientProps {
   article: NewsItem | null;
   relatedArticles?: NewsItem[];
-  previousArticle?: NewsItem | null;
-  nextArticle?: NewsItem | null;
 }
 
 interface TableOfContentsItem {
@@ -44,7 +42,7 @@ interface TableOfContentsItem {
   text: string;
 }
 
-export default function ArtigoClient({ article, relatedArticles = [], previousArticle = null, nextArticle = null }: ArtigoClientProps) {
+export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoClientProps) {
   const router = useRouter();
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
   const [activeSection, setActiveSection] = useState<string>('');
@@ -75,31 +73,6 @@ export default function ArtigoClient({ article, relatedArticles = [], previousAr
     }
   };
 
-
-
-  // Extrair fontes do markdown
-  const extractSourcesFromMarkdown = (content: string): { name: string; url: string }[] => {
-    const sources: { name: string; url: string }[] = [];
-    const markdownRegex = /^-\s+\[(.+?)\]\((https?:\/\/[^\)]+)\)/gm;
-    let match;
-
-    while ((match = markdownRegex.exec(content)) !== null) {
-      sources.push({
-        name: match[1].trim(),
-        url: match[2].trim()
-      });
-    }
-
-    const oldFormatRegex = /^-\s+([^\[\(]+?)\s+\((https?:\/\/[^\)]+)\)/gm;
-    while ((match = oldFormatRegex.exec(content)) !== null) {
-      sources.push({
-        name: match[1].trim(),
-        url: match[2].trim()
-      });
-    }
-
-    return sources;
-  };
 
   // Remover H1 do início do conteúdo
   const removeH1FromContent = (content: string): string => {

@@ -12,7 +12,7 @@ import { useTheme } from '@/lib/core/theme';
 export default function CustomUserButton() {
     const { user, isLoaded } = useUser();
     const { signOut, openUserProfile } = useClerk();
-    const { theme, toggleTheme, mounted, setTheme, accent, setAccent, depth, setDepth } = useTheme();
+    const { theme, mounted, setTheme, accent, setAccent, depth, setDepth } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
     const [hasMounted, setHasMounted] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
