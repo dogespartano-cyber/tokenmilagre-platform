@@ -148,7 +148,7 @@ export async function GET(request: NextRequest) {
         // Buscar contagem total
         const item = articleId
             ? await prisma.article.findUnique({ where: { id: articleId }, select: { commentCount: true } })
-            : await prisma.resource.findUnique({ where: { id: resourceId }, select: { commentCount: true } });
+            : await prisma.resource.findUnique({ where: { id: resourceId! }, select: { commentCount: true } });
 
         return NextResponse.json({
             success: true,
