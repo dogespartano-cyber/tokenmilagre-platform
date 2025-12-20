@@ -1,13 +1,16 @@
 /**
  * ArticlePreviewPanel Component
  * Preview e ações para artigos gerados
+ * Inclui validação de veracidade com Gemini 3 Flash
  */
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner, faCopy, faPen, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faCopy, faPen, faCheck, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 import ArticlePreview from '@/components/admin/ArticlePreview';
-import { type ArticleType, MESSAGES, API_ENDPOINTS, ANIMATION_DELAYS } from '../_lib/constants';
+import { type ArticleType } from '../_lib/constants';
 import type { ProcessedArticle } from '../_hooks/usePerplexityChat';
+import ValidationResultPanel from './ValidationResultPanel';
+import type { FactCheckResult } from '@/lib/shared/ai/gemini-validator';
 
 interface ArticlePreviewPanelProps {
   article: ProcessedArticle;
@@ -20,6 +23,11 @@ interface ArticlePreviewPanelProps {
   onCopyArticle: () => void;
   onGenerateCover: () => Promise<void>;
   onPublish: () => void;
+  // Novas props para validação
+  validating?: boolean;
+  validationResult?: FactCheckResult | null;
+  onValidate?: () => void;
+  onClearValidation?: () => void;
 }
 
 export default function ArticlePreviewPanel({
@@ -32,13 +40,18 @@ export default function ArticlePreviewPanel({
   onProcessWithGemini,
   onCopyArticle,
   onGenerateCover,
-  onPublish
+  onPublish,
+  // Validação
+  validating = false,
+  validationResult = null,
+  onValidate,
+  onClearValidation
 }: ArticlePreviewPanelProps) {
   return (
     <div className="rounded-2xl p-6 border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl shadow-xl">
       <div className="mb-6">
         {/* Header */}
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-3 mb-4 flex-wrap">
           <h2 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-gray-900 dark:text-white">
             Preview do Artigo
           </h2>
@@ -55,6 +68,17 @@ export default function ArticlePreviewPanel({
           ) : (
             <span className="px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 bg-red-500 text-white">
               ⚠️ Sem fontes
+            </span>
+          )}
+          {/* Badge de Validação */}
+          {validationResult && (
+            <span className={`px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 text-white ${validationResult.status === 'verified' ? 'bg-emerald-500' :
+              validationResult.status === 'partially_verified' ? 'bg-amber-500' :
+                'bg-red-500'
+              }`}>
+              {validationResult.status === 'verified' ? '✓ Verificado' :
+                validationResult.status === 'partially_verified' ? '⚠ Parcial' :
+                  '✗ Não verificado'} ({validationResult.score}%)
             </span>
           )}
         </div>
@@ -109,11 +133,33 @@ export default function ArticlePreviewPanel({
             )}
           </button>
 
+          {/* NOVO: Botão de Validação */}
+          {onValidate && articleType !== 'resource' && (
+            <button
+              onClick={onValidate}
+              disabled={validating || processing}
+              className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2 disabled:opacity-50 border border-purple-300 dark:border-purple-500/30 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/30"
+              aria-label={validating ? 'Validando veracidade do artigo' : 'Validar veracidade do artigo com Gemini e Google Search'}
+            >
+              {validating ? (
+                <>
+                  <FontAwesomeIcon icon={faSpinner} spin />
+                  Validando...
+                </>
+              ) : (
+                <>
+                  <FontAwesomeIcon icon={faShieldAlt} />
+                  🔍 Validar Veracidade
+                </>
+              )}
+            </button>
+          )}
+
           <button
             onClick={onCopyArticle}
             className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2 border ${copiedProcessed
-                ? 'bg-emerald-500 border-emerald-500 text-white'
-                : 'border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10'
+              ? 'bg-emerald-500 border-emerald-500 text-white'
+              : 'border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10'
               }`}
             aria-label={copiedProcessed ? 'Conteúdo copiado para área de transferência' : 'Copiar conteúdo do artigo'}
           >
@@ -144,6 +190,16 @@ export default function ArticlePreviewPanel({
           </button>
         </div>
       </div>
+
+      {/* Resultado da Validação */}
+      {validationResult && (
+        <ValidationResultPanel
+          result={validationResult}
+          articleTitle={article.title || article.name || ''}
+          articleContent={article.content || ''}
+          onDismiss={onClearValidation}
+        />
+      )}
 
       {/* Divisor */}
       <div className="border-t border-gray-200 dark:border-white/10 my-6"></div>

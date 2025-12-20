@@ -101,9 +101,9 @@ export async function POST(request: NextRequest) {
 **Retornar JSON completo e válido com todas as seções.**`
     };
 
-    // 5. Chamar Gemini API (usando 2.5-flash - mais rápido)
+    // 5. Chamar Gemini 3 Flash com grounding (Google Search) para buscar dados atualizados
     const geminiResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`,
       {
         method: 'POST',
         headers: {
@@ -117,6 +117,11 @@ export async function POST(request: NextRequest) {
                   text: `${systemPrompts[articleType]}\n\n**Artigo para processar:**\n${JSON.stringify(article, null, 2)}`
                 }
               ]
+            }
+          ],
+          tools: [
+            {
+              google_search: {} // Habilita grounding com Google Search
             }
           ],
           generationConfig: {

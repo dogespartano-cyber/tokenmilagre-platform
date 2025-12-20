@@ -128,9 +128,9 @@ export default function CustomUserButton() {
                                 </div>
                             </button>
 
-                            {/* App Settings */}
+                            {/* Admin Dashboard */}
                             <Link
-                                href="/membro"
+                                href="/dashboard"
                                 onClick={() => setIsOpen(false)}
                                 className="flex cursor-pointer items-center gap-4 px-6 min-h-[56px] justify-between transition-colors"
                                 style={{ color: 'var(--text-modal)' }}
@@ -142,7 +142,29 @@ export default function CustomUserButton() {
                                         <FontAwesomeIcon icon={faCog} className="text-xl" />
                                     </div>
                                     <p className="text-base font-medium leading-normal" style={{ color: 'var(--text-modal)' }}>
-                                        Dashboard Membro
+                                        Dashboard
+                                    </p>
+                                </div>
+                                <div className="shrink-0" style={{ color: 'var(--text-modal-muted)' }}>
+                                    <FontAwesomeIcon icon={faChevronRight} />
+                                </div>
+                            </Link>
+
+                            {/* App Settings */}
+                            <Link
+                                href="/membro"
+                                onClick={() => setIsOpen(false)}
+                                className="flex cursor-pointer items-center gap-4 px-6 min-h-[56px] justify-between transition-colors"
+                                style={{ color: 'var(--text-modal)' }}
+                                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-modal-hover)'}
+                                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                            >
+                                <div className="flex items-center gap-4">
+                                    <div className="text-[var(--brand-primary)] flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--brand-primary)]/10">
+                                        <FontAwesomeIcon icon={faUser} className="text-xl" />
+                                    </div>
+                                    <p className="text-base font-medium leading-normal" style={{ color: 'var(--text-modal)' }}>
+                                        Minha Conta
                                     </p>
                                 </div>
                                 <div className="shrink-0" style={{ color: 'var(--text-modal-muted)' }}>

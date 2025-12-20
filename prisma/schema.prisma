@@ -104,6 +104,7 @@ model Article {
   factCheckSources   String?   // JSON array com URLs das fontes consultadas
   factCheckDate      DateTime? // Data da verificação
   factCheckStatus    String?   // verified (>=70%), failed (<70%), skipped (sem APIs)
+  factCheckClicks    Int       @default(0) // Contador de verificações públicas
 
   // Campos específicos de ARTIGOS EDUCACIONAIS
   level              String?   // 'iniciante' | 'intermediario' | 'avancado'
@@ -487,3 +488,22 @@ model UserProgress {
   @@index([articleSlug])
   @@index([completed])
 }
+
+// Rastreamento de verificações públicas de fact-check
+model ArticleFactCheck {
+  id          String   @id @default(cuid())
+  articleId   String
+  userId      String
+  
+  // Resultado da verificação
+  score       Float    // 0-100
+  status      String   // verified, partially_verified, unverified
+  summary     String   // Resumo da verificação
+  
+  createdAt   DateTime @default(now())
+
+  @@unique([articleId, userId]) // Apenas 1 verificação por usuário por artigo
+  @@index([articleId])
+  @@index([userId])
+}
+

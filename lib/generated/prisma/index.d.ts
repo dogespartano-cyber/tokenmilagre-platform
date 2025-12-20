@@ -73,6 +73,11 @@ export type ProjectMap = $Result.DefaultSelection<Prisma.$ProjectMapPayload>
  * 
  */
 export type UserProgress = $Result.DefaultSelection<Prisma.$UserProgressPayload>
+/**
+ * Model ArticleFactCheck
+ * 
+ */
+export type ArticleFactCheck = $Result.DefaultSelection<Prisma.$ArticleFactCheckPayload>
 
 /**
  * Enums
@@ -382,6 +387,16 @@ export class PrismaClient<
     * ```
     */
   get userProgress(): Prisma.UserProgressDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.articleFactCheck`: Exposes CRUD operations for the **ArticleFactCheck** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ArticleFactChecks
+    * const articleFactChecks = await prisma.articleFactCheck.findMany()
+    * ```
+    */
+  get articleFactCheck(): Prisma.ArticleFactCheckDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -834,7 +849,8 @@ export namespace Prisma {
     CommunityStory: 'CommunityStory',
     SocialProject: 'SocialProject',
     ProjectMap: 'ProjectMap',
-    UserProgress: 'UserProgress'
+    UserProgress: 'UserProgress',
+    ArticleFactCheck: 'ArticleFactCheck'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -853,7 +869,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "article" | "citation" | "resource" | "cryptocurrency" | "copilotActivity" | "automationTask" | "copilotReport" | "communityStory" | "socialProject" | "projectMap" | "userProgress"
+      modelProps: "user" | "article" | "citation" | "resource" | "cryptocurrency" | "copilotActivity" | "automationTask" | "copilotReport" | "communityStory" | "socialProject" | "projectMap" | "userProgress" | "articleFactCheck"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1745,6 +1761,80 @@ export namespace Prisma {
           }
         }
       }
+      ArticleFactCheck: {
+        payload: Prisma.$ArticleFactCheckPayload<ExtArgs>
+        fields: Prisma.ArticleFactCheckFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ArticleFactCheckFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArticleFactCheckPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ArticleFactCheckFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArticleFactCheckPayload>
+          }
+          findFirst: {
+            args: Prisma.ArticleFactCheckFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArticleFactCheckPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ArticleFactCheckFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArticleFactCheckPayload>
+          }
+          findMany: {
+            args: Prisma.ArticleFactCheckFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArticleFactCheckPayload>[]
+          }
+          create: {
+            args: Prisma.ArticleFactCheckCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArticleFactCheckPayload>
+          }
+          createMany: {
+            args: Prisma.ArticleFactCheckCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ArticleFactCheckCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArticleFactCheckPayload>[]
+          }
+          delete: {
+            args: Prisma.ArticleFactCheckDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArticleFactCheckPayload>
+          }
+          update: {
+            args: Prisma.ArticleFactCheckUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArticleFactCheckPayload>
+          }
+          deleteMany: {
+            args: Prisma.ArticleFactCheckDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ArticleFactCheckUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ArticleFactCheckUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArticleFactCheckPayload>[]
+          }
+          upsert: {
+            args: Prisma.ArticleFactCheckUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArticleFactCheckPayload>
+          }
+          aggregate: {
+            args: Prisma.ArticleFactCheckAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateArticleFactCheck>
+          }
+          groupBy: {
+            args: Prisma.ArticleFactCheckGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ArticleFactCheckGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ArticleFactCheckCountArgs<ExtArgs>
+            result: $Utils.Optional<ArticleFactCheckCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1853,6 +1943,7 @@ export namespace Prisma {
     socialProject?: SocialProjectOmit
     projectMap?: ProjectMapOmit
     userProgress?: UserProgressOmit
+    articleFactCheck?: ArticleFactCheckOmit
   }
 
   /* Types for Logging */
@@ -3314,11 +3405,13 @@ export namespace Prisma {
 
   export type ArticleAvgAggregateOutputType = {
     factCheckScore: number | null
+    factCheckClicks: number | null
     courseSequence: number | null
   }
 
   export type ArticleSumAggregateOutputType = {
     factCheckScore: number | null
+    factCheckClicks: number | null
     courseSequence: number | null
   }
 
@@ -3338,6 +3431,7 @@ export namespace Prisma {
     factCheckSources: string | null
     factCheckDate: Date | null
     factCheckStatus: string | null
+    factCheckClicks: number | null
     level: string | null
     contentType: string | null
     readTime: string | null
@@ -3369,6 +3463,7 @@ export namespace Prisma {
     factCheckSources: string | null
     factCheckDate: Date | null
     factCheckStatus: string | null
+    factCheckClicks: number | null
     level: string | null
     contentType: string | null
     readTime: string | null
@@ -3400,6 +3495,7 @@ export namespace Prisma {
     factCheckSources: number
     factCheckDate: number
     factCheckStatus: number
+    factCheckClicks: number
     level: number
     contentType: number
     readTime: number
@@ -3419,11 +3515,13 @@ export namespace Prisma {
 
   export type ArticleAvgAggregateInputType = {
     factCheckScore?: true
+    factCheckClicks?: true
     courseSequence?: true
   }
 
   export type ArticleSumAggregateInputType = {
     factCheckScore?: true
+    factCheckClicks?: true
     courseSequence?: true
   }
 
@@ -3443,6 +3541,7 @@ export namespace Prisma {
     factCheckSources?: true
     factCheckDate?: true
     factCheckStatus?: true
+    factCheckClicks?: true
     level?: true
     contentType?: true
     readTime?: true
@@ -3474,6 +3573,7 @@ export namespace Prisma {
     factCheckSources?: true
     factCheckDate?: true
     factCheckStatus?: true
+    factCheckClicks?: true
     level?: true
     contentType?: true
     readTime?: true
@@ -3505,6 +3605,7 @@ export namespace Prisma {
     factCheckSources?: true
     factCheckDate?: true
     factCheckStatus?: true
+    factCheckClicks?: true
     level?: true
     contentType?: true
     readTime?: true
@@ -3623,6 +3724,7 @@ export namespace Prisma {
     factCheckSources: string | null
     factCheckDate: Date | null
     factCheckStatus: string | null
+    factCheckClicks: number
     level: string | null
     contentType: string | null
     readTime: string | null
@@ -3673,6 +3775,7 @@ export namespace Prisma {
     factCheckSources?: boolean
     factCheckDate?: boolean
     factCheckStatus?: boolean
+    factCheckClicks?: boolean
     level?: boolean
     contentType?: boolean
     readTime?: boolean
@@ -3707,6 +3810,7 @@ export namespace Prisma {
     factCheckSources?: boolean
     factCheckDate?: boolean
     factCheckStatus?: boolean
+    factCheckClicks?: boolean
     level?: boolean
     contentType?: boolean
     readTime?: boolean
@@ -3739,6 +3843,7 @@ export namespace Prisma {
     factCheckSources?: boolean
     factCheckDate?: boolean
     factCheckStatus?: boolean
+    factCheckClicks?: boolean
     level?: boolean
     contentType?: boolean
     readTime?: boolean
@@ -3771,6 +3876,7 @@ export namespace Prisma {
     factCheckSources?: boolean
     factCheckDate?: boolean
     factCheckStatus?: boolean
+    factCheckClicks?: boolean
     level?: boolean
     contentType?: boolean
     readTime?: boolean
@@ -3786,7 +3892,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "type" | "excerpt" | "published" | "authorId" | "category" | "tags" | "sentiment" | "factCheckScore" | "factCheckSources" | "factCheckDate" | "factCheckStatus" | "level" | "contentType" | "readTime" | "warningLevel" | "securityTips" | "courseSequence" | "relatedArticles" | "projectHighlight" | "coverImage" | "coverImageAlt" | "quizData" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
+  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "type" | "excerpt" | "published" | "authorId" | "category" | "tags" | "sentiment" | "factCheckScore" | "factCheckSources" | "factCheckDate" | "factCheckStatus" | "factCheckClicks" | "level" | "contentType" | "readTime" | "warningLevel" | "securityTips" | "courseSequence" | "relatedArticles" | "projectHighlight" | "coverImage" | "coverImageAlt" | "quizData" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
   export type ArticleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     citations?: boolean | Article$citationsArgs<ExtArgs>
@@ -3821,6 +3927,7 @@ export namespace Prisma {
       factCheckSources: string | null
       factCheckDate: Date | null
       factCheckStatus: string | null
+      factCheckClicks: number
       level: string | null
       contentType: string | null
       readTime: string | null
@@ -4274,6 +4381,7 @@ export namespace Prisma {
     readonly factCheckSources: FieldRef<"Article", 'String'>
     readonly factCheckDate: FieldRef<"Article", 'DateTime'>
     readonly factCheckStatus: FieldRef<"Article", 'String'>
+    readonly factCheckClicks: FieldRef<"Article", 'Int'>
     readonly level: FieldRef<"Article", 'String'>
     readonly contentType: FieldRef<"Article", 'String'>
     readonly readTime: FieldRef<"Article", 'String'>
@@ -17033,6 +17141,1061 @@ export namespace Prisma {
 
 
   /**
+   * Model ArticleFactCheck
+   */
+
+  export type AggregateArticleFactCheck = {
+    _count: ArticleFactCheckCountAggregateOutputType | null
+    _avg: ArticleFactCheckAvgAggregateOutputType | null
+    _sum: ArticleFactCheckSumAggregateOutputType | null
+    _min: ArticleFactCheckMinAggregateOutputType | null
+    _max: ArticleFactCheckMaxAggregateOutputType | null
+  }
+
+  export type ArticleFactCheckAvgAggregateOutputType = {
+    score: number | null
+  }
+
+  export type ArticleFactCheckSumAggregateOutputType = {
+    score: number | null
+  }
+
+  export type ArticleFactCheckMinAggregateOutputType = {
+    id: string | null
+    articleId: string | null
+    userId: string | null
+    score: number | null
+    status: string | null
+    summary: string | null
+    createdAt: Date | null
+  }
+
+  export type ArticleFactCheckMaxAggregateOutputType = {
+    id: string | null
+    articleId: string | null
+    userId: string | null
+    score: number | null
+    status: string | null
+    summary: string | null
+    createdAt: Date | null
+  }
+
+  export type ArticleFactCheckCountAggregateOutputType = {
+    id: number
+    articleId: number
+    userId: number
+    score: number
+    status: number
+    summary: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ArticleFactCheckAvgAggregateInputType = {
+    score?: true
+  }
+
+  export type ArticleFactCheckSumAggregateInputType = {
+    score?: true
+  }
+
+  export type ArticleFactCheckMinAggregateInputType = {
+    id?: true
+    articleId?: true
+    userId?: true
+    score?: true
+    status?: true
+    summary?: true
+    createdAt?: true
+  }
+
+  export type ArticleFactCheckMaxAggregateInputType = {
+    id?: true
+    articleId?: true
+    userId?: true
+    score?: true
+    status?: true
+    summary?: true
+    createdAt?: true
+  }
+
+  export type ArticleFactCheckCountAggregateInputType = {
+    id?: true
+    articleId?: true
+    userId?: true
+    score?: true
+    status?: true
+    summary?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ArticleFactCheckAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ArticleFactCheck to aggregate.
+     */
+    where?: ArticleFactCheckWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ArticleFactChecks to fetch.
+     */
+    orderBy?: ArticleFactCheckOrderByWithRelationInput | ArticleFactCheckOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ArticleFactCheckWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ArticleFactChecks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ArticleFactChecks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ArticleFactChecks
+    **/
+    _count?: true | ArticleFactCheckCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ArticleFactCheckAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ArticleFactCheckSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ArticleFactCheckMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ArticleFactCheckMaxAggregateInputType
+  }
+
+  export type GetArticleFactCheckAggregateType<T extends ArticleFactCheckAggregateArgs> = {
+        [P in keyof T & keyof AggregateArticleFactCheck]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateArticleFactCheck[P]>
+      : GetScalarType<T[P], AggregateArticleFactCheck[P]>
+  }
+
+
+
+
+  export type ArticleFactCheckGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ArticleFactCheckWhereInput
+    orderBy?: ArticleFactCheckOrderByWithAggregationInput | ArticleFactCheckOrderByWithAggregationInput[]
+    by: ArticleFactCheckScalarFieldEnum[] | ArticleFactCheckScalarFieldEnum
+    having?: ArticleFactCheckScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ArticleFactCheckCountAggregateInputType | true
+    _avg?: ArticleFactCheckAvgAggregateInputType
+    _sum?: ArticleFactCheckSumAggregateInputType
+    _min?: ArticleFactCheckMinAggregateInputType
+    _max?: ArticleFactCheckMaxAggregateInputType
+  }
+
+  export type ArticleFactCheckGroupByOutputType = {
+    id: string
+    articleId: string
+    userId: string
+    score: number
+    status: string
+    summary: string
+    createdAt: Date
+    _count: ArticleFactCheckCountAggregateOutputType | null
+    _avg: ArticleFactCheckAvgAggregateOutputType | null
+    _sum: ArticleFactCheckSumAggregateOutputType | null
+    _min: ArticleFactCheckMinAggregateOutputType | null
+    _max: ArticleFactCheckMaxAggregateOutputType | null
+  }
+
+  type GetArticleFactCheckGroupByPayload<T extends ArticleFactCheckGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ArticleFactCheckGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ArticleFactCheckGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ArticleFactCheckGroupByOutputType[P]>
+            : GetScalarType<T[P], ArticleFactCheckGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ArticleFactCheckSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    articleId?: boolean
+    userId?: boolean
+    score?: boolean
+    status?: boolean
+    summary?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["articleFactCheck"]>
+
+  export type ArticleFactCheckSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    articleId?: boolean
+    userId?: boolean
+    score?: boolean
+    status?: boolean
+    summary?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["articleFactCheck"]>
+
+  export type ArticleFactCheckSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    articleId?: boolean
+    userId?: boolean
+    score?: boolean
+    status?: boolean
+    summary?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["articleFactCheck"]>
+
+  export type ArticleFactCheckSelectScalar = {
+    id?: boolean
+    articleId?: boolean
+    userId?: boolean
+    score?: boolean
+    status?: boolean
+    summary?: boolean
+    createdAt?: boolean
+  }
+
+  export type ArticleFactCheckOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "articleId" | "userId" | "score" | "status" | "summary" | "createdAt", ExtArgs["result"]["articleFactCheck"]>
+
+  export type $ArticleFactCheckPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ArticleFactCheck"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      articleId: string
+      userId: string
+      score: number
+      status: string
+      summary: string
+      createdAt: Date
+    }, ExtArgs["result"]["articleFactCheck"]>
+    composites: {}
+  }
+
+  type ArticleFactCheckGetPayload<S extends boolean | null | undefined | ArticleFactCheckDefaultArgs> = $Result.GetResult<Prisma.$ArticleFactCheckPayload, S>
+
+  type ArticleFactCheckCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ArticleFactCheckFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ArticleFactCheckCountAggregateInputType | true
+    }
+
+  export interface ArticleFactCheckDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ArticleFactCheck'], meta: { name: 'ArticleFactCheck' } }
+    /**
+     * Find zero or one ArticleFactCheck that matches the filter.
+     * @param {ArticleFactCheckFindUniqueArgs} args - Arguments to find a ArticleFactCheck
+     * @example
+     * // Get one ArticleFactCheck
+     * const articleFactCheck = await prisma.articleFactCheck.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ArticleFactCheckFindUniqueArgs>(args: SelectSubset<T, ArticleFactCheckFindUniqueArgs<ExtArgs>>): Prisma__ArticleFactCheckClient<$Result.GetResult<Prisma.$ArticleFactCheckPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ArticleFactCheck that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ArticleFactCheckFindUniqueOrThrowArgs} args - Arguments to find a ArticleFactCheck
+     * @example
+     * // Get one ArticleFactCheck
+     * const articleFactCheck = await prisma.articleFactCheck.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ArticleFactCheckFindUniqueOrThrowArgs>(args: SelectSubset<T, ArticleFactCheckFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ArticleFactCheckClient<$Result.GetResult<Prisma.$ArticleFactCheckPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ArticleFactCheck that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArticleFactCheckFindFirstArgs} args - Arguments to find a ArticleFactCheck
+     * @example
+     * // Get one ArticleFactCheck
+     * const articleFactCheck = await prisma.articleFactCheck.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ArticleFactCheckFindFirstArgs>(args?: SelectSubset<T, ArticleFactCheckFindFirstArgs<ExtArgs>>): Prisma__ArticleFactCheckClient<$Result.GetResult<Prisma.$ArticleFactCheckPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ArticleFactCheck that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArticleFactCheckFindFirstOrThrowArgs} args - Arguments to find a ArticleFactCheck
+     * @example
+     * // Get one ArticleFactCheck
+     * const articleFactCheck = await prisma.articleFactCheck.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ArticleFactCheckFindFirstOrThrowArgs>(args?: SelectSubset<T, ArticleFactCheckFindFirstOrThrowArgs<ExtArgs>>): Prisma__ArticleFactCheckClient<$Result.GetResult<Prisma.$ArticleFactCheckPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ArticleFactChecks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArticleFactCheckFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ArticleFactChecks
+     * const articleFactChecks = await prisma.articleFactCheck.findMany()
+     * 
+     * // Get first 10 ArticleFactChecks
+     * const articleFactChecks = await prisma.articleFactCheck.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const articleFactCheckWithIdOnly = await prisma.articleFactCheck.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ArticleFactCheckFindManyArgs>(args?: SelectSubset<T, ArticleFactCheckFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticleFactCheckPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ArticleFactCheck.
+     * @param {ArticleFactCheckCreateArgs} args - Arguments to create a ArticleFactCheck.
+     * @example
+     * // Create one ArticleFactCheck
+     * const ArticleFactCheck = await prisma.articleFactCheck.create({
+     *   data: {
+     *     // ... data to create a ArticleFactCheck
+     *   }
+     * })
+     * 
+     */
+    create<T extends ArticleFactCheckCreateArgs>(args: SelectSubset<T, ArticleFactCheckCreateArgs<ExtArgs>>): Prisma__ArticleFactCheckClient<$Result.GetResult<Prisma.$ArticleFactCheckPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ArticleFactChecks.
+     * @param {ArticleFactCheckCreateManyArgs} args - Arguments to create many ArticleFactChecks.
+     * @example
+     * // Create many ArticleFactChecks
+     * const articleFactCheck = await prisma.articleFactCheck.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ArticleFactCheckCreateManyArgs>(args?: SelectSubset<T, ArticleFactCheckCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ArticleFactChecks and returns the data saved in the database.
+     * @param {ArticleFactCheckCreateManyAndReturnArgs} args - Arguments to create many ArticleFactChecks.
+     * @example
+     * // Create many ArticleFactChecks
+     * const articleFactCheck = await prisma.articleFactCheck.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ArticleFactChecks and only return the `id`
+     * const articleFactCheckWithIdOnly = await prisma.articleFactCheck.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ArticleFactCheckCreateManyAndReturnArgs>(args?: SelectSubset<T, ArticleFactCheckCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticleFactCheckPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ArticleFactCheck.
+     * @param {ArticleFactCheckDeleteArgs} args - Arguments to delete one ArticleFactCheck.
+     * @example
+     * // Delete one ArticleFactCheck
+     * const ArticleFactCheck = await prisma.articleFactCheck.delete({
+     *   where: {
+     *     // ... filter to delete one ArticleFactCheck
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ArticleFactCheckDeleteArgs>(args: SelectSubset<T, ArticleFactCheckDeleteArgs<ExtArgs>>): Prisma__ArticleFactCheckClient<$Result.GetResult<Prisma.$ArticleFactCheckPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ArticleFactCheck.
+     * @param {ArticleFactCheckUpdateArgs} args - Arguments to update one ArticleFactCheck.
+     * @example
+     * // Update one ArticleFactCheck
+     * const articleFactCheck = await prisma.articleFactCheck.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ArticleFactCheckUpdateArgs>(args: SelectSubset<T, ArticleFactCheckUpdateArgs<ExtArgs>>): Prisma__ArticleFactCheckClient<$Result.GetResult<Prisma.$ArticleFactCheckPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ArticleFactChecks.
+     * @param {ArticleFactCheckDeleteManyArgs} args - Arguments to filter ArticleFactChecks to delete.
+     * @example
+     * // Delete a few ArticleFactChecks
+     * const { count } = await prisma.articleFactCheck.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ArticleFactCheckDeleteManyArgs>(args?: SelectSubset<T, ArticleFactCheckDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ArticleFactChecks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArticleFactCheckUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ArticleFactChecks
+     * const articleFactCheck = await prisma.articleFactCheck.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ArticleFactCheckUpdateManyArgs>(args: SelectSubset<T, ArticleFactCheckUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ArticleFactChecks and returns the data updated in the database.
+     * @param {ArticleFactCheckUpdateManyAndReturnArgs} args - Arguments to update many ArticleFactChecks.
+     * @example
+     * // Update many ArticleFactChecks
+     * const articleFactCheck = await prisma.articleFactCheck.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ArticleFactChecks and only return the `id`
+     * const articleFactCheckWithIdOnly = await prisma.articleFactCheck.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ArticleFactCheckUpdateManyAndReturnArgs>(args: SelectSubset<T, ArticleFactCheckUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticleFactCheckPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ArticleFactCheck.
+     * @param {ArticleFactCheckUpsertArgs} args - Arguments to update or create a ArticleFactCheck.
+     * @example
+     * // Update or create a ArticleFactCheck
+     * const articleFactCheck = await prisma.articleFactCheck.upsert({
+     *   create: {
+     *     // ... data to create a ArticleFactCheck
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ArticleFactCheck we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ArticleFactCheckUpsertArgs>(args: SelectSubset<T, ArticleFactCheckUpsertArgs<ExtArgs>>): Prisma__ArticleFactCheckClient<$Result.GetResult<Prisma.$ArticleFactCheckPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ArticleFactChecks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArticleFactCheckCountArgs} args - Arguments to filter ArticleFactChecks to count.
+     * @example
+     * // Count the number of ArticleFactChecks
+     * const count = await prisma.articleFactCheck.count({
+     *   where: {
+     *     // ... the filter for the ArticleFactChecks we want to count
+     *   }
+     * })
+    **/
+    count<T extends ArticleFactCheckCountArgs>(
+      args?: Subset<T, ArticleFactCheckCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ArticleFactCheckCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ArticleFactCheck.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArticleFactCheckAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ArticleFactCheckAggregateArgs>(args: Subset<T, ArticleFactCheckAggregateArgs>): Prisma.PrismaPromise<GetArticleFactCheckAggregateType<T>>
+
+    /**
+     * Group by ArticleFactCheck.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArticleFactCheckGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ArticleFactCheckGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ArticleFactCheckGroupByArgs['orderBy'] }
+        : { orderBy?: ArticleFactCheckGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ArticleFactCheckGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetArticleFactCheckGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ArticleFactCheck model
+   */
+  readonly fields: ArticleFactCheckFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ArticleFactCheck.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ArticleFactCheckClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ArticleFactCheck model
+   */
+  interface ArticleFactCheckFieldRefs {
+    readonly id: FieldRef<"ArticleFactCheck", 'String'>
+    readonly articleId: FieldRef<"ArticleFactCheck", 'String'>
+    readonly userId: FieldRef<"ArticleFactCheck", 'String'>
+    readonly score: FieldRef<"ArticleFactCheck", 'Float'>
+    readonly status: FieldRef<"ArticleFactCheck", 'String'>
+    readonly summary: FieldRef<"ArticleFactCheck", 'String'>
+    readonly createdAt: FieldRef<"ArticleFactCheck", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ArticleFactCheck findUnique
+   */
+  export type ArticleFactCheckFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticleFactCheck
+     */
+    select?: ArticleFactCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticleFactCheck
+     */
+    omit?: ArticleFactCheckOmit<ExtArgs> | null
+    /**
+     * Filter, which ArticleFactCheck to fetch.
+     */
+    where: ArticleFactCheckWhereUniqueInput
+  }
+
+  /**
+   * ArticleFactCheck findUniqueOrThrow
+   */
+  export type ArticleFactCheckFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticleFactCheck
+     */
+    select?: ArticleFactCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticleFactCheck
+     */
+    omit?: ArticleFactCheckOmit<ExtArgs> | null
+    /**
+     * Filter, which ArticleFactCheck to fetch.
+     */
+    where: ArticleFactCheckWhereUniqueInput
+  }
+
+  /**
+   * ArticleFactCheck findFirst
+   */
+  export type ArticleFactCheckFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticleFactCheck
+     */
+    select?: ArticleFactCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticleFactCheck
+     */
+    omit?: ArticleFactCheckOmit<ExtArgs> | null
+    /**
+     * Filter, which ArticleFactCheck to fetch.
+     */
+    where?: ArticleFactCheckWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ArticleFactChecks to fetch.
+     */
+    orderBy?: ArticleFactCheckOrderByWithRelationInput | ArticleFactCheckOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ArticleFactChecks.
+     */
+    cursor?: ArticleFactCheckWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ArticleFactChecks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ArticleFactChecks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ArticleFactChecks.
+     */
+    distinct?: ArticleFactCheckScalarFieldEnum | ArticleFactCheckScalarFieldEnum[]
+  }
+
+  /**
+   * ArticleFactCheck findFirstOrThrow
+   */
+  export type ArticleFactCheckFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticleFactCheck
+     */
+    select?: ArticleFactCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticleFactCheck
+     */
+    omit?: ArticleFactCheckOmit<ExtArgs> | null
+    /**
+     * Filter, which ArticleFactCheck to fetch.
+     */
+    where?: ArticleFactCheckWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ArticleFactChecks to fetch.
+     */
+    orderBy?: ArticleFactCheckOrderByWithRelationInput | ArticleFactCheckOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ArticleFactChecks.
+     */
+    cursor?: ArticleFactCheckWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ArticleFactChecks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ArticleFactChecks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ArticleFactChecks.
+     */
+    distinct?: ArticleFactCheckScalarFieldEnum | ArticleFactCheckScalarFieldEnum[]
+  }
+
+  /**
+   * ArticleFactCheck findMany
+   */
+  export type ArticleFactCheckFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticleFactCheck
+     */
+    select?: ArticleFactCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticleFactCheck
+     */
+    omit?: ArticleFactCheckOmit<ExtArgs> | null
+    /**
+     * Filter, which ArticleFactChecks to fetch.
+     */
+    where?: ArticleFactCheckWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ArticleFactChecks to fetch.
+     */
+    orderBy?: ArticleFactCheckOrderByWithRelationInput | ArticleFactCheckOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ArticleFactChecks.
+     */
+    cursor?: ArticleFactCheckWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ArticleFactChecks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ArticleFactChecks.
+     */
+    skip?: number
+    distinct?: ArticleFactCheckScalarFieldEnum | ArticleFactCheckScalarFieldEnum[]
+  }
+
+  /**
+   * ArticleFactCheck create
+   */
+  export type ArticleFactCheckCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticleFactCheck
+     */
+    select?: ArticleFactCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticleFactCheck
+     */
+    omit?: ArticleFactCheckOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ArticleFactCheck.
+     */
+    data: XOR<ArticleFactCheckCreateInput, ArticleFactCheckUncheckedCreateInput>
+  }
+
+  /**
+   * ArticleFactCheck createMany
+   */
+  export type ArticleFactCheckCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ArticleFactChecks.
+     */
+    data: ArticleFactCheckCreateManyInput | ArticleFactCheckCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ArticleFactCheck createManyAndReturn
+   */
+  export type ArticleFactCheckCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticleFactCheck
+     */
+    select?: ArticleFactCheckSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticleFactCheck
+     */
+    omit?: ArticleFactCheckOmit<ExtArgs> | null
+    /**
+     * The data used to create many ArticleFactChecks.
+     */
+    data: ArticleFactCheckCreateManyInput | ArticleFactCheckCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ArticleFactCheck update
+   */
+  export type ArticleFactCheckUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticleFactCheck
+     */
+    select?: ArticleFactCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticleFactCheck
+     */
+    omit?: ArticleFactCheckOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ArticleFactCheck.
+     */
+    data: XOR<ArticleFactCheckUpdateInput, ArticleFactCheckUncheckedUpdateInput>
+    /**
+     * Choose, which ArticleFactCheck to update.
+     */
+    where: ArticleFactCheckWhereUniqueInput
+  }
+
+  /**
+   * ArticleFactCheck updateMany
+   */
+  export type ArticleFactCheckUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ArticleFactChecks.
+     */
+    data: XOR<ArticleFactCheckUpdateManyMutationInput, ArticleFactCheckUncheckedUpdateManyInput>
+    /**
+     * Filter which ArticleFactChecks to update
+     */
+    where?: ArticleFactCheckWhereInput
+    /**
+     * Limit how many ArticleFactChecks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ArticleFactCheck updateManyAndReturn
+   */
+  export type ArticleFactCheckUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticleFactCheck
+     */
+    select?: ArticleFactCheckSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticleFactCheck
+     */
+    omit?: ArticleFactCheckOmit<ExtArgs> | null
+    /**
+     * The data used to update ArticleFactChecks.
+     */
+    data: XOR<ArticleFactCheckUpdateManyMutationInput, ArticleFactCheckUncheckedUpdateManyInput>
+    /**
+     * Filter which ArticleFactChecks to update
+     */
+    where?: ArticleFactCheckWhereInput
+    /**
+     * Limit how many ArticleFactChecks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ArticleFactCheck upsert
+   */
+  export type ArticleFactCheckUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticleFactCheck
+     */
+    select?: ArticleFactCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticleFactCheck
+     */
+    omit?: ArticleFactCheckOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ArticleFactCheck to update in case it exists.
+     */
+    where: ArticleFactCheckWhereUniqueInput
+    /**
+     * In case the ArticleFactCheck found by the `where` argument doesn't exist, create a new ArticleFactCheck with this data.
+     */
+    create: XOR<ArticleFactCheckCreateInput, ArticleFactCheckUncheckedCreateInput>
+    /**
+     * In case the ArticleFactCheck was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ArticleFactCheckUpdateInput, ArticleFactCheckUncheckedUpdateInput>
+  }
+
+  /**
+   * ArticleFactCheck delete
+   */
+  export type ArticleFactCheckDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticleFactCheck
+     */
+    select?: ArticleFactCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticleFactCheck
+     */
+    omit?: ArticleFactCheckOmit<ExtArgs> | null
+    /**
+     * Filter which ArticleFactCheck to delete.
+     */
+    where: ArticleFactCheckWhereUniqueInput
+  }
+
+  /**
+   * ArticleFactCheck deleteMany
+   */
+  export type ArticleFactCheckDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ArticleFactChecks to delete
+     */
+    where?: ArticleFactCheckWhereInput
+    /**
+     * Limit how many ArticleFactChecks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ArticleFactCheck without action
+   */
+  export type ArticleFactCheckDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticleFactCheck
+     */
+    select?: ArticleFactCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticleFactCheck
+     */
+    omit?: ArticleFactCheckOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -17080,6 +18243,7 @@ export namespace Prisma {
     factCheckSources: 'factCheckSources',
     factCheckDate: 'factCheckDate',
     factCheckStatus: 'factCheckStatus',
+    factCheckClicks: 'factCheckClicks',
     level: 'level',
     contentType: 'contentType',
     readTime: 'readTime',
@@ -17327,6 +18491,19 @@ export namespace Prisma {
   };
 
   export type UserProgressScalarFieldEnum = (typeof UserProgressScalarFieldEnum)[keyof typeof UserProgressScalarFieldEnum]
+
+
+  export const ArticleFactCheckScalarFieldEnum: {
+    id: 'id',
+    articleId: 'articleId',
+    userId: 'userId',
+    score: 'score',
+    status: 'status',
+    summary: 'summary',
+    createdAt: 'createdAt'
+  };
+
+  export type ArticleFactCheckScalarFieldEnum = (typeof ArticleFactCheckScalarFieldEnum)[keyof typeof ArticleFactCheckScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -17614,6 +18791,7 @@ export namespace Prisma {
     factCheckSources?: StringNullableFilter<"Article"> | string | null
     factCheckDate?: DateTimeNullableFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableFilter<"Article"> | string | null
+    factCheckClicks?: IntFilter<"Article"> | number
     level?: StringNullableFilter<"Article"> | string | null
     contentType?: StringNullableFilter<"Article"> | string | null
     readTime?: StringNullableFilter<"Article"> | string | null
@@ -17647,6 +18825,7 @@ export namespace Prisma {
     factCheckSources?: SortOrderInput | SortOrder
     factCheckDate?: SortOrderInput | SortOrder
     factCheckStatus?: SortOrderInput | SortOrder
+    factCheckClicks?: SortOrder
     level?: SortOrderInput | SortOrder
     contentType?: SortOrderInput | SortOrder
     readTime?: SortOrderInput | SortOrder
@@ -17683,6 +18862,7 @@ export namespace Prisma {
     factCheckSources?: StringNullableFilter<"Article"> | string | null
     factCheckDate?: DateTimeNullableFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableFilter<"Article"> | string | null
+    factCheckClicks?: IntFilter<"Article"> | number
     level?: StringNullableFilter<"Article"> | string | null
     contentType?: StringNullableFilter<"Article"> | string | null
     readTime?: StringNullableFilter<"Article"> | string | null
@@ -17716,6 +18896,7 @@ export namespace Prisma {
     factCheckSources?: SortOrderInput | SortOrder
     factCheckDate?: SortOrderInput | SortOrder
     factCheckStatus?: SortOrderInput | SortOrder
+    factCheckClicks?: SortOrder
     level?: SortOrderInput | SortOrder
     contentType?: SortOrderInput | SortOrder
     readTime?: SortOrderInput | SortOrder
@@ -17755,6 +18936,7 @@ export namespace Prisma {
     factCheckSources?: StringNullableWithAggregatesFilter<"Article"> | string | null
     factCheckDate?: DateTimeNullableWithAggregatesFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableWithAggregatesFilter<"Article"> | string | null
+    factCheckClicks?: IntWithAggregatesFilter<"Article"> | number
     level?: StringNullableWithAggregatesFilter<"Article"> | string | null
     contentType?: StringNullableWithAggregatesFilter<"Article"> | string | null
     readTime?: StringNullableWithAggregatesFilter<"Article"> | string | null
@@ -18932,6 +20114,71 @@ export namespace Prisma {
     lastAccessed?: DateTimeWithAggregatesFilter<"UserProgress"> | Date | string
   }
 
+  export type ArticleFactCheckWhereInput = {
+    AND?: ArticleFactCheckWhereInput | ArticleFactCheckWhereInput[]
+    OR?: ArticleFactCheckWhereInput[]
+    NOT?: ArticleFactCheckWhereInput | ArticleFactCheckWhereInput[]
+    id?: StringFilter<"ArticleFactCheck"> | string
+    articleId?: StringFilter<"ArticleFactCheck"> | string
+    userId?: StringFilter<"ArticleFactCheck"> | string
+    score?: FloatFilter<"ArticleFactCheck"> | number
+    status?: StringFilter<"ArticleFactCheck"> | string
+    summary?: StringFilter<"ArticleFactCheck"> | string
+    createdAt?: DateTimeFilter<"ArticleFactCheck"> | Date | string
+  }
+
+  export type ArticleFactCheckOrderByWithRelationInput = {
+    id?: SortOrder
+    articleId?: SortOrder
+    userId?: SortOrder
+    score?: SortOrder
+    status?: SortOrder
+    summary?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ArticleFactCheckWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    articleId_userId?: ArticleFactCheckArticleIdUserIdCompoundUniqueInput
+    AND?: ArticleFactCheckWhereInput | ArticleFactCheckWhereInput[]
+    OR?: ArticleFactCheckWhereInput[]
+    NOT?: ArticleFactCheckWhereInput | ArticleFactCheckWhereInput[]
+    articleId?: StringFilter<"ArticleFactCheck"> | string
+    userId?: StringFilter<"ArticleFactCheck"> | string
+    score?: FloatFilter<"ArticleFactCheck"> | number
+    status?: StringFilter<"ArticleFactCheck"> | string
+    summary?: StringFilter<"ArticleFactCheck"> | string
+    createdAt?: DateTimeFilter<"ArticleFactCheck"> | Date | string
+  }, "id" | "articleId_userId">
+
+  export type ArticleFactCheckOrderByWithAggregationInput = {
+    id?: SortOrder
+    articleId?: SortOrder
+    userId?: SortOrder
+    score?: SortOrder
+    status?: SortOrder
+    summary?: SortOrder
+    createdAt?: SortOrder
+    _count?: ArticleFactCheckCountOrderByAggregateInput
+    _avg?: ArticleFactCheckAvgOrderByAggregateInput
+    _max?: ArticleFactCheckMaxOrderByAggregateInput
+    _min?: ArticleFactCheckMinOrderByAggregateInput
+    _sum?: ArticleFactCheckSumOrderByAggregateInput
+  }
+
+  export type ArticleFactCheckScalarWhereWithAggregatesInput = {
+    AND?: ArticleFactCheckScalarWhereWithAggregatesInput | ArticleFactCheckScalarWhereWithAggregatesInput[]
+    OR?: ArticleFactCheckScalarWhereWithAggregatesInput[]
+    NOT?: ArticleFactCheckScalarWhereWithAggregatesInput | ArticleFactCheckScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ArticleFactCheck"> | string
+    articleId?: StringWithAggregatesFilter<"ArticleFactCheck"> | string
+    userId?: StringWithAggregatesFilter<"ArticleFactCheck"> | string
+    score?: FloatWithAggregatesFilter<"ArticleFactCheck"> | number
+    status?: StringWithAggregatesFilter<"ArticleFactCheck"> | string
+    summary?: StringWithAggregatesFilter<"ArticleFactCheck"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ArticleFactCheck"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name?: string | null
@@ -19068,6 +20315,7 @@ export namespace Prisma {
     factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
+    factCheckClicks?: number
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -19101,6 +20349,7 @@ export namespace Prisma {
     factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
+    factCheckClicks?: number
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -19132,6 +20381,7 @@ export namespace Prisma {
     factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    factCheckClicks?: IntFieldUpdateOperationsInput | number
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19165,6 +20415,7 @@ export namespace Prisma {
     factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    factCheckClicks?: IntFieldUpdateOperationsInput | number
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19197,6 +20448,7 @@ export namespace Prisma {
     factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
+    factCheckClicks?: number
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -19227,6 +20479,7 @@ export namespace Prisma {
     factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    factCheckClicks?: IntFieldUpdateOperationsInput | number
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19258,6 +20511,7 @@ export namespace Prisma {
     factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    factCheckClicks?: IntFieldUpdateOperationsInput | number
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20679,6 +21933,76 @@ export namespace Prisma {
     lastAccessed?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ArticleFactCheckCreateInput = {
+    id?: string
+    articleId: string
+    userId: string
+    score: number
+    status: string
+    summary: string
+    createdAt?: Date | string
+  }
+
+  export type ArticleFactCheckUncheckedCreateInput = {
+    id?: string
+    articleId: string
+    userId: string
+    score: number
+    status: string
+    summary: string
+    createdAt?: Date | string
+  }
+
+  export type ArticleFactCheckUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    articleId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    summary?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArticleFactCheckUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    articleId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    summary?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArticleFactCheckCreateManyInput = {
+    id?: string
+    articleId: string
+    userId: string
+    score: number
+    status: string
+    summary: string
+    createdAt?: Date | string
+  }
+
+  export type ArticleFactCheckUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    articleId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    summary?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArticleFactCheckUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    articleId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    summary?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -21009,6 +22333,7 @@ export namespace Prisma {
     factCheckSources?: SortOrder
     factCheckDate?: SortOrder
     factCheckStatus?: SortOrder
+    factCheckClicks?: SortOrder
     level?: SortOrder
     contentType?: SortOrder
     readTime?: SortOrder
@@ -21026,6 +22351,7 @@ export namespace Prisma {
 
   export type ArticleAvgOrderByAggregateInput = {
     factCheckScore?: SortOrder
+    factCheckClicks?: SortOrder
     courseSequence?: SortOrder
   }
 
@@ -21045,6 +22371,7 @@ export namespace Prisma {
     factCheckSources?: SortOrder
     factCheckDate?: SortOrder
     factCheckStatus?: SortOrder
+    factCheckClicks?: SortOrder
     level?: SortOrder
     contentType?: SortOrder
     readTime?: SortOrder
@@ -21076,6 +22403,7 @@ export namespace Prisma {
     factCheckSources?: SortOrder
     factCheckDate?: SortOrder
     factCheckStatus?: SortOrder
+    factCheckClicks?: SortOrder
     level?: SortOrder
     contentType?: SortOrder
     readTime?: SortOrder
@@ -21093,6 +22421,7 @@ export namespace Prisma {
 
   export type ArticleSumOrderByAggregateInput = {
     factCheckScore?: SortOrder
+    factCheckClicks?: SortOrder
     courseSequence?: SortOrder
   }
 
@@ -21955,6 +23284,49 @@ export namespace Prisma {
     quizAttempts?: SortOrder
   }
 
+  export type ArticleFactCheckArticleIdUserIdCompoundUniqueInput = {
+    articleId: string
+    userId: string
+  }
+
+  export type ArticleFactCheckCountOrderByAggregateInput = {
+    id?: SortOrder
+    articleId?: SortOrder
+    userId?: SortOrder
+    score?: SortOrder
+    status?: SortOrder
+    summary?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ArticleFactCheckAvgOrderByAggregateInput = {
+    score?: SortOrder
+  }
+
+  export type ArticleFactCheckMaxOrderByAggregateInput = {
+    id?: SortOrder
+    articleId?: SortOrder
+    userId?: SortOrder
+    score?: SortOrder
+    status?: SortOrder
+    summary?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ArticleFactCheckMinOrderByAggregateInput = {
+    id?: SortOrder
+    articleId?: SortOrder
+    userId?: SortOrder
+    score?: SortOrder
+    status?: SortOrder
+    summary?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ArticleFactCheckSumOrderByAggregateInput = {
+    score?: SortOrder
+  }
+
   export type ArticleCreateNestedManyWithoutAuthorInput = {
     create?: XOR<ArticleCreateWithoutAuthorInput, ArticleUncheckedCreateWithoutAuthorInput> | ArticleCreateWithoutAuthorInput[] | ArticleUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: ArticleCreateOrConnectWithoutAuthorInput | ArticleCreateOrConnectWithoutAuthorInput[]
@@ -22688,6 +24060,7 @@ export namespace Prisma {
     factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
+    factCheckClicks?: number
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -22719,6 +24092,7 @@ export namespace Prisma {
     factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
+    factCheckClicks?: number
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -22894,6 +24268,7 @@ export namespace Prisma {
     factCheckSources?: StringNullableFilter<"Article"> | string | null
     factCheckDate?: DateTimeNullableFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableFilter<"Article"> | string | null
+    factCheckClicks?: IntFilter<"Article"> | number
     level?: StringNullableFilter<"Article"> | string | null
     contentType?: StringNullableFilter<"Article"> | string | null
     readTime?: StringNullableFilter<"Article"> | string | null
@@ -23174,6 +24549,7 @@ export namespace Prisma {
     factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
+    factCheckClicks?: number
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -23206,6 +24582,7 @@ export namespace Prisma {
     factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
+    factCheckClicks?: number
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -23252,6 +24629,7 @@ export namespace Prisma {
     factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    factCheckClicks?: IntFieldUpdateOperationsInput | number
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23284,6 +24662,7 @@ export namespace Prisma {
     factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    factCheckClicks?: IntFieldUpdateOperationsInput | number
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23782,6 +25161,7 @@ export namespace Prisma {
     factCheckSources?: string | null
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
+    factCheckClicks?: number
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -23854,6 +25234,7 @@ export namespace Prisma {
     factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    factCheckClicks?: IntFieldUpdateOperationsInput | number
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23885,6 +25266,7 @@ export namespace Prisma {
     factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    factCheckClicks?: IntFieldUpdateOperationsInput | number
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23916,6 +25298,7 @@ export namespace Prisma {
     factCheckSources?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    factCheckClicks?: IntFieldUpdateOperationsInput | number
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null

@@ -7,6 +7,7 @@ import { AdminRoute } from '@/lib/domains/users';
 // Components from /criar-artigo for manual mode
 import { usePerplexityChat } from '../criar-artigo/_hooks/usePerplexityChat';
 import { useArticleState } from '../criar-artigo/_hooks/useArticleState';
+import { useArticleValidation } from '../criar-artigo/_hooks/useArticleValidation';
 import ArticleTypeSelector from '../criar-artigo/_components/ArticleTypeSelector';
 import ChatInterface from '../criar-artigo/_components/ChatInterface';
 import ArticlePreviewPanel from '../criar-artigo/_components/ArticlePreviewPanel';
@@ -80,11 +81,21 @@ function ManualModeContent() {
         selectedType,
         onArticleGenerated: (article) => {
             setGeneratedArticle(article);
+            // Limpar validação anterior quando novo artigo é gerado
+            clearValidation();
         },
         onError: (error) => {
             console.error('Erro no chat:', error);
         }
     });
+
+    // Hook de validação com Gemini
+    const {
+        validating,
+        validationResult,
+        validateArticle: runValidation,
+        clearValidation
+    } = useArticleValidation();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -272,6 +283,19 @@ function ManualModeContent() {
                     onCopyArticle={handleCopyArticle}
                     onGenerateCover={handleGenerateCover}
                     onPublish={handlePublish}
+                    validating={validating}
+                    validationResult={validationResult}
+                    onValidate={async () => {
+                        if (!generatedArticle || !selectedType) return;
+                        await runValidation({
+                            title: generatedArticle.title || generatedArticle.name || '',
+                            content: generatedArticle.content || '',
+                            excerpt: generatedArticle.excerpt,
+                            citations: generatedArticle.citations,
+                            articleType: selectedType
+                        });
+                    }}
+                    onClearValidation={clearValidation}
                 />
             )}
             {generatedArticle && (

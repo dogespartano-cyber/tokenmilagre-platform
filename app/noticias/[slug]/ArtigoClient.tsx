@@ -12,6 +12,7 @@ import { getCitationAwareMarkdownComponents, SourcesSection } from '@/lib/domain
 import TransparencyNote from '@/components/shared/TransparencyNote';
 import PageWrapper from '@/components/layout/PageWrapper';
 import { useSidebar } from '@/contexts/SidebarContext';
+import FactCheckButton from '@/components/articles/FactCheckButton';
 
 interface NewsItem {
   id: string;
@@ -339,13 +340,15 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
                   {article.summary}
                 </p>
 
-                {/* Meta Line: Date + Reading Time */}
+                {/* Meta Line: Date + Reading Time + FactCheck */}
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[var(--text-article-muted)] pb-6 md:pb-8 border-b border-[var(--border-article)]">
                   <time dateTime={article.publishedAt} className="capitalize">
                     {formatEditorialDate(article.publishedAt)}
                   </time>
                   <span className="hidden md:inline">•</span>
                   <span>{readingTime} min de leitura</span>
+                  <span className="hidden md:inline">•</span>
+                  <FactCheckButton articleId={article.id} />
                 </div>
 
                 {/* Mobile: Share Buttons */}

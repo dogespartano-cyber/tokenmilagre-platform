@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { sanitizeJSON, parseJSONRobust } from "@/lib/shared/utils/json-sanitizer";
+import { parseJSONRobust } from "@/lib/shared/utils/json-sanitizer";
 import { validateProcessedArticle } from '@/lib/domains/articles/services/article-processor-client';
 import { requireEditor } from '@/lib/shared/helpers/auth-helpers';
 import { checkAIRateLimit } from '@/lib/shared/helpers/rate-limit';
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 export async function POST(request: NextRequest) {
   // Autenticação: Apenas ADMIN e EDITOR podem usar esta API (custo de IA)
@@ -26,7 +23,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+    // Validar API Key
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+    if (!GEMINI_API_KEY) {
+      return NextResponse.json(
+        { error: 'GEMINI_API_KEY não configurada' },
+        { status: 500 }
+      );
+    }
 
     // Prompt para refinamento baseado no tipo
     const systemPrompt = `Você é um editor especializado em conteúdo sobre criptomoedas e blockchain.
@@ -120,8 +124,36 @@ Retorne APENAS o objeto JSON puro, sem:
 - Comentários no JSON
 - Apenas o JSON limpo: { ... }`;
 
-    const result = await model.generateContent(systemPrompt);
-    const responseText = result.response.text();
+    // Chamar Gemini 3 Flash com grounding para enriquecer refinamento
+    const geminiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: systemPrompt }] }],
+          tools: [{ google_search: {} }], // Grounding para dados atualizados
+          generationConfig: {
+            temperature: 0.4,
+            topK: 40,
+            topP: 0.95,
+            maxOutputTokens: 8192,
+          }
+        })
+      }
+    );
+
+    if (!geminiResponse.ok) {
+      const errorData = await geminiResponse.json();
+      throw new Error(`Gemini API error: ${errorData.error?.message || 'Unknown'}`);
+    }
+
+    const geminiData = await geminiResponse.json();
+    const responseText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    if (!responseText) {
+      throw new Error('Resposta vazia do Gemini');
+    }
 
     // Parsear JSON de forma robusta
     const refinedArticle = parseJSONRobust(responseText, 'refine-article');
