@@ -175,14 +175,15 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
     window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
   };
 
-  // Formatar data no estilo editorial
+  // Formatar data no estilo editorial - usando UTC para consistência SSR
   const formatEditorialDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('pt-BR', {
       weekday: 'long',
       day: 'numeric',
       month: 'long',
-      year: 'numeric'
+      year: 'numeric',
+      timeZone: 'UTC' // Força UTC para consistência entre servidor e cliente
     });
   };
 
