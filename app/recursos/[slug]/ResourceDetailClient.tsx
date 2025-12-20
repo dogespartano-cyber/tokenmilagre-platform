@@ -18,6 +18,7 @@ import { useState, useEffect } from 'react';
 import TransparencyNote from '@/components/shared/TransparencyNote';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { getCategoryLabel } from '@/lib/shared/utils/categories';
+import CommentsSection from '@/components/engagement/CommentsSection';
 
 interface ResourceDetailClientProps {
   resource: Resource;
@@ -34,6 +35,7 @@ export default function ResourceDetailClient({ resource, relatedResources, categ
   const router = useRouter();
   const [activeSection, setActiveSection] = useState<string>('');
   const [currentUrl, setCurrentUrl] = useState<string>('');
+  const [showComments, setShowComments] = useState(false);
 
   const { setSidebarMode, resetSidebar } = useSidebar();
 
@@ -118,7 +120,7 @@ export default function ResourceDetailClient({ resource, relatedResources, categ
 
         <div className="container mx-auto px-6 md:px-10 relative z-10">
           <div className="max-w-6xl">
-            <ResourceHeader resource={resource} />
+            <ResourceHeader resource={resource} onCommentClick={() => setShowComments(!showComments)} />
           </div>
         </div>
       </div>
@@ -216,6 +218,13 @@ export default function ResourceDetailClient({ resource, relatedResources, categ
             <div className="pt-8 border-t border-[var(--border-article)]">
               <TransparencyNote publishedAt={resource.updatedAt} />
             </div>
+
+            {/* Comments Section */}
+            <CommentsSection
+              id={resource.id}
+              type="resource"
+              isOpen={showComments}
+            />
 
             {/* Recursos Relacionados */}
             <div className="pt-8 border-t border-[var(--border-article)]">

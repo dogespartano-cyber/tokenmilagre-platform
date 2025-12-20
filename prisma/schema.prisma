@@ -71,6 +71,8 @@ model User {
   copilotActivities CopilotActivity[]
   communityStories CommunityStory[]
   userProgress UserProgress[]
+  likes       Like[]
+  comments    Comment[]
 }
 
 model Article {
@@ -127,11 +129,17 @@ model Article {
   // FASE 5 - Cursos Interativos
   quizData           String?   // JSON com quiz interativo
 
+  // Engagement (Likes & Comments)
+  likeCount          Int       @default(0)
+  commentCount       Int       @default(0)
+
   createdAt          DateTime  @default(now()) // API: publishedAt
   updatedAt          DateTime  @updatedAt      // API: lastVerified
 
   // Relations
   citations          Citation[]
+  likes              Like[]
+  comments           Comment[]
 
   @@index([authorId])
   @@index([published])
@@ -213,6 +221,18 @@ model Resource {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   lastVerified  DateTime @default(now())
+
+  // Fact-checking fields (verificação pública)
+  factCheckScore     Float?    // Score de 0-100
+  factCheckStatus    String?   // verified, partially_verified, unverified
+  factCheckDate      DateTime? // Data da última verificação
+  factCheckClicks    Int       @default(0) // Contador de verificações públicas
+
+  // Engagement (Likes & Comments)
+  likeCount          Int       @default(0)
+  commentCount       Int       @default(0)
+  likes              Like[]
+  comments           Comment[]
 
   @@index([slug])
   @@index([category])
@@ -507,3 +527,64 @@ model ArticleFactCheck {
   @@index([userId])
 }
 
+// Rastreamento de verificações públicas de fact-check para Recursos
+model ResourceFactCheck {
+  id          String   @id @default(cuid())
+  resourceId  String
+  userId      String
+  
+  // Resultado da verificação
+  score       Float    // 0-100
+  status      String   // verified, partially_verified, unverified
+  summary     String   // Resumo da verificação
+  
+  createdAt   DateTime @default(now())
+
+  @@unique([resourceId, userId]) // Apenas 1 verificação por usuário por recurso
+  @@index([resourceId])
+  @@index([userId])
+}
+
+// =====================================================
+// ENGAGEMENT SYSTEM (Likes & Comments)
+// =====================================================
+
+model Like {
+  id         String   @id @default(cuid())
+  userId     String
+  articleId  String?
+  resourceId String?
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  article    Article? @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  resource   Resource? @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, articleId])
+  @@unique([userId, resourceId])
+  @@index([articleId])
+  @@index([resourceId])
+  @@index([userId])
+}
+
+model Comment {
+  id         String    @id @default(cuid())
+  content    String
+  userId     String
+  articleId  String?
+  resourceId String?
+  parentId   String?   // Para respostas aninhadas
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  article    Article?  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  resource   Resource? @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  parent     Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies    Comment[] @relation("CommentReplies")
+
+  @@index([articleId])
+  @@index([resourceId])
+  @@index([userId])
+  @@index([parentId])
+}

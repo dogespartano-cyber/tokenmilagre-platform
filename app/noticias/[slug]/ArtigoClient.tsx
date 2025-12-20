@@ -12,7 +12,10 @@ import { getCitationAwareMarkdownComponents, SourcesSection } from '@/lib/domain
 import TransparencyNote from '@/components/shared/TransparencyNote';
 import PageWrapper from '@/components/layout/PageWrapper';
 import { useSidebar } from '@/contexts/SidebarContext';
-import FactCheckButton from '@/components/articles/FactCheckButton';
+import VerifyButton from '@/components/shared/VerifyButton';
+import EngagementBar from '@/components/engagement/EngagementBar';
+import CommentsSection from '@/components/engagement/CommentsSection';
+import CommentCountButton from '@/components/engagement/CommentCountButton';
 
 interface NewsItem {
   id: string;
@@ -58,6 +61,7 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
 
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
   const [activeSection, setActiveSection] = useState<string>('');
+  const [showComments, setShowComments] = useState(false);
 
 
   const createSlug = (text: string) => {
@@ -348,7 +352,8 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
                   <span className="hidden md:inline">•</span>
                   <span>{readingTime} min de leitura</span>
                   <span className="hidden md:inline">•</span>
-                  <FactCheckButton articleId={article.id} />
+                  <VerifyButton id={article.id} type="article" />
+                  <CommentCountButton id={article.id} type="article" onClick={() => setShowComments(!showComments)} />
                 </div>
 
                 {/* Mobile: Share Buttons */}
@@ -535,6 +540,22 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
               <div className="mt-12 pt-8 border-t border-[var(--border-article)]">
                 <TransparencyNote publishedAt={article.publishedAt} />
               </div>
+
+              {/* ===== ENGAGEMENT BAR ===== */}
+              <div className="mt-8 pt-6 border-t border-[var(--border-article)]">
+                <EngagementBar
+                  id={article.id}
+                  type="article"
+                  onCommentClick={() => setShowComments(!showComments)}
+                />
+              </div>
+
+              {/* ===== COMMENTS SECTION ===== */}
+              <CommentsSection
+                id={article.id}
+                type="article"
+                isOpen={showComments}
+              />
 
               {/* ===== RELATED ARTICLES ===== */}
               {relatedArticles.length > 0 && (

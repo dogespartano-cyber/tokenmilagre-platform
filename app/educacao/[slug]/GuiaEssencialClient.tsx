@@ -11,6 +11,9 @@ import { faWhatsapp, faTelegram, faXTwitter } from '@fortawesome/free-brands-svg
 import { slugify } from '@/lib/shared/utils/content-helpers';
 import { GUIA_ESSENCIAL_TRILHA } from '@/lib/education/guia-essencial';
 import { useSidebar } from '@/contexts/SidebarContext';
+import VerifyButton from '@/components/shared/VerifyButton';
+import CommentCountButton from '@/components/engagement/CommentCountButton';
+import CommentsSection from '@/components/engagement/CommentsSection';
 
 interface EducationalArticle {
     id: string;
@@ -41,6 +44,7 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
     const [readingProgress, setReadingProgress] = useState(0);
     const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
     const [activeSection, setActiveSection] = useState<string>('');
+    const [showComments, setShowComments] = useState(false);
 
     const { setSidebarMode, resetSidebar, setDynamicTitle, setShortTitle } = useSidebar();
 
@@ -379,11 +383,14 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
                                     {article.description}
                                 </p>
 
-                                {/* Meta Line: Reading Time + Level */}
+                                {/* Meta Line: Reading Time + Level + FactCheck */}
                                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[var(--text-article-muted)] pb-6 md:pb-8 border-b border-[var(--border-article)]">
                                     <span>{article.readTime}</span>
                                     <span>•</span>
                                     <span className="capitalize">Nível: {article.level}</span>
+                                    <span className="hidden md:inline">•</span>
+                                    <VerifyButton id={article.id} type="article" />
+                                    <CommentCountButton id={article.id} type="article" onClick={() => setShowComments(!showComments)} />
                                 </div>
 
                                 {/* Mobile: Share Buttons */}
@@ -560,6 +567,13 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
                                     )}
                                 </div>
                             </nav>
+
+                            {/* ===== COMMENTS SECTION ===== */}
+                            <CommentsSection
+                                id={article.id}
+                                type="article"
+                                isOpen={showComments}
+                            />
 
                             {/* Bottom Spacing */}
                             <div className="h-16 md:h-24" />

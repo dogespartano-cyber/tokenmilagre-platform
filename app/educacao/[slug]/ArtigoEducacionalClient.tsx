@@ -11,6 +11,9 @@ import { getLevelLabel } from '@/lib/shared/utils/level-helpers';
 import { slugify } from '@/lib/shared/utils/content-helpers';
 import QuizComponent from '@/components/education/QuizComponent';
 import TransparencyNote from '@/components/shared/TransparencyNote';
+import VerifyButton from '@/components/shared/VerifyButton';
+import CommentCountButton from '@/components/engagement/CommentCountButton';
+import CommentsSection from '@/components/engagement/CommentsSection';
 
 interface EducationalArticle {
   id: string;
@@ -44,6 +47,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
   const router = useRouter();
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
   const [activeSection, setActiveSection] = useState<string>('');
+  const [showComments, setShowComments] = useState(false);
 
   // Pre-compute heading IDs for consistent hydration
   // This creates a map of heading text -> unique ID that's deterministic
@@ -345,13 +349,16 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                   {article.description}
                 </p>
 
-                {/* Meta Line: Date + Reading Time */}
+                {/* Meta Line: Date + Reading Time + VerifyButton */}
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[var(--text-article-muted)] pb-6 md:pb-8 border-b border-[var(--border-article)]">
                   <time dateTime={article.publishedAt} className="capitalize">
                     {formatEditorialDate(article.publishedAt)}
                   </time>
                   <span className="hidden md:inline">•</span>
                   <span>{article.readTime}</span>
+                  <span className="hidden md:inline">•</span>
+                  <VerifyButton id={article.id} type="article" />
+                  <CommentCountButton id={article.id} type="article" onClick={() => setShowComments(!showComments)} />
                 </div>
 
                 {/* Mobile: Share Buttons */}
@@ -531,6 +538,13 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
               <div className="mt-12 pt-8 border-t border-[var(--border-article)]">
                 <TransparencyNote publishedAt={article.publishedAt} />
               </div>
+
+              {/* ===== COMMENTS SECTION ===== */}
+              <CommentsSection
+                id={article.id}
+                type="article"
+                isOpen={showComments}
+              />
 
               {/* ===== RELATED ARTICLES ===== */}
               {relatedArticles.length > 0 && (

@@ -2,17 +2,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { Resource } from '@/lib/domains/resources/legacy-api';
 import { getCategoryLabel } from '@/lib/shared/utils/categories';
+import VerifyButton from '@/components/shared/VerifyButton';
+import CommentCountButton from '@/components/engagement/CommentCountButton';
 
 interface ResourceHeaderProps {
   resource: Resource;
+  onCommentClick?: () => void;
 }
 
-export default function ResourceHeader({ resource }: ResourceHeaderProps) {
+export default function ResourceHeader({ resource, onCommentClick }: ResourceHeaderProps) {
   return (
     <div className="space-y-6">
       {/* Meta badges */}
       <div className="flex flex-wrap items-center gap-3">
-
         <span
           className="px-3 py-1 rounded-lg text-sm font-semibold"
           style={{
@@ -34,8 +36,8 @@ export default function ResourceHeader({ resource }: ResourceHeaderProps) {
         {resource.hero.description}
       </p>
 
-      {/* Botão Acessar Site */}
-      <div className="flex flex-wrap gap-3 pt-4">
+      {/* Botões de Ação */}
+      <div className="flex flex-wrap items-center gap-3 pt-4">
         <a
           href={resource.officialUrl}
           target="_blank"
@@ -50,7 +52,14 @@ export default function ResourceHeader({ resource }: ResourceHeaderProps) {
           Acessar site oficial
           <FontAwesomeIcon icon={faExternalLinkAlt} className="w-5 h-5" />
         </a>
+
+        {/* Verificar Button */}
+        <VerifyButton id={resource.id} type="resource" />
+
+        {/* Comentários Button */}
+        <CommentCountButton id={resource.id} type="resource" onClick={onCommentClick} />
       </div>
     </div>
   );
 }
+
