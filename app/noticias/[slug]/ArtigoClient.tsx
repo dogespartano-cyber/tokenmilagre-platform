@@ -10,6 +10,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { getCitationAwareMarkdownComponents, SourcesSection } from '@/lib/domains/articles/components/citations-processor';
 import TransparencyNote from '@/components/shared/TransparencyNote';
+import PageHeader from '@/components/shared/PageHeader';
 
 interface NewsItem {
   id: string;
@@ -218,6 +219,11 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
 
   return (
     <>
+      {/* PageHeader com logo, título e Fear & Greed */}
+      <div className="container mx-auto px-4 lg:px-8 py-1 lg:py-4">
+        <PageHeader title="Notícias" description="Análises e atualizações do mercado cripto" />
+      </div>
+
       {/* ============================================
           NYT-STYLE EDITORIAL LAYOUT
           ============================================ */}
@@ -229,21 +235,8 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
           {/* Grid: Sidebar Left + Content Center + Space Right */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-8">
 
-            {/* ========== SIDEBAR (Desktop Only) ========== */}
             <aside className="hidden lg:block lg:col-span-2 xl:col-span-2">
               <div className="sticky top-24 pt-8 space-y-8">
-
-                {/* Voltar */}
-                <button
-                  onClick={() => router.push('/noticias')}
-                  className="flex items-center gap-2 text-sm text-[var(--text-article-muted)] hover:text-[var(--text-article-title)] transition-colors group"
-                >
-                  <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3 transition-transform group-hover:-translate-x-1" />
-                  <span>Notícias</span>
-                </button>
-
-                {/* Divisor */}
-                <div className="h-px bg-[var(--border-article)]" />
 
                 {/* Índice */}
                 {tableOfContents.length > 0 && (
@@ -304,17 +297,6 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
 
             {/* ========== MAIN CONTENT ========== */}
             <main className="lg:col-span-7 xl:col-span-7 pt-6 md:pt-12 lg:pt-8">
-
-              {/* Mobile: Voltar */}
-              <div className="lg:hidden mb-6">
-                <button
-                  onClick={() => router.push('/noticias')}
-                  className="inline-flex items-center gap-2 text-sm text-[var(--text-article-muted)]"
-                >
-                  <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
-                  Notícias
-                </button>
-              </div>
 
               {/* ===== ARTICLE HEADER (NYT Style) ===== */}
               <header className="mb-10 md:mb-14">

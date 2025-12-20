@@ -2,7 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import SocialLinks from '@/components/shared/SocialLinks';
+import Image from 'next/image';
+import Link from 'next/link';
+import { FearGreedDesktop } from '@/app/components/home/FearGreedDesktop';
+import Breadcrumbs from '@/components/layout/Breadcrumbs';
 
 interface PageHeaderProps {
   title: string;
@@ -76,7 +79,6 @@ export default function PageHeader({ title, description }: PageHeaderProps) {
       const targetValue = parseInt(fearGreed.value);
       const duration = 2500;
       const steps = 60;
-      const stepValue = targetValue / steps;
       const stepDuration = duration / steps;
 
       let currentStep = 0;
@@ -109,21 +111,41 @@ export default function PageHeader({ title, description }: PageHeaderProps) {
   }, [fearGreed, pathname]); // Adiciona pathname como dependência
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-2 lg:space-y-8">
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div className="flex items-center gap-4">
+          {/* Logo */}
+          <div
+            className="hidden lg:block relative w-28 h-28 group cursor-pointer"
+            style={{
+              opacity: animateTitle ? 1 : 0,
+              transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
+              transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+            }}
+          >
+            <Image
+              src="/images/TOKEN-MILAGRE-Hero.webp"
+              alt="$MILAGRE Logo"
+              fill
+              className="object-contain transition-transform duration-300 group-hover:scale-110"
+              priority
+            />
+          </div>
           <div>
-            <h1
-              className={`text-4xl font-bold mb-1 font-[family-name:var(--font-poppins)] ${pathname === '/' ? 'hidden lg:block text-[var(--text-primary)]' : 'text-[var(--text-primary)]'}`}
-              style={{
-                opacity: animateTitle ? 1 : 0,
-                transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
-                transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
-              }}
-            >
-              {title}
-            </h1>
+            {/* Título - sempre clicável, posts de notícias voltam para /noticias */}
+            <Link href={pathname.startsWith('/noticias/') && pathname !== '/noticias' ? '/noticias' : pathname}>
+              <h1
+                className={`text-4xl font-bold mb-1 font-[family-name:var(--font-poppins)] text-[var(--text-primary)] cursor-pointer hover:text-[var(--brand-primary)] transition-colors ${pathname === '/' ? 'hidden lg:block' : ''}`}
+                style={{
+                  opacity: animateTitle ? 1 : 0,
+                  transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
+                  transition: 'opacity 0.6s ease-out, transform 0.6s ease-out, color 0.3s ease'
+                }}
+              >
+                {title}
+              </h1>
+            </Link>
             <p
               className={`text-lg ${pathname === '/' ? 'text-[var(--text-primary)] text-xl lg:text-lg lg:text-[var(--text-secondary)] font-bold lg:font-normal' : 'text-[var(--text-secondary)]'}`}
               style={{
@@ -137,7 +159,7 @@ export default function PageHeader({ title, description }: PageHeaderProps) {
           </div>
         </div>
 
-        {/* Community Buttons - Now using centralized SocialLinks */}
+        {/* Fear & Greed Gauge - Desktop Only */}
         <div
           style={{
             opacity: animateTitle ? 1 : 0,
@@ -145,12 +167,16 @@ export default function PageHeader({ title, description }: PageHeaderProps) {
             transition: 'opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s'
           }}
         >
-          <SocialLinks
-            variant="glass"
-            platforms={['discord', 'telegram']}
-            size="md"
+          <FearGreedDesktop
+            fearGreed={fearGreed}
+            gaugeValue={gaugeValue}
           />
         </div>
+      </div>
+
+      {/* Breadcrumbs - última posição do header */}
+      <div className="hidden lg:block">
+        <Breadcrumbs inline={true} />
       </div>
     </div>
   );

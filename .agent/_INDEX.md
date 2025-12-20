@@ -26,6 +26,7 @@ version: 2.0.0
 | Geração de ideias | [IDEIAS](./workflows/IDEIAS-agent.md) | "Brainstorm", "ideias" |
 | Validação de valor/ROI | [VALOR](./workflows/VALOR-agent.md) | "Monetização", "ROI" |
 | Estatísticas e relatórios | [DADOS](./workflows/DADOS-agent.md) | "Estatísticas", "dados" |
+| **Verificar consistência** | [CONSISTENCIA](./workflows/CONSISTENCIA-agent.md) | "Sincronização", "integridade" |
 
 ---
 
@@ -43,8 +44,9 @@ version: 2.0.0
 ┌───┴───┐    ┌─────┴─────┐                              │
 │       │    │           │                              │
 SEGURANCA   DESIGN    CONTEUDO ←────────────────────────┘
-    │
-  TOKEN
+    │                    ↑
+  TOKEN            CONSISTENCIA
+                   (audita todos)
 ```
 
 ---

@@ -1,6 +1,6 @@
 /**
- * @module home/FearGreedGauge
- * @description Velocímetro Fear & Greed para mobile
+ * @module home/FearGreedMobile
+ * @description Velocímetro Fear & Greed EXCLUSIVO para MOBILE
  */
 
 'use client';
@@ -43,30 +43,20 @@ const getTextColor = (value: number): string => {
     return '#10B981';
 };
 
-interface ExtendedFearGreedProps extends FearGreedProps {
-    variant?: 'mobile' | 'desktop' | 'both';
-}
-
-export function FearGreedGauge({ fearGreed, gaugeValue, variant = 'mobile' }: ExtendedFearGreedProps) {
+export function FearGreedMobile({ fearGreed, gaugeValue }: FearGreedProps) {
     if (!fearGreed) return null;
 
     const gaugeColor = getGaugeColor(gaugeValue);
 
-    // Classes de visibilidade baseadas na variante
-    const visibilityClass = variant === 'mobile'
-        ? 'lg:hidden'
-        : variant === 'desktop'
-            ? 'hidden lg:block'
-            : '';
-
     return (
-        <div className={`${visibilityClass} mb-8 px-2`}>
+        // MOBILE ONLY - lg:hidden
+        <div className="lg:hidden mb-8 px-2">
             <div className="flex items-center justify-between">
                 {/* Gauge */}
                 <div className="relative flex items-center justify-center" style={{ width: '130px', height: '75px' }}>
                     <svg viewBox="20 30 140 85" className="w-full h-full" style={{ overflow: 'visible' }}>
                         <defs>
-                            <linearGradient id="rainbowGradientHome" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <linearGradient id="rainbowMobile" x1="0%" y1="0%" x2="100%" y2="0%">
                                 <stop offset="0%" stopColor="#DC2626" />
                                 <stop offset="20%" stopColor="#EA580C" />
                                 <stop offset="40%" stopColor="#F59E0B" />
@@ -74,18 +64,11 @@ export function FearGreedGauge({ fearGreed, gaugeValue, variant = 'mobile' }: Ex
                                 <stop offset="80%" stopColor="#22C55E" />
                                 <stop offset="100%" stopColor="#10B981" />
                             </linearGradient>
-                            <filter id="intensiveGlowHome" x="-50%" y="-50%" width="200%" height="200%">
-                                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-                                <feMerge>
-                                    <feMergeNode in="coloredBlur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
                         </defs>
                         {/* Track */}
-                        <path d="M 30 100 A 60 60 0 0 1 150 100" fill="none" stroke="var(--bg-tertiary)" strokeWidth="16" strokeLinecap="round" opacity="0.2" />
-                        {/* Colored Arc */}
-                        <path d="M 30 100 A 60 60 0 0 1 150 100" fill="none" stroke="url(#rainbowGradientHome)" strokeWidth="16" strokeLinecap="round" />
+                        <path d="M 30 100 A 60 60 0 0 1 150 100" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="16" strokeLinecap="round" />
+                        {/* Colored Arc - SEM FILTRO */}
+                        <path d="M 30 100 A 60 60 0 0 1 150 100" fill="none" stroke="url(#rainbowMobile)" strokeWidth="16" strokeLinecap="round" />
 
                         {/* Needle */}
                         <g style={{ transform: `rotate(${(gaugeValue * 1.8) - 90}deg)`, transformOrigin: '90px 100px' }}>
@@ -94,7 +77,7 @@ export function FearGreedGauge({ fearGreed, gaugeValue, variant = 'mobile' }: Ex
                         </g>
 
                         {/* Value inside gauge */}
-                        <text x="90" y="85" fill="var(--text-primary)" fontSize="28" fontWeight="800" textAnchor="middle" dominantBaseline="middle" className="font-[family-name:var(--font-poppins)]">
+                        <text x="90" y="85" fill="white" fontSize="28" fontWeight="800" textAnchor="middle" dominantBaseline="middle" className="font-[family-name:var(--font-poppins)]">
                             {gaugeValue}
                         </text>
                     </svg>

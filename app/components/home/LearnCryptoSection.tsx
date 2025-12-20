@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import type { EducationItem } from './types';
-import { ZenithCard } from '../ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
 
 interface LearnCryptoSectionProps {
     education: EducationItem[];

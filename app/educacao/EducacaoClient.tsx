@@ -18,7 +18,7 @@ import TruthDetector from '@/components/education/TruthDetector';
 import SocialLinks from '@/components/shared/SocialLinks';
 import { useEducationFilters, categories, levels } from '@/contexts/EducationFilterContext';
 import { useSidebar } from '@/contexts/SidebarContext';
-import { ZenithCard } from '@/app/components/ui/ZenithCard'; // Imported ZenithCard
+import ZenithCard from '@/components/ui/ZenithCard'; // Imported ZenithCard
 import PageWrapper from '@/components/layout/PageWrapper';
 
 // Header config - inline para IA reconhecer

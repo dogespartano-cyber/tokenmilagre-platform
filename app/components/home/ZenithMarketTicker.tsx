@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faRightLeft } from '@fortawesome/free-solid-svg-icons';
 import { TokenBTC, TokenETH } from '@token-icons/react';
-import { FearGreedGauge } from './FearGreedGauge';
+import { FearGreedMobile } from './FearGreedMobile';
 import { useCryptoData } from '@/lib/domains/crypto/hooks/useCryptoData';
-import { ZenithCard } from '../ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
+import FlipCard from '@/components/ui/FlipCard';
 import {
     DndContext,
     closestCenter,
@@ -130,12 +131,62 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
 
     if (!marketData) return null;
 
+    // Definições dos cards com explicações (versões para mobile e desktop)
+    const cardDefinitions = {
+        marketCap: {
+            title: 'Capitalização',
+            mobileText: 'Valor total de mercado cripto. Preço × quantidade em circulação.',
+            desktopText: 'Valor total de mercado de todas as criptomoedas. Calculado multiplicando o preço de cada moeda pela quantidade em circulação. Indica o tamanho do mercado cripto.'
+        },
+        volume: {
+            title: 'Volume 24h',
+            mobileText: 'Total negociado nas últimas 24h. Alto volume = mercado ativo.',
+            desktopText: 'Total de criptomoedas negociadas nas últimas 24 horas. Alto volume indica mercado ativo e liquidez. Baixo volume pode significar menos interesse.'
+        },
+        btcDom: {
+            title: 'Dominância BTC',
+            mobileText: '% do mercado que é Bitcoin. Queda indica altcoin season.',
+            desktopText: 'Percentual do mercado cripto que pertence ao Bitcoin. Alta dominância sugere maior confiança no BTC. Queda pode indicar "altcoin season".'
+        },
+        ethDom: {
+            title: 'Dominância ETH',
+            mobileText: '% do mercado que é Ethereum. Força do ecossistema.',
+            desktopText: 'Percentual do mercado cripto que pertence ao Ethereum. Reflete a força do ecossistema ETH incluindo DeFi, NFTs e smart contracts.'
+        }
+    };
+
     const renderCard = (id: string) => {
+        const cardInfo = cardDefinitions[id as keyof typeof cardDefinitions];
+
+        // Card de explicação (verso) - versões separadas para mobile e desktop
+        const renderBackCard = (variant: 'success' | 'danger' | 'orange' | 'indigo', title: string, mobileText: string, desktopText: string) => (
+            <ZenithCard variant={variant} className="h-full flex flex-col justify-center min-h-[150px] p-3 lg:p-4">
+                {/* Mobile: texto curto, centralizado */}
+                <div className="lg:hidden text-center">
+                    <h4 className="font-bold text-sm mb-1 text-[var(--text-primary)]">
+                        {title}
+                    </h4>
+                    <p className="text-xs text-[var(--text-secondary)] leading-snug">
+                        {mobileText}
+                    </p>
+                </div>
+                {/* Desktop: texto completo, alinhado à esquerda */}
+                <div className="hidden lg:block">
+                    <h4 className="font-bold text-base mb-2 text-[var(--text-primary)]">
+                        O que é {title}?
+                    </h4>
+                    <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                        {desktopText}
+                    </p>
+                </div>
+            </ZenithCard>
+        );
+
         switch (id) {
             case 'marketCap':
                 const isPositive = marketData.marketCapChange24h >= 0;
-                return (
-                    <ZenithCard variant={isPositive ? 'success' : 'danger'} className="h-full flex flex-col justify-center min-h-[140px]">
+                const frontMarketCap = (
+                    <ZenithCard variant={isPositive ? 'success' : 'danger'} className="h-full flex flex-col justify-center min-h-[150px]">
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className={`hidden lg:block p-2 rounded-xl transition-transform duration-300 group-hover:scale-110 ${isPositive
@@ -159,10 +210,17 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                         </span>
                     </ZenithCard>
                 );
+                return (
+                    <FlipCard
+                        front={frontMarketCap}
+                        back={renderBackCard(isPositive ? 'success' : 'danger', cardInfo.title, cardInfo.mobileText, cardInfo.desktopText)}
+                        className="h-full"
+                    />
+                );
             case 'volume':
                 const isPositiveVolume = (marketData.volumeChange24h || 0) >= 0;
-                return (
-                    <ZenithCard variant={isPositiveVolume ? 'success' : 'danger'} className="h-full flex flex-col justify-center min-h-[140px]">
+                const frontVolume = (
+                    <ZenithCard variant={isPositiveVolume ? 'success' : 'danger'} className="h-full flex flex-col justify-center min-h-[150px]">
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className={`hidden lg:block p-2 rounded-xl transition-transform duration-300 group-hover:scale-110 ${isPositiveVolume
@@ -179,13 +237,18 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                         <div className="flex items-end gap-2 mb-1">
                             <p className="text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight">{formatNumber(marketData.totalVolume)}</p>
                         </div>
-
-
                     </ZenithCard>
                 );
-            case 'btcDom':
                 return (
-                    <ZenithCard variant="orange" className="h-full flex flex-col justify-center min-h-[140px]">
+                    <FlipCard
+                        front={frontVolume}
+                        back={renderBackCard(isPositiveVolume ? 'success' : 'danger', cardInfo.title, cardInfo.mobileText, cardInfo.desktopText)}
+                        className="h-full"
+                    />
+                );
+            case 'btcDom':
+                const frontBtcDom = (
+                    <ZenithCard variant="orange" className="h-full flex flex-col justify-center min-h-[150px]">
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className="hidden lg:block p-2 bg-orange-50 dark:bg-orange-500/10 rounded-xl text-orange-700 dark:text-orange-400 transition-transform duration-300 group-hover:scale-110">
@@ -205,9 +268,16 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                         </div>
                     </ZenithCard>
                 );
-            case 'ethDom':
                 return (
-                    <ZenithCard variant="indigo" className="h-full flex flex-col justify-center min-h-[140px]">
+                    <FlipCard
+                        front={frontBtcDom}
+                        back={renderBackCard('orange', cardInfo.title, cardInfo.mobileText, cardInfo.desktopText)}
+                        className="h-full"
+                    />
+                );
+            case 'ethDom':
+                const frontEthDom = (
+                    <ZenithCard variant="indigo" className="h-full flex flex-col justify-center min-h-[150px]">
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className="hidden lg:block p-2 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl text-indigo-700 dark:text-indigo-400 transition-transform duration-300 group-hover:scale-110">
@@ -227,6 +297,13 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                         </div>
                     </ZenithCard>
                 );
+                return (
+                    <FlipCard
+                        front={frontEthDom}
+                        back={renderBackCard('indigo', cardInfo.title, cardInfo.mobileText, cardInfo.desktopText)}
+                        className="h-full"
+                    />
+                );
             default:
                 return null;
         }
@@ -234,7 +311,7 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
 
     if (!mounted) {
         return (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 lg:mb-8">
                 {initialItems.map((id) => (
                     <div key={id} className="h-full">
                         {renderCard(id)}
@@ -249,7 +326,7 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
             {/* MOBILE ONLY: Fear & Greed and Price Ticker (Moved here for correct order) */}
             {fearGreed && typeof gaugeValue !== 'undefined' && (
                 <div className="lg:hidden space-y-6 mb-2">
-                    <FearGreedGauge fearGreed={fearGreed} gaugeValue={gaugeValue} />
+                    <FearGreedMobile fearGreed={fearGreed} gaugeValue={gaugeValue} />
 
                     {/* Mobile Price Ticker - DYNAMIC DATA */}
                     <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-2 pb-4 border-b border-[var(--border-light)]">
@@ -286,7 +363,7 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                     items={items}
                     strategy={rectSortingStrategy}
                 >
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 lg:mb-8">
                         {items.map((id) => (
                             <SortableCard key={id} id={id}>
                                 {renderCard(id)}

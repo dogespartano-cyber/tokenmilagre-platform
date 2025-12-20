@@ -4,7 +4,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle, faLightbulb, faShieldAlt, faChartLine } from '@fortawesome/free-solid-svg-icons';
 
-import { ZenithCard } from '@/app/components/ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
 
 /**
  * @module crypto/CryptoEducator

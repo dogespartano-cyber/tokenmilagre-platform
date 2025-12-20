@@ -1,6 +1,6 @@
 import React from 'react';
 
-type CardVariant = 'default' | 'success' | 'danger' | 'warning' | 'info' | 'orange' | 'indigo' | 'teal' | 'violet' | 'slate';
+type CardVariant = 'default' | 'success' | 'danger' | 'warning' | 'info' | 'orange' | 'indigo' | 'teal' | 'violet' | 'slate' | 'glass';
 
 interface ZenithCardProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: CardVariant;
@@ -11,7 +11,7 @@ interface ZenithCardProps extends React.HTMLAttributes<HTMLDivElement> {
     [key: string]: any;
 }
 
-export function ZenithCard({
+export default function ZenithCard({
     variant = 'default',
     hoverEffect = true,
     as: Component = 'div',
@@ -94,6 +94,12 @@ export function ZenithCard({
             bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-slate-500/10 dark:to-zinc-500/5 
             border-slate-200 dark:border-slate-500/20 group-hover:border-slate-300 dark:group-hover:border-slate-500/40
             hover:shadow-slate-500/10
+        `,
+
+        glass: `
+            bg-white/80 dark:bg-zinc-900/40 backdrop-blur-lg
+            border-white/20 dark:border-white/10
+            hover:shadow-lg
         `
     };
 
@@ -108,7 +114,8 @@ export function ZenithCard({
         indigo: 'from-indigo-500/10 to-transparent',
         teal: 'from-teal-500/10 to-transparent',
         violet: 'from-violet-500/10 to-transparent',
-        slate: 'from-slate-500/10 to-transparent'
+        slate: 'from-slate-500/10 to-transparent',
+        glass: ''
     };
 
     const containerClasses = [

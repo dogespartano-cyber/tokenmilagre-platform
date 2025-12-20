@@ -8,7 +8,7 @@ import MarketFlow from '@/components/crypto/MarketFlow';
 import SocialLinks from '@/components/shared/SocialLinks';
 import { useSidebar } from '@/contexts/SidebarContext';
 import PageWrapper from '@/components/layout/PageWrapper';
-import { ZenithCard } from '@/app/components/ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
 
 // Header config - inline para IA reconhecer
 const pageHeader = {

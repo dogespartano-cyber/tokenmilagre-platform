@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faNewspaper } from '@fortawesome/free-solid-svg-icons';
 import type { NewsItem } from './types';
-import { ZenithCard } from '../ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
 
 interface LatestNewsGridProps {
     news: NewsItem[];

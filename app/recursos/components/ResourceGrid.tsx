@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Resource } from '@/lib/domains/resources/legacy-api';
 import { getCategoryGradient, getAllCategories } from '@/lib/shared/utils/categories';
 import { MAX_VISIBLE_TAGS } from '@/lib/core/constants/ui';
-import { ZenithCard } from '@/app/components/ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
 
 interface ResourceGridProps {
   resources: Resource[];

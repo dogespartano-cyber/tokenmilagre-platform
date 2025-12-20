@@ -262,6 +262,7 @@ Antes de aprovar qualquer componente novo:
 @references:
   - _DNA.md
   - ESTRUTURA.md  # Consistência de padrões
+  - CONSISTENCIA.md  # Audita consistência visual
   - lib/core/theme/  # Código fonte
   - app/page.tsx  # Referência de design
   - app/globals.css  # CSS Variables

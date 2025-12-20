@@ -6,7 +6,7 @@ import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faClock, faArrowRight, faFilter } from '@fortawesome/free-solid-svg-icons';
 import PageWrapper from '@/components/layout/PageWrapper';
-import { ZenithCard } from '@/app/components/ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
 
 // Header config - inline para IA reconhecer
 const pageHeader = {

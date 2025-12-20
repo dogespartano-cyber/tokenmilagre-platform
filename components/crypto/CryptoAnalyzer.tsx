@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBitcoin, faEthereum } from '@fortawesome/free-brands-svg-icons';
 import { TokenSOL } from '@token-icons/react';
 import { BinanceDataProvider, useBinanceContext } from '@/contexts/BinanceDataContext';
-import { ZenithCard } from '@/app/components/ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
 
 const AdvancedChart = dynamic(() => import('./AdvancedChart'), {
     ssr: false,

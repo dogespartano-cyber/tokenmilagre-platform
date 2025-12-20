@@ -191,10 +191,34 @@ Relatório $MILAGRE:
 
 ---
 
+## 💾 Persistência
+
+> Relatórios devem ser salvos para acompanhamento histórico.
+
+| Tipo | Destino |
+|------|---------|
+| **Relatórios completos** | `Feedback/logs/RELATORIO_[data].md` |
+| **Snapshots periódicos** | `Feedback/logs/METRICAS_YYYY-MM.md` (mensal) |
+| **Gaps identificados** | `Feedback/backlog/BACKLOG.md` (como tarefa) |
+
+**Formato sugerido**:
+```yaml
+---
+type: report
+date: YYYY-MM-DD
+scope: full | articles | resources | users
+---
+```
+
+> **Dica**: Execute relatórios semanalmente para acompanhar evolução do projeto.
+
+---
+
 ```yaml
 @references:
   - _DNA.md
   - CODIGO.md  # Para queries complexas
   - CONTEUDO.md  # Para preencher gaps
   - VALOR.md  # Para validar ROI de conteúdo
+  - ../Feedback/logs/  # Destino para relatórios
 ```

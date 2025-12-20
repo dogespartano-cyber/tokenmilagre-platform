@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShieldCheck, XCircle } from 'lucide-react';
-import { ZenithCard } from '@/app/components/ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
 
 interface TruthDetectorProps {
     frameless?: boolean;

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faBookmark, faBan, faEye } from '@fortawesome/free-solid-svg-icons';
-import { ZenithCard } from '@/app/components/ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
 
 export default function SecurityTips() {
   const tips = [

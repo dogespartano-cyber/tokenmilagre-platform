@@ -10,7 +10,7 @@ import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faArrowUp, faArrowDown, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useCryptoData } from '@/lib/domains/crypto/hooks/useCryptoData';
-import { ZenithCard } from '../ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
 
 // --- Sparkline Component ---
 function SimpleSparkline({ data, isUp }: { data: number[]; isUp: boolean }) {

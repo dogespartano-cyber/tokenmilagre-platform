@@ -1,135 +1,94 @@
 ---
 type: policy
 name: TRANSPARENCY_POLICY
-purpose: Firewall ético entre educação e token
+purpose: Diretrizes éticas para comunicação
 inherits: _DNA.md
 ---
 
-# 🔒 Política de Transparência do Token
+# 🔒 Política de Transparência
 
-> Integridade acima de valorização.
-
----
-
-## Contexto
-
-O projeto $MILAGRE possui um token associado no blockchain Solana. Esta política existe para **garantir que a missão educacional nunca seja comprometida** por interesses financeiros.
+> Integridade através da clareza.
 
 ---
 
-## Regras Invioláveis
+## Princípio Central
 
-| Regra | Descrição |
-|-------|-----------|
-| **Separação de Conteúdo** | Artigos educacionais NUNCA promovem o token $MILAGRE |
-| **Disclosure Obrigatório** | Qualquer menção ao token inclui aviso de conflito de interesse |
-| **Métricas Públicas** | Carteira do projeto visível em `/transparencia` |
-| **Sem Promessas** | Proibido prometer valorização ou retorno financeiro |
-| **Educação Primeiro** | Todo conteúdo deve ter valor independente do token |
+O projeto $MILAGRE mantém **transparência total** sobre:
+- Código (open source)
+- Holdings (carteira pública)
+- Missão (educação + prosperidade)
 
 ---
 
-## Teste de Integridade
+## Diretrizes de Comunicação
 
-Antes de publicar qualquer conteúdo, aplique este teste:
+### ✅ Permitido
 
-| Pergunta | Resposta Esperada |
-|----------|-------------------|
-| Removendo o token, o conteúdo ainda tem valor? | ✅ SIM |
-| Leitor sem token se beneficia igualmente? | ✅ SIM |
-| Conflito de interesse está declarado? | ✅ SIM (se aplicável) |
-| Há promessa de valorização? | ❌ NÃO |
+| Contexto | O que pode |
+|----------|-----------|
+| **Páginas institucionais** (`/token`, `/sobre`, `/transparencia`) | Falar sobre o token, utilidades, visão |
+| **Utilidades do token** | Mencionar benefícios reais (acesso, governança, recompensas) |
+| **Disclosure natural** | "Este projeto possui um token associado" |
 
-Se qualquer resposta estiver errada, **o conteúdo não pode ser publicado**.
+### ⚠️ Com Cuidado
 
----
+| Contexto | Orientação |
+|----------|------------|
+| **Artigos educacionais** | Preferir foco no conteúdo; se mencionar token, ser natural |
+| **Redes sociais** | Equilibrar educação com atualizações do projeto |
 
-## Zonas de Conteúdo
+### ❌ Evitar
 
-```yaml
-@content-zones:
-  educacional:
-    - /educacao/*
-    - /recursos/* (artigos)
-    - /noticias/*
-    token-mention: PROIBIDO
-    
-  institucional:
-    - /token
-    - /sobre
-    - /transparencia
-    token-mention: PERMITIDO com disclosure
-    
-  comunicação:
-    - redes sociais
-    - newsletter
-    token-mention: APENAS com contexto educacional
-```
+| Prática | Por quê |
+|---------|---------|
+| Prometer valorização | Cria expectativa financeira irreal |
+| Pressão para comprar | Fere autonomia do leitor |
+| FOMO artificial | Manipulação emocional |
 
 ---
 
-## Disclosure Padrão
+## Teste Simples
 
-Quando menção ao token for permitida, usar:
+Antes de publicar, pergunte:
 
-> **⚠️ Aviso**: O projeto $MILAGRE possui um token associado. A equipe detém tokens. Este conteúdo não é aconselhamento financeiro. Faça sua própria pesquisa.
+> *"Isso ajuda a pessoa ou apenas me ajuda a vender?"*
 
----
-
-## Violações
-
-Qualquer conteúdo que viole esta política deve ser:
-1. Removido imediatamente
-2. Reportado ao ARQUITETO
-3. Documentado para prevenção futura
+Se ajuda a pessoa → ✅ Publique
+Se é só pitch → ⚠️ Revise
 
 ---
 
-## Checklist Pré-Publicação
+## Flexibilidade para Utilidades Futuras
 
-> **Obrigatório** antes de publicar qualquer conteúdo.
+O token $MILAGRE pode evoluir para ter utilidades que ainda não foram definidas. Esta política **não limita** usos legítimos como:
 
-| # | Item | ✓ |
-|---|------|---|
-| 1 | Revisor designado aprovou o conteúdo | ☐ |
-| 2 | Teste de integridade aplicado (4 perguntas) | ☐ |
-| 3 | Zona de conteúdo verificada | ☐ |
-| 4 | Disclosure adicionado (se aplicável) | ☐ |
-| 5 | Zero promessas de valorização | ☐ |
-| 6 | Fontes verificadas e linkadas | ☐ |
+- Acesso a conteúdo premium
+- Gamificação e recompensas
+- Governança comunitária
+- Benefícios para holders
+- Integrações com DeFi
+- Qualquer utilidade real que agregue valor
 
-**Responsável pela revisão**: Membro designado ou CONTEUDO
+**A única restrição é ética**: não manipular, não mentir, não criar expectativas falsas.
 
 ---
 
-## Disclosure Expandido
+## Disclaimer (quando necessário)
 
-Quando menção ao token for permitida, usar:
+Em contextos financeiros, usar:
 
-> **⚠️ Aviso de Transparência**
-> - O projeto $MILAGRE possui um token associado
-> - Holdings da equipe visíveis em [/transparencia](/transparencia)
-> - Este conteúdo **não é aconselhamento financeiro**
-> - Faça sua própria pesquisa (DYOR)
-
----
-
-## Disclaimer Legal
-
-> **Isenção de Responsabilidade**
-> 
-> O conteúdo deste site é apenas para fins educacionais e informativos. Nenhuma informação aqui contida constitui aconselhamento financeiro, de investimento, jurídico ou tributário. Criptomoedas são ativos de alto risco; você pode perder todo o capital investido. Consulte profissionais qualificados antes de tomar decisões financeiras. O projeto $MILAGRE e seus colaboradores não se responsabilizam por perdas decorrentes do uso destas informações.
+> *Criptomoedas são ativos de risco. Faça sua própria pesquisa.*
 
 ---
 
 ```yaml
 @policy-metadata:
-  version: 1.1.0
+  version: 2.0.0
   created: 2025-12-15
-  updated: 2025-12-15
+  updated: 2025-12-20
   approved-by: ARQUITETO
-  audited-by: SEGURANCA
-  inherits: _DNA.md
   changelog:
-    - v1.1.0: Added checklist, expanded disclosure, legal disclaimer (DD-001/002/004)
+    - v2.0.0: Simplificado para maior flexibilidade; foco em ética, não em proibições
+    - v1.1.0: Added checklist, expanded disclosure, legal disclaimer
 ```
+

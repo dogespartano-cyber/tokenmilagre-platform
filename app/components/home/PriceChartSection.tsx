@@ -10,7 +10,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { ZenithCard } from '../ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
 
 const LightweightChart = dynamic(() => import('@/components/crypto/LightweightChart'), {
     ssr: false,

@@ -26,6 +26,8 @@ import RecursosMode from './modes/RecursosMode';
 import RecursoDetalheMode from './modes/RecursoDetalheMode';
 import ComeceAquiMode from './modes/ComeceAquiMode';
 
+import SobreMode from './modes/SobreMode';
+
 // Types
 import type { SidebarProps } from './types';
 
@@ -41,6 +43,7 @@ const MODE_COMPONENTS: Record<string, React.ComponentType<any>> = {
     recursos: RecursosMode,
     'recurso-detalhe': RecursoDetalheMode,
     'comece-aqui': ComeceAquiMode,
+    sobre: SobreMode,
 };
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {

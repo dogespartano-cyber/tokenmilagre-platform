@@ -90,4 +90,5 @@ Nível 3: Recurso    (service.ts, hooks/, types.ts)
   - _DNA.md
   - ./ARQUITETURA.md  # Filosofia completa
   - CODIGO.md  # Colaboração em code review
+  - CONSISTENCIA.md  # Audita consistência estrutural
 ```

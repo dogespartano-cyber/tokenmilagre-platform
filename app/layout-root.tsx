@@ -30,8 +30,7 @@ import ScrollToTop from '@/components/shared/ScrollToTop';
 import CookieConsent from '@/components/shared/CookieConsent';
 
 // Componentes extraídos
-import { Sidebar, FearGreedGaugeNavbar, Footer } from './components/layout';
-import { useFearGreedNavbar } from './components/layout/useFearGreedNavbar';
+import { Sidebar, Footer } from './components/layout';
 import { SidebarProvider } from '@/contexts/SidebarContext';
 
 const TickerTapeWidget = dynamic(() => import('@/components/widgets/TickerTapeWidget'), {
@@ -46,7 +45,6 @@ export default function RootLayoutNav({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
-  const { fearGreed, gaugeValue } = useFearGreedNavbar();
 
   return (
     <SidebarProvider>
@@ -58,25 +56,19 @@ export default function RootLayoutNav({
         <div className="min-h-screen flex flex-col lg:ml-72">
           {/* Header */}
           <header className="sticky top-0 z-30 backdrop-blur-xl h-[88px] flex items-center bg-transparent">
-            <div className="container mx-auto px-6 h-full">
+            <div className="container mx-auto px-6 h-full relative">
               <div className="flex justify-between items-center h-full">
                 {/* Mobile Header Layout */}
                 <div className="flex items-center justify-between w-full lg:hidden">
                   <div className="flex items-center gap-4">
                     <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-all duration-300 group">
-                      <div className="relative w-10 h-10 rounded-full shadow-lg overflow-hidden border-2 group-hover:scale-110 transition-all duration-300 group-hover:rotate-12" style={{
-                        borderColor: 'var(--brand-primary)'
-                      }}>
-                        <div className="absolute inset-0 blur-sm" style={{
-                          background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
-                          opacity: 0.2
-                        }}></div>
+                      <div className="relative w-10 h-10 overflow-hidden group-hover:scale-110 transition-all duration-300">
                         <Image
                           src="/images/TOKEN-MILAGRE-Hero.webp"
                           alt="$MILAGRE"
                           width={40}
                           height={40}
-                          className="w-full h-full object-cover relative z-10"
+                          className="w-full h-full object-contain relative z-10"
                         />
                       </div>
                       <div className="text-xl sm:text-2xl font-bold drop-shadow-lg transition-all duration-300 font-[family-name:var(--font-poppins)] text-theme-primary group-hover:text-brand-primary group-hover:scale-105">
@@ -94,9 +86,8 @@ export default function RootLayoutNav({
                   </button>
                 </div>
 
-                {/* Desktop: Fear & Greed + Crypto Ticker */}
-                <div className="hidden lg:flex flex-1 w-full mx-8 items-center gap-8 justify-center overflow-hidden">
-                  {fearGreed && <FearGreedGaugeNavbar value={gaugeValue} />}
+                {/* Desktop: Crypto Ticker */}
+                <div className="hidden lg:flex flex-1 w-full mx-8 items-center justify-center overflow-hidden transition-opacity duration-300">
                   <div className="flex-1 overflow-x-auto no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                     <NavbarCryptoTicker />
                   </div>
@@ -143,11 +134,6 @@ export default function RootLayoutNav({
           <main className="flex-1 relative">
             <GlobalBackground />
 
-            {/* Breadcrumbs */}
-            <div className="container mx-auto px-4 mt-4 relative z-10">
-              <Breadcrumbs inline={true} />
-            </div>
-
             {/* TODO: Ticker Tape desabilitado - revisar se continuar usando
             {!pathname.startsWith('/educacao') && !pathname.startsWith('/recursos') && (
               <div
@@ -173,10 +159,10 @@ export default function RootLayoutNav({
           {/* Mobile Sidebar Toggle FAB */}
           <button
             onClick={() => setSidebarOpen(true)}
-            className="glass-card fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full flex lg:hidden items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-lg"
+            className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full flex lg:hidden items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-lg bg-white dark:bg-emerald-950 border border-gray-200 dark:border-emerald-800"
             aria-label="Abrir menu"
           >
-            <FontAwesomeIcon icon={faBars} className="w-6 h-6" style={{ color: 'var(--text-primary)' }} />
+            <FontAwesomeIcon icon={faBars} className="w-6 h-6 text-[var(--brand-primary)]" />
           </button>
 
           {/* Global Components */}

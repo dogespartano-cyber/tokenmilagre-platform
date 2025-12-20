@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt, faCheckCircle, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import type { ResourceItem } from './types';
-import { ZenithCard } from '../ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
 
 interface FeaturedResourcesSectionProps {
     resources: ResourceItem[];

@@ -26,14 +26,14 @@ export default function ScrollToTop() {
   if (!showScrollTop) return null;
 
   return (
-    <>
+    <div className={`fixed bottom-8 right-8 z-50 hidden lg:block transition-all duration-500 ${showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}>
       <button
         onClick={scrollToTop}
-        className={`glass-card fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full hidden lg:flex items-center justify-center transition-all duration-500 hover:scale-110 ${showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
         aria-label="Voltar ao topo"
+        className="w-14 h-14 rounded-full flex items-center justify-center cursor-pointer bg-white dark:bg-emerald-950 border border-gray-200 dark:border-emerald-800 shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300"
       >
-        <FontAwesomeIcon icon={faArrowUp} className="w-5 h-5" style={{ color: 'var(--text-primary)' }} />
+        <FontAwesomeIcon icon={faArrowUp} className="w-5 h-5 text-[var(--brand-primary)]" />
       </button>
-    </>
+    </div>
   );
 }

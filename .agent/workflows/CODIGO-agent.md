@@ -122,10 +122,26 @@ Sempre forneça referências ao pedir código:
 
 ---
 
+## 💾 Persistência
+
+> Sessões de trabalho significativas devem ser documentadas.
+
+| Tipo | Destino |
+|------|---------|
+| **Refatorações grandes** | `Feedback/logs/HISTORICO.md` |
+| **Bugs corrigidos** | `Feedback/logs/HISTORICO.md` |
+| **Decisões técnicas** | `Feedback/notes/DECISOES_TECNICAS.md` |
+
+> **Regra**: Após commits importantes, adicione entrada no `HISTORICO.md` com resumo do que foi feito.
+
+---
+
 ```yaml
 @references:
   - _DNA.md
   - ESTRUTURA.md  # Estrutura
   - SEGURANCA.md  # Segurança
+  - CONSISTENCIA.md  # Audita consistência de código
   - prisma/schema.prisma  # Schema real
+  - ../Feedback/logs/HISTORICO.md  # Histórico de sessões
 ```

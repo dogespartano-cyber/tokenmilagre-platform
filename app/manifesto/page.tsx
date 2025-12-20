@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, BookOpen, Heart, Eye, Users, Globe, Scale } from 'lucide-react';
+import { Shield, BookOpen, Heart, Eye, Users, Globe, Scale, Sparkles, Target, TrendingUp, GraduationCap, Leaf, Coins } from 'lucide-react';
 
 export default function ManifestoPage() {
     return (
@@ -15,6 +15,16 @@ export default function ManifestoPage() {
                         Acreditamos que o conhecimento deve ser livre, mas a integridade deve ser protegida.
                         Este é o nosso compromisso com a <span className="font-bold text-teal-600 dark:text-teal-400">transparência</span> e a prosperidade real.
                     </p>
+                </div>
+
+                {/* Mantra Visual - NOVO */}
+                <div className="relative p-8 md:p-12 rounded-3xl bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-cyan-500/10 border border-emerald-500/20 text-center overflow-hidden">
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500" />
+                    <Sparkles className="w-8 h-8 text-emerald-500 mx-auto mb-4" />
+                    <blockquote className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] italic">
+                        &ldquo;Ensinar a construir patrimônio, não a jogar na loteria.&rdquo;
+                    </blockquote>
+                    <p className="text-[var(--text-tertiary)] mt-4 text-sm">— Mantra $MILAGRE</p>
                 </div>
 
                 {/* Core Values Grid - Expandido */}
@@ -55,7 +65,7 @@ export default function ManifestoPage() {
                         </div>
                         <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">Comunidade Horizontal</h3>
                         <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
-                            Não há "VIPs" ou "Insiders". Todos somos Testemunhas. O conhecimento e as oportunidades são distribuídos igualmente.
+                            Não há &quot;VIPs&quot; ou &quot;Insiders&quot;. Todos somos Testemunhas. O conhecimento e as oportunidades são distribuídos igualmente.
                         </p>
                     </div>
 
@@ -75,8 +85,77 @@ export default function ManifestoPage() {
                         </div>
                         <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">Justiça Econômica</h3>
                         <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
-                            Combatemos a cultura de "Pump and Dump". Construímos valor sustentável através de utilidade real e educação contínua.
+                            Combatemos a cultura de &quot;Pump and Dump&quot;. Construímos valor sustentável através de utilidade real e educação contínua.
                         </p>
+                    </div>
+                </div>
+
+                {/* Filosofia de Prosperidade - NOVO */}
+                <div className="glass-card p-8 md:p-12 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]/50 backdrop-blur-xl space-y-8 shadow-sm relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+                        <Coins className="w-64 h-64 text-emerald-500" />
+                    </div>
+
+                    <div className="space-y-4 relative z-10">
+                        <div className="flex items-center gap-3">
+                            <div className="p-2 bg-emerald-500/10 rounded-xl text-emerald-600 dark:text-emerald-400">
+                                <TrendingUp className="w-6 h-6" />
+                            </div>
+                            <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Filosofia de Prosperidade</h2>
+                        </div>
+                        <p className="text-lg text-[var(--text-secondary)]">
+                            Acreditamos em <span className="text-emerald-600 dark:text-emerald-400 font-bold">riqueza construída com fundamentos, paciência e ética</span>!
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-10">
+                        <div className="p-5 rounded-2xl bg-[var(--bg-primary)]/50 border border-[var(--border-light)] hover:border-emerald-500/30 transition-all">
+                            <div className="flex items-center gap-3 mb-3">
+                                <Target className="w-5 h-5 text-emerald-500" />
+                                <h4 className="font-bold text-[var(--text-primary)]">Enriquecer com verdade</h4>
+                            </div>
+                            <p className="text-sm text-[var(--text-secondary)]">Dinheiro sim, mas sem mentiras</p>
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-[var(--bg-primary)]/50 border border-[var(--border-light)] hover:border-emerald-500/30 transition-all">
+                            <div className="flex items-center gap-3 mb-3">
+                                <Heart className="w-5 h-5 text-emerald-500" />
+                                <h4 className="font-bold text-[var(--text-primary)]">Prosperidade com propósito</h4>
+                            </div>
+                            <p className="text-sm text-[var(--text-secondary)]">Riqueza como meio, não fim</p>
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-[var(--bg-primary)]/50 border border-[var(--border-light)] hover:border-emerald-500/30 transition-all">
+                            <div className="flex items-center gap-3 mb-3">
+                                <Shield className="w-5 h-5 text-emerald-500" />
+                                <h4 className="font-bold text-[var(--text-primary)]">Patrimônio, não pirâmides</h4>
+                            </div>
+                            <p className="text-sm text-[var(--text-secondary)]">Contra esquemas, pró fundamentos</p>
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-[var(--bg-primary)]/50 border border-[var(--border-light)] hover:border-emerald-500/30 transition-all">
+                            <div className="flex items-center gap-3 mb-3">
+                                <Users className="w-5 h-5 text-emerald-500" />
+                                <h4 className="font-bold text-[var(--text-primary)]">Servir bem, lucrar junto</h4>
+                            </div>
+                            <p className="text-sm text-[var(--text-secondary)]">O lucro vem como consequência</p>
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-[var(--bg-primary)]/50 border border-[var(--border-light)] hover:border-emerald-500/30 transition-all">
+                            <div className="flex items-center gap-3 mb-3">
+                                <GraduationCap className="w-5 h-5 text-emerald-500" />
+                                <h4 className="font-bold text-[var(--text-primary)]">Educar para prosperar</h4>
+                            </div>
+                            <p className="text-sm text-[var(--text-secondary)]">Conhecimento que gera riqueza real</p>
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-[var(--bg-primary)]/50 border border-[var(--border-light)] hover:border-emerald-500/30 transition-all">
+                            <div className="flex items-center gap-3 mb-3">
+                                <Leaf className="w-5 h-5 text-emerald-500" />
+                                <h4 className="font-bold text-[var(--text-primary)]">Riqueza sustentável</h4>
+                            </div>
+                            <p className="text-sm text-[var(--text-secondary)]">Longo prazo &gt; pump and dump</p>
+                        </div>
                     </div>
                 </div>
 
@@ -124,7 +203,7 @@ export default function ManifestoPage() {
 
                     <div className="pt-8 border-t border-[var(--border-light)] relative z-10">
                         <p className="text-center text-[var(--text-tertiary)] italic text-lg font-serif">
-                            "Conhecereis a verdade, e a verdade vos libertará." — João 8:32
+                            &quot;Conhecereis a verdade, e a verdade vos libertará.&quot; — João 8:32
                         </p>
                     </div>
                 </div>

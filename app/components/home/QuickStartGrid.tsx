@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faGraduationCap, faNewspaper, faArrowRight, faCoins, faTools } from '@fortawesome/free-solid-svg-icons';
-import { ZenithCard } from '../ui/ZenithCard';
+import ZenithCard from '@/components/ui/ZenithCard';
 import {
     DndContext,
     closestCenter,

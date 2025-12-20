@@ -120,6 +120,21 @@ Verificar: [como validar sucesso]
 
 ---
 
+## 📁 Banco de Dados Local (Feedback)
+
+> Diretório para persistência de dados efêmeros, ignorado pelo Git.
+
+| Pasta | Propósito | Usado por |
+|-------|-----------|-----------|
+| `Feedback/backlog/` | Tarefas pendentes | TODOS |
+| `Feedback/logs/` | Histórico, relatórios | CODIGO, DADOS |
+| `Feedback/ideas/` | Brainstorms, sessões criativas | IDEIAS |
+| `Feedback/notes/` | Análises, rascunhos | ANALISTA |
+
+> **Regra**: Sempre que gerar output significativo (análises, relatórios, brainstorms), salvar no diretório apropriado do `Feedback/`.
+
+---
+
 ```yaml
 @agi-metadata:
   inherits: null  # Este é o núcleo

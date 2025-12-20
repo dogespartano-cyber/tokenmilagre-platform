@@ -162,10 +162,33 @@ Quando travar, usar:
 
 ---
 
+## 💾 Persistência
+
+> Sessões de brainstorm devem ser salvas para referência futura.
+
+| Tipo | Destino |
+|------|---------|
+| **Sessões completas** | `Feedback/ideas/BRAINSTORM_[data].md` |
+| **Ideias aprovadas** | `Feedback/backlog/BACKLOG.md` (como tarefa) |
+| **Ideias descartadas** | Manter no arquivo da sessão para histórico |
+
+**Formato do arquivo de sessão**:
+```yaml
+---
+type: brainstorm
+date: YYYY-MM-DD
+framework: [SCAMPER | 6 Chapéus | Crazy 8s | etc.]
+status: open | closed
+---
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
   - ARQUITETO.md  # Para validação ética
   - CONTEUDO.md  # Para execução de ideias de conteúdo
   - ANALISTA.md  # Para análise de ideias
+  - ../Feedback/ideas/  # Destino para brainstorms
 ```

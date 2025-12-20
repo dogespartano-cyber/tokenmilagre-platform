@@ -68,9 +68,32 @@ Objetivo: **Encontrar a verdade**, não validar. Desconstruir para ver se para e
 
 ---
 
+## 💾 Persistência
+
+> Análises significativas devem ser documentadas para referência futura.
+
+| Tipo | Destino |
+|------|---------|
+| **Análises de projeto** | `Feedback/notes/ANALISE_[tema]_[data].md` |
+| **Insights recorrentes** | `Feedback/notes/INSIGHTS.md` (acumulativo) |
+| **Diagnósticos críticos** | Escalar para `ARQUITETO` e documentar |
+
+**Formato sugerido**:
+```yaml
+---
+type: analysis
+date: YYYY-MM-DD
+subject: [nome do projeto/feature analisado]
+verdict: healthy | warning | critical
+---
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
   - ARQUITETO.md  # Filosofia
   - CONTEUDO.md  # Tom de voz
+  - ../Feedback/notes/  # Destino para análises
 ```
