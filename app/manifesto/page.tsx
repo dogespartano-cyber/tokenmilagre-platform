@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { Shield, BookOpen, Heart, Eye, Users, Globe, Scale, Sparkles, Target, TrendingUp, GraduationCap, Leaf, Coins } from 'lucide-react';
