@@ -45,21 +45,44 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
   const [activeSection, setActiveSection] = useState<string>('');
 
-  // Create unique ID generator that resets per render
-  // useMemo ensures consistency between server and client
-  const getUniqueId = useMemo(() => {
-    const slugRegistry = new Map<string, number>();
-    return (text: string) => {
-      const id = slugify(text);
-      if (slugRegistry.has(id)) {
-        const count = slugRegistry.get(id)!;
-        slugRegistry.set(id, count + 1);
-        return `${id}-${count}`;
+  // Pre-compute heading IDs for consistent hydration
+  // This creates a map of heading text -> unique ID that's deterministic
+  const headingIdMap = useMemo(() => {
+    if (!article) return new Map<string, string>();
+
+    const idMap = new Map<string, string>();
+    const usedIds = new Set<string>();
+    const lines = article.content.split('\n');
+
+    lines.forEach((line) => {
+      const h2Match = line.match(/^## (.+)$/);
+      const h3Match = line.match(/^### (.+)$/);
+
+      if (h2Match || h3Match) {
+        const text = (h2Match ? h2Match[1] : h3Match![1]).trim();
+        let id = slugify(text);
+
+        // Create unique ID if duplicate
+        if (usedIds.has(id)) {
+          let counter = 1;
+          while (usedIds.has(`${id}-${counter}`)) {
+            counter++;
+          }
+          id = `${id}-${counter}`;
+        }
+
+        usedIds.add(id);
+        idMap.set(text, id);
       }
-      slugRegistry.set(id, 1);
-      return id;
-    };
-  }, [article?.id]); // Reset when article changes
+    });
+
+    return idMap;
+  }, [article?.content]);
+
+  // Get ID for heading text using pre-computed map
+  const getHeadingId = (text: string): string => {
+    return headingIdMap.get(text) || slugify(text);
+  };
 
   // Custom color scheme for level
   const getLevelColor = (level: string) => {
@@ -85,13 +108,12 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
     }
   };
 
-  // Extrai headings do conteúdo para criar índice
+  // Build table of contents from pre-computed heading IDs
   useEffect(() => {
     if (!article) return;
 
     const headings: TableOfContentsItem[] = [];
     const lines = article.content.split('\n');
-    const usedIds = new Set<string>();
 
     lines.forEach((line) => {
       const h2Match = line.match(/^## (.+)$/);
@@ -100,23 +122,13 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
       if (h2Match || h3Match) {
         const text = (h2Match ? h2Match[1] : h3Match![1]).trim();
         const level = h2Match ? 2 : 3;
-        let id = slugify(text);
-
-        if (usedIds.has(id)) {
-          let counter = 1;
-          while (usedIds.has(`${id}-${counter}`)) {
-            counter++;
-          }
-          id = `${id}-${counter}`;
-        }
-
-        usedIds.add(id);
+        const id = headingIdMap.get(text) || slugify(text);
         headings.push({ id, text, level });
       }
     });
 
     setTableOfContents(headings);
-  }, [article]);
+  }, [article, headingIdMap]);
 
   // Rastrear seção ativa
   useEffect(() => {
@@ -382,7 +394,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                     ),
                     h2: ({ children }) => {
                       const text = String(children);
-                      const id = getUniqueId(text);
+                      const id = getHeadingId(text);
                       return (
                         <h2
                           id={id}
@@ -395,7 +407,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                     },
                     h3: ({ children }) => {
                       const text = String(children);
-                      const id = getUniqueId(text);
+                      const id = getHeadingId(text);
                       return (
                         <h3
                           id={id}
