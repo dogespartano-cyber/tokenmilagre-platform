@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
-import { useRef, useEffect, useState } from "react";
+import { useMemo, useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, ArrowRight, CheckCircle2, Shield, BookOpen } from 'lucide-react';
@@ -172,22 +172,47 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
         }
     };
 
-    // Registry for unique IDs in Markdown render to match TOC generation
-    // Use useMemo to ensure the same IDs are generated on server and client
-    const slugRegistry = useRef(new Map<string, number>());
+    // Pre-compute heading IDs for consistent hydration
+    const headingIdMap = useMemo(() => {
+        if (!article) return new Map<string, string>();
 
-    // Reset registry on each render to ensure consistent ordering
-    slugRegistry.current.clear();
+        const idMap = new Map<string, string>();
+        const usedIds = new Set<string>();
+        const lines = article.content.split('\n');
 
-    const getUniqueId = (text: string) => {
-        const id = slugify(text);
-        if (slugRegistry.current.has(id)) {
-            const count = slugRegistry.current.get(id)!;
-            slugRegistry.current.set(id, count + 1);
-            return `${id}-${count}`;
-        }
-        slugRegistry.current.set(id, 1);
-        return id;
+        lines.forEach((line) => {
+            const h2Match = line.match(/^\s*##\s+(.+)$/);
+            const h3Match = line.match(/^\s*###\s+(.+)$/);
+
+            if (h2Match || h3Match) {
+                const rawText = (h2Match ? h2Match[1] : h3Match![1]).trim();
+                const cleanText = rawText
+                    .replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1')
+                    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+                    .replace(/[*_`]/g, '')
+                    .trim();
+
+                let id = slugify(cleanText);
+
+                if (usedIds.has(id)) {
+                    let counter = 1;
+                    while (usedIds.has(`${id}-${counter}`)) {
+                        counter++;
+                    }
+                    id = `${id}-${counter}`;
+                }
+
+                usedIds.add(id);
+                idMap.set(cleanText, id);
+            }
+        });
+
+        return idMap;
+    }, [article?.content]);
+
+    // Get ID for heading text using pre-computed map
+    const getHeadingId = (text: string): string => {
+        return headingIdMap.get(text) || slugify(text);
     };
 
     // Helper para extrair texto limpo de children complexos (ex: com itálico/negrito aninhado)
@@ -298,12 +323,12 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
                                     h1: ({ children }) => <h1 className="sr-only">{children}</h1>,
                                     h2: ({ children }) => {
                                         const text = extractTextFromNode(children);
-                                        const id = getUniqueId(text);
+                                        const id = getHeadingId(text);
                                         return <h2 id={id} className="scroll-mt-28">{children}</h2>;
                                     },
                                     h3: ({ children }) => {
                                         const text = extractTextFromNode(children);
-                                        const id = getUniqueId(text);
+                                        const id = getHeadingId(text);
                                         return <h3 id={id} className="scroll-mt-28">{children}</h3>;
                                     },
                                 }}
