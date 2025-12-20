@@ -148,8 +148,6 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
 
   // Buscar artigos relacionados, anterior e próximo
   let relatedArticles: NewsItem[] = [];
-  let previousArticle: NewsItem | null = null;
-  let nextArticle: NewsItem | null = null;
 
   if (article) {
     try {
@@ -205,20 +203,7 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
         };
       });
 
-      // Encontrar índice do artigo atual
-      const currentIndex = allNews.findIndex(item =>
-        item.id === article.id || item.slug === article.slug
-      );
 
-      // Artigo anterior (mais novo)
-      if (currentIndex > 0) {
-        previousArticle = allNews[currentIndex - 1];
-      }
-
-      // Próximo artigo (mais antigo)
-      if (currentIndex < allNews.length - 1) {
-        nextArticle = allNews[currentIndex + 1];
-      }
 
       // Artigos relacionados (mesma categoria, excluindo atual)
       relatedArticles = allNews
@@ -232,5 +217,5 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
     }
   }
 
-  return <ArtigoClient article={article} relatedArticles={relatedArticles} previousArticle={previousArticle} nextArticle={nextArticle} />;
+  return <ArtigoClient article={article} relatedArticles={relatedArticles} />;
 }
