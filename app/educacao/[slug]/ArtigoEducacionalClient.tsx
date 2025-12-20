@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -11,19 +11,6 @@ import { getLevelLabel } from '@/lib/shared/utils/level-helpers';
 import { slugify } from '@/lib/shared/utils/content-helpers';
 import QuizComponent from '@/components/education/QuizComponent';
 import TransparencyNote from '@/components/shared/TransparencyNote';
-
-// Custom unique ID generation for Markdown headers
-const slugRegistry = new Map<string, number>();
-const getUniqueId = (text: string) => {
-  const id = slugify(text);
-  if (slugRegistry.has(id)) {
-    const count = slugRegistry.get(id)!;
-    slugRegistry.set(id, count + 1);
-    return `${id}-${count}`;
-  }
-  slugRegistry.set(id, 1);
-  return id;
-};
 
 interface EducationalArticle {
   id: string;
@@ -57,6 +44,22 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
   const router = useRouter();
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
   const [activeSection, setActiveSection] = useState<string>('');
+
+  // Create unique ID generator that resets per render
+  // useMemo ensures consistency between server and client
+  const getUniqueId = useMemo(() => {
+    const slugRegistry = new Map<string, number>();
+    return (text: string) => {
+      const id = slugify(text);
+      if (slugRegistry.has(id)) {
+        const count = slugRegistry.get(id)!;
+        slugRegistry.set(id, count + 1);
+        return `${id}-${count}`;
+      }
+      slugRegistry.set(id, 1);
+      return id;
+    };
+  }, [article?.id]); // Reset when article changes
 
   // Custom color scheme for level
   const getLevelColor = (level: string) => {
