@@ -61,14 +61,14 @@ export async function POST(request: NextRequest) {
                         data: { likeCount: { decrement: 1 } }
                     })
                     : prisma.resource.update({
-                        where: { id: resourceId },
+                        where: { id: resourceId! },
                         data: { likeCount: { decrement: 1 } }
                     })
             ]);
 
             const updated = articleId
                 ? await prisma.article.findUnique({ where: { id: articleId }, select: { likeCount: true } })
-                : await prisma.resource.findUnique({ where: { id: resourceId }, select: { likeCount: true } });
+                : await prisma.resource.findUnique({ where: { id: resourceId! }, select: { likeCount: true } });
 
             return NextResponse.json({
                 success: true,
@@ -90,14 +90,14 @@ export async function POST(request: NextRequest) {
                         data: { likeCount: { increment: 1 } }
                     })
                     : prisma.resource.update({
-                        where: { id: resourceId },
+                        where: { id: resourceId! },
                         data: { likeCount: { increment: 1 } }
                     })
             ]);
 
             const updated = articleId
                 ? await prisma.article.findUnique({ where: { id: articleId }, select: { likeCount: true } })
-                : await prisma.resource.findUnique({ where: { id: resourceId }, select: { likeCount: true } });
+                : await prisma.resource.findUnique({ where: { id: resourceId! }, select: { likeCount: true } });
 
             return NextResponse.json({
                 success: true,
@@ -130,7 +130,7 @@ export async function GET(request: NextRequest) {
         // Buscar contagem total
         const item = articleId
             ? await prisma.article.findUnique({ where: { id: articleId }, select: { likeCount: true } })
-            : await prisma.resource.findUnique({ where: { id: resourceId }, select: { likeCount: true } });
+            : await prisma.resource.findUnique({ where: { id: resourceId! }, select: { likeCount: true } });
 
         // Verificar se usuário atual deu like
         let userLiked = false;
