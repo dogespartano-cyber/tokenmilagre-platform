@@ -40,7 +40,8 @@ import {
 // Header config - inline para IA reconhecer
 const pageHeader = {
   title: '$MILAGRE',
-  description: 'Em busca de uma comunidade com prosperidade.'
+  description: 'Em busca de uma comunidade com prosperidade.',
+  shortTitle: '$MILAGRE'
 };
 
 const initialSections = [
@@ -195,7 +196,7 @@ export default function HomePage() {
     // Server-side / Initial render matches default order to prevent hydration mismatch
     return (
       <PageWrapper header={pageHeader}>
-        <div className="container mx-auto px-6 md:px-10 py-8 relative z-10">
+        <div className="container mx-auto px-6 md:px-10 py-4 lg:py-8 relative z-10">
           {loading ? (
             <LoadingSkeleton />
           ) : (
@@ -214,7 +215,7 @@ export default function HomePage() {
 
   return (
     <PageWrapper header={pageHeader}>
-      <div className="container mx-auto px-6 md:px-10 py-8 relative z-10">
+      <div className="container mx-auto px-6 md:px-10 py-4 lg:py-8 relative z-10">
         {loading ? (
           <LoadingSkeleton />
         ) : (

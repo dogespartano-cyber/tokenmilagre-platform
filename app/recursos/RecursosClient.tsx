@@ -13,7 +13,8 @@ import PageWrapper from '@/components/layout/PageWrapper';
 // Header config - inline para IA reconhecer
 const pageHeader = {
   title: 'Ferramentas e Links Seguros',
-  description: 'Acesse exchanges, carteiras e sites oficiais com tranquilidade.'
+  description: 'Acesse exchanges, carteiras e sites oficiais com tranquilidade.',
+  shortTitle: 'Recursos'
 };
 
 interface RecursosClientProps {
@@ -120,7 +121,7 @@ export default function RecursosClient({ resources }: RecursosClientProps) {
 
   return (
     <PageWrapper header={pageHeader}>
-      <div className="container mx-auto px-4 py-8 relative">
+      <div className="container mx-auto px-4 py-4 lg:py-8 relative">
         <div className="space-y-8">
 
           {/* Grid de Recursos */}

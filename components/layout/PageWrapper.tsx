@@ -13,7 +13,9 @@ import PageHeader from '@/components/shared/PageHeader';
 export interface PageHeaderConfig {
     title: string;
     description: string;
+    shortTitle?: string;
 }
+
 
 interface PageWrapperProps {
     children: React.ReactNode;
@@ -36,10 +38,11 @@ export default function PageWrapper({
         <div className={`min-h-screen relative ${className}`}>
             {/* Header dinâmico */}
             {header && (
-                <div className="container mx-auto px-4 py-8 relative z-10">
+                <div className="container mx-auto px-4 pt-4 pb-1 lg:py-8 relative z-10">
                     <PageHeader
                         title={header.title}
                         description={header.description}
+                        shortTitle={header.shortTitle}
                     />
                 </div>
             )}

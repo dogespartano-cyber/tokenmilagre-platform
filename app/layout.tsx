@@ -11,6 +11,7 @@ import { ThemeProvider } from "@/lib/core/theme";
 import { EducationFilterProvider } from "@/contexts/EducationFilterContext";
 import RootLayoutNav from "./layout-root";
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { SidebarProvider } from "@/contexts/SidebarContext";
 
 // Viewport configuration with theme-color for Android navigation bar
 export { viewport } from './viewport';
@@ -218,9 +219,11 @@ export default function RootLayout({
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />
           <ThemeProvider>
             <EducationFilterProvider>
-              <RootLayoutNav>
-                {children}
-              </RootLayoutNav>
+              <SidebarProvider>
+                <RootLayoutNav>
+                  {children}
+                </RootLayoutNav>
+              </SidebarProvider>
             </EducationFilterProvider>
           </ThemeProvider>
         </body>

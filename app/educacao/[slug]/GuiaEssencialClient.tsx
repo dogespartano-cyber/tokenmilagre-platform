@@ -42,7 +42,7 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
     const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
     const [activeSection, setActiveSection] = useState<string>('');
 
-    const { setSidebarMode, resetSidebar } = useSidebar();
+    const { setSidebarMode, resetSidebar, setDynamicTitle, setShortTitle } = useSidebar();
 
     // Encontrar posição atual na trilha
     const currentIndex = GUIA_ESSENCIAL_TRILHA.findIndex(t => t.slug === article.slug);
@@ -112,10 +112,13 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
             progress: courseProgress
         });
 
+        setDynamicTitle(article.title);
+        setShortTitle('Educação');
+
         return () => {
             resetSidebar();
         };
-    }, [article.slug, setSidebarMode, resetSidebar]);
+    }, [article.slug, article.title, setSidebarMode, resetSidebar, setDynamicTitle, setShortTitle]);
 
     // Calcula progresso de leitura e seção ativa
     useEffect(() => {

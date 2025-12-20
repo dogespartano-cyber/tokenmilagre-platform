@@ -13,7 +13,8 @@ import ZenithCard from '@/components/ui/ZenithCard';
 // Header config - inline para IA reconhecer
 const pageHeader = {
   title: 'Gráficos e Análises de Mercado',
-  description: 'Acompanhe o mercado em tempo real com gráficos avançados, análise técnica e indicadores profissionais'
+  description: 'Acompanhe o mercado em tempo real com gráficos avançados, análise técnica e indicadores profissionais',
+  shortTitle: 'Gráficos'
 };
 
 const CryptoHeatmapWidget = dynamic(() => import('@/components/widgets/CryptoHeatmapWidget'), {
@@ -58,7 +59,7 @@ export default function GraficosPage() {
       <div className="min-h-screen relative transition-colors duration-300">
 
 
-        <div className="container mx-auto px-4 py-8 relative z-10">
+        <div className="container mx-auto px-4 py-4 lg:py-8 relative z-10">
           <div className="space-y-16">
 
             {/* Section 1: Command Center (Deep Dive) - Moved to Top */}

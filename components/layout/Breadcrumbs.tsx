@@ -75,7 +75,7 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
                 }}
               >
                 <FontAwesomeIcon icon={faHome} className="w-4 h-4" />
-                <span className="text-sm font-semibold">Início</span>
+                <span className="text-sm font-medium">Início</span>
               </Link>
             </li>
 
@@ -88,7 +88,7 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
                 />
                 {index === items.length - 1 ? (
                   <span
-                    className="px-3 py-1.5 rounded-lg text-sm font-semibold"
+                    className="px-3 py-1.5 rounded-lg text-sm font-medium"
                     style={{
                       backgroundColor: 'var(--brand-primary)',
                       color: 'var(--text-inverse)'
@@ -99,7 +99,7 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
                 ) : (
                   <Link
                     href={item.href}
-                    className="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all hover:scale-105"
+                    className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all hover:scale-105"
                     style={{
                       color: 'var(--text-secondary)',
                       backgroundColor: 'var(--bg-secondary)'
@@ -141,7 +141,7 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
                 aria-current="page"
               >
                 <FontAwesomeIcon icon={faHome} className="w-4 h-4" />
-                <span className="text-sm font-medium">Início</span>
+                <span className="text-sm font-normal">Início</span>
               </Link>
             </li>
           </ol>
@@ -230,7 +230,7 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
               }}
             >
               <FontAwesomeIcon icon={faHome} className="w-4 h-4 shrink-0" />
-              <span className="text-sm font-medium hidden sm:inline">Início</span>
+              <span className="text-sm font-normal hidden sm:inline">Início</span>
             </Link>
           </li>
 
@@ -243,7 +243,7 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
               />
               {index === breadcrumbItems.length - 1 ? (
                 <span
-                  className="text-sm font-semibold truncate block"
+                  className="text-sm font-medium truncate block"
                   style={{
                     color: 'var(--text-primary)'
                   }}
@@ -254,7 +254,7 @@ export default function Breadcrumbs({ items, customLabels, inline = false }: Bre
               ) : (
                 <Link
                   href={item.href}
-                  className="text-sm font-medium transition-colors duration-200 hover:text-[var(--brand-primary)]"
+                  className="text-sm font-normal transition-colors duration-200 hover:text-[var(--brand-primary)]"
                   style={{
                     color: 'var(--text-secondary)',
                     backgroundColor: 'transparent'

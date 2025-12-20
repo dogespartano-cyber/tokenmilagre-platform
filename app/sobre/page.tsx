@@ -26,14 +26,16 @@ import { useSidebar } from '@/contexts/SidebarContext'; // Re-imported
 
 export default function SobrePage() {
   const [activeSection, setActiveSection] = useState('hero');
-  const { setSidebarMode } = useSidebar();
+  const { setSidebarMode, setDynamicTitle, setShortTitle } = useSidebar();
 
   // Set Sidebar Mode
   useEffect(() => {
     // @ts-ignore - 'sobre' might not be in the strict type yet, but works in runtime
     setSidebarMode('sobre');
+    setDynamicTitle('Sobre o $MILAGRE');
+    setShortTitle('Sobre');
     return () => setSidebarMode('default');
-  }, [setSidebarMode]);
+  }, [setSidebarMode, setDynamicTitle, setShortTitle]);
 
   // Scroll spy para atualizar nav ativa
   useEffect(() => {
@@ -108,7 +110,7 @@ export default function SobrePage() {
             </p>
 
             <div className="pt-6 md:pt-8 flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-4">
-              <button onClick={() => scrollTo('conexoes')} className="group flex items-center justify-center gap-3 px-6 md:px-8 py-3 md:py-4 rounded-full bg-[var(--text-primary)] text-[var(--bg-primary)] font-bold text-base md:text-lg hover:scale-105 transition-transform">
+              <button onClick={() => scrollTo('conexoes')} className="group flex items-center justify-center gap-3 px-6 md:px-8 py-3 md:py-4 rounded-full bg-[#fcd535] text-black font-bold text-base md:text-lg hover:scale-105 transition-transform">
                 Junte-se a nós
                 <FontAwesomeIcon icon={faArrowRight} className="group-hover:translate-x-1 transition-transform" />
               </button>
@@ -130,7 +132,7 @@ export default function SobrePage() {
                 { name: 'Github', icon: faGithub, count: 'Código', link: SOCIAL_LINKS.GITHUB, color: 'hover:text-[var(--text-primary)]' },
               ].map((social, i) => (
                 <a key={i} href={social.link} target="_blank" className="block h-full">
-                  <ZenithCard variant="glass" className={`h-full flex flex-col items-center justify-center text-center p-4 md:p-8 transition-all hover:-translate-y-2 hover:shadow-xl group ${social.color} border border-[var(--border-light)] hover:border-transparent gap-1`}>
+                  <ZenithCard variant="glass" className={`h-full flex flex-col items-center justify-center text-center p-4 md:p-8 transition-all hover:-translate-y-2 hover:shadow-xl group ${social.color} border border-[var(--border-medium)] hover:border-[var(--brand-primary)]/50 gap-1`}>
                     <FontAwesomeIcon icon={social.icon} className="text-2xl md:text-4xl mb-2 md:mb-3 text-[var(--text-tertiary)] group-hover:scale-110 transition-transform mx-auto" />
                     <span className="font-bold text-base md:text-xl block w-full">{social.name}</span>
                     <span className="text-sm text-[var(--text-tertiary)] uppercase tracking-widest block w-full">{social.count}</span>
@@ -276,7 +278,7 @@ export default function SobrePage() {
               </div>
 
               {/* Open Source CTA */}
-              <ZenithCard variant="glass" className="flex flex-col justify-center p-10 rounded-3xl transition-all hover:-translate-y-2 hover:shadow-xl border border-[var(--border-light)] hover:border-transparent">
+              <ZenithCard variant="glass" className="flex flex-col justify-center p-10 rounded-3xl transition-all hover:-translate-y-2 hover:shadow-xl border border-[var(--border-medium)] hover:border-transparent">
                 <FontAwesomeIcon icon={faGithub} className="text-5xl text-[var(--text-primary)] mb-6" />
                 <h3 className="text-2xl font-bold mb-4">100% Auditável.</h3>
                 <p className="text-[var(--text-secondary)] mb-8">
@@ -299,7 +301,7 @@ export default function SobrePage() {
         {/* 6. Criador Profile Horizontal */}
         <section id="criador" className="py-16 md:py-32 px-4 md:px-6 scroll-mt-32">
           <div className="max-w-4xl mx-auto">
-            <ZenithCard variant="glass" className="p-6 md:p-16 relative overflow-hidden rounded-2xl md:rounded-[3rem] transition-all hover:-translate-y-2 hover:shadow-2xl border border-[var(--border-light)] hover:border-transparent">
+            <ZenithCard variant="glass" className="p-6 md:p-16 relative overflow-hidden rounded-2xl md:rounded-[3rem] transition-all hover:-translate-y-2 hover:shadow-2xl border border-[var(--border-medium)] hover:border-transparent">
 
               {/* Decorative BG */}
               <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>

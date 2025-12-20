@@ -30,7 +30,8 @@ import { useSidebar } from '@/contexts/SidebarContext';
 // Header config - inline para IA reconhecer
 const pageHeader = {
     title: 'Comece Aqui',
-    description: 'Seu ponto de partida no mundo cripto. Educação sem promessas falsas, conhecimento real.'
+    description: 'Seu ponto de partida no mundo cripto. Educação sem promessas falsas, conhecimento real.',
+    shortTitle: 'Começar'
 };
 
 // Cards de navegação com cores neon (teal unificado)
@@ -116,7 +117,7 @@ export default function ComeceAquiPage() {
 
     return (
         <PageWrapper header={pageHeader}>
-            <div className="container mx-auto px-6 md:px-10 py-8 relative z-10">
+            <div className="container mx-auto px-6 md:px-10 py-4 lg:py-8 relative z-10">
                 <div className="space-y-16 pb-20">
 
                     {/* SEÇÃO 1: O Essencial Primeiro */}

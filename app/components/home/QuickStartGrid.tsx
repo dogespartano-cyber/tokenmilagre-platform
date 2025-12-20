@@ -40,7 +40,7 @@ const initialCards = [
         title: 'Comece Aqui',
         description: 'Seu ponto de partida no mundo cripto',
         bgImage: '/assets/zenith/card-invest.webp',
-        theme: 'teal'
+        theme: 'default'
     },
     {
         id: 'news',
@@ -49,7 +49,7 @@ const initialCards = [
         title: 'Notícias do Mercado',
         description: 'Atualizações em tempo real',
         bgImage: '/assets/zenith/card-news.webp',
-        theme: 'teal'
+        theme: 'default'
     },
     {
         id: 'charts',
@@ -58,7 +58,7 @@ const initialCards = [
         title: 'Gráficos Avançados',
         description: 'Análise técnica profissional',
         bgImage: '/assets/zenith/card-charts.webp',
-        theme: 'teal'
+        theme: 'default'
     },
     {
         id: 'tools',
@@ -67,7 +67,7 @@ const initialCards = [
         title: 'Ferramentas',
         description: 'Calculadoras e recursos',
         bgImage: '/assets/zenith/card-tools.webp',
-        theme: 'teal'
+        theme: 'default'
     },
     {
         id: 'crypto',
@@ -75,7 +75,7 @@ const initialCards = [
         icon: faCoins,
         title: 'Criptomoedas',
         description: 'Explore o mercado',
-        theme: 'teal'
+        theme: 'default'
     }
 ];
 
@@ -100,7 +100,8 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
     };
 
     // Map legacy themes to ZenithCard variants
-    const variantMap: Record<string, 'success' | 'warning' | 'danger' | 'info' | 'orange' | 'indigo' | 'teal'> = {
+    const variantMap: Record<string, 'default' | 'success' | 'warning' | 'danger' | 'info' | 'orange' | 'indigo' | 'teal'> = {
+        default: 'default',
         success: 'success',
         yellow: 'warning',
         warning: 'warning',
@@ -112,12 +113,13 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
         teal: 'teal'
     };
 
-    // Default to 'success' if theme is missing or invalid, though strict typing should prevent this
-    const variant = variantMap[card.theme as string] || 'success';
+    // Default to 'default' if theme is missing or invalid
+    const variant = variantMap[card.theme as string] || 'default';
 
     // Icon colors still need to be handled. We can map them based on variant or keep local logic.
     // Let's keep a simple map for inner content colors to match the variant
     const colorClasses = {
+        default: 'text-[var(--brand-primary)] bg-[var(--brand-primary)]/10',
         success: 'text-[var(--success)] bg-[var(--success)]/10',
         warning: 'text-yellow-500 bg-yellow-500/10',
         danger: 'text-red-500 bg-red-500/10',
@@ -127,7 +129,7 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
         teal: 'text-teal-600 bg-teal-500/10'
     };
 
-    const iconClass = colorClasses[variant] || colorClasses.success;
+    const iconClass = colorClasses[variant] || colorClasses.default;
 
     return (
         <div ref={setNodeRef} style={style} {...attributes} {...listeners} className="h-full">

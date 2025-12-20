@@ -11,7 +11,8 @@ import ZenithCard from '@/components/ui/ZenithCard';
 // Header config - inline para IA reconhecer
 const pageHeader = {
   title: 'Notícias Cripto',
-  description: 'Resumos inteligentes das principais notícias do mercado'
+  description: 'Resumos inteligentes das principais notícias do mercado',
+  shortTitle: 'Notícias'
 };
 
 interface NewsItem {
@@ -197,7 +198,7 @@ export default function NoticiasPage() {
 
   return (
     <PageWrapper header={pageHeader}>
-      <div className="container mx-auto px-4 py-8 relative">
+      <div className="container mx-auto px-4 py-4 lg:py-8 relative">
         <button
           onClick={() => setShowFilters(true)}
           className="glass-card fixed bottom-24 right-8 z-50 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 text-[var(--text-primary)]"

@@ -11,6 +11,7 @@ import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg
 import { getCitationAwareMarkdownComponents, SourcesSection } from '@/lib/domains/articles/components/citations-processor';
 import TransparencyNote from '@/components/shared/TransparencyNote';
 import PageHeader from '@/components/shared/PageHeader';
+import { useSidebar } from '@/contexts/SidebarContext';
 
 interface NewsItem {
   id: string;
@@ -45,6 +46,15 @@ interface TableOfContentsItem {
 
 export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoClientProps) {
   const router = useRouter();
+  const { setDynamicTitle, setShortTitle } = useSidebar();
+
+  useEffect(() => {
+    if (article) {
+      setDynamicTitle(article.title);
+      setShortTitle('Notícias');
+    }
+  }, [article, setDynamicTitle, setShortTitle]);
+
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
   const [activeSection, setActiveSection] = useState<string>('');
 

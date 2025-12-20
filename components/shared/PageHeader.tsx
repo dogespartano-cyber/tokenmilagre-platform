@@ -6,10 +6,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FearGreedDesktop } from '@/app/components/home/FearGreedDesktop';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
+import { useSidebar } from '@/contexts/SidebarContext';
 
 interface PageHeaderProps {
   title: string;
   description: string;
+  shortTitle?: string;
 }
 
 interface FearGreedData {
@@ -17,11 +19,12 @@ interface FearGreedData {
   value_classification: string;
 }
 
-export default function PageHeader({ title, description }: PageHeaderProps) {
+export default function PageHeader({ title, description, shortTitle }: PageHeaderProps) {
   const pathname = usePathname();
   const [fearGreed, setFearGreed] = useState<FearGreedData | null>(null);
   const [gaugeValue, setGaugeValue] = useState(0);
   const [animateTitle, setAnimateTitle] = useState(false);
+  const { setDynamicTitle, setShortTitle } = useSidebar();
 
   // Buscar Fear & Greed Index
   useEffect(() => {
@@ -64,13 +67,23 @@ export default function PageHeader({ title, description }: PageHeaderProps) {
     // Desativa a animação
     setAnimateTitle(false);
 
+    // Atualiza o título dinâmico no contexto (para a navbar mobile)
+    setDynamicTitle(title);
+    if (shortTitle) {
+      setShortTitle(shortTitle);
+    } else if (title === '$MILAGRE') {
+      setShortTitle('');
+    } else {
+      setShortTitle(title);
+    }
+
     // Pequeno delay para resetar e depois ativar com efeito suave
     const timer = setTimeout(() => {
       setAnimateTitle(true);
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [title, pathname]); // Anima quando título ou pathname mudar
+  }, [title, pathname, setDynamicTitle]); // Anima quando título ou pathname mudar
 
   // Animação do ponteiro do velocímetro
   // Reinicia quando fearGreed muda OU quando a página muda (pathname)
@@ -111,7 +124,7 @@ export default function PageHeader({ title, description }: PageHeaderProps) {
   }, [fearGreed, pathname]); // Adiciona pathname como dependência
 
   return (
-    <div className="space-y-2 lg:space-y-8">
+    <div className="space-y-2 lg:space-y-4">
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div className="flex items-center gap-4">
@@ -136,7 +149,7 @@ export default function PageHeader({ title, description }: PageHeaderProps) {
             {/* Título - sempre clicável, posts de notícias voltam para /noticias */}
             <Link href={pathname.startsWith('/noticias/') && pathname !== '/noticias' ? '/noticias' : pathname}>
               <h1
-                className={`text-4xl font-bold mb-1 font-[family-name:var(--font-poppins)] text-[var(--text-primary)] cursor-pointer hover:text-[var(--brand-primary)] transition-colors ${pathname === '/' ? 'hidden lg:block' : ''}`}
+                className={`text-4xl font-bold mb-1 font-[family-name:var(--font-poppins)] text-[#ebb60b] cursor-pointer hover:text-[var(--brand-primary)] transition-colors hidden lg:block ${pathname === '/' ? '' : ''}`}
                 style={{
                   opacity: animateTitle ? 1 : 0,
                   transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
@@ -147,7 +160,7 @@ export default function PageHeader({ title, description }: PageHeaderProps) {
               </h1>
             </Link>
             <p
-              className={`text-lg ${pathname === '/' ? 'text-[var(--text-primary)] text-xl lg:text-lg lg:text-[var(--text-secondary)] font-bold lg:font-normal' : 'text-[var(--text-secondary)]'}`}
+              className="text-xl lg:text-lg text-[var(--text-primary)] font-bold"
               style={{
                 opacity: animateTitle ? 1 : 0,
                 transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',

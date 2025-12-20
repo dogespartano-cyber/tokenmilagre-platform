@@ -9,8 +9,9 @@ import PageWrapper from '@/components/layout/PageWrapper';
 
 // Header config - inline para IA reconhecer
 const pageHeader = {
-  title: 'Cotações em Tempo Real',
-  description: 'Acompanhe o preço, volume e tendências das principais criptomoedas do mercado.'
+  title: 'Criptomoedas',
+  description: 'Acompanhe o preço, volume e tendências das principais criptomoedas do mercado.',
+  shortTitle: 'Criptomoedas'
 };
 
 interface NewsItem {
@@ -88,7 +89,7 @@ export default function CriptomoedasPage() {
 
   return (
     <PageWrapper header={pageHeader}>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-4 lg:py-8">
         <div className="space-y-16">
           {/* Rastreador de Mercado */}
           <div className="space-y-8">

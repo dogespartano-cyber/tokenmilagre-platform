@@ -1,7 +1,15 @@
-import React from 'react';
+import { useEffect } from 'react';
+import { useSidebar } from '@/contexts/SidebarContext';
 import { Shield, BookOpen, Heart, Eye, Users, Globe, Scale, Sparkles, Target, TrendingUp, GraduationCap, Leaf, Coins } from 'lucide-react';
 
 export default function ManifestoPage() {
+    const { setDynamicTitle, setShortTitle } = useSidebar();
+
+    useEffect(() => {
+        setDynamicTitle('Manifesto $MILAGRE');
+        setShortTitle('Manifesto');
+    }, [setDynamicTitle, setShortTitle]);
+
     return (
         <main className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
             <div className="max-w-5xl mx-auto relative z-10 space-y-20">

@@ -24,7 +24,8 @@ import PageWrapper from '@/components/layout/PageWrapper';
 // Header config - inline para IA reconhecer
 const pageHeader = {
   title: 'Aprenda Cripto do Zero ao Avançado',
-  description: 'Artigos e tutoriais gratuitos criados pela comunidade. Sem promessas falsas, apenas conhecimento real.'
+  description: 'Artigos e tutoriais gratuitos criados pela comunidade. Sem promessas falsas, apenas conhecimento real.',
+  shortTitle: 'Educação'
 };
 
 interface Resource {
@@ -147,7 +148,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
         })}
       </Script>
 
-      <div className="container mx-auto px-4 py-8 relative">
+      <div className="container mx-auto px-4 py-4 lg:py-8 relative">
         <div className="space-y-8">
 
           {/* Cards Introdutórios - 8 Temas (Estáticos) */}
