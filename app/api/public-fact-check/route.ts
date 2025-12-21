@@ -74,7 +74,18 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // 6. Verificar se usuário já fez fact-check deste artigo
+        // 6. CACHE GLOBAL: Buscar verificação recente de QUALQUER usuário (últimos 3 dias)
+        const THREE_DAYS_AGO = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000);
+
+        const globalCache = await prisma.articleFactCheck.findFirst({
+            where: {
+                articleId: article.id,
+                createdAt: { gte: THREE_DAYS_AGO }
+            },
+            orderBy: { createdAt: 'desc' }
+        });
+
+        // 7. Verificar se ESTE usuário já fez fact-check deste artigo
         const existingCheck = await prisma.articleFactCheck.findUnique({
             where: {
                 articleId_userId: {
@@ -84,8 +95,8 @@ export async function POST(request: NextRequest) {
             }
         });
 
+        // Se usuário já verificou, retornar resultado dele
         if (existingCheck) {
-            // Retornar resultado anterior com log completo
             let parsedLog = null;
             try {
                 if (existingCheck.verificationLog) {
@@ -98,6 +109,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({
                 success: true,
                 alreadyChecked: true,
+                fromCache: false,
                 data: {
                     score: existingCheck.score,
                     status: existingCheck.status,
@@ -108,7 +120,53 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        // 7. Fazer verificação com Gemini
+        // Se existe cache global válido, usar ele (economiza chamada ao Gemini)
+        if (globalCache) {
+            console.log('[public-fact-check] ♻️ Usando cache global de', globalCache.createdAt);
+
+            let parsedLog = null;
+            try {
+                if (globalCache.verificationLog) {
+                    parsedLog = JSON.parse(globalCache.verificationLog);
+                }
+            } catch (e) {
+                console.error('[public-fact-check] Erro ao parsear log do cache');
+            }
+
+            // Salvar registro para este usuário (baseado no cache)
+            await prisma.$transaction([
+                prisma.articleFactCheck.create({
+                    data: {
+                        articleId: article.id,
+                        userId: user.id,
+                        score: globalCache.score,
+                        status: globalCache.status,
+                        summary: globalCache.summary,
+                        verificationLog: globalCache.verificationLog
+                    }
+                }),
+                prisma.article.update({
+                    where: { id: article.id },
+                    data: { factCheckClicks: { increment: 1 } }
+                })
+            ]);
+
+            return NextResponse.json({
+                success: true,
+                alreadyChecked: false,
+                fromCache: true,
+                cacheAge: Math.floor((Date.now() - globalCache.createdAt.getTime()) / 3600000) + 'h',
+                data: {
+                    score: globalCache.score,
+                    status: globalCache.status,
+                    summary: globalCache.summary,
+                    totalChecks: article.factCheckClicks + 1,
+                    verificationLog: parsedLog
+                }
+            });
+        }
+
+        // 8. Nenhum cache disponível - Fazer verificação com Gemini
         console.log('[public-fact-check] Iniciando verificação para:', article.title);
 
         const result = await validateArticleContent(
