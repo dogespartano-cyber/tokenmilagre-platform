@@ -175,8 +175,9 @@ export async function POST(request: NextRequest) {
                 content: article.content,
                 category: article.category,
                 tags: JSON.stringify(article.tags || []),
-                sentiment: article.sentiment,
+                sentiment: article.sentiment || 'neutral', // Default para neutral
                 type: articleType,
+                published: true, // Publicar imediatamente
                 coverImage: article.coverImage,
                 coverImageAlt: article.coverImageAlt,
                 readTime: article.readTime,
