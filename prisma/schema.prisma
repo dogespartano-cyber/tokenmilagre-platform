@@ -107,6 +107,9 @@ model Article {
   factCheckDate      DateTime? // Data da verificação
   factCheckStatus    String?   // verified (>=70%), failed (<70%), skipped (sem APIs)
   factCheckClicks    Int       @default(0) // Contador de verificações públicas
+  
+  // Modo Cross - Fontes consolidadas (Perplexity + Gemini)
+  consolidatedSources String?  @db.Text // JSON com fontes de ambas APIs
 
   // Campos específicos de ARTIGOS EDUCACIONAIS
   level              String?   // 'iniciante' | 'intermediario' | 'avancado'

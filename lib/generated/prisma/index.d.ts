@@ -3872,6 +3872,7 @@ export namespace Prisma {
     factCheckDate: Date | null
     factCheckStatus: string | null
     factCheckClicks: number | null
+    consolidatedSources: string | null
     level: string | null
     contentType: string | null
     readTime: string | null
@@ -3906,6 +3907,7 @@ export namespace Prisma {
     factCheckDate: Date | null
     factCheckStatus: string | null
     factCheckClicks: number | null
+    consolidatedSources: string | null
     level: string | null
     contentType: string | null
     readTime: string | null
@@ -3940,6 +3942,7 @@ export namespace Prisma {
     factCheckDate: number
     factCheckStatus: number
     factCheckClicks: number
+    consolidatedSources: number
     level: number
     contentType: number
     readTime: number
@@ -3992,6 +3995,7 @@ export namespace Prisma {
     factCheckDate?: true
     factCheckStatus?: true
     factCheckClicks?: true
+    consolidatedSources?: true
     level?: true
     contentType?: true
     readTime?: true
@@ -4026,6 +4030,7 @@ export namespace Prisma {
     factCheckDate?: true
     factCheckStatus?: true
     factCheckClicks?: true
+    consolidatedSources?: true
     level?: true
     contentType?: true
     readTime?: true
@@ -4060,6 +4065,7 @@ export namespace Prisma {
     factCheckDate?: true
     factCheckStatus?: true
     factCheckClicks?: true
+    consolidatedSources?: true
     level?: true
     contentType?: true
     readTime?: true
@@ -4181,6 +4187,7 @@ export namespace Prisma {
     factCheckDate: Date | null
     factCheckStatus: string | null
     factCheckClicks: number
+    consolidatedSources: string | null
     level: string | null
     contentType: string | null
     readTime: string | null
@@ -4234,6 +4241,7 @@ export namespace Prisma {
     factCheckDate?: boolean
     factCheckStatus?: boolean
     factCheckClicks?: boolean
+    consolidatedSources?: boolean
     level?: boolean
     contentType?: boolean
     readTime?: boolean
@@ -4273,6 +4281,7 @@ export namespace Prisma {
     factCheckDate?: boolean
     factCheckStatus?: boolean
     factCheckClicks?: boolean
+    consolidatedSources?: boolean
     level?: boolean
     contentType?: boolean
     readTime?: boolean
@@ -4308,6 +4317,7 @@ export namespace Prisma {
     factCheckDate?: boolean
     factCheckStatus?: boolean
     factCheckClicks?: boolean
+    consolidatedSources?: boolean
     level?: boolean
     contentType?: boolean
     readTime?: boolean
@@ -4343,6 +4353,7 @@ export namespace Prisma {
     factCheckDate?: boolean
     factCheckStatus?: boolean
     factCheckClicks?: boolean
+    consolidatedSources?: boolean
     level?: boolean
     contentType?: boolean
     readTime?: boolean
@@ -4360,7 +4371,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "type" | "excerpt" | "published" | "authorId" | "category" | "tags" | "sentiment" | "factCheckScore" | "factCheckSources" | "factCheckDate" | "factCheckStatus" | "factCheckClicks" | "level" | "contentType" | "readTime" | "warningLevel" | "securityTips" | "courseSequence" | "relatedArticles" | "projectHighlight" | "coverImage" | "coverImageAlt" | "quizData" | "likeCount" | "commentCount" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
+  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "type" | "excerpt" | "published" | "authorId" | "category" | "tags" | "sentiment" | "factCheckScore" | "factCheckSources" | "factCheckDate" | "factCheckStatus" | "factCheckClicks" | "consolidatedSources" | "level" | "contentType" | "readTime" | "warningLevel" | "securityTips" | "courseSequence" | "relatedArticles" | "projectHighlight" | "coverImage" | "coverImageAlt" | "quizData" | "likeCount" | "commentCount" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
   export type ArticleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     citations?: boolean | Article$citationsArgs<ExtArgs>
@@ -4400,6 +4411,7 @@ export namespace Prisma {
       factCheckDate: Date | null
       factCheckStatus: string | null
       factCheckClicks: number
+      consolidatedSources: string | null
       level: string | null
       contentType: string | null
       readTime: string | null
@@ -4858,6 +4870,7 @@ export namespace Prisma {
     readonly factCheckDate: FieldRef<"Article", 'DateTime'>
     readonly factCheckStatus: FieldRef<"Article", 'String'>
     readonly factCheckClicks: FieldRef<"Article", 'Int'>
+    readonly consolidatedSources: FieldRef<"Article", 'String'>
     readonly level: FieldRef<"Article", 'String'>
     readonly contentType: FieldRef<"Article", 'String'>
     readonly readTime: FieldRef<"Article", 'String'>
@@ -22368,6 +22381,7 @@ export namespace Prisma {
     factCheckDate: 'factCheckDate',
     factCheckStatus: 'factCheckStatus',
     factCheckClicks: 'factCheckClicks',
+    consolidatedSources: 'consolidatedSources',
     level: 'level',
     contentType: 'contentType',
     readTime: 'readTime',
@@ -22970,6 +22984,7 @@ export namespace Prisma {
     factCheckDate?: DateTimeNullableFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableFilter<"Article"> | string | null
     factCheckClicks?: IntFilter<"Article"> | number
+    consolidatedSources?: StringNullableFilter<"Article"> | string | null
     level?: StringNullableFilter<"Article"> | string | null
     contentType?: StringNullableFilter<"Article"> | string | null
     readTime?: StringNullableFilter<"Article"> | string | null
@@ -23008,6 +23023,7 @@ export namespace Prisma {
     factCheckDate?: SortOrderInput | SortOrder
     factCheckStatus?: SortOrderInput | SortOrder
     factCheckClicks?: SortOrder
+    consolidatedSources?: SortOrderInput | SortOrder
     level?: SortOrderInput | SortOrder
     contentType?: SortOrderInput | SortOrder
     readTime?: SortOrderInput | SortOrder
@@ -23049,6 +23065,7 @@ export namespace Prisma {
     factCheckDate?: DateTimeNullableFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableFilter<"Article"> | string | null
     factCheckClicks?: IntFilter<"Article"> | number
+    consolidatedSources?: StringNullableFilter<"Article"> | string | null
     level?: StringNullableFilter<"Article"> | string | null
     contentType?: StringNullableFilter<"Article"> | string | null
     readTime?: StringNullableFilter<"Article"> | string | null
@@ -23087,6 +23104,7 @@ export namespace Prisma {
     factCheckDate?: SortOrderInput | SortOrder
     factCheckStatus?: SortOrderInput | SortOrder
     factCheckClicks?: SortOrder
+    consolidatedSources?: SortOrderInput | SortOrder
     level?: SortOrderInput | SortOrder
     contentType?: SortOrderInput | SortOrder
     readTime?: SortOrderInput | SortOrder
@@ -23129,6 +23147,7 @@ export namespace Prisma {
     factCheckDate?: DateTimeNullableWithAggregatesFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableWithAggregatesFilter<"Article"> | string | null
     factCheckClicks?: IntWithAggregatesFilter<"Article"> | number
+    consolidatedSources?: StringNullableWithAggregatesFilter<"Article"> | string | null
     level?: StringNullableWithAggregatesFilter<"Article"> | string | null
     contentType?: StringNullableWithAggregatesFilter<"Article"> | string | null
     readTime?: StringNullableWithAggregatesFilter<"Article"> | string | null
@@ -24774,6 +24793,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
     factCheckClicks?: number
+    consolidatedSources?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -24812,6 +24832,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
     factCheckClicks?: number
+    consolidatedSources?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -24848,6 +24869,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
+    consolidatedSources?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24886,6 +24908,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
+    consolidatedSources?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24923,6 +24946,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
     factCheckClicks?: number
+    consolidatedSources?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -24956,6 +24980,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
+    consolidatedSources?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24990,6 +25015,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
+    consolidatedSources?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27098,6 +27124,7 @@ export namespace Prisma {
     factCheckDate?: SortOrder
     factCheckStatus?: SortOrder
     factCheckClicks?: SortOrder
+    consolidatedSources?: SortOrder
     level?: SortOrder
     contentType?: SortOrder
     readTime?: SortOrder
@@ -27140,6 +27167,7 @@ export namespace Prisma {
     factCheckDate?: SortOrder
     factCheckStatus?: SortOrder
     factCheckClicks?: SortOrder
+    consolidatedSources?: SortOrder
     level?: SortOrder
     contentType?: SortOrder
     readTime?: SortOrder
@@ -27174,6 +27202,7 @@ export namespace Prisma {
     factCheckDate?: SortOrder
     factCheckStatus?: SortOrder
     factCheckClicks?: SortOrder
+    consolidatedSources?: SortOrder
     level?: SortOrder
     contentType?: SortOrder
     readTime?: SortOrder
@@ -29394,6 +29423,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
     factCheckClicks?: number
+    consolidatedSources?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -29430,6 +29460,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
     factCheckClicks?: number
+    consolidatedSources?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -29666,6 +29697,7 @@ export namespace Prisma {
     factCheckDate?: DateTimeNullableFilter<"Article"> | Date | string | null
     factCheckStatus?: StringNullableFilter<"Article"> | string | null
     factCheckClicks?: IntFilter<"Article"> | number
+    consolidatedSources?: StringNullableFilter<"Article"> | string | null
     level?: StringNullableFilter<"Article"> | string | null
     contentType?: StringNullableFilter<"Article"> | string | null
     readTime?: StringNullableFilter<"Article"> | string | null
@@ -30102,6 +30134,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
     factCheckClicks?: number
+    consolidatedSources?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -30139,6 +30172,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
     factCheckClicks?: number
+    consolidatedSources?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -30190,6 +30224,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
+    consolidatedSources?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30227,6 +30262,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
+    consolidatedSources?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30887,6 +30923,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
     factCheckClicks?: number
+    consolidatedSources?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -30924,6 +30961,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
     factCheckClicks?: number
+    consolidatedSources?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -31115,6 +31153,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
+    consolidatedSources?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31152,6 +31191,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
+    consolidatedSources?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31327,6 +31367,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
     factCheckClicks?: number
+    consolidatedSources?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -31364,6 +31405,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
     factCheckClicks?: number
+    consolidatedSources?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -31614,6 +31656,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
+    consolidatedSources?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31651,6 +31694,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
+    consolidatedSources?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31830,6 +31874,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckStatus?: string | null
     factCheckClicks?: number
+    consolidatedSources?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -31922,6 +31967,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
+    consolidatedSources?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31958,6 +32004,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
+    consolidatedSources?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31994,6 +32041,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
+    consolidatedSources?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null

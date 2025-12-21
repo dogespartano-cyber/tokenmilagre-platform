@@ -60,6 +60,7 @@ function ManualModeContent() {
 
     const [prompt, setPrompt] = useState('');
     const [selectedType, setSelectedType] = useState<ArticleType | null>(null);
+    const [crossMode, setCrossMode] = useState(false);
 
     const {
         generatedArticle,
@@ -207,6 +208,40 @@ function ManualModeContent() {
             setGeneratedArticle(articleToValidate);
         }
         try {
+            // Cross Mode: usar endpoint especial com verificação automática
+            if (crossMode && selectedType !== 'resource') {
+                addMessage({ role: 'assistant', content: '⚡ Modo Cross ativado! Publicando e verificando automaticamente...' });
+
+                const tagsToSend = typeof articleToValidate.tags === 'string' ? [articleToValidate.tags] : (articleToValidate.tags || []);
+
+                const response = await fetch('/api/cross-publish', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        article: {
+                            ...articleToValidate,
+                            tags: tagsToSend,
+                            citations: articleToValidate.citations || []
+                        },
+                        articleType: selectedType,
+                        userId
+                    })
+                });
+
+                const data = await response.json();
+                if (!data.success) throw new Error(data.error || 'Erro ao publicar');
+
+                addMessage({
+                    role: 'assistant',
+                    content: `✅ Artigo publicado com verificação!\n\n🎯 Score: ${data.data.factCheck.score}/100\n📚 Fontes: ${data.data.sourcesCount} consultadas`
+                });
+
+                const url = getArticleRoute(selectedType, data.data.slug);
+                router.push(url);
+                return;
+            }
+
+            // Modo normal (sem Cross)
             const apiEndpoint = getApiEndpoint(selectedType);
             const tagsToSend = typeof articleToValidate.tags === 'string' ? [articleToValidate.tags] : (articleToValidate.tags || []);
             const citations = articleToValidate.citations || [];
@@ -246,7 +281,12 @@ function ManualModeContent() {
                 onPromptChange={setPrompt}
                 onSendMessage={handleSendMessage}
             />
-            <ArticleTypeSelector selectedType={selectedType} onTypeChange={setSelectedType} />
+            <ArticleTypeSelector
+                selectedType={selectedType}
+                onTypeChange={setSelectedType}
+                crossMode={crossMode}
+                onCrossModeChange={setCrossMode}
+            />
             {generatedArticle && (
                 <ArticlePreviewPanel
                     article={generatedArticle}

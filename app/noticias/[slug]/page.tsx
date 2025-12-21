@@ -46,6 +46,7 @@ interface NewsItem {
   citations?: string[]; // URLs das fontes (Perplexity)
   coverImage?: string; // URL da imagem de capa
   coverImageAlt?: string; // Texto alternativo
+  consolidatedSources?: { url: string; title?: string; origin: 'perplexity' | 'gemini' }[]; // Cross Mode
 }
 
 async function getArticle(slug: string): Promise<NewsItem | null> {
@@ -78,6 +79,16 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
       }
     }
 
+    // Parse consolidatedSources se existir (Cross Mode)
+    let consolidatedSources;
+    if (article.consolidatedSources) {
+      try {
+        consolidatedSources = JSON.parse(article.consolidatedSources);
+      } catch (e) {
+        console.error('Erro ao parsear consolidatedSources:', e);
+      }
+    }
+
     // Formatar para NewsItem
     return {
       id: article.id,
@@ -97,6 +108,7 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
       citations, // ← ADICIONA CITATIONS!
       coverImage: article.coverImage || undefined,
       coverImageAlt: article.coverImageAlt || undefined,
+      consolidatedSources, // ← Cross Mode
     };
   } catch (error) {
     console.error('Erro ao buscar artigo:', error);

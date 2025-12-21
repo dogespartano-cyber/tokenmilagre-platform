@@ -4,15 +4,22 @@
  */
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNewspaper, faGraduationCap, faBox } from '@fortawesome/free-solid-svg-icons';
+import { faNewspaper, faGraduationCap, faBox, faBolt } from '@fortawesome/free-solid-svg-icons';
 import { type ArticleType, ARTICLE_TYPE_CONFIG, MESSAGES } from '../_lib/constants';
 
 interface ArticleTypeSelectorProps {
   selectedType: ArticleType | null;
   onTypeChange: (type: ArticleType | null) => void;
+  crossMode?: boolean;
+  onCrossModeChange?: (enabled: boolean) => void;
 }
 
-export default function ArticleTypeSelector({ selectedType, onTypeChange }: ArticleTypeSelectorProps) {
+export default function ArticleTypeSelector({
+  selectedType,
+  onTypeChange,
+  crossMode = false,
+  onCrossModeChange
+}: ArticleTypeSelectorProps) {
   const toggleType = (type: ArticleType) => {
     onTypeChange(selectedType === type ? null : type);
   };
@@ -28,8 +35,8 @@ export default function ArticleTypeSelector({ selectedType, onTypeChange }: Arti
         <button
           onClick={() => toggleType('news')}
           className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex items-center gap-2 ${selectedType === 'news'
-              ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20'
-              : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10'
+            ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20'
+            : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10'
             }`}
           aria-pressed={selectedType === 'news'}
           aria-label={`${ARTICLE_TYPE_CONFIG.news.ariaLabel} ${selectedType === 'news' ? '(selecionado)' : ''}`}
@@ -42,8 +49,8 @@ export default function ArticleTypeSelector({ selectedType, onTypeChange }: Arti
         <button
           onClick={() => toggleType('educational')}
           className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex items-center gap-2 ${selectedType === 'educational'
-              ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20'
-              : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10'
+            ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20'
+            : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10'
             }`}
           aria-pressed={selectedType === 'educational'}
           aria-label={`${ARTICLE_TYPE_CONFIG.educational.ariaLabel} ${selectedType === 'educational' ? '(selecionado)' : ''}`}
@@ -56,8 +63,8 @@ export default function ArticleTypeSelector({ selectedType, onTypeChange }: Arti
         <button
           onClick={() => toggleType('resource')}
           className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex items-center gap-2 ${selectedType === 'resource'
-              ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20'
-              : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10'
+            ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20'
+            : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10'
             }`}
           aria-pressed={selectedType === 'resource'}
           aria-label={`${ARTICLE_TYPE_CONFIG.resource.ariaLabel} ${selectedType === 'resource' ? '(selecionado)' : ''}`}
@@ -67,10 +74,33 @@ export default function ArticleTypeSelector({ selectedType, onTypeChange }: Arti
         </button>
       </div>
 
+      {/* Cross Mode Checkbox */}
+      {selectedType && onCrossModeChange && (
+        <label className="flex items-center gap-3 mt-4 p-3 rounded-lg cursor-pointer transition-all bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 hover:border-purple-500/40">
+          <input
+            type="checkbox"
+            checked={crossMode}
+            onChange={(e) => onCrossModeChange(e.target.checked)}
+            className="w-4 h-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+          />
+          <FontAwesomeIcon icon={faBolt} className="text-purple-500" />
+          <div className="flex-1">
+            <span className="font-semibold text-sm text-gray-800 dark:text-white">Modo Cross</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">(Pré-verificado com fontes consolidadas)</span>
+          </div>
+        </label>
+      )}
+
       {/* Feedback de modo selecionado */}
       {selectedType && (
-        <div className="mt-3 p-3 rounded-lg text-sm bg-teal-500/10 border-l-4 border-teal-500 text-gray-700 dark:text-gray-200">
-          ✅ <strong>Modo Criação Ativado:</strong> {ARTICLE_TYPE_CONFIG[selectedType].description}
+        <div className={`mt-3 p-3 rounded-lg text-sm border-l-4 ${crossMode
+          ? 'bg-purple-500/10 border-purple-500 text-gray-700 dark:text-gray-200'
+          : 'bg-teal-500/10 border-teal-500 text-gray-700 dark:text-gray-200'}`}>
+          {crossMode ? (
+            <>⚡ <strong>Modo Cross Ativado:</strong> O artigo será criado e verificado automaticamente com fontes consolidadas.</>
+          ) : (
+            <>✅ <strong>Modo Criação Ativado:</strong> {ARTICLE_TYPE_CONFIG[selectedType].description}</>
+          )}
         </div>
       )}
 
