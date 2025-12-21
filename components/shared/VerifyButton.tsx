@@ -29,16 +29,41 @@ interface VerifyButtonProps {
     className?: string;
 }
 
+interface ClaimSource {
+    url: string;
+    title: string;
+    snippet?: string;
+}
+
+interface DetailedClaim {
+    text: string;
+    status: 'verified' | 'refuted' | 'partial';
+    confidence: number;
+    sources: ClaimSource[];
+}
+
+interface VerificationLog {
+    claims: DetailedClaim[];
+    unverifiedClaims: string[];
+    additionalSources: ClaimSource[];
+    suggestions: string[];
+    timestamp: string;
+}
+
 interface FactCheckResult {
     score: number;
     status: 'verified' | 'partially_verified' | 'unverified' | 'error';
     summary: string;
     totalChecks: number;
+    verificationLog?: VerificationLog;
+    // Legado (para compatibilidade)
     verifiedClaims?: { claim: string; verified: boolean; source?: string }[];
     unverifiedClaims?: string[];
     sources?: { name: string; url: string }[];
     suggestions?: string[];
 }
+
+type TabType = 'summary' | 'claims' | 'log';
 
 export default function VerifyButton({ id, type, className = '' }: VerifyButtonProps) {
     const { isSignedIn } = useUser();
@@ -46,6 +71,7 @@ export default function VerifyButton({ id, type, className = '' }: VerifyButtonP
     const [result, setResult] = useState<FactCheckResult | null>(null);
     const [showModal, setShowModal] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [activeTab, setActiveTab] = useState<TabType>('summary');
     const [initialStatus, setInitialStatus] = useState<{
         score: number | null;
         totalChecks: number;
@@ -284,93 +310,217 @@ export default function VerifyButton({ id, type, className = '' }: VerifyButtonP
                             </p>
                         </div>
 
-                        {/* Conteúdo */}
-                        <div className="p-6 space-y-6">
+                        {/* Abas */}
+                        <div className="flex border-b border-gray-200 dark:border-gray-700">
+                            {[
+                                { id: 'summary' as TabType, label: 'Resumo' },
+                                { id: 'claims' as TabType, label: 'Claims' },
+                                { id: 'log' as TabType, label: 'Log Técnico' }
+                            ].map(tab => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${activeTab === tab.id
+                                            ? 'text-purple-600 dark:text-purple-400 border-b-2 border-purple-500'
+                                            : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                                        }`}
+                                >
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </div>
 
-                            {/* Resumo da Análise */}
-                            <div>
-                                <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 flex items-center gap-1.5">
-                                    <FontAwesomeIcon icon={faInfoCircle} className="w-3.5 h-3.5" />
-                                    Resumo da Análise
-                                </h4>
-                                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-                                    {result.summary}
-                                </p>
-                            </div>
+                        {/* Conteúdo das Abas */}
+                        <div className="p-6 space-y-6 max-h-[40vh] overflow-y-auto">
 
-                            {/* Claims Verificados */}
-                            {result.verifiedClaims && result.verifiedClaims.length > 0 && (
-                                <div>
-                                    <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-3 flex items-center gap-1.5">
-                                        <FontAwesomeIcon icon={faCheckCircle} className="w-3.5 h-3.5" />
-                                        Claims Verificados ({result.verifiedClaims.length})
-                                    </h4>
-                                    <ul className="space-y-2">
-                                        {result.verifiedClaims.map((claim, i) => (
-                                            <li key={i} className="flex items-start gap-2 text-sm">
-                                                <span className="text-emerald-500 mt-0.5 flex-shrink-0">✓</span>
-                                                <span className="text-gray-700 dark:text-gray-300">{claim.claim}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
-
-                            {/* Claims Não Verificados */}
-                            {result.unverifiedClaims && result.unverifiedClaims.length > 0 && (
-                                <div>
-                                    <h4 className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-3 flex items-center gap-1.5">
-                                        <FontAwesomeIcon icon={faExclamationTriangle} className="w-3.5 h-3.5" />
-                                        Requer Atenção ({result.unverifiedClaims.length})
-                                    </h4>
-                                    <ul className="space-y-2">
-                                        {result.unverifiedClaims.map((claim, i) => (
-                                            <li key={i} className="flex items-start gap-2 text-sm">
-                                                <span className="text-amber-500 mt-0.5 flex-shrink-0">⚠</span>
-                                                <span className="text-gray-700 dark:text-gray-300">{claim}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
-
-                            {/* Sugestões de Melhoria */}
-                            {result.suggestions && result.suggestions.length > 0 && (
-                                <div>
-                                    <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
-                                        💡 Sugestões de Melhoria
-                                    </h4>
-                                    <ul className="space-y-2">
-                                        {result.suggestions.map((suggestion, i) => (
-                                            <li key={i} className="text-sm text-gray-600 dark:text-gray-400 pl-4 border-l-2 border-blue-200 dark:border-blue-800">
-                                                {suggestion}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
-
-                            {/* Fontes Consultadas */}
-                            {result.sources && result.sources.length > 0 && (
-                                <div>
-                                    <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
-                                        📚 Fontes Consultadas
-                                    </h4>
-                                    <div className="flex flex-wrap gap-2">
-                                        {result.sources.map((source, i) => (
-                                            <a
-                                                key={i}
-                                                href={source.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                                            >
-                                                {source.name}
-                                                <FontAwesomeIcon icon={faExternalLinkAlt} className="w-2.5 h-2.5" />
-                                            </a>
-                                        ))}
+                            {/* === ABA RESUMO === */}
+                            {activeTab === 'summary' && (
+                                <>
+                                    {/* Resumo da Análise */}
+                                    <div>
+                                        <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 flex items-center gap-1.5">
+                                            <FontAwesomeIcon icon={faInfoCircle} className="w-3.5 h-3.5" />
+                                            Resumo da Análise
+                                        </h4>
+                                        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                                            {result.summary}
+                                        </p>
                                     </div>
-                                </div>
+
+                                    {/* Sugestões de Melhoria */}
+                                    {(result.verificationLog?.suggestions || result.suggestions)?.length! > 0 && (
+                                        <div>
+                                            <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
+                                                💡 Sugestões
+                                            </h4>
+                                            <ul className="space-y-2">
+                                                {(result.verificationLog?.suggestions || result.suggestions)?.map((suggestion, i) => (
+                                                    <li key={i} className="text-sm text-gray-600 dark:text-gray-400 pl-4 border-l-2 border-blue-200 dark:border-blue-800">
+                                                        {suggestion}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+                                </>
+                            )}
+
+                            {/* === ABA CLAIMS === */}
+                            {activeTab === 'claims' && (
+                                <>
+                                    {/* Claims do verificationLog */}
+                                    {result.verificationLog?.claims && result.verificationLog.claims.length > 0 ? (
+                                        <div className="space-y-4">
+                                            {result.verificationLog.claims.map((claim, i) => (
+                                                <div key={i} className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+                                                    <div className="flex items-start gap-3">
+                                                        <span className={`mt-1 ${claim.status === 'verified' ? 'text-emerald-500' :
+                                                                claim.status === 'refuted' ? 'text-red-500' : 'text-amber-500'
+                                                            }`}>
+                                                            {claim.status === 'verified' ? '✓' : claim.status === 'refuted' ? '✗' : '⚠'}
+                                                        </span>
+                                                        <div className="flex-1">
+                                                            <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                                                                {claim.text}
+                                                            </p>
+                                                            <div className="flex items-center gap-2 mt-1">
+                                                                <span className={`text-xs px-2 py-0.5 rounded ${claim.status === 'verified' ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600' :
+                                                                        claim.status === 'refuted' ? 'bg-red-100 dark:bg-red-900/30 text-red-600' :
+                                                                            'bg-amber-100 dark:bg-amber-900/30 text-amber-600'
+                                                                    }`}>
+                                                                    {claim.confidence}% confiança
+                                                                </span>
+                                                            </div>
+                                                            {/* Fontes do claim */}
+                                                            {claim.sources && claim.sources.length > 0 && (
+                                                                <div className="mt-3 space-y-2">
+                                                                    {claim.sources.map((source, j) => (
+                                                                        <a
+                                                                            key={j}
+                                                                            href={source.url}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            className="block p-2 rounded bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 hover:border-purple-500 transition-colors"
+                                                                        >
+                                                                            <div className="flex items-center gap-2 text-xs text-purple-600 dark:text-purple-400 font-medium">
+                                                                                <FontAwesomeIcon icon={faExternalLinkAlt} className="w-3 h-3" />
+                                                                                {source.title || new URL(source.url).hostname}
+                                                                            </div>
+                                                                            {source.snippet && (
+                                                                                <p className="text-xs text-gray-500 mt-1 line-clamp-2">
+                                                                                    "{source.snippet}"
+                                                                                </p>
+                                                                            )}
+                                                                        </a>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        /* Fallback para formato legado */
+                                        <>
+                                            {result.verifiedClaims && result.verifiedClaims.length > 0 && (
+                                                <div>
+                                                    <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-3">
+                                                        ✓ Verificados ({result.verifiedClaims.length})
+                                                    </h4>
+                                                    <ul className="space-y-2">
+                                                        {result.verifiedClaims.map((claim, i) => (
+                                                            <li key={i} className="flex items-start gap-2 text-sm">
+                                                                <span className="text-emerald-500 mt-0.5">✓</span>
+                                                                <span className="text-gray-700 dark:text-gray-300">{claim.claim}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
+                                            {result.unverifiedClaims && result.unverifiedClaims.length > 0 && (
+                                                <div>
+                                                    <h4 className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-3">
+                                                        ⚠ Requer Atenção ({result.unverifiedClaims.length})
+                                                    </h4>
+                                                    <ul className="space-y-2">
+                                                        {result.unverifiedClaims.map((claim, i) => (
+                                                            <li key={i} className="flex items-start gap-2 text-sm">
+                                                                <span className="text-amber-500 mt-0.5">⚠</span>
+                                                                <span className="text-gray-700 dark:text-gray-300">{claim}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </>
+                                    )}
+                                </>
+                            )}
+
+                            {/* === ABA LOG TÉCNICO === */}
+                            {activeTab === 'log' && (
+                                <>
+                                    {result.verificationLog ? (
+                                        <div className="space-y-4">
+                                            {/* Timestamp */}
+                                            <div className="text-xs text-gray-500">
+                                                Verificado em: {new Date(result.verificationLog.timestamp).toLocaleString('pt-BR')}
+                                            </div>
+
+                                            {/* Fontes Adicionais */}
+                                            {result.verificationLog.additionalSources.length > 0 && (
+                                                <div>
+                                                    <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
+                                                        📚 Fontes Consultadas ({result.verificationLog.additionalSources.length})
+                                                    </h4>
+                                                    <div className="space-y-2">
+                                                        {result.verificationLog.additionalSources.map((source, i) => (
+                                                            <a
+                                                                key={i}
+                                                                href={source.url}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="block p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 hover:border-purple-500 transition-colors"
+                                                            >
+                                                                <div className="flex items-center gap-2 text-sm text-purple-600 dark:text-purple-400 font-medium">
+                                                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="w-3 h-3" />
+                                                                    {source.title || source.url}
+                                                                </div>
+                                                                {source.snippet && (
+                                                                    <p className="text-xs text-gray-500 mt-1">
+                                                                        {source.snippet}
+                                                                    </p>
+                                                                )}
+                                                            </a>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Claims não verificados */}
+                                            {result.verificationLog.unverifiedClaims.length > 0 && (
+                                                <div>
+                                                    <h4 className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-2">
+                                                        ⚠ Claims Sem Verificação
+                                                    </h4>
+                                                    <ul className="space-y-1">
+                                                        {result.verificationLog.unverifiedClaims.map((claim, i) => (
+                                                            <li key={i} className="text-sm text-gray-600 dark:text-gray-400">
+                                                                • {claim}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <div className="text-center py-8 text-gray-500">
+                                            <p>Log técnico não disponível para esta verificação.</p>
+                                            <p className="text-xs mt-2">Verificações anteriores não incluem log detalhado.</p>
+                                        </div>
+                                    )}
+                                </>
                             )}
                         </div>
 

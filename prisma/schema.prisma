@@ -520,6 +520,9 @@ model ArticleFactCheck {
   status      String   // verified, partially_verified, unverified
   summary     String   // Resumo da verificação
   
+  // Log detalhado de verificação (JSON)
+  verificationLog  String?  @db.Text // Claims, sources, queries
+  
   createdAt   DateTime @default(now())
 
   @@unique([articleId, userId]) // Apenas 1 verificação por usuário por artigo
@@ -537,6 +540,9 @@ model ResourceFactCheck {
   score       Float    // 0-100
   status      String   // verified, partially_verified, unverified
   summary     String   // Resumo da verificação
+  
+  // Log detalhado de verificação (JSON)
+  verificationLog  String?  @db.Text // Claims, sources, queries
   
   createdAt   DateTime @default(now())
 

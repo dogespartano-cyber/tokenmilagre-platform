@@ -85,7 +85,16 @@ export async function POST(request: NextRequest) {
         });
 
         if (existingCheck) {
-            // Retornar resultado anterior
+            // Retornar resultado anterior com log completo
+            let parsedLog = null;
+            try {
+                if (existingCheck.verificationLog) {
+                    parsedLog = JSON.parse(existingCheck.verificationLog);
+                }
+            } catch (e) {
+                console.error('[public-fact-check] Erro ao parsear log salvo');
+            }
+
             return NextResponse.json({
                 success: true,
                 alreadyChecked: true,
@@ -93,7 +102,8 @@ export async function POST(request: NextRequest) {
                     score: existingCheck.score,
                     status: existingCheck.status,
                     summary: existingCheck.summary,
-                    totalChecks: article.factCheckClicks
+                    totalChecks: article.factCheckClicks,
+                    verificationLog: parsedLog
                 }
             });
         }
@@ -111,7 +121,21 @@ export async function POST(request: NextRequest) {
             GEMINI_API_KEY
         );
 
-        // 8. Salvar resultado e incrementar contador
+        // 8. Preparar log de verificação para salvar
+        const verificationLog = {
+            claims: result.verifiedClaims.map(c => ({
+                text: c.claim,
+                status: c.verified ? 'verified' : 'refuted',
+                confidence: c.confidence,
+                sources: c.sources
+            })),
+            unverifiedClaims: result.unverifiedClaims,
+            additionalSources: result.additionalSources,
+            suggestions: result.suggestions,
+            timestamp: new Date().toISOString()
+        };
+
+        // 9. Salvar resultado e incrementar contador
         await prisma.$transaction([
             prisma.articleFactCheck.create({
                 data: {
@@ -119,7 +143,8 @@ export async function POST(request: NextRequest) {
                     userId: user.id,
                     score: result.score,
                     status: result.status,
-                    summary: result.summary
+                    summary: result.summary,
+                    verificationLog: JSON.stringify(verificationLog)
                 }
             }),
             prisma.article.update({
@@ -145,9 +170,8 @@ export async function POST(request: NextRequest) {
                 score: result.score,
                 status: result.status,
                 summary: result.summary,
-                verifiedClaims: result.verifiedClaims.slice(0, 3), // Top 3
-                unverifiedClaims: result.unverifiedClaims.slice(0, 2), // Top 2
-                totalChecks: article.factCheckClicks + 1
+                totalChecks: article.factCheckClicks + 1,
+                verificationLog: verificationLog
             }
         });
 

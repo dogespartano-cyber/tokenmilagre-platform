@@ -17890,6 +17890,7 @@ export namespace Prisma {
     score: number | null
     status: string | null
     summary: string | null
+    verificationLog: string | null
     createdAt: Date | null
   }
 
@@ -17900,6 +17901,7 @@ export namespace Prisma {
     score: number | null
     status: string | null
     summary: string | null
+    verificationLog: string | null
     createdAt: Date | null
   }
 
@@ -17910,6 +17912,7 @@ export namespace Prisma {
     score: number
     status: number
     summary: number
+    verificationLog: number
     createdAt: number
     _all: number
   }
@@ -17930,6 +17933,7 @@ export namespace Prisma {
     score?: true
     status?: true
     summary?: true
+    verificationLog?: true
     createdAt?: true
   }
 
@@ -17940,6 +17944,7 @@ export namespace Prisma {
     score?: true
     status?: true
     summary?: true
+    verificationLog?: true
     createdAt?: true
   }
 
@@ -17950,6 +17955,7 @@ export namespace Prisma {
     score?: true
     status?: true
     summary?: true
+    verificationLog?: true
     createdAt?: true
     _all?: true
   }
@@ -18047,6 +18053,7 @@ export namespace Prisma {
     score: number
     status: string
     summary: string
+    verificationLog: string | null
     createdAt: Date
     _count: ArticleFactCheckCountAggregateOutputType | null
     _avg: ArticleFactCheckAvgAggregateOutputType | null
@@ -18076,6 +18083,7 @@ export namespace Prisma {
     score?: boolean
     status?: boolean
     summary?: boolean
+    verificationLog?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["articleFactCheck"]>
 
@@ -18086,6 +18094,7 @@ export namespace Prisma {
     score?: boolean
     status?: boolean
     summary?: boolean
+    verificationLog?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["articleFactCheck"]>
 
@@ -18096,6 +18105,7 @@ export namespace Prisma {
     score?: boolean
     status?: boolean
     summary?: boolean
+    verificationLog?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["articleFactCheck"]>
 
@@ -18106,10 +18116,11 @@ export namespace Prisma {
     score?: boolean
     status?: boolean
     summary?: boolean
+    verificationLog?: boolean
     createdAt?: boolean
   }
 
-  export type ArticleFactCheckOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "articleId" | "userId" | "score" | "status" | "summary" | "createdAt", ExtArgs["result"]["articleFactCheck"]>
+  export type ArticleFactCheckOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "articleId" | "userId" | "score" | "status" | "summary" | "verificationLog" | "createdAt", ExtArgs["result"]["articleFactCheck"]>
 
   export type $ArticleFactCheckPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ArticleFactCheck"
@@ -18121,6 +18132,7 @@ export namespace Prisma {
       score: number
       status: string
       summary: string
+      verificationLog: string | null
       createdAt: Date
     }, ExtArgs["result"]["articleFactCheck"]>
     composites: {}
@@ -18551,6 +18563,7 @@ export namespace Prisma {
     readonly score: FieldRef<"ArticleFactCheck", 'Float'>
     readonly status: FieldRef<"ArticleFactCheck", 'String'>
     readonly summary: FieldRef<"ArticleFactCheck", 'String'>
+    readonly verificationLog: FieldRef<"ArticleFactCheck", 'String'>
     readonly createdAt: FieldRef<"ArticleFactCheck", 'DateTime'>
   }
     
@@ -18945,6 +18958,7 @@ export namespace Prisma {
     score: number | null
     status: string | null
     summary: string | null
+    verificationLog: string | null
     createdAt: Date | null
   }
 
@@ -18955,6 +18969,7 @@ export namespace Prisma {
     score: number | null
     status: string | null
     summary: string | null
+    verificationLog: string | null
     createdAt: Date | null
   }
 
@@ -18965,6 +18980,7 @@ export namespace Prisma {
     score: number
     status: number
     summary: number
+    verificationLog: number
     createdAt: number
     _all: number
   }
@@ -18985,6 +19001,7 @@ export namespace Prisma {
     score?: true
     status?: true
     summary?: true
+    verificationLog?: true
     createdAt?: true
   }
 
@@ -18995,6 +19012,7 @@ export namespace Prisma {
     score?: true
     status?: true
     summary?: true
+    verificationLog?: true
     createdAt?: true
   }
 
@@ -19005,6 +19023,7 @@ export namespace Prisma {
     score?: true
     status?: true
     summary?: true
+    verificationLog?: true
     createdAt?: true
     _all?: true
   }
@@ -19102,6 +19121,7 @@ export namespace Prisma {
     score: number
     status: string
     summary: string
+    verificationLog: string | null
     createdAt: Date
     _count: ResourceFactCheckCountAggregateOutputType | null
     _avg: ResourceFactCheckAvgAggregateOutputType | null
@@ -19131,6 +19151,7 @@ export namespace Prisma {
     score?: boolean
     status?: boolean
     summary?: boolean
+    verificationLog?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["resourceFactCheck"]>
 
@@ -19141,6 +19162,7 @@ export namespace Prisma {
     score?: boolean
     status?: boolean
     summary?: boolean
+    verificationLog?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["resourceFactCheck"]>
 
@@ -19151,6 +19173,7 @@ export namespace Prisma {
     score?: boolean
     status?: boolean
     summary?: boolean
+    verificationLog?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["resourceFactCheck"]>
 
@@ -19161,10 +19184,11 @@ export namespace Prisma {
     score?: boolean
     status?: boolean
     summary?: boolean
+    verificationLog?: boolean
     createdAt?: boolean
   }
 
-  export type ResourceFactCheckOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "resourceId" | "userId" | "score" | "status" | "summary" | "createdAt", ExtArgs["result"]["resourceFactCheck"]>
+  export type ResourceFactCheckOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "resourceId" | "userId" | "score" | "status" | "summary" | "verificationLog" | "createdAt", ExtArgs["result"]["resourceFactCheck"]>
 
   export type $ResourceFactCheckPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ResourceFactCheck"
@@ -19176,6 +19200,7 @@ export namespace Prisma {
       score: number
       status: string
       summary: string
+      verificationLog: string | null
       createdAt: Date
     }, ExtArgs["result"]["resourceFactCheck"]>
     composites: {}
@@ -19606,6 +19631,7 @@ export namespace Prisma {
     readonly score: FieldRef<"ResourceFactCheck", 'Float'>
     readonly status: FieldRef<"ResourceFactCheck", 'String'>
     readonly summary: FieldRef<"ResourceFactCheck", 'String'>
+    readonly verificationLog: FieldRef<"ResourceFactCheck", 'String'>
     readonly createdAt: FieldRef<"ResourceFactCheck", 'DateTime'>
   }
     
@@ -22606,6 +22632,7 @@ export namespace Prisma {
     score: 'score',
     status: 'status',
     summary: 'summary',
+    verificationLog: 'verificationLog',
     createdAt: 'createdAt'
   };
 
@@ -22619,6 +22646,7 @@ export namespace Prisma {
     score: 'score',
     status: 'status',
     summary: 'summary',
+    verificationLog: 'verificationLog',
     createdAt: 'createdAt'
   };
 
@@ -24326,6 +24354,7 @@ export namespace Prisma {
     score?: FloatFilter<"ArticleFactCheck"> | number
     status?: StringFilter<"ArticleFactCheck"> | string
     summary?: StringFilter<"ArticleFactCheck"> | string
+    verificationLog?: StringNullableFilter<"ArticleFactCheck"> | string | null
     createdAt?: DateTimeFilter<"ArticleFactCheck"> | Date | string
   }
 
@@ -24336,6 +24365,7 @@ export namespace Prisma {
     score?: SortOrder
     status?: SortOrder
     summary?: SortOrder
+    verificationLog?: SortOrderInput | SortOrder
     createdAt?: SortOrder
   }
 
@@ -24350,6 +24380,7 @@ export namespace Prisma {
     score?: FloatFilter<"ArticleFactCheck"> | number
     status?: StringFilter<"ArticleFactCheck"> | string
     summary?: StringFilter<"ArticleFactCheck"> | string
+    verificationLog?: StringNullableFilter<"ArticleFactCheck"> | string | null
     createdAt?: DateTimeFilter<"ArticleFactCheck"> | Date | string
   }, "id" | "articleId_userId">
 
@@ -24360,6 +24391,7 @@ export namespace Prisma {
     score?: SortOrder
     status?: SortOrder
     summary?: SortOrder
+    verificationLog?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: ArticleFactCheckCountOrderByAggregateInput
     _avg?: ArticleFactCheckAvgOrderByAggregateInput
@@ -24378,6 +24410,7 @@ export namespace Prisma {
     score?: FloatWithAggregatesFilter<"ArticleFactCheck"> | number
     status?: StringWithAggregatesFilter<"ArticleFactCheck"> | string
     summary?: StringWithAggregatesFilter<"ArticleFactCheck"> | string
+    verificationLog?: StringNullableWithAggregatesFilter<"ArticleFactCheck"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ArticleFactCheck"> | Date | string
   }
 
@@ -24391,6 +24424,7 @@ export namespace Prisma {
     score?: FloatFilter<"ResourceFactCheck"> | number
     status?: StringFilter<"ResourceFactCheck"> | string
     summary?: StringFilter<"ResourceFactCheck"> | string
+    verificationLog?: StringNullableFilter<"ResourceFactCheck"> | string | null
     createdAt?: DateTimeFilter<"ResourceFactCheck"> | Date | string
   }
 
@@ -24401,6 +24435,7 @@ export namespace Prisma {
     score?: SortOrder
     status?: SortOrder
     summary?: SortOrder
+    verificationLog?: SortOrderInput | SortOrder
     createdAt?: SortOrder
   }
 
@@ -24415,6 +24450,7 @@ export namespace Prisma {
     score?: FloatFilter<"ResourceFactCheck"> | number
     status?: StringFilter<"ResourceFactCheck"> | string
     summary?: StringFilter<"ResourceFactCheck"> | string
+    verificationLog?: StringNullableFilter<"ResourceFactCheck"> | string | null
     createdAt?: DateTimeFilter<"ResourceFactCheck"> | Date | string
   }, "id" | "resourceId_userId">
 
@@ -24425,6 +24461,7 @@ export namespace Prisma {
     score?: SortOrder
     status?: SortOrder
     summary?: SortOrder
+    verificationLog?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: ResourceFactCheckCountOrderByAggregateInput
     _avg?: ResourceFactCheckAvgOrderByAggregateInput
@@ -24443,6 +24480,7 @@ export namespace Prisma {
     score?: FloatWithAggregatesFilter<"ResourceFactCheck"> | number
     status?: StringWithAggregatesFilter<"ResourceFactCheck"> | string
     summary?: StringWithAggregatesFilter<"ResourceFactCheck"> | string
+    verificationLog?: StringNullableWithAggregatesFilter<"ResourceFactCheck"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ResourceFactCheck"> | Date | string
   }
 
@@ -26432,6 +26470,7 @@ export namespace Prisma {
     score: number
     status: string
     summary: string
+    verificationLog?: string | null
     createdAt?: Date | string
   }
 
@@ -26442,6 +26481,7 @@ export namespace Prisma {
     score: number
     status: string
     summary: string
+    verificationLog?: string | null
     createdAt?: Date | string
   }
 
@@ -26452,6 +26492,7 @@ export namespace Prisma {
     score?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     summary?: StringFieldUpdateOperationsInput | string
+    verificationLog?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26462,6 +26503,7 @@ export namespace Prisma {
     score?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     summary?: StringFieldUpdateOperationsInput | string
+    verificationLog?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26472,6 +26514,7 @@ export namespace Prisma {
     score: number
     status: string
     summary: string
+    verificationLog?: string | null
     createdAt?: Date | string
   }
 
@@ -26482,6 +26525,7 @@ export namespace Prisma {
     score?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     summary?: StringFieldUpdateOperationsInput | string
+    verificationLog?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26492,6 +26536,7 @@ export namespace Prisma {
     score?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     summary?: StringFieldUpdateOperationsInput | string
+    verificationLog?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26502,6 +26547,7 @@ export namespace Prisma {
     score: number
     status: string
     summary: string
+    verificationLog?: string | null
     createdAt?: Date | string
   }
 
@@ -26512,6 +26558,7 @@ export namespace Prisma {
     score: number
     status: string
     summary: string
+    verificationLog?: string | null
     createdAt?: Date | string
   }
 
@@ -26522,6 +26569,7 @@ export namespace Prisma {
     score?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     summary?: StringFieldUpdateOperationsInput | string
+    verificationLog?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26532,6 +26580,7 @@ export namespace Prisma {
     score?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     summary?: StringFieldUpdateOperationsInput | string
+    verificationLog?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26542,6 +26591,7 @@ export namespace Prisma {
     score: number
     status: string
     summary: string
+    verificationLog?: string | null
     createdAt?: Date | string
   }
 
@@ -26552,6 +26602,7 @@ export namespace Prisma {
     score?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     summary?: StringFieldUpdateOperationsInput | string
+    verificationLog?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26562,6 +26613,7 @@ export namespace Prisma {
     score?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     summary?: StringFieldUpdateOperationsInput | string
+    verificationLog?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -28044,6 +28096,7 @@ export namespace Prisma {
     score?: SortOrder
     status?: SortOrder
     summary?: SortOrder
+    verificationLog?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -28058,6 +28111,7 @@ export namespace Prisma {
     score?: SortOrder
     status?: SortOrder
     summary?: SortOrder
+    verificationLog?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -28068,6 +28122,7 @@ export namespace Prisma {
     score?: SortOrder
     status?: SortOrder
     summary?: SortOrder
+    verificationLog?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -28087,6 +28142,7 @@ export namespace Prisma {
     score?: SortOrder
     status?: SortOrder
     summary?: SortOrder
+    verificationLog?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -28101,6 +28157,7 @@ export namespace Prisma {
     score?: SortOrder
     status?: SortOrder
     summary?: SortOrder
+    verificationLog?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -28111,6 +28168,7 @@ export namespace Prisma {
     score?: SortOrder
     status?: SortOrder
     summary?: SortOrder
+    verificationLog?: SortOrder
     createdAt?: SortOrder
   }
 
