@@ -16,12 +16,10 @@ interface ArticlePreviewPanelProps {
   article: ProcessedArticle;
   articleType: ArticleType;
   copiedProcessed: boolean;
-  generatingCover: boolean;
   processing: boolean;
   refineSectionRef: React.RefObject<HTMLDivElement | null>;
   onProcessWithGemini: () => void;
   onCopyArticle: () => void;
-  onGenerateCover: () => Promise<void>;
   onPublish: () => void;
   // Novas props para validação
   validating?: boolean;
@@ -34,12 +32,10 @@ export default function ArticlePreviewPanel({
   article,
   articleType,
   copiedProcessed,
-  generatingCover,
   processing,
   refineSectionRef,
   onProcessWithGemini,
   onCopyArticle,
-  onGenerateCover,
   onPublish,
   // Validação
   validating = false,
@@ -95,25 +91,6 @@ export default function ArticlePreviewPanel({
             <FontAwesomeIcon icon={faPen} />
             Editar Manualmente
           </button>
-
-          {articleType !== 'resource' && (
-            <button
-              onClick={onGenerateCover}
-              disabled={generatingCover}
-              className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:brightness-110 flex items-center gap-2 disabled:opacity-50 border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10"
-            >
-              {generatingCover ? (
-                <>
-                  <FontAwesomeIcon icon={faSpinner} spin />
-                  Gerando...
-                </>
-              ) : (
-                <>
-                  🎨 {article.coverImage ? 'Nova Capa' : 'Gerar Capa'}
-                </>
-              )}
-            </button>
-          )}
 
           <button
             onClick={onProcessWithGemini}

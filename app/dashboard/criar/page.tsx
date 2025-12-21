@@ -179,30 +179,6 @@ function ManualModeContent() {
         }
     };
 
-    const handleGenerateCover = async () => {
-        if (!generatedArticle || !selectedType) return;
-        startGeneratingCover();
-        try {
-            const response = await fetch(API_ENDPOINTS.regenerateCover, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ article: generatedArticle, articleType: selectedType })
-            });
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Erro ao gerar capa');
-            }
-            const { article } = await response.json();
-            setGeneratedArticle({ ...article, type: selectedType });
-            addMessage({ role: 'assistant', content: MESSAGES.article.coverGenerated });
-        } catch (error: unknown) {
-            console.error('Erro ao gerar capa:', error);
-            addMessage({ role: 'assistant', content: MESSAGES.errors.cover(getErrorMessage(error)) });
-        } finally {
-            stopGeneratingCover();
-        }
-    };
-
     const handlePublish = async () => {
         if (!generatedArticle || !userId || !selectedType) return;
         let articleToValidate = { ...generatedArticle };
@@ -276,12 +252,10 @@ function ManualModeContent() {
                     article={generatedArticle}
                     articleType={selectedType!}
                     copiedProcessed={copiedProcessed}
-                    generatingCover={generatingCover}
                     processing={processing}
                     refineSectionRef={refineSectionRef}
                     onProcessWithGemini={handleProcessWithGemini}
                     onCopyArticle={handleCopyArticle}
-                    onGenerateCover={handleGenerateCover}
                     onPublish={handlePublish}
                     validating={validating}
                     validationResult={validationResult}
