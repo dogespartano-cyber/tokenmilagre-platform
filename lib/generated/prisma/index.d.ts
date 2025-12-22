@@ -3844,6 +3844,7 @@ export namespace Prisma {
     factCheckClicks: number | null
     courseSequence: number | null
     likeCount: number | null
+    dislikeCount: number | null
     commentCount: number | null
   }
 
@@ -3852,6 +3853,7 @@ export namespace Prisma {
     factCheckClicks: number | null
     courseSequence: number | null
     likeCount: number | null
+    dislikeCount: number | null
     commentCount: number | null
   }
 
@@ -3885,6 +3887,7 @@ export namespace Prisma {
     coverImageAlt: string | null
     quizData: string | null
     likeCount: number | null
+    dislikeCount: number | null
     commentCount: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3920,6 +3923,7 @@ export namespace Prisma {
     coverImageAlt: string | null
     quizData: string | null
     likeCount: number | null
+    dislikeCount: number | null
     commentCount: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3955,6 +3959,7 @@ export namespace Prisma {
     coverImageAlt: number
     quizData: number
     likeCount: number
+    dislikeCount: number
     commentCount: number
     createdAt: number
     updatedAt: number
@@ -3967,6 +3972,7 @@ export namespace Prisma {
     factCheckClicks?: true
     courseSequence?: true
     likeCount?: true
+    dislikeCount?: true
     commentCount?: true
   }
 
@@ -3975,6 +3981,7 @@ export namespace Prisma {
     factCheckClicks?: true
     courseSequence?: true
     likeCount?: true
+    dislikeCount?: true
     commentCount?: true
   }
 
@@ -4008,6 +4015,7 @@ export namespace Prisma {
     coverImageAlt?: true
     quizData?: true
     likeCount?: true
+    dislikeCount?: true
     commentCount?: true
     createdAt?: true
     updatedAt?: true
@@ -4043,6 +4051,7 @@ export namespace Prisma {
     coverImageAlt?: true
     quizData?: true
     likeCount?: true
+    dislikeCount?: true
     commentCount?: true
     createdAt?: true
     updatedAt?: true
@@ -4078,6 +4087,7 @@ export namespace Prisma {
     coverImageAlt?: true
     quizData?: true
     likeCount?: true
+    dislikeCount?: true
     commentCount?: true
     createdAt?: true
     updatedAt?: true
@@ -4200,6 +4210,7 @@ export namespace Prisma {
     coverImageAlt: string | null
     quizData: string | null
     likeCount: number
+    dislikeCount: number
     commentCount: number
     createdAt: Date
     updatedAt: Date
@@ -4254,6 +4265,7 @@ export namespace Prisma {
     coverImageAlt?: boolean
     quizData?: boolean
     likeCount?: boolean
+    dislikeCount?: boolean
     commentCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4294,6 +4306,7 @@ export namespace Prisma {
     coverImageAlt?: boolean
     quizData?: boolean
     likeCount?: boolean
+    dislikeCount?: boolean
     commentCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4330,6 +4343,7 @@ export namespace Prisma {
     coverImageAlt?: boolean
     quizData?: boolean
     likeCount?: boolean
+    dislikeCount?: boolean
     commentCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4366,12 +4380,13 @@ export namespace Prisma {
     coverImageAlt?: boolean
     quizData?: boolean
     likeCount?: boolean
+    dislikeCount?: boolean
     commentCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "type" | "excerpt" | "published" | "authorId" | "category" | "tags" | "sentiment" | "factCheckScore" | "factCheckSources" | "factCheckDate" | "factCheckStatus" | "factCheckClicks" | "consolidatedSources" | "level" | "contentType" | "readTime" | "warningLevel" | "securityTips" | "courseSequence" | "relatedArticles" | "projectHighlight" | "coverImage" | "coverImageAlt" | "quizData" | "likeCount" | "commentCount" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
+  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "type" | "excerpt" | "published" | "authorId" | "category" | "tags" | "sentiment" | "factCheckScore" | "factCheckSources" | "factCheckDate" | "factCheckStatus" | "factCheckClicks" | "consolidatedSources" | "level" | "contentType" | "readTime" | "warningLevel" | "securityTips" | "courseSequence" | "relatedArticles" | "projectHighlight" | "coverImage" | "coverImageAlt" | "quizData" | "likeCount" | "dislikeCount" | "commentCount" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
   export type ArticleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     citations?: boolean | Article$citationsArgs<ExtArgs>
@@ -4424,6 +4439,7 @@ export namespace Prisma {
       coverImageAlt: string | null
       quizData: string | null
       likeCount: number
+      dislikeCount: number
       commentCount: number
       createdAt: Date
       updatedAt: Date
@@ -4883,6 +4899,7 @@ export namespace Prisma {
     readonly coverImageAlt: FieldRef<"Article", 'String'>
     readonly quizData: FieldRef<"Article", 'String'>
     readonly likeCount: FieldRef<"Article", 'Int'>
+    readonly dislikeCount: FieldRef<"Article", 'Int'>
     readonly commentCount: FieldRef<"Article", 'Int'>
     readonly createdAt: FieldRef<"Article", 'DateTime'>
     readonly updatedAt: FieldRef<"Article", 'DateTime'>
@@ -6520,6 +6537,7 @@ export namespace Prisma {
     factCheckScore: number | null
     factCheckClicks: number | null
     likeCount: number | null
+    dislikeCount: number | null
     commentCount: number | null
   }
 
@@ -6528,6 +6546,7 @@ export namespace Prisma {
     factCheckScore: number | null
     factCheckClicks: number | null
     likeCount: number | null
+    dislikeCount: number | null
     commentCount: number | null
   }
 
@@ -6569,6 +6588,7 @@ export namespace Prisma {
     factCheckDate: Date | null
     factCheckClicks: number | null
     likeCount: number | null
+    dislikeCount: number | null
     commentCount: number | null
   }
 
@@ -6610,6 +6630,7 @@ export namespace Prisma {
     factCheckDate: Date | null
     factCheckClicks: number | null
     likeCount: number | null
+    dislikeCount: number | null
     commentCount: number | null
   }
 
@@ -6651,6 +6672,7 @@ export namespace Prisma {
     factCheckDate: number
     factCheckClicks: number
     likeCount: number
+    dislikeCount: number
     commentCount: number
     _all: number
   }
@@ -6661,6 +6683,7 @@ export namespace Prisma {
     factCheckScore?: true
     factCheckClicks?: true
     likeCount?: true
+    dislikeCount?: true
     commentCount?: true
   }
 
@@ -6669,6 +6692,7 @@ export namespace Prisma {
     factCheckScore?: true
     factCheckClicks?: true
     likeCount?: true
+    dislikeCount?: true
     commentCount?: true
   }
 
@@ -6710,6 +6734,7 @@ export namespace Prisma {
     factCheckDate?: true
     factCheckClicks?: true
     likeCount?: true
+    dislikeCount?: true
     commentCount?: true
   }
 
@@ -6751,6 +6776,7 @@ export namespace Prisma {
     factCheckDate?: true
     factCheckClicks?: true
     likeCount?: true
+    dislikeCount?: true
     commentCount?: true
   }
 
@@ -6792,6 +6818,7 @@ export namespace Prisma {
     factCheckDate?: true
     factCheckClicks?: true
     likeCount?: true
+    dislikeCount?: true
     commentCount?: true
     _all?: true
   }
@@ -6920,6 +6947,7 @@ export namespace Prisma {
     factCheckDate: Date | null
     factCheckClicks: number
     likeCount: number
+    dislikeCount: number
     commentCount: number
     _count: ResourceCountAggregateOutputType | null
     _avg: ResourceAvgAggregateOutputType | null
@@ -6980,6 +7008,7 @@ export namespace Prisma {
     factCheckDate?: boolean
     factCheckClicks?: boolean
     likeCount?: boolean
+    dislikeCount?: boolean
     commentCount?: boolean
     likes?: boolean | Resource$likesArgs<ExtArgs>
     comments?: boolean | Resource$commentsArgs<ExtArgs>
@@ -7024,6 +7053,7 @@ export namespace Prisma {
     factCheckDate?: boolean
     factCheckClicks?: boolean
     likeCount?: boolean
+    dislikeCount?: boolean
     commentCount?: boolean
   }, ExtArgs["result"]["resource"]>
 
@@ -7065,6 +7095,7 @@ export namespace Prisma {
     factCheckDate?: boolean
     factCheckClicks?: boolean
     likeCount?: boolean
+    dislikeCount?: boolean
     commentCount?: boolean
   }, ExtArgs["result"]["resource"]>
 
@@ -7106,10 +7137,11 @@ export namespace Prisma {
     factCheckDate?: boolean
     factCheckClicks?: boolean
     likeCount?: boolean
+    dislikeCount?: boolean
     commentCount?: boolean
   }
 
-  export type ResourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "category" | "verified" | "shortDescription" | "officialUrl" | "platforms" | "tags" | "heroTitle" | "heroDescription" | "heroGradient" | "whyGoodTitle" | "whyGoodContent" | "features" | "howToStartTitle" | "howToStartSteps" | "pros" | "cons" | "faq" | "securityTips" | "securityAudit" | "securityAuditDate" | "auditedByCommunity" | "toolConfig" | "interactiveType" | "showCompatibleWallets" | "relatedResources" | "views" | "createdAt" | "updatedAt" | "lastVerified" | "factCheckScore" | "factCheckStatus" | "factCheckDate" | "factCheckClicks" | "likeCount" | "commentCount", ExtArgs["result"]["resource"]>
+  export type ResourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "category" | "verified" | "shortDescription" | "officialUrl" | "platforms" | "tags" | "heroTitle" | "heroDescription" | "heroGradient" | "whyGoodTitle" | "whyGoodContent" | "features" | "howToStartTitle" | "howToStartSteps" | "pros" | "cons" | "faq" | "securityTips" | "securityAudit" | "securityAuditDate" | "auditedByCommunity" | "toolConfig" | "interactiveType" | "showCompatibleWallets" | "relatedResources" | "views" | "createdAt" | "updatedAt" | "lastVerified" | "factCheckScore" | "factCheckStatus" | "factCheckDate" | "factCheckClicks" | "likeCount" | "dislikeCount" | "commentCount", ExtArgs["result"]["resource"]>
   export type ResourceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     likes?: boolean | Resource$likesArgs<ExtArgs>
     comments?: boolean | Resource$commentsArgs<ExtArgs>
@@ -7162,6 +7194,7 @@ export namespace Prisma {
       factCheckDate: Date | null
       factCheckClicks: number
       likeCount: number
+      dislikeCount: number
       commentCount: number
     }, ExtArgs["result"]["resource"]>
     composites: {}
@@ -7625,6 +7658,7 @@ export namespace Prisma {
     readonly factCheckDate: FieldRef<"Resource", 'DateTime'>
     readonly factCheckClicks: FieldRef<"Resource", 'Int'>
     readonly likeCount: FieldRef<"Resource", 'Int'>
+    readonly dislikeCount: FieldRef<"Resource", 'Int'>
     readonly commentCount: FieldRef<"Resource", 'Int'>
   }
     
@@ -20027,6 +20061,7 @@ export namespace Prisma {
     userId: string | null
     articleId: string | null
     resourceId: string | null
+    isDislike: boolean | null
     createdAt: Date | null
   }
 
@@ -20035,6 +20070,7 @@ export namespace Prisma {
     userId: string | null
     articleId: string | null
     resourceId: string | null
+    isDislike: boolean | null
     createdAt: Date | null
   }
 
@@ -20043,6 +20079,7 @@ export namespace Prisma {
     userId: number
     articleId: number
     resourceId: number
+    isDislike: number
     createdAt: number
     _all: number
   }
@@ -20053,6 +20090,7 @@ export namespace Prisma {
     userId?: true
     articleId?: true
     resourceId?: true
+    isDislike?: true
     createdAt?: true
   }
 
@@ -20061,6 +20099,7 @@ export namespace Prisma {
     userId?: true
     articleId?: true
     resourceId?: true
+    isDislike?: true
     createdAt?: true
   }
 
@@ -20069,6 +20108,7 @@ export namespace Prisma {
     userId?: true
     articleId?: true
     resourceId?: true
+    isDislike?: true
     createdAt?: true
     _all?: true
   }
@@ -20150,6 +20190,7 @@ export namespace Prisma {
     userId: string
     articleId: string | null
     resourceId: string | null
+    isDislike: boolean
     createdAt: Date
     _count: LikeCountAggregateOutputType | null
     _min: LikeMinAggregateOutputType | null
@@ -20175,6 +20216,7 @@ export namespace Prisma {
     userId?: boolean
     articleId?: boolean
     resourceId?: boolean
+    isDislike?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     article?: boolean | Like$articleArgs<ExtArgs>
@@ -20186,6 +20228,7 @@ export namespace Prisma {
     userId?: boolean
     articleId?: boolean
     resourceId?: boolean
+    isDislike?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     article?: boolean | Like$articleArgs<ExtArgs>
@@ -20197,6 +20240,7 @@ export namespace Prisma {
     userId?: boolean
     articleId?: boolean
     resourceId?: boolean
+    isDislike?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     article?: boolean | Like$articleArgs<ExtArgs>
@@ -20208,10 +20252,11 @@ export namespace Prisma {
     userId?: boolean
     articleId?: boolean
     resourceId?: boolean
+    isDislike?: boolean
     createdAt?: boolean
   }
 
-  export type LikeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "articleId" | "resourceId" | "createdAt", ExtArgs["result"]["like"]>
+  export type LikeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "articleId" | "resourceId" | "isDislike" | "createdAt", ExtArgs["result"]["like"]>
   export type LikeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     article?: boolean | Like$articleArgs<ExtArgs>
@@ -20240,6 +20285,7 @@ export namespace Prisma {
       userId: string
       articleId: string | null
       resourceId: string | null
+      isDislike: boolean
       createdAt: Date
     }, ExtArgs["result"]["like"]>
     composites: {}
@@ -20671,6 +20717,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"Like", 'String'>
     readonly articleId: FieldRef<"Like", 'String'>
     readonly resourceId: FieldRef<"Like", 'String'>
+    readonly isDislike: FieldRef<"Like", 'Boolean'>
     readonly createdAt: FieldRef<"Like", 'DateTime'>
   }
     
@@ -22394,6 +22441,7 @@ export namespace Prisma {
     coverImageAlt: 'coverImageAlt',
     quizData: 'quizData',
     likeCount: 'likeCount',
+    dislikeCount: 'dislikeCount',
     commentCount: 'commentCount',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -22454,6 +22502,7 @@ export namespace Prisma {
     factCheckDate: 'factCheckDate',
     factCheckClicks: 'factCheckClicks',
     likeCount: 'likeCount',
+    dislikeCount: 'dislikeCount',
     commentCount: 'commentCount'
   };
 
@@ -22672,6 +22721,7 @@ export namespace Prisma {
     userId: 'userId',
     articleId: 'articleId',
     resourceId: 'resourceId',
+    isDislike: 'isDislike',
     createdAt: 'createdAt'
   };
 
@@ -22997,6 +23047,7 @@ export namespace Prisma {
     coverImageAlt?: StringNullableFilter<"Article"> | string | null
     quizData?: StringNullableFilter<"Article"> | string | null
     likeCount?: IntFilter<"Article"> | number
+    dislikeCount?: IntFilter<"Article"> | number
     commentCount?: IntFilter<"Article"> | number
     createdAt?: DateTimeFilter<"Article"> | Date | string
     updatedAt?: DateTimeFilter<"Article"> | Date | string
@@ -23036,6 +23087,7 @@ export namespace Prisma {
     coverImageAlt?: SortOrderInput | SortOrder
     quizData?: SortOrderInput | SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23078,6 +23130,7 @@ export namespace Prisma {
     coverImageAlt?: StringNullableFilter<"Article"> | string | null
     quizData?: StringNullableFilter<"Article"> | string | null
     likeCount?: IntFilter<"Article"> | number
+    dislikeCount?: IntFilter<"Article"> | number
     commentCount?: IntFilter<"Article"> | number
     createdAt?: DateTimeFilter<"Article"> | Date | string
     updatedAt?: DateTimeFilter<"Article"> | Date | string
@@ -23117,6 +23170,7 @@ export namespace Prisma {
     coverImageAlt?: SortOrderInput | SortOrder
     quizData?: SortOrderInput | SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23160,6 +23214,7 @@ export namespace Prisma {
     coverImageAlt?: StringNullableWithAggregatesFilter<"Article"> | string | null
     quizData?: StringNullableWithAggregatesFilter<"Article"> | string | null
     likeCount?: IntWithAggregatesFilter<"Article"> | number
+    dislikeCount?: IntWithAggregatesFilter<"Article"> | number
     commentCount?: IntWithAggregatesFilter<"Article"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Article"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Article"> | Date | string
@@ -23278,6 +23333,7 @@ export namespace Prisma {
     factCheckDate?: DateTimeNullableFilter<"Resource"> | Date | string | null
     factCheckClicks?: IntFilter<"Resource"> | number
     likeCount?: IntFilter<"Resource"> | number
+    dislikeCount?: IntFilter<"Resource"> | number
     commentCount?: IntFilter<"Resource"> | number
     likes?: LikeListRelationFilter
     comments?: CommentListRelationFilter
@@ -23321,6 +23377,7 @@ export namespace Prisma {
     factCheckDate?: SortOrderInput | SortOrder
     factCheckClicks?: SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
     likes?: LikeOrderByRelationAggregateInput
     comments?: CommentOrderByRelationAggregateInput
@@ -23367,6 +23424,7 @@ export namespace Prisma {
     factCheckDate?: DateTimeNullableFilter<"Resource"> | Date | string | null
     factCheckClicks?: IntFilter<"Resource"> | number
     likeCount?: IntFilter<"Resource"> | number
+    dislikeCount?: IntFilter<"Resource"> | number
     commentCount?: IntFilter<"Resource"> | number
     likes?: LikeListRelationFilter
     comments?: CommentListRelationFilter
@@ -23410,6 +23468,7 @@ export namespace Prisma {
     factCheckDate?: SortOrderInput | SortOrder
     factCheckClicks?: SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
     _count?: ResourceCountOrderByAggregateInput
     _avg?: ResourceAvgOrderByAggregateInput
@@ -23459,6 +23518,7 @@ export namespace Prisma {
     factCheckDate?: DateTimeNullableWithAggregatesFilter<"Resource"> | Date | string | null
     factCheckClicks?: IntWithAggregatesFilter<"Resource"> | number
     likeCount?: IntWithAggregatesFilter<"Resource"> | number
+    dislikeCount?: IntWithAggregatesFilter<"Resource"> | number
     commentCount?: IntWithAggregatesFilter<"Resource"> | number
   }
 
@@ -24511,6 +24571,7 @@ export namespace Prisma {
     userId?: StringFilter<"Like"> | string
     articleId?: StringNullableFilter<"Like"> | string | null
     resourceId?: StringNullableFilter<"Like"> | string | null
+    isDislike?: BoolFilter<"Like"> | boolean
     createdAt?: DateTimeFilter<"Like"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     article?: XOR<ArticleNullableScalarRelationFilter, ArticleWhereInput> | null
@@ -24522,6 +24583,7 @@ export namespace Prisma {
     userId?: SortOrder
     articleId?: SortOrderInput | SortOrder
     resourceId?: SortOrderInput | SortOrder
+    isDislike?: SortOrder
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
     article?: ArticleOrderByWithRelationInput
@@ -24538,6 +24600,7 @@ export namespace Prisma {
     userId?: StringFilter<"Like"> | string
     articleId?: StringNullableFilter<"Like"> | string | null
     resourceId?: StringNullableFilter<"Like"> | string | null
+    isDislike?: BoolFilter<"Like"> | boolean
     createdAt?: DateTimeFilter<"Like"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     article?: XOR<ArticleNullableScalarRelationFilter, ArticleWhereInput> | null
@@ -24549,6 +24612,7 @@ export namespace Prisma {
     userId?: SortOrder
     articleId?: SortOrderInput | SortOrder
     resourceId?: SortOrderInput | SortOrder
+    isDislike?: SortOrder
     createdAt?: SortOrder
     _count?: LikeCountOrderByAggregateInput
     _max?: LikeMaxOrderByAggregateInput
@@ -24563,6 +24627,7 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Like"> | string
     articleId?: StringNullableWithAggregatesFilter<"Like"> | string | null
     resourceId?: StringNullableWithAggregatesFilter<"Like"> | string | null
+    isDislike?: BoolWithAggregatesFilter<"Like"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Like"> | Date | string
   }
 
@@ -24806,6 +24871,7 @@ export namespace Prisma {
     coverImageAlt?: string | null
     quizData?: string | null
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -24845,6 +24911,7 @@ export namespace Prisma {
     coverImageAlt?: string | null
     quizData?: string | null
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -24882,6 +24949,7 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -24921,6 +24989,7 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -24959,6 +25028,7 @@ export namespace Prisma {
     coverImageAlt?: string | null
     quizData?: string | null
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -24993,6 +25063,7 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25028,6 +25099,7 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25147,6 +25219,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckClicks?: number
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     likes?: LikeCreateNestedManyWithoutResourceInput
     comments?: CommentCreateNestedManyWithoutResourceInput
@@ -25190,6 +25263,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckClicks?: number
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     likes?: LikeUncheckedCreateNestedManyWithoutResourceInput
     comments?: CommentUncheckedCreateNestedManyWithoutResourceInput
@@ -25233,6 +25307,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     likes?: LikeUpdateManyWithoutResourceNestedInput
     comments?: CommentUpdateManyWithoutResourceNestedInput
@@ -25276,6 +25351,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     likes?: LikeUncheckedUpdateManyWithoutResourceNestedInput
     comments?: CommentUncheckedUpdateManyWithoutResourceNestedInput
@@ -25319,6 +25395,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckClicks?: number
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
   }
 
@@ -25360,6 +25437,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
   }
 
@@ -25401,6 +25479,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
   }
 
@@ -26645,6 +26724,7 @@ export namespace Prisma {
 
   export type LikeCreateInput = {
     id?: string
+    isDislike?: boolean
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutLikesInput
     article?: ArticleCreateNestedOneWithoutLikesInput
@@ -26656,11 +26736,13 @@ export namespace Prisma {
     userId: string
     articleId?: string | null
     resourceId?: string | null
+    isDislike?: boolean
     createdAt?: Date | string
   }
 
   export type LikeUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    isDislike?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutLikesNestedInput
     article?: ArticleUpdateOneWithoutLikesNestedInput
@@ -26672,6 +26754,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articleId?: NullableStringFieldUpdateOperationsInput | string | null
     resourceId?: NullableStringFieldUpdateOperationsInput | string | null
+    isDislike?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26680,11 +26763,13 @@ export namespace Prisma {
     userId: string
     articleId?: string | null
     resourceId?: string | null
+    isDislike?: boolean
     createdAt?: Date | string
   }
 
   export type LikeUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    isDislike?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26693,6 +26778,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articleId?: NullableStringFieldUpdateOperationsInput | string | null
     resourceId?: NullableStringFieldUpdateOperationsInput | string | null
+    isDislike?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -27137,6 +27223,7 @@ export namespace Prisma {
     coverImageAlt?: SortOrder
     quizData?: SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -27147,6 +27234,7 @@ export namespace Prisma {
     factCheckClicks?: SortOrder
     courseSequence?: SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
   }
 
@@ -27180,6 +27268,7 @@ export namespace Prisma {
     coverImageAlt?: SortOrder
     quizData?: SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -27215,6 +27304,7 @@ export namespace Prisma {
     coverImageAlt?: SortOrder
     quizData?: SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -27225,6 +27315,7 @@ export namespace Prisma {
     factCheckClicks?: SortOrder
     courseSequence?: SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
   }
 
@@ -27372,6 +27463,7 @@ export namespace Prisma {
     factCheckDate?: SortOrder
     factCheckClicks?: SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
   }
 
@@ -27380,6 +27472,7 @@ export namespace Prisma {
     factCheckScore?: SortOrder
     factCheckClicks?: SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
   }
 
@@ -27421,6 +27514,7 @@ export namespace Prisma {
     factCheckDate?: SortOrder
     factCheckClicks?: SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
   }
 
@@ -27462,6 +27556,7 @@ export namespace Prisma {
     factCheckDate?: SortOrder
     factCheckClicks?: SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
   }
 
@@ -27470,6 +27565,7 @@ export namespace Prisma {
     factCheckScore?: SortOrder
     factCheckClicks?: SortOrder
     likeCount?: SortOrder
+    dislikeCount?: SortOrder
     commentCount?: SortOrder
   }
 
@@ -28230,6 +28326,7 @@ export namespace Prisma {
     userId?: SortOrder
     articleId?: SortOrder
     resourceId?: SortOrder
+    isDislike?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -28238,6 +28335,7 @@ export namespace Prisma {
     userId?: SortOrder
     articleId?: SortOrder
     resourceId?: SortOrder
+    isDislike?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -28246,6 +28344,7 @@ export namespace Prisma {
     userId?: SortOrder
     articleId?: SortOrder
     resourceId?: SortOrder
+    isDislike?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -29436,6 +29535,7 @@ export namespace Prisma {
     coverImageAlt?: string | null
     quizData?: string | null
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29473,6 +29573,7 @@ export namespace Prisma {
     coverImageAlt?: string | null
     quizData?: string | null
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29607,6 +29708,7 @@ export namespace Prisma {
 
   export type LikeCreateWithoutUserInput = {
     id?: string
+    isDislike?: boolean
     createdAt?: Date | string
     article?: ArticleCreateNestedOneWithoutLikesInput
     resource?: ResourceCreateNestedOneWithoutLikesInput
@@ -29616,6 +29718,7 @@ export namespace Prisma {
     id?: string
     articleId?: string | null
     resourceId?: string | null
+    isDislike?: boolean
     createdAt?: Date | string
   }
 
@@ -29710,6 +29813,7 @@ export namespace Prisma {
     coverImageAlt?: StringNullableFilter<"Article"> | string | null
     quizData?: StringNullableFilter<"Article"> | string | null
     likeCount?: IntFilter<"Article"> | number
+    dislikeCount?: IntFilter<"Article"> | number
     commentCount?: IntFilter<"Article"> | number
     createdAt?: DateTimeFilter<"Article"> | Date | string
     updatedAt?: DateTimeFilter<"Article"> | Date | string
@@ -29841,6 +29945,7 @@ export namespace Prisma {
     userId?: StringFilter<"Like"> | string
     articleId?: StringNullableFilter<"Like"> | string | null
     resourceId?: StringNullableFilter<"Like"> | string | null
+    isDislike?: BoolFilter<"Like"> | boolean
     createdAt?: DateTimeFilter<"Like"> | Date | string
   }
 
@@ -29951,6 +30056,7 @@ export namespace Prisma {
 
   export type LikeCreateWithoutArticleInput = {
     id?: string
+    isDislike?: boolean
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutLikesInput
     resource?: ResourceCreateNestedOneWithoutLikesInput
@@ -29960,6 +30066,7 @@ export namespace Prisma {
     id?: string
     userId: string
     resourceId?: string | null
+    isDislike?: boolean
     createdAt?: Date | string
   }
 
@@ -30147,6 +30254,7 @@ export namespace Prisma {
     coverImageAlt?: string | null
     quizData?: string | null
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -30185,6 +30293,7 @@ export namespace Prisma {
     coverImageAlt?: string | null
     quizData?: string | null
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -30237,6 +30346,7 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30275,6 +30385,7 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30284,6 +30395,7 @@ export namespace Prisma {
 
   export type LikeCreateWithoutResourceInput = {
     id?: string
+    isDislike?: boolean
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutLikesInput
     article?: ArticleCreateNestedOneWithoutLikesInput
@@ -30293,6 +30405,7 @@ export namespace Prisma {
     id?: string
     userId: string
     articleId?: string | null
+    isDislike?: boolean
     createdAt?: Date | string
   }
 
@@ -30936,6 +31049,7 @@ export namespace Prisma {
     coverImageAlt?: string | null
     quizData?: string | null
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -30974,6 +31088,7 @@ export namespace Prisma {
     coverImageAlt?: string | null
     quizData?: string | null
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -31024,6 +31139,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckClicks?: number
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     comments?: CommentCreateNestedManyWithoutResourceInput
   }
@@ -31066,6 +31182,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckClicks?: number
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     comments?: CommentUncheckedCreateNestedManyWithoutResourceInput
   }
@@ -31166,6 +31283,7 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31204,6 +31322,7 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31260,6 +31379,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     comments?: CommentUpdateManyWithoutResourceNestedInput
   }
@@ -31302,6 +31422,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     comments?: CommentUncheckedUpdateManyWithoutResourceNestedInput
   }
@@ -31380,6 +31501,7 @@ export namespace Prisma {
     coverImageAlt?: string | null
     quizData?: string | null
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -31418,6 +31540,7 @@ export namespace Prisma {
     coverImageAlt?: string | null
     quizData?: string | null
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -31468,6 +31591,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckClicks?: number
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     likes?: LikeCreateNestedManyWithoutResourceInput
   }
@@ -31510,6 +31634,7 @@ export namespace Prisma {
     factCheckDate?: Date | string | null
     factCheckClicks?: number
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     likes?: LikeUncheckedCreateNestedManyWithoutResourceInput
   }
@@ -31669,6 +31794,7 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31707,6 +31833,7 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31763,6 +31890,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     likes?: LikeUpdateManyWithoutResourceNestedInput
   }
@@ -31805,6 +31933,7 @@ export namespace Prisma {
     factCheckDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     factCheckClicks?: IntFieldUpdateOperationsInput | number
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     likes?: LikeUncheckedUpdateManyWithoutResourceNestedInput
   }
@@ -31887,6 +32016,7 @@ export namespace Prisma {
     coverImageAlt?: string | null
     quizData?: string | null
     likeCount?: number
+    dislikeCount?: number
     commentCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -31938,6 +32068,7 @@ export namespace Prisma {
     id?: string
     articleId?: string | null
     resourceId?: string | null
+    isDislike?: boolean
     createdAt?: Date | string
   }
 
@@ -31980,6 +32111,7 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32017,6 +32149,7 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32054,6 +32187,7 @@ export namespace Prisma {
     coverImageAlt?: NullableStringFieldUpdateOperationsInput | string | null
     quizData?: NullableStringFieldUpdateOperationsInput | string | null
     likeCount?: IntFieldUpdateOperationsInput | number
+    dislikeCount?: IntFieldUpdateOperationsInput | number
     commentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32187,6 +32321,7 @@ export namespace Prisma {
 
   export type LikeUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    isDislike?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     article?: ArticleUpdateOneWithoutLikesNestedInput
     resource?: ResourceUpdateOneWithoutLikesNestedInput
@@ -32196,6 +32331,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     articleId?: NullableStringFieldUpdateOperationsInput | string | null
     resourceId?: NullableStringFieldUpdateOperationsInput | string | null
+    isDislike?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -32203,6 +32339,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     articleId?: NullableStringFieldUpdateOperationsInput | string | null
     resourceId?: NullableStringFieldUpdateOperationsInput | string | null
+    isDislike?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -32252,6 +32389,7 @@ export namespace Prisma {
     id?: string
     userId: string
     resourceId?: string | null
+    isDislike?: boolean
     createdAt?: Date | string
   }
 
@@ -32297,6 +32435,7 @@ export namespace Prisma {
 
   export type LikeUpdateWithoutArticleInput = {
     id?: StringFieldUpdateOperationsInput | string
+    isDislike?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutLikesNestedInput
     resource?: ResourceUpdateOneWithoutLikesNestedInput
@@ -32306,6 +32445,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     resourceId?: NullableStringFieldUpdateOperationsInput | string | null
+    isDislike?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -32313,6 +32453,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     resourceId?: NullableStringFieldUpdateOperationsInput | string | null
+    isDislike?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -32352,6 +32493,7 @@ export namespace Prisma {
     id?: string
     userId: string
     articleId?: string | null
+    isDislike?: boolean
     createdAt?: Date | string
   }
 
@@ -32367,6 +32509,7 @@ export namespace Prisma {
 
   export type LikeUpdateWithoutResourceInput = {
     id?: StringFieldUpdateOperationsInput | string
+    isDislike?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutLikesNestedInput
     article?: ArticleUpdateOneWithoutLikesNestedInput
@@ -32376,6 +32519,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     articleId?: NullableStringFieldUpdateOperationsInput | string | null
+    isDislike?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -32383,6 +32527,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     articleId?: NullableStringFieldUpdateOperationsInput | string | null
+    isDislike?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

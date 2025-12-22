@@ -25,10 +25,28 @@ export default function SidebarHeader({ onClose }: SidebarHeaderProps) {
                     href="/"
                     className="flex items-center gap-3 hover:opacity-100 transition-all duration-300 group px-2 py-1 rounded-xl"
                     onClick={onClose}
+                    title="$MILAGRE - Voltar para página inicial"
                 >
-                    <div className="text-xl sm:text-lg font-bold drop-shadow-lg transition-all duration-300 font-[family-name:var(--font-poppins)] text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] group-hover:scale-105">
-                        $MILAGRE
-                    </div>
+                    {/* Logo tema claro */}
+                    <Image
+                        src="/images/$Milagre-claro.webp"
+                        alt="$MILAGRE - Plataforma de Educação e Recursos Cripto"
+                        title="$MILAGRE"
+                        width={180}
+                        height={58}
+                        className="group-hover:scale-105 transition-transform duration-300 dark:hidden"
+                        priority
+                    />
+                    {/* Logo tema escuro */}
+                    <Image
+                        src="/images/$Milagre-escuro.webp"
+                        alt="$MILAGRE - Plataforma de Educação e Recursos Cripto"
+                        title="$MILAGRE"
+                        width={180}
+                        height={58}
+                        className="group-hover:scale-105 transition-transform duration-300 hidden dark:block"
+                        priority
+                    />
                 </Link>
                 <button
                     onClick={onClose}

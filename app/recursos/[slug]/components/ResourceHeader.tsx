@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { Resource } from '@/lib/domains/resources/legacy-api';
 import { getCategoryLabel } from '@/lib/shared/utils/categories';
-import VerifyButton from '@/components/shared/VerifyButton';
+import LikeDislikeButton from '@/components/shared/LikeDislikeButton';
 import CommentCountButton from '@/components/engagement/CommentCountButton';
 
 interface ResourceHeaderProps {
@@ -53,8 +53,8 @@ export default function ResourceHeader({ resource, onCommentClick }: ResourceHea
           <FontAwesomeIcon icon={faExternalLinkAlt} className="w-5 h-5" />
         </a>
 
-        {/* Verificar Button */}
-        <VerifyButton id={resource.id} type="resource" />
+        {/* Like/Dislike Button */}
+        <LikeDislikeButton id={resource.id} type="resource" />
 
         {/* Comentários Button */}
         <CommentCountButton id={resource.id} type="resource" onClick={onCommentClick} />

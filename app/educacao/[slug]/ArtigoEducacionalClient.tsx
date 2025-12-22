@@ -11,7 +11,7 @@ import { getLevelLabel } from '@/lib/shared/utils/level-helpers';
 import { slugify } from '@/lib/shared/utils/content-helpers';
 import QuizComponent from '@/components/education/QuizComponent';
 import TransparencyNote from '@/components/shared/TransparencyNote';
-import VerifyButton from '@/components/shared/VerifyButton';
+import LikeDislikeButton from '@/components/shared/LikeDislikeButton';
 import CommentCountButton from '@/components/engagement/CommentCountButton';
 import CommentsSection from '@/components/engagement/CommentsSection';
 
@@ -349,7 +349,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                   {article.description}
                 </p>
 
-                {/* Meta Line: Date + Reading Time + VerifyButton */}
+                {/* Meta Line: Date + Reading Time + LikeDislike */}
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[var(--text-article-muted)] pb-6 md:pb-8 border-b border-[var(--border-article)]">
                   <time dateTime={article.publishedAt} className="capitalize">
                     {formatEditorialDate(article.publishedAt)}
@@ -357,7 +357,7 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
                   <span className="hidden md:inline">•</span>
                   <span>{article.readTime}</span>
                   <span className="hidden md:inline">•</span>
-                  <VerifyButton id={article.id} type="article" />
+                  <LikeDislikeButton id={article.id} type="article" />
                   <CommentCountButton id={article.id} type="article" onClick={() => setShowComments(!showComments)} />
                 </div>
 

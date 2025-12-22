@@ -62,27 +62,32 @@ export default function RootLayoutNav({
       {/* Main Content Wrapper */}
       <div className="min-h-screen flex flex-col lg:ml-72">
         {/* Header */}
-        <header className="sticky top-0 z-30 backdrop-blur-xl h-[88px] flex items-center bg-transparent">
+        <header className="sticky top-0 z-30 h-[64px] flex items-center bg-white dark:bg-transparent dark:backdrop-blur-xl lg:bg-transparent lg:backdrop-blur-xl">
           <div className="container mx-auto px-6 h-full relative">
             <div className="flex justify-between items-center h-full">
               {/* Mobile Header Layout */}
               <div className="flex items-center justify-between w-full lg:hidden">
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-3">
-                    <Link href="/" className="relative w-10 h-10 overflow-hidden hover:scale-110 transition-all duration-300">
+                    <Link href="/" className="relative overflow-hidden hover:scale-110 transition-all duration-300" title="$MILAGRE - Voltar para Home">
+                      {/* Logo tema claro */}
                       <Image
-                        src="/images/TOKEN-MILAGRE-Hero.webp"
-                        alt="$MILAGRE"
-                        width={40}
-                        height={40}
-                        className="w-full h-full object-contain relative z-10"
+                        src="/images/$Milagre-claro.webp"
+                        alt="$MILAGRE - Plataforma de Educação e Recursos Cripto"
+                        title="$MILAGRE"
+                        width={140}
+                        height={45}
+                        className="object-contain relative z-10 dark:hidden"
                       />
-                    </Link>
-                    <Link
-                      href={pathname.startsWith('/noticias/') && pathname !== '/noticias' ? '/noticias' : pathname}
-                      className="text-xl sm:text-2xl font-black uppercase transition-all duration-300 font-[family-name:var(--font-poppins)] text-[#ebb60b] hover:text-brand-primary hover:scale-105 active:scale-95 truncate max-w-[200px]"
-                    >
-                      {shortTitle || dynamicTitle || '$MILAGRE'}
+                      {/* Logo tema escuro */}
+                      <Image
+                        src="/images/$Milagre-escuro.webp"
+                        alt="$MILAGRE - Plataforma de Educação e Recursos Cripto"
+                        title="$MILAGRE"
+                        width={140}
+                        height={45}
+                        className="object-contain relative z-10 hidden dark:block"
+                      />
                     </Link>
                   </div>
                 </div>

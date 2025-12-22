@@ -12,8 +12,8 @@ import { getCitationAwareMarkdownComponents, SourcesSection } from '@/lib/domain
 import TransparencyNote from '@/components/shared/TransparencyNote';
 import PageWrapper from '@/components/layout/PageWrapper';
 import { useSidebar } from '@/contexts/SidebarContext';
-import VerifyButton from '@/components/shared/VerifyButton';
-import EngagementBar from '@/components/engagement/EngagementBar';
+import LikeDislikeButton from '@/components/shared/LikeDislikeButton';
+
 import CommentsSection from '@/components/engagement/CommentsSection';
 import CommentCountButton from '@/components/engagement/CommentCountButton';
 
@@ -315,6 +315,17 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
             {/* ========== MAIN CONTENT ========== */}
             <main className="lg:col-span-7 xl:col-span-7 pt-6 md:pt-12 lg:pt-8">
 
+              {/* Mobile: Voltar */}
+              <div className="lg:hidden mb-6">
+                <button
+                  onClick={() => router.push('/noticias')}
+                  className="inline-flex items-center gap-2 text-sm text-[var(--text-article-muted)]"
+                >
+                  <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
+                  Notícias
+                </button>
+              </div>
+
               {/* ===== ARTICLE HEADER (NYT Style) ===== */}
               <header className="mb-10 md:mb-14">
 
@@ -353,7 +364,7 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
                   <span className="hidden md:inline">•</span>
                   <span>{readingTime} min de leitura</span>
                   <span className="hidden md:inline">•</span>
-                  <VerifyButton id={article.id} type="article" />
+                  <LikeDislikeButton id={article.id} type="article" />
                   <CommentCountButton id={article.id} type="article" onClick={() => setShowComments(!showComments)} />
                 </div>
 
@@ -551,8 +562,8 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
                         className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all group"
                       >
                         <span className={`text-xs px-1.5 py-0.5 rounded ${source.origin === 'perplexity'
-                            ? 'bg-blue-500/20 text-blue-400'
-                            : 'bg-purple-500/20 text-purple-400'
+                          ? 'bg-blue-500/20 text-blue-400'
+                          : 'bg-purple-500/20 text-purple-400'
                           }`}>
                           {source.origin === 'perplexity' ? 'P' : 'G'}
                         </span>
@@ -578,14 +589,7 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
                 <TransparencyNote publishedAt={article.publishedAt} />
               </div>
 
-              {/* ===== ENGAGEMENT BAR ===== */}
-              <div className="mt-8 pt-6 border-t border-[var(--border-article)]">
-                <EngagementBar
-                  id={article.id}
-                  type="article"
-                  onCommentClick={() => setShowComments(!showComments)}
-                />
-              </div>
+
 
               {/* ===== COMMENTS SECTION ===== */}
               <CommentsSection

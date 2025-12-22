@@ -129,8 +129,23 @@ As "tarefas chatas" são fundamentais para firmar conhecimento básico.
 
 ---
 
+## 9. Workflows Relacionados
+
+Use estes workflows para práticas específicas:
+
+| Workflow | Quando Usar |
+|----------|-------------|
+| `/debug` | Debugging sistemático em 4 fases |
+| `/tdd` | Test-Driven Development (red-green-refactor) |
+| `/plano` | Escrever planos de implementação detalhados |
+| `/execucao` | Executar planos em batches com checkpoints |
+| `/verificacao` | Verificar antes de declarar conclusão |
+
+---
+
 ```yaml
 @source: Lucas Montano - "Como Sêniors estão usando AI"
 @video: https://youtube.com/watch?v=P1-8da1GgBg
+@updated: 2025-12-22
 @created: 2025-12-15
 ```

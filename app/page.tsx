@@ -39,9 +39,9 @@ import {
 
 // Header config - inline para IA reconhecer
 const pageHeader = {
-  title: '$MILAGRE',
+  title: 'Sua Jornada Começa Aqui',
   description: 'Em busca de uma comunidade com prosperidade.',
-  shortTitle: '$MILAGRE'
+  shortTitle: 'Home'
 };
 
 const initialSections = [

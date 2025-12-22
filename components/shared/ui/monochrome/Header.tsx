@@ -271,7 +271,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="logo-link">
             <Image
-              src="/images/TOKEN-MILAGRE-Hero.webp"
+              src="/images/milagre-logo.webp"
               alt="$MILAGRE"
               width={40}
               height={40}
@@ -324,7 +324,7 @@ export default function Header() {
           <div className="mobile-menu-header">
             <Link href="/" className="logo-link" onClick={() => setMobileMenuOpen(false)}>
               <Image
-                src="/images/TOKEN-MILAGRE-Hero.webp"
+                src="/images/milagre-logo.webp"
                 alt="$MILAGRE"
                 width={40}
                 height={40}

@@ -150,11 +150,11 @@ export default function PageHeader({ title, description, shortTitle }: PageHeade
             {/* Título - sempre clicável, posts de notícias voltam para /noticias */}
             <Link href={pathname.startsWith('/noticias/') && pathname !== '/noticias' ? '/noticias' : pathname}>
               <h1
-                className={`text-4xl font-bold mb-1 font-[family-name:var(--font-poppins)] text-[#ebb60b] cursor-pointer hover:text-[var(--brand-primary)] transition-colors hidden lg:block uppercase ${pathname === '/' ? '' : ''}`}
+                className={`text-4xl font-bold mb-1 font-[family-name:var(--font-poppins)] cursor-pointer hover:opacity-80 transition-opacity hidden lg:block bg-gradient-to-r from-[#0D9488] to-[#ebb60b] bg-clip-text text-transparent ${pathname === '/' ? '' : ''}`}
                 style={{
                   opacity: animateTitle ? 1 : 0,
                   transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
-                  transition: 'opacity 0.6s ease-out, transform 0.6s ease-out, color 0.3s ease'
+                  transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
                 }}
               >
                 {title}

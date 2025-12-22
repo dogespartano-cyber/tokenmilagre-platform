@@ -134,6 +134,7 @@ model Article {
 
   // Engagement (Likes & Comments)
   likeCount          Int       @default(0)
+  dislikeCount       Int       @default(0)
   commentCount       Int       @default(0)
 
   createdAt          DateTime  @default(now()) // API: publishedAt
@@ -233,6 +234,7 @@ model Resource {
 
   // Engagement (Likes & Comments)
   likeCount          Int       @default(0)
+  dislikeCount       Int       @default(0)
   commentCount       Int       @default(0)
   likes              Like[]
   comments           Comment[]
@@ -563,6 +565,7 @@ model Like {
   userId     String
   articleId  String?
   resourceId String?
+  isDislike  Boolean  @default(false)
   createdAt  DateTime @default(now())
 
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)

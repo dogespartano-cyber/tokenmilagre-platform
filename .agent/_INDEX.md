@@ -126,6 +126,16 @@ SEGURANCA   DESIGN    CONTEUDO ←───────────────�
 | [vibe](./workflows/vibe.md) | Boas práticas de vibe coding |
 | [ANÁLISE HOLÍSTICA](../Feedback/ANALISE-HOLISTICA_2025-12-19.md) | Auditoria multi-agent *(local)* |
 
+### Workflows de Desenvolvimento (Superpowers)
+
+| Workflow | Propósito |
+|----------|-----------|
+| [debug](./workflows/debug.md) | Debugging sistemático em 4 fases |
+| [tdd](./workflows/tdd.md) | Test-Driven Development (red-green-refactor) |
+| [plano](./workflows/plano.md) | Escrita de planos de implementação |
+| [execucao](./workflows/execucao.md) | Execução de planos em batches |
+| [verificacao](./workflows/verificacao.md) | Verificação antes de conclusão |
+
 ---
 
 ```yaml

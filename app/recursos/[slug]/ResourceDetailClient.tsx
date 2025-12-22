@@ -120,6 +120,17 @@ export default function ResourceDetailClient({ resource, relatedResources, categ
 
         <div className="container mx-auto px-6 md:px-10 relative z-10">
           <div className="max-w-6xl">
+            {/* Mobile: Voltar */}
+            <div className="lg:hidden mb-4">
+              <button
+                onClick={() => router.push('/recursos')}
+                className="inline-flex items-center gap-2 text-sm text-[var(--text-article-muted)]"
+              >
+                <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
+                Recursos
+              </button>
+            </div>
+
             <ResourceHeader resource={resource} onCommentClick={() => setShowComments(!showComments)} />
           </div>
         </div>
