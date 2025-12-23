@@ -192,12 +192,19 @@ export function QuickStartGrid() {
     const [items, setItems] = useState(initialCards);
     const [mounted, setMounted] = useState(false);
     const [hoveredId, setHoveredId] = useState<string | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
 
     // Persistence key
     const STORAGE_KEY = 'zenith_quickstart_order';
 
     useEffect(() => {
         setMounted(true);
+
+        // Detect mobile for forcing active state
+        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
         const savedOrder = localStorage.getItem(STORAGE_KEY);
         if (savedOrder) {
             try {
@@ -217,6 +224,8 @@ export function QuickStartGrid() {
                 console.error('Failed to parse saved order', e);
             }
         }
+
+        return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
     const sensors = useSensors(
@@ -276,7 +285,7 @@ export function QuickStartGrid() {
                 <div className="flex flex-wrap justify-start md:justify-center gap-4 lg:gap-6">
                     {initialCards.map((card) => {
                         const isComeceAqui = card.id === 'invest';
-                        const shouldShowActive = isComeceAqui && (hoveredId === null || hoveredId === 'invest');
+                        const shouldShowActive = isMobile || (isComeceAqui && (hoveredId === null || hoveredId === 'invest'));
 
                         return (
                             <div key={card.id} className="w-[calc(50%-0.5rem)] lg:w-[calc(20%-1.2rem)] md:w-[calc(33.33%-1rem)] flex-grow-0 flex-shrink-0">
@@ -323,7 +332,7 @@ export function QuickStartGrid() {
                     <div className="flex flex-wrap justify-start md:justify-center gap-4 lg:gap-6">
                         {items.map((card) => {
                             const isComeceAqui = card.id === 'invest';
-                            const shouldShowActive = isComeceAqui && (hoveredId === null || hoveredId === 'invest');
+                            const shouldShowActive = isMobile || (isComeceAqui && (hoveredId === null || hoveredId === 'invest'));
 
                             return (
                                 <div key={card.id} className="w-[calc(50%-0.5rem)] lg:w-[calc(20%-1.2rem)] md:w-[calc(33.33%-1rem)] flex-grow-0 flex-shrink-0">

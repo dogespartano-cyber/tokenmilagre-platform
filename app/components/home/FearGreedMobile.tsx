@@ -66,7 +66,7 @@ export function FearGreedMobile({ fearGreed, gaugeValue }: FearGreedProps) {
                             </linearGradient>
                         </defs>
                         {/* Track */}
-                        <path d="M 30 100 A 60 60 0 0 1 150 100" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="16" strokeLinecap="round" />
+                        <path d="M 30 100 A 60 60 0 0 1 150 100" fill="none" stroke="currentColor" strokeWidth="16" strokeLinecap="round" className="text-zinc-200 dark:text-zinc-800" />
                         {/* Colored Arc - SEM FILTRO */}
                         <path d="M 30 100 A 60 60 0 0 1 150 100" fill="none" stroke="url(#rainbowMobile)" strokeWidth="16" strokeLinecap="round" />
 
@@ -77,7 +77,7 @@ export function FearGreedMobile({ fearGreed, gaugeValue }: FearGreedProps) {
                         </g>
 
                         {/* Value inside gauge */}
-                        <text x="90" y="85" fill="white" fontSize="28" fontWeight="800" textAnchor="middle" dominantBaseline="middle" className="font-[family-name:var(--font-poppins)]">
+                        <text x="90" y="85" fill="var(--text-primary)" fontSize="28" fontWeight="800" textAnchor="middle" dominantBaseline="middle" className="font-[family-name:var(--font-poppins)]">
                             {gaugeValue}
                         </text>
                     </svg>
