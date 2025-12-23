@@ -254,7 +254,7 @@ export default function GerenciarUsuariosPage() {
   return (
     <AdminRoute allowEditor={false}>
       <div className="min-h-screen relative">
-        <div className="container mx-auto px-4 py-8 max-w-7xl relative z-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8 relative z-10">
           {/* Header Removed */}
 
           <div className="space-y-6">

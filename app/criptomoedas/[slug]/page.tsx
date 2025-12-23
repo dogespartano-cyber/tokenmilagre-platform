@@ -320,7 +320,7 @@ export default function CryptoPage() {
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-12">
         <div className="flex items-center justify-center min-h-[calc(100vh-300px)] animate-fade-in">
           {/* Spinner circular */}
           <div
@@ -333,7 +333,7 @@ export default function CryptoPage() {
 
   if (error || !crypto) {
     return (
-      <div className="container mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-12">
         <div className="text-center">
           <div className="text-6xl mb-4">❌</div>
           <h1 className="text-3xl font-bold mb-4 text-[var(--text-article-title)]">
@@ -351,7 +351,7 @@ export default function CryptoPage() {
       : 'text-red-500';
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8">
       {/* Grid Layout: Content + Sidebar */}
       <div
         className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-8 transition-all duration-300 ease-in-out"

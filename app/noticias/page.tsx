@@ -198,7 +198,7 @@ export default function NoticiasPage() {
 
   return (
     <PageWrapper header={pageHeader}>
-      <div className="container mx-auto px-4 py-4 lg:py-8 relative">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-4 lg:py-8 relative">
         <button
           onClick={() => setShowFilters(true)}
           className="glass-card fixed bottom-24 right-8 z-50 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 text-[var(--text-primary)]"

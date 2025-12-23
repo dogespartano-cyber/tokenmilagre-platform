@@ -118,7 +118,7 @@ export default function ResourceDetailClient({ resource, relatedResources, categ
           }}
         />
 
-        <div className="container mx-auto px-6 md:px-10 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 relative z-10">
           <div className="max-w-6xl">
             {/* Mobile: Voltar */}
             <div className="lg:hidden mb-4">
@@ -136,7 +136,7 @@ export default function ResourceDetailClient({ resource, relatedResources, categ
         </div>
       </div>
 
-      <div className="container mx-auto px-6 pt-2 pb-8 lg:pt-4 lg:pb-12">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 pt-2 pb-8 lg:pt-4 lg:pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
           {/* Coluna Principal (Conteúdo) */}

@@ -59,7 +59,7 @@ export default function GraficosPage() {
       <div className="min-h-screen relative transition-colors duration-300">
 
 
-        <div className="container mx-auto px-4 py-4 lg:py-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-4 lg:py-8 relative z-10">
           <div className="space-y-16">
 
             {/* Section 1: Command Center (Deep Dive) - Moved to Top */}

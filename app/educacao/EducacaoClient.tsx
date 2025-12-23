@@ -148,7 +148,7 @@ export default function EducacaoClient({ resources, stats }: EducacaoClientProps
         })}
       </Script>
 
-      <div className="container mx-auto px-4 py-4 lg:py-8 relative">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-4 lg:py-8 relative">
         <div className="space-y-8">
 
           {/* Cards Introdutórios - 8 Temas (Estáticos) */}

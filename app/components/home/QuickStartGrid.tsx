@@ -137,7 +137,7 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
                 as={Link}
                 href={card.href}
                 variant={variant}
-                className="h-full min-h-[220px] flex flex-col justify-between select-none touch-manipulation"
+                className="aspect-square rounded-full flex flex-col justify-center items-center select-none touch-manipulation"
                 style={{ pointerEvents: isDragging ? 'none' : 'auto' }}
                 onClick={(e: React.MouseEvent) => {
                     if (isDragging) {
@@ -146,35 +146,19 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
                 }}
             >
                 {/* Content Layer */}
-                <div className="relative z-10">
-                    <div className="flex justify-between items-start mb-4">
-                        <div className={`
-                            w-12 h-12 rounded-2xl flex items-center justify-center
-                            text-xl transition-all duration-300
-                            ${iconClass}
-                            shadow-lg
-                        `}>
-                            <FontAwesomeIcon icon={card.icon} />
-                        </div>
-
-                        <div className={`
-                            w-8 h-8 rounded-full flex items-center justify-center
-                            border opacity-0 group-hover:opacity-100
-                            transition-all duration-300 transform translate-x-4 group-hover:translate-x-0
-                            border-[var(--border-light)] text-[var(--text-tertiary)]
-                        `}>
-                            <FontAwesomeIcon icon={faArrowRight} className="text-sm" />
-                        </div>
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center">
+                    <div className={`
+                        w-14 h-14 rounded-2xl flex items-center justify-center
+                        text-2xl transition-all duration-300 mb-4
+                        ${iconClass}
+                        shadow-lg
+                    `}>
+                        <FontAwesomeIcon icon={card.icon} />
                     </div>
 
-                    <div>
-                        <h3 className="font-[family-name:var(--font-poppins)] font-bold text-lg mb-1 text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors">
-                            {card.title}
-                        </h3>
-                        <p className="text-sm text-[var(--text-secondary)] font-medium">
-                            {card.description}
-                        </p>
-                    </div>
+                    <h3 className="font-[family-name:var(--font-poppins)] font-bold text-base text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors">
+                        {card.title}
+                    </h3>
                 </div>
 
                 {/* Decorative Gradient handled by ZenithCard variants mostly, but we can keep extra blob if needed. 

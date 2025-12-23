@@ -4,7 +4,7 @@ import { faShieldAlt, faExclamationTriangle, faGavel, faHandshake } from '@forta
 
 export default function TermsPage() {
     return (
-        <div className="container mx-auto px-4 py-12 max-w-4xl">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-12">
             <div className="mb-12 text-center">
                 <h1 className="text-4xl font-bold mb-4 font-[family-name:var(--font-poppins)]">Termos de Uso</h1>
                 <p className="text-lg text-[var(--text-secondary)]">

@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FearGreedDesktop } from '@/app/components/home/FearGreedDesktop';
+import { SentimentGauge } from '@/app/components/news/SentimentGauge';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import { useSidebar } from '@/contexts/SidebarContext';
 
@@ -12,6 +13,7 @@ interface PageHeaderProps {
   title: string;
   description: string;
   shortTitle?: string;
+  sentiment?: 'positive' | 'neutral' | 'negative';
 }
 
 interface FearGreedData {
@@ -19,7 +21,7 @@ interface FearGreedData {
   value_classification: string;
 }
 
-export default function PageHeader({ title, description, shortTitle }: PageHeaderProps) {
+export default function PageHeader({ title, description, shortTitle, sentiment }: PageHeaderProps) {
   const pathname = usePathname();
   const [fearGreed, setFearGreed] = useState<FearGreedData | null>(null);
   const [gaugeValue, setGaugeValue] = useState(0);
@@ -125,8 +127,8 @@ export default function PageHeader({ title, description, shortTitle }: PageHeade
 
   return (
     <div className="space-y-2 lg:space-y-4">
-      {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      {/* Header - Centered with matching page margins */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-start gap-4 lg:gap-16 max-w-7xl mx-auto lg:px-8">
         <div className="flex items-center gap-4">
           {/* Logo */}
           <div
@@ -171,20 +173,6 @@ export default function PageHeader({ title, description, shortTitle }: PageHeade
               {description}
             </p>
           </div>
-        </div>
-
-        {/* Fear & Greed Gauge - Desktop Only */}
-        <div
-          style={{
-            opacity: animateTitle ? 1 : 0,
-            transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
-            transition: 'opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s'
-          }}
-        >
-          <FearGreedDesktop
-            fearGreed={fearGreed}
-            gaugeValue={gaugeValue}
-          />
         </div>
       </div>
 

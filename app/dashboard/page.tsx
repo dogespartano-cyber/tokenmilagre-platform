@@ -120,7 +120,7 @@ export default function AdminDashboardPage() {
 
   return (
     <AdminRoute allowEditor={false}>
-      <div className="container mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8">
         {/* Error State */}
         {error && (
           <div

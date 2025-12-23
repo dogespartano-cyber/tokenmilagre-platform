@@ -13,6 +13,8 @@ import TransparencyNote from '@/components/shared/TransparencyNote';
 import PageWrapper from '@/components/layout/PageWrapper';
 import { useSidebar } from '@/contexts/SidebarContext';
 import LikeDislikeButton from '@/components/shared/LikeDislikeButton';
+import { SentimentGauge } from '@/app/components/news/SentimentGauge';
+import { FearGreedSidebar } from '@/app/components/news/FearGreedSidebar';
 
 import CommentsSection from '@/components/engagement/CommentsSection';
 import CommentCountButton from '@/components/engagement/CommentCountButton';
@@ -356,7 +358,7 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
                   {article.summary}
                 </p>
 
-                {/* Meta Line: Date + Reading Time + FactCheck */}
+                {/* Meta Line: Date + Reading Time + LikeDislike */}
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[var(--text-article-muted)] pb-6 md:pb-8 border-b border-[var(--border-article)]">
                   <time dateTime={article.publishedAt} className="capitalize">
                     {formatEditorialDate(article.publishedAt)}
@@ -368,31 +370,13 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
                   <CommentCountButton id={article.id} type="article" onClick={() => setShowComments(!showComments)} />
                 </div>
 
-                {/* Mobile: Share Buttons */}
-                <div className="lg:hidden mt-4 pt-4 flex items-center gap-4">
-                  <span className="text-xs text-[var(--text-article-muted)] uppercase tracking-wider">Compartilhar</span>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={shareOnX}
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)]"
-                      aria-label="X"
-                    >
-                      <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={shareOnTelegram}
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[#0088cc]"
-                      aria-label="Telegram"
-                    >
-                      <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={shareOnWhatsApp}
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[#25D366]"
-                      aria-label="WhatsApp"
-                    >
-                      <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
-                    </button>
+                {/* Mobile: Gauges */}
+                <div className="lg:hidden mt-6 pt-4 grid grid-cols-2 gap-3">
+                  <div className="p-3 rounded-2xl bg-[var(--bg-glass)] border border-[#64748b]/30">
+                    <FearGreedSidebar />
+                  </div>
+                  <div className="p-3 rounded-2xl bg-[var(--bg-glass)] border border-[#64748b]/30">
+                    <SentimentGauge sentiment={article.sentiment} />
                   </div>
                 </div>
 
@@ -589,6 +573,36 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
                 <TransparencyNote publishedAt={article.publishedAt} />
               </div>
 
+              {/* ===== SHARE BUTTONS ===== */}
+              <div className="mt-12 pt-8 border-t border-[var(--border-article)]">
+                <h3 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--text-article-muted)] mb-4">
+                  Compartilhar
+                </h3>
+                <div className="flex gap-2">
+                  <button
+                    onClick={shareOnX}
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[var(--text-article-title)] hover:text-[var(--text-article-title)] transition-colors"
+                    aria-label="Compartilhar no X"
+                  >
+                    <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={shareOnTelegram}
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[#0088cc] hover:text-[#0088cc] transition-colors"
+                    aria-label="Compartilhar no Telegram"
+                  >
+                    <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={shareOnWhatsApp}
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[#25D366] hover:text-[#25D366] transition-colors"
+                    aria-label="Compartilhar no WhatsApp"
+                  >
+                    <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
 
 
               {/* ===== COMMENTS SECTION ===== */}
@@ -636,8 +650,19 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
 
             </main>
 
-            {/* ========== RIGHT SPACER (Desktop) ========== */}
-            <div className="hidden lg:block lg:col-span-3 xl:col-span-3" />
+            {/* ========== RIGHT SIDEBAR (Desktop) ========== */}
+            <aside className="hidden lg:block lg:col-span-3 xl:col-span-3">
+              <div className="sticky top-24 pt-8 space-y-6">
+                {/* Fear & Greed Index */}
+                <div className="p-4 rounded-2xl bg-[var(--bg-glass)] border border-[#64748b]/30">
+                  <FearGreedSidebar />
+                </div>
+                {/* Sentiment Gauge */}
+                <div className="p-4 rounded-2xl bg-[var(--bg-glass)] border border-[#64748b]/30">
+                  <SentimentGauge sentiment={article.sentiment} />
+                </div>
+              </div>
+            </aside>
 
           </div>
         </div>

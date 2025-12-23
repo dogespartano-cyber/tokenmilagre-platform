@@ -117,7 +117,7 @@ export default function ComeceAquiPage() {
 
     return (
         <PageWrapper header={pageHeader}>
-            <div className="container mx-auto px-6 md:px-10 py-4 lg:py-8 relative z-10">
+            <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-4 lg:py-8 relative z-10">
                 <div className="space-y-16 pb-20">
 
                     {/* SEÇÃO 1: O Essencial Primeiro */}

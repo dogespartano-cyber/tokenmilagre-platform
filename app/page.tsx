@@ -196,7 +196,7 @@ export default function HomePage() {
     // Server-side / Initial render matches default order to prevent hydration mismatch
     return (
       <PageWrapper header={pageHeader}>
-        <div className="container mx-auto px-6 md:px-10 py-4 lg:py-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-4 lg:py-8 relative z-10">
           {loading ? (
             <LoadingSkeleton />
           ) : (
@@ -215,7 +215,7 @@ export default function HomePage() {
 
   return (
     <PageWrapper header={pageHeader}>
-      <div className="container mx-auto px-6 md:px-10 py-4 lg:py-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-4 lg:py-8 relative z-10">
         {loading ? (
           <LoadingSkeleton />
         ) : (

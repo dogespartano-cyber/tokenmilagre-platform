@@ -74,7 +74,7 @@ export default function VerificadorURLPage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
-      <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-12">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-block mb-4">

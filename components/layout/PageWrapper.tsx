@@ -14,6 +14,7 @@ export interface PageHeaderConfig {
     title: string;
     description: string;
     shortTitle?: string;
+    sentiment?: 'positive' | 'neutral' | 'negative';
 }
 
 
@@ -43,6 +44,7 @@ export default function PageWrapper({
                         title={header.title}
                         description={header.description}
                         shortTitle={header.shortTitle}
+                        sentiment={header.sentiment}
                     />
                 </div>
             )}
