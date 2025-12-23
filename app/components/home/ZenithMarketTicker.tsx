@@ -160,7 +160,7 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
 
         // Card de explicação (verso) - versões separadas para mobile e desktop
         const renderBackCard = (variant: 'success' | 'danger' | 'orange' | 'indigo', title: string, mobileText: string, desktopText: string) => (
-            <ZenithCard variant={variant} className="h-full flex flex-col justify-center min-h-[150px] p-3 lg:p-4">
+            <ZenithCard variant={variant} className="h-full flex flex-col justify-center min-h-[180px] p-3 lg:p-4">
                 {/* Mobile: texto curto, centralizado */}
                 <div className="lg:hidden text-center">
                     <h4 className="font-bold text-sm mb-1 text-[var(--text-primary)]">
@@ -186,7 +186,7 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
             case 'marketCap':
                 const isPositive = marketData.marketCapChange24h >= 0;
                 const frontMarketCap = (
-                    <ZenithCard variant={isPositive ? 'success' : 'danger'} className="h-full flex flex-col justify-center min-h-[150px]">
+                    <ZenithCard variant={isPositive ? 'success' : 'danger'} className="h-full flex flex-col justify-center min-h-[180px]">
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className={`hidden lg:block p-2 rounded-xl transition-transform duration-300 group-hover:scale-110 ${isPositive
@@ -220,7 +220,7 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
             case 'volume':
                 const isPositiveVolume = (marketData.volumeChange24h || 0) >= 0;
                 const frontVolume = (
-                    <ZenithCard variant={isPositiveVolume ? 'success' : 'danger'} className="h-full flex flex-col justify-center min-h-[150px]">
+                    <ZenithCard variant={isPositiveVolume ? 'success' : 'danger'} className="h-full flex flex-col justify-center min-h-[180px]">
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className={`hidden lg:block p-2 rounded-xl transition-transform duration-300 group-hover:scale-110 ${isPositiveVolume
@@ -248,7 +248,7 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                 );
             case 'btcDom':
                 const frontBtcDom = (
-                    <ZenithCard variant="orange" className="h-full flex flex-col justify-center min-h-[150px]">
+                    <ZenithCard variant="orange" className="h-full flex flex-col justify-center min-h-[180px]">
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className="hidden lg:block p-2 bg-orange-50 dark:bg-orange-500/10 rounded-xl text-orange-700 dark:text-orange-400 transition-transform duration-300 group-hover:scale-110">
@@ -277,7 +277,7 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                 );
             case 'ethDom':
                 const frontEthDom = (
-                    <ZenithCard variant="indigo" className="h-full flex flex-col justify-center min-h-[150px]">
+                    <ZenithCard variant="indigo" className="h-full flex flex-col justify-center min-h-[180px]">
                         {/* Header */}
                         <div className="flex items-center gap-3 mb-2">
                             <div className="hidden lg:block p-2 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl text-indigo-700 dark:text-indigo-400 transition-transform duration-300 group-hover:scale-110">
@@ -311,7 +311,7 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
 
     if (!mounted) {
         return (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 lg:mb-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-6 lg:mb-8">
                 {initialItems.map((id) => (
                     <div key={id} className="h-full">
                         {renderCard(id)}
@@ -363,7 +363,7 @@ export function ZenithMarketTicker({ marketData, fearGreed, gaugeValue }: Market
                     items={items}
                     strategy={rectSortingStrategy}
                 >
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 lg:mb-8">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-6 lg:mb-8">
                         {items.map((id) => (
                             <SortableCard key={id} id={id}>
                                 {renderCard(id)}

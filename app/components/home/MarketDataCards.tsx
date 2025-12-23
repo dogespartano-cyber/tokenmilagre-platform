@@ -20,7 +20,7 @@ const formatNumber = (num: number): string => {
 export function MarketDataCards({ marketData }: MarketDataProps) {
     if (!marketData) return null;
 
-    const cardClass = "relative p-4 lg:p-6 rounded-2xl crystal-card overflow-hidden";
+    const cardClass = "relative p-4 lg:p-6 rounded-2xl zenith-card overflow-hidden";
 
     return (
         <>

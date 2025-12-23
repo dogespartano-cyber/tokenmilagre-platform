@@ -34,6 +34,7 @@ export default function SidebarHeader({ onClose }: SidebarHeaderProps) {
                         title="$MILAGRE"
                         width={180}
                         height={58}
+                        style={{ width: 'auto', height: 'auto' }}
                         className="group-hover:scale-105 transition-transform duration-300 dark:hidden"
                         priority
                     />
@@ -44,6 +45,7 @@ export default function SidebarHeader({ onClose }: SidebarHeaderProps) {
                         title="$MILAGRE"
                         width={180}
                         height={58}
+                        style={{ width: 'auto', height: 'auto' }}
                         className="group-hover:scale-105 transition-transform duration-300 hidden dark:block"
                         priority
                     />

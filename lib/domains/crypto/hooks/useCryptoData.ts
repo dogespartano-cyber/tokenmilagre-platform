@@ -87,9 +87,7 @@ const fetchGlobalData = async (forceString?: string) => {
 
     activePromise = (async () => {
         try {
-            const response = await fetch(
-                'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h,24h,7d'
-            );
+            const response = await fetch('/api/crypto/markets');
 
             if (!response.ok) {
                 const statusError = new Error(`CoinGecko API returned status ${response.status}`);

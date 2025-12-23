@@ -26,7 +26,7 @@ export function DailyAnalysisCard({ dailyAnalysis, marketData }: DailyAnalysisPr
     if (!dailyAnalysis) return null;
 
     return (
-        <div className="group relative p-6 rounded-2xl crystal-card overflow-hidden">
+        <div className="group relative p-6 rounded-2xl zenith-card overflow-hidden">
 
             {/* Header */}
             <div className="flex items-center justify-between mb-4">

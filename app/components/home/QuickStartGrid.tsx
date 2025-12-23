@@ -137,7 +137,7 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
                 as={Link}
                 href={card.href}
                 variant={variant}
-                className="aspect-square rounded-full flex flex-col justify-center items-center select-none touch-manipulation"
+                className="h-full min-h-[160px] flex flex-col justify-start items-center select-none touch-manipulation border-none bg-transparent hover:shadow-none"
                 style={{ pointerEvents: isDragging ? 'none' : 'auto' }}
                 onClick={(e: React.MouseEvent) => {
                     if (isDragging) {
@@ -146,12 +146,12 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
                 }}
             >
                 {/* Content Layer */}
-                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center">
+                <div className="relative z-10 h-full flex flex-col items-center justify-start text-center gap-4 pt-4">
                     <div className={`
                         w-14 h-14 rounded-2xl flex items-center justify-center
-                        text-2xl transition-all duration-300 mb-4
+                        text-2xl transition-all duration-300
                         ${iconClass}
-                        shadow-lg
+                        shadow-none
                     `}>
                         <FontAwesomeIcon icon={card.icon} />
                     </div>
@@ -253,13 +253,11 @@ export function QuickStartGrid() {
                         </h2>
                     </Link>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div className="flex flex-wrap justify-start md:justify-center gap-4 lg:gap-6">
                     {initialCards.map((card) => (
-                        // Reusing the inner card structure statically or simplifying?
-                        // Ideally we should extract the card content to a pure presentational component to reuse.
-                        // For now, let's just render the first pass content or null.
-                        // Rendering initialCards ensures SEO content is present.
-                        <SortableCard key={card.id} card={card} id={card.id} />
+                        <div key={card.id} className="w-[calc(50%-0.5rem)] lg:w-[calc(20%-1.2rem)] md:w-[calc(33.33%-1rem)] flex-grow-0 flex-shrink-0">
+                            <SortableCard key={card.id} card={card} id={card.id} />
+                        </div>
                     ))}
                 </div>
             </section>
@@ -292,9 +290,11 @@ export function QuickStartGrid() {
                     items={items.map(i => i.id)}
                     strategy={rectSortingStrategy}
                 >
-                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div className="flex flex-wrap justify-start md:justify-center gap-4 lg:gap-6">
                         {items.map((card) => (
-                            <SortableCard key={card.id} card={card} id={card.id} />
+                            <div key={card.id} className="w-[calc(50%-0.5rem)] lg:w-[calc(20%-1.2rem)] md:w-[calc(33.33%-1rem)] flex-grow-0 flex-shrink-0">
+                                <SortableCard card={card} id={card.id} />
+                            </div>
                         ))}
                     </div>
                 </SortableContext>

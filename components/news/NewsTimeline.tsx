@@ -12,12 +12,12 @@ interface NewsItem {
     title: string;
     summary: string;
     content?: string;
-    url: string;
-    source: string;
+    url?: string;
+    source?: string;
     publishedAt: string;
     category: string[];
     sentiment: 'positive' | 'neutral' | 'negative';
-    keywords: string[];
+    keywords?: string[];
 }
 
 interface NewsTimelineProps {
@@ -84,26 +84,22 @@ export default function NewsTimeline({ items }: NewsTimelineProps) {
 
     return (
         <div className="max-w-7xl mx-auto px-4 md:px-0">
-            <div className="relative border-l-2 border-[#FF9F43] dark:border-[#FF9F43] ml-0 md:ml-6 space-y-12 pb-12">
+            <div className="relative space-y-16 pb-12">
                 {Object.entries(groupedItems).map(([dateLabel, groupItems], groupIndex) => (
                     <div key={dateLabel} className="relative">
-                        {/* Date Header */}
-                        <div className="flex items-center mb-8 -ml-[9px] md:-ml-[9px]">
-                            {/* Timeline Dot */}
-                            <div className="w-4 h-4 rounded-full bg-[#FF9F43] shadow-[0_0_8px_#FF9F43]" />
-                            <span className="ml-4 text-lg md:text-2xl font-bold text-[var(--brand-primary)] capitalize">
+                        {/* Date Header with Horizontal Orange Line */}
+                        <div className="flex items-center gap-4 mb-10">
+                            <div className="w-3 h-3 rounded-full bg-[#FF9F43] shadow-[0_0_8px_#FF9F43] flex-shrink-0" />
+                            <span className="text-xl md:text-2xl font-bold text-[var(--brand-primary)] capitalize whitespace-nowrap">
                                 {dateLabel}
                             </span>
-                            {/* Desktop Horizontal Line after Date */}
-                            <div className="hidden md:block h-px flex-1 bg-[var(--border-light)]/50 ml-4 max-w-xs" />
+                            <div className="h-0.5 flex-1 bg-gradient-to-r from-[#FF9F43] via-[#FF9F43]/40 to-transparent" />
                         </div>
 
-                        {/* Items Layout: Stack on Mobile, Grid on Desktop */}
-                        <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-x-12 md:gap-y-10 md:pl-8">
+                        {/* Items Layout: Dynamic Flex (Fills space when few items) */}
+                        <div className="flex flex-col md:flex-row md:flex-wrap gap-8 md:gap-x-12 md:gap-y-10">
                             {groupItems.map((item, index) => (
-                                <div key={item.id} className="relative pl-6 md:pl-0 group">
-                                    {/* Timeline Dot for Item (Mobile Only) */}
-                                    <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#FF9F43] shadow-[0_0_6px_#FF9F43] md:hidden" />
+                                <div key={item.id} className="relative group w-full md:w-[calc(50%-24px)] lg:w-[calc(33.333%-32px)] flex-grow">
 
                                     {/* Content Container */}
                                     <article className="flex flex-col h-full md:p-0 transition-opacity duration-300 hover:opacity-80">

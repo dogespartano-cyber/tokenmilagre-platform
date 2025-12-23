@@ -46,6 +46,7 @@ export function FeaturedResourcesSection({ resources }: FeaturedResourcesSection
                             flex flex-col justify-between
                             h-full min-h-[180px]
                             transition-all duration-300
+                            border-none shadow-none hover:shadow-none
                         `}
                     >
                         <div className="relative z-10">
@@ -58,7 +59,7 @@ export function FeaturedResourcesSection({ resources }: FeaturedResourcesSection
 
                             {/* Title & Description */}
                             <div>
-                                <h3 className="font-[family-name:var(--font-poppins)] font-bold text-lg mb-2 text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors flex items-center gap-2">
+                                <h3 className="font-[family-name:var(--font-poppins)] font-bold text-lg mb-2 text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors flex items-center gap-2 underline underline-offset-4 decoration-zinc-300 dark:decoration-zinc-700">
                                     {resource.name}
                                     <FontAwesomeIcon icon={faExternalLinkAlt} className="text-xs opacity-0 group-hover:opacity-100 transition-opacity text-[var(--text-tertiary)]" />
                                 </h3>

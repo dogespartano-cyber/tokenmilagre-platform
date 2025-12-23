@@ -31,13 +31,13 @@ export default function FlipCard({ front, back, className = '' }: FlipCardProps)
             <style jsx>{`
                 .flip-card-container {
                     perspective: 1000px;
-                    min-height: 150px;
+                    min-height: 180px;
                 }
                 
                 .flip-card-inner {
                     position: relative;
                     width: 100%;
-                    min-height: 150px;
+                    min-height: 180px;
                     height: 100%;
                     transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
                     transform-style: preserve-3d;
@@ -47,23 +47,25 @@ export default function FlipCard({ front, back, className = '' }: FlipCardProps)
                     transform: rotateY(180deg);
                 }
                 
-                .flip-card-front,
+                .flip-card-front {
+                    position: relative;
+                    width: 100%;
+                    min-height: 180px;
+                    height: 100%;
+                    z-index: 2;
+                    backface-visibility: hidden;
+                    -webkit-backface-visibility: hidden;
+                }
+                
                 .flip-card-back {
                     position: absolute;
                     top: 0;
                     left: 0;
                     width: 100%;
-                    min-height: 150px;
+                    min-height: 180px;
                     height: 100%;
                     backface-visibility: hidden;
                     -webkit-backface-visibility: hidden;
-                }
-                
-                .flip-card-front {
-                    z-index: 2;
-                }
-                
-                .flip-card-back {
                     transform: rotateY(180deg);
                     z-index: 1;
                 }

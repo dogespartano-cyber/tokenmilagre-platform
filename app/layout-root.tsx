@@ -77,7 +77,9 @@ export default function RootLayoutNav({
                         title="$MILAGRE"
                         width={140}
                         height={45}
+                        style={{ width: 'auto', height: 'auto' }}
                         className="object-contain relative z-10 dark:hidden"
+                        priority
                       />
                       {/* Logo tema escuro */}
                       <Image
@@ -86,7 +88,9 @@ export default function RootLayoutNav({
                         title="$MILAGRE"
                         width={140}
                         height={45}
+                        style={{ width: 'auto', height: 'auto' }}
                         className="object-contain relative z-10 hidden dark:block"
+                        priority
                       />
                     </Link>
                   </div>
