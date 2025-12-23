@@ -9,6 +9,7 @@
 'use client';
 
 import Link from 'next/link';
+import ZenithLogo from '@/components/ui/ZenithLogo';
 
 export default function Footer() {
     return (
@@ -18,9 +19,10 @@ export default function Footer() {
 
 
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div className="space-y-2 text-center md:text-left">
-                        <p className="text-sm font-semibold text-[var(--text-tertiary)]">
-                            $MILAGRE &quot;Acreditamos em riqueza construída com fundamentos, paciência e ética!&quot;
+                    <div className="space-y-4 text-center md:text-left flex flex-col items-center md:items-start">
+                        <ZenithLogo size="sm" showTagline={true} />
+                        <p className="text-sm font-semibold text-[var(--text-tertiary)] max-w-md">
+                            &quot;Acreditamos em riqueza construída com fundamentos, paciência e ética!&quot;
                         </p>
                     </div>
 

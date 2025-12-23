@@ -28,6 +28,7 @@ import CustomUserButton from '@/components/shared/CustomUserButton';
 import ClientOnly from '@/components/shared/ClientOnly';
 import ScrollToTop from '@/components/shared/ScrollToTop';
 import CookieConsent from '@/components/shared/CookieConsent';
+import ZenithLogo from '@/components/ui/ZenithLogo';
 
 // Componentes extraídos
 import { Sidebar, Footer } from './components/layout';
@@ -70,28 +71,7 @@ export default function RootLayoutNav({
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-3">
                     <Link href="/" className="relative overflow-hidden hover:scale-110 transition-all duration-300" title="$MILAGRE - Voltar para Home">
-                      {/* Logo tema claro */}
-                      <Image
-                        src="/images/$Milagre-claro.webp"
-                        alt="$MILAGRE - Plataforma de Educação e Recursos Cripto"
-                        title="$MILAGRE"
-                        width={140}
-                        height={45}
-                        style={{ width: 'auto', height: 'auto' }}
-                        className="object-contain relative z-10 dark:hidden"
-                        priority
-                      />
-                      {/* Logo tema escuro */}
-                      <Image
-                        src="/images/$Milagre-escuro.webp"
-                        alt="$MILAGRE - Plataforma de Educação e Recursos Cripto"
-                        title="$MILAGRE"
-                        width={140}
-                        height={45}
-                        style={{ width: 'auto', height: 'auto' }}
-                        className="object-contain relative z-10 hidden dark:block"
-                        priority
-                      />
+                      <ZenithLogo size="sm" />
                     </Link>
                   </div>
                 </div>

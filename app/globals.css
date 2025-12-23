@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Syne:wght@400..800&display=swap');
 @import "tailwindcss";
 @import "../lib/core/theme/accents/index.css";
 
@@ -332,10 +333,10 @@ html {
 
   /* Brand $MILAGRE - Teal/Turquoise Palette */
   --brand-primary: #0D9488;
-  /* Teal 600 */
-  --brand-hover: #0F766E;
-  /* Teal 700 */
+  --brand-primary-rgb: 13, 148, 136;
   --brand-light: #14B8A6;
+  --brand-light-rgb: 20, 184, 166;
+  --brand-hover: #0F766E;
   /* Teal 500 */
   --brand-lighter: #5EEAD4;
   /* Teal 300 */
@@ -498,10 +499,10 @@ html {
 
   /* Brand Zenith - Solar Gold & Neon Emerald */
   --brand-primary: #FFD700;
-  /* Solar Gold */
-  --brand-hover: #FDB931;
-  /* Rich Gold */
+  --brand-primary-rgb: 255, 215, 0;
   --brand-light: #FFE55C;
+  --brand-light-rgb: 255, 229, 92;
+  --brand-hover: #FDB931;
   /* Bright Gold */
   --brand-lighter: #FFF9C4;
   --brand-bg: #2A2200;
@@ -598,6 +599,14 @@ body {
   background: transparent;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.font-space {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.font-syne {
+  font-family: 'Syne', sans-serif;
 }
 
 /* ============================================

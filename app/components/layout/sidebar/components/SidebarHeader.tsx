@@ -12,6 +12,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import ZenithLogo from '@/components/ui/ZenithLogo';
 
 interface SidebarHeaderProps {
     onClose: () => void;
@@ -27,28 +28,7 @@ export default function SidebarHeader({ onClose }: SidebarHeaderProps) {
                     onClick={onClose}
                     title="$MILAGRE - Voltar para página inicial"
                 >
-                    {/* Logo tema claro */}
-                    <Image
-                        src="/images/$Milagre-claro.webp"
-                        alt="$MILAGRE - Plataforma de Educação e Recursos Cripto"
-                        title="$MILAGRE"
-                        width={180}
-                        height={58}
-                        style={{ width: 'auto', height: 'auto' }}
-                        className="group-hover:scale-105 transition-transform duration-300 dark:hidden"
-                        priority
-                    />
-                    {/* Logo tema escuro */}
-                    <Image
-                        src="/images/$Milagre-escuro.webp"
-                        alt="$MILAGRE - Plataforma de Educação e Recursos Cripto"
-                        title="$MILAGRE"
-                        width={180}
-                        height={58}
-                        style={{ width: 'auto', height: 'auto' }}
-                        className="group-hover:scale-105 transition-transform duration-300 hidden dark:block"
-                        priority
-                    />
+                    <ZenithLogo size="md" showTagline={true} />
                 </Link>
                 <button
                     onClick={onClose}
