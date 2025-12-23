@@ -90,7 +90,7 @@ export default function NewsTimeline({ items }: NewsTimelineProps) {
                         {/* Date Header with Horizontal Orange Line */}
                         <div className="flex items-center gap-4 mb-10">
                             <div className="w-3 h-3 rounded-full bg-[#FF9F43] shadow-[0_0_8px_#FF9F43] flex-shrink-0" />
-                            <span className="text-sm md:text-base font-bold text-[var(--brand-primary)] uppercase tracking-wider whitespace-nowrap">
+                            <span className="text-sm md:text-base font-bold text-[var(--brand-primary)] capitalize whitespace-nowrap">
                                 {dateLabel}
                             </span>
                             <div className="h-0.5 flex-1 bg-gradient-to-r from-[#FF9F43] via-[#FF9F43]/40 to-transparent" />

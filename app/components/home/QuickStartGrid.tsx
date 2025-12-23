@@ -82,7 +82,17 @@ const initialCards = [
 
 
 // --- Sortable Item Component ---
-function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }) {
+function SortableCard({
+    card,
+    id,
+    isActive,
+    onHoverChange
+}: {
+    card: typeof initialCards[0],
+    id: string,
+    isActive?: boolean,
+    onHoverChange?: (id: string | null) => void
+}) {
     const {
         attributes,
         listeners,
@@ -132,12 +142,21 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
     const iconClass = colorClasses[variant] || colorClasses.default;
 
     return (
-        <div ref={setNodeRef} style={style} {...attributes} {...listeners} className="h-full">
+        <div
+            ref={setNodeRef}
+            style={style}
+            {...attributes}
+            {...listeners}
+            className="h-full"
+            onMouseEnter={() => onHoverChange?.(id)}
+            onMouseLeave={() => onHoverChange?.(null)}
+        >
             <ZenithCard
                 as={Link}
                 href={card.href}
                 variant={variant}
-                className="h-full min-h-[160px] flex flex-col justify-start items-center select-none touch-manipulation border-none bg-transparent hover:shadow-none"
+                isActive={isActive}
+                className="h-full min-h-[160px] flex flex-col justify-start items-center select-none touch-manipulation border-none bg-transparent"
                 style={{ pointerEvents: isDragging ? 'none' : 'auto' }}
                 onClick={(e: React.MouseEvent) => {
                     if (isDragging) {
@@ -156,7 +175,7 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
                         <FontAwesomeIcon icon={card.icon} />
                     </div>
 
-                    <h3 className="font-[family-name:var(--font-poppins)] font-bold text-base text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors">
+                    <h3 className={`font-[family-name:var(--font-poppins)] font-bold text-base transition-colors ${isActive ? 'text-[var(--brand-primary)]' : 'text-[var(--text-primary)] group-hover:text-[var(--brand-primary)]'}`}>
                         {card.title}
                     </h3>
                 </div>
@@ -172,6 +191,7 @@ function SortableCard({ card, id }: { card: typeof initialCards[0], id: string }
 export function QuickStartGrid() {
     const [items, setItems] = useState(initialCards);
     const [mounted, setMounted] = useState(false);
+    const [hoveredId, setHoveredId] = useState<string | null>(null);
 
     // Persistence key
     const STORAGE_KEY = 'zenith_quickstart_order';
@@ -254,11 +274,21 @@ export function QuickStartGrid() {
                     </Link>
                 </div>
                 <div className="flex flex-wrap justify-start md:justify-center gap-4 lg:gap-6">
-                    {initialCards.map((card) => (
-                        <div key={card.id} className="w-[calc(50%-0.5rem)] lg:w-[calc(20%-1.2rem)] md:w-[calc(33.33%-1rem)] flex-grow-0 flex-shrink-0">
-                            <SortableCard key={card.id} card={card} id={card.id} />
-                        </div>
-                    ))}
+                    {initialCards.map((card) => {
+                        const isComeceAqui = card.id === 'invest';
+                        const shouldShowActive = isComeceAqui && (hoveredId === null || hoveredId === 'invest');
+
+                        return (
+                            <div key={card.id} className="w-[calc(50%-0.5rem)] lg:w-[calc(20%-1.2rem)] md:w-[calc(33.33%-1rem)] flex-grow-0 flex-shrink-0">
+                                <SortableCard
+                                    card={card}
+                                    id={card.id}
+                                    isActive={shouldShowActive}
+                                    onHoverChange={setHoveredId}
+                                />
+                            </div>
+                        );
+                    })}
                 </div>
             </section>
         );
@@ -291,11 +321,21 @@ export function QuickStartGrid() {
                     strategy={rectSortingStrategy}
                 >
                     <div className="flex flex-wrap justify-start md:justify-center gap-4 lg:gap-6">
-                        {items.map((card) => (
-                            <div key={card.id} className="w-[calc(50%-0.5rem)] lg:w-[calc(20%-1.2rem)] md:w-[calc(33.33%-1rem)] flex-grow-0 flex-shrink-0">
-                                <SortableCard card={card} id={card.id} />
-                            </div>
-                        ))}
+                        {items.map((card) => {
+                            const isComeceAqui = card.id === 'invest';
+                            const shouldShowActive = isComeceAqui && (hoveredId === null || hoveredId === 'invest');
+
+                            return (
+                                <div key={card.id} className="w-[calc(50%-0.5rem)] lg:w-[calc(20%-1.2rem)] md:w-[calc(33.33%-1rem)] flex-grow-0 flex-shrink-0">
+                                    <SortableCard
+                                        card={card}
+                                        id={card.id}
+                                        isActive={shouldShowActive}
+                                        onHoverChange={setHoveredId}
+                                    />
+                                </div>
+                            );
+                        })}
                     </div>
                 </SortableContext>
             </DndContext>
