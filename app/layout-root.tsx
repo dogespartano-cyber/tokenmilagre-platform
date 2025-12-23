@@ -68,12 +68,18 @@ export default function RootLayoutNav({
             <div className="flex justify-between items-center h-full">
               {/* Mobile Header Layout */}
               <div className="flex items-center justify-between w-full lg:hidden">
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-3">
-                    <Link href="/" className="relative overflow-hidden hover:scale-110 transition-all duration-300" title="$MILAGRE - Voltar para Home">
-                      <ZenithLogo size="sm" />
-                    </Link>
-                  </div>
+                <div className="flex items-center gap-3">
+                  <Link href="/" className="relative overflow-hidden hover:scale-110 transition-all duration-300" title="$MILAGRE - Voltar para Home">
+                    <ZenithLogo size="sm" />
+                  </Link>
+                  {shortTitle && (
+                    <div className="flex items-center gap-2 animate-in fade-in slide-in-from-left-2 duration-500">
+                      <div className="w-[1px] h-4 bg-zinc-300 dark:bg-zinc-800" />
+                      <span className="text-sm font-bold bg-gradient-to-r from-[var(--text-primary)] to-[var(--text-secondary)] bg-clip-text text-transparent truncate max-w-[140px]">
+                        {shortTitle}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <button

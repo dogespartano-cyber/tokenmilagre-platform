@@ -13,8 +13,7 @@ import TransparencyNote from '@/components/shared/TransparencyNote';
 import PageWrapper from '@/components/layout/PageWrapper';
 import { useSidebar } from '@/contexts/SidebarContext';
 import LikeDislikeButton from '@/components/shared/LikeDislikeButton';
-import { SentimentGauge } from '@/app/components/news/SentimentGauge';
-import { FearGreedSidebar } from '@/app/components/news/FearGreedSidebar';
+import { SentimentIndicator } from '@/app/components/news/SentimentIndicator';
 
 import CommentsSection from '@/components/engagement/CommentsSection';
 import CommentCountButton from '@/components/engagement/CommentCountButton';
@@ -368,17 +367,11 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
                   <span className="hidden md:inline">•</span>
                   <LikeDislikeButton id={article.id} type="article" />
                   <CommentCountButton id={article.id} type="article" onClick={() => setShowComments(!showComments)} />
+                  <div className="lg:hidden ml-auto">
+                    <SentimentIndicator sentiment={article.sentiment} variant="compact" />
+                  </div>
                 </div>
 
-                {/* Mobile: Gauges */}
-                <div className="lg:hidden mt-6 pt-4 grid grid-cols-2 gap-3">
-                  <div className="p-3 rounded-2xl bg-[var(--bg-glass)] border border-[#64748b]/30">
-                    <FearGreedSidebar />
-                  </div>
-                  <div className="p-3 rounded-2xl bg-[var(--bg-glass)] border border-[#64748b]/30">
-                    <SentimentGauge sentiment={article.sentiment} />
-                  </div>
-                </div>
 
               </header>
 
@@ -653,13 +646,9 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
             {/* ========== RIGHT SIDEBAR (Desktop) ========== */}
             <aside className="hidden lg:block lg:col-span-3 xl:col-span-3">
               <div className="sticky top-24 pt-8 space-y-6">
-                {/* Fear & Greed Index */}
-                <div className="p-4 rounded-2xl bg-[var(--bg-glass)] border border-[#64748b]/30">
-                  <FearGreedSidebar />
-                </div>
-                {/* Sentiment Gauge */}
-                <div className="p-4 rounded-2xl bg-[var(--bg-glass)] border border-[#64748b]/30">
-                  <SentimentGauge sentiment={article.sentiment} />
+                {/* Contexto Editorial Side indicator */}
+                <div className="pt-4">
+                  <SentimentIndicator sentiment={article.sentiment} />
                 </div>
               </div>
             </aside>

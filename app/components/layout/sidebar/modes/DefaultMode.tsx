@@ -42,6 +42,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useTheme } from '@/contexts/ThemeContext';
+import SocialLinks from '@/components/shared/SocialLinks';
 import type { SidebarModeProps, MenuItem } from '../types';
 
 const initialMenuItems: MenuItem[] = [
@@ -170,7 +171,7 @@ export default function DefaultMode({ onClose }: SidebarModeProps) {
                         items={menuItems.map(i => i.id)}
                         strategy={verticalListSortingStrategy}
                     >
-                        <div className="space-y-2">
+                        <div className="space-y-2 mb-8">
                             {menuItems.map((item) => {
                                 const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
                                 return (
@@ -186,6 +187,11 @@ export default function DefaultMode({ onClose }: SidebarModeProps) {
                         </div>
                     </SortableContext>
                 </DndContext>
+            </div>
+
+            {/* Social Links (Above the line) */}
+            <div className="px-5 mb-2">
+                <SocialLinks variant="minimal" platforms={['discord', 'telegram']} size="sm" className="justify-start gap-5 opacity-50 hover:opacity-100 transition-opacity" />
             </div>
 
             {/* Reset Interface Button */}

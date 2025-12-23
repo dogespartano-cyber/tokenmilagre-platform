@@ -79,6 +79,9 @@ const initialCards = [
     }
 ];
 
+interface QuickStartGridProps {
+}
+
 
 
 // --- Sortable Item Component ---
@@ -179,10 +182,6 @@ function SortableCard({
                         {card.title}
                     </h3>
                 </div>
-
-                {/* Decorative Gradient handled by ZenithCard variants mostly, but we can keep extra blob if needed. 
-                    ZenithCard has its own glows, so let's try without the extra blob first for cleanliness. 
-                */}
             </ZenithCard>
         </div>
     );

@@ -54,8 +54,6 @@ export interface ResourceItem {
 export interface MarketDataProps {
     marketData: MarketData | null;
     loading?: boolean;
-    fearGreed?: FearGreedData | null;
-    gaugeValue?: number;
 }
 
 /**

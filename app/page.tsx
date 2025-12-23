@@ -99,7 +99,6 @@ function SortableSection({ id, children }: { id: string, children: React.ReactNo
 
 export default function HomePage() {
   const { marketData, news, education, resources, dailyAnalysis, loading } = useHomeData();
-  const { fearGreed, gaugeValue } = useFearGreed();
 
   const [sections, setSections] = useState(initialSections);
   const [mounted, setMounted] = useState(false);
@@ -162,8 +161,6 @@ export default function HomePage() {
         return (
           <ZenithMarketTicker
             marketData={marketData}
-            fearGreed={fearGreed}
-            gaugeValue={gaugeValue}
           />
         );
       case 'hud':
@@ -171,8 +168,6 @@ export default function HomePage() {
           <ZenithHeroHUD
             marketData={marketData}
             dailyAnalysis={dailyAnalysis}
-            fearGreed={fearGreed}
-            gaugeValue={gaugeValue}
           />
         );
       case 'quickstart':

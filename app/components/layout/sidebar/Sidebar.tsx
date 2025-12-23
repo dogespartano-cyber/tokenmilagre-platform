@@ -16,6 +16,7 @@ import { useSidebar } from '@/contexts/SidebarContext';
 import SidebarHeader from './components/SidebarHeader';
 import SidebarOverlay from './components/SidebarOverlay';
 import SidebarWrapper from './components/SidebarWrapper';
+import SidebarFearGreed from './components/SidebarFearGreed';
 
 // Mode Components
 import DefaultMode from './modes/DefaultMode';
@@ -65,6 +66,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
             <SidebarWrapper isOpen={isOpen}>
                 <SidebarHeader onClose={onClose} />
+                <SidebarFearGreed />
                 <ModeComponent config={config} onClose={onClose} />
             </SidebarWrapper>
         </>

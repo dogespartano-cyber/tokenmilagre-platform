@@ -152,7 +152,7 @@ export default function PageHeader({ title, description, shortTitle, sentiment }
             {/* Título - sempre clicável, posts de notícias voltam para /noticias */}
             <Link href={pathname.startsWith('/noticias/') && pathname !== '/noticias' ? '/noticias' : pathname}>
               <h1
-                className={`text-4xl font-bold mb-1 font-[family-name:var(--font-poppins)] cursor-pointer hover:opacity-80 transition-opacity hidden lg:block bg-gradient-to-r from-[#0D9488] to-[#ebb60b] bg-clip-text text-transparent ${pathname === '/' ? '' : ''}`}
+                className={`text-3xl lg:text-4xl font-bold mb-2 font-[family-name:var(--font-poppins)] cursor-pointer hover:opacity-80 transition-opacity bg-gradient-to-r from-[#0D9488] to-[#ebb60b] bg-clip-text text-transparent`}
                 style={{
                   opacity: animateTitle ? 1 : 0,
                   transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
@@ -163,7 +163,7 @@ export default function PageHeader({ title, description, shortTitle, sentiment }
               </h1>
             </Link>
             <p
-              className="text-xl lg:text-lg text-[var(--text-primary)] font-bold"
+              className="text-base lg:text-lg text-[var(--text-secondary)] font-medium"
               style={{
                 opacity: animateTitle ? 1 : 0,
                 transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
