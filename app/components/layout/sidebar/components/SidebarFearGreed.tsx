@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { useFearGreed } from '@/app/components/home/hooks/useFearGreed';
 import ZenithCard from '@/components/ui/ZenithCard';
 
@@ -35,8 +36,11 @@ export default function SidebarFearGreed() {
     const needleColor = getLabelColor(gaugeValue, true);
 
     return (
-        <div className="px-4 py-1 border-b border-[#e6f4f3] dark:border-white/5 flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-transparent to-white/[0.02] dark:to-white/[0.01]">
-            <div className="flex items-center justify-center">
+        <Link
+            href="/sentimento"
+            className="group px-4 py-1 border-b border-[#e6f4f3] dark:border-white/5 flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-transparent to-white/[0.02] dark:to-white/[0.01] hover:bg-white/5 transition-colors cursor-pointer"
+        >
+            <div className="flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300">
                 <svg viewBox="25 40 130 65" className="w-full max-w-[110px] md:max-w-[130px] overflow-visible drop-shadow-xl">
                     <defs>
                         <linearGradient id="sidebarRainbow" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -101,7 +105,7 @@ export default function SidebarFearGreed() {
             </div>
 
             {/* Centralized Labels Below */}
-            <div className="mt-1 mb-2 flex flex-col items-center gap-0">
+            <div className="mt-1 mb-2 flex flex-col items-center gap-0 group-hover:opacity-80 transition-opacity">
                 <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-[var(--text-tertiary)] opacity-60 font-[family-name:var(--font-poppins)]">
                     Sentimento
                 </span>
@@ -109,6 +113,6 @@ export default function SidebarFearGreed() {
                     {translateClassification(fearGreed.value_classification)}
                 </span>
             </div>
-        </div>
+        </Link>
     );
 }

@@ -28,18 +28,39 @@ export default function NewsTimeline({ items }: NewsTimelineProps) {
     // Group items by Date
     const groupedItems = useMemo(() => {
         const groups: { [key: string]: NewsItem[] } = {};
+        const now = new Date();
 
         items.forEach(item => {
             const date = new Date(item.publishedAt);
-            // Format: "20/12 Sábado"
-            const day = date.getDate().toString().padStart(2, '0');
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
 
-            // Get Weekday in Portuguese
-            const weekdays = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-            const weekday = weekdays[date.getDay()];
+            // Check if it's today
+            const isToday = date.getDate() === now.getDate() &&
+                date.getMonth() === now.getMonth() &&
+                date.getFullYear() === now.getFullYear();
 
-            const key = `${day}/${month} ${weekday}`;
+            // Check if it's yesterday
+            const yesterday = new Date(now);
+            yesterday.setDate(now.getDate() - 1);
+            const isYesterday = date.getDate() === yesterday.getDate() &&
+                date.getMonth() === yesterday.getMonth() &&
+                date.getFullYear() === yesterday.getFullYear();
+
+            let key;
+            if (isToday) {
+                key = 'Hoje';
+            } else if (isYesterday) {
+                key = 'Ontem';
+            } else {
+                // Format: "20/12 Sábado"
+                const day = date.getDate().toString().padStart(2, '0');
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+
+                // Get Weekday in Portuguese
+                const weekdays = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+                const weekday = weekdays[date.getDay()];
+
+                key = `${day}/${month} ${weekday}`;
+            }
 
             if (!groups[key]) {
                 groups[key] = [];
