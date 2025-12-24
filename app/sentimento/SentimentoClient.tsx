@@ -118,7 +118,7 @@ function FearGreedGaugeLarge({ value, classification }: { value: number; classif
                         }}
                         className="transition-all duration-1000 ease-out"
                     >
-                        <path d="M 90 100 L 86 95 L 90 35 L 94 95 Z" fill={needleColor} filter="url(#glowGauge)" />
+                        <path d="M 90 100 L 86 95 L 90 35 L 94 95 Z" fill={needleColor} />
                         <circle cx="90" cy="100" r="6" fill={needleColor} />
                     </g>
 

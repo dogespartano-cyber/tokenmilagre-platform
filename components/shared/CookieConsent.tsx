@@ -27,9 +27,9 @@ export default function CookieConsent() {
 
     return (
         <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md z-50 animate-fade-in-up">
-            <div className="glass-card !backdrop-blur-2xl !bg-white/90 dark:!bg-gray-900/90 p-6 rounded-2xl shadow-2xl border border-[var(--brand-primary)]/20 relative overflow-hidden">
-                {/* Background Glow */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--brand-primary)]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+            <div className="glass-card !backdrop-blur-md md:!backdrop-blur-2xl !bg-white/95 md:!bg-white/90 dark:!bg-gray-900/95 dark:md:!bg-gray-900/90 p-6 rounded-2xl shadow-2xl border border-[var(--brand-primary)]/20 relative overflow-hidden">
+                {/* Background Glow - Hidden on mobile for performance */}
+                <div className="hidden md:block absolute top-0 right-0 w-32 h-32 bg-[var(--brand-primary)]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
                 <div className="flex items-start gap-4 relative z-10">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[var(--brand-primary)]/10 flex items-center justify-center text-[var(--brand-primary)]">

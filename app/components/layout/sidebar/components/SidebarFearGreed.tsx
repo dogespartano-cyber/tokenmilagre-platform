@@ -84,7 +84,7 @@ export default function SidebarFearGreed() {
                         }}
                         className="transition-all duration-1000 ease-out"
                     >
-                        <path d="M 90 100 L 87 97 L 90 45 L 93 97 Z" fill={needleColor} filter="url(#glowSidebar)" />
+                        <path d="M 90 100 L 87 97 L 90 45 L 93 97 Z" fill={needleColor} />
                         <circle cx="90" cy="100" r="4" fill={needleColor} />
                     </g>
 
