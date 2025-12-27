@@ -267,15 +267,7 @@ export const MESSAGES = {
 
   article: {
     generated: (title: string, slug: string, readTime: string, citationsCount: number) =>
-      `✨ **Artigo gerado e processado!**\n\n✅ Título: ${title || 'Sem título'}\n✅ Slug: ${slug || 'sem-slug'}\n✅ Tempo de leitura: ${readTime || '1 min'}${citationsCount > 0 ? `\n✅ Fontes: ${citationsCount} citações encontradas` : `\n⚠️ Fontes: Nenhuma citação retornada pela API`}\n\nO artigo está pronto para publicação! Você pode:\n- **Publicar agora** (recomendado)\n- **Refinar com Gemini** (opcional)\n- **Criar capa com IA** (experimental)`,
-
-    processing: '✨ **Refinando artigo com Gemini...**\n\n1. Melhorando estrutura e fluidez\n2. Otimizando títulos e formatação\n3. Validando qualidade\n\nAguarde alguns segundos...',
-
-    refined: '✅ **Artigo refinado com Gemini!**\n\nO conteúdo foi otimizado e está pronto para publicação.',
-
-    refinedManual: '✅ Artigo refinado com sucesso!',
-
-    coverGenerated: '🎨 Capa gerada com sucesso!',
+      `✨ **Artigo gerado!**\n\n✅ Título: ${title || 'Sem título'}\n✅ Slug: ${slug || 'sem-slug'}\n✅ Tempo de leitura: ${readTime || '1 min'}${citationsCount > 0 ? `\n✅ Fontes: ${citationsCount} citações encontradas` : `\n⚠️ Fontes: Nenhuma citação retornada pela API`}\n\nO artigo está pronto para publicação!`,
 
     validationWarning: (errors: string[]) =>
       `⚠️ Artigo com erros de validação: ${errors.join(', ')}`
@@ -283,9 +275,6 @@ export const MESSAGES = {
 
   errors: {
     perplexity: 'Erro ao chamar Perplexity',
-    gemini: 'Erro ao processar com Gemini',
-    refine: (error: string) => `❌ Erro ao refinar: ${error}`,
-    cover: (error: string) => `❌ Erro ao gerar capa: ${error}`,
     publish: (error: string) => `Erro ao publicar: ${error}`,
     processArticle: (error: string) => `❌ Erro ao processar artigo: ${error}\n\nPor favor, tente novamente.`,
     generic: (error: string) => `❌ Erro: ${error}`
@@ -298,9 +287,6 @@ export const MESSAGES = {
 
 export const API_ENDPOINTS = {
   chatPerplexity: '/api/chat-perplexity',
-  processGemini: '/api/process-gemini',
-  refineArticle: '/api/refine-article',
-  regenerateCover: '/api/regenerate-cover',
   articles: '/api/articles',
   resources: '/api/resources'
 } as const;

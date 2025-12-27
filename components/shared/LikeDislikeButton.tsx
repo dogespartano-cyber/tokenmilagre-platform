@@ -14,7 +14,7 @@ import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 interface LikeDislikeButtonProps {
     id: string;
-    type: 'article' | 'resource';
+    type: 'article' | 'resource' | 'curiosity';
     className?: string;
     initialLikeCount?: number;
     initialDislikeCount?: number;

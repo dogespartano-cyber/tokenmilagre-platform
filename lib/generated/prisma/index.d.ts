@@ -22482,7 +22482,10 @@ export namespace Prisma {
 
   export type CuriosityMinAggregateOutputType = {
     id: string | null
+    slug: string | null
     content: string | null
+    description: string | null
+    fullContent: string | null
     category: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -22490,7 +22493,10 @@ export namespace Prisma {
 
   export type CuriosityMaxAggregateOutputType = {
     id: string | null
+    slug: string | null
     content: string | null
+    description: string | null
+    fullContent: string | null
     category: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -22498,8 +22504,12 @@ export namespace Prisma {
 
   export type CuriosityCountAggregateOutputType = {
     id: number
+    slug: number
     content: number
+    description: number
+    fullContent: number
     category: number
+    keywords: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -22508,7 +22518,10 @@ export namespace Prisma {
 
   export type CuriosityMinAggregateInputType = {
     id?: true
+    slug?: true
     content?: true
+    description?: true
+    fullContent?: true
     category?: true
     createdAt?: true
     updatedAt?: true
@@ -22516,7 +22529,10 @@ export namespace Prisma {
 
   export type CuriosityMaxAggregateInputType = {
     id?: true
+    slug?: true
     content?: true
+    description?: true
+    fullContent?: true
     category?: true
     createdAt?: true
     updatedAt?: true
@@ -22524,8 +22540,12 @@ export namespace Prisma {
 
   export type CuriosityCountAggregateInputType = {
     id?: true
+    slug?: true
     content?: true
+    description?: true
+    fullContent?: true
     category?: true
+    keywords?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -22605,8 +22625,12 @@ export namespace Prisma {
 
   export type CuriosityGroupByOutputType = {
     id: string
+    slug: string
     content: string
+    description: string | null
+    fullContent: string | null
     category: string | null
+    keywords: string[]
     createdAt: Date
     updatedAt: Date
     _count: CuriosityCountAggregateOutputType | null
@@ -22630,45 +22654,65 @@ export namespace Prisma {
 
   export type CuriositySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    slug?: boolean
     content?: boolean
+    description?: boolean
+    fullContent?: boolean
     category?: boolean
+    keywords?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["curiosity"]>
 
   export type CuriositySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    slug?: boolean
     content?: boolean
+    description?: boolean
+    fullContent?: boolean
     category?: boolean
+    keywords?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["curiosity"]>
 
   export type CuriositySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    slug?: boolean
     content?: boolean
+    description?: boolean
+    fullContent?: boolean
     category?: boolean
+    keywords?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["curiosity"]>
 
   export type CuriositySelectScalar = {
     id?: boolean
+    slug?: boolean
     content?: boolean
+    description?: boolean
+    fullContent?: boolean
     category?: boolean
+    keywords?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CuriosityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "category" | "createdAt" | "updatedAt", ExtArgs["result"]["curiosity"]>
+  export type CuriosityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "content" | "description" | "fullContent" | "category" | "keywords" | "createdAt" | "updatedAt", ExtArgs["result"]["curiosity"]>
 
   export type $CuriosityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Curiosity"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      slug: string
       content: string
+      description: string | null
+      fullContent: string | null
       category: string | null
+      keywords: string[]
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["curiosity"]>
@@ -23095,8 +23139,12 @@ export namespace Prisma {
    */
   interface CuriosityFieldRefs {
     readonly id: FieldRef<"Curiosity", 'String'>
+    readonly slug: FieldRef<"Curiosity", 'String'>
     readonly content: FieldRef<"Curiosity", 'String'>
+    readonly description: FieldRef<"Curiosity", 'String'>
+    readonly fullContent: FieldRef<"Curiosity", 'String'>
     readonly category: FieldRef<"Curiosity", 'String'>
+    readonly keywords: FieldRef<"Curiosity", 'String[]'>
     readonly createdAt: FieldRef<"Curiosity", 'DateTime'>
     readonly updatedAt: FieldRef<"Curiosity", 'DateTime'>
   }
@@ -23830,8 +23878,12 @@ export namespace Prisma {
 
   export const CuriosityScalarFieldEnum: {
     id: 'id',
+    slug: 'slug',
     content: 'content',
+    description: 'description',
+    fullContent: 'fullContent',
     category: 'category',
+    keywords: 'keywords',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -25815,35 +25867,51 @@ export namespace Prisma {
     OR?: CuriosityWhereInput[]
     NOT?: CuriosityWhereInput | CuriosityWhereInput[]
     id?: StringFilter<"Curiosity"> | string
+    slug?: StringFilter<"Curiosity"> | string
     content?: StringFilter<"Curiosity"> | string
+    description?: StringNullableFilter<"Curiosity"> | string | null
+    fullContent?: StringNullableFilter<"Curiosity"> | string | null
     category?: StringNullableFilter<"Curiosity"> | string | null
+    keywords?: StringNullableListFilter<"Curiosity">
     createdAt?: DateTimeFilter<"Curiosity"> | Date | string
     updatedAt?: DateTimeFilter<"Curiosity"> | Date | string
   }
 
   export type CuriosityOrderByWithRelationInput = {
     id?: SortOrder
+    slug?: SortOrder
     content?: SortOrder
+    description?: SortOrderInput | SortOrder
+    fullContent?: SortOrderInput | SortOrder
     category?: SortOrderInput | SortOrder
+    keywords?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type CuriosityWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    slug?: string
     AND?: CuriosityWhereInput | CuriosityWhereInput[]
     OR?: CuriosityWhereInput[]
     NOT?: CuriosityWhereInput | CuriosityWhereInput[]
     content?: StringFilter<"Curiosity"> | string
+    description?: StringNullableFilter<"Curiosity"> | string | null
+    fullContent?: StringNullableFilter<"Curiosity"> | string | null
     category?: StringNullableFilter<"Curiosity"> | string | null
+    keywords?: StringNullableListFilter<"Curiosity">
     createdAt?: DateTimeFilter<"Curiosity"> | Date | string
     updatedAt?: DateTimeFilter<"Curiosity"> | Date | string
-  }, "id">
+  }, "id" | "slug">
 
   export type CuriosityOrderByWithAggregationInput = {
     id?: SortOrder
+    slug?: SortOrder
     content?: SortOrder
+    description?: SortOrderInput | SortOrder
+    fullContent?: SortOrderInput | SortOrder
     category?: SortOrderInput | SortOrder
+    keywords?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CuriosityCountOrderByAggregateInput
@@ -25856,8 +25924,12 @@ export namespace Prisma {
     OR?: CuriosityScalarWhereWithAggregatesInput[]
     NOT?: CuriosityScalarWhereWithAggregatesInput | CuriosityScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Curiosity"> | string
+    slug?: StringWithAggregatesFilter<"Curiosity"> | string
     content?: StringWithAggregatesFilter<"Curiosity"> | string
+    description?: StringNullableWithAggregatesFilter<"Curiosity"> | string | null
+    fullContent?: StringNullableWithAggregatesFilter<"Curiosity"> | string | null
     category?: StringNullableWithAggregatesFilter<"Curiosity"> | string | null
+    keywords?: StringNullableListFilter<"Curiosity">
     createdAt?: DateTimeWithAggregatesFilter<"Curiosity"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Curiosity"> | Date | string
   }
@@ -28010,56 +28082,84 @@ export namespace Prisma {
 
   export type CuriosityCreateInput = {
     id?: string
+    slug: string
     content: string
+    description?: string | null
+    fullContent?: string | null
     category?: string | null
+    keywords?: CuriosityCreatekeywordsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type CuriosityUncheckedCreateInput = {
     id?: string
+    slug: string
     content: string
+    description?: string | null
+    fullContent?: string | null
     category?: string | null
+    keywords?: CuriosityCreatekeywordsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type CuriosityUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fullContent?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: CuriosityUpdatekeywordsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CuriosityUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fullContent?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: CuriosityUpdatekeywordsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CuriosityCreateManyInput = {
     id?: string
+    slug: string
     content: string
+    description?: string | null
+    fullContent?: string | null
     category?: string | null
+    keywords?: CuriosityCreatekeywordsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type CuriosityUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fullContent?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: CuriosityUpdatekeywordsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CuriosityUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fullContent?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: CuriosityUpdatekeywordsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -29591,17 +29691,32 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type CuriosityCountOrderByAggregateInput = {
     id?: SortOrder
+    slug?: SortOrder
     content?: SortOrder
+    description?: SortOrder
+    fullContent?: SortOrder
     category?: SortOrder
+    keywords?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type CuriosityMaxOrderByAggregateInput = {
     id?: SortOrder
+    slug?: SortOrder
     content?: SortOrder
+    description?: SortOrder
+    fullContent?: SortOrder
     category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -29609,7 +29724,10 @@ export namespace Prisma {
 
   export type CuriosityMinOrderByAggregateInput = {
     id?: SortOrder
+    slug?: SortOrder
     content?: SortOrder
+    description?: SortOrder
+    fullContent?: SortOrder
     category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -30415,6 +30533,15 @@ export namespace Prisma {
     update?: CommentUpdateWithWhereUniqueWithoutParentInput | CommentUpdateWithWhereUniqueWithoutParentInput[]
     updateMany?: CommentUpdateManyWithWhereWithoutParentInput | CommentUpdateManyWithWhereWithoutParentInput[]
     deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
+  export type CuriosityCreatekeywordsInput = {
+    set: string[]
+  }
+
+  export type CuriosityUpdatekeywordsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {

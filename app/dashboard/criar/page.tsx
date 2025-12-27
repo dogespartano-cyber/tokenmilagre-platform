@@ -1,21 +1,18 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { AdminRoute } from '@/lib/domains/users';
 
 // Components from /criar-artigo for manual mode
 import { usePerplexityChat } from '../criar-artigo/_hooks/usePerplexityChat';
 import { useArticleState } from '../criar-artigo/_hooks/useArticleState';
-import { useArticleValidation } from '../criar-artigo/_hooks/useArticleValidation';
 import ArticleTypeSelector from '../criar-artigo/_components/ArticleTypeSelector';
 import ChatInterface from '../criar-artigo/_components/ChatInterface';
 import ArticlePreviewPanel from '../criar-artigo/_components/ArticlePreviewPanel';
-import RefinementInput from '../criar-artigo/_components/RefinementInput';
 import {
     type ArticleType,
     MESSAGES,
-    API_ENDPOINTS,
     ANIMATION_DELAYS,
     getArticleRoute,
     getApiEndpoint,
@@ -29,8 +26,6 @@ import UnifiedArticleGenerator from '../criar-artigo/_components/UnifiedArticleG
 // Cache manager
 import CacheManager from './_components/CacheManager';
 
-const isDev = process.env.NODE_ENV === 'development';
-
 function getErrorMessage(error: unknown): string {
     if (error instanceof Error) return error.message;
     return String(error);
@@ -40,7 +35,6 @@ function getErrorMessage(error: unknown): string {
 function ManualModeContent() {
     const router = useRouter();
     const [userId, setUserId] = useState<string | null>(null);
-    const refineSectionRef = useRef<HTMLDivElement>(null);
 
     // Fetch user ID on mount
     useEffect(() => {
@@ -60,43 +54,24 @@ function ManualModeContent() {
 
     const [prompt, setPrompt] = useState('');
     const [selectedType, setSelectedType] = useState<ArticleType | null>(null);
-    const [crossMode, setCrossMode] = useState(false);
 
     const {
         generatedArticle,
-        refinePrompt,
-        refining,
         copiedProcessed,
-        generatingCover,
         setGeneratedArticle,
-        setRefinePrompt,
-        startRefining,
-        stopRefining,
         setCopied,
         resetCopied,
-        startGeneratingCover,
-        stopGeneratingCover
     } = useArticleState();
 
     const { conversation, loading, processing, sendMessage, addMessage } = usePerplexityChat({
         selectedType,
         onArticleGenerated: (article) => {
             setGeneratedArticle(article);
-            // Limpar validação anterior quando novo artigo é gerado
-            clearValidation();
         },
         onError: (error) => {
             console.error('Erro no chat:', error);
         }
     });
-
-    // Hook de validação com Gemini
-    const {
-        validating,
-        validationResult,
-        validateArticle: runValidation,
-        clearValidation
-    } = useArticleValidation();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -107,33 +82,6 @@ function ManualModeContent() {
         const userMessage = prompt.trim();
         setPrompt('');
         await sendMessage(userMessage);
-    };
-
-    const handleProcessWithGemini = async () => {
-        if (!generatedArticle) return;
-        try {
-            addMessage({ role: 'assistant', content: MESSAGES.article.processing });
-            const geminiResponse = await fetch(API_ENDPOINTS.processGemini, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ article: generatedArticle, articleType: selectedType })
-            });
-            if (!geminiResponse.ok) {
-                const errorData = await geminiResponse.json();
-                throw new Error(errorData.error || MESSAGES.errors.gemini);
-            }
-            const { article: refinedArticle } = await geminiResponse.json();
-            setGeneratedArticle({
-                ...refinedArticle,
-                coverImage: generatedArticle.coverImage || refinedArticle.coverImage,
-                coverImageAlt: generatedArticle.coverImageAlt || refinedArticle.coverImageAlt,
-                type: selectedType
-            });
-            addMessage({ role: 'assistant', content: MESSAGES.article.refined });
-        } catch (error: unknown) {
-            console.error('Erro ao processar com Gemini:', error);
-            addMessage({ role: 'assistant', content: MESSAGES.errors.refine(getErrorMessage(error)) });
-        }
     };
 
     const handleCopyArticle = async () => {
@@ -150,33 +98,6 @@ function ManualModeContent() {
             setTimeout(() => resetCopied(), ANIMATION_DELAYS.copiedFeedback);
         } catch (error) {
             console.error('Erro ao copiar:', error);
-        }
-    };
-
-    const handleRefine = async () => {
-        if (!refinePrompt.trim() || !generatedArticle) return;
-        const refinementRequest = refinePrompt.trim();
-        setRefinePrompt('');
-        startRefining();
-        try {
-            const response = await fetch(API_ENDPOINTS.refineArticle, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ article: generatedArticle, refinementPrompt: refinementRequest, articleType: selectedType })
-            });
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Erro ao refinar artigo');
-            }
-            const { article: refinedArticle } = await response.json();
-            setGeneratedArticle({ ...refinedArticle, type: selectedType });
-            addMessage({ role: 'user', content: `🎨 Refinar: ${refinementRequest}` });
-            addMessage({ role: 'assistant', content: MESSAGES.article.refinedManual });
-        } catch (error: unknown) {
-            console.error('Erro ao refinar:', error);
-            addMessage({ role: 'assistant', content: MESSAGES.errors.refine(getErrorMessage(error)) });
-        } finally {
-            stopRefining();
         }
     };
 
@@ -208,40 +129,6 @@ function ManualModeContent() {
             setGeneratedArticle(articleToValidate);
         }
         try {
-            // Cross Mode: usar endpoint especial com verificação automática
-            if (crossMode && selectedType !== 'resource') {
-                addMessage({ role: 'assistant', content: '⚡ Modo Cross ativado! Publicando e verificando automaticamente...' });
-
-                const tagsToSend = typeof articleToValidate.tags === 'string' ? [articleToValidate.tags] : (articleToValidate.tags || []);
-
-                const response = await fetch('/api/cross-publish', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        article: {
-                            ...articleToValidate,
-                            tags: tagsToSend,
-                            citations: articleToValidate.citations || []
-                        },
-                        articleType: selectedType,
-                        userId
-                    })
-                });
-
-                const data = await response.json();
-                if (!data.success) throw new Error(data.error || 'Erro ao publicar');
-
-                addMessage({
-                    role: 'assistant',
-                    content: `✅ Artigo publicado com verificação!\n\n🎯 Score: ${data.data.factCheck.score}/100\n📚 Fontes: ${data.data.sourcesCount} consultadas`
-                });
-
-                const url = getArticleRoute(selectedType, data.data.slug);
-                router.push(url);
-                return;
-            }
-
-            // Modo normal (sem Cross)
             const apiEndpoint = getApiEndpoint(selectedType);
             const tagsToSend = typeof articleToValidate.tags === 'string' ? [articleToValidate.tags] : (articleToValidate.tags || []);
             const citations = articleToValidate.citations || [];
@@ -284,8 +171,6 @@ function ManualModeContent() {
             <ArticleTypeSelector
                 selectedType={selectedType}
                 onTypeChange={setSelectedType}
-                crossMode={crossMode}
-                onCrossModeChange={setCrossMode}
             />
             {generatedArticle && (
                 <ArticlePreviewPanel
@@ -293,32 +178,8 @@ function ManualModeContent() {
                     articleType={selectedType!}
                     copiedProcessed={copiedProcessed}
                     processing={processing}
-                    refineSectionRef={refineSectionRef}
-                    onProcessWithGemini={handleProcessWithGemini}
                     onCopyArticle={handleCopyArticle}
                     onPublish={handlePublish}
-                    validating={validating}
-                    validationResult={validationResult}
-                    onValidate={async () => {
-                        if (!generatedArticle || !selectedType) return;
-                        await runValidation({
-                            title: generatedArticle.title || generatedArticle.name || '',
-                            content: generatedArticle.content || '',
-                            excerpt: generatedArticle.excerpt,
-                            citations: generatedArticle.citations,
-                            articleType: selectedType
-                        });
-                    }}
-                    onClearValidation={clearValidation}
-                />
-            )}
-            {generatedArticle && (
-                <RefinementInput
-                    value={refinePrompt}
-                    onChange={setRefinePrompt}
-                    onRefine={handleRefine}
-                    refining={refining}
-                    refineSectionRef={refineSectionRef}
                 />
             )}
         </div>

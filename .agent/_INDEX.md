@@ -9,6 +9,15 @@ version: 2.0.0
 
 > **⚠️ IMPORTANTE:** Nunca faça commit ou push sem solicitação explícita do usuário. Pergunte sempre antes de salvar alterações no repositório.
 
+> **🚨 CRÍTICO - BANCO DE DADOS:** Antes de QUALQUER operação destrutiva no banco (migrations, resets, db push --force-reset, etc), você DEVE:
+> 1. **Criar backup local** executando: `npm run db:backup`
+> 2. **Confirmar com o usuário** que o backup foi criado
+> 3. **Só então executar** a operação destrutiva
+> 
+> Esta regra é INVIOLÁVEL. Consulte [DATABASE](./workflows/DATABASE-agent.md) para detalhes.
+
+> **🌐 NAVEGADOR:** Nunca abra o modo navegador (`browser_subagent`) sem solicitação explícita do usuário. Para análises de páginas, use apenas leitura de código-fonte a menos que o usuário peça especificamente para visualizar no browser.
+
 ---
 
 ## Uso Rápido
@@ -28,6 +37,7 @@ version: 2.0.0
 | Validação de valor/ROI | [VALOR](./workflows/VALOR-agent.md) | "Monetização", "ROI" |
 | Estatísticas e relatórios | [DADOS](./workflows/DADOS-agent.md) | "Estatísticas", "dados" |
 | **Verificar consistência** | [CONSISTENCIA](./workflows/CONSISTENCIA-agent.md) | "Sincronização", "integridade" |
+| **Banco de dados/Backup** | [DATABASE](./workflows/DATABASE-agent.md) | "Backup", "migração", "db push" |
 
 ---
 
