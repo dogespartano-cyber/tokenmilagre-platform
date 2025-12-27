@@ -600,3 +600,11 @@ model Comment {
   @@index([userId])
   @@index([parentId])
 }
+
+model Curiosity {
+  id        String   @id @default(cuid())
+  content   String
+  category  String?  @default("general")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

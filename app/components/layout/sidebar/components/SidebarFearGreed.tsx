@@ -97,7 +97,7 @@ export default function SidebarFearGreed() {
                         fontWeight="900"
                         textAnchor="middle"
                         dominantBaseline="middle"
-                        className="font-[family-name:var(--font-poppins)] tracking-tighter drop-shadow-sm opacity-90"
+                        className="font-inter tracking-tighter drop-shadow-sm opacity-90"
                     >
                         {gaugeValue}
                     </text>
@@ -106,10 +106,10 @@ export default function SidebarFearGreed() {
 
             {/* Centralized Labels Below */}
             <div className="mt-1 mb-2 flex flex-col items-center gap-0 group-hover:opacity-80 transition-opacity">
-                <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-[var(--text-tertiary)] opacity-60 font-[family-name:var(--font-poppins)]">
+                <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-[var(--text-tertiary)] opacity-60 font-inter">
                     Sentimento
                 </span>
-                <span className={`text-[10px] font-black uppercase tracking-wider ${getLabelColor(gaugeValue)} font-[family-name:var(--font-poppins)] transition-colors duration-1000`}>
+                <span className={`text-[10px] font-black uppercase tracking-wider ${getLabelColor(gaugeValue)} font-inter transition-colors duration-1000`}>
                     {translateClassification(fearGreed.value_classification)}
                 </span>
             </div>

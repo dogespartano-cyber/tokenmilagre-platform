@@ -23,6 +23,7 @@ import {
     faBitcoinSign,
     faRotateRight,
     faGaugeHigh,
+    faLightbulb,
 } from '@fortawesome/free-solid-svg-icons';
 import {
     DndContext,
@@ -53,6 +54,7 @@ const initialMenuItems: MenuItem[] = [
     { id: 'sentiment', href: '/sentimento', label: 'Sentimento', icon: faGaugeHigh },
     { id: 'crypto', href: '/criptomoedas', label: 'Criptomoedas', icon: faBitcoinSign },
     { id: 'edu', href: '/educacao', label: 'Educação', icon: faGraduationCap },
+    { id: 'curiosities', href: '/curiosidades', label: 'Curiosidades', icon: faLightbulb },
     { id: 'resources', href: '/recursos', label: 'Recursos', icon: faStore },
     { id: 'token', href: '/token', label: 'Token', icon: faCoins },
     { id: 'about', href: '/sobre', label: 'Sobre', icon: faInfoCircle },

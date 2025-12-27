@@ -79,11 +79,10 @@ export default function SectionNav({ sections }: SectionNavProps) {
               <button
                 key={section.id}
                 onClick={() => scrollToSection(section.id)}
-                className={`w-full text-left px-4 py-2 rounded-lg transition-all text-sm font-semibold ${
-                  activeSection === section.id
-                    ? 'shadow-md scale-105'
-                    : 'hover:scale-102'
-                }`}
+                className={`w-full text-left px-4 py-2 rounded-lg transition-all text-sm font-semibold ${activeSection === section.id
+                  ? 'shadow-md scale-105'
+                  : 'hover:scale-102'
+                  }`}
                 style={{
                   backgroundColor: activeSection === section.id
                     ? 'var(--brand-primary)'
@@ -123,9 +122,9 @@ export default function SectionNav({ sections }: SectionNavProps) {
               onClick={() => setIsOpen(false)}
             />
             <nav
-              className="fixed right-4 top-40 z-50 backdrop-blur-xl rounded-2xl p-4 border-2 shadow-2xl max-w-xs animate-fade-in"
+              className="fixed right-4 top-40 z-50 backdrop-blur-md rounded-2xl p-4 border-2 shadow-xl max-w-xs animate-fade-in"
               style={{
-                backgroundColor: 'var(--bg-elevated)',
+                backgroundColor: 'rgba(var(--bg-elevated-rgb), 0.98)',
                 borderColor: 'var(--border-medium)'
               }}
             >
@@ -134,11 +133,10 @@ export default function SectionNav({ sections }: SectionNavProps) {
                   <button
                     key={section.id}
                     onClick={() => scrollToSection(section.id)}
-                    className={`w-full text-left px-4 py-3 rounded-lg transition-all text-sm font-semibold ${
-                      activeSection === section.id
-                        ? 'shadow-md'
-                        : ''
-                    }`}
+                    className={`w-full text-left px-4 py-3 rounded-lg transition-all text-sm font-semibold ${activeSection === section.id
+                      ? 'shadow-md'
+                      : ''
+                      }`}
                     style={{
                       backgroundColor: activeSection === section.id
                         ? 'var(--brand-primary)'
@@ -161,7 +159,7 @@ export default function SectionNav({ sections }: SectionNavProps) {
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 border-2"
+          className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 border-2"
           style={{
             background: 'linear-gradient(135deg, var(--brand-primary), var(--brand-hover))',
             borderColor: 'var(--brand-primary)',

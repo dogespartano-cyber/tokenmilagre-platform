@@ -35,6 +35,7 @@ import {
   PriceChartSection,
   TopCryptosSection,
   LoadingSkeleton,
+  CryptoCuriosities
 } from './components/home';
 
 // Header config - inline para IA reconhecer
@@ -45,10 +46,11 @@ const pageHeader = {
 };
 
 const initialSections = [
+  'quickstart',
   'ticker',
   'hud',
-  'quickstart',
   'news',
+  'curiosities',
   'charts',
   'topcryptos',
   'education',
@@ -182,6 +184,8 @@ export default function HomePage() {
         return <PriceChartSection />;
       case 'topcryptos':
         return <TopCryptosSection />;
+      case 'curiosities':
+        return <CryptoCuriosities />;
       default:
         return null;
     }

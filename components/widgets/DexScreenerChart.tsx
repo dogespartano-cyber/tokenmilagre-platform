@@ -1,11 +1,13 @@
 'use client';
 
+import { MISSION } from '@/lib/core/constants/mission';
+
 interface DexScreenerChartProps {
   className?: string;
 }
 
 export function DexScreenerChart({ className = '' }: DexScreenerChartProps) {
-  const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
+  const TOKEN_ADDRESS = MISSION.BLOCKCHAIN.TOKEN_ADDRESS;
 
   return (
     <div className={`w-full ${className}`}>

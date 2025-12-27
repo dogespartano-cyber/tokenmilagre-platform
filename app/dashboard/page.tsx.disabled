@@ -133,7 +133,7 @@ export default function DashboardPage() {
               <div className="text-6xl mb-6">
                 <FontAwesomeIcon icon={faLink} className="w-16 h-16" style={{ color: 'var(--brand-primary)' }} />
               </div>
-              <h1 className="text-3xl font-bold mb-4 font-[family-name:var(--font-poppins)]" style={{ color: 'var(--text-primary)' }}>
+              <h1 className="text-3xl font-bold mb-4 font-inter" style={{ color: 'var(--text-primary)' }}>
                 Conecte sua Wallet
               </h1>
               <p className="mb-8" style={{ color: 'var(--text-tertiary)' }}>
@@ -270,7 +270,7 @@ export default function DashboardPage() {
               background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
               borderColor: 'var(--border-medium)'
             }}>
-              <h3 className="font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+              <h3 className="font-bold text-xl mb-4 font-inter flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                 <FontAwesomeIcon icon={faTrophy} className="w-6 h-6" style={{ color: 'var(--warning)' }} />
                 Coleção de Badges
               </h3>
@@ -307,7 +307,7 @@ export default function DashboardPage() {
               background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary))',
               borderColor: 'var(--border-medium)'
             }}>
-              <h3 className="font-bold text-xl mb-4 font-[family-name:var(--font-poppins)] flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+              <h3 className="font-bold text-xl mb-4 font-inter flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                 <FontAwesomeIcon icon={faChartSimple} className="w-6 h-6" style={{ color: 'var(--info)' }} />
                 Histórico de Transações
               </h3>

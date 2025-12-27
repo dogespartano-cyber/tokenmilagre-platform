@@ -39,7 +39,7 @@ export default function PageWrapper({
         <div className={`min-h-screen relative ${className}`}>
             {/* Header dinâmico */}
             {header && (
-                <div className="container mx-auto px-4 pt-4 pb-1 lg:py-8 relative z-10">
+                <div className="container mx-auto px-4 pt-8 pb-1 lg:pt-16 lg:pb-8 relative z-10">
                     <PageHeader
                         title={header.title}
                         description={header.description}

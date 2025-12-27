@@ -80,7 +80,7 @@ export function SentimentGauge({ sentiment }: SentimentGaugeProps) {
                         </g>
 
                         {/* Value inside gauge */}
-                        <text x="90" y="94" fill="var(--text-primary)" fontSize="34" fontWeight="900" textAnchor="middle" dominantBaseline="middle" className="font-[family-name:var(--font-poppins)]">
+                        <text x="90" y="94" fill="var(--text-primary)" fontSize="34" fontWeight="900" textAnchor="middle" dominantBaseline="middle" className="font-inter">
                             {gaugeValue}
                         </text>
                     </svg>
@@ -92,7 +92,7 @@ export function SentimentGauge({ sentiment }: SentimentGaugeProps) {
                         Análise de Sentimento
                     </span>
                     <span
-                        className="text-lg font-black font-[family-name:var(--font-poppins)] leading-none mb-1 uppercase tracking-wider transition-colors duration-1000"
+                        className="text-lg font-black font-inter leading-none mb-1 uppercase tracking-wider transition-colors duration-1000"
                         style={{ color: gaugeColor }}
                     >
                         {label}

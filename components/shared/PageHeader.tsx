@@ -10,176 +10,158 @@ import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import { useSidebar } from '@/contexts/SidebarContext';
 
 interface PageHeaderProps {
-  title: string;
-  description: string;
-  shortTitle?: string;
-  sentiment?: 'positive' | 'neutral' | 'negative';
+ title: string;
+ description: string;
+ shortTitle?: string;
+ sentiment?: 'positive' | 'neutral' | 'negative';
 }
 
 interface FearGreedData {
-  value: string;
-  value_classification: string;
+ value: string;
+ value_classification: string;
 }
 
 export default function PageHeader({ title, description, shortTitle, sentiment }: PageHeaderProps) {
-  const pathname = usePathname();
-  const [fearGreed, setFearGreed] = useState<FearGreedData | null>(null);
-  const [gaugeValue, setGaugeValue] = useState(0);
-  const [animateTitle, setAnimateTitle] = useState(false);
-  const { setDynamicTitle, setShortTitle } = useSidebar();
+ const pathname = usePathname();
+ const [fearGreed, setFearGreed] = useState<FearGreedData | null>(null);
+ const [gaugeValue, setGaugeValue] = useState(0);
+ const [animateTitle, setAnimateTitle] = useState(false);
+ const { setDynamicTitle, setShortTitle } = useSidebar();
 
-  // Buscar Fear & Greed Index
-  useEffect(() => {
-    const CACHE_KEY = 'fear_greed_index';
+ // Buscar Fear & Greed Index
+ useEffect(() => {
+  const CACHE_KEY = 'fear_greed_index';
 
-    // Carregar do cache imediatamente (elimina flash visual)
-    const cached = sessionStorage.getItem(CACHE_KEY);
-    if (cached) {
-      try {
-        const cachedData = JSON.parse(cached);
-        setFearGreed(cachedData);
-      } catch (error) {
-        console.error('Erro ao carregar cache:', error);
-      }
-    }
+  // Carregar do cache imediatamente (elimina flash visual)
+  const cached = sessionStorage.getItem(CACHE_KEY);
+  if (cached) {
+   try {
+    const cachedData = JSON.parse(cached);
+    setFearGreed(cachedData);
+   } catch (error) {
+    console.error('Erro ao carregar cache:', error);
+   }
+  }
 
-    // Buscar dados atualizados em background
-    const fetchFearGreed = async () => {
-      try {
-        const response = await fetch('/api/fear-greed');
-        const result = await response.json();
+  // Buscar dados atualizados em background
+  const fetchFearGreed = async () => {
+   try {
+    const response = await fetch('/api/fear-greed');
+    const result = await response.json();
 
-        if (result.success && result.data) {
-          setFearGreed(result.data);
-          // Salvar no cache
-          sessionStorage.setItem(CACHE_KEY, JSON.stringify(result.data));
-        } else {
-          console.error('Erro ao buscar Fear & Greed Index:', result.error);
-        }
-      } catch (error) {
-        console.error('Erro ao buscar Fear & Greed Index:', error);
-      }
-    };
-
-    fetchFearGreed();
-  }, []);
-
-  // Animação do título quando muda de página
-  useEffect(() => {
-    // Desativa a animação
-    setAnimateTitle(false);
-
-    // Atualiza o título dinâmico no contexto (para a navbar mobile)
-    setDynamicTitle(title);
-    if (shortTitle) {
-      setShortTitle(shortTitle);
-    } else if (title === '$MILAGRE') {
-      setShortTitle('');
+    if (result.success && result.data) {
+     setFearGreed(result.data);
+     // Salvar no cache
+     sessionStorage.setItem(CACHE_KEY, JSON.stringify(result.data));
     } else {
-      setShortTitle(title);
+     console.error('Erro ao buscar Fear & Greed Index:', result.error);
     }
+   } catch (error) {
+    console.error('Erro ao buscar Fear & Greed Index:', error);
+   }
+  };
 
-    // Pequeno delay para resetar e depois ativar com efeito suave
-    const timer = setTimeout(() => {
-      setAnimateTitle(true);
-    }, 100);
+  fetchFearGreed();
+ }, []);
 
-    return () => clearTimeout(timer);
-  }, [title, pathname, setDynamicTitle]); // Anima quando título ou pathname mudar
+ // Animação do título quando muda de página
+ useEffect(() => {
+  // Desativa a animação
+  setAnimateTitle(false);
 
-  // Animação do ponteiro do velocímetro
-  // Reinicia quando fearGreed muda OU quando a página muda (pathname)
-  useEffect(() => {
-    if (fearGreed) {
-      const targetValue = parseInt(fearGreed.value);
-      const duration = 2500;
-      const steps = 60;
-      const stepDuration = duration / steps;
+  // Atualiza o título dinâmico no contexto (para a navbar mobile)
+  setDynamicTitle(title);
+  if (shortTitle) {
+   setShortTitle(shortTitle);
+  } else if (title === '$MILAGRE') {
+   setShortTitle('');
+  } else {
+   setShortTitle(title);
+  }
 
-      let currentStep = 0;
+  // Pequeno delay para resetar e depois ativar com efeito suave
+  const timer = setTimeout(() => {
+   setAnimateTitle(true);
+  }, 100);
 
-      // Resetar para 0 para iniciar a animação
-      setGaugeValue(0);
+  return () => clearTimeout(timer);
+ }, [title, pathname, setDynamicTitle]); // Anima quando título ou pathname mudar
 
-      // Easing function
-      const easeOutCubic = (t: number): number => {
-        return 1 - Math.pow(1 - t, 3);
-      };
+ // Animação do ponteiro do velocímetro
+ // Reinicia quando fearGreed muda OU quando a página muda (pathname)
+ useEffect(() => {
+  if (fearGreed) {
+   const targetValue = parseInt(fearGreed.value);
+   const duration = 2500;
+   const steps = 60;
+   const stepDuration = duration / steps;
 
-      const animate = () => {
-        currentStep++;
-        const progress = currentStep / steps;
-        const easedProgress = easeOutCubic(progress);
-        const newValue = Math.floor(easedProgress * targetValue);
+   let currentStep = 0;
 
-        setGaugeValue(newValue);
+   // Resetar para 0 para iniciar a animação
+   setGaugeValue(0);
 
-        if (currentStep < steps) {
-          setTimeout(animate, stepDuration);
-        } else {
-          setGaugeValue(targetValue);
-        }
-      };
+   // Easing function
+   const easeOutCubic = (t: number): number => {
+    return 1 - Math.pow(1 - t, 3);
+   };
 
-      animate();
+   const animate = () => {
+    currentStep++;
+    const progress = currentStep / steps;
+    const easedProgress = easeOutCubic(progress);
+    const newValue = Math.floor(easedProgress * targetValue);
+
+    setGaugeValue(newValue);
+
+    if (currentStep < steps) {
+     setTimeout(animate, stepDuration);
+    } else {
+     setGaugeValue(targetValue);
     }
-  }, [fearGreed, pathname]); // Adiciona pathname como dependência
+   };
 
-  return (
-    <div className="space-y-2 lg:space-y-4">
-      {/* Header - Centered with matching page margins */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-start gap-4 lg:gap-16 max-w-7xl mx-auto lg:px-8">
-        <div className="flex items-center gap-4">
-          {/* Logo */}
-          <div
-            className="hidden lg:block relative w-28 h-28 group cursor-pointer"
-            style={{
-              opacity: animateTitle ? 1 : 0,
-              transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
-              transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
-            }}
-          >
-            <Image
-              src="/images/TOKEN-MILAGRE-Hero.webp"
-              alt="$MILAGRE Logo"
-              fill
-              sizes="112px"
-              className="object-contain transition-transform duration-300 group-hover:scale-110"
-              priority
-            />
-          </div>
-          <div>
-            {/* Título - sempre clicável, posts de notícias voltam para /noticias */}
-            <Link href={pathname.startsWith('/noticias/') && pathname !== '/noticias' ? '/noticias' : pathname}>
-              <h1
-                className={`text-3xl lg:text-4xl font-bold mb-2 font-[family-name:var(--font-poppins)] cursor-pointer hover:opacity-80 transition-opacity bg-gradient-to-r from-[#0D9488] to-[#ebb60b] bg-clip-text text-transparent`}
-                style={{
-                  opacity: animateTitle ? 1 : 0,
-                  transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
-                  transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
-                }}
-              >
-                {title}
-              </h1>
-            </Link>
-            <p
-              className="text-base lg:text-lg text-[var(--text-secondary)] font-medium"
-              style={{
-                opacity: animateTitle ? 1 : 0,
-                transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
-                transition: 'opacity 0.6s ease-out 0.1s, transform 0.6s ease-out 0.1s'
-              }}
-            >
-              {description}
-            </p>
-          </div>
-        </div>
-      </div>
+   animate();
+  }
+ }, [fearGreed, pathname]); // Adiciona pathname como dependência
 
-      {/* Breadcrumbs - última posição do header */}
-      <div className="sr-only">
-        <Breadcrumbs inline={true} />
-      </div>
+ return (
+  <div className="space-y-2 lg:space-y-4">
+   {/* Header - Centered with matching page margins */}
+   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-start gap-4 lg:gap-16 max-w-7xl mx-auto lg:px-8">
+    <div className="flex items-center">
+     <div>
+      {/* Título - sempre clicável, posts de notícias voltam para /noticias */}
+      <Link href={pathname.startsWith('/noticias/') && pathname !== '/noticias' ? '/noticias' : pathname}>
+       <h1
+className={`text-3xl lg:text-4xl title-newtab mb-2 cursor-pointer hover:opacity-80 transition-opacity`}
+        style={{
+         opacity: animateTitle ? 1 : 0,
+         transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
+         transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+        }}
+       >
+        {title}
+       </h1>
+      </Link>
+      <p
+       className="text-base lg:text-lg text-[var(--text-secondary)] font-light font-inter"
+       style={{
+        opacity: animateTitle ? 1 : 0,
+        transform: animateTitle ? 'translateY(0)' : 'translateY(-10px)',
+        transition: 'opacity 0.6s ease-out 0.1s, transform 0.6s ease-out 0.1s'
+       }}
+      >
+       {description}
+      </p>
+     </div>
     </div>
-  );
+   </div>
+
+   {/* Breadcrumbs - última posição do header */}
+   <div className="sr-only">
+    <Breadcrumbs inline={true} />
+   </div>
+  </div>
+ );
 }

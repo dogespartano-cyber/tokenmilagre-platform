@@ -8,6 +8,7 @@
  */
 
 import type { TrendSignal } from '@/lib/shared/utils/technical-analysis';
+import { MISSION } from '@/lib/core/constants/mission';
 
 // ============================================
 // BINANCE DATA TYPES
@@ -85,8 +86,9 @@ export interface UseHolderCountResult {
 
 /**
  * $MILAGRE token address on Solana
+ * @source lib/core/constants/mission.ts (Single Source of Truth)
  */
-export const TOKEN_ADDRESS = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump';
+export const TOKEN_ADDRESS = MISSION.BLOCKCHAIN.TOKEN_ADDRESS;
 
 /**
  * Solana RPC URL

@@ -21,6 +21,7 @@
 
 import { useState, useEffect } from 'react';
 import Button from './Button';
+import { MISSION } from '@/lib/core/constants/mission';
 
 interface TokenData {
   price?: number;
@@ -37,7 +38,7 @@ interface TokenWidgetProps {
 }
 
 export default function TokenWidget({
-  tokenAddress = '3tpz3ar7gaHmPZfhWHzRdPnBJ5MrZZVDxepDtDLYpump',
+  tokenAddress = MISSION.BLOCKCHAIN.TOKEN_ADDRESS,
   variant = 'full',
   showBuyButton = true
 }: TokenWidgetProps) {
@@ -281,9 +282,8 @@ export default function TokenWidget({
                   <div className="loading-skeleton"></div>
                 ) : (
                   <span
-                    className={`metric-change ${
-                      (tokenData.change24h ?? 0) >= 0 ? 'metric-change-positive' : 'metric-change-negative'
-                    }`}
+                    className={`metric-change ${(tokenData.change24h ?? 0) >= 0 ? 'metric-change-positive' : 'metric-change-negative'
+                      }`}
                     aria-label={`Variação em 24 horas: ${formatChange(tokenData.change24h)}`}
                   >
                     {formatChange(tokenData.change24h)}

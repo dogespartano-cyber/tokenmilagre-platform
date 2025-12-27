@@ -18,6 +18,7 @@ version: 2.0.0
 | Validação filosófica/ética | [ARQUITETO](./workflows/ARQUITETO-agent.md) | "Valide esta ideia" |
 | Criar conteúdo web | [CONTEUDO](./workflows/CONTEUDO-agent.md) | "Crie artigo/página" |
 | Regras de design/tema | [DESIGN](./workflows/DESIGN-agent.md) | "CSS/tema/cores" |
+| Gerenciamento de Código e Versionamento | [GITHUB](./workflows/GITHUB-agent.md) | "Gerenciar repositório", "versionamento" |
 | Validar arquitetura | [ESTRUTURA](./workflows/ESTRUTURA-agent.md) | "Revisar estrutura" |
 | Revisar código | [CODIGO](./workflows/CODIGO-agent.md) | "Code review" |
 | Auditoria de segurança | [SEGURANCA](./workflows/SEGURANCA-agent.md) | "Segurança", "auditoria" |

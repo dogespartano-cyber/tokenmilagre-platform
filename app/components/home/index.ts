@@ -24,5 +24,6 @@ export { LoadingSkeleton } from './LoadingSkeleton';
 export { ZenithHeroHUD } from './ZenithHeroHUD';
 export { ZenithMarketTicker } from './ZenithMarketTicker';
 export { FeaturedResourcesSection } from './FeaturedResourcesSection';
+export { CryptoCuriosities } from './CryptoCuriosities';
 
 

@@ -54,7 +54,6 @@ export default function RootLayoutNav({
     setShortTitle('');
   }, [pathname, setDynamicTitle, setShortTitle]);
 
-
   return (
     <div className="min-h-screen">
       {/* Sidebar Component */}
@@ -63,7 +62,7 @@ export default function RootLayoutNav({
       {/* Main Content Wrapper */}
       <div className="min-h-screen flex flex-col lg:ml-72">
         {/* Header */}
-        <header className="sticky top-0 z-30 h-[64px] flex items-center bg-white dark:bg-transparent dark:backdrop-blur-xl lg:bg-transparent lg:backdrop-blur-xl">
+        <header className="sticky top-0 z-30 h-[64px] flex items-center bg-white dark:bg-[#0A1120]/95 backdrop-blur-md lg:bg-transparent lg:dark:bg-transparent lg:backdrop-blur-xl">
           <div className="container mx-auto px-6 h-full relative">
             <div className="flex justify-between items-center h-full">
               {/* Mobile Header Layout */}

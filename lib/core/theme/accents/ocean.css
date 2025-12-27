@@ -96,7 +96,7 @@
    ================================================ */
 [data-theme="light"][data-accent="ocean"] {
     /* Background Colors - Clean */
-    --bg-primary: #F8FAFC;
+    --bg-primary: #f5f5f7;
     --bg-secondary: #FFFFFF;
     --bg-tertiary: #F1F5F9;
     --bg-elevated: #FFFFFF;

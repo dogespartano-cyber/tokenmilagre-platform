@@ -99,31 +99,31 @@ export default function ZenithCard({
     // Full static strings for Tailwind JIT to detect neon shadows
     // Adjusted to be directional (bottom/sides) instead of global spread
     const neonActiveStyles = {
-        default: 'dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.4)]',
-        success: 'dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.45)]',
-        danger: 'dark:shadow-[0_15px_30px_-5px_rgba(239,68,68,0.35)]',
-        warning: 'dark:shadow-[0_15px_30px_-5px_rgba(234,179,8,0.35)]',
-        info: 'dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
-        orange: 'dark:shadow-[0_15px_30px_-5px_rgba(249,115,22,0.35)]',
-        indigo: 'dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
-        teal: 'dark:shadow-[0_15px_30px_-5px_rgba(20,184,166,0.4)]',
-        violet: 'dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
-        slate: 'dark:shadow-[0_15px_30px_-5px_rgba(100,116,139,0.3)]',
-        glass: 'dark:shadow-[0_15px_30px_-5px_rgba(255,255,255,0.08)]'
+        default: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.3)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.4)]',
+        success: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.35)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.45)]',
+        danger: 'dark:shadow-[0_8px_20px_-6px_rgba(239,68,68,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(239,68,68,0.35)]',
+        warning: 'dark:shadow-[0_8px_20px_-6px_rgba(234,179,8,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(234,179,8,0.35)]',
+        info: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
+        orange: 'dark:shadow-[0_8px_20px_-6px_rgba(249,115,22,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(249,115,22,0.35)]',
+        indigo: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
+        teal: 'dark:shadow-[0_8px_20px_-6px_rgba(20,184,166,0.3)] lg:dark:shadow-[0_15px_30px_-5px_rgba(20,184,166,0.4)]',
+        violet: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
+        slate: 'dark:shadow-[0_8px_20px_-6px_rgba(100,116,139,0.2)] lg:dark:shadow-[0_15px_30px_-5px_rgba(100,116,139,0.3)]',
+        glass: 'dark:shadow-[0_8px_16px_-6px_rgba(255,255,255,0.05)] lg:dark:shadow-[0_15px_30px_-5px_rgba(255,255,255,0.08)]'
     };
 
     const neonHoverStyles = {
-        default: 'dark:hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.4)]',
-        success: 'dark:hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.45)]',
-        danger: 'dark:hover:shadow-[0_15px_30px_-5px_rgba(239,68,68,0.35)]',
-        warning: 'dark:hover:shadow-[0_15px_30px_-5px_rgba(234,179,8,0.35)]',
-        info: 'dark:hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
-        orange: 'dark:hover:shadow-[0_15px_30px_-5px_rgba(249,115,22,0.35)]',
-        indigo: 'dark:hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
-        teal: 'dark:hover:shadow-[0_15px_30px_-5px_rgba(20,184,166,0.4)]',
-        violet: 'dark:hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
-        slate: 'dark:hover:shadow-[0_15px_30px_-5px_rgba(100,116,139,0.3)]',
-        glass: 'dark:hover:shadow-[0_15px_30px_-5px_rgba(255,255,255,0.08)]'
+        default: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.3)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.4)]',
+        success: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.35)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.45)]',
+        danger: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(239,68,68,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(239,68,68,0.35)]',
+        warning: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(234,179,8,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(234,179,8,0.35)]',
+        info: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
+        orange: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(249,115,22,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(249,115,22,0.35)]',
+        indigo: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
+        teal: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(20,184,166,0.3)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(20,184,166,0.4)]',
+        violet: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
+        slate: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(100,116,139,0.2)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(100,116,139,0.3)]',
+        glass: 'dark:group-hover:shadow-[0_8px_16px_-6px_rgba(255,255,255,0.05)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(255,255,255,0.08)]'
     };
 
     // Ambient Effect Gradients (Replaces Top Line with Soft Fill)
