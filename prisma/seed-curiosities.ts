@@ -1,183 +1,303 @@
+
 import { PrismaClient } from '../lib/generated/prisma';
 
 const prisma = new PrismaClient();
 
 const curiosities = [
     {
+        slug: "primeira-transacao-bitcoin-pizza",
         content: "A primeira transação de Bitcoin foi 10.000 BTC por duas pizzas em 2010.",
-        description: "O marco histórico que deu início ao uso do Bitcoin como meio de troca.",
-        fullContent: "# A Famosa Pizza de 10.000 Bitcoins\n\nEm 22 de maio de 2010, Laszlo Hanyecz fez história ao realizar a primeira compra documentada de um bem físico usando Bitcoin. Ele pagou 10.000 BTC por duas pizzas da Papa John's.\n\n## O Valor Hoje\nNa época, os 10.000 Bitcoins valiam cerca de 41 dólares. Hoje, essa mesma quantia representaria centenas de milhões de dólares, tornando-as as pizzas mais caras da história humana.\n\n## Bitcoin Day\nDesde então, a comunidade cripto celebra o 'Bitcoin Pizza Day' todos os anos em 22 de maio para comemorar este marco da utilidade real da criptomoeda.",
-        keywords: ["Bitcoin", "Pizza Day", "História", "Transação"]
+        description: "Conheça a história do 'Bitcoin Pizza Day' e como uma simples vontade de comer pizza marcou o início da economia cripto.",
+        category: "História",
+        keywords: ["Bitcoin", "História", "Curiosidade", "Adoção", "Pizza"],
+        fullContent: `
+# A Pizza de R$ 3 Bilhões: O Nascimento do Comércio em Bitcoin
+
+Em 22 de maio de 2010, um programador chamado **Laszlo Hanyecz** fez história - e provavelmente o pedido de delivery mais caro de todos os tempos. Esta data é hoje celebrada mundialmente como o **Bitcoin Pizza Day**.
+
+## O Pedido Lendário
+
+Laszlo postou no fórum *BitcoinTalk*, o ponto de encontro original dos entusiastas de cripto, oferecendo **10.000 Bitcoins** para quem lhe entregasse duas pizzas grandes. Na época, esses 10.000 BTC valiam cerca de **41 dólares**.
+
+> "Eu pagarei 10.000 bitcoins por um par de pizzas.. talvez duas grandes para que sobre para o dia seguinte." — Laszlo Hanyecz
+
+Um estudante britânico chamado Jeremy Sturdivant aceitou a oferta. Ele comprou duas pizzas da Papa John's por cerca de $25 e as entregou a Laszlo, recebendo as moedas digitais em troca.
+
+## Por Que Isso Importa?
+
+Pode parecer apenas uma troca curiosa, mas foi um marco fundamental: **foi a primeira vez que o Bitcoin foi usado como meio de troca por um bem real e tangível**. Antes desse momento, o Bitcoin era apenas um experimento de nicho minerado por hobby.
+
+Essa transação provou que a moeda digital tinha valor real e poderia ser usada no comércio, pavimentando o caminho para a adoção global que vemos hoje.
+
+## Quanto Valeriam Hoje?
+
+A parte "dolorosa" (ou divertida) da história é calcular o valor atual.
+- **2010**: $41 USD
+- **2021 (Alta Histórica)**: ~$690.000.000 USD
+- **Hoje**: Calcule 10.000 x a cotação atual!
+
+Se Laszlo tivesse guardado esses Bitcoins, hoje ele seria bilionário. No entanto, ele afirma não se arrepender: "Alguém tinha que começar a gastar", disse ele em entrevistas. Graças a sua fome de pizza, o Bitcoin deu seu primeiro passo para se tornar um ativo global.
+    `
     },
     {
+        slug: "fortuna-satoshi-nakamoto",
         content: "Satoshi Nakamoto, o criador do Bitcoin, possui cerca de 1.1 milhão de BTC.",
-        description: "A fortuna intocada do misterioso criador da primeira criptomoeda.",
-        fullContent: "# A Fortuna de Satoshi Nakamoto\n\nEstima-se que Satoshi Nakamoto, o pseudônimo do criador do Bitcoin, tenha minerado aproximadamente 1,1 milhão de BTC nos primeiros dias da rede.\n\n## Carteiras Intocadas\nO fato mais fascinante é que essas moedas nunca foram movidas. Elas permanecem nos endereços originais desde 2009. Se Satoshi ainda estiver vivo e tiver acesso às chaves, ele é uma das pessoas mais ricas do mundo.\n\n## O Mistério\nA identidade de Satoshi permanece o maior segredo da era digital, com diversas teorias apontando para diferentes cientistas da computação, mas nenhuma comprovada até hoje.",
-        keywords: ["Satoshi Nakamoto", "Fortuna", "Mistério", "BTC"]
+        description: "Uma das maiores fortunas do mundo permanece intocada há mais de uma década. Onde estão os Bitcoins do criador?",
+        category: "Mistério",
+        keywords: ["Satoshi Nakamoto", "Bitcoin", "Riqueza", "Mistério"],
+        fullContent: `
+# O Tesouro Intocado de Satoshi Nakamoto
+
+Satoshi Nakamoto não é apenas o misterioso criador do Bitcoin - ele é também, potencialmente, uma das pessoas mais ricas do planeta. Análises da blockchain revelam um fato impressionante: as carteiras associadas à mineração inicial do Bitcoin, atribuídas a Satoshi, contêm cerca de **1.1 milhão de BTC**.
+
+## A "Mineração Patrão"
+
+Nos primeiros dias da rede, em 2009, Satoshi era um dos únicos mineradores ativos. Ele minerou milhares de blocos para manter a rede segura e operacional. O resultado é um acúmulo massivo de moedas que, curiosamente, **nunca foram movidas**.
+
+## Por Que Ninguém Mexeu?
+
+Existem várias teorias sobre o porquê desses fundos permanecerem estáticos:
+
+1.  **Altruísmo**: Satoshi queria evitar que uma única pessoa tivesse poder de mercado excessivo para derrubar o preço.
+2.  **Perda de Chaves**: As chaves privadas podem ter sido perdidas ou destruídas propositalmente.
+3.  **Falecimento**: Uma teoria comum é que Satoshi (ou o indivíduo principal do grupo) pode ter falecido, como Hal Finney, um dos primeiros pioneiros.
+
+## O Impacto no Mercado
+
+Se esses 1.1 milhão de BTC fossem vendidos de uma vez, causariam um choque sísmico no mercado de criptomoedas. No entanto, a imobilidade desses fundos por mais de 15 anos transformou-os em uma espécie de "lastro" psicológico para a comunidade.
+
+Para muitos, o fato de Satoshi nunca ter lucrado com sua invenção é a prova definitiva da pureza e descentralização do projeto Bitcoin.
+    `
     },
     {
+        slug: "bitcoin-perdido-sempre",
         content: "Estima-se que cerca de 20% de todo o Bitcoin existente esteja perdido para sempre.",
-        description: "Milhões de moedas inacessíveis devido a chaves perdidas ou esquecidas.",
-        fullContent: "# O Tesouro Perdido do Século XXI\n\nAo contrário do ouro físico que pode ser recuperado de naufrágios, o Bitcoin perdido por falta de chaves privadas é matematicamente irrecuperável.\n\n## Causas do Perigo\nA maioria dessas perdas ocorreu nos primeiros anos, quando o Bitcoin valia quase nada e as pessoas não cuidavam de seus discos rígidos ou senhas.\n\n## Impacto na Escassez\nIsso torna o Bitcoin ainda mais escasso do que os 21 milhões previstos no protocolo, aumentando seu potencial de valor como reserva de valor.",
-        keywords: ["Escassez", "Segurança", "Chaves Privadas", "Bitcoin Perdido"]
+        description: "Discos rígidos no lixo, senhas esquecidas e chaves perdidas. Descubra como milhões de Bitcoins saíram de circulação.",
+        category: "Curiosidade",
+        keywords: ["Escassez", "Bitcoin", "Segurança", "Blockchain"],
+        fullContent: `
+# O Tesouro Perdido da Era Digital
+
+Diferente do dinheiro fiduciário que pode ser reimpresso, ou do ouro que pode ser derretido e reusado, o Bitcoin perdido está... bem, perdido para sempre. Segundo análises da empresa **Chainalysis**, estima-se que entre **17% a 23%** de todos os Bitcoins já minerados estão inacessíveis permanentemente.
+
+## Como se Perde um Ativo Digital?
+
+As histórias variam do trágico ao cômico:
+
+*   **Esquecimento de Senhas**: Carteiras antigas protegidas por senhas que os donos não lembram mais.
+*   **Hardware no Lixo**: O famoso caso de James Howells, que jogou fora um disco rígido contendo 8.000 BTC e vem tentando convencer a prefeitura a deixá-lo escavar o aterro sanitário há anos.
+*   **Morte sem Herdeiros**: Investidores que faleceram sem deixar instruções de acesso para suas famílias.
+
+## Escassez Aumentada
+
+Essa perda permanente tem um efeito econômico importante: **deflação**.
+O limite máximo de Bitcoins é 21 milhões. Se considerarmos que ~4 milhões estão perdidos, o suprimento real circulante máximo será de apenas ~17 milhões.
+
+Na prática, cada Bitcoin perdido é uma doação para todos os outros detentores de Bitcoin, pois torna as moedas restantes ligeiramente mais raras e valiosas. Como dizem no meio cripto: *"Lost coins only make everyone else's coins worth slightly more."*
+    `
     },
     {
+        slug: "ultimo-bitcoin-minerado-2140",
         content: "O último Bitcoin será minerado por volta do ano 2140.",
-        description: "A curva de emissão programada que garante a escassez absoluta.",
-        fullContent: "# O Horizonte de 2140\n\nO protocolo do Bitcoin foi desenhado para ser deflacionário. Através de um processo chamado Halving, a recompensa dos mineradores cai pela metade a cada 4 anos.\n\n## O Fim da Mineração\nSeguindo esta progressão matemática, o último satoshi será minerado aproximadamente no ano 2140. Após isso, os mineradores serão remunerados exclusivamente pelas taxas de transação da rede.\n\n## Legado de Longo Prazo\nEste design garante que o Bitcoin sobreviva por gerações, mantendo uma política monetária previsível e imutável.",
-        keywords: ["Mineração", "2140", "Halving", "Futuro"]
+        description: "O cronograma de emissão do Bitcoin se estende por mais de um século. O que acontece quando o último Satoshi for criado?",
+        category: "Futuro",
+        keywords: ["Halving", "Mineração", "Futuro", "Economia"],
+        fullContent: `
+# 2140: O Ano Final da Emissão
+
+O protocolo do Bitcoin é regido por uma regra matemática imutável: só existirão **21 milhões** de unidades. Mas eles não são liberados de uma vez. A emissão segue uma curva logarítmica controlada pelo evento conhecido como **Halving**.
+
+## O Ritmo dos Halvings
+
+A cada 210.000 blocos (aproximadamente 4 anos), a recompensa dada aos mineradores por bloco cai pela metade.
+*   2009: 50 BTC
+*   2012: 25 BTC
+*   2016: 12.5 BTC
+*   2020: 6.25 BTC
+*   2024: 3.125 BTC
+
+Esse processo continuará até que a recompensa chegue a zero. Cálculos matemáticos projetam que isso ocorrerá por volta do ano **2140**.
+
+## E Depois de 2140?
+
+Muitos perguntam: *"Os mineradores vão parar de trabalhar?"* *"A rede vai morrer?"*
+A resposta é **não**.
+
+Quando não houver mais novos Bitcoins para serem criados, os mineradores serão remunerados exclusivamente pelas **taxas de transação**. Espera-se que, até lá, o volume de transações e o valor do Bitcoin sejam altos o suficiente para que apenas as taxas sustentem a segurança da rede.
+
+O Bitcoin foi projetado para ser um sistema autossustentável que sobrevive aos seus criadores e netos.
+    `
     },
     {
+        slug: "poder-rede-bitcoin-supercomputadores",
         content: "A rede Bitcoin é mais poderosa do que os 500 maiores supercomputadores do mundo juntos.",
-        description: "A segurança inigualável da maior rede descentralizada do planeta.",
-        fullContent: "# O Supercomputador Global\n\nA rede Bitcoin não é apenas uma moeda, é a infraestrutura de computação mais segura e resiliente já criada pela humanidade.\n\n## Poder de Processamento\nO 'Hash Rate' da rede Bitcoin ultrapassa o poder computacional combinado dos supercomputadores mais rápidos do mundo. Tentar atacar essa rede exigiria uma quantidade de energia e recursos praticamente impossível para qualquer entidade única.\n\n## Descentralização\nEsse poder não está em um lugar só, mas espalhado por milhares de máquinas ao redor do globo, garantindo que não haja um ponto único de falha.",
-        keywords: ["Segurança", "Hash Rate", "Tecnologia", "Descentralização"]
+        description: "Em termos de poder de processamento bruto, nada na Terra se compara à rede de mineração do Bitcoin.",
+        category: "Tecnologia",
+        keywords: ["Mineração", "Hashrate", "Tecnologia", "Segurança"],
+        fullContent: `
+# A Maior Força Computacional da Terra
+
+Frequentemente ouvimos sobre o consumo de energia do Bitcoin, mas raramente sobre o que essa energia produz: a rede de computação mais segura e poderosa da história da humanidade.
+
+Se somarmos todo o poder de processamento (hashrate) dedicado a proteger a rede Bitcoin, o número ultrapassa a capacidade combinada dos **500 supercomputadores mais potentes do mundo**.
+
+## Segurança Através da Força Bruta
+
+Esse poder colossal não é desperdício; é uma muralha digital. Para hackear ou "reverter" o Bitcoin (um ataque de 51%), um atacante precisaria reunir mais poder computacional do que toda essa rede combinada.
+
+*   Isso exigiria bilhões de dólares em hardware.
+*   Consumiria a energia de um país pequeno.
+*   Seria logisticamente impossível adquirir tantos chips de uma só vez.
+
+## Especialização vs Generalização
+
+Vale notar a diferença: supercomputadores são máquinas de "propósito geral" para cálculos científicos complexos. Os mineradores de Bitcoin (ASICs) são máquinas de "propósito único", projetadas para fazer apenas uma coisa: calcular hashes SHA-256.
+
+Ainda assim, a escala da infraestrutura física do Bitcoin - galpões de servidores espalhados do Texas à Islândia - representa a maior mobilização de recursos de hardware para um único propósito descentralizado que já vimos.
+    `
     },
     {
-        content: "A primeira criptomoeda do mundo não foi o Bitcoin, mas o eCash de David Chaum em 1983.",
-        description: "Os predecessores que pavimentaram o caminho para a revolução blockchain.",
-        fullContent: "# Antes do Bitcoin: O Surgimento do eCash\n\nMuito antes de Satoshi Nakamoto, criptógrafos como David Chaum já exploravam formas de dinheiro digital anônimo.\n\n## David Chaum e a DigiCash\nEm 1983, Chaum concebeu o eCash, um sistema de dinheiro eletrônico baseado em algoritmos criptográficos que permitiam transações privadas e seguras. Embora a empresa DigiCash tenha falido em 1998, seus conceitos foram fundamentais para o que viria a ser o Bitcoin.\n\n## O Elo Perdido\nO eCash mostrou que a privacidade financeira digital era possível, mas ainda dependia de uma entidade central para validar as moedas — um problema que o Bitcoin resolveu com a blockchain.",
-        keywords: ["eCash", "História", "Criptografia", "David Chaum"]
-    },
-    {
-        content: "Hal Finney foi a primeira pessoa a receber uma transação de Bitcoin de Satoshi.",
-        description: "O encontro histórico entre dois pioneiros da criptografia.",
-        fullContent: "# A Primeira Transação: Satoshi para Hal Finney\n\nEm 12 de janeiro de 2009, apenas alguns dias após o lançamento do Bitcoin, ocorreu a primeira transferência entre dois usuários no bloco 170.\n\n## Quem foi Hal Finney?\nHal foi um renomado criptógrafo e o primeiro a rodar o software Bitcoin depois de Satoshi. Ele recebeu 10 BTC como um teste de funcionamento da rede.\n\n## O Mistério Continua\nMuitos acreditam que Hal Finney poderia ser o próprio Satoshi, ou pelo menos parte de um grupo, devido à sua proximidade com o projeto desde o início.",
-        keywords: ["Hal Finney", "Satoshi", "História", "Primeira Transação"]
-    },
-    {
+        slug: "erro-digitacao-hodl-2013",
         content: "O termo 'HODL' surgiu de um erro de digitação em um fórum em 2013.",
-        description: "Como um erro de gramática se tornou o mantra mais famoso da cultura cripto.",
-        fullContent: "# I AM HODLING: O Surgimento de um Mantra\n\nEm dezembro de 2013, durante uma queda brusca de preços, um usuário chamado GameKyuubi postou no fórum Bitcointalk o título: 'I AM HODLING'.\n\n## O Erro que Ficou\nEle pretendia escrever 'HOLDING' (segurando), mas digitou errado em meio a um desabafo sobre não saber fazer trade. O erro foi instantaneamente adotado pela comunidade.\n\n## Significado Atual\nHoje, HODL é frequentemente interpretado como um acrônimo para 'Hold On for Dear Life' (Segure-se pela sua vida), representando a estratégia de longo prazo de nunca vender seus ativos apesar da volatilidade.",
-        keywords: ["HODL", "Cultura", "Meme", "Estratégia"]
+        description: "Como um post bêbado e frustrado criou a gíria mais famosa do mercado financeiro moderno.",
+        category: "Cultura",
+        keywords: ["HODL", "Meme", "Cultura", "História"],
+        fullContent: `
+# I AM HODLING: O Erro que Virou Mantra
+
+No mundo das finanças tradicionais, temos termos como "Buy and Hold" (Comprar e Segurar). No mundo cripto, temos **HODL**. E não, não é uma sigla técnica sofisticada.
+
+## O Post Original
+
+Em 18 de dezembro de 2013, o preço do Bitcoin estava despencando. Um usuário do fórum BitcoinTalk chamado **GameKyuubi**, aparentemente embriagado e frustrado com a queda e com sua falta de habilidade para "tradar", escreveu um post intitulado:
+
+> **"I AM HODLING"**
+
+No corpo do texto, ele admitiu o erro de digitação ("eu sei que escrevi errado"), explicou que tinha bebido uísque e desabafou que, como era um péssimo trader, sua melhor estratégia era simplesmente segurar suas moedas, não importava o quanto o preço caísse.
+
+## O Significado Hoje
+
+A comunidade adotou o erro instantaneamente. HODL passou a representar uma filosofia de investimento: **resistir à volatilidade e não vender no pânico**.
+
+Posteriormente, alguns tentaram criar um retro-acrônimo para a palavra: *Hold On for Dear Life* (Segure por sua vida), mas a verdade é mais simples e humana: foi apenas um erro de digitação honesto de alguém que acreditava no futuro da moeda, mesmo enquanto ela caía.
+    `
     },
     {
+        slug: "criacao-dogecoin-3-horas",
         content: "A Dogecoin foi criada em apenas 3 horas como uma piada.",
-        description: "A origem humilde da memecoin que conquistou o mercado.",
-        fullContent: "# Dogecoin: De Piada a Fenômeno de Mercado\n\nBilly Markus e Jackson Palmer criaram a Dogecoin em 2013 com o objetivo de satirizar a proliferação de altcoins sem propósito na época.\n\n## Rapidez no Desenvolvimento\nBilly Markus afirmou que a maior parte do código foi feita em cerca de 3 horas, simplesmente copiando o código da Luckycoin (que por sua vez era um fork da Litecoin) e trocando os ícones.\n\n## O Poder da Comunidade\nO que começou como uma brincadeira baseada no meme do cachorro Shiba Inu se tornou uma das criptomoedas com maior capitalização e uma das comunidades mais engajadas do mundo.",
-        keywords: ["Dogecoin", "Memecoin", "Meme", "História"]
+        description: "Billy Markus queria satirizar a explosão de novas criptomoedas. Acabou criando um ícone cultural de bilhões de dólares.",
+        category: "Altcoins",
+        keywords: ["Dogecoin", "Memecoin", "História", "Elon Musk"],
+        fullContent: `
+# De Piada a Fenômeno Global em 3 Horas
+
+Em 2013, o cenário de criptomoedas estava ficando sério e cheio de especulação. Billy Markus e Jackson Palmer achavam tudo aquilo um tanto ridículo. Eles decidiram criar uma moeda "meme" para satirizar a febre do momento.
+
+## Copy, Paste, Doge
+
+Billy Markus, um programador da IBM, pegou o código fonte do Litecoin (que já era um fork do Bitcoin), fez algumas pequenas alterações no protocolo, trocou a fonte para Comic Sans e colocou a imagem do cachorro Shiba Inu "Doge" como logo.
+
+Todo o processo de desenvolvimento levou cerca de **3 horas**.
+
+## O Efeito Inesperado
+
+Eles esperavam que a moeda morresse em dias. Em vez disso:
+1.  A comunidade do Reddit adotou a moeda para "gorjetas" (tipping) devido ao seu valor baixo.
+2.  A cultura leve e divertida atraiu novatos que tinham medo da seriedade do Bitcoin.
+3.  Anos depois, figuras como **Elon Musk** abraçaram o meme, impulsionando a moeda para o top 10 do mercado global.
+
+A Dogecoin provou que, na era da internet, a **comunidade e a cultura** podem ser tão valiosas quanto a tecnologia pura. O que era uma sátira tornou-se uma das maiores portas de entrada para o mundo cripto.
+    `
     },
     {
+        slug: "vitalik-buterin-19-anos-ethereum",
         content: "Vitalik Buterin tinha apenas 19 anos quando escreveu o whitepaper do Ethereum.",
-        description: "A mente jovem por trás da maior plataforma de contratos inteligentes do mundo.",
-        fullContent: "# O Gênio Precoce do Ethereum\n\nInsatisfeito com as limitações do Bitcoin para rodar aplicações mais complexas, um jovem programador canadense decidiu criar algo novo.\n\n## A Proposta de Vitalik\nEm 2013, Vitalik Buterin publicou o whitepaper do Ethereum, propondo uma blockchain com uma linguagem de programação integrada que permitiria a qualquer pessoa criar aplicativos descentralizados.\n\n## Impacto Global\nHoje, o Ethereum é a base para o mundo de DeFi (Finanças Descentralizadas), NFTs e milhares de outros projetos, provando que a visão de Vitalik transformou permanentemente o ecossistema cripto.",
-        keywords: ["Vitalik Buterin", "Ethereum", "Smart Contracts", "História"]
+        description: "Insatisfeito com as limitações do Bitcoin, um adolescente propôs um 'computador mundial'.",
+        category: "Ethereum",
+        keywords: ["Vitalik Buterin", "Ethereum", "Smart Contracts", "Inovação"],
+        fullContent: `
+# O Adolescente que Mudou a Internet
+
+Imagine ter 19 anos e decidir que a invenção financeira mais revolucionária do século (o Bitcoin) "precisava de uma atualização". Foi exatamente isso que **Vitalik Buterin** fez.
+
+## O Escritor Prodígio
+
+Vitalik já era co-fundador da *Bitcoin Magazine* e viajava o mundo conversando com desenvolvedores. Ele percebeu uma falha fundamental no Bitcoin. O Bitcoin era ótimo como uma "calculadora" (fazer transações), mas péssimo como um "computador" (rodar programas complexos).
+
+Ele sugeriu melhorias à comunidade Bitcoin (Mastercoin), mas foi rejeitado. Então, decidiu criar sua própria plataforma.
+
+## O Nascimento dos Smart Contracts
+
+Em 2013, ele publicou o Whitepaper do **Ethereum**. A grande inovação não foi a moeda (Ether), mas a capacidade de escrever **Smart Contracts** (Contratos Inteligentes) - código programável que roda na blockchain.
+
+Isso abriu as portas para tudo o que veio depois:
+*   DeFi (Finanças Descentralizadas)
+*   NFTs
+*   DAOs
+
+Vitalik provou que a juventude e uma mente aberta (e genial) podem superar barreiras que especialistas experientes consideravam impossíveis. O Ethereum transformou a blockchain de um simples livro-razão em um **computador mundial**.
+    `
+    },
+    {
+        slug: "el-salvador-bitcoin-moeda-legal",
+        content: "El Salvador foi o primeiro país a adotar o Bitcoin como moeda legal.",
+        description: "Em 2021, uma pequena nação da América Central fez a aposta mais ousada da história econômica moderna.",
+        category: "Adoção",
+        keywords: ["El Salvador", "Nayib Bukele", "Adoção", "Economia"],
+        fullContent: `
+# A Lei Bitcoin: O Experimento de El Salvador
+
+Em setembro de 2021, o mundo assistiu incrédulo quando El Salvador, um pequeno país da América Central, tornou-se a primeira nação soberana a adotar o Bitcoin como **moeda de curso legal (Legal Tender)**.
+
+## O Que Isso Significa?
+
+Diferente de apenas "permitir" o uso, torná-lo moeda legal significa que:
+1.  Todo comerciante deve aceitar Bitcoin se tiver tecnologia para tal.
+2.  Impostos podem ser pagos em Bitcoin.
+3.  Não há imposto sobre ganho de capital na valorização da moeda.
+
+## A Visão de Nayib Bukele
+
+O presidente Nayib Bukele apostou no Bitcoin para resolver problemas estruturais:
+*   **Remessas**: Milhões de salvadorenhos vivem no exterior e enviam dinheiro para casa. O Bitcoin elimina intermediários caros como a Western Union.
+*   **Bancarização**: 70% da população não tinha conta em banco, mas tinha celular.
+*   **Turismo e Investimento**: Atrair capital estrangeiro e turistas tech-savvy.
+
+## O Resultado Até Agora
+
+A jornada tem sido volátil. O país comprou centenas de Bitcoins e passou por períodos de prejuízo durante o "inverno cripto" de 2022, sendo duramente criticado pelo FMI.
+
+No entanto, com a recuperação do mercado, os cofres do país voltaram ao lucro, e o turismo aumentou drasticamente. El Salvador se tornou uma "Meca" para bitcoiners do mundo todo, provando que a inovacão pode vir de onde menos se espera.
+    `
     }
 ];
-
-// Fallback for remaining curiosities without full content (will generate automatically)
-const otherCuriosities = [
-    "Existem mais de 200 milhões de usuários de criptomoedas no mundo hoje.",
-    "O governo dos EUA é um dos maiores detentores de Bitcoin do mundo devido a apreensões.",
-    "A menor unidade de um Bitcoin é chamada de 'Satoshi'.",
-    "O bloco gênese do Bitcoin contém uma manchete do jornal 'The Times' sobre resgate bancário.",
-    "Laszlo Hanyecz, o homem da pizza, gastou o que hoje valeria bilhões em uma refeição.",
-    "Ethereum não é apenas uma moeda, mas uma plataforma para contratos inteligentes.",
-    "O suprimento total de Bitcoin é de 21 milhões, nem um a mais.",
-    "El Salvador foi o primeiro país a adotar o Bitcoin como moeda legal.",
-    "A primeira grande exchange de Bitcoin, Mt. Gox, era originalmente um site de cards de Magic.",
-    "A mineração de Bitcoin utiliza eletricidade gasta por aparelhos eletrônicos em stand-by nos EUA.",
-    "Existem milhares de 'moedas zumbis' que não têm volume ou valor de mercado.",
-    "A palavra 'Criptomoeda' não aparece no whitepaper original do Bitcoin.",
-    "O Bitcoin é considerado 'ouro digital' por sua escassez programada.",
-    "NFTs (Tokens Não Fungíveis) podem representar qualquer coisa, de arte a terrenos virtuais.",
-    "A rede Ethereum processa significativamente mais transações diárias que o Bitcoin.",
-    "Mais de 100 milhões de pessoas possuem algum tipo de ativo cripto no Brasil.",
-    "O termo 'To the Moon' refere-se à expectativa de que o preço suba drasticamente.",
-    "Gas no ecossistema Ethereum refere-se à taxa paga para processar transações.",
-    "Algumas mineradoras de Bitcoin usam energia térmica de vulcões para operar.",
-    "O símbolo do Bitcoin (₿) foi adicionado oficialmente ao padrão Unicode em 2017.",
-    "Bitcoin é um software de código aberto; qualquer um pode sugerir melhorias.",
-    "A primeira conferência de Bitcoin aconteceu em Praga, in 2011.",
-    "O termo 'Whale' (Baleia) refere-se a indivíduos que possuem enormes quantias de cripto.",
-    "Stablecoins são criptos pareadas ao valor de moedas fiduciárias como o Dólar.",
-    "DeFi (Finanças Descentralizadas) visa eliminar intermediários como bancos.",
-    "O processo de reduzir a recompensa por bloco minerado pela metade chama-se Halving.",
-    "O Halving do Bitcoin acontece aproximadamente a cada quatro anos.",
-    "Existem caixas eletrônicos de Bitcoin em quase todos os países do mundo.",
-    "A Lightning Network permite pagamentos instantâneos com taxas quase zero no Bitcoin.",
-    "O endereço do bloco gênese do Bitcoin não pode gastar a recompensa original.",
-    "A primeira ICO (Oferta Inicial de Moedas) foi do projeto Mastercoin em 2013.",
-    "Shiba Inu começou como uma paródia da Dogecoin, que já era uma paródia.",
-    "O criador da Litecoin, Charlie Lee, trabalhou anteriormente no Google.",
-    "A Binance é atualmente a maior exchange de criptomoedas do mundo por volume.",
-    "Cerca de 10% das empresas globais já consideram aceitar pagamentos em Bitcoin.",
-    "O termo 'Altcoin' refere-se a qualquer criptomoeda que não seja o Bitcoin.",
-    "Perder as chaves privadas da sua carteira significa perder o acesso aos fundos para sempre.",
-    "O mercado cripto funciona 24 horas por dia, 7 dias por semana, sem interrupções.",
-    "O custo de transação no Bitcoin não depende do valor enviado, mas do tamanho dos dados.",
-    "Muitas pessoas no mundo usam criptomoedas como proteção contra a inflação local."
-];
-
-function createSlug(text: string) {
-    return text
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .trim()
-        .substring(0, 50);
-}
 
 async function main() {
-    console.log('🌱 Seed: Cleaning up and re-seeding curiosities...');
+    console.log('🌱 Starting curiosities seed...');
 
-    // Using a map to track used slugs to avoid collisions
-    const usedSlugs = new Set<string>();
-
-    for (const item of curiosities) {
-        let slug = createSlug(item.content);
-        if (usedSlugs.has(slug)) slug = `${slug}-${Math.random().toString(36).substr(2, 5)}`;
-        usedSlugs.add(slug);
-
-        await prisma.curiosity.upsert({
-            where: { slug: slug },
+    for (const curiosity of curiosities) {
+        const created = await prisma.curiosity.upsert({
+            where: { slug: curiosity.slug },
             update: {
-                content: item.content,
-                description: item.description,
-                fullContent: item.fullContent,
-                keywords: item.keywords,
-                category: 'general'
+                content: curiosity.content,
+                description: curiosity.description,
+                fullContent: curiosity.fullContent,
+                category: curiosity.category,
+                keywords: curiosity.keywords,
             },
             create: {
-                content: item.content,
-                slug: slug,
-                description: item.description,
-                fullContent: item.fullContent,
-                keywords: item.keywords,
-                category: 'general'
-            }
-        });
-    }
-
-    for (const content of otherCuriosities) {
-        let slug = createSlug(content);
-        if (usedSlugs.has(slug)) slug = `${slug}-${Math.random().toString(36).substr(2, 5)}`;
-        usedSlugs.add(slug);
-
-        await prisma.curiosity.upsert({
-            where: { slug: slug },
-            update: {
-                content,
-                description: `Descubra mais sobre: ${content}`,
-                fullContent: `# ${content}\n\nEm breve, traremos um artigo detalhado sobre este fato fascinante do mundo cripto.\n\n## Por que isso é importante?\nEntender estes marcos ajuda a compreender a evolução da tecnologia blockchain e seu impacto na sociedade moderna.`,
-                category: 'general',
-                keywords: ["Cripto", "Curiosidade", "Fato"]
+                slug: curiosity.slug,
+                content: curiosity.content,
+                description: curiosity.description,
+                fullContent: curiosity.fullContent,
+                category: curiosity.category,
+                keywords: curiosity.keywords,
             },
-            create: {
-                content,
-                slug: slug,
-                description: `Descubra mais sobre: ${content}`,
-                fullContent: `# ${content}\n\nEm breve, traremos um artigo detalhado sobre este fato fascinante do mundo cripto.\n\n## Por que isso é importante?\nEntender estes marcos ajuda a compreender a evolução da tecnologia blockchain e seu impacto na sociedade moderna.`,
-                category: 'general',
-                keywords: ["Cripto", "Curiosidade", "Fato"]
-            }
         });
+        console.log(`✅ Upserted curiosity: ${created.slug}`);
     }
 
-    console.log(`✅ ${curiosities.length + otherCuriosities.length} curiosities seeded with slugs and articles!`);
+    console.log('✨ Seed completed successfully!');
 }
 
 main()
