@@ -6,8 +6,9 @@
 set -e
 
 BACKUP_DIR="/home/zenfoco/Documentos/Backup Supabase"
-TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-BACKUP_FILE="$BACKUP_DIR/db_backup_$TIMESTAMP.sql"
+# Formato legível: "Banco de dados - dia 27-12 - 14 horas.sql"
+TIMESTAMP=$(date +"dia %d-%m - %H horas")
+BACKUP_FILE="$BACKUP_DIR/Banco de dados - $TIMESTAMP.sql"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
@@ -56,13 +57,13 @@ if [ $? -eq 0 ] && [ -s "$BACKUP_FILE" ]; then
     echo -e "   📊 Tamanho: $FILE_SIZE"
     
     # Manter apenas os últimos 7 backups
-    BACKUP_COUNT=$(ls -1 "$BACKUP_DIR"/db_backup_*.sql 2>/dev/null | wc -l)
+    BACKUP_COUNT=$(ls -1 "$BACKUP_DIR"/Banco\ de\ dados*.sql "$BACKUP_DIR"/db_backup_*.sql 2>/dev/null | wc -l)
     if [ "$BACKUP_COUNT" -gt 7 ]; then
         echo -e "${YELLOW}🧹 Removendo backups antigos (mantendo últimos 7)...${NC}"
-        ls -t "$BACKUP_DIR"/db_backup_*.sql | tail -n +8 | xargs -r rm
+        ls -t "$BACKUP_DIR"/Banco\ de\ dados*.sql "$BACKUP_DIR"/db_backup_*.sql 2>/dev/null | tail -n +8 | xargs -r rm
     fi
     
-    echo -e "${GREEN}📦 Backups disponíveis: $(ls -1 "$BACKUP_DIR"/db_backup_*.sql | wc -l)${NC}"
+    echo -e "${GREEN}📦 Backups disponíveis: $(ls -1 "$BACKUP_DIR"/Banco\ de\ dados*.sql "$BACKUP_DIR"/db_backup_*.sql 2>/dev/null | wc -l)${NC}"
 else
     echo -e "${RED}❌ Erro ao criar backup${NC}"
     rm -f "$BACKUP_FILE"
