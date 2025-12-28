@@ -95,6 +95,7 @@ jobs:
   lighthouse:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    if: false  # Disabled: requires NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY for build
 
     steps:
       - name: Checkout code
