@@ -11,7 +11,6 @@ export * from './server';
 export * from './handlers/binance';
 export * from './handlers/perplexity';
 export * from './handlers/gemini';
-export * from './handlers/solana';
 
 /**
  * Quick setup function for tests

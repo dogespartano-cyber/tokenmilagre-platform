@@ -53,14 +53,3 @@ export { geminiHandlers } from './handlers/gemini';
 export { binanceMockData } from './handlers/binance';
 export { perplexityMockData } from './handlers/perplexity';
 export { geminiMockData } from './handlers/gemini';
-
-/**
- * Export Solana mocks (these use Jest mocks instead of MSW)
- */
-export {
-  mockSolanaData,
-  createMockSolanaConnection,
-  createMockPublicKey,
-  setupSolanaMocks,
-  solanaMockUtils,
-} from './handlers/solana';
