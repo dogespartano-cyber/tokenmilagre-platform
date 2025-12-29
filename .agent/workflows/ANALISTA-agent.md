@@ -86,6 +86,7 @@ date: YYYY-MM-DD
 subject: [nome do projeto/feature analisado]
 verdict: healthy | warning | critical
 ---
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -96,4 +97,5 @@ verdict: healthy | warning | critical
   - ARQUITETO.md  # Filosofia
   - CONTEUDO.md  # Tom de voz
   - ../Feedback/notes/  # Destino para análises
+@last-verified: 2025-12-29
 ```

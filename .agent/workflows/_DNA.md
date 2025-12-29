@@ -68,6 +68,7 @@ trust-level: MAXIMUM
   - Regra dos 70%: planejar estrutura antes de implementar detalhes
   - Acompanhamento: observar IA em tempo real para detectar alucinações
   - Domínio: se não consegue explicar o código, não entendeu o suficiente
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -108,6 +109,7 @@ Tarefa: [objetivo único e claro]
 Restrições: [o que NÃO fazer]
 Formato: [saída esperada]
 Verificar: [como validar sucesso]
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -140,4 +142,5 @@ Verificar: [como validar sucesso]
   inherits: null  # Este é o núcleo
   referenced-by: ALL_AGENTS
   immutable: true
+@last-verified: 2025-12-29
 ```

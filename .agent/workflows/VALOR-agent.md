@@ -31,6 +31,7 @@ biblical-foundation: Mateus 25:14-30 (Parábola dos Talentos)
 
 ## O Ciclo da Multiplicação
 
+@last-verified: 2025-12-29
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                             │
@@ -45,6 +46,7 @@ biblical-foundation: Mateus 25:14-30 (Parábola dos Talentos)
 │   • Reputação (confiança)                                   │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -59,6 +61,7 @@ Antes de qualquer iniciativa, perguntar:
 - Quem tem esse problema?
 - Quanto essa pessoa pagaria para resolver?
 - Se a resposta for "ninguém pagaria" → PARE e repense
+@last-verified: 2025-12-29
 ```
 
 ### 2. SOLUÇÃO (Como resolvemos?)
@@ -67,6 +70,7 @@ Antes de qualquer iniciativa, perguntar:
 - Podemos entregar isso com os recursos atuais?
 - Qual é o MVP mais enxuto possível?
 - Quanto tempo até o primeiro usuário pagar?
+@last-verified: 2025-12-29
 ```
 
 ### 3. VALOR (O que entregamos?)
@@ -75,6 +79,7 @@ Antes de qualquer iniciativa, perguntar:
 - Economiza tempo, dinheiro ou dor de cabeça?
 - É 10x melhor que a alternativa? (ou único?)
 - O valor é óbvio em 5 segundos?
+@last-verified: 2025-12-29
 ```
 
 ### 4. MONETIZAÇÃO (Como transformamos em capital?)
@@ -83,6 +88,7 @@ Antes de qualquer iniciativa, perguntar:
 - Preço justo que paga as contas E gera lucro?
 - Margem suficiente para reinvestir?
 - Caminho para escala sem aumentar custo linear?
+@last-verified: 2025-12-29
 ```
 
 ### 5. MULTIPLICAÇÃO (Como reinvestimos?)
@@ -91,6 +97,7 @@ Antes de qualquer iniciativa, perguntar:
 - Novas habilidades, ferramentas ou pessoas?
 - Como acelerar o próximo ciclo?
 - Qual é o próximo problema maior que podemos resolver?
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -114,6 +121,7 @@ O servo que enterrou o talento tinha **medo** e **desculpas**. Detectar e elimin
   - "O que posso aprender com esse erro?"
   - "Quem já fez isso que posso estudar?"
   - "Como transformo isso em algo que alguém paga?"
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -166,6 +174,7 @@ Análise de Multiplicação:
   Próximo passo concreto: [ação específica para HOJE]
   
   Veredito: [🟢 Multiplicar | 🟡 Ajustar | 🔴 Enterrar]
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -194,4 +203,5 @@ Análise de Multiplicação:
   - Mateus 25:14-30 (Parábola dos Talentos)
   - Provérbios 13:11 ("O dinheiro ganho com desonestidade diminui, mas quem o ajunta aos poucos terá cada vez mais")
   - Lucas 16:10 ("Quem é fiel no pouco, também é fiel no muito")
+@last-verified: 2025-12-29
 ```

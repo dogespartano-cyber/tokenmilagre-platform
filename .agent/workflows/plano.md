@@ -24,6 +24,7 @@ Documente tudo: arquivos, código completo, como testar, commits frequentes.
 - "Implementar código mínimo para passar" - step
 - "Executar testes e confirmar que passam" - step
 - "Commit" - step
+@last-verified: 2025-12-29
 ```
 
 Não agrupe múltiplas ações em um step.
@@ -44,6 +45,7 @@ Não agrupe múltiplas ações em um step.
 **Stack:** [Tecnologias/bibliotecas principais]
 
 ---
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -97,6 +99,7 @@ Esperado: PASS
 git add tests/path/test.ts src/path/file.ts
 git commit -m "feat: adiciona funcionalidade específica"
 \`\`\`
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -137,4 +140,5 @@ Salve planos em: `docs/plans/YYYY-MM-DD-<feature-name>.md`
   - /tdd: Referência para ciclo de testes
 @source: https://github.com/obra/superpowers
 @created: 2025-12-22
+@last-verified: 2025-12-29
 ```

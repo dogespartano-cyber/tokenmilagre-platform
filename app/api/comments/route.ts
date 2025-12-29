@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
                 replies: []
             }
         });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('[comments] Erro POST:', error);
         return NextResponse.json(
             { success: false, error: 'Erro ao criar comentário' },
@@ -174,7 +174,7 @@ export async function GET(request: NextRequest) {
             })),
             commentCount: item?.commentCount || 0
         });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('[comments] Erro GET:', error);
         return NextResponse.json(
             { success: false, error: 'Erro ao buscar comentários' },

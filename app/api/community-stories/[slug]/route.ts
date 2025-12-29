@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { authenticate } from '@/lib/shared/helpers/auth-helpers';
 import { prisma } from '@/lib/core/prisma';
+import { Prisma } from '@prisma/client';
 
 // GET /api/community-stories/[slug] - Buscar história específica
 export async function GET(

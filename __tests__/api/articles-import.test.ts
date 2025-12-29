@@ -162,8 +162,8 @@ Conteúdo aqui.
   describe('Nota de Transparência', () => {
     function hasTransparencyNote(content: string): boolean {
       return content.includes('Nota de Transparência') ||
-             content.includes('$MILAGRE Research') ||
-             content.includes('Sobre Este Conteúdo')
+        content.includes('$MILAGRE Research') ||
+        content.includes('Sobre Este Conteúdo')
     }
 
     function addTransparencyNote(content: string, date: Date = new Date()): string {
@@ -225,7 +225,9 @@ Conteúdo aqui.
 
     it('deve incluir data formatada na nota', () => {
       const content = 'Conteúdo do artigo.'
-      const testDate = new Date('2025-01-15')
+      // Usar constructor numérico para evitar problemas de timezone
+      // new Date('2025-01-15') é interpretado como UTC meia-noite = 14/01 em GMT-3
+      const testDate = new Date(2025, 0, 15) // Janeiro = 0
       const withNote = addTransparencyNote(content, testDate)
 
       expect(withNote).toContain('15/01/2025')

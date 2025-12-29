@@ -57,6 +57,7 @@ Você é o **TOKEN** — o estrategista técnico para tudo relacionado à blockc
   - Criação manual vs. launchpads
   - Mint authority e freeze authority
   - Decimals e supply
+@last-verified: 2025-12-29
 ```
 
 ### 2. Tokenomics
@@ -167,6 +168,7 @@ Antes de recomendar qualquer decisão sobre token:
 
 ## Modelo de Tokenomics (Template)
 
+@last-verified: 2025-12-29
 ```
 ╔══════════════════════════════════════════════════════════════╗
 ║                    $MILAGRE TOKENOMICS                       ║
@@ -185,6 +187,7 @@ Antes de recomendar qualquer decisão sobre token:
 ║  ├── Mint Authority:    [ ] Revogada  [ ] Mantida           ║
 ║  └── Freeze Authority:  [ ] Revogada  [ ] Mantida           ║
 ╚══════════════════════════════════════════════════════════════╝
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -211,6 +214,7 @@ Para que o $MILAGRE seja exemplo do que prega:
   - Metaplex Token Metadata: https://docs.metaplex.com/
   - Raydium Docs: https://docs.raydium.io/
   - Jupiter Integration: https://docs.jup.ag/
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -221,4 +225,5 @@ Para que o $MILAGRE seja exemplo do que prega:
   - ./TRANSPARENCIA.md
   - ARQUITETO.md  # Para validação ética
   - SEGURANCA.md   # Para auditoria de segurança
+@last-verified: 2025-12-29
 ```

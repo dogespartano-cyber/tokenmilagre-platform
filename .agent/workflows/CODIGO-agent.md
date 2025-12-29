@@ -26,6 +26,7 @@ function process(items) { ... }
 // ✅ CORRETO
 interface ApiResponse { items: Item[]; total: number; }
 const data: ApiResponse = await fetchTyped<ApiResponse>(url);
+@last-verified: 2025-12-29
 ```
 
 **Checklist**:
@@ -44,6 +45,7 @@ constantes: lib/core/constants/
 serviços: lib/domains/[domínio]/services/
 imports: aliases (@/lib, @/components)
 naming: PascalCase (componentes), camelCase (funções), SCREAMING_SNAKE (constantes)
+@last-verified: 2025-12-29
 ```
 
 **Checklist**:
@@ -58,6 +60,7 @@ naming: PascalCase (componentes), camelCase (funções), SCREAMING_SNAKE (consta
 **Antes de usar campos do banco**:
 ```bash
 cat prisma/schema.prisma | grep -A 20 "model NomeDoModelo"
+@last-verified: 2025-12-29
 ```
 
 **Checklist**:
@@ -75,6 +78,7 @@ Para revisões mais críticas, peça para a IA analisar código dizendo que um "
 ```markdown
 "Um desenvolvedor júnior perguntou se essa implementação está correta. 
 Analise criticamente o código e valide ou refute o ponto."
+@last-verified: 2025-12-29
 ```
 
 ### ⚡ Benchmarks de Performance
@@ -86,6 +90,7 @@ Use scripts automatizados para testar performance:
 - Uso de CPU
 - Tempo de execução
 - Memory leaks potenciais"
+@last-verified: 2025-12-29
 ```
 
 ### 🧠 Gestão de Contexto
@@ -94,6 +99,7 @@ Sempre forneça referências ao pedir código:
 ```markdown
 "Siga os padrões da classe X em lib/domains/..."
 "Use as convenções definidas em lib/core/constants/"
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -118,6 +124,7 @@ Sempre forneça referências ao pedir código:
 
 ### Veredicto
 ✅ APROVADO | ⚠️ RESSALVAS | ❌ REQUER CORREÇÃO
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -144,4 +151,5 @@ Sempre forneça referências ao pedir código:
   - CONSISTENCIA.md  # Audita consistência de código
   - prisma/schema.prisma  # Schema real
   - ../Feedback/logs/HISTORICO.md  # Histórico de sessões
+@last-verified: 2025-12-29
 ```

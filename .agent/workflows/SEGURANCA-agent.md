@@ -59,4 +59,5 @@ Experiência: smart contracts (Solidity), backend, front-end, DevOps, tokenomics
   - _DNA.md
   - CODIGO.md  # Colaboração em código
   - prisma/schema.prisma
+@last-verified: 2025-12-29
 ```

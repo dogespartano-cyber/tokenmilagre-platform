@@ -16,9 +16,11 @@ purpose: architecture-philosophy
 Este projeto segue princípios universais encontrados na natureza:
 
 ### Fractais — Auto-Similaridade
+@last-verified: 2025-12-29
 ```
 Árvore → Galho → Ramificação → Folha
      O mesmo padrão em diferentes escalas
+@last-verified: 2025-12-29
 ```
 
 Cada módulo do projeto replica a mesma estrutura interna, independente do "zoom":
@@ -26,9 +28,11 @@ Cada módulo do projeto replica a mesma estrutura interna, independente do "zoom
 - Um **componente** segue as mesmas regras que o **sistema inteiro**
 
 ### Leis de Potência — Distribuição Natural
+@last-verified: 2025-12-29
 ```
 Poucos componentes centrais → Usados intensamente (80%)
 Muitos componentes especializados → Usados pontualmente (20%)
+@last-verified: 2025-12-29
 ```
 
 A distribuição Pareto (80/20) reflete padrões naturais:
@@ -42,6 +46,7 @@ A distribuição Pareto (80/20) reflete padrões naturais:
 
 A **dimensão fractal** determina como propriedades escalam — e essa escala segue uma **lei de potência**:
 
+@last-verified: 2025-12-29
 ```
 N(r) = k × r^(-D)
 
@@ -49,6 +54,7 @@ Onde:
   N(r) = número de elementos na escala r
   D = dimensão fractal
   k = constante
+@last-verified: 2025-12-29
 ```
 
 Sistemas que respeitam esses princípios são:
@@ -62,6 +68,7 @@ Sistemas que respeitam esses princípios são:
 
 ### Hierarquia (Dimensão = 3)
 
+@last-verified: 2025-12-29
 ```
 lib/
 ├── core/              # 🔥 Núcleo atômico (80% do uso)
@@ -86,6 +93,7 @@ lib/
     ├── adapters/
     ├── middleware/
     └── validations/
+@last-verified: 2025-12-29
 ```
 
 ### Módulo Auto-Similar
@@ -119,6 +127,7 @@ Cada módulo **deve** seguir esta estrutura:
   start_at: "lib/core/"
   expand_to: "lib/domains/"
   utilities_at: "lib/shared/"
+@last-verified: 2025-12-29
 ```
 
 ### Princípios de Contribuição
@@ -143,8 +152,10 @@ Cada módulo **deve** seguir esta estrutura:
 
 *"A natureza não é estúpida. Imitá-la é sabedoria."*
 
+@last-verified: 2025-12-29
 ```
 Criado: 2025-12-07
 Versão: 1.0.0
 Alinhamento: MANIFESTO.md
+@last-verified: 2025-12-29
 ```

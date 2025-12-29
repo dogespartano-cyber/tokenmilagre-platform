@@ -22,7 +22,7 @@ export default function ComeceAquiPage() {
         <section className="text-center space-y-8 animate-fade-in pt-10">
 
 
-<h1 className="title-newtab text-4xl md:text-7xl leading-tight tracking-tight">
+          <h1 className="title-newtab text-4xl md:text-7xl leading-tight tracking-tight">
             Cansado de ser a <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">
               liquidez de saída
@@ -42,22 +42,22 @@ export default function ComeceAquiPage() {
             <div className="absolute top-0 right-0 p-4 opacity-10">
               <AlertTriangle className="w-32 h-32 " />
             </div>
-<h3 className="title-newtab text-2xl mb-6 flex items-center gap-3">
+            <h3 className="title-newtab text-2xl mb-6 flex items-center gap-3">
               <span className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-sm">✕</span>
               O que te venderam
             </h3>
             <ul className="space-y-4 text-[var(--text-secondary)]">
               <li className="flex items-start gap-3">
                 <span className=" mt-1 font-bold">•</span>
-                <span>"Fique rico da noite para o dia com essa memecoin."</span>
+                <span>&quot;Fique rico da noite para o dia com essa memecoin.&quot;</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className=" mt-1 font-bold">•</span>
-                <span>"Grupo VIP de sinais com 100% de acerto."</span>
+                <span>&quot;Grupo VIP de sinais com 100% de acerto.&quot;</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className=" mt-1 font-bold">•</span>
-                <span>"Confie no influenciador, ele quer te ajudar."</span>
+                <span>&quot;Confie no influenciador, ele quer te ajudar.&quot;</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className=" mt-1 font-bold">•</span>
@@ -71,7 +71,7 @@ export default function ComeceAquiPage() {
             <div className="absolute top-0 right-0 p-4 opacity-10">
               <Shield className="w-32 h-32 " />
             </div>
-<h3 className="title-newtab text-2xl mb-6 flex items-center gap-3">
+            <h3 className="title-newtab text-2xl mb-6 flex items-center gap-3">
               <span className="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center text-sm">✓</span>
               A Realidade Aqui
             </h3>
@@ -99,7 +99,7 @@ export default function ComeceAquiPage() {
         {/* Os 3 Pilares da Recuperação */}
         <section className="space-y-12">
           <div className="text-center space-y-4">
-<h2 className="title-newtab text-3xl md:text-4xl">Os 3 Pilares da Sua Recuperação</h2>
+            <h2 className="title-newtab text-3xl md:text-4xl">Os 3 Pilares da Sua Recuperação</h2>
             <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
               Para sair do ciclo de perdas, você precisa de uma base sólida. O $MILAGRE oferece essa estrutura gratuitamente.
             </p>
@@ -110,9 +110,9 @@ export default function ComeceAquiPage() {
               <div className="w-14 h-14 bg-teal-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <BookOpen className="w-7 h-7" />
               </div>
-<h3 className="title-newtab text-xl mb-3">Educação Profunda</h3>
+              <h3 className="title-newtab text-xl mb-3">Educação Profunda</h3>
               <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
-                Esqueça "sinais de compra". Ensinamos análise fundamentalista, leitura de contratos e segurança DeFi. O conhecimento é a única vacina contra golpes.
+                Esqueça &quot;sinais de compra&quot;. Ensinamos análise fundamentalista, leitura de contratos e segurança DeFi. O conhecimento é a única vacina contra golpes.
               </p>
             </div>
 
@@ -120,7 +120,7 @@ export default function ComeceAquiPage() {
               <div className="w-14 h-14 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <Users className="w-7 h-7" />
               </div>
-<h3 className="title-newtab text-xl mb-3">Comunidade Real</h3>
+              <h3 className="title-newtab text-xl mb-3">Comunidade Real</h3>
               <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
                 Um ambiente onde dúvidas são bem-vindas e ninguém é deixado para trás. Nossos "Guardiões" estão aqui para ajudar, não para usar você como liquidez.
               </p>
@@ -130,7 +130,7 @@ export default function ComeceAquiPage() {
               <div className="w-14 h-14 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <Search className="w-7 h-7" />
               </div>
-<h3 className="title-newtab text-xl mb-3">Transparência</h3>
+              <h3 className="title-newtab text-xl mb-3">Transparência</h3>
               <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
                 Ferramentas como o "Verificador de URL" e nosso código aberto garantem que você saiba exatamente onde está pisando. Sem caixas pretas.
               </p>
@@ -140,7 +140,7 @@ export default function ComeceAquiPage() {
 
         {/* Passo a Passo Prático */}
         <section className="glass-card p-8 md:p-12 rounded-3xl border border-[var(--border-light)] bg-[var(--bg-elevated)]/50 backdrop-blur-xl">
-<h2 className="title-newtab text-2xl md:text-3xl mb-8 text-center">Seus Primeiros Passos Seguros</h2>
+          <h2 className="title-newtab text-2xl md:text-3xl mb-8 text-center">Seus Primeiros Passos Seguros</h2>
           <div className="space-y-6 max-w-3xl mx-auto">
             <div className="flex gap-4 items-start">
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-teal-500 text-white flex items-center justify-center font-bold">1</div>
@@ -174,7 +174,7 @@ export default function ComeceAquiPage() {
             <Heart className="w-10 h-10" />
           </div>
 
-<h2 className="title-newtab text-4xl md:text-5xl">O Resgate Começa Agora</h2>
+          <h2 className="title-newtab text-4xl md:text-5xl">O Resgate Começa Agora</h2>
           <p className="text-xl text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
             O $MILAGRE não é uma promessa de lucro fácil. É uma promessa de <strong>nunca mais ser enganado</strong>.
             Construímos um ecossistema focado em distribuir a verdadeira prosperidade: o conhecimento.

@@ -68,7 +68,7 @@ export class ArticleCrudService {
             const tagsArray = data.tagIds || data.tags || [];
 
             // Create article data object
-            const createData: any = {
+            const createData: Prisma.ArticleUncheckedCreateInput = {
                 title: data.title,
                 slug: data.slug,
                 content: sanitizedContent,
@@ -76,7 +76,8 @@ export class ArticleCrudService {
                 excerpt: data.excerpt,
                 published: data.published ?? false,
                 authorId: data.authorId || userId,
-                category: data.category,
+                // Category is required in Prisma but optional in Zod (migration phase)
+                category: data.category ?? 'general',
                 tags: JSON.stringify(tagsArray),
                 sentiment: data.sentiment || 'neutral',
                 level: data.level,

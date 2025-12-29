@@ -70,4 +70,5 @@ Ao ser invocado:
   - _DNA.md
   - ./MANIFESTO.md
   - ./ARQUITETURA.md
+@last-verified: 2025-12-29
 ```

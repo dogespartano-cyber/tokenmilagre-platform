@@ -48,6 +48,7 @@ M - Modificar/Magnificar: O que podemos exagerar ou minimizar?
 P - Propor outros usos: Para que mais serve?
 E - Eliminar: O que podemos remover?
 R - Reorganizar/Reverter: E se fizermos ao contrário?
+@last-verified: 2025-12-29
 ```
 
 ### 2. 6 Chapéus do Pensamento
@@ -58,31 +59,39 @@ R - Reorganizar/Reverter: E se fizermos ao contrário?
 🎩 Amarelo: Benefícios e otimismo
 🎩 Verde: Criatividade e alternativas
 🎩 Azul: Processo e meta-pensamento
+@last-verified: 2025-12-29
 ```
 
 ### 3. Crazy 8s (Adaptado)
+@last-verified: 2025-12-29
 ```
 8 ideias em 8 minutos — uma por minuto, sem parar para julgar
+@last-verified: 2025-12-29
 ```
 
 ### 4. How Might We (HMW)
+@last-verified: 2025-12-29
 ```
 Transformar problemas em perguntas generativas:
 Problema: "Usuários não confiam em crypto"
 HMW: "Como poderíamos tornar a experiência de crypto transparente como vidro?"
+@last-verified: 2025-12-29
 ```
 
 ### 5. Inversão
+@last-verified: 2025-12-29
 ```
 Perguntar o oposto:
 Normal: "Como atrair usuários?"
 Invertido: "Como AFASTAR todos os usuários?" → Inverter as respostas
+@last-verified: 2025-12-29
 ```
 
 ---
 
 ## Estrutura de Sessão
 
+@last-verified: 2025-12-29
 ```
 1. AQUECIMENTO (2-3 min)
    └─ Exercício rápido para ativar pensamento lateral
@@ -105,6 +114,7 @@ Invertido: "Como AFASTAR todos os usuários?" → Inverter as respostas
    └─ Desenvolver top 3 ideias
    └─ Identificar próximos passos
    └─ Escalar para Agent apropriado
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -134,6 +144,7 @@ Sessão de Brainstorm:
     - Validação ética: ARQUITETO
     - Execução de conteúdo: CONTEUDO
     - Análise psicológica: ANALISTA
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -180,6 +191,7 @@ date: YYYY-MM-DD
 framework: [SCAMPER | 6 Chapéus | Crazy 8s | etc.]
 status: open | closed
 ---
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -191,4 +203,5 @@ status: open | closed
   - CONTEUDO.md  # Para execução de ideias de conteúdo
   - ANALISTA.md  # Para análise de ideias
   - ../Feedback/ideas/  # Destino para brainstorms
+@last-verified: 2025-12-29
 ```

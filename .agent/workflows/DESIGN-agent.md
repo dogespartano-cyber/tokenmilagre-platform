@@ -30,6 +30,7 @@ O `ThemeProvider` sincroniza todos automaticamente.
 ### 1. Import único
 ```typescript
 import { useTheme, tokens, cssVar } from '@/lib/core/theme';
+@last-verified: 2025-12-29
 ```
 
 ### 2. Nunca hardcode cores
@@ -40,12 +41,14 @@ import { useTheme, tokens, cssVar } from '@/lib/core/theme';
 
 // ❌ PROIBIDO (ESLint alertará)
 <div style={{ backgroundColor: '#0b0e11' }} />
+@last-verified: 2025-12-29
 ```
 
 ### 3. Hydration safety
 ```typescript
 const { theme, mounted } = useTheme();
 if (!mounted) return <Skeleton />;
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -85,6 +88,7 @@ import { faUsers, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 
 // ❌ PROIBIDO
 import { RocketIcon } from 'lucide-react';  // Não usar Lucide para ícones inline
+@last-verified: 2025-12-29
 ```
 
 ### Ícones Recomendados por Contexto
@@ -110,6 +114,7 @@ import { RocketIcon } from 'lucide-react';  // Não usar Lucide para ícones inl
 
 // Espaçamento entre seções
 <div className="space-y-16 pb-20">
+@last-verified: 2025-12-29
 ```
 
 ### Glass Card (Componente Principal)
@@ -121,6 +126,7 @@ import { RocketIcon } from 'lucide-react';  // Não usar Lucide para ícones inl
   border: 1px solid var(--border-light);
   border-radius: var(--radius-2xl);  /* 24px */
 }
+@last-verified: 2025-12-29
 ```
 
 ### Títulos de Seção
@@ -132,6 +138,7 @@ import { RocketIcon } from 'lucide-react';  // Não usar Lucide para ícones inl
 <p className="text-xl text-[var(--text-secondary)]">
   Subtítulo explicativo
 </p>
+@last-verified: 2025-12-29
 ```
 
 ### Botões Primários
@@ -142,6 +149,7 @@ import { RocketIcon } from 'lucide-react';  // Não usar Lucide para ícones inl
   border border-white/20 hover:scale-105 transition-all shadow-xl">
   Texto do Botão
 </button>
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -185,6 +193,7 @@ O `ZenithCard` é a fonte única de verdade para design de cards. Ele substitui 
 >
   Conteúdo...
 </ZenithCard>
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -266,5 +275,6 @@ Antes de aprovar qualquer componente novo:
   - lib/core/theme/  # Código fonte
   - app/page.tsx  # Referência de design
   - app/globals.css  # CSS Variables
+@last-verified: 2025-12-29
 ```
 

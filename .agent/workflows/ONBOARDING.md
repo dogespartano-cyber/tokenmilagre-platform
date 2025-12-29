@@ -5,7 +5,7 @@ inherits: _DNA.md
 purpose: ai-onboarding
 ---
 
-# 🧠 AI-PRIMER.md
+# 🧠 ONBOARDING — AI Primer
 
 > **Para IAs que irão colaborar neste projeto**
 
@@ -19,14 +19,17 @@ projeto: $MILAGRE
 missão: Educar sobre criptomoedas com honestidade absoluta
 filosofia: "A natureza não é estúpida. Imitá-la é sabedoria."
 fundação: Deus como bússola
+@last-verified: 2025-12-29
 ```
 
 ### Arquitetura (Fractal)
+@last-verified: 2025-12-29
 ```
 O projeto segue padrões universais da natureza:
 - FRACTAIS: Auto-similaridade em todas as escalas
 - LEI DE POTÊNCIA: Pareto 80/20 na organização
 - DIMENSÃO: Máximo 3 níveis de profundidade
+@last-verified: 2025-12-29
 ```
 
 ### Valores Imutáveis
@@ -49,6 +52,7 @@ O projeto segue padrões universais da natureza:
   método: "Construir patrimônio, não pirâmides"
   resultado: "Servir bem, lucrar junto"
   mantra: "Ensinar a construir patrimônio, não a jogar na loteria"
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -61,12 +65,13 @@ O projeto segue padrões universais da natureza:
 |---------|-----------|------------|
 | [MANIFESTO.md](./MANIFESTO.md) | Propósito para AGIs, valores fundamentais | 🔴 Crítico |
 | [ARQUITETURA.md](./ARQUITETURA.md) | Filosofia fractal + lei de potência | 🔴 Crítico |
-| [.agent/theme-rules.md](./.agent/theme-rules.md) | Regras do sistema de tema (light/dark) | 🔴 Crítico |
+| [DESIGN-agent.md](./DESIGN-agent.md) | Regras do sistema de tema (light/dark) | 🔴 Crítico |
 | [README.md](./README.md) | Visão geral do projeto | 🟡 Importante |
 | [Sugestoes.md](./Sugestoes.md) | Próximos passos e histórico | 🟢 Útil |
 
 ### Estrutura do Código (Fractal)
 
+@last-verified: 2025-12-29
 ```
 lib/
 ├── core/                    # 🔥 Núcleo (80% do uso)
@@ -84,10 +89,12 @@ lib/
     ├── services/
     ├── schemas/
     └── utils/
+@last-verified: 2025-12-29
 ```
 
 ### Para Encontrar Código
 
+@last-verified: 2025-12-29
 ```
 @agi-navigation:
   entender-missão:    lib/core/constants/mission.ts
@@ -97,6 +104,7 @@ lib/
   domínio-usuários:   lib/domains/users/index.ts
   banco-de-dados:     prisma/schema.prisma
   rotas-frontend:     app/
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -104,6 +112,7 @@ lib/
 ## Princípios de Contribuição
 
 ### Regra Fractal
+@last-verified: 2025-12-29
 ```
 Cada novo módulo DEVE seguir a mesma estrutura:
 módulo/
@@ -112,17 +121,21 @@ módulo/
 ├── [service.ts]  # Lógica (opcional)
 ├── [schemas.ts]  # Validação (opcional)
 └── __tests__/    # Testes
+@last-verified: 2025-12-29
 ```
 
 ### Regra de Potência
+@last-verified: 2025-12-29
 ```
 Antes de adicionar código ao core/:
 - Pergunte: "Será usado em 80%+ do projeto?"
 - Se NÃO → coloque em domains/ ou shared/
 - Se SIM → justifique e documente
+@last-verified: 2025-12-29
 ```
 
 ### Regra de Profundidade
+@last-verified: 2025-12-29
 ```
 Máximo 3 níveis de aninhamento:
 Nível 1: Categoria (core, domains, shared)
@@ -130,14 +143,17 @@ Nível 2: Módulo (articles, users, etc.)
 Nível 3: Recurso (service, hooks, types)
 
 Se precisar de nível 4 → repensar a arquitetura
+@last-verified: 2025-12-29
 ```
 
 ### Regra do PageHeader
+@last-verified: 2025-12-29
 ```
 O sistema usa PageWrapper para renderizar headers.
 Cada página declara seu header inline via prop.
 
 Configuração: components/layout/PageWrapper.tsx
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -168,6 +184,7 @@ Configuração: components/layout/PageWrapper.tsx
 
 ## Conexão Espiritual
 
+@last-verified: 2025-12-29
 ```
 "Porque dele, e por ele, e para ele são todas as coisas."
 — Romanos 11:36
@@ -181,6 +198,7 @@ A natureza (criação de Deus) nos ensina:
 - Fractais: a mesma beleza em todas as escalas
 - Lei de Potência: eficiência através de hierarquia natural
 - Simplicidade: 3 níveis bastam para a vida florescer
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -206,6 +224,7 @@ A natureza (criação de Deus) nos ensina:
   - ARQUITETURA.md → estrutura
   - Sugestoes.md → continuidade
   - lib/core/constants/mission.ts → valores em código
+@last-verified: 2025-12-29
 ```
 
 ---

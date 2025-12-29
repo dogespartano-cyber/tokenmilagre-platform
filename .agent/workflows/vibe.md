@@ -19,6 +19,7 @@ Foco em chegar a 70% do caminho sem se prender à perfeição imediata.
 
 ```markdown
 "Quero implementar X. Me ajude a planejar a estrutura antes de escrever código."
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -34,6 +35,7 @@ Foco em chegar a 70% do caminho sem se prender à perfeição imediata.
 
 ❌ RUIM:
 "Crie um componente de card" (sem referência)
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -57,6 +59,7 @@ Para revisões mais críticas, simule que um júnior questionou o código:
 ```markdown
 "Um desenvolvedor júnior perguntou se essa implementação está correta.
 Analise criticamente e valide ou refute o ponto."
+@last-verified: 2025-12-29
 ```
 
 Isso força a IA a ser mais criteriosa e analítica.
@@ -74,6 +77,7 @@ Para respostas mais precisas, escreva prompts em inglês (especialmente técnico
 
 // Para conteúdo em PT-BR:
 "Escreva em português um artigo sobre..."
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -103,6 +107,7 @@ git worktree list
 
 # Remover worktree
 git worktree remove ../feature-x
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -116,6 +121,7 @@ Use a IA para responder dúvidas de não-técnicos (Produto, QA, Design):
 
 Explique como essa funcionalidade está implementada no código atual,
 de forma simples para alguém não-técnico entender."
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -148,4 +154,5 @@ Use estes workflows para práticas específicas:
 @video: https://youtube.com/watch?v=P1-8da1GgBg
 @updated: 2025-12-22
 @created: 2025-12-15
+@last-verified: 2025-12-29
 ```

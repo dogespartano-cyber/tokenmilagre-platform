@@ -149,4 +149,5 @@ Se você se pegar pensando:
   - /verificacao: Verificar que fix funcionou antes de declarar sucesso
 @source: https://github.com/obra/superpowers
 @created: 2025-12-22
+@last-verified: 2025-12-29
 ```

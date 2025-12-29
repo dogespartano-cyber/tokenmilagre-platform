@@ -16,6 +16,7 @@ source: Superpowers - obra/superpowers (verification-before-completion)
 
 ## O Gate Function
 
+@last-verified: 2025-12-29
 ```
 ANTES de declarar qualquer status ou expressar satisfação:
 
@@ -28,6 +29,7 @@ ANTES de declarar qualquer status ou expressar satisfação:
 5. SÓ ENTÃO: Faça a claim
 
 Pular qualquer step = mentir, não verificar
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -73,23 +75,29 @@ Pular qualquer step = mentir, não verificar
 
 ### Testes
 
+@last-verified: 2025-12-29
 ```
 ✅ [Executa comando] [Vê: 34/34 pass] "Todos os testes passam"
 ❌ "Deve passar agora" / "Parece correto"
+@last-verified: 2025-12-29
 ```
 
 ### Build
 
+@last-verified: 2025-12-29
 ```
 ✅ [Executa build] [Vê: exit 0] "Build passa"
 ❌ "Linter passou" (linter não verifica compilação)
+@last-verified: 2025-12-29
 ```
 
 ### Requisitos
 
+@last-verified: 2025-12-29
 ```
 ✅ Re-lê plano → Cria checklist → Verifica cada → Reporta gaps ou conclusão
 ❌ "Testes passam, fase completa"
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -131,4 +139,5 @@ Isso é não-negociável.
   - /execucao: Verificar cada batch antes de prosseguir
 @source: https://github.com/obra/superpowers
 @created: 2025-12-22
+@last-verified: 2025-12-29
 ```

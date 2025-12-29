@@ -50,6 +50,7 @@ test('validação funciona', async () => {
   await validate(mock);
   expect(mock).toHaveBeenCalled();
 });
+@last-verified: 2025-12-29
 ```
 
 **Requisitos:**
@@ -65,6 +66,7 @@ test('validação funciona', async () => {
 
 ```bash
 npm test path/to/test.test.ts
+@last-verified: 2025-12-29
 ```
 
 Confirme:
@@ -97,6 +99,7 @@ function submitForm(data: FormData, options?: {
 }) {
   // YAGNI - You Aren't Gonna Need It
 }
+@last-verified: 2025-12-29
 ```
 
 Não adicione features, refatore outro código, ou "melhore" além do teste.
@@ -109,6 +112,7 @@ Não adicione features, refatore outro código, ou "melhore" além do teste.
 
 ```bash
 npm test path/to/test.test.ts
+@last-verified: 2025-12-29
 ```
 
 Confirme:
@@ -174,4 +178,5 @@ Antes de marcar trabalho como completo:
   - /verificacao: Verificar antes de declarar sucesso
 @source: https://github.com/obra/superpowers
 @created: 2025-12-22
+@last-verified: 2025-12-29
 ```

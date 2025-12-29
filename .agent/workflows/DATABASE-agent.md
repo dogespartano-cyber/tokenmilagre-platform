@@ -49,6 +49,7 @@ description: Gerenciamento de banco de dados, backups e migrações Prisma
 
 ## Arquitetura
 
+@last-verified: 2025-12-29
 ```
 ┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
 │   Next.js App   │ ──▶ │   Prisma ORM     │ ──▶ │   Supabase      │
@@ -61,6 +62,7 @@ description: Gerenciamento de banco de dados, backups e migrações Prisma
                     │ ~/Documentos/    │
                     │ Backup Supabase/ │
                     └──────────────────┘
+@last-verified: 2025-12-29
 ```
 
 ### Conexões:
@@ -108,4 +110,5 @@ description: Gerenciamento de banco de dados, backups e migrações Prisma
   inherits: _DNA.md
   collaborates_with: [CODIGO, ESTRUTURA]
   escalates_to: ARQUITETO
+@last-verified: 2025-12-29
 ```

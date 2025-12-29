@@ -56,6 +56,7 @@ npm test
 \`\`\`
 
 **Pronto para feedback.**
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -117,4 +118,5 @@ Após todas as tarefas completas e verificadas:
   - /tdd: Seguir TDD em cada tarefa
 @source: https://github.com/obra/superpowers  
 @created: 2025-12-22
+@last-verified: 2025-12-29
 ```

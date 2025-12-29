@@ -66,7 +66,7 @@ export class ArticleBulkService {
                     break;
 
                 default:
-                    throw new ValidationError(`Unknown bulk action: ${(operation as any).action}`);
+                    throw new ValidationError(`Unknown bulk action: ${(operation as { action: string }).action}`);
             }
 
             this.logger.info('Bulk operation completed', {

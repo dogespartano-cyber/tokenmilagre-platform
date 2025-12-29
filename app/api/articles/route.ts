@@ -17,6 +17,13 @@ import { articleQueryInputCurrent, articleCreateInputCurrent } from '@/lib/schem
 
 export const dynamic = 'force-dynamic';
 
+// Interface para erros de validação Zod
+interface ZodValidationIssue {
+  path: (string | number)[]
+  message: string
+  code: string
+}
+
 // Helper para parse seguro de JSON
 function safeJSONParse<T>(json: string | null | undefined, fallback: T): T {
   if (!json) return fallback;
@@ -169,10 +176,11 @@ export async function POST(request: NextRequest) {
   let auth;
   try {
     auth = await requireEditor(request)
-  } catch (authError: any) {
-    console.error('❌ [POST /api/articles] Critical Auth Error:', authError);
-    return errorResponse('Authentication System Failure: ' + authError.message, 500, {
-      stack: authError.stack,
+  } catch (authError: unknown) {
+    const error = authError as Error
+    console.error('❌ [POST /api/articles] Critical Auth Error:', error);
+    return errorResponse('Authentication System Failure: ' + error.message, 500, {
+      stack: error.stack,
       type: 'AuthSystemError'
     });
   }
@@ -208,20 +216,21 @@ export async function POST(request: NextRequest) {
     let validated;
     try {
       validated = validation.validate(articleCreateInputCurrent, body)
-    } catch (validationError: any) {
+    } catch (validationError: unknown) {
+      const valError = validationError as { issues?: ZodValidationIssue[] }
       // Log validation error details to server console
       console.error('❌ [Validation Failed] Body that failed:', JSON.stringify(body, null, 2));
-      console.error('❌ [Validation Failed] Error:', validationError);
+      console.error('❌ [Validation Failed] Error:', valError);
 
       // Return specific 400 response immediately for Zod errors
-      if (validationError.issues) {
-        const zodErrors = validationError.issues.map((issue: any) => ({
+      if (valError.issues) {
+        const zodErrors = valError.issues.map((issue: ZodValidationIssue) => ({
           path: issue.path.join('.'),
           message: issue.message,
           code: issue.code
         }))
         return errorResponse(
-          'Validation failed: ' + zodErrors.map((e: any) => `${e.path}: ${e.message}`).join('; '),
+          'Validation failed: ' + zodErrors.map((e: { path: string; message: string }) => `${e.path}: ${e.message}`).join('; '),
           400,
           { validationErrors: zodErrors }
         )

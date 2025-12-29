@@ -5,7 +5,7 @@ role: Gerenciamento de Código e Versionamento
 trigger: "git", "github", "pr", "pull request", "commit", "review", "branch", "versionamento", "release"
 inherits: _DNA.md
 collaborates: [ESTRUTURA, CONSISTENCIA]
-escalates-to: SYSTEM
+escalates-to: ARQUITETO
 ---
 
 # 🐙 GITHUB Agent
@@ -81,4 +81,5 @@ O agente pode ajudar a criar descrições de PR ricas:
   - ESTRUTURA.md
   - DESIGN-agent.md
   - task.md
+@last-verified: 2025-12-29
 ```

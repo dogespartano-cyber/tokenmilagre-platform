@@ -60,6 +60,7 @@ async function main() {
 }
 main().finally(() => prisma.\$disconnect());
 "
+@last-verified: 2025-12-29
 ```
 
 ### 2. Estatísticas de Recursos
@@ -82,6 +83,7 @@ async function main() {
 }
 main().finally(() => prisma.\$disconnect());
 "
+@last-verified: 2025-12-29
 ```
 
 ### 3. Relatório Completo
@@ -136,6 +138,7 @@ async function main() {
 }
 main().finally(() => prisma.\$disconnect());
 "
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -166,6 +169,7 @@ Relatório $MILAGRE:
   
   Recomendações:
     - [ação sugerida]
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -208,6 +212,7 @@ type: report
 date: YYYY-MM-DD
 scope: full | articles | resources | users
 ---
+@last-verified: 2025-12-29
 ```
 
 > **Dica**: Execute relatórios semanalmente para acompanhar evolução do projeto.
@@ -221,4 +226,5 @@ scope: full | articles | resources | users
   - CONTEUDO.md  # Para preencher gaps
   - VALOR.md  # Para validar ROI de conteúdo
   - ../Feedback/logs/  # Destino para relatórios
+@last-verified: 2025-12-29
 ```

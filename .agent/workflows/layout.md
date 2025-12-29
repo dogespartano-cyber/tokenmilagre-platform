@@ -38,6 +38,7 @@ Estilos `.prose` customizados foram adicionados manualmente no final de `app/glo
 .prose p { ... }
 .prose blockquote { ... }
 /* etc. */
+@last-verified: 2025-12-29
 ```
 
 ### Variáveis de Tema para Artigos
@@ -46,6 +47,7 @@ Estilos `.prose` customizados foram adicionados manualmente no final de `app/glo
 --text-article-body: #374151;
 --bg-article-quote: #F9FAFB;
 --border-article: #E5E7EB;
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -61,6 +63,7 @@ const currentSlug = pathname?.startsWith('/educacao/')
     ? pathname.replace('/educacao/', '').split('/')[0]
     : null;
 const isTrilhaMode = currentSlug ? isGuiaEssencialSlug(currentSlug) : false;
+@last-verified: 2025-12-29
 ```
 
 ### Comportamento
@@ -89,6 +92,7 @@ const isTrilhaMode = currentSlug ? isGuiaEssencialSlug(currentSlug) : false;
 ```typescript
 const h2Match = line.match(/^## (.+)$/);
 const h3Match = line.match(/^### (.+)$/);
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -103,12 +107,14 @@ const h3Match = line.match(/^### (.+)$/);
 ```tsx
 <main className="flex-1 min-w-0">
 <aside className="hidden lg:block w-56 shrink-0">
+@last-verified: 2025-12-29
 ```
 
 ### Espaçamentos de Texto (prose)
 ```css
 .prose h2 { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-article); }
 .prose p { margin-bottom: 1.5rem; line-height: 1.8; }
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -122,6 +128,7 @@ const h3Match = line.match(/^### (.+)$/);
 ### Executar Seed
 ```bash
 npx tsx prisma/seeds/seed-seguranca-primeiro.ts
+@last-verified: 2025-12-29
 ```
 
 ### Verificar Conteúdo no Banco
@@ -138,6 +145,7 @@ async function main() {
 }
 main().finally(() => prisma.\$disconnect());
 "
+@last-verified: 2025-12-29
 ```
 
 ---

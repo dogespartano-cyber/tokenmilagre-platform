@@ -90,5 +90,6 @@ Em contextos financeiros, usar:
   changelog:
     - v2.0.0: Simplificado para maior flexibilidade; foco em ética, não em proibições
     - v1.1.0: Added checklist, expanded disclosure, legal disclaimer
+@last-verified: 2025-12-29
 ```
 

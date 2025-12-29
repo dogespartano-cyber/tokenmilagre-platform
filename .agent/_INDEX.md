@@ -38,6 +38,7 @@ version: 2.0.0
 | Estatísticas e relatórios | [DADOS](./workflows/DADOS-agent.md) | "Estatísticas", "dados" |
 | **Verificar consistência** | [CONSISTENCIA](./workflows/CONSISTENCIA-agent.md) | "Sincronização", "integridade" |
 | **Banco de dados/Backup** | [DATABASE](./workflows/DATABASE-agent.md) | "Backup", "migração", "db push" |
+| **🔧 Manutenção de Agents** | [MANUTENCAO](./workflows/manutencao.md) | "/manutencao", "health check" |
 
 ---
 
@@ -130,6 +131,7 @@ SEGURANCA   DESIGN    CONTEUDO ←───────────────�
 | [MANIFESTO](./workflows/MANIFESTO.md) | Missão e propósito |
 | [ARQUITETURA](./workflows/ARQUITETURA.md) | Filosofia fractal |
 | [TRANSPARENCIA](./workflows/TRANSPARENCIA.md) | Política ética do token |
+| [CONHECIMENTO](./workflows/CONHECIMENTO.md) | Base de troubleshooting |
 | [BACKLOG](../Feedback/backlog/BACKLOG.md) | Tarefas pendentes *(local)* |
 | [HISTORICO](../Feedback/logs/HISTORICO.md) | Histórico de sessões *(local)* |
 | [MANTRA](./workflows/MANTRA.md) | Leitura diária |
@@ -146,6 +148,7 @@ SEGURANCA   DESIGN    CONTEUDO ←───────────────�
 | [plano](./workflows/plano.md) | Escrita de planos de implementação |
 | [execucao](./workflows/execucao.md) | Execução de planos em batches |
 | [verificacao](./workflows/verificacao.md) | Verificação antes de conclusão |
+| [manutencao](./workflows/manutencao.md) | **🔧 Manutenção semanal do ecossistema** |
 
 ---
 
@@ -153,4 +156,6 @@ SEGURANCA   DESIGN    CONTEUDO ←───────────────�
 @agi-metadata:
   inherits: _DNA.md
   updates: on-agent-change
+  last-maintained: 2025-12-29
 ```
+

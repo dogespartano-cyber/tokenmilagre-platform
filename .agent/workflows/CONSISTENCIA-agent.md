@@ -83,6 +83,7 @@ escalates-to: ARQUITETO
 4. CORREÇÃO:
    - Aplicar correções necessárias
    - Documentar mudanças no HISTORICO.md
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -120,6 +121,7 @@ Auditoria de Consistência:
     - [lista de páginas sem problemas]
     
   Próxima Auditoria: [data sugerida]
+@last-verified: 2025-12-29
 ```
 
 ---
@@ -171,4 +173,5 @@ Auditoria de Consistência:
   - CONTEUDO.md  # Padrões de conteúdo
   - CODIGO.md  # Padrões técnicos
   - ../Feedback/logs/  # Destino para relatórios
+@last-verified: 2025-12-29
 ```

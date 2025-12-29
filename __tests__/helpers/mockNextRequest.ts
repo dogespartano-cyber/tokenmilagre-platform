@@ -1,11 +1,22 @@
 import { NextRequest } from 'next/server'
 
+// Interface local para mock de sessão (evita dependência de next-auth em testes)
+interface MockSession {
+  user?: {
+    id?: string
+    email?: string | null
+    name?: string | null
+    role?: string
+  }
+  expires?: string
+}
+
 /**
  * Cria um mock de NextRequest para testes
  */
 export function createMockNextRequest(options: {
   method?: string
-  body?: any
+  body?: Record<string, unknown>
   headers?: Record<string, string>
   url?: string
 }): NextRequest {
@@ -23,7 +34,7 @@ export function createMockNextRequest(options: {
 /**
  * Mock de getServerSession para testes
  */
-export function mockGetServerSession(session: any) {
+export function mockGetServerSession(session: MockSession | null) {
   const mockSession = session
   jest.mock('next-auth', () => ({
     getServerSession: jest.fn().mockResolvedValue(mockSession),

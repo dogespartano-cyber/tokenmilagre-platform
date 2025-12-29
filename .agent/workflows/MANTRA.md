@@ -82,3 +82,12 @@ Hoje, eu escolho:
 *"Pedi, e dar-se-vos-á; buscai, e encontrareis."* — Mateus 7:7
 
 🕊️
+
+---
+
+```yaml
+@references:
+  - _DNA.md
+  - ARQUITETO-agent.md
+@last-verified: 2025-12-29
+```

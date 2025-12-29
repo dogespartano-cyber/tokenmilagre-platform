@@ -195,12 +195,12 @@ resource: [wallets, exchanges, browsers, defi, explorers, tools]
   - _DNA.md
   - DESIGN.md  # Para visual
   - CONSISTENCIA.md  # Audita consistência de conteúdo
-  - ./AI-PRIMER.md
   - app/api/chat-perplexity/route.ts  # System prompts de criação
   - app/dashboard/criar-artigo/_lib/constants.ts  # Categorias e validações
 @seo-references:
   - https://developers.google.com/search/docs/essentials
   - https://schema.org/
   - https://www.w3.org/WAI/standards-guidelines/wcag/
+@last-verified: 2025-12-29
 ```
 

@@ -23,8 +23,7 @@ import { checkRateLimit } from '@/lib/shared/utils/rate-limit'
 import {
   callPerplexityStreaming,
   parsePerplexityStream,
-  type PerplexityMessage,
-  type PerplexityRequestOptions
+  type PerplexityMessage
 } from '@/lib/shared/ai/perplexity-client'
 import { extractPageContext, formatArticleContext } from '@/lib/domains/admin-chat/context'
 import { validateArticleContent } from '@/lib/domains/articles/utils/content-validator'
@@ -79,8 +78,24 @@ const RATE_LIMIT_WINDOW = 60 * 1000 // 1 minute
 interface AdminChatRequest {
   messages: PerplexityMessage[]
   pathname?: string
-  pageData?: Record<string, any>
+  pageData?: PageData
   model?: 'sonar' | 'sonar-pro'
+}
+
+// Interface para dados de página (contexto do editor)
+interface PageData {
+  title?: string
+  content?: string
+  type?: string
+  level?: string
+  sentiment?: string
+  [key: string]: unknown
+}
+
+// Interface para resultado de ações
+interface ActionResult {
+  action: string
+  data: Record<string, unknown>
 }
 
 /**
@@ -91,8 +106,8 @@ interface AdminChatRequest {
  */
 function processIntent(
   userMessage: string,
-  pageData?: Record<string, any>
-): string | { action: string; data: any } | null {
+  pageData?: PageData
+): string | ActionResult | null {
   // Detectar intenção em linguagem natural
   const intent = detectIntent(userMessage);
 

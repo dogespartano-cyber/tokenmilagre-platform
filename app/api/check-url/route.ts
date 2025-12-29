@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { analyzeURL, extractDomain } from '@/lib/url-security/patterns';
 
+// Interface para resposta tipada
+interface URLCheckResponse {
+  safe: boolean
+  cached: boolean
+  checkedAt: string
+  threat?: {
+    level?: string
+    reasons: string[]
+    educationalTip?: string
+    similarLegitDomain?: string
+    source?: string
+  }
+}
+
 /**
  * API Route: POST /api/check-url
  *
@@ -38,7 +52,7 @@ export async function POST(request: NextRequest) {
     const analysis = analyzeURL(url);
 
     // Formatar resposta
-    const response: any = {
+    const response: URLCheckResponse = {
       safe: analysis.safe,
       cached: false, // TODO: Implementar cache em DB
       checkedAt: new Date().toISOString(),
