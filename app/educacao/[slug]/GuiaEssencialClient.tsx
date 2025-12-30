@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { useMemo, useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
@@ -280,7 +281,7 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
                 {/* Índice do Artigo */}
                 {tableOfContents.length > 0 && (
                   <nav className="space-y-1">
-<h3 className="title-newtab text-[10px] uppercase tracking-[0.2em] text-[var(--text-article-muted)] mb-3">
+                    <h3 className="title-newtab text-[10px] uppercase tracking-[0.2em] text-[var(--text-article-muted)] mb-3">
                       Neste artigo
                     </h3>
                     {tableOfContents.map((item, idx) => (
@@ -304,7 +305,7 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
 
                 {/* Compartilhar */}
                 <div className="space-y-3">
-<h3 className="title-newtab text-[10px] uppercase tracking-[0.2em] text-[var(--text-article-muted)]">
+                  <h3 className="title-newtab text-[10px] uppercase tracking-[0.2em] text-[var(--text-article-muted)]">
                     Compartilhar
                   </h3>
                   <div className="flex gap-2">
@@ -365,7 +366,7 @@ export default function GuiaEssencialClient({ article }: GuiaEssencialClientProp
 
                 {/* Title - Editorial Typography */}
                 <h1
-className="title-newtab text-[1.75rem] md:text-[2.5rem] lg:text-[2.75rem] mb-6 md:mb-8"
+                  className="title-newtab text-[1.75rem] md:text-[2.5rem] lg:text-[2.75rem] mb-6 md:mb-8"
                   style={{
                     lineHeight: '1.15',
                     letterSpacing: '-0.02em',
@@ -426,6 +427,7 @@ className="title-newtab text-[1.75rem] md:text-[2.5rem] lg:text-[2.75rem] mb-6 m
               {/* ===== ARTICLE BODY ===== */}
               <article className="prose prose-lg max-w-none">
                 <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
                   components={{
                     h1: ({ children }) => <h1 className="sr-only">{children}</h1>,
                     h2: ({ children }) => {
@@ -434,7 +436,7 @@ className="title-newtab text-[1.75rem] md:text-[2.5rem] lg:text-[2.75rem] mb-6 m
                       return (
                         <h2
                           id={id}
-className="title-newtab text-xl md:text-2xl mt-14 md:mt-16 mb-5 pt-8 scroll-mt-28 border-t border-[var(--border-article)]"
+                          className="title-newtab text-xl md:text-2xl mt-14 md:mt-16 mb-5 pt-8 scroll-mt-28 border-t border-[var(--border-article)]"
                           style={{ letterSpacing: '-0.01em' }}
                         >
                           {children}
@@ -447,7 +449,7 @@ className="title-newtab text-xl md:text-2xl mt-14 md:mt-16 mb-5 pt-8 scroll-mt-2
                       return (
                         <h3
                           id={id}
-className="title-newtab text-lg md:text-xl mt-10 mb-4 scroll-mt-28"
+                          className="title-newtab text-lg md:text-xl mt-10 mb-4 scroll-mt-28"
                         >
                           {children}
                         </h3>
@@ -511,6 +513,39 @@ className="title-newtab text-lg md:text-xl mt-10 mb-4 scroll-mt-28"
                       >
                         {children}
                       </a>
+                    ),
+                    // Table components for GFM tables
+                    table: ({ children }) => (
+                      <div className="my-8 overflow-x-auto rounded-lg border border-[var(--border-article)]">
+                        <table className="w-full text-sm">
+                          {children}
+                        </table>
+                      </div>
+                    ),
+                    thead: ({ children }) => (
+                      <thead className="bg-[var(--bg-article-tag)] border-b border-[var(--border-article)]">
+                        {children}
+                      </thead>
+                    ),
+                    tbody: ({ children }) => (
+                      <tbody className="divide-y divide-[var(--border-article)]">
+                        {children}
+                      </tbody>
+                    ),
+                    tr: ({ children }) => (
+                      <tr className="hover:bg-[var(--bg-article-tag)]/50 transition-colors">
+                        {children}
+                      </tr>
+                    ),
+                    th: ({ children }) => (
+                      <th className="px-4 py-3 text-left font-semibold text-[var(--text-article-title)]">
+                        {children}
+                      </th>
+                    ),
+                    td: ({ children }) => (
+                      <td className="px-4 py-3 text-[var(--text-article-body)]">
+                        {children}
+                      </td>
                     ),
                   }}
                 >

@@ -67,7 +67,6 @@ prisma/backup-*.json
 
 # Local documentation (kept locally, not in git)
 CLAUDE-MEMORY.md
-MANIFESTO.md
 MIGRACAO-POSTGRES.md
 *.backup.md
 
