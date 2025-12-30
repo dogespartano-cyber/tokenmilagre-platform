@@ -7,7 +7,7 @@ import { faSave, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import dynamic from 'next/dynamic';
 
 // Dynamic import for TipTapEditor (heavy)
-const TipTapEditor = dynamic(() => import('@/app/lab/editor/TipTapEditor'), {
+const TipTapEditor = dynamic(() => import('@/lib/domains/articles/editor/components/TipTapEditor'), {
       ssr: false,
       loading: () => <div className="animate-pulse bg-milagre-800 h-96 rounded-xl w-full" />
 });
@@ -63,8 +63,8 @@ export default function EditorPage() {
                                     onClick={handleSave}
                                     disabled={isSaving}
                                     className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition-all ${isSaving
-                                                ? 'bg-gray-700 cursor-not-allowed text-gray-400'
-                                                : 'bg-gradient-to-r from-milagre-gold to-yellow-500 text-milagre-900 hover:shadow-lg hover:shadow-yellow-500/20 active:scale-95'
+                                          ? 'bg-gray-700 cursor-not-allowed text-gray-400'
+                                          : 'bg-gradient-to-r from-milagre-gold to-yellow-500 text-milagre-900 hover:shadow-lg hover:shadow-yellow-500/20 active:scale-95'
                                           }`}
                               >
                                     <FontAwesomeIcon icon={faSave} />

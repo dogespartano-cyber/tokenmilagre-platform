@@ -3,7 +3,7 @@
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Callout } from '@/lib/domains/articles/editor/extensions/Callout';
 import { Quiz } from '@/lib/domains/articles/editor/extensions/Quiz';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +14,6 @@ import {
     faListOl,
     faQuoteLeft,
     faCode,
-    faHeading,
     faUndo,
     faRedo,
     faMinus,

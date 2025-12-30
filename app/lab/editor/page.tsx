@@ -13,8 +13,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 // TipTap precisa ser carregado dinamicamente (client-only)
+// TipTap precisa ser carregado dinamicamente (client-only)
 const TipTapEditor = dynamic(
-    () => import('./TipTapEditor'),
+    () => import('@/lib/domains/articles/editor/components/TipTapEditor'),
     {
         ssr: false,
         loading: () => (

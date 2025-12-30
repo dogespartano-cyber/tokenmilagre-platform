@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import TipTapEditor from '@/app/lab/editor/TipTapEditor';
+import TipTapEditor from '@/lib/domains/articles/editor/components/TipTapEditor';
 import ModularArticleRenderer from '@/lib/domains/articles/editor/components/ModularArticleRenderer';
 
 export default function ArticleTemplateLab() {
