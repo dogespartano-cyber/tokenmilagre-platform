@@ -1,9 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { useEffect, useState, useMemo } from 'react';
+import ModularArticleRenderer from '@/lib/domains/articles/editor/components/ModularArticleRenderer';
+import { markdownToHtml } from '@/lib/domains/articles/editor/converters/markdown-to-html';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -49,6 +49,15 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
   const [activeSection, setActiveSection] = useState<string>('');
   const [showComments, setShowComments] = useState(false);
+  const [htmlContent, setHtmlContent] = useState<string>('');
+
+  // Convert Markdown to HTML for the Modular Renderer
+  useEffect(() => {
+    if (article?.content) {
+      const converted = markdownToHtml(article.content);
+      setHtmlContent(converted);
+    }
+  }, [article?.content]);
 
   // Pre-compute heading IDs for consistent hydration
   // This creates a map of heading text -> unique ID that's deterministic
@@ -392,154 +401,17 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
 
               </header>
 
-              {/* ===== ARTICLE BODY ===== */}
               <article className="prose prose-lg max-w-none">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  components={{
-                    h1: ({ children }) => (
-                      <h1 className="title-newtab text-2xl md:text-3xl mt-12 md:mt-16 mb-6">
-                        {children}
-                      </h1>
-                    ),
-                    h2: ({ children }) => {
-                      const text = String(children);
-                      const id = getHeadingId(text);
-                      return (
-                        <h2
-                          id={id}
-                          className="title-newtab text-xl md:text-2xl mt-14 md:mt-16 mb-5 pt-8 scroll-mt-28 border-t border-[var(--border-article)]"
-                          style={{ letterSpacing: '-0.01em' }}
-                        >
-                          {children}
-                        </h2>
-                      );
-                    },
-                    h3: ({ children }) => {
-                      const text = String(children);
-                      const id = getHeadingId(text);
-                      return (
-                        <h3
-                          id={id}
-                          className="title-newtab text-lg md:text-xl mt-10 mb-4 scroll-mt-28"
-                        >
-                          {children}
-                        </h3>
-                      );
-                    },
-                    p: ({ children }) => (
-                      <p
-                        className="text-[var(--text-article-body)] mb-7 md:mb-8"
-                        style={{
-                          fontSize: 'clamp(1.0625rem, 1vw + 0.9rem, 1.1875rem)',
-                          lineHeight: '1.9'
-                        }}
-                      >
-                        {children}
-                      </p>
-                    ),
-                    ul: ({ children }) => (
-                      <ul className="mb-8 space-y-3 list-disc pl-6 text-[var(--text-article-body)]" style={{ lineHeight: '1.8' }}>
-                        {children}
-                      </ul>
-                    ),
-                    ol: ({ children }) => (
-                      <ol className="mb-8 space-y-3 list-decimal pl-6 text-[var(--text-article-body)]" style={{ lineHeight: '1.8' }}>
-                        {children}
-                      </ol>
-                    ),
-                    li: ({ children }) => (
-                      <li className="pl-1" style={{ lineHeight: '1.8' }}>
-                        {children}
-                      </li>
-                    ),
-                    blockquote: ({ children }) => (
-                      <blockquote
-                        className="pl-6 md:pl-8 border-l-[3px] border-[var(--brand-primary)] my-10 md:my-12 py-2 text-[var(--text-article-body)]"
-                        style={{ fontStyle: 'normal' }}
-                      >
-                        <div className="text-lg md:text-xl" style={{ lineHeight: '1.7' }}>
-                          {children}
-                        </div>
-                      </blockquote>
-                    ),
-                    hr: () => (
-                      <hr className="my-12 md:my-16 border-0 h-px bg-[var(--border-article)]" />
-                    ),
-                    code: ({ children }) => (
-                      <code className="px-1.5 py-0.5 rounded text-sm font-mono bg-[var(--bg-article-tag)] text-[var(--brand-primary)]">
-                        {children}
-                      </code>
-                    ),
-                    strong: ({ children }) => (
-                      <strong className="font-semibold text-[var(--text-article-title)]">
-                        {children}
-                      </strong>
-                    ),
-                    em: ({ children }) => (
-                      <em className="italic">{children}</em>
-                    ),
-                    a: ({ href, children }) => (
-                      <a
-                        href={href}
-                        className="text-[var(--brand-primary)] underline decoration-[var(--brand-primary)]/30 underline-offset-2 hover:decoration-[var(--brand-primary)] transition-colors"
-                        target={href?.startsWith('http') ? '_blank' : undefined}
-                        rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      >
-                        {children}
-                      </a>
-                    ),
-                    img: ({ src, alt }) => (
-                      <figure className="my-10 md:my-12 -mx-4 md:mx-0">
-                        <img
-                          src={src}
-                          alt={alt}
-                          className="w-full h-auto md:rounded-lg"
-                        />
-                        {alt && (
-                          <figcaption className="mt-3 px-4 md:px-0 text-sm text-[var(--text-article-muted)] italic text-center">
-                            {alt}
-                          </figcaption>
-                        )}
-                      </figure>
-                    ),
-                    // Table components for GFM tables
-                    table: ({ children }) => (
-                      <div className="my-8 overflow-x-auto rounded-lg border border-[var(--border-article)]">
-                        <table className="w-full text-sm">
-                          {children}
-                        </table>
-                      </div>
-                    ),
-                    thead: ({ children }) => (
-                      <thead className="bg-[var(--bg-article-tag)] border-b border-[var(--border-article)]">
-                        {children}
-                      </thead>
-                    ),
-                    tbody: ({ children }) => (
-                      <tbody className="divide-y divide-[var(--border-article)]">
-                        {children}
-                      </tbody>
-                    ),
-                    tr: ({ children }) => (
-                      <tr className="hover:bg-[var(--bg-article-tag)]/50 transition-colors">
-                        {children}
-                      </tr>
-                    ),
-                    th: ({ children }) => (
-                      <th className="px-4 py-3 text-left font-semibold text-[var(--text-article-title)]">
-                        {children}
-                      </th>
-                    ),
-                    td: ({ children }) => (
-                      <td className="px-4 py-3 text-[var(--text-article-body)]">
-                        {children}
-                      </td>
-                    ),
-                  }}
-                >
-                  {article.content}
-                </ReactMarkdown>
+                {/* MODULAR RENDERER REPLACES REACT MARKDOWN */}
+                {htmlContent ? (
+                  <ModularArticleRenderer content={htmlContent} />
+                ) : (
+                  <div className="animate-pulse space-y-4">
+                    <div className="h-4 bg-white/5 rounded w-3/4"></div>
+                    <div className="h-4 bg-white/5 rounded w-full"></div>
+                    <div className="h-4 bg-white/5 rounded w-5/6"></div>
+                  </div>
+                )}
               </article>
 
               {/* ===== QUIZ SECTION ===== */}

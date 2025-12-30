@@ -4,6 +4,8 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
 import { useCallback, useEffect } from 'react';
+import { Callout } from '@/lib/domains/articles/editor/extensions/Callout';
+import { Quiz } from '@/lib/domains/articles/editor/extensions/Quiz';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBold,
@@ -15,7 +17,9 @@ import {
     faHeading,
     faUndo,
     faRedo,
-    faMinus
+    faMinus,
+    faLightbulb,
+    faQuestionCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 interface TipTapEditorProps {
@@ -34,6 +38,8 @@ export default function TipTapEditor({ onChange, initialContent }: TipTapEditorP
             Placeholder.configure({
                 placeholder: 'Comece a escrever seu artigo aqui...',
             }),
+            Callout,
+            Quiz,
         ],
         content: initialContent || '',
         immediatelyRender: false, // Evita hydration mismatch com SSR
@@ -193,6 +199,29 @@ export default function TipTapEditor({ onChange, initialContent }: TipTapEditorP
                     title="Horizontal Rule"
                 >
                     <FontAwesomeIcon icon={faMinus} />
+                </button>
+                <button
+                    onClick={() => editor.chain().focus().toggleCallout().run()}
+                    className="p-2 rounded transition-colors"
+                    style={{
+                        background: editor.isActive('callout') ? 'var(--brand-bg)' : 'transparent',
+                        color: editor.isActive('callout') ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                    }}
+                    title="Callout / Destaque"
+                >
+                    <FontAwesomeIcon icon={faLightbulb} />
+                </button>
+
+                <button
+                    onClick={() => editor.chain().focus().setQuiz().run()}
+                    className="p-2 rounded transition-colors"
+                    style={{
+                        background: editor.isActive('quiz') ? 'var(--brand-bg)' : 'transparent',
+                        color: editor.isActive('quiz') ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                    }}
+                    title="Inserir Quiz"
+                >
+                    <FontAwesomeIcon icon={faQuestionCircle} />
                 </button>
 
                 <div className="flex-1" />

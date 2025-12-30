@@ -134,7 +134,7 @@ async function main() {
                 generated = extractJsonRegex(raw);
                 if (generated) break; // Sucesso
             } catch (e) {
-                console.error(`   Tentativa ${i + 1} falhou:`, e.message);
+                console.error(`   Tentativa ${i + 1} falhou:`, (e as Error).message);
                 await new Promise(r => setTimeout(r, 5000));
             }
         }
