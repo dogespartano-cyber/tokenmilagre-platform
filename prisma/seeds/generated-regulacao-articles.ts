@@ -30,7 +30,44 @@ export const regulacaoArticles = [
       "https://www.gov.br/fazenda/pt-br/assuntos/noticias/2025/novembro/receita-federal-atualiza-regulamentacao-de-criptoativos-para-adapta-la-ao-padrao-internacional",
       "https://www.mynt.com.br/academy/guia-para-iniciantes/como-reportar-ganhos-e-perdas-em-criptomoedas-na-sua-declaracao-ir-2025/"
     ],
-    "description": "Este guia prático e completo ensina passo a passo como declarar criptomoedas no Imposto de Renda 2025 no Brasil, desde a obrigatoriedade até o pagamento de DARF e multas por omissão. Aprenda a calcular ganhos, preencher fichas e evitar problemas com a Receita Federal de forma clara e detalhada."
+    "description": "Este guia prático e completo ensina passo a passo como declarar criptomoedas no Imposto de Renda 2025 no Brasil, desde a obrigatoriedade até o pagamento de DARF e multas por omissão. Aprenda a calcular ganhos, preencher fichas e evitar problemas com a Receita Federal de forma clara e detalhada.",
+    "quiz": [
+      {
+        "id": 1,
+        "text": "A partir de qual valor de compra por tipo de criptoativo você é obrigado a declarar no IR?",
+        "options": ["R$ 1.000", "R$ 5.000", "R$ 10.000", "R$ 35.000"],
+        "correctAnswer": 1,
+        "explanation": "Pessoas físicas com compras iguais ou superiores a R$ 5 mil por tipo de criptoativo em 2024 devem informar na ficha Bens e Direitos do IR 2025."
+      },
+      {
+        "id": 2,
+        "text": "Quando ocorre a tributação sobre vendas de criptomoedas?",
+        "options": ["Sempre que houver lucro", "Quando vendas mensais excedem R$ 35 mil com lucro", "Apenas em vendas acima de R$ 100 mil", "Nunca, criptos são isentas"],
+        "correctAnswer": 1,
+        "explanation": "Só há tributação se as vendas mensais superarem R$ 35 mil E houver lucro. Abaixo deste limite, os ganhos são isentos de IR mensal."
+      },
+      {
+        "id": 3,
+        "text": "Qual programa da Receita Federal é usado para calcular ganhos de capital em cripto?",
+        "options": ["IRPF", "e-CAC", "GCAP", "IN 1.888"],
+        "correctAnswer": 2,
+        "explanation": "O GCAP (Ganhos de Capital) é o programa específico da Receita para apurar lucros em vendas de bens, incluindo criptomoedas."
+      },
+      {
+        "id": 4,
+        "text": "Qual é o código DARF para pagamento de IR sobre ganhos com criptomoedas?",
+        "options": ["4600", "0190", "6015", "3208"],
+        "correctAnswer": 0,
+        "explanation": "O código 4600 é usado para Pessoa Física - Ganho de Capital em criptoativos, quando vendas mensais excedem R$ 35 mil."
+      },
+      {
+        "id": 5,
+        "text": "Como é tratado um airdrop de criptomoedas na declaração de IR?",
+        "options": ["Não precisa declarar", "Como rendimento tributável a 15%", "Como ganho isento, informado em Rendimentos Isentos", "Como empréstimo"],
+        "correctAnswer": 2,
+        "explanation": "Airdrops são informados em Rendimentos Isentos (código 05) pelo valor de mercado na data de recebimento."
+      }
+    ]
   },
   {
     "slug": "regulacao-cripto-mundial",
@@ -57,6 +94,43 @@ export const regulacaoArticles = [
       "https://br.tradingview.com/news/invezz:8fb8e6d6dbc81:0/",
       "https://www.ibet.com.br/in-2-291-2025-mundo-cripto-prestacao-de-informacoes-operacoes/"
     ],
-    "description": "Bem-vindo ao panorama completo da regulação de criptomoedas em 2025!  Se você é um brasileiro curioso sobre Bitcoin, stablecoins ou investimentos digitais, es..."
+    "description": "Bem-vindo ao panorama completo da regulação de criptomoedas em 2025!  Se você é um brasileiro curioso sobre Bitcoin, stablecoins ou investimentos digitais, es...",
+    "quiz": [
+      {
+        "id": 1,
+        "text": "Qual é o nome do marco regulatório unificado da Europa para criptoativos?",
+        "options": ["GENIUS Act", "MiCA", "DORA", "FATF"],
+        "correctAnswer": 1,
+        "explanation": "MiCA (Markets in Crypto-Assets) é o marco unificado que harmonizou regras para 27 países europeus, exigindo licenças e reservas para stablecoins."
+      },
+      {
+        "id": 2,
+        "text": "Nos EUA, o que o GENIUS Act exige para stablecoins de pagamento?",
+        "options": ["Aprovação da SEC apenas", "Lastro integral 100% em ativos líquidos com auditorias", "Proibição total de stablecoins", "Registro voluntário"],
+        "correctAnswer": 1,
+        "explanation": "O GENIUS Act exige lastro integral em dólares ou títulos do Tesouro, com auditorias obrigatórias para emissores de stablecoins."
+      },
+      {
+        "id": 3,
+        "text": "No Brasil, qual órgão supervisiona as exchanges de criptomoedas desde 2025?",
+        "options": ["CVM", "Banco Central", "Receita Federal", "ANBIMA"],
+        "correctAnswer": 1,
+        "explanation": "O Banco Central do Brasil supervisiona exchanges e provedores de serviços de ativos virtuais (VASPs) com foco em governança e AML."
+      },
+      {
+        "id": 4,
+        "text": "Qual região asiática se tornou hub de inovação cripto por licenças atrativas em 2025?",
+        "options": ["China", "Coreia do Norte", "Hong Kong/Singapore", "Tailândia"],
+        "correctAnswer": 2,
+        "explanation": "Hong Kong e Singapore atraíram capital global com regimes de licenciamento claros, tornando-se hubs para ETFs e trading regulado."
+      },
+      {
+        "id": 5,
+        "text": "O que significa KYC/AML no contexto de regulação cripto?",
+        "options": ["Tipos de criptomoedas", "Protocolos de blockchain", "Conheça seu Cliente / Combate à Lavagem de Dinheiro", "Taxas de transação"],
+        "correctAnswer": 2,
+        "explanation": "KYC (Know Your Customer) e AML (Anti-Money Laundering) são processos obrigatórios para verificar identidade e prevenir crimes financeiros."
+      }
+    ]
   }
 ];

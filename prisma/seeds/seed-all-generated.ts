@@ -49,7 +49,8 @@ async function main() {
             const data = {
                 slug: articleData.slug,
                 title: articleData.title,
-                excerpt: articleData.excerpt,
+                excerpt: (articleData as { excerpt?: string; description?: string }).excerpt
+                    || (articleData as { description?: string }).description,
                 content: articleData.content,
                 type: articleData.type,
                 category: articleData.category,
@@ -61,6 +62,10 @@ async function main() {
                 securityTips: articleData.securityTips,
                 published: articleData.published,
                 authorId: admin.id,
+                // Sincroniza quiz se existir no seed
+                quizData: (articleData as { quiz?: unknown }).quiz
+                    ? JSON.stringify((articleData as { quiz: unknown }).quiz)
+                    : null,
             };
 
             // Verificar se já existe

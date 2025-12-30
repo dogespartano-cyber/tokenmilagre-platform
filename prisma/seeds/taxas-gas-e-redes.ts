@@ -149,4 +149,41 @@ Agora que você entende custos, vamos aprender sobre golpes comuns — e como ev
     published: true,
     projectHighlight: false,
     relatedArticles: JSON.stringify(['carteiras-e-custodia', 'golpes-comuns-cripto']),
+    quizData: JSON.stringify([
+        {
+            id: 1,
+            text: 'O que mede a unidade "gas" no Ethereum?',
+            options: ['Velocidade da transação', 'Trabalho computacional necessário', 'Quantidade de tokens', 'Número de confirmações'],
+            correctAnswer: 1,
+            explanation: 'Gas mede o trabalho computacional necessário para processar uma transação. Operações complexas usam mais gas.',
+        },
+        {
+            id: 2,
+            text: 'Qual é a fórmula correta para calcular a taxa total de transação?',
+            options: ['Gas price ÷ Gas limit', 'Gas usado × Gas price', 'Confirmações × Gwei', 'Block size × Gas limit'],
+            correctAnswer: 1,
+            explanation: 'Taxa total = Gas usado × Gas price. Por exemplo: 21.000 gas × 50 Gwei = 1.050.000 Gwei.',
+        },
+        {
+            id: 3,
+            text: 'Por que as taxas Layer 2 são geralmente mais baratas que Layer 1?',
+            options: ['Usam menos eletricidade', 'Processam transações em lote antes de ancorar na L1', 'Não têm validadores', 'São centralizadas'],
+            correctAnswer: 1,
+            explanation: 'L2s como Polygon e Arbitrum processam muitas transações e depois "ancoram" o resultado na L1, economizando custos.',
+        },
+        {
+            id: 4,
+            text: 'Qual é o melhor horário para economizar em taxas de gas?',
+            options: ['Durante lançamentos de NFT', 'Alta volatilidade do mercado', 'Fins de semana e madrugadas (horário EUA)', 'Segundas-feiras de manhã'],
+            correctAnswer: 2,
+            explanation: 'As taxas funcionam como leilão. Menor demanda = menor preço. Fins de semana e madrugadas costumam ter menos atividade.',
+        },
+        {
+            id: 5,
+            text: 'O que acontece se você definir um gas limit muito baixo?',
+            options: ['Transação fica mais barata', 'Transação falha mas você ainda paga a taxa', 'Gas é devolvido', 'Nada acontece'],
+            correctAnswer: 1,
+            explanation: 'Se o gas limit for insuficiente, a transação falha por falta de recursos, mas você ainda paga pelo gas consumido até a falha.',
+        },
+    ]),
 };

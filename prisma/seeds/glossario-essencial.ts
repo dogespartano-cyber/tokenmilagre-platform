@@ -164,4 +164,41 @@ Agora que você conhece o vocabulário, vamos aprender como pesquisar projetos d
     published: true,
     projectHighlight: false,
     relatedArticles: JSON.stringify(['fundamentos-cripto', 'como-pesquisar-projeto']),
+    quizData: JSON.stringify([
+        {
+            id: 1,
+            text: 'O que significa a gíria HODL no mundo cripto?',
+            options: ['Vender rapidamente', 'Manter cripto a longo prazo sem vender', 'Comprar mais', 'Fazer day trading'],
+            correctAnswer: 1,
+            explanation: 'HODL veio de um erro de digitação de "Hold" que virou meme. Significa manter cripto a longo prazo sem vender.',
+        },
+        {
+            id: 2,
+            text: 'Qual é a diferença entre Hot Wallet e Cold Wallet?',
+            options: ['Hot é mais cara', 'Hot é conectada à internet, Cold é offline', 'Cold é para tokens, Hot é para moedas', 'Não há diferença'],
+            correctAnswer: 1,
+            explanation: 'Hot Wallet fica online (conveniente mas menos segura). Cold Wallet fica offline (mais segura para guardar grandes valores).',
+        },
+        {
+            id: 3,
+            text: 'O que é uma Stablecoin?',
+            options: ['Moeda com preço volátil', 'Criptomoeda que mantém valor estável atrelada ao dólar', 'Token de NFT', 'Moeda de mineração'],
+            correctAnswer: 1,
+            explanation: 'Stablecoins como USDT, USDC e DAI mantêm valor estável (geralmente $1) para facilitar transações sem volatilidade.',
+        },
+        {
+            id: 4,
+            text: 'O que significa DYOR?',
+            options: ['Do Your Own Research', 'Digital Yield On Returns', 'Decentralized Year Over Rate', 'Dollar Yield Operating Reserve'],
+            correctAnswer: 0,
+            explanation: 'DYOR significa "Do Your Own Research" - lembrete para pesquisar antes de investir, sem confiar cegamente em dicas.',
+        },
+        {
+            id: 5,
+            text: 'O que é um Rug Pull?',
+            options: ['Tipo de NFT', 'Quando desenvolvedores abandonam projeto e fogem com o dinheiro', 'Método de staking', 'Ferramenta de análise'],
+            correctAnswer: 1,
+            explanation: 'Rug Pull é um golpe onde criadores de projeto abandonam tudo depois de levantar dinheiro, deixando investidores no prejuízo.',
+        },
+    ]),
 };

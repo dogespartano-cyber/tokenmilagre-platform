@@ -219,6 +219,43 @@ Segurança em cripto não é opcional - é **essencial**. Dedique tempo para imp
     ]),
     tags: JSON.stringify(['segurança', 'iniciante', 'wallet', '2fa', 'senha']),
     published: true,
+    quizData: JSON.stringify([
+      {
+        id: 1,
+        text: 'Qual tipo de 2FA é mais recomendado para segurança em cripto?',
+        options: ['SMS', 'Email', 'App Authenticator (Google/Authy)', 'Pergunta secreta'],
+        correctAnswer: 2,
+        explanation: 'Apps authenticators são mais seguros que SMS, que é vulnerável a SIM Swap attacks.',
+      },
+      {
+        id: 2,
+        text: 'Onde você NUNCA deve armazenar sua seed phrase?',
+        options: ['Em papel dentro de um cofre', 'Em múltiplas cópias físicas', 'No Google Drive ou foto no celular', 'Em metal resistente a fogo'],
+        correctAnswer: 2,
+        explanation: 'Seed phrases nunca devem ser armazenadas digitalmente. Qualquer armazenamento em nuvem ou digital é vulnerável.',
+      },
+      {
+        id: 3,
+        text: 'Qual é a estratégia recomendada de divisão entre hot e cold wallet?',
+        options: ['100% em hot wallet', '50% em cada', '10% hot wallet, 90% cold wallet', '100% em cold wallet'],
+        correctAnswer: 2,
+        explanation: 'Mantenha apenas o necessário para uso diário (10%) em hot wallet e o resto em cold storage seguro.',
+      },
+      {
+        id: 4,
+        text: 'O que é Shamir Secret Sharing?',
+        options: ['Um tipo de exchange', 'Técnica de dividir seed phrase em partes que só funcionam juntas', 'Um gerenciador de senhas', 'Um tipo de 2FA'],
+        correctAnswer: 1,
+        explanation: 'Shamir Secret Sharing divide a seed em N partes, onde K partes são necessárias para recuperar (ex: 2 de 3).',
+      },
+      {
+        id: 5,
+        text: 'Por que você nunca deve usar Wi-Fi público para acessar exchanges?',
+        options: ['É muito lento', 'É como gritar suas senhas em praça pública', 'Gasta muita bateria', 'Não funciona'],
+        correctAnswer: 1,
+        explanation: 'Wi-Fi público permite que hackers interceptem suas comunicações e roubem credenciais.',
+      },
+    ]),
   },
 
   {
@@ -548,6 +585,43 @@ Compartilhe este guia com amigos e familiares. Muitos golpes poderiam ser evitad
     tags: JSON.stringify(['segurança', 'fraudes', 'scam', 'phishing', 'proteção']),
     published: true,
     projectHighlight: false,
+    quizData: JSON.stringify([
+      {
+        id: 1,
+        text: 'O que é um Rug Pull no contexto de cripto?',
+        options: ['Tipo de trading', 'Desenvolvedores abandonam projeto e fogem com o dinheiro', 'Queda de preço normal', 'Bug em contrato'],
+        correctAnswer: 1,
+        explanation: 'Rug Pull é quando criadores de um token atraem investidores e depois desaparecem com os fundos.',
+      },
+      {
+        id: 2,
+        text: 'Qual é o maior sinal de alerta de um esquema Ponzi?',
+        options: ['Equipe conhecida', 'Código auditado', 'Promessa de retornos garantidos (10%+ ao mês)', 'Liquidez bloqueada'],
+        correctAnswer: 2,
+        explanation: 'Retornos garantidos irrealistas são o principal indicador de pirâmide. No mercado real, não há ganhos garantidos.',
+      },
+      {
+        id: 3,
+        text: 'O que você deve fazer se receber DM de suporte oferecendo ajuda?',
+        options: ['Agradecer e seguir as instruções', 'Enviar sua seed phrase', 'Bloquear e reportar imediatamente', 'Clicar no link enviado'],
+        correctAnswer: 2,
+        explanation: 'Nenhuma empresa legítima entra em contato por DM. Todo suporte não solicitado é golpe.',
+      },
+      {
+        id: 4,
+        text: 'O que é SIM Swap e como se proteger?',
+        options: ['Trocar de celular regularmente', 'Hacker transfere seu número para outro chip - use 2FA por app', 'Usar SMS para 2FA', 'Tipo de carteira'],
+        correctAnswer: 1,
+        explanation: 'SIM Swap é quando hackers convencem a operadora a transferir seu número. Não use SMS para 2FA.',
+      },
+      {
+        id: 5,
+        text: 'Qual ferramenta detecta se um token é honeypot (permite comprar mas não vender)?',
+        options: ['Google', 'Honeypot.is ou Token Sniffer', 'Telegram', 'WhatsApp'],
+        correctAnswer: 1,
+        explanation: 'Honeypot.is e Token Sniffer verificam se o contrato permite vendas ou se há funções maliciosas.',
+      },
+    ]),
   },
 
   {
@@ -940,5 +1014,42 @@ Com as ferramentas certas e conhecimento fundamental, a comunidade pode:
     published: true,
     projectHighlight: false,
     relatedArticles: JSON.stringify(['fraudes-comuns-cripto-2024', 'protecao-digital-basica-cripto']),
+    quizData: JSON.stringify([
+      {
+        id: 1,
+        text: 'Qual é o primeiro passo para verificar se um contrato é seguro?',
+        options: ['Confiar no marketing', 'Verificar se o código-fonte está disponível e verificado no explorer', 'Perguntar no Telegram', 'Olhar o preço do token'],
+        correctAnswer: 1,
+        explanation: 'Código verificado no Etherscan/BSCScan é o requisito mínimo. Sem isso, é impossível analisar o contrato.',
+      },
+      {
+        id: 2,
+        text: 'Qual é um red flag na distribuição de holders de um token?',
+        options: ['Muitos holders pequenos', 'Top holder com mais de 50% do supply', 'Distribuição equilibrada', 'Liquidez bloqueada'],
+        correctAnswer: 1,
+        explanation: 'Se uma carteira controla 50%+ do supply, pode manipular preço ou fazer dump a qualquer momento.',
+      },
+      {
+        id: 3,
+        text: 'O que significa função onlyOwner com mint ilimitado em um contrato?',
+        options: ['Segurança extra', 'Owner pode criar tokens infinitos, diluindo seu investimento', 'Tokens são queimados', 'Não afeta investidores'],
+        correctAnswer: 1,
+        explanation: 'Mint ilimitado permite que o dono crie tokens do nada, causando inflação e desvalorização.',
+      },
+      {
+        id: 4,
+        text: 'Qual empresa de auditoria é considerada top tier?',
+        options: ['Random Audit LLC', 'CertiK', 'TrustMeBro Security', 'Audit4Free'],
+        correctAnswer: 1,
+        explanation: 'CertiK, PeckShield, SlowMist e Trail of Bits são as empresas mais respeitadas em auditoria de contratos.',
+      },
+      {
+        id: 5,
+        text: 'O que verificar primeiro em um relatório de auditoria?',
+        options: ['Design do PDF', 'Se tem critical issues não resolvidos', 'Tamanho do documento', 'Número de páginas'],
+        correctAnswer: 1,
+        explanation: 'Critical issues são vulnerabilidades que podem causar perda de fundos. DEVEM ser 0 para investir.',
+      },
+    ]),
   },
 ];

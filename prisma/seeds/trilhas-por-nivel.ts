@@ -160,4 +160,41 @@ Bem-vindo ao mundo das criptomoedas!
     published: true,
     projectHighlight: false,
     relatedArticles: JSON.stringify(['fundamentos-cripto', 'seguranca-primeiro']),
+    quizData: JSON.stringify([
+        {
+            id: 1,
+            text: 'Qual é a melhor abordagem para aprender cripto na prática?',
+            options: ['Investir tudo de uma vez', 'Aprender fazendo com valores pequenos', 'Copiar trades de influenciadores', 'Ignorar erros'],
+            correctAnswer: 1,
+            explanation: 'Aprenda fazendo com valores pequenos que você pode perder. Errar barato é parte essencial do aprendizado.',
+        },
+        {
+            id: 2,
+            text: 'Se você quer comprar e guardar cripto por anos, qual perfil descreve você?',
+            options: ['Trader', 'Entusiasta DeFi', 'Investidor de Longo Prazo', 'Colecionador NFT'],
+            correctAnswer: 2,
+            explanation: 'Investidores de longo prazo focam em DCA, análise fundamentalista e gestão de risco para manter posições por anos.',
+        },
+        {
+            id: 3,
+            text: 'Qual habilidade é essencial para um trader de cripto?',
+            options: ['Ignorar perdas', 'Controle emocional e gestão de risco', 'Seguir FOMO sempre', 'Usar apenas market orders'],
+            correctAnswer: 1,
+            explanation: 'Traders bem-sucedidos dominam disciplina, gestão de risco (1-2% por trade) e controle emocional.',
+        },
+        {
+            id: 4,
+            text: 'O que significa MEV no contexto avançado de cripto?',
+            options: ['Minimum Ethereum Value', 'Maximal Extractable Value', 'Market Execution Variance', 'Mining Error Verification'],
+            correctAnswer: 1,
+            explanation: 'MEV (Maximal Extractable Value) é um conceito avançado sobre valor que mineradores/validadores podem extrair.',
+        },
+        {
+            id: 5,
+            text: 'Qual recurso é recomendado para aprender Solidity de forma interativa?',
+            options: ['DefiLlama', 'CryptoZombies', 'Etherscan', 'CoinDesk'],
+            correctAnswer: 1,
+            explanation: 'CryptoZombies é um curso interativo onde você aprende Solidity construindo um jogo de zumbis.',
+        },
+    ]),
 };
