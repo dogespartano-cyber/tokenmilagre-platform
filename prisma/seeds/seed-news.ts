@@ -1,4 +1,4 @@
-import { PrismaClient } from '../../lib/generated/prisma';
+import { PrismaClient, Prisma } from '../../lib/generated/prisma';
 
 const prisma = new PrismaClient();
 
@@ -61,16 +61,14 @@ async function main() {
     }
 
     for (const articleData of newsArticles) {
+        const baseData = {
+            ...articleData,
+            authorId: admin.id,
+        };
         await prisma.article.upsert({
             where: { slug: articleData.slug },
-            update: {
-                ...articleData as any,
-                authorId: admin.id,
-            },
-            create: {
-                ...articleData as any,
-                authorId: admin.id,
-            },
+            update: baseData as Prisma.ArticleUncheckedUpdateInput,
+            create: baseData as Prisma.ArticleUncheckedCreateInput,
         });
         console.log(`✅ News seeded: ${articleData.title}`);
     }
