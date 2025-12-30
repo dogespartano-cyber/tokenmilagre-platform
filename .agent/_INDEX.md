@@ -39,6 +39,7 @@ version: 2.0.0
 | **Verificar consistência** | [CONSISTENCIA](./workflows/CONSISTENCIA-agent.md) | "Sincronização", "integridade" |
 | **Banco de dados/Backup** | [DATABASE](./workflows/DATABASE-agent.md) | "Backup", "migração", "db push" |
 | **🔧 Manutenção de Agents** | [MANUTENCAO](./workflows/manutencao.md) | "/manutencao", "health check" |
+| **🧠 Grafo de Conhecimento** | [CONHECIMENTO](./workflows/CONHECIMENTO-agent.md) | "/conhecimento", "lembrar", "buscar" |
 
 ---
 
@@ -149,6 +150,7 @@ SEGURANCA   DESIGN    CONTEUDO ←───────────────�
 | [execucao](./workflows/execucao.md) | Execução de planos em batches |
 | [verificacao](./workflows/verificacao.md) | Verificação antes de conclusão |
 | [manutencao](./workflows/manutencao.md) | **🔧 Manutenção semanal do ecossistema** |
+| [criador-conteudo](./workflows/criador-conteudo.md) | **📝 Prompts Perplexity para criação de conteúdo** |
 
 ---
 

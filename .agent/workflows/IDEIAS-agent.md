@@ -196,6 +196,25 @@ status: open | closed
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é CONSUMIDOR** de conhecimento.
+
+| Ação | Quando |
+|------|--------|
+| Consultar ideias passadas | Antes de brainstorm para evitar repetição |
+| Registrar ideias aprovadas | Após sessão convergente |
+
+```typescript
+// Buscar ideias passadas sobre tema
+const pastIdeas = await knowledgeTracker.search({
+  query: 'brainstorm gamificação usuário',
+  limit: 10
+});
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
@@ -203,5 +222,7 @@ status: open | closed
   - CONTEUDO.md  # Para execução de ideias de conteúdo
   - ANALISTA.md  # Para análise de ideias
   - ../Feedback/ideas/  # Destino para brainstorms
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Consultar ideias e sessões anteriores
+@last-verified: 2025-12-30
 ```

@@ -219,11 +219,32 @@ Para que o $MILAGRE seja exemplo do que prega:
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é COLABORADOR** - registra decisões de tokenomics.
+
+| Ação | Quando |
+|------|--------|
+| Registrar | Decisões sobre tokenomics, lançamento |
+| Consultar | Histórico de decisões sobre o token |
+
+```typescript
+// Registrar decisão de tokenomics
+await knowledgeTracker.trackDecision(
+  'Supply fixo de 1B tokens com mint authority revogada',
+  'Transparência e anti-inflação são prioridades'
+);
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
   - ./TRANSPARENCIA.md
   - ARQUITETO.md  # Para validação ética
   - SEGURANCA.md   # Para auditoria de segurança
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Registrar decisões de tokenomics
+@last-verified: 2025-12-30
 ```

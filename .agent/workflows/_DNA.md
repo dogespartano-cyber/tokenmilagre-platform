@@ -137,6 +137,43 @@ Verificar: [como validar sucesso]
 
 ---
 
+## 🧠 Grafo de Conhecimento (Graphiti)
+
+> Memória coletiva persistente que conecta sessões, decisões e soluções.
+
+| Ação | Quando | Comando |
+|------|--------|---------|
+| **Consultar** | Antes de decisões, ao debugar | `knowledgeTracker.search()` |
+| **Registrar Sessão** | Ao final de cada sessão | `knowledgeTracker.trackSession()` |
+| **Registrar Decisão** | Após decisões importantes | `knowledgeTracker.trackDecision()` |
+| **Registrar Bug/Solução** | Ao resolver problemas | `knowledgeTracker.trackTroubleshoot()` |
+
+### Princípios de Uso
+
+1. **Antes de agir**: Consultar se já existe solução/decisão similar
+2. **Após agir**: Registrar o que foi feito e por quê
+3. **Colaborar**: Escalar para [CONHECIMENTO](./CONHECIMENTO-agent.md) em dúvidas
+
+### Exemplo
+
+```typescript
+import { knowledgeTracker } from '@/lib/knowledge';
+
+// Consultar antes de decidir
+const context = await knowledgeTracker.search({
+  query: 'decisões sobre autenticação',
+  type: 'decision'
+});
+
+// Registrar após decidir
+await knowledgeTracker.trackDecision(
+  'Usar Clerk para autenticação',
+  'Integração pronta com Next.js, SSO incluído'
+);
+```
+
+---
+
 ```yaml
 @agi-metadata:
   inherits: null  # Este é o núcleo

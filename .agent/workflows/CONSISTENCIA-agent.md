@@ -165,6 +165,25 @@ Auditoria de Consistência:
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é CONSUMIDOR** de conhecimento.
+
+| Ação | Quando |
+|------|--------|
+| Consultar auditorias | Para comparar com verificações anteriores |
+| Registrar discrepâncias | Para histórico de problemas |
+
+```typescript
+// Comparar com auditorias anteriores
+const pastAudits = await knowledgeTracker.search({
+  query: 'auditoria consistência página manifesto',
+  type: 'session'
+});
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
@@ -173,5 +192,7 @@ Auditoria de Consistência:
   - CONTEUDO.md  # Padrões de conteúdo
   - CODIGO.md  # Padrões técnicos
   - ../Feedback/logs/  # Destino para relatórios
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Consultar histórico de auditorias
+@last-verified: 2025-12-30
 ```

@@ -170,6 +170,36 @@ Se agent menciona arquivo que não existe mais → atualizar ou remover
 
 ---
 
+### Fase 5: Sincronização com Graphiti (5 min)
+
+**5.1 Verificar saúde do Graphiti**
+
+```bash
+curl -s http://localhost:8000/health
+# Esperado: {"status":"healthy"}
+```
+
+**5.2 Verificar fallback local**
+
+```bash
+wc -l Feedback/logs/knowledge-fallback.jsonl 2>/dev/null
+# Se > 100 linhas: sincronizar com Graphiti ou limpar antigos
+```
+
+**5.3 Indexar sessões recentes**
+
+```bash
+# Indexar sessão atual
+npx tsx scripts/knowledge/index-session.ts "Resumo da sessão"
+```
+
+**5.4 Limpeza (se necessário)**
+
+```bash
+# Episódios > 30 dias podem ser arquivados
+# Manter apenas os essenciais (decisões, troubleshoot importantes)
+```
+
 ## Checklist Rápido
 
 Antes de marcar manutenção como completa:
@@ -180,6 +210,8 @@ Antes de marcar manutenção como completa:
 - [ ] Agents refletem código atual
 - [ ] Entrada adicionada ao HISTORICO.md
 - [ ] Issues registradas no BACKLOG.md
+- [ ] Graphiti healthy ou fallback funcionando
+- [ ] Sessão indexada no grafo de conhecimento
 
 ---
 
@@ -191,6 +223,8 @@ Antes de marcar manutenção como completa:
 | Dias desde última auditoria | < 7 | 7-14 | 15+ |
 | Agents sem `@last-verified` | 0-3 | 4-7 | 8+ |
 | Issues no BACKLOG | < 10 | 10-20 | 20+ |
+| Graphiti status | healthy | degraded | offline |
+| Fallback lines | < 50 | 50-100 | 100+ |
 
 ---
 

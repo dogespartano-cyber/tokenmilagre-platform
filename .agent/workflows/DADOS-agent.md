@@ -219,6 +219,25 @@ scope: full | articles | resources | users
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é COLABORADOR** - registra snapshots de métricas.
+
+| Ação | Quando |
+|------|--------|
+| Registrar | Snapshots mensais de métricas |
+| Consultar | Histórico de evolução do projeto |
+
+```typescript
+// Registrar snapshot de métricas
+await knowledgeTracker.track('session',
+  'Relatório Dez/2024: 150 artigos, 45 recursos, 12 usuários',
+  { tags: ['metrics', 'snapshot'] }
+);
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
@@ -226,5 +245,7 @@ scope: full | articles | resources | users
   - CONTEUDO.md  # Para preencher gaps
   - VALOR.md  # Para validar ROI de conteúdo
   - ../Feedback/logs/  # Destino para relatórios
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Registrar snapshots de métricas
+@last-verified: 2025-12-30
 ```

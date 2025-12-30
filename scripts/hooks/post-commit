@@ -1,0 +1,14 @@
+#!/bin/bash
+# =============================================================================
+# post-commit - Git hook for knowledge tracking
+# =============================================================================
+# Para instalar:
+#   cp scripts/hooks/post-commit .git/hooks/post-commit
+#   chmod +x .git/hooks/post-commit
+# =============================================================================
+
+# Run knowledge tracker (non-blocking, ignore errors)
+npx tsx scripts/knowledge/track-commit.ts 2>/dev/null &
+
+# Exit successfully (don't block commits)
+exit 0

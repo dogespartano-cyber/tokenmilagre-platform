@@ -267,6 +267,24 @@ Antes de aprovar qualquer componente novo:
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é COLABORADOR** - consulta referências passadas.
+
+| Ação | Quando |
+|------|--------|
+| Consultar | Ao criar novo componente, verificar padrões existentes |
+
+```typescript
+// Buscar padrões de design anteriores
+const patterns = await knowledgeTracker.search({
+  query: 'card design glassmorphism',
+  type: 'codeindex'
+});
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
@@ -275,6 +293,8 @@ Antes de aprovar qualquer componente novo:
   - lib/core/theme/  # Código fonte
   - app/page.tsx  # Referência de design
   - app/globals.css  # CSS Variables
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Consultar padrões visuais
+@last-verified: 2025-12-30
 ```
 

@@ -65,10 +65,32 @@ Ao ser invocado:
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é PRODUTOR** de conhecimento tipo `decision`.
+
+| Ação | Quando |
+|------|--------|
+| Consultar | Antes de validar ideias novas |
+| Registrar | Após decisões filosóficas importantes |
+
+```typescript
+// Após decisão importante
+await knowledgeTracker.trackDecision(
+  'Rejeitar feature X por violar Anti-Vício',
+  'Criaria dependência do usuário, não autonomia'
+);
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
   - ./MANIFESTO.md
   - ./ARQUITETURA.md
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Registrar decisões filosóficas
+@last-verified: 2025-12-30
 ```
+

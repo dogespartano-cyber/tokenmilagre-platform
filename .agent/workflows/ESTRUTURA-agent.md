@@ -92,11 +92,32 @@ Nível 3: Recurso    (service.ts, hooks/, types.ts)
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é PRODUTOR** de conhecimento tipo `decision`.
+
+| Ação | Quando |
+|------|--------|
+| Consultar | Antes de propor nova estrutura |
+| Registrar | Após decisões estruturais importantes |
+
+```typescript
+// Registrar decisão estrutural
+await knowledgeTracker.trackDecision(
+  'Mover utils para lib/shared ao invés de lib/core',
+  'Core deve conter apenas módulos usados por múltiplos domínios'
+);
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
   - ./ARQUITETURA.md  # Filosofia completa
   - CODIGO.md  # Colaboração em code review
   - CONSISTENCIA.md  # Audita consistência estrutural
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Registrar decisões arquiteturais
+@last-verified: 2025-12-30
 ```

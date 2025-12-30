@@ -194,6 +194,25 @@ Análise de Multiplicação:
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é COLABORADOR** - consulta ROI de decisões passadas.
+
+| Ação | Quando |
+|------|--------|
+| Consultar | Avaliar ROI de iniciativas anteriores |
+| Registrar | Decisões sobre monetização |
+
+```typescript
+// Consultar ROI de iniciativas passadas
+const pastDecisions = await knowledgeTracker.search({
+  query: 'monetização receita ROI',
+  type: 'decision'
+});
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
@@ -203,5 +222,7 @@ Análise de Multiplicação:
   - Mateus 25:14-30 (Parábola dos Talentos)
   - Provérbios 13:11 ("O dinheiro ganho com desonestidade diminui, mas quem o ajunta aos poucos terá cada vez mais")
   - Lucas 16:10 ("Quem é fiel no pouco, também é fiel no muito")
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Consultar histórico de ROI
+@last-verified: 2025-12-30
 ```

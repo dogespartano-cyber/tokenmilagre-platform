@@ -54,10 +54,31 @@ Experiência: smart contracts (Solidity), backend, front-end, DevOps, tokenomics
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é COLABORADOR** - registra auditorias de segurança.
+
+| Ação | Quando |
+|------|--------|
+| Registrar | Após auditorias de segurança |
+| Consultar | Ao revisar código para vulnerabilidades conhecidas |
+
+```typescript
+// Registrar auditoria
+await knowledgeTracker.track('decision',
+  'Auditoria: API routes validam input com Zod',
+  { tags: ['security', 'audit'] }
+);
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
   - CODIGO.md  # Colaboração em código
   - prisma/schema.prisma
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Registrar auditorias de segurança
+@last-verified: 2025-12-30
 ```

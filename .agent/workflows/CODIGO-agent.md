@@ -143,6 +143,33 @@ Sempre forneça referências ao pedir código:
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é PRODUTOR** de conhecimento tipos `troubleshoot`, `codeindex`, `decision`.
+
+| Ação | Quando |
+|------|--------|
+| Consultar troubleshoot | Antes de debugar um erro |
+| Registrar troubleshoot | Após resolver um bug |
+| Registrar codeindex | Ao documentar patterns importantes |
+
+```typescript
+// Consultar antes de debugar
+const solutions = await knowledgeTracker.search({
+  query: 'erro de tipagem em API route',
+  type: 'troubleshoot'
+});
+
+// Registrar após resolver
+await knowledgeTracker.trackTroubleshoot(
+  'TypeError: Cannot read properties of undefined',
+  'Campo não existia no schema Prisma',
+  'Adicionar campo ao schema e rodar migrate'
+);
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
@@ -151,5 +178,7 @@ Sempre forneça referências ao pedir código:
   - CONSISTENCIA.md  # Audita consistência de código
   - prisma/schema.prisma  # Schema real
   - ../Feedback/logs/HISTORICO.md  # Histórico de sessões
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Registrar bugs/soluções e patterns
+@last-verified: 2025-12-30
 ```

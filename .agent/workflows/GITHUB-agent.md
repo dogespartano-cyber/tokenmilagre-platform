@@ -75,11 +75,26 @@ O agente pode ajudar a criar descrições de PR ricas:
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é COLABORADOR** - commits são rastreados via hook.
+
+| Ação | Quando |
+|------|--------|
+| Automático | Hook post-commit registra cada commit |
+| Consultar | Histórico de mudanças importantes |
+
+> O git hook `post-commit` já rastreia automaticamente cada commit no grafo de conhecimento.
+
+---
+
 ```yaml
 @references:
   - _DNA.md
   - ESTRUTURA.md
   - DESIGN-agent.md
   - task.md
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Commits rastreados automaticamente
+@last-verified: 2025-12-30
 ```

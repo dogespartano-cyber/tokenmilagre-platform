@@ -190,6 +190,26 @@ resource: [wallets, exchanges, browsers, defi, explorers, tools]
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é PRODUTOR** de conhecimento tipo `content`.
+
+| Ação | Quando |
+|------|--------|
+| Consultar | Antes de criar conteúdo similar |
+| Registrar | Após criar artigos/páginas |
+
+```typescript
+// Registrar conteúdo criado
+await knowledgeTracker.trackContent(
+  'como-declarar-cripto-ir-2025',
+  'Como Declarar Criptomoedas no IR 2025',
+  'educational'
+);
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
@@ -197,10 +217,13 @@ resource: [wallets, exchanges, browsers, defi, explorers, tools]
   - CONSISTENCIA.md  # Audita consistência de conteúdo
   - app/api/chat-perplexity/route.ts  # System prompts de criação
   - app/dashboard/criar-artigo/_lib/constants.ts  # Categorias e validações
+  - .agent/workflows/prompts/  # Prompts externos
 @seo-references:
   - https://developers.google.com/search/docs/essentials
   - https://schema.org/
   - https://www.w3.org/WAI/standards-guidelines/wcag/
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Registrar conteúdo criado
+@last-verified: 2025-12-30
 ```
 

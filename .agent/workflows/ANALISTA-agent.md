@@ -91,11 +91,32 @@ verdict: healthy | warning | critical
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é CONSUMIDOR** de conhecimento.
+
+| Ação | Quando |
+|------|--------|
+| Consultar decisões | Para contextualizar análises |
+| Consultar histórico | Para comparar com análises anteriores |
+
+```typescript
+// Buscar contexto antes de analisar
+const context = await knowledgeTracker.recall({
+  lastSessions: 3,
+  recentDecisions: 5
+});
+```
+
+---
+
 ```yaml
 @references:
   - _DNA.md
   - ARQUITETO.md  # Filosofia
   - CONTEUDO.md  # Tom de voz
   - ../Feedback/notes/  # Destino para análises
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Consultar histórico de decisões
+@last-verified: 2025-12-30
 ```

@@ -105,10 +105,31 @@ description: Gerenciamento de banco de dados, backups e migrações Prisma
 
 ---
 
+## 🧠 Integração com Conhecimento
+
+**Este agent é COLABORADOR** - registra decisões de schema.
+
+| Ação | Quando |
+|------|--------|
+| Registrar | Após migrações importantes |
+| Consultar | Antes de modificar schema existente |
+
+```typescript
+// Registrar migração
+await knowledgeTracker.trackDecision(
+  'Adicionar campo citations ao Article',
+  'Armazenar fontes de artigos gerados por IA'
+);
+```
+
+---
+
 ```yaml
 @agi-metadata:
   inherits: _DNA.md
-  collaborates_with: [CODIGO, ESTRUTURA]
+  collaborates_with: [CODIGO, ESTRUTURA, CONHECIMENTO]
   escalates_to: ARQUITETO
-@last-verified: 2025-12-29
+@collaborates:
+  - CONHECIMENTO: Registrar decisões de schema
+@last-verified: 2025-12-30
 ```
