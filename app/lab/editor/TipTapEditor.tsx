@@ -36,6 +36,7 @@ export default function TipTapEditor({ onChange, initialContent }: TipTapEditorP
             }),
         ],
         content: initialContent || '',
+        immediatelyRender: false, // Evita hydration mismatch com SSR
         editorProps: {
             attributes: {
                 class: 'prose prose-invert max-w-none focus:outline-none min-h-[400px] px-4 py-3',
@@ -66,95 +67,129 @@ export default function TipTapEditor({ onChange, initialContent }: TipTapEditorP
     return (
         <div className="tiptap-editor-wrapper">
             {/* Toolbar */}
-            <div className="flex flex-wrap gap-1 p-2 border-b border-milagre-gold/20 bg-milagre-dark/50 rounded-t-xl">
+            <div
+                className="flex flex-wrap gap-1 p-2 rounded-t-xl"
+                style={{
+                    background: 'var(--bg-tertiary)',
+                    borderBottom: '1px solid var(--border-light)'
+                }}
+            >
                 {/* Headings */}
                 <button
                     onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-                    className={`p-2 rounded hover:bg-milagre-gold/20 transition-colors ${editor.isActive('heading', { level: 1 }) ? 'bg-milagre-gold/30 text-milagre-gold' : 'text-gray-400'
-                        }`}
+                    className="p-2 rounded transition-colors"
+                    style={{
+                        background: editor.isActive('heading', { level: 1 }) ? 'var(--brand-bg)' : 'transparent',
+                        color: editor.isActive('heading', { level: 1 }) ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                    }}
                     title="Heading 1"
                 >
                     <span className="text-sm font-bold">H1</span>
                 </button>
                 <button
                     onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-                    className={`p-2 rounded hover:bg-milagre-gold/20 transition-colors ${editor.isActive('heading', { level: 2 }) ? 'bg-milagre-gold/30 text-milagre-gold' : 'text-gray-400'
-                        }`}
+                    className="p-2 rounded transition-colors"
+                    style={{
+                        background: editor.isActive('heading', { level: 2 }) ? 'var(--brand-bg)' : 'transparent',
+                        color: editor.isActive('heading', { level: 2 }) ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                    }}
                     title="Heading 2"
                 >
                     <span className="text-sm font-bold">H2</span>
                 </button>
                 <button
                     onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-                    className={`p-2 rounded hover:bg-milagre-gold/20 transition-colors ${editor.isActive('heading', { level: 3 }) ? 'bg-milagre-gold/30 text-milagre-gold' : 'text-gray-400'
-                        }`}
+                    className="p-2 rounded transition-colors"
+                    style={{
+                        background: editor.isActive('heading', { level: 3 }) ? 'var(--brand-bg)' : 'transparent',
+                        color: editor.isActive('heading', { level: 3 }) ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                    }}
                     title="Heading 3"
                 >
                     <span className="text-sm font-bold">H3</span>
                 </button>
 
-                <div className="w-px h-6 bg-milagre-gold/20 mx-1 self-center" />
+                <div className="w-px h-6 mx-1 self-center" style={{ background: 'var(--border-light)' }} />
 
                 {/* Formatting */}
                 <button
                     onClick={() => editor.chain().focus().toggleBold().run()}
-                    className={`p-2 rounded hover:bg-milagre-gold/20 transition-colors ${editor.isActive('bold') ? 'bg-milagre-gold/30 text-milagre-gold' : 'text-gray-400'
-                        }`}
+                    className="p-2 rounded transition-colors"
+                    style={{
+                        background: editor.isActive('bold') ? 'var(--brand-bg)' : 'transparent',
+                        color: editor.isActive('bold') ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                    }}
                     title="Bold"
                 >
                     <FontAwesomeIcon icon={faBold} />
                 </button>
                 <button
                     onClick={() => editor.chain().focus().toggleItalic().run()}
-                    className={`p-2 rounded hover:bg-milagre-gold/20 transition-colors ${editor.isActive('italic') ? 'bg-milagre-gold/30 text-milagre-gold' : 'text-gray-400'
-                        }`}
+                    className="p-2 rounded transition-colors"
+                    style={{
+                        background: editor.isActive('italic') ? 'var(--brand-bg)' : 'transparent',
+                        color: editor.isActive('italic') ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                    }}
                     title="Italic"
                 >
                     <FontAwesomeIcon icon={faItalic} />
                 </button>
 
-                <div className="w-px h-6 bg-milagre-gold/20 mx-1 self-center" />
+                <div className="w-px h-6 mx-1 self-center" style={{ background: 'var(--border-light)' }} />
 
                 {/* Lists */}
                 <button
                     onClick={() => editor.chain().focus().toggleBulletList().run()}
-                    className={`p-2 rounded hover:bg-milagre-gold/20 transition-colors ${editor.isActive('bulletList') ? 'bg-milagre-gold/30 text-milagre-gold' : 'text-gray-400'
-                        }`}
+                    className="p-2 rounded transition-colors"
+                    style={{
+                        background: editor.isActive('bulletList') ? 'var(--brand-bg)' : 'transparent',
+                        color: editor.isActive('bulletList') ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                    }}
                     title="Bullet List"
                 >
                     <FontAwesomeIcon icon={faListUl} />
                 </button>
                 <button
                     onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                    className={`p-2 rounded hover:bg-milagre-gold/20 transition-colors ${editor.isActive('orderedList') ? 'bg-milagre-gold/30 text-milagre-gold' : 'text-gray-400'
-                        }`}
+                    className="p-2 rounded transition-colors"
+                    style={{
+                        background: editor.isActive('orderedList') ? 'var(--brand-bg)' : 'transparent',
+                        color: editor.isActive('orderedList') ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                    }}
                     title="Ordered List"
                 >
                     <FontAwesomeIcon icon={faListOl} />
                 </button>
 
-                <div className="w-px h-6 bg-milagre-gold/20 mx-1 self-center" />
+                <div className="w-px h-6 mx-1 self-center" style={{ background: 'var(--border-light)' }} />
 
                 {/* Blocks */}
                 <button
                     onClick={() => editor.chain().focus().toggleBlockquote().run()}
-                    className={`p-2 rounded hover:bg-milagre-gold/20 transition-colors ${editor.isActive('blockquote') ? 'bg-milagre-gold/30 text-milagre-gold' : 'text-gray-400'
-                        }`}
+                    className="p-2 rounded transition-colors"
+                    style={{
+                        background: editor.isActive('blockquote') ? 'var(--brand-bg)' : 'transparent',
+                        color: editor.isActive('blockquote') ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                    }}
                     title="Quote"
                 >
                     <FontAwesomeIcon icon={faQuoteLeft} />
                 </button>
                 <button
                     onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-                    className={`p-2 rounded hover:bg-milagre-gold/20 transition-colors ${editor.isActive('codeBlock') ? 'bg-milagre-gold/30 text-milagre-gold' : 'text-gray-400'
-                        }`}
+                    className="p-2 rounded transition-colors"
+                    style={{
+                        background: editor.isActive('codeBlock') ? 'var(--brand-bg)' : 'transparent',
+                        color: editor.isActive('codeBlock') ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                    }}
                     title="Code Block"
                 >
                     <FontAwesomeIcon icon={faCode} />
                 </button>
                 <button
                     onClick={() => editor.chain().focus().setHorizontalRule().run()}
-                    className="p-2 rounded hover:bg-milagre-gold/20 transition-colors text-gray-400"
+                    className="p-2 rounded transition-colors"
+                    style={{ color: 'var(--text-secondary)' }}
                     title="Horizontal Rule"
                 >
                     <FontAwesomeIcon icon={faMinus} />
@@ -166,7 +201,8 @@ export default function TipTapEditor({ onChange, initialContent }: TipTapEditorP
                 <button
                     onClick={() => editor.chain().focus().undo().run()}
                     disabled={!editor.can().undo()}
-                    className="p-2 rounded hover:bg-milagre-gold/20 transition-colors text-gray-400 disabled:opacity-30"
+                    className="p-2 rounded transition-colors disabled:opacity-30"
+                    style={{ color: 'var(--text-secondary)' }}
                     title="Undo"
                 >
                     <FontAwesomeIcon icon={faUndo} />
@@ -174,7 +210,8 @@ export default function TipTapEditor({ onChange, initialContent }: TipTapEditorP
                 <button
                     onClick={() => editor.chain().focus().redo().run()}
                     disabled={!editor.can().redo()}
-                    className="p-2 rounded hover:bg-milagre-gold/20 transition-colors text-gray-400 disabled:opacity-30"
+                    className="p-2 rounded transition-colors disabled:opacity-30"
+                    style={{ color: 'var(--text-secondary)' }}
                     title="Redo"
                 >
                     <FontAwesomeIcon icon={faRedo} />
@@ -182,7 +219,14 @@ export default function TipTapEditor({ onChange, initialContent }: TipTapEditorP
             </div>
 
             {/* Editor Content */}
-            <div className="bg-milagre-darker rounded-b-xl border border-t-0 border-milagre-gold/20">
+            <div
+                className="rounded-b-xl"
+                style={{
+                    background: 'var(--bg-secondary)',
+                    border: '1px solid var(--border-light)',
+                    borderTop: 'none'
+                }}
+            >
                 <EditorContent editor={editor} />
             </div>
 
@@ -190,10 +234,11 @@ export default function TipTapEditor({ onChange, initialContent }: TipTapEditorP
         .tiptap-editor-wrapper .ProseMirror {
           min-height: 400px;
           padding: 1rem;
+          background: var(--bg-primary);
         }
 
         .tiptap-editor-wrapper .ProseMirror p.is-editor-empty:first-child::before {
-          color: #6b7280;
+          color: var(--text-muted);
           content: attr(data-placeholder);
           float: left;
           height: 0;
@@ -207,26 +252,26 @@ export default function TipTapEditor({ onChange, initialContent }: TipTapEditorP
         .tiptap-editor-wrapper .ProseMirror h1 {
           font-size: 2rem;
           font-weight: 700;
-          color: #fbbf24;
+          color: var(--brand-primary);
           margin: 1.5rem 0 1rem;
         }
 
         .tiptap-editor-wrapper .ProseMirror h2 {
           font-size: 1.5rem;
           font-weight: 600;
-          color: #fbbf24;
+          color: var(--brand-primary);
           margin: 1.25rem 0 0.75rem;
         }
 
         .tiptap-editor-wrapper .ProseMirror h3 {
           font-size: 1.25rem;
           font-weight: 600;
-          color: #e5e5e5;
+          color: var(--text-primary);
           margin: 1rem 0 0.5rem;
         }
 
         .tiptap-editor-wrapper .ProseMirror p {
-          color: #d1d5db;
+          color: var(--text-secondary);
           margin: 0.75rem 0;
           line-height: 1.7;
         }
@@ -235,7 +280,7 @@ export default function TipTapEditor({ onChange, initialContent }: TipTapEditorP
         .tiptap-editor-wrapper .ProseMirror ol {
           padding-left: 1.5rem;
           margin: 0.75rem 0;
-          color: #d1d5db;
+          color: var(--text-secondary);
         }
 
         .tiptap-editor-wrapper .ProseMirror li {
@@ -243,16 +288,16 @@ export default function TipTapEditor({ onChange, initialContent }: TipTapEditorP
         }
 
         .tiptap-editor-wrapper .ProseMirror blockquote {
-          border-left: 4px solid #fbbf24;
+          border-left: 4px solid var(--brand-primary);
           padding-left: 1rem;
           margin: 1rem 0;
-          color: #9ca3af;
+          color: var(--text-tertiary);
           font-style: italic;
         }
 
         .tiptap-editor-wrapper .ProseMirror pre {
-          background: #1a1a1a;
-          border: 1px solid #333;
+          background: var(--bg-tertiary);
+          border: 1px solid var(--border-light);
           border-radius: 8px;
           padding: 1rem;
           margin: 1rem 0;
@@ -260,28 +305,28 @@ export default function TipTapEditor({ onChange, initialContent }: TipTapEditorP
         }
 
         .tiptap-editor-wrapper .ProseMirror code {
-          background: #1a1a1a;
+          background: var(--bg-tertiary);
           padding: 0.2rem 0.4rem;
           border-radius: 4px;
           font-family: 'Fira Code', monospace;
           font-size: 0.9em;
-          color: #fbbf24;
+          color: var(--brand-primary);
         }
 
         .tiptap-editor-wrapper .ProseMirror pre code {
           background: none;
           padding: 0;
-          color: #e5e5e5;
+          color: var(--text-primary);
         }
 
         .tiptap-editor-wrapper .ProseMirror hr {
           border: none;
-          border-top: 1px solid #333;
+          border-top: 1px solid var(--border-light);
           margin: 2rem 0;
         }
 
         .tiptap-editor-wrapper .ProseMirror strong {
-          color: #fbbf24;
+          color: var(--brand-primary);
           font-weight: 600;
         }
       `}</style>
