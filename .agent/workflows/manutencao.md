@@ -1,44 +1,80 @@
 ---
 type: workflow
-version: 1.0.0
+version: 2.0.0
 inherits: _DNA.md
-description: Manutenção obrigatória do ecossistema de agents - execute semanalmente
-trigger: "/manutencao", "manter agents", "health check agents"
+description: Manutenção crítica e observadora do ecossistema - não apenas verificar, mas MELHORAR
+trigger: "/manutencao", "manter agents", "health check agents", "auditoria crítica"
+escalates-to: ARQUITETO
 ---
 
-# 🔧 Manutenção do Ecossistema de Agents
+# 🔧 Manutenção Crítica do Ecossistema
 
-> *"Um sistema não mantido é um sistema morrendo."*
+> *"Um sistema não mantido é um sistema morrendo. Um sistema mantido sem crítica é um sistema estagnado."*
 
-**Propósito**: Garantir que o ecossistema de agents permaneça útil, sincronizado e livre de degradação.
-
----
-
-## Quando Executar
-
-| Gatilho | Frequência |
-|---------|------------|
-| **Automático** | Toda segunda-feira (início de sprint) |
-| **Manual** | Após grandes refatorações |
-| **Obrigatório** | Antes de releases |
+**Propósito**: Não apenas verificar, mas **observar criticamente**, **questionar** e **aprimorar proativamente** todo o ecossistema.
 
 ---
 
-## O Processo (4 Fases)
+## 📊 Dashboard de Saúde
 
-### Fase 1: Verificação de Integridade (5 min)
+Antes de iniciar, capturar snapshot atual:
+
+```bash
+echo "╔══════════════════════════════════════════════════════════════╗"
+echo "║           DASHBOARD DE SAÚDE - $(date '+%Y-%m-%d %H:%M')          ║"
+echo "╠══════════════════════════════════════════════════════════════╣"
+echo "║ Agents:        $(ls .agent/workflows/*-agent.md 2>/dev/null | wc -l) arquivos"
+echo "║ Workflows:     $(ls .agent/workflows/*.md 2>/dev/null | grep -v agent | wc -l) arquivos"
+echo "║ Last verified: $(grep -h "@last-verified" .agent/workflows/*.md | sort | head -1)"
+echo "║ Graphiti:      $(curl -s http://localhost:8000/health 2>/dev/null | jq -r '.status // "offline"')"
+echo "║ Fallback:      $(wc -l < Feedback/logs/knowledge-fallback.jsonl 2>/dev/null || echo 0) linhas"
+echo "╚══════════════════════════════════════════════════════════════╝"
+```
+
+---
+
+## 🔍 Mentalidade Crítica
+
+### O que BUSCAR ativamente
+
+| Categoria | Perguntas Críticas |
+|-----------|-------------------|
+| **Utilidade** | Este agent ainda é útil? Alguém o usa? |
+| **Redundância** | Dois agents fazem a mesma coisa? Podem ser fundidos? |
+| **Completude** | Falta algo que deveria existir? |
+| **Atualidade** | As informações estão corretas para o código atual? |
+| **Conectividade** | Os agents colaboram corretamente? Há ilhas isoladas? |
+| **Clareza** | Um novo desenvolvedor entenderia? |
+
+### O que NÃO fazer
+
+❌ Apenas verificar se arquivos existem (passivo)
+❌ Ignorar agents que "parecem ok"
+❌ Adiar melhorias para "depois"
+
+### O que FAZER
+
+✅ Questionar cada seção: "Isso ainda faz sentido?"
+✅ Propor melhorias mesmo se nada estiver quebrado
+✅ Registrar insights no grafo de conhecimento
+
+---
+
+## O Processo (6 Fases)
+
+### Fase 1: Integridade Estrutural (5 min)
 
 **1.1 Verificar referências de arquivos**
 
 ```bash
-# Executar no diretório do projeto
 cd /home/zenfoco/Dev/tokenmilagre-platform
 
-# Verificar se paths referenciados existem
+# Verificar paths essenciais
 for ref in \
   "lib/core/theme/" \
   "lib/core/constants/" \
   "lib/domains/" \
+  "lib/knowledge/" \
   "prisma/schema.prisma" \
   "Feedback/backlog/BACKLOG.md" \
   "Feedback/logs/HISTORICO.md"; do
@@ -55,203 +91,279 @@ done
 ```bash
 ls -la Feedback/
 # Esperado: backlog/, logs/, ideas/, notes/
-```
-
-**1.3 Verificar última auditoria**
-
-```bash
-ls -la Feedback/logs/AUDITORIA_*.md 2>/dev/null | tail -3
-# Se última auditoria > 7 dias: EXECUTAR /consistencia
+# NÃO esperado: .obsidian, arquivos temporários
 ```
 
 ---
 
 ### Fase 2: Auditoria de Referências (10 min)
 
-**2.1 Listar todas as referências nos agents**
+**2.1 Verificar referências quebradas**
 
 ```bash
-grep -r "@references:" .agent/workflows/ -A 10 | grep -E "^\s+-"
+# Verificar se referências -agent.md existem
+for f in .agent/workflows/*-agent.md; do
+  grep -A20 "@references:" "$f" 2>/dev/null | grep -E "^\s+-.*\.md" | while read ref; do
+    path=$(echo "$ref" | sed 's/.*- //' | tr -d ' ')
+    if [[ "$path" == *"-agent.md"* ]] && [ ! -f ".agent/workflows/$(basename $path)" ]; then
+      echo "❌ $f → $path (não encontrado)"
+    fi
+  done
+done
 ```
 
-**2.2 Para cada referência, verificar se existe**
-
-| Tipo de Referência | Como Verificar |
-|--------------------|----------------|
-| `./ARQUIVO.md` | `ls .agent/workflows/ARQUIVO.md` |
-| `lib/path/` | `ls lib/path/` |
-| `app/path/` | `ls app/path/` |
-| `prisma/` | `ls prisma/` |
-
-**2.3 Corrigir ou remover referências quebradas**
-
-Se arquivo não existe:
-1. Arquivo foi renomeado? → Atualizar referência
-2. Arquivo foi deletado? → Remover referência
-3. Arquivo deveria existir? → Criar arquivo ou escalar
-
-**2.4 ⚠️ CRÍTICO: Verificar YAML frontmatter em TODOS os arquivos**
+**2.2 Verificar frontmatter padronizado**
 
 ```bash
-# Listar arquivos SEM header YAML válido
-for f in .agent/workflows/*.md; do
-  if ! head -1 "$f" | grep -q "^---$"; then
-    echo "❌ SEM FRONTMATTER: $f"
+for f in .agent/workflows/*-agent.md; do
+  missing=""
+  grep -q "^type:" "$f" || missing="$missing type"
+  grep -q "escalates-to:" "$f" || missing="$missing escalates-to"
+  grep -q "@last-verified:" "$f" || missing="$missing @last-verified"
+  [ -n "$missing" ] && echo "⚠️ $(basename $f): falta$missing"
+done
+```
+
+**2.3 🔍 CRÍTICO: Verificar consistência de colaborações**
+
+```bash
+# Todos os agents devem colaborar com CONHECIMENTO
+for f in .agent/workflows/*-agent.md; do
+  if ! grep -q "CONHECIMENTO" "$f"; then
+    echo "⚠️ $(basename $f): não integrado com CONHECIMENTO"
   fi
 done
 ```
 
-**2.5 Verificar se TODOS os .md estão no _INDEX.md**
+---
+
+### Fase 3: Análise Crítica de Conteúdo (15 min)
+
+**3.1 Perguntas por Agent**
+
+Para CADA agent, perguntar:
+
+| Pergunta | Se NÃO | Ação |
+|----------|--------|------|
+| O trigger ainda faz sentido? | → | Atualizar triggers |
+| Os exemplos de código funcionam? | → | Testar e corrigir |
+| As referências estão corretas? | → | Atualizar paths |
+| Há seções obsoletas? | → | Remover ou atualizar |
+| Falta algo que deveria ter? | → | Adicionar |
+
+**3.2 Verificar se código reflete agents**
 
 ```bash
-# Comparar arquivos existentes vs listados no índice
-for f in .agent/workflows/*.md; do
-  basename=$(basename "$f")
-  if ! grep -q "$basename" .agent/_INDEX.md; then
-    echo "⚠️ Não listado no _INDEX: $basename"
-  fi
-done
+# Verificar se estruturas citadas existem
+ls -la lib/core/theme/ 2>/dev/null || echo "⚠️ DESIGN cita lib/core/theme/ mas não existe"
+ls -la lib/domains/ 2>/dev/null || echo "⚠️ ESTRUTURA cita lib/domains/ mas não existe"
 ```
-
-> **Lição aprendida**: Arquivos sem nomenclatura `-agent.md` podem escapar da auditoria. Verificar TODOS os `.md`, não apenas os agents.
-
-### Fase 3: Sincronização com Código (15 min)
-
-**3.1 Verificar se agents refletem estrutura real**
-
-| Agent | Verificar |
-|-------|-----------|
-| DESIGN | `lib/core/theme/` existe e tem os arquivos citados? |
-| CODIGO | Convenções citadas ainda são válidas? |
-| ESTRUTURA | Hierarquia de pastas ainda está correta? |
-| DADOS | Queries Prisma ainda funcionam? |
-| DATABASE | Scripts `npm run db:*` funcionam? |
-
-**3.2 Atualizar agents se necessário**
-
-Se código mudou → atualizar agent correspondente
-Se agent menciona arquivo que não existe mais → atualizar ou remover
 
 **3.3 Atualizar timestamps**
 
-```yaml
-# No final de cada agent modificado:
-@last-verified: YYYY-MM-DD
+```bash
+# Atualizar @last-verified para hoje em TODOS os arquivos verificados
+today=$(date '+%Y-%m-%d')
+for f in .agent/workflows/*.md; do
+  if grep -q "@last-verified:" "$f"; then
+    sed -i "s/@last-verified: .*/@last-verified: $today/" "$f"
+  fi
+done
 ```
 
 ---
 
-### Fase 4: Registro e Próximos Passos (5 min)
+### Fase 4: Grafo de Conhecimento (5 min)
 
-**4.1 Criar entrada no HISTORICO.md**
-
-```markdown
-## [DATA] - Manutenção de Agents
-
-### Verificações
-- [x] Referências de arquivos verificadas
-- [x] Estrutura Feedback/ OK
-- [x] Última auditoria: [DATA]
-
-### Correções Aplicadas
-- [lista de correções]
-
-### Issues Encontradas
-- [lista de issues para próxima manutenção]
-
-### Próxima Manutenção
-- Data: [próxima segunda-feira]
-```
-
-**4.2 Se encontrou issues críticas**
-
-→ Criar item no `Feedback/backlog/BACKLOG.md`
-→ Escalar para ARQUITETO se for decisão filosófica
-
----
-
-### Fase 5: Sincronização com Graphiti (5 min)
-
-**5.1 Verificar saúde do Graphiti**
+**4.1 Verificar saúde do Graphiti**
 
 ```bash
 curl -s http://localhost:8000/health
-# Esperado: {"status":"healthy"}
+# ✅ {"status":"healthy"}
+# ⚠️ Offline → usar fallback
 ```
 
-**5.2 Verificar fallback local**
+**4.2 Verificar e limpar fallback**
 
 ```bash
-wc -l Feedback/logs/knowledge-fallback.jsonl 2>/dev/null
-# Se > 100 linhas: sincronizar com Graphiti ou limpar antigos
+lines=$(wc -l < Feedback/logs/knowledge-fallback.jsonl 2>/dev/null || echo 0)
+echo "Fallback: $lines linhas"
+
+if [ "$lines" -gt 100 ]; then
+  echo "⚠️ Fallback muito grande - considerar sincronizar ou arquivar"
+fi
 ```
 
-**5.3 Indexar sessões recentes**
+**4.3 Indexar a manutenção atual**
 
 ```bash
-# Indexar sessão atual
-npx tsx scripts/knowledge/index-session.ts "Resumo da sessão"
+npx tsx scripts/knowledge/index-session.ts "Manutenção semanal realizada: $(date '+%Y-%m-%d')"
 ```
 
-**5.4 Limpeza (se necessário)**
+---
 
-```bash
-# Episódios > 30 dias podem ser arquivados
-# Manter apenas os essenciais (decisões, troubleshoot importantes)
+### Fase 5: Propostas de Melhoria (10 min) 🆕
+
+> **Esta é a fase crítica que diferencia manutenção passiva de melhoria ativa.**
+
+**5.1 Identificar oportunidades**
+
+| Área | Perguntas |
+|------|-----------|
+| **Novos agents** | Há funcionalidade que deveria ter um agent dedicado? |
+| **Fusão de agents** | Dois agents similares podem ser combinados? |
+| **Novos workflows** | Há processos repetitivos que podem ser documentados? |
+| **Automação** | Algo manual pode ser automatizado? |
+
+**5.2 Registrar propostas**
+
+```markdown
+## Propostas de Melhoria ($(date '+%Y-%m-%d'))
+
+### Novos Agents Sugeridos
+- [ ] [Nome]: [Justificativa]
+
+### Melhorias em Agents Existentes
+- [ ] [Agent]: [Melhoria sugerida]
+
+### Automações Possíveis
+- [ ] [Descrição]: [Benefício esperado]
 ```
 
-## Checklist Rápido
+→ Salvar em `Feedback/backlog/BACKLOG.md`
 
-Antes de marcar manutenção como completa:
+---
 
+### Fase 6: Registro e Conhecimento (5 min)
+
+**6.1 Criar entrada no HISTORICO.md**
+
+```markdown
+## [DATA] - Manutenção Crítica
+
+### Verificações
+- [x] Referências de arquivos: [OK/X issues]
+- [x] Frontmatter padronizado: [OK/X issues]
+- [x] Integração CONHECIMENTO: [OK/X issues]
+- [x] Graphiti: [healthy/offline]
+
+### Correções Aplicadas
+- [lista]
+
+### Propostas de Melhoria
+- [lista de propostas geradas]
+
+### Métricas Finais
+| Métrica | Valor | Status |
+|---------|-------|--------|
+| Referências quebradas | X | 🟢/🟡/🔴 |
+| Agents desatualizados | X | 🟢/🟡/🔴 |
+| Graphiti status | X | 🟢/🟡/🔴 |
+```
+
+**6.2 Indexar no grafo de conhecimento**
+
+```typescript
+await knowledgeTracker.track('session', 
+  'Manutenção crítica: X correções, Y propostas de melhoria',
+  { tags: ['manutencao', 'auditoria'] }
+);
+```
+
+---
+
+## Checklist Final
+
+Antes de marcar como completa:
+
+### Integridade
 - [ ] Todos os paths em `@references` existem
-- [ ] `Feedback/` tem estrutura completa
-- [ ] Última auditoria < 7 dias (ou executar)
-- [ ] Agents refletem código atual
-- [ ] Entrada adicionada ao HISTORICO.md
-- [ ] Issues registradas no BACKLOG.md
-- [ ] Graphiti healthy ou fallback funcionando
-- [ ] Sessão indexada no grafo de conhecimento
+- [ ] Todos os agents têm frontmatter completo
+- [ ] Todos integrados com CONHECIMENTO
+
+### Atualidade
+- [ ] `@last-verified` atualizado em todos
+- [ ] Código e agents estão sincronizados
+- [ ] Nenhum agent obsoleto
+
+### Conhecimento
+- [ ] Graphiti healthy OU fallback funcionando
+- [ ] Fallback < 100 linhas
+- [ ] Sessão indexada
+
+### Melhoria (🆕)
+- [ ] Pelo menos 1 proposta de melhoria registrada
+- [ ] Propostas adicionadas ao BACKLOG.md
 
 ---
 
 ## Métricas de Saúde
 
-| Métrica | Verde | Amarelo | Vermelho |
-|---------|-------|---------|----------|
+| Métrica | 🟢 Verde | 🟡 Amarelo | 🔴 Vermelho |
+|---------|----------|------------|-------------|
 | Referências quebradas | 0 | 1-2 | 3+ |
-| Dias desde última auditoria | < 7 | 7-14 | 15+ |
-| Agents sem `@last-verified` | 0-3 | 4-7 | 8+ |
+| Dias desde manutenção | < 7 | 7-14 | 15+ |
+| Agents sem @last-verified | 0 | 1-3 | 4+ |
 | Issues no BACKLOG | < 10 | 10-20 | 20+ |
 | Graphiti status | healthy | degraded | offline |
 | Fallback lines | < 50 | 50-100 | 100+ |
+| Propostas de melhoria | 1+ | 0 | - |
 
 ---
 
-## Automação (Futuro)
-
-Para automatizar esta verificação, criar script em `scripts/agent-health-check.sh`:
+## Script de Verificação Automática
 
 ```bash
 #!/bin/bash
-# TODO: Implementar verificação automática
-# - Checar referências
-# - Alertar se manutenção atrasada
-# - Gerar relatório
+# scripts/agent-health-check.sh
+
+echo "🔧 Verificação de Saúde do Ecossistema"
+echo "======================================"
+
+errors=0
+warnings=0
+
+# 1. Verificar referências
+echo -e "\n📁 Referências..."
+for f in .agent/workflows/*-agent.md; do
+  if grep -q "FALTANDO" <(grep -A10 "@references:" "$f"); then
+    ((errors++))
+  fi
+done
+
+# 2. Verificar frontmatter
+echo -e "\n📋 Frontmatter..."
+for f in .agent/workflows/*-agent.md; do
+  if ! grep -q "escalates-to:" "$f"; then
+    echo "⚠️ $(basename $f): sem escalates-to"
+    ((warnings++))
+  fi
+done
+
+# 3. Verificar Graphiti
+echo -e "\n🧠 Graphiti..."
+if ! curl -s http://localhost:8000/health | grep -q "healthy"; then
+  echo "⚠️ Graphiti offline"
+  ((warnings++))
+fi
+
+# 4. Resultado
+echo -e "\n======================================"
+echo "Erros: $errors | Avisos: $warnings"
+[ $errors -eq 0 ] && [ $warnings -eq 0 ] && echo "✅ Ecossistema saudável!"
 ```
 
 ---
 
 ## Escalação
 
-Se durante a manutenção encontrar:
-
 | Situação | Escalar Para |
 |----------|--------------|
-| Referência para arquivo que nunca existiu | ARQUITETO |
-| Agent está completamente desatualizado | ESTRUTURA |
+| Agent obsoleto que pode ser deletado | ARQUITETO |
 | Conflito entre agents | ARQUITETO |
-| Dúvida sobre manter ou deletar | ARQUITETO |
+| Proposta de novo agent | ARQUITETO |
+| Performance do Graphiti | CONHECIMENTO |
+| Estrutura de pastas | ESTRUTURA |
 
 ---
 
@@ -259,6 +371,11 @@ Se durante a manutenção encontrar:
 @workflow-links:
   - /consistencia: Para auditorias de conteúdo
   - /verificacao: Para verificar antes de concluir
+  - /conhecimento: Para gerenciar o grafo
+@collaborates:
+  - CONHECIMENTO: Indexar resultados da manutenção
+  - ARQUITETO: Escalar decisões críticas
 @created: 2025-12-29
-@author: DevSenior Agent
+@updated: 2025-12-30
+@version-notes: v2.0 - Adicionada Fase 5 (Propostas de Melhoria) e mentalidade crítica
 ```
