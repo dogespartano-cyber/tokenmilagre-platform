@@ -7,6 +7,13 @@ version: 2.0.0
 
 > Quando a IA precisar de contexto especializado, consulte este índice.
 
+> **🖥️ AMBIENTE DE EXECUÇÃO:**
+> - **Container:** distrobox `dev-ubuntu` (Ubuntu dentro do host)
+> - **Host:** Fedora Kinoite (imutável, acesso via [BRIDGE](./workflows/BRIDGE-agent.md))
+> - **Limitações:** SEM acesso a Podman/Docker, systemd do host
+> - **Bridge:** `/home/zenfoco/Dev/.claude-bridge/` para comunicar com Claude do host
+> - **Serviços externos:** Graphiti (port 8000), FalkorDB (port 6379) via Podman no host
+
 > **⚠️ IMPORTANTE:** Nunca faça commit ou push sem solicitação explícita do usuário. Pergunte sempre antes de salvar alterações no repositório.
 
 > **🚨 CRÍTICO - BANCO DE DADOS:** Antes de QUALQUER operação destrutiva no banco (migrations, resets, db push --force-reset, etc), você DEVE:
@@ -46,6 +53,7 @@ version: 2.0.0
 | **Banco de dados/Backup** | [DATABASE](./workflows/DATABASE-agent.md) | "Backup", "migração", "db push" |
 | **🔧 Manutenção de Agents** | [MANUTENCAO](./workflows/manutencao.md) | "/manutencao", "health check" |
 | **🧠 Grafo de Conhecimento** | [CONHECIMENTO](./workflows/CONHECIMENTO-agent.md) | "/conhecimento", "lembrar", "buscar" |
+| **🌉 Comunicação com Host** | [BRIDGE](./workflows/BRIDGE-agent.md) | "bridge", "host", "podman", "fora do container" |
 
 ---
 
