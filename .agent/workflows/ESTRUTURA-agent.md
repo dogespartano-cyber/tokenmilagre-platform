@@ -115,8 +115,8 @@ await knowledgeTracker.trackDecision(
 @references:
   - _DNA.md
   - ./ARQUITETURA.md  # Filosofia completa
-  - CODIGO.md  # Colaboração em code review
-  - CONSISTENCIA.md  # Audita consistência estrutural
+  - CODIGO-agent.md  # Colaboração em code review
+  - CONSISTENCIA-agent.md  # Audita consistência estrutural
 @collaborates:
   - CONHECIMENTO: Registrar decisões arquiteturais
 @last-verified: 2025-12-30

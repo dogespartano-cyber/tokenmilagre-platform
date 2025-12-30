@@ -4,6 +4,8 @@ version: 1.0.0
 inherits: _DNA.md
 description: Gerenciamento do grafo de conhecimento Graphiti
 trigger: "/conhecimento", "buscar conhecimento", "lembrar"
+escalates-to: ARQUITETO
+collaborates: [MANUTENCAO, ARQUITETO, ESTRUTURA, CODIGO]
 ---
 
 # 🧠 CONHECIMENTO Agent
@@ -139,9 +141,19 @@ Este agent deve ser verificado no `/manutencao`:
   - lib/knowledge/types.ts
   - lib/services/graphiti.service.ts
   - scripts/knowledge/
+@receives-from:
+  - ARQUITETO: Decisões filosóficas
+  - CODIGO: Bugs, soluções, patterns
+  - ESTRUTURA: Decisões arquiteturais
+  - CONTEUDO: Artigos criados
+  - GITHUB: Commits (via hook automático)
+  - DATABASE: Decisões de schema
+  - SEGURANCA: Auditorias
+  - TOKEN: Decisões tokenomics
+  - DADOS: Snapshots de métricas
 @collaborates:
-  - MANUTENCAO: Verificação semanal
-  - ARQUITETO: Decisões sobre estrutura
+  - MANUTENCAO: Verificação semanal (Fase 5)
+  - ARQUITETO: Decisões sobre estrutura do grafo
 @created: 2025-12-30
 @last-verified: 2025-12-30
 ```

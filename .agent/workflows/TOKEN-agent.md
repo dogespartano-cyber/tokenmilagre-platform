@@ -242,8 +242,8 @@ await knowledgeTracker.trackDecision(
 @references:
   - _DNA.md
   - ./TRANSPARENCIA.md
-  - ARQUITETO.md  # Para validação ética
-  - SEGURANCA.md   # Para auditoria de segurança
+  - ARQUITETO-agent.md  # Para validação ética
+  - SEGURANCA-agent.md   # Para auditoria de segurança
 @collaborates:
   - CONHECIMENTO: Registrar decisões de tokenomics
 @last-verified: 2025-12-30

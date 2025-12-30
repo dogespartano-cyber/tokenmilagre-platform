@@ -113,8 +113,8 @@ const context = await knowledgeTracker.recall({
 ```yaml
 @references:
   - _DNA.md
-  - ARQUITETO.md  # Filosofia
-  - CONTEUDO.md  # Tom de voz
+  - ARQUITETO-agent.md  # Filosofia
+  - CONTEUDO-agent.md  # Tom de voz
   - ../Feedback/notes/  # Destino para análises
 @collaborates:
   - CONHECIMENTO: Consultar histórico de decisões

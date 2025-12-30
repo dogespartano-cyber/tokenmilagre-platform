@@ -213,8 +213,8 @@ await knowledgeTracker.trackContent(
 ```yaml
 @references:
   - _DNA.md
-  - DESIGN.md  # Para visual
-  - CONSISTENCIA.md  # Audita consistência de conteúdo
+  - DESIGN-agent.md  # Para visual
+  - CONSISTENCIA-agent.md  # Audita consistência de conteúdo
   - app/api/chat-perplexity/route.ts  # System prompts de criação
   - app/dashboard/criar-artigo/_lib/constants.ts  # Categorias e validações
   - .agent/workflows/prompts/  # Prompts externos

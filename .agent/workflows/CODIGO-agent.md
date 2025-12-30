@@ -173,9 +173,9 @@ await knowledgeTracker.trackTroubleshoot(
 ```yaml
 @references:
   - _DNA.md
-  - ESTRUTURA.md  # Estrutura
-  - SEGURANCA.md  # Segurança
-  - CONSISTENCIA.md  # Audita consistência de código
+  - ESTRUTURA-agent.md  # Estrutura
+  - SEGURANCA-agent.md  # Segurança
+  - CONSISTENCIA-agent.md  # Audita consistência de código
   - prisma/schema.prisma  # Schema real
   - ../Feedback/logs/HISTORICO.md  # Histórico de sessões
 @collaborates:

@@ -218,9 +218,9 @@ const pastIdeas = await knowledgeTracker.search({
 ```yaml
 @references:
   - _DNA.md
-  - ARQUITETO.md  # Para validação ética
-  - CONTEUDO.md  # Para execução de ideias de conteúdo
-  - ANALISTA.md  # Para análise de ideias
+  - ARQUITETO-agent.md  # Para validação ética
+  - CONTEUDO-agent.md  # Para execução de ideias de conteúdo
+  - ANALISTA-agent.md  # Para análise de ideias
   - ../Feedback/ideas/  # Destino para brainstorms
 @collaborates:
   - CONHECIMENTO: Consultar ideias e sessões anteriores

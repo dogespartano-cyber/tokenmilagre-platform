@@ -91,7 +91,7 @@ O agente pode ajudar a criar descrições de PR ricas:
 ```yaml
 @references:
   - _DNA.md
-  - ESTRUTURA.md
+  - ESTRUTURA-agent.md
   - DESIGN-agent.md
   - task.md
 @collaborates:

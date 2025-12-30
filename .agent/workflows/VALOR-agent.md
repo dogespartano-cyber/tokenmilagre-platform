@@ -216,8 +216,8 @@ const pastDecisions = await knowledgeTracker.search({
 ```yaml
 @references:
   - _DNA.md
-  - ARQUITETO.md  # Validação ética
-  - IDEIAS.md  # Geração de ideias
+  - ARQUITETO-agent.md  # Validação ética
+  - IDEIAS-agent.md  # Geração de ideias
 @biblical-references:
   - Mateus 25:14-30 (Parábola dos Talentos)
   - Provérbios 13:11 ("O dinheiro ganho com desonestidade diminui, mas quem o ajunta aos poucos terá cada vez mais")

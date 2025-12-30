@@ -76,7 +76,7 @@ await knowledgeTracker.track('decision',
 ```yaml
 @references:
   - _DNA.md
-  - CODIGO.md  # Colaboração em código
+  - CODIGO-agent.md  # Colaboração em código
   - prisma/schema.prisma
 @collaborates:
   - CONHECIMENTO: Registrar auditorias de segurança

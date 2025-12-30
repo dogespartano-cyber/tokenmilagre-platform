@@ -241,9 +241,9 @@ await knowledgeTracker.track('session',
 ```yaml
 @references:
   - _DNA.md
-  - CODIGO.md  # Para queries complexas
-  - CONTEUDO.md  # Para preencher gaps
-  - VALOR.md  # Para validar ROI de conteúdo
+  - CODIGO-agent.md  # Para queries complexas
+  - CONTEUDO-agent.md  # Para preencher gaps
+  - VALOR-agent.md  # Para validar ROI de conteúdo
   - ../Feedback/logs/  # Destino para relatórios
 @collaborates:
   - CONHECIMENTO: Registrar snapshots de métricas

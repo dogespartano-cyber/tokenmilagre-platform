@@ -189,8 +189,8 @@ const pastAudits = await knowledgeTracker.search({
   - _DNA.md
   - MANIFESTO.md  # Fonte para /manifesto
   - TRANSPARENCIA.md  # Fonte para /transparencia
-  - CONTEUDO.md  # Padrões de conteúdo
-  - CODIGO.md  # Padrões técnicos
+  - CONTEUDO-agent.md  # Padrões de conteúdo
+  - CODIGO-agent.md  # Padrões técnicos
   - ../Feedback/logs/  # Destino para relatórios
 @collaborates:
   - CONHECIMENTO: Consultar histórico de auditorias

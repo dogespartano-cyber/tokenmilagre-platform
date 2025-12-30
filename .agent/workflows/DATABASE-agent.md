@@ -1,4 +1,11 @@
 ---
+type: agent
+name: DATABASE
+role: Gerenciamento de Banco de Dados
+trigger: "backup", "migração", "db push", "prisma", "database"
+inherits: _DNA.md
+collaborates: [CODIGO, ESTRUTURA, CONHECIMENTO]
+escalates-to: ARQUITETO
 description: Gerenciamento de banco de dados, backups e migrações Prisma
 ---
 

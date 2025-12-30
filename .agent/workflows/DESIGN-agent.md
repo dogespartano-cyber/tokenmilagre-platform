@@ -288,8 +288,8 @@ const patterns = await knowledgeTracker.search({
 ```yaml
 @references:
   - _DNA.md
-  - ESTRUTURA.md  # Consistência de padrões
-  - CONSISTENCIA.md  # Audita consistência visual
+  - ESTRUTURA-agent.md  # Consistência de padrões
+  - CONSISTENCIA-agent.md  # Audita consistência visual
   - lib/core/theme/  # Código fonte
   - app/page.tsx  # Referência de design
   - app/globals.css  # CSS Variables
