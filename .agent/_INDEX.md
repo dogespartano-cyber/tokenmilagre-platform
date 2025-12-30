@@ -18,6 +18,12 @@ version: 2.0.0
 
 > **🌐 NAVEGADOR:** Nunca abra o modo navegador (`browser_subagent`) sem solicitação explícita do usuário. Para análises de páginas, use apenas leitura de código-fonte a menos que o usuário peça especificamente para visualizar no browser.
 
+> **🧠 SISTEMA DE CONHECIMENTO:** Este projeto usa Graphiti (localhost:8000) para memória persistente.
+> - **Início de sessão:** Consulte conhecimento anterior com `curl -X POST localhost:8000/search -d '{"query":"<contexto>"}'`
+> - **Durante trabalho:** Registre decisões importantes com `curl -X POST localhost:8000/add-episode`
+> - **Detalhes:** [CONHECIMENTO-agent.md](./workflows/CONHECIMENTO-agent.md)
+> - **Se Graphiti offline:** Use fallback em `Feedback/logs/knowledge-fallback.jsonl`
+
 ---
 
 ## Uso Rápido
