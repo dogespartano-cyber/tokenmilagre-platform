@@ -17,5 +17,4 @@ export { default as TransparencyNote } from './TransparencyNote';
 export { default as TransparencyStats } from './TransparencyStats';
 export { default as CustomUserButton } from './CustomUserButton';
 export { default as UserDropdown } from './UserDropdown';
-export { ThemeCard, ThemeText } from './ThemeCard';
-export { default as NovelEditor } from './NovelEditor';
+
