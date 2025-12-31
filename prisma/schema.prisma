@@ -101,15 +101,10 @@ model Article {
   // Campos específicos de NOTÍCIAS
   sentiment          Sentiment @default(neutral)
 
-  // Fact-checking fields (apenas notícias)
-  factCheckScore     Float?    // Score de 0-100 (threshold padrão: 70%)
-  factCheckSources   String?   // JSON array com URLs das fontes consultadas
-  factCheckDate      DateTime? // Data da verificação
-  factCheckStatus    String?   // verified (>=70%), failed (<70%), skipped (sem APIs)
-  factCheckClicks    Int       @default(0) // Contador de verificações públicas
-  
-  // Modo Cross - Fontes consolidadas (Perplexity + Gemini)
-  consolidatedSources String?  @db.Text // JSON com fontes de ambas APIs
+  // Verificação manual (simplificado)
+  verified           Boolean   @default(false) // Artigo verificado manualmente
+  verifiedAt         DateTime? // Data da verificação manual
+  verifiedBy         String?   // Quem verificou
 
   // Campos específicos de ARTIGOS EDUCACIONAIS
   level              String?   // 'iniciante' | 'intermediario' | 'avancado'
@@ -226,11 +221,8 @@ model Resource {
   updatedAt     DateTime @updatedAt
   lastVerified  DateTime @default(now())
 
-  // Fact-checking fields (verificação pública)
-  factCheckScore     Float?    // Score de 0-100
-  factCheckStatus    String?   // verified, partially_verified, unverified
-  factCheckDate      DateTime? // Data da última verificação
-  factCheckClicks    Int       @default(0) // Contador de verificações públicas
+  // Verificação manual (simplificado)
+  // Campo 'verified' já existe acima (linha 176)
 
   // Engagement (Likes & Comments)
   likeCount          Int       @default(0)
@@ -514,47 +506,7 @@ model UserProgress {
   @@index([completed])
 }
 
-// Rastreamento de verificações públicas de fact-check
-model ArticleFactCheck {
-  id          String   @id @default(cuid())
-  articleId   String
-  userId      String
-  
-  // Resultado da verificação
-  score       Float    // 0-100
-  status      String   // verified, partially_verified, unverified
-  summary     String   // Resumo da verificação
-  
-  // Log detalhado de verificação (JSON)
-  verificationLog  String?  @db.Text // Claims, sources, queries
-  
-  createdAt   DateTime @default(now())
 
-  @@unique([articleId, userId]) // Apenas 1 verificação por usuário por artigo
-  @@index([articleId])
-  @@index([userId])
-}
-
-// Rastreamento de verificações públicas de fact-check para Recursos
-model ResourceFactCheck {
-  id          String   @id @default(cuid())
-  resourceId  String
-  userId      String
-  
-  // Resultado da verificação
-  score       Float    // 0-100
-  status      String   // verified, partially_verified, unverified
-  summary     String   // Resumo da verificação
-  
-  // Log detalhado de verificação (JSON)
-  verificationLog  String?  @db.Text // Claims, sources, queries
-  
-  createdAt   DateTime @default(now())
-
-  @@unique([resourceId, userId]) // Apenas 1 verificação por usuário por recurso
-  @@index([resourceId])
-  @@index([userId])
-}
 
 // =====================================================
 // ENGAGEMENT SYSTEM (Likes & Comments)

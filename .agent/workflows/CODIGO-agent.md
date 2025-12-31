@@ -137,6 +137,30 @@ Sempre forneça referências ao pedir código:
 
 ---
 
+## 🧳 Muambas (Baú de Código)
+
+> Código removido não vai pro lixo — vai pro baú!
+
+**Localização:** `/home/zenfoco/Dev/Muambas/`
+
+**Regra obrigatória:** Ao remover código que pode ser útil no futuro:
+
+1. **PERGUNTAR** ao usuário: "Quer guardar esse código no Muambas?"
+2. Se sim, mover para `/home/zenfoco/Dev/Muambas/[feature]-[data]/`
+3. Criar README.md explicando o que é
+
+```bash
+# Exemplo de arquivamento:
+mkdir -p /home/zenfoco/Dev/Muambas/[feature]-$(date +%Y-%m-%d)
+mv arquivo.ts /home/zenfoco/Dev/Muambas/[feature]-$(date +%Y-%m-%d)/
+```
+
+**Convenção de nomes:**
+- `fact-checking-2025-12-31/` — Sistema de validação Gemini+Perplexity
+- `[feature]-[YYYY-MM-DD]/` — Qualquer outra funcionalidade
+
+---
+
 ## 💾 Persistência
 
 > Sessões de trabalho significativas devem ser documentadas.
