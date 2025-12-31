@@ -15,12 +15,14 @@ import {
        faHandHoldingHeart,
        faBullseye,
        faShieldAlt,
-       faTerminal
+       faTerminal,
+       faQuestionCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord, faTelegram, faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { SOCIAL_LINKS } from '@/lib/core/constants/social';
 import TransparencyStats from '@/components/shared/TransparencyStats';
 import ZenithCard from '@/components/ui/ZenithCard';
+import FAQAccordion from '@/components/shared/FAQAccordion';
 
 import { useSidebar } from '@/contexts/SidebarContext'; // Re-imported
 
@@ -40,7 +42,7 @@ export default function SobrePage() {
        // Scroll spy para atualizar nav ativa
        useEffect(() => {
               const handleScroll = () => {
-                     const sections = ['conexoes', 'manifesto', 'valores', 'transparencia', 'criador'];
+                     const sections = ['conexoes', 'manifesto', 'valores', 'transparencia', 'faq', 'criador'];
                      const scrollPosition = window.scrollY + 200;
 
                      for (const section of sections) {
@@ -298,7 +300,47 @@ export default function SobrePage() {
                                    </div>
                             </section>
 
-                            {/* 6. Criador Profile Horizontal */}
+                            {/* 6. FAQ Educacional */}
+                            <section id="faq" className="py-16 md:py-32 px-4 md:px-6 scroll-mt-32">
+                                   <div className="max-w-3xl mx-auto space-y-8 md:space-y-12">
+                                          <div className="text-center max-w-2xl mx-auto mb-8 md:mb-16">
+                                                 <span className="font-mono text-sm tracking-widest uppercase mb-4 block">04 — FAQ</span>
+                                                 <h2 className="title-newtab text-2xl sm:text-3xl md:text-5xl mb-4 md:mb-6">Perguntas Frequentes</h2>
+                                                 <p className="text-base md:text-xl text-[var(--text-secondary)]">Respostas simples para quem está começando no mundo cripto.</p>
+                                          </div>
+
+                                          <FAQAccordion
+                                                 items={[
+                                                        {
+                                                               question: 'O que vou aprender aqui?',
+                                                               answer: 'Você vai aprender a navegar o mundo cripto com segurança: identificar golpes, entender fundamentos, analisar projetos, proteger seus ativos e construir patrimônio com estratégia — não com sorte.'
+                                                        },
+                                                        {
+                                                               question: 'Preciso ter experiência para participar?',
+                                                               answer: 'Não! Nosso conteúdo é pensado para iniciantes absolutos. Explicamos tudo do zero, passo a passo, sem jargões desnecessários. Se você sabe acessar a internet, pode aprender conosco.'
+                                                        },
+                                                        {
+                                                               question: 'Quanto custa participar?',
+                                                               answer: 'O acesso ao conteúdo educacional é gratuito. Acreditamos que educação financeira de qualidade deve ser acessível a todos. Sem pegadinhas, sem upsell agressivo.'
+                                                        },
+                                                        {
+                                                               question: 'Por que o criador é anônimo?',
+                                                               answer: 'Porque este projeto não é sobre uma pessoa — é sobre a missão. O anonimato elimina culto à personalidade e coloca o foco onde deve estar: no código, no conteúdo e na comunidade.'
+                                                        },
+                                                        {
+                                                               question: 'Como vocês ganham dinheiro?',
+                                                               answer: 'Transparência total: o projeto é sustentado pela comunidade e por parcerias éticas. Nunca promovemos projetos pagos sem disclosure. Todo conflito de interesse é declarado.'
+                                                        },
+                                                        {
+                                                               question: 'Posso confiar nas informações?',
+                                                               answer: 'Nosso compromisso é com a verdade, não com hype. Todo conteúdo passa por fact-checking. Erros são corrigidos publicamente. Não vendemos sonhos — ensinamos fundamentos.'
+                                                        }
+                                                 ]}
+                                          />
+                                   </div>
+                            </section>
+
+                            {/* 7. Criador Profile Horizontal */}
                             <section id="criador" className="py-16 md:py-32 px-4 md:px-6 scroll-mt-32">
                                    <div className="max-w-4xl mx-auto">
                                           <ZenithCard variant="glass" className="p-6 md:p-16 relative overflow-hidden rounded-2xl md:rounded-[3rem] transition-all hover:-translate-y-2 hover:shadow-2xl border border-[var(--border-medium)] hover:border-transparent">

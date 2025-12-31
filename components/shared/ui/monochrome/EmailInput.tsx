@@ -20,188 +20,188 @@
 import { useState, useCallback, InputHTMLAttributes, useId } from 'react';
 
 interface EmailInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> {
-    /** Label do campo */
-    label?: string;
-    /** Placeholder customizado */
-    placeholder?: string;
-    /** Mensagem de erro customizada */
-    errorMessage?: string;
-    /** Se deve validar em tempo real enquanto digita */
-    validateOnChange?: boolean;
-    /** Se deve validar ao sair do campo */
-    validateOnBlur?: boolean;
-    /** Callback quando o valor muda */
-    onChange?: (value: string) => void;
-    /** Callback quando a validação muda */
-    onValidationChange?: (isValid: boolean) => void;
-    /** Texto auxiliar abaixo do input */
-    helperText?: string;
-    /** Se o campo é obrigatório */
-    required?: boolean;
-    /** Tamanho do input */
-    size?: 'sm' | 'md' | 'lg';
-    /** Se deve mostrar ícone de status */
-    showStatusIcon?: boolean;
+  /** Label do campo */
+  label?: string;
+  /** Placeholder customizado */
+  placeholder?: string;
+  /** Mensagem de erro customizada */
+  errorMessage?: string;
+  /** Se deve validar em tempo real enquanto digita */
+  validateOnChange?: boolean;
+  /** Se deve validar ao sair do campo */
+  validateOnBlur?: boolean;
+  /** Callback quando o valor muda */
+  onChange?: (value: string) => void;
+  /** Callback quando a validação muda */
+  onValidationChange?: (isValid: boolean) => void;
+  /** Texto auxiliar abaixo do input */
+  helperText?: string;
+  /** Se o campo é obrigatório */
+  required?: boolean;
+  /** Tamanho do input */
+  inputSize?: 'sm' | 'md' | 'lg';
+  /** Se deve mostrar ícone de status */
+  showStatusIcon?: boolean;
 }
 
 // Regex para validação de email (RFC 5322 simplificado)
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function EmailInput({
-    label,
-    placeholder = 'Digite seu email',
-    errorMessage = 'Por favor, insira um email válido',
-    validateOnChange = true,
-    validateOnBlur = true,
-    onChange,
-    onValidationChange,
-    helperText,
-    required = false,
-    size = 'md',
-    showStatusIcon = true,
-    className = '',
-    disabled,
-    value: controlledValue,
-    ...props
+  label,
+  placeholder = 'Digite seu email',
+  errorMessage = 'Por favor, insira um email válido',
+  validateOnChange = true,
+  validateOnBlur = true,
+  onChange,
+  onValidationChange,
+  helperText,
+  required = false,
+  inputSize = 'md',
+  showStatusIcon = true,
+  className = '',
+  disabled,
+  value: controlledValue,
+  ...props
 }: EmailInputProps) {
-    const id = useId();
-    const inputId = props.id || `email-input-${id}`;
-    const errorId = `${inputId}-error`;
-    const helperId = `${inputId}-helper`;
+  const id = useId();
+  const inputId = props.id || `email-input-${id}`;
+  const errorId = `${inputId}-error`;
+  const helperId = `${inputId}-helper`;
 
-    const [internalValue, setInternalValue] = useState('');
-    const [touched, setTouched] = useState(false);
-    const [validationState, setValidationState] = useState<'neutral' | 'valid' | 'invalid'>('neutral');
+  const [internalValue, setInternalValue] = useState('');
+  const [touched, setTouched] = useState(false);
+  const [validationState, setValidationState] = useState<'neutral' | 'valid' | 'invalid'>('neutral');
 
-    const value = controlledValue !== undefined ? String(controlledValue) : internalValue;
+  const value = controlledValue !== undefined ? String(controlledValue) : internalValue;
 
-    const validateEmail = useCallback((email: string): boolean => {
-        if (!email) {
-            return !required;
-        }
-        return EMAIL_REGEX.test(email);
-    }, [required]);
+  const validateEmail = useCallback((email: string): boolean => {
+    if (!email) {
+      return !required;
+    }
+    return EMAIL_REGEX.test(email);
+  }, [required]);
 
-    const updateValidation = useCallback((email: string) => {
-        if (!email && !required) {
-            setValidationState('neutral');
-            onValidationChange?.(true);
-            return;
-        }
+  const updateValidation = useCallback((email: string) => {
+    if (!email && !required) {
+      setValidationState('neutral');
+      onValidationChange?.(true);
+      return;
+    }
 
-        const isValid = validateEmail(email);
-        setValidationState(isValid ? 'valid' : 'invalid');
-        onValidationChange?.(isValid);
-    }, [validateEmail, required, onValidationChange]);
+    const isValid = validateEmail(email);
+    setValidationState(isValid ? 'valid' : 'invalid');
+    onValidationChange?.(isValid);
+  }, [validateEmail, required, onValidationChange]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = e.target.value;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
 
-        if (controlledValue === undefined) {
-            setInternalValue(newValue);
-        }
+    if (controlledValue === undefined) {
+      setInternalValue(newValue);
+    }
 
-        onChange?.(newValue);
+    onChange?.(newValue);
 
-        if (validateOnChange && touched) {
-            updateValidation(newValue);
-        }
-    };
+    if (validateOnChange && touched) {
+      updateValidation(newValue);
+    }
+  };
 
-    const handleBlur = () => {
-        setTouched(true);
-        if (validateOnBlur) {
-            updateValidation(value);
-        }
-    };
+  const handleBlur = () => {
+    setTouched(true);
+    if (validateOnBlur) {
+      updateValidation(value);
+    }
+  };
 
-    const handleFocus = () => {
-        if (validationState === 'invalid') {
-            // Mantém o estado de erro durante edição
-        }
-    };
+  const handleFocus = () => {
+    if (validationState === 'invalid') {
+      // Mantém o estado de erro durante edição
+    }
+  };
 
-    const showError = validationState === 'invalid' && touched;
-    const showSuccess = validationState === 'valid' && touched && value;
+  const showError = validationState === 'invalid' && touched;
+  const showSuccess = validationState === 'valid' && touched && value;
 
-    const describedBy = [
-        showError ? errorId : null,
-        helperText ? helperId : null
-    ].filter(Boolean).join(' ') || undefined;
+  const describedBy = [
+    showError ? errorId : null,
+    helperText ? helperId : null
+  ].filter(Boolean).join(' ') || undefined;
 
-    return (
-        <>
-            <Styles />
-            <div className={`email-input-wrapper email-input-${size} ${className}`}>
-                {label && (
-                    <label htmlFor={inputId} className="email-input-label">
-                        {label}
-                        {required && <span className="email-input-required" aria-hidden="true">*</span>}
-                    </label>
-                )}
+  return (
+    <>
+      <Styles />
+      <div className={`email-input-wrapper email-input-${inputSize} ${className}`}>
+        {label && (
+          <label htmlFor={inputId} className="email-input-label">
+            {label}
+            {required && <span className="email-input-required" aria-hidden="true">*</span>}
+          </label>
+        )}
 
-                <div className={`email-input-container ${showError ? 'has-error' : ''} ${showSuccess ? 'has-success' : ''} ${disabled ? 'is-disabled' : ''}`}>
-                    <span className="email-input-icon" aria-hidden="true">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                            <polyline points="22,6 12,13 2,6" />
-                        </svg>
-                    </span>
+        <div className={`email-input-container ${showError ? 'has-error' : ''} ${showSuccess ? 'has-success' : ''} ${disabled ? 'is-disabled' : ''}`}>
+          <span className="email-input-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+          </span>
 
-                    <input
-                        {...props}
-                        id={inputId}
-                        type="email"
-                        className="email-input"
-                        placeholder={placeholder}
-                        value={value}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        onFocus={handleFocus}
-                        disabled={disabled}
-                        required={required}
-                        aria-invalid={showError}
-                        aria-describedby={describedBy}
-                        autoComplete="email"
-                    />
+          <input
+            {...props}
+            id={inputId}
+            type="email"
+            className="email-input"
+            placeholder={placeholder}
+            value={value}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+            disabled={disabled}
+            required={required}
+            aria-invalid={showError}
+            aria-describedby={describedBy}
+            autoComplete="email"
+          />
 
-                    {showStatusIcon && (showError || showSuccess) && (
-                        <span className={`email-input-status ${showError ? 'status-error' : 'status-success'}`} aria-hidden="true">
-                            {showError ? (
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <line x1="15" y1="9" x2="9" y2="15" />
-                                    <line x1="9" y1="9" x2="15" y2="15" />
-                                </svg>
-                            ) : (
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                    <polyline points="22 4 12 14.01 9 11.01" />
-                                </svg>
-                            )}
-                        </span>
-                    )}
-                </div>
+          {showStatusIcon && (showError || showSuccess) && (
+            <span className={`email-input-status ${showError ? 'status-error' : 'status-success'}`} aria-hidden="true">
+              {showError ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="15" y1="9" x2="9" y2="15" />
+                  <line x1="9" y1="9" x2="15" y2="15" />
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+              )}
+            </span>
+          )}
+        </div>
 
-                {showError && (
-                    <p id={errorId} className="email-input-error" role="alert">
-                        {errorMessage}
-                    </p>
-                )}
+        {showError && (
+          <p id={errorId} className="email-input-error" role="alert">
+            {errorMessage}
+          </p>
+        )}
 
-                {helperText && !showError && (
-                    <p id={helperId} className="email-input-helper">
-                        {helperText}
-                    </p>
-                )}
-            </div>
-        </>
-    );
+        {helperText && !showError && (
+          <p id={helperId} className="email-input-helper">
+            {helperText}
+          </p>
+        )}
+      </div>
+    </>
+  );
 }
 
 function Styles() {
-    return (
-        <style jsx global>{`
+  return (
+    <style jsx global>{`
       .email-input-wrapper {
         display: flex;
         flex-direction: column;
@@ -353,7 +353,7 @@ function Styles() {
         height: 24px;
       }
     `}</style>
-    );
+  );
 }
 
 /**
@@ -361,16 +361,16 @@ function Styles() {
  * Útil quando precisa validar emails em outros contextos
  */
 export function useEmailValidation() {
-    const validateEmail = useCallback((email: string): boolean => {
-        if (!email) return false;
-        return EMAIL_REGEX.test(email);
-    }, []);
+  const validateEmail = useCallback((email: string): boolean => {
+    if (!email) return false;
+    return EMAIL_REGEX.test(email);
+  }, []);
 
-    const getEmailError = useCallback((email: string): string | null => {
-        if (!email) return 'Email é obrigatório';
-        if (!EMAIL_REGEX.test(email)) return 'Por favor, insira um email válido';
-        return null;
-    }, []);
+  const getEmailError = useCallback((email: string): string | null => {
+    if (!email) return 'Email é obrigatório';
+    if (!EMAIL_REGEX.test(email)) return 'Por favor, insira um email válido';
+    return null;
+  }, []);
 
-    return { validateEmail, getEmailError };
+  return { validateEmail, getEmailError };
 }
