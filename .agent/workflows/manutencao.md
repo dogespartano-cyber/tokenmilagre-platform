@@ -28,7 +28,53 @@ echo "║ Workflows:     $(ls .agent/workflows/*.md 2>/dev/null | grep -v agent 
 echo "║ Last verified: $(grep -h "@last-verified" .agent/workflows/*.md | sort | head -1)"
 echo "║ Graphiti:      $(curl -s http://localhost:8000/health 2>/dev/null | jq -r '.status // "offline"')"
 echo "║ Fallback:      $(wc -l < Feedback/logs/knowledge-fallback.jsonl 2>/dev/null || echo 0) linhas"
+echo "║ GEMINI.md:     $([ -s ~/.homebox/dev-ubuntu/.gemini/GEMINI.md ] && echo '✅' || echo '❌')"
 echo "╚══════════════════════════════════════════════════════════════╝"
+```
+
+---
+
+## 🤖 Configuração Antigravity (CRÍTICO)
+
+> **Descoberta 2025-12-31:** O caminho do GEMINI.md dentro do distrobox é diferente!
+
+### Caminho Correto
+
+| Tipo | Caminho |
+|------|---------|
+| **✅ CORRETO (distrobox)** | `/home/zenfoco/.homebox/dev-ubuntu/.gemini/GEMINI.md` |
+| ❌ Incorreto (home normal) | `/home/zenfoco/.gemini/GEMINI.md` |
+| **✅ Workspace Rules** | `.agent/rules/` (dentro do projeto) |
+| **✅ Workflows** | `.agent/workflows/` (invocados com `/`) |
+
+### Verificar Sincronização
+
+```bash
+# Verificar se GEMINI.md está no local correto e tem conteúdo
+if [ -s /home/zenfoco/.homebox/dev-ubuntu/.gemini/GEMINI.md ]; then
+  echo "✅ GEMINI.md configurado corretamente"
+  head -5 /home/zenfoco/.homebox/dev-ubuntu/.gemini/GEMINI.md
+else
+  echo "❌ GEMINI.md vazio ou inexistente!"
+  echo "→ Copiar de .agent/rules/ ou CLAUDE.md"
+fi
+```
+
+### Sincronizar se Necessário
+
+```bash
+# Se GEMINI.md estiver desatualizado, copiar da fonte
+cp /home/zenfoco/Dev/tokenmilagre-platform/CLAUDE.md \
+   /home/zenfoco/.homebox/dev-ubuntu/.gemini/GEMINI.md
+```
+
+### Verificar se Protocolo Funciona
+
+Após sincronização, a IA deve iniciar respostas com:
+```
+🧠 Agent: [NOME]
+📡 Graphiti: [status]
+📋 Contexto: [1 linha]
 ```
 
 ---
@@ -372,10 +418,12 @@ echo "Erros: $errors | Avisos: $warnings"
   - /consistencia: Para auditorias de conteúdo
   - /verificacao: Para verificar antes de concluir
   - /conhecimento: Para gerenciar o grafo
+  - /chaos: Para contexto inicial via Graphiti
+  - /sessao: Para registrar sessão ao finalizar
 @collaborates:
   - CONHECIMENTO: Indexar resultados da manutenção
   - ARQUITETO: Escalar decisões críticas
 @created: 2025-12-29
-@updated: 2025-12-30
-@version-notes: v2.0 - Adicionada Fase 5 (Propostas de Melhoria) e mentalidade crítica
+@updated: 2025-12-31
+@version-notes: v3.0 - Adicionada seção Configuração Antigravity com caminho correto do GEMINI.md
 ```
