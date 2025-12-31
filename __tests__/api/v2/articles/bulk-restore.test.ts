@@ -1,7 +1,12 @@
 /**
  * Integration Tests - Bulk Operations & Restore
  * Tests bulk operations and article restoration with role checks
+ * 
+ * @note These tests are skipped (API v2 not implemented) and use legacy patterns
  */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 import request from 'supertest'
 import {
@@ -26,7 +31,7 @@ jest.mock('next/server', () => ({
 
 jest.mock('@/lib/core/prisma', () => ({
   __esModule: true,
-  prisma: require('@/lib/__mocks__/prisma').prismaMock,
+  prisma: jest.requireActual('@/lib/__mocks__/prisma').prismaMock,
 }))
 
 const baseUrl = 'http://localhost:3000'
