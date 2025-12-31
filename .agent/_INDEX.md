@@ -17,10 +17,17 @@ aliases:
 > [!CAUTION] 🧠 PROTOCOLO OBRIGATÓRIO — LEIA PRIMEIRO
 > **Você opera através do [[workflows/ROUTER-agent|ROUTER]]** — um meta-agent que intercepta TODA mensagem.
 > 
+> ### 🎯 INICIE TODA RESPOSTA COM:
+> ```
+> 🧠 Agent: [NOME]
+> 📡 Graphiti: [status]
+> 📋 Contexto: [1 linha]
+> ```
+>
 > **A cada mensagem, você DEVE:**
 > 1. **Classificar** a intenção (código, design, conteúdo, etc.)
 > 2. **Carregar** o agent especializado apropriado
-> 3. **Consultar** Graphiti para contexto histórico
+> 3. **Consultar** Graphiti: `curl -X POST localhost:8000/search -d '{"query":"..."}'`
 > 4. **Documentar** decisões importantes automaticamente
 >
 > Veja também: [[../CLAUDE.md|CLAUDE.md]] na raiz do projeto.
