@@ -4,6 +4,17 @@
 
 ---
 
+## 🎯 FORMATO DE RESPOSTA OBRIGATÓRIO
+
+**Inicie TODA resposta com:**
+```
+🧠 Agent: [NOME DO AGENT]
+📡 Graphiti: [online/offline]
+📋 Contexto: [resumo de 1 linha]
+```
+
+---
+
 ## 🧠 Sistema de Agents Autônomos
 
 Este projeto usa um **sistema de agents especializados** com memória persistente.
