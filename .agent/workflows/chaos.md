@@ -1,4 +1,6 @@
 ---
+type: workflow
+inherits: _DNA.md
 description: Consulta automática de contexto do projeto via Graphiti antes de começar trabalho
 ---
 
@@ -78,4 +80,5 @@ Após executar `/chaos`, você deve ter:
   purpose: context-retrieval
   requires: graphiti-online
   created: 2025-12-31
+@last-verified: 2025-12-31
 ```

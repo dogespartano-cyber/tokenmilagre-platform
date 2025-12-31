@@ -1,4 +1,6 @@
 ---
+type: workflow
+inherits: _DNA.md
 description: Registro de sessão no Graphiti ao final do trabalho
 ---
 
@@ -95,4 +97,5 @@ Para sessões simples, use este formato:
   purpose: knowledge-persistence
   requires: graphiti-online
   created: 2025-12-31
+@last-verified: 2025-12-31
 ```

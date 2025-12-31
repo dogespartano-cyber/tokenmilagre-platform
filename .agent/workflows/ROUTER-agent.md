@@ -5,6 +5,7 @@ role: Orquestrador Invisível
 trigger: AUTOMÁTICO - toda mensagem passa por aqui
 inherits: _DNA.md
 priority: MAXIMUM
+escalates-to: null  # Meta-orquestrador - topo da hierarquia operacional
 tags:
   - meta
   - router
@@ -171,4 +172,5 @@ Ao final de cada resposta, pergunte-se:
   inherits: _DNA.md
   created: 2025-12-31
   purpose: autonomous-orchestration
+@last-verified: 2025-12-31
 ```

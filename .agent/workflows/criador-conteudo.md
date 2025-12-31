@@ -1,4 +1,6 @@
 ---
+type: workflow
+inherits: _DNA.md
 description: Workflow principal para criação de conteúdo via Perplexity AI
 ---
 
@@ -46,4 +48,12 @@ curl -X POST http://localhost:3000/api/chat-perplexity \
 curl -X POST http://localhost:3000/api/chat-perplexity \
   -H "Content-Type: application/json" \
   -d '{"messages": [{"role": "user", "content": "Bitcoin atinge 100k"}], "articleType": "news"}'
+```
+
+```yaml
+@agi-metadata:
+  type: workflow
+  trigger: /criador-conteudo
+  purpose: content-creation
+@last-verified: 2025-12-31
 ```

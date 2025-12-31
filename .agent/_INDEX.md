@@ -196,6 +196,7 @@ SEGURANCA   DESIGN    CONTEUDO ←───────────────�
 | Workflow | Propósito |
 |----------|-----------|
 | [[workflows/chaos\|chaos]] | **🧠 Contexto instantâneo via Graphiti** |
+| [[workflows/auditoria\|auditoria]] | **🏥 Prompt para auditoria completa** |
 | [[workflows/sessao\|sessao]] | **📝 Registro de sessão no Graphiti** |
 | [[workflows/debug\|debug]] | Debugging sistemático em 4 fases |
 | [[workflows/tdd\|tdd]] | Test-Driven Development (red-green-refactor) |
