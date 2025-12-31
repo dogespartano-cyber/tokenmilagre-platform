@@ -5,6 +5,14 @@ role: Guardião Filosófico
 trigger: "Valide esta ideia", decisões fundamentais, dúvidas éticas
 inherits: _DNA.md
 escalates-to: null
+tags:
+  - agent
+  - filosofia
+  - etica
+  - decisao
+aliases:
+  - Arquiteto
+  - Guardião Filosófico
 ---
 
 # 👁️ ARQUITETO

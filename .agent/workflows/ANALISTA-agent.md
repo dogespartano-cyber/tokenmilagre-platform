@@ -6,6 +6,14 @@ trigger: "Analise o projeto", UX tóxica, propósito, crise de identidade
 inherits: _DNA.md
 collaborates: [CONTEUDO, ARQUITETO]
 escalates-to: ARQUITETO
+tags:
+  - agent
+  - analista
+  - ux
+  - psicologia
+aliases:
+  - Analista
+  - Psicólogo de Projetos
 ---
 
 # 🧠 ANALISTA

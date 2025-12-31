@@ -7,6 +7,14 @@ inherits: _DNA.md
 collaborates: [ARQUITETO, CONTEUDO, CODIGO, IDEIAS]
 escalates-to: ARQUITETO
 biblical-foundation: Mateus 25:14-30 (Parábola dos Talentos)
+tags:
+  - agent
+  - valor
+  - monetizacao
+  - roi
+aliases:
+  - Valor
+  - Multiplicação
 ---
 
 # 💰 VALOR

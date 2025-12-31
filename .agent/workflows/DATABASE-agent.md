@@ -7,6 +7,14 @@ inherits: _DNA.md
 collaborates: [CODIGO, ESTRUTURA, CONHECIMENTO]
 escalates-to: ARQUITETO
 description: Gerenciamento de banco de dados, backups e migrações Prisma
+tags:
+  - agent
+  - database
+  - prisma
+  - backup
+aliases:
+  - Database
+  - Banco de Dados
 ---
 
 # 🗄️ Agent DATABASE

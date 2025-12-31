@@ -6,6 +6,15 @@ trigger: "Crie artigo", "landing page", "página", "microcopy", conteúdo educac
 inherits: _DNA.md
 collaborates: [DESIGN, CODIGO]
 escalates-to: ARQUITETO
+tags:
+  - agent
+  - conteudo
+  - artigos
+  - seo
+  - criacao
+aliases:
+  - Conteúdo
+  - Content
 ---
 
 # ✍️ CONTEUDO

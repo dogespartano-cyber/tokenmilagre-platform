@@ -6,6 +6,14 @@ trigger: "estatísticas", "relatório", "dados do projeto", "status do projeto",
 inherits: _DNA.md
 collaborates: [CODIGO, CONTEUDO, VALOR]
 escalates-to: ARQUITETO
+tags:
+  - agent
+  - dados
+  - metricas
+  - relatorios
+aliases:
+  - Dados
+  - Data Analyst
 ---
 
 # 📊 DADOS

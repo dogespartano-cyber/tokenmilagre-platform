@@ -6,6 +6,14 @@ trigger: "Code review", "revisar código", antes de commits, tipagem
 inherits: _DNA.md
 collaborates: [ESTRUTURA, SEGURANCA]
 escalates-to: ESTRUTURA
+tags:
+  - agent
+  - codigo
+  - review
+  - typescript
+aliases:
+  - Código
+  - Tech Lead
 ---
 
 # 🔍 CODIGO

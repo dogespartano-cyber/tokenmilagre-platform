@@ -6,6 +6,14 @@ trigger: "Criar token", "SPL token", "Solana", "Tokenomics", "Whitepaper", "Lan√
 inherits: _DNA.md
 escalates-to: ARQUITETO
 collaborates: [CODIGO, SEGURANCA]
+tags:
+  - agent
+  - token
+  - solana
+  - tokenomics
+aliases:
+  - Token
+  - SPL Token
 ---
 
 # ‚ö° TOKEN

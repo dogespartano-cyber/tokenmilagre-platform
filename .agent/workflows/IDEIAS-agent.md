@@ -6,6 +6,14 @@ trigger: "Brainstorm", "ideias", "vamos pensar", "criar conceitos", "explorar po
 inherits: _DNA.md
 collaborates: [CONTEUDO, ARQUITETO, ANALISTA]
 escalates-to: ARQUITETO
+tags:
+  - agent
+  - ideias
+  - brainstorm
+  - criatividade
+aliases:
+  - Ideias
+  - Brainstorm
 ---
 
 # 💡 IDEIAS

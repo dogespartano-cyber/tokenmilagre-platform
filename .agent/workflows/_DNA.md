@@ -2,6 +2,15 @@
 type: core-dna
 version: 1.0.0
 trust-level: MAXIMUM
+tags:
+  - core
+  - dna
+  - valores
+  - milagre
+aliases:
+  - DNA
+  - Core DNA
+  - Núcleo
 ---
 
 # 🧬 DNA $MILAGRE

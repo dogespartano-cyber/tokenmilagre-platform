@@ -1,34 +1,56 @@
 ---
 type: agent-registry
-version: 2.0.0
+version: 3.0.0
+tags:
+  - index
+  - milagre
+  - agents
+aliases:
+  - Índice de Agents
+  - Agent Registry
 ---
 
 # 📖 Índice de Agents $MILAGRE
 
 > Quando a IA precisar de contexto especializado, consulte este índice.
 
-> **🖥️ AMBIENTE DE EXECUÇÃO:**
+> [!CAUTION] 🧠 PROTOCOLO OBRIGATÓRIO — LEIA PRIMEIRO
+> **Você opera através do [[workflows/ROUTER-agent|ROUTER]]** — um meta-agent que intercepta TODA mensagem.
+> 
+> **A cada mensagem, você DEVE:**
+> 1. **Classificar** a intenção (código, design, conteúdo, etc.)
+> 2. **Carregar** o agent especializado apropriado
+> 3. **Consultar** Graphiti para contexto histórico
+> 4. **Documentar** decisões importantes automaticamente
+>
+> Veja também: [[../CLAUDE.md|CLAUDE.md]] na raiz do projeto.
+
+> [!NOTE] 🖥️ AMBIENTE DE EXECUÇÃO
 > - **Container:** distrobox `dev-ubuntu` (Ubuntu dentro do host)
-> - **Host:** Fedora Kinoite (imutável, acesso via [BRIDGE](./workflows/BRIDGE-agent.md))
+> - **Host:** Fedora Kinoite (imutável, acesso via [[workflows/BRIDGE-agent|BRIDGE]])
 > - **Limitações:** SEM acesso a Podman/Docker, systemd do host
 > - **Bridge:** `/home/zenfoco/Dev/.claude-bridge/` para comunicar com Claude do host
 > - **Serviços externos:** Graphiti (port 8000), FalkorDB (port 6379) via Podman no host
 
-> **⚠️ IMPORTANTE:** Nunca faça commit ou push sem solicitação explícita do usuário. Pergunte sempre antes de salvar alterações no repositório.
+> [!WARNING] ⚠️ IMPORTANTE
+> Nunca faça commit ou push sem solicitação explícita do usuário. Pergunte sempre antes de salvar alterações no repositório.
 
-> **🚨 CRÍTICO - BANCO DE DADOS:** Antes de QUALQUER operação destrutiva no banco (migrations, resets, db push --force-reset, etc), você DEVE:
+> [!CAUTION] 🚨 CRÍTICO - BANCO DE DADOS
+> Antes de QUALQUER operação destrutiva no banco (migrations, resets, db push --force-reset, etc), você DEVE:
 > 1. **Criar backup local** executando: `npm run db:backup`
 > 2. **Confirmar com o usuário** que o backup foi criado
 > 3. **Só então executar** a operação destrutiva
 > 
-> Esta regra é INVIOLÁVEL. Consulte [DATABASE](./workflows/DATABASE-agent.md) para detalhes.
+> Esta regra é INVIOLÁVEL. Consulte [[workflows/DATABASE-agent|DATABASE]] para detalhes.
 
-> **🌐 NAVEGADOR:** Nunca abra o modo navegador (`browser_subagent`) sem solicitação explícita do usuário. Para análises de páginas, use apenas leitura de código-fonte a menos que o usuário peça especificamente para visualizar no browser.
+> [!TIP] 🌐 NAVEGADOR
+> Nunca abra o modo navegador (`browser_subagent`) sem solicitação explícita do usuário. Para análises de páginas, use apenas leitura de código-fonte a menos que o usuário peça especificamente para visualizar no browser.
 
-> **🧠 SISTEMA DE CONHECIMENTO:** Este projeto usa Graphiti (localhost:8000) para memória persistente.
+> [!IMPORTANT] 🧠 SISTEMA DE CONHECIMENTO
+> Este projeto usa Graphiti (localhost:8000) para memória persistente.
 > - **Início de sessão:** Consulte conhecimento anterior com `curl -X POST localhost:8000/search -d '{"query":"<contexto>"}'`
 > - **Durante trabalho:** Registre decisões importantes com `curl -X POST localhost:8000/add-episode`
-> - **Detalhes:** [CONHECIMENTO-agent.md](./workflows/CONHECIMENTO-agent.md)
+> - **Detalhes:** [[workflows/CONHECIMENTO-agent|CONHECIMENTO]]
 > - **Se Graphiti offline:** Use fallback em `Feedback/logs/knowledge-fallback.jsonl`
 
 ---
@@ -37,23 +59,24 @@ version: 2.0.0
 
 | Preciso de... | Agent | Ativação |
 |---------------|-------|----------|
-| Validação filosófica/ética | [ARQUITETO](./workflows/ARQUITETO-agent.md) | "Valide esta ideia" |
-| Criar conteúdo web | [CONTEUDO](./workflows/CONTEUDO-agent.md) | "Crie artigo/página" |
-| Regras de design/tema | [DESIGN](./workflows/DESIGN-agent.md) | "CSS/tema/cores" |
-| Gerenciamento de Código e Versionamento | [GITHUB](./workflows/GITHUB-agent.md) | "Gerenciar repositório", "versionamento" |
-| Validar arquitetura | [ESTRUTURA](./workflows/ESTRUTURA-agent.md) | "Revisar estrutura" |
-| Revisar código | [CODIGO](./workflows/CODIGO-agent.md) | "Code review" |
-| Auditoria de segurança | [SEGURANCA](./workflows/SEGURANCA-agent.md) | "Segurança", "auditoria" |
-| Análise crítica/UX | [ANALISTA](./workflows/ANALISTA-agent.md) | "Analise o projeto" |
-| Token Solana/Tokenomics | [TOKEN](./workflows/TOKEN-agent.md) | "Criar token", "Tokenomics" |
-| Geração de ideias | [IDEIAS](./workflows/IDEIAS-agent.md) | "Brainstorm", "ideias" |
-| Validação de valor/ROI | [VALOR](./workflows/VALOR-agent.md) | "Monetização", "ROI" |
-| Estatísticas e relatórios | [DADOS](./workflows/DADOS-agent.md) | "Estatísticas", "dados" |
-| **Verificar consistência** | [CONSISTENCIA](./workflows/CONSISTENCIA-agent.md) | "Sincronização", "integridade" |
-| **Banco de dados/Backup** | [DATABASE](./workflows/DATABASE-agent.md) | "Backup", "migração", "db push" |
-| **🔧 Manutenção de Agents** | [MANUTENCAO](./workflows/manutencao.md) | "/manutencao", "health check" |
-| **🧠 Grafo de Conhecimento** | [CONHECIMENTO](./workflows/CONHECIMENTO-agent.md) | "/conhecimento", "lembrar", "buscar" |
-| **🌉 Comunicação com Host** | [BRIDGE](./workflows/BRIDGE-agent.md) | "bridge", "host", "podman", "fora do container" |
+| **🧠 Orquestração automática** | [[workflows/ROUTER-agent\|ROUTER]] | **AUTOMÁTICO** (toda mensagem) |
+| Validação filosófica/ética | [[workflows/ARQUITETO-agent\|ARQUITETO]] | "Valide esta ideia" |
+| Criar conteúdo web | [[workflows/CONTEUDO-agent\|CONTEUDO]] | "Crie artigo/página" |
+| Regras de design/tema | [[workflows/DESIGN-agent\|DESIGN]] | "CSS/tema/cores" |
+| Gerenciamento de Código e Versionamento | [[workflows/GITHUB-agent\|GITHUB]] | "Gerenciar repositório", "versionamento" |
+| Validar arquitetura | [[workflows/ESTRUTURA-agent\|ESTRUTURA]] | "Revisar estrutura" |
+| Revisar código | [[workflows/CODIGO-agent\|CODIGO]] | "Code review" |
+| Auditoria de segurança | [[workflows/SEGURANCA-agent\|SEGURANCA]] | "Segurança", "auditoria" |
+| Análise crítica/UX | [[workflows/ANALISTA-agent\|ANALISTA]] | "Analise o projeto" |
+| Token Solana/Tokenomics | [[workflows/TOKEN-agent\|TOKEN]] | "Criar token", "Tokenomics" |
+| Geração de ideias | [[workflows/IDEIAS-agent\|IDEIAS]] | "Brainstorm", "ideias" |
+| Validação de valor/ROI | [[workflows/VALOR-agent\|VALOR]] | "Monetização", "ROI" |
+| Estatísticas e relatórios | [[workflows/DADOS-agent\|DADOS]] | "Estatísticas", "dados" |
+| **Verificar consistência** | [[workflows/CONSISTENCIA-agent\|CONSISTENCIA]] | "Sincronização", "integridade" |
+| **Banco de dados/Backup** | [[workflows/DATABASE-agent\|DATABASE]] | "Backup", "migração", "db push" |
+| **🔧 Manutenção de Agents** | [[workflows/manutencao\|MANUTENCAO]] | "/manutencao", "health check" |
+| **🧠 Grafo de Conhecimento** | [[workflows/CONHECIMENTO-agent\|CONHECIMENTO]] | "/conhecimento", "lembrar", "buscar" |
+| **🌉 Comunicação com Host** | [[workflows/BRIDGE-agent\|BRIDGE]] | "bridge", "host", "podman", "fora do container" |
 
 ---
 
@@ -148,37 +171,40 @@ SEGURANCA   DESIGN    CONTEUDO ←───────────────�
 
 | Documento | Propósito |
 |-----------|-----------|
-| [_DNA.md](./workflows/_DNA.md) | Mantra e valores (herdado por todos) |
-| [ONBOARDING](./workflows/ONBOARDING.md) | Onboarding para IAs |
-| [MANIFESTO](./workflows/MANIFESTO.md) | Missão e propósito |
-| [ARQUITETURA](./workflows/ARQUITETURA.md) | Filosofia fractal |
-| [TRANSPARENCIA](./workflows/TRANSPARENCIA.md) | Política ética do token |
-| [CONHECIMENTO](./workflows/CONHECIMENTO.md) | Base de troubleshooting |
-| [BACKLOG](../Feedback/backlog/BACKLOG.md) | Tarefas pendentes *(local)* |
-| [HISTORICO](../Feedback/logs/HISTORICO.md) | Histórico de sessões *(local)* |
-| [MANTRA](./workflows/MANTRA.md) | Leitura diária |
-| [layout](./workflows/layout.md) | Guia de layout/tipografia |
-| [vibe](./workflows/vibe.md) | Boas práticas de vibe coding |
-| [ANÁLISE HOLÍSTICA](../Feedback/ANALISE-HOLISTICA_2025-12-19.md) | Auditoria multi-agent *(local)* |
+| [[workflows/_DNA\|_DNA]] | Mantra e valores (herdado por todos) |
+| [[workflows/ONBOARDING\|ONBOARDING]] | Onboarding para IAs |
+| [[workflows/MANIFESTO\|MANIFESTO]] | Missão e propósito |
+| [[workflows/ARQUITETURA\|ARQUITETURA]] | Filosofia fractal |
+| [[workflows/TRANSPARENCIA\|TRANSPARENCIA]] | Política ética do token |
+| [[workflows/CONHECIMENTO\|CONHECIMENTO]] | Base de troubleshooting |
+| [[../Feedback/backlog/BACKLOG\|BACKLOG]] | Tarefas pendentes *(local)* |
+| [[../Feedback/logs/HISTORICO\|HISTORICO]] | Histórico de sessões *(local)* |
+| [[workflows/MANTRA\|MANTRA]] | Leitura diária |
+| [[workflows/layout\|layout]] | Guia de layout/tipografia |
+| [[workflows/vibe\|vibe]] | Boas práticas de vibe coding |
+| [[../Feedback/ANALISE-HOLISTICA_2025-12-19\|ANÁLISE HOLÍSTICA]] | Auditoria multi-agent *(local)* |
 
 ### Workflows de Desenvolvimento (Superpowers)
 
 | Workflow | Propósito |
 |----------|-----------|
-| [debug](./workflows/debug.md) | Debugging sistemático em 4 fases |
-| [tdd](./workflows/tdd.md) | Test-Driven Development (red-green-refactor) |
-| [plano](./workflows/plano.md) | Escrita de planos de implementação |
-| [execucao](./workflows/execucao.md) | Execução de planos em batches |
-| [verificacao](./workflows/verificacao.md) | Verificação antes de conclusão |
-| [manutencao](./workflows/manutencao.md) | **🔧 Manutenção semanal do ecossistema** |
-| [criador-conteudo](./workflows/criador-conteudo.md) | **📝 Prompts Perplexity para criação de conteúdo** |
+| [[workflows/chaos\|chaos]] | **🧠 Contexto instantâneo via Graphiti** |
+| [[workflows/sessao\|sessao]] | **📝 Registro de sessão no Graphiti** |
+| [[workflows/debug\|debug]] | Debugging sistemático em 4 fases |
+| [[workflows/tdd\|tdd]] | Test-Driven Development (red-green-refactor) |
+| [[workflows/plano\|plano]] | Escrita de planos de implementação |
+| [[workflows/execucao\|execucao]] | Execução de planos em batches |
+| [[workflows/verificacao\|verificacao]] | Verificação antes de conclusão |
+| [[workflows/manutencao\|manutencao]] | 🔧 Manutenção semanal do ecossistema |
+| [[workflows/criador-conteudo\|criador-conteudo]] | 📝 Prompts Perplexity para criação de conteúdo |
+
 
 ---
 
 ```yaml
 @agi-metadata:
-  inherits: _DNA.md
+  inherits: [[workflows/_DNA|_DNA]]
   updates: on-agent-change
-  last-maintained: 2025-12-29
+  last-maintained: 2025-12-31
 ```
 

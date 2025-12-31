@@ -6,6 +6,15 @@ trigger: "CSS", "tema", "cores", "tokens", "dark mode", "light mode", "glassmorp
 inherits: _DNA.md
 collaborates: [CONTEUDO, ESTRUTURA]
 escalates-to: ESTRUTURA
+tags:
+  - agent
+  - design
+  - css
+  - tema
+  - visual
+aliases:
+  - Design
+  - Design System
 ---
 
 # 🎨 DESIGN

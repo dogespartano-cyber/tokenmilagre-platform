@@ -77,3 +77,7 @@ scripts/publish-*.js
 .sentryclirc
 sentry.properties
 .env*.local
+
+# Obsidian vault (derived from workflows/)
+.agent/Obsidian/
+.agent/Agents/

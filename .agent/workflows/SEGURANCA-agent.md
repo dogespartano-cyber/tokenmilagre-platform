@@ -6,6 +6,14 @@ trigger: "Due diligence", "auditoria", "segurança", smart contracts, riscos
 inherits: _DNA.md
 collaborates: [CODIGO]
 escalates-to: ARQUITETO
+tags:
+  - agent
+  - seguranca
+  - auditoria
+  - security
+aliases:
+  - Segurança
+  - Security
 ---
 
 # 🔐 SEGURANCA

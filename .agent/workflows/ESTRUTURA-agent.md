@@ -6,6 +6,14 @@ trigger: "Revisar estrutura", "novo módulo", "validar arquitetura", PR grande
 inherits: _DNA.md
 collaborates: [CODIGO, DESIGN]
 escalates-to: ARQUITETO
+tags:
+  - agent
+  - estrutura
+  - arquitetura
+  - fractal
+aliases:
+  - Estrutura
+  - Arquitetura
 ---
 
 # 🌀 ESTRUTURA
