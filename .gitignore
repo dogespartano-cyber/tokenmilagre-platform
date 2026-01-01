@@ -82,4 +82,6 @@ sentry.properties
 .agent/Obsidian/
 .agent/Agents/
 
+# Symlinks to external folders (not tracked by git)
 /app/lab
+/Muambas

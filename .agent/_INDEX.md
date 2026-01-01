@@ -24,11 +24,10 @@ aliases:
 > 📋 Contexto: [1 linha]
 > ```
 >
-> **A cada mensagem, você DEVE:**
-> 1. **Classificar** a intenção (código, design, conteúdo, etc.)
-> 2. **Carregar** o agent especializado apropriado
-> 3. **Consultar** Graphiti: `curl -X POST localhost:8000/search -d '{"query":"..."}'`
-> 4. **Documentar** decisões importantes automaticamente
+> **ROUTER v2.0 — Sistema Inteligente de Roteamento:**
+> 1. **Detector Semântico** — keywords + sinônimos + frases contextuais
+> 2. **Score de Confiança** — ≥0.8 (skill direta), 0.5-0.8 (confirmação), <0.5 (fallback)
+> 3. **Multi-skill Dispatch** — combina agents (ex: "🧠 Agent: CONTEUDO (com DESIGN)")
 >
 > Veja também: [[../CLAUDE.md|CLAUDE.md]] na raiz do projeto.
 
