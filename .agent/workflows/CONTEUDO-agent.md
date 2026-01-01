@@ -40,6 +40,17 @@ aliases:
 | **Fato ≠ Opinião** | Separar explicitamente |
 | **Fontes obrigatórias** | Dados sem fonte = "NÃO VERIFICADO" |
 | **Proteger usuário** | Destacar riscos (volatilidade, golpes) |
+| **Open Source** | Jamais usar "Todos os direitos reservados". Usar "Licença MIT". |
+
+---
+
+## ⚖️ Diretrizes Legais (Copy)
+
+| Elemento | Texto Padrão |
+|----------|--------------|
+| **Footer Copyright** | `© [Ano] $MILAGRE. Open Source (Licença MIT).` |
+| **Disclaimer Invest.** | "Não é aconselhamento financeiro." |
+| **Licença** | MIT License (Permite uso, cópia, modificação e distribuição) |
 
 ---
 

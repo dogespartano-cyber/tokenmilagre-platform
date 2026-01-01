@@ -20,7 +20,7 @@ updated: 2025-12-31
 │ Gamificação │ SEO Schema  │             │             │ Chaos MVP   │
 │ Newsletter  │             │             │             │ Graphiti    │
 │ PWA         │             │             │             │ Agent Tests │
-│ OpenAPI     │             │             │             │             │
+│ OpenAPI     │             │             │             │ UI Standard │
 └─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘
 ```
 

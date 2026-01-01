@@ -13,8 +13,16 @@ import {
       faFlag,
       faLock,
       faGlobe,
+
       faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import PageWrapper from '@/components/layout/PageWrapper';
+
+const pageHeader = {
+      title: 'Verificador de Links',
+      description: 'Proteja-se contra phishing e scams antes de clicar em links suspeitos',
+      shortTitle: 'Verificador'
+};
 
 interface VerificationResult {
       safe: boolean;
@@ -73,27 +81,8 @@ export default function VerificadorURLPage() {
       };
 
       return (
-            <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
-                  <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-12">
-                        {/* Header */}
-                        <div className="text-center mb-12">
-                              <div className="inline-block mb-4">
-                                    <FontAwesomeIcon
-                                          icon={faShieldHalved}
-                                          className="w-16 h-16"
-                                          style={{ color: 'var(--brand-primary)' }}
-                                    />
-                              </div>
-                              <h1
-                                    className="title-newtab text-4xl mb-4 font-inter"
-                                    style={{ color: 'var(--text-primary)' }}
-                              >
-                                    Verificador de Links
-                              </h1>
-                              <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-                                    Proteja-se contra phishing e scams antes de clicar em links suspeitos
-                              </p>
-                        </div>
+            <PageWrapper header={pageHeader}>
+                  <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8">
 
                         {/* Verification Form */}
                         <div
@@ -421,6 +410,6 @@ export default function VerificadorURLPage() {
                               </p>
                         </div>
                   </div>
-            </div>
+            </PageWrapper>
       );
 }

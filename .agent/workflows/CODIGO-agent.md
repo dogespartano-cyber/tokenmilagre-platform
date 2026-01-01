@@ -141,23 +141,38 @@ Sempre forneça referências ao pedir código:
 
 > Código removido não vai pro lixo — vai pro baú!
 
-**Localização:** `/home/zenfoco/Dev/Muambas/`
+**Localização:** `Muambas/` (na raiz do projeto)
 
 **Regra obrigatória:** Ao remover código que pode ser útil no futuro:
 
 1. **PERGUNTAR** ao usuário: "Quer guardar esse código no Muambas?"
-2. Se sim, mover para `/home/zenfoco/Dev/Muambas/[feature]-[data]/`
+2. Se sim, mover para `Muambas/[feature]-[data]/`
 3. Criar README.md explicando o que é
 
 ```bash
 # Exemplo de arquivamento:
-mkdir -p /home/zenfoco/Dev/Muambas/[feature]-$(date +%Y-%m-%d)
-mv arquivo.ts /home/zenfoco/Dev/Muambas/[feature]-$(date +%Y-%m-%d)/
+mkdir -p Muambas/[feature]-$(date +%Y-%m-%d)
+mv arquivo.ts Muambas/[feature]-$(date +%Y-%m-%d)/
 ```
 
 **Convenção de nomes:**
 - `fact-checking-2025-12-31/` — Sistema de validação Gemini+Perplexity
 - `[feature]-[YYYY-MM-DD]/` — Qualquer outra funcionalidade
+
+---
+
+## 🧪 Labs (Laboratório de Testes)
+
+> Experimentos ativos e páginas de teste.
+
+**Localização:** `app/lab/`
+
+**Propósito:**
+- Testar novos componentes isoladamente
+- Criar versões alternativas de páginas (A/B testing)
+- Prototipar ideias sem afetar a produção
+
+**Regra:** Conteúdo em `app/lab/` **NÃO** vai para o Git (ignorado via .gitignore), mas faz parte do workspace ativo.
 
 ---
 

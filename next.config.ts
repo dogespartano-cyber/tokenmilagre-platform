@@ -23,6 +23,11 @@ const nextConfig: any = {
     // Manter validação de TypeScript - importante para type safety
     ignoreBuildErrors: false,
   },
+  // Enable symlinks for /app/lab -> /Dev/Lab
+  webpack: (config: any) => {
+    config.resolve.symlinks = true;
+    return config;
+  },
 };
 
 // Sentry configuration options

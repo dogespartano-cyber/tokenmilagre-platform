@@ -162,6 +162,30 @@ import { RocketIcon } from 'lucide-react';  // Não usar Lucide para ícones inl
 ```
 
 ---
+---
+
+## 🏗️ Componentes Globais: Footer
+
+> **Obrigatório: Footer "Sem Roxo" (Monochrome)**
+
+O projeto padronizou o rodapé para utilizar a versão completa e monocromática, abandonando a versão simplificada antiga.
+
+**Regra de Implementação:**
+O arquivo `app/components/layout/index.ts` DEVE exportar o footer compartilhado:
+
+```typescript
+// ✅ CORRETO
+export { default as Footer } from '@/components/shared/ui/monochrome/Footer';
+
+// ❌ PROIBIDO
+export { default as Footer } from './Footer';
+```
+
+**Motivo:**
+- O Footer monocromático contém todas as colunas de navegação (Produto, Comunidade, Legal).
+- O Footer antigo era apenas um placeholder com links quebrados ou faltantes.
+
+---
 
 
 ---
