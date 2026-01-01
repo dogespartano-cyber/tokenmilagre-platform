@@ -4,7 +4,7 @@ name: DESIGN
 role: Sistema de Design e Tema
 trigger: "CSS", "tema", "cores", "tokens", "dark mode", "light mode", "glassmorphism", "ícones"
 inherits: _DNA.md
-collaborates: [CONTEUDO, ESTRUTURA]
+collaborates: [CONTEUDO, ESTRUTURA, CONHECIMENTO]
 escalates-to: ESTRUTURA
 tags:
   - agent
@@ -60,7 +60,24 @@ if (!mounted) return <Skeleton />;
 @last-verified: 2025-12-29
 ```
 
+### 4. 📱 Mobile & Responsividade (MANDATÓRIO)
+
+> **REGRA DE OURO:** Se quebra no mobile, o design não existe.
+
+1.  **Mobile First:** Projete sempre pensando na tela vertical (320px ~ 400px) primeiro.
+    *   Flex-direction padrão deve ser `col` (vertical), mudando para `row` apenas em `md:` ou `lg:`.
+    *   Exemplo: `<div className="flex flex-col md:flex-row items-center gap-4">`
+2.  **Tamanhos Relativos:**
+    *   Use `w-full` em botões/inputs no mobile.
+    *   Reduza `paddings` de containers (ex: `p-6` mobile, `md:p-12` desktop).
+    *   Ajuste fontes grandes (ex: `text-2xl` mobile, `md:text-4xl` desktop).
+3.  **Elementos Perigosos:**
+    *   Cuidado com tamanhos fixos (`w-96`) ou absolutos.
+    *   Ícones decorativos grandes (`w-64`) devem ser reduzidos (`w-32`) ou ocultos (`hidden md:block`) no mobile.
+
 ---
+
+
 
 ## 🚫 Ícones Proibidos
 

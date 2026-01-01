@@ -19,8 +19,10 @@ updated: 2025-12-31
 ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
 │ Gamificação │ SEO Schema  │             │             │ Chaos MVP   │
 │ Newsletter  │             │             │             │ Graphiti    │
-│ PWA         │             │             │             │ Agent Tests │
-│ OpenAPI     │             │             │             │ UI Standard │
+│ PWA         │             │             │             │ UI Standard │
+│ OpenAPI     │             │             │             │ Verificador │
+│             │             │             │             │ Mobile Check│
+│             │             │             │             │ Agent Gov   │
 └─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘
 ```
 

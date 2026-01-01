@@ -4,6 +4,7 @@ name: ARQUITETO
 role: Guardião Filosófico
 trigger: "Valide esta ideia", decisões fundamentais, dúvidas éticas
 inherits: _DNA.md
+collaborates: [CONHECIMENTO]
 escalates-to: null
 tags:
   - agent

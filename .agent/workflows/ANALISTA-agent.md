@@ -4,7 +4,7 @@ name: ANALISTA
 role: Análise Existencial de Projetos
 trigger: "Analise o projeto", UX tóxica, propósito, crise de identidade
 inherits: _DNA.md
-collaborates: [CONTEUDO, ARQUITETO]
+collaborates: [CONTEUDO, ARQUITETO, CONHECIMENTO]
 escalates-to: ARQUITETO
 tags:
   - agent

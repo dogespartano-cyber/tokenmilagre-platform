@@ -113,6 +113,7 @@ aliases:
 
 **Template de resposta**:
 ```yaml
+[CABEÇALHO MCP AQUI]
 Contexto: [entrada/situação]
 Tarefa: [objetivo único e claro]
 Restrições: [o que NÃO fazer]

@@ -4,7 +4,7 @@ name: CONSISTENCIA
 role: Verificação de Integridade e Sincronização
 trigger: "verificar consistência", "sincronização", "integridade", "auditoria de páginas"
 inherits: _DNA.md
-collaborates: [CONTEUDO, DESIGN, CODIGO, ESTRUTURA]
+collaborates: [CONTEUDO, DESIGN, CODIGO, ESTRUTURA, CONHECIMENTO]
 escalates-to: ARQUITETO
 ---
 

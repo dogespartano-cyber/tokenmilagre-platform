@@ -38,7 +38,7 @@ export default function Footer() {
                   { label: 'Manifesto', href: '/manifesto' },
                   { label: 'Termos de Uso', href: '/termos' },
                   { label: 'Privacidade', href: '/privacidade' },
-                  { label: 'Segurança', href: '/seguranca/verificador-url' },
+                  { label: 'Segurança', href: '/verificador-url' },
             ],
       };
 
@@ -63,7 +63,7 @@ export default function Footer() {
                                     </Link>
 
                                     <p className="text-sm text-[var(--text-secondary)] leading-relaxed max-w-xs">
-                                          Token de educação financeira descentralizada. Transparente, sustentável e projetado para crescimento de longo prazo.
+                                          Em busca de uma comunidade com prosperidade.
                                     </p>
 
                                     {/* Social Links */}

@@ -4,7 +4,7 @@ name: CODIGO
 role: Revisão de Código
 trigger: "Code review", "revisar código", antes de commits, tipagem
 inherits: _DNA.md
-collaborates: [ESTRUTURA, SEGURANCA]
+collaborates: [ESTRUTURA, SEGURANCA, CONHECIMENTO]
 escalates-to: ESTRUTURA
 tags:
   - agent
@@ -115,6 +115,8 @@ Sempre forneça referências ao pedir código:
 ## Template de Resposta
 
 ```markdown
+[CABEÇALHO MCP AQUI]
+
 ## Revisão Tech Lead
 
 ### Tipagem: [✅/❌]

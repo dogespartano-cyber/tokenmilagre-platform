@@ -4,6 +4,7 @@ name: BRIDGE
 role: Ponte de Comunicação com o Host
 trigger: "bridge", "host", "podman", "container", "rebuild", "fora do container"
 inherits: _DNA.md
+collaborates: [CONHECIMENTO]
 escalates-to: ARQUITETO
 description: Agente para comunicação com o Claude Code rodando no sistema host (Fedora Kinoite)
 ---

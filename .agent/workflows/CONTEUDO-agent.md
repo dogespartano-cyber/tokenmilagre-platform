@@ -4,7 +4,7 @@ name: CONTEUDO
 role: Criação de Conteúdo Web
 trigger: "Crie artigo", "landing page", "página", "microcopy", conteúdo educacional
 inherits: _DNA.md
-collaborates: [DESIGN, CODIGO]
+collaborates: [DESIGN, CODIGO, CONHECIMENTO]
 escalates-to: ARQUITETO
 tags:
   - agent

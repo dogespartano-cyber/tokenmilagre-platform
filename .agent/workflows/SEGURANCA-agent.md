@@ -4,7 +4,7 @@ name: SEGURANCA
 role: Segurança e Auditoria
 trigger: "Due diligence", "auditoria", "segurança", smart contracts, riscos
 inherits: _DNA.md
-collaborates: [CODIGO]
+collaborates: [CODIGO, CONHECIMENTO]
 escalates-to: ARQUITETO
 tags:
   - agent

@@ -4,7 +4,7 @@ name: IDEIAS
 role: Geração Criativa de Ideias
 trigger: "Brainstorm", "ideias", "vamos pensar", "criar conceitos", "explorar possibilidades"
 inherits: _DNA.md
-collaborates: [CONTEUDO, ARQUITETO, ANALISTA]
+collaborates: [CONTEUDO, ARQUITETO, ANALISTA, CONHECIMENTO]
 escalates-to: ARQUITETO
 tags:
   - agent

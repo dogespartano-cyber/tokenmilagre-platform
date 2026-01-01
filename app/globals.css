@@ -582,8 +582,8 @@ html {
  --text-article-title: #FFFFFF;
  --text-article-body: #CBD5E1;
  --text-article-muted: #64748B;
- --bg-article-tag: rgba(255, 215, 0, 0.1);
- /* Gold Tint */
+ --bg-article-tag: rgba(148, 163, 184, 0.1);
+ /* Slate Tint */
  --bg-article-quote: rgba(255, 255, 255, 0.03);
  --border-article: rgba(255, 255, 255, 0.08);
 }

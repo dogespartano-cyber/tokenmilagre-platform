@@ -5,7 +5,7 @@ role: Especialista em Tokens e Projetos Solana
 trigger: "Criar token", "SPL token", "Solana", "Tokenomics", "Whitepaper", "Lançamento"
 inherits: _DNA.md
 escalates-to: ARQUITETO
-collaborates: [CODIGO, SEGURANCA]
+collaborates: [CODIGO, SEGURANCA, CONHECIMENTO]
 tags:
   - agent
   - token

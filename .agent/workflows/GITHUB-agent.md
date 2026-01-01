@@ -4,7 +4,7 @@ name: GITHUB
 role: Gerenciamento de Código e Versionamento
 trigger: "git", "github", "pr", "pull request", "commit", "review", "branch", "versionamento", "release"
 inherits: _DNA.md
-collaborates: [ESTRUTURA, CONSISTENCIA]
+collaborates: [ESTRUTURA, CONSISTENCIA, CONHECIMENTO]
 escalates-to: ARQUITETO
 ---
 

@@ -4,7 +4,7 @@ name: ESTRUTURA
 role: Arquitetura Fractal
 trigger: "Revisar estrutura", "novo módulo", "validar arquitetura", PR grande
 inherits: _DNA.md
-collaborates: [CODIGO, DESIGN]
+collaborates: [CODIGO, DESIGN, CONHECIMENTO]
 escalates-to: ARQUITETO
 tags:
   - agent
@@ -80,6 +80,8 @@ Nível 3: Recurso    (service.ts, hooks/, types.ts)
 ## Template de Revisão
 
 ```markdown
+[CABEÇALHO MCP AQUI]
+
 ## Revisão Fractal
 
 ### Lei Fractal
