@@ -3774,9 +3774,6 @@ export namespace Prisma {
     category: string | null
     tags: string | null
     sentiment: $Enums.Sentiment | null
-    verified: boolean | null
-    verifiedAt: Date | null
-    verifiedBy: string | null
     level: string | null
     contentType: string | null
     readTime: string | null
@@ -3807,9 +3804,6 @@ export namespace Prisma {
     category: string | null
     tags: string | null
     sentiment: $Enums.Sentiment | null
-    verified: boolean | null
-    verifiedAt: Date | null
-    verifiedBy: string | null
     level: string | null
     contentType: string | null
     readTime: string | null
@@ -3840,9 +3834,6 @@ export namespace Prisma {
     category: number
     tags: number
     sentiment: number
-    verified: number
-    verifiedAt: number
-    verifiedBy: number
     level: number
     contentType: number
     readTime: number
@@ -3889,9 +3880,6 @@ export namespace Prisma {
     category?: true
     tags?: true
     sentiment?: true
-    verified?: true
-    verifiedAt?: true
-    verifiedBy?: true
     level?: true
     contentType?: true
     readTime?: true
@@ -3922,9 +3910,6 @@ export namespace Prisma {
     category?: true
     tags?: true
     sentiment?: true
-    verified?: true
-    verifiedAt?: true
-    verifiedBy?: true
     level?: true
     contentType?: true
     readTime?: true
@@ -3955,9 +3940,6 @@ export namespace Prisma {
     category?: true
     tags?: true
     sentiment?: true
-    verified?: true
-    verifiedAt?: true
-    verifiedBy?: true
     level?: true
     contentType?: true
     readTime?: true
@@ -4075,9 +4057,6 @@ export namespace Prisma {
     category: string
     tags: string
     sentiment: $Enums.Sentiment
-    verified: boolean
-    verifiedAt: Date | null
-    verifiedBy: string | null
     level: string | null
     contentType: string | null
     readTime: string | null
@@ -4127,9 +4106,6 @@ export namespace Prisma {
     category?: boolean
     tags?: boolean
     sentiment?: boolean
-    verified?: boolean
-    verifiedAt?: boolean
-    verifiedBy?: boolean
     level?: boolean
     contentType?: boolean
     readTime?: boolean
@@ -4165,9 +4141,6 @@ export namespace Prisma {
     category?: boolean
     tags?: boolean
     sentiment?: boolean
-    verified?: boolean
-    verifiedAt?: boolean
-    verifiedBy?: boolean
     level?: boolean
     contentType?: boolean
     readTime?: boolean
@@ -4199,9 +4172,6 @@ export namespace Prisma {
     category?: boolean
     tags?: boolean
     sentiment?: boolean
-    verified?: boolean
-    verifiedAt?: boolean
-    verifiedBy?: boolean
     level?: boolean
     contentType?: boolean
     readTime?: boolean
@@ -4233,9 +4203,6 @@ export namespace Prisma {
     category?: boolean
     tags?: boolean
     sentiment?: boolean
-    verified?: boolean
-    verifiedAt?: boolean
-    verifiedBy?: boolean
     level?: boolean
     contentType?: boolean
     readTime?: boolean
@@ -4254,7 +4221,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "type" | "excerpt" | "published" | "authorId" | "category" | "tags" | "sentiment" | "verified" | "verifiedAt" | "verifiedBy" | "level" | "contentType" | "readTime" | "warningLevel" | "securityTips" | "courseSequence" | "relatedArticles" | "projectHighlight" | "coverImage" | "coverImageAlt" | "quizData" | "likeCount" | "dislikeCount" | "commentCount" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
+  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "type" | "excerpt" | "published" | "authorId" | "category" | "tags" | "sentiment" | "level" | "contentType" | "readTime" | "warningLevel" | "securityTips" | "courseSequence" | "relatedArticles" | "projectHighlight" | "coverImage" | "coverImageAlt" | "quizData" | "likeCount" | "dislikeCount" | "commentCount" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
   export type ArticleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     citations?: boolean | Article$citationsArgs<ExtArgs>
@@ -4289,9 +4256,6 @@ export namespace Prisma {
       category: string
       tags: string
       sentiment: $Enums.Sentiment
-      verified: boolean
-      verifiedAt: Date | null
-      verifiedBy: string | null
       level: string | null
       contentType: string | null
       readTime: string | null
@@ -4746,9 +4710,6 @@ export namespace Prisma {
     readonly category: FieldRef<"Article", 'String'>
     readonly tags: FieldRef<"Article", 'String'>
     readonly sentiment: FieldRef<"Article", 'Sentiment'>
-    readonly verified: FieldRef<"Article", 'Boolean'>
-    readonly verifiedAt: FieldRef<"Article", 'DateTime'>
-    readonly verifiedBy: FieldRef<"Article", 'String'>
     readonly level: FieldRef<"Article", 'String'>
     readonly contentType: FieldRef<"Article", 'String'>
     readonly readTime: FieldRef<"Article", 'String'>
@@ -21132,9 +21093,6 @@ export namespace Prisma {
     category: 'category',
     tags: 'tags',
     sentiment: 'sentiment',
-    verified: 'verified',
-    verifiedAt: 'verifiedAt',
-    verifiedBy: 'verifiedBy',
     level: 'level',
     contentType: 'contentType',
     readTime: 'readTime',
@@ -21718,9 +21676,6 @@ export namespace Prisma {
     category?: StringFilter<"Article"> | string
     tags?: StringFilter<"Article"> | string
     sentiment?: EnumSentimentFilter<"Article"> | $Enums.Sentiment
-    verified?: BoolFilter<"Article"> | boolean
-    verifiedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
-    verifiedBy?: StringNullableFilter<"Article"> | string | null
     level?: StringNullableFilter<"Article"> | string | null
     contentType?: StringNullableFilter<"Article"> | string | null
     readTime?: StringNullableFilter<"Article"> | string | null
@@ -21755,9 +21710,6 @@ export namespace Prisma {
     category?: SortOrder
     tags?: SortOrder
     sentiment?: SortOrder
-    verified?: SortOrder
-    verifiedAt?: SortOrderInput | SortOrder
-    verifiedBy?: SortOrderInput | SortOrder
     level?: SortOrderInput | SortOrder
     contentType?: SortOrderInput | SortOrder
     readTime?: SortOrderInput | SortOrder
@@ -21795,9 +21747,6 @@ export namespace Prisma {
     category?: StringFilter<"Article"> | string
     tags?: StringFilter<"Article"> | string
     sentiment?: EnumSentimentFilter<"Article"> | $Enums.Sentiment
-    verified?: BoolFilter<"Article"> | boolean
-    verifiedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
-    verifiedBy?: StringNullableFilter<"Article"> | string | null
     level?: StringNullableFilter<"Article"> | string | null
     contentType?: StringNullableFilter<"Article"> | string | null
     readTime?: StringNullableFilter<"Article"> | string | null
@@ -21832,9 +21781,6 @@ export namespace Prisma {
     category?: SortOrder
     tags?: SortOrder
     sentiment?: SortOrder
-    verified?: SortOrder
-    verifiedAt?: SortOrderInput | SortOrder
-    verifiedBy?: SortOrderInput | SortOrder
     level?: SortOrderInput | SortOrder
     contentType?: SortOrderInput | SortOrder
     readTime?: SortOrderInput | SortOrder
@@ -21873,9 +21819,6 @@ export namespace Prisma {
     category?: StringWithAggregatesFilter<"Article"> | string
     tags?: StringWithAggregatesFilter<"Article"> | string
     sentiment?: EnumSentimentWithAggregatesFilter<"Article"> | $Enums.Sentiment
-    verified?: BoolWithAggregatesFilter<"Article"> | boolean
-    verifiedAt?: DateTimeNullableWithAggregatesFilter<"Article"> | Date | string | null
-    verifiedBy?: StringNullableWithAggregatesFilter<"Article"> | string | null
     level?: StringNullableWithAggregatesFilter<"Article"> | string | null
     contentType?: StringNullableWithAggregatesFilter<"Article"> | string | null
     readTime?: StringNullableWithAggregatesFilter<"Article"> | string | null
@@ -23439,9 +23382,6 @@ export namespace Prisma {
     category: string
     tags: string
     sentiment?: $Enums.Sentiment
-    verified?: boolean
-    verifiedAt?: Date | string | null
-    verifiedBy?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -23476,9 +23416,6 @@ export namespace Prisma {
     category: string
     tags: string
     sentiment?: $Enums.Sentiment
-    verified?: boolean
-    verifiedAt?: Date | string | null
-    verifiedBy?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -23511,9 +23448,6 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     tags?: StringFieldUpdateOperationsInput | string
     sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23548,9 +23482,6 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     tags?: StringFieldUpdateOperationsInput | string
     sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23584,9 +23515,6 @@ export namespace Prisma {
     category: string
     tags: string
     sentiment?: $Enums.Sentiment
-    verified?: boolean
-    verifiedAt?: Date | string | null
-    verifiedBy?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -23616,9 +23544,6 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     tags?: StringFieldUpdateOperationsInput | string
     sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23649,9 +23574,6 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     tags?: StringFieldUpdateOperationsInput | string
     sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25661,9 +25583,6 @@ export namespace Prisma {
     category?: SortOrder
     tags?: SortOrder
     sentiment?: SortOrder
-    verified?: SortOrder
-    verifiedAt?: SortOrder
-    verifiedBy?: SortOrder
     level?: SortOrder
     contentType?: SortOrder
     readTime?: SortOrder
@@ -25701,9 +25620,6 @@ export namespace Prisma {
     category?: SortOrder
     tags?: SortOrder
     sentiment?: SortOrder
-    verified?: SortOrder
-    verifiedAt?: SortOrder
-    verifiedBy?: SortOrder
     level?: SortOrder
     contentType?: SortOrder
     readTime?: SortOrder
@@ -25734,9 +25650,6 @@ export namespace Prisma {
     category?: SortOrder
     tags?: SortOrder
     sentiment?: SortOrder
-    verified?: SortOrder
-    verifiedAt?: SortOrder
-    verifiedBy?: SortOrder
     level?: SortOrder
     contentType?: SortOrder
     readTime?: SortOrder
@@ -27914,9 +27827,6 @@ export namespace Prisma {
     category: string
     tags: string
     sentiment?: $Enums.Sentiment
-    verified?: boolean
-    verifiedAt?: Date | string | null
-    verifiedBy?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -27949,9 +27859,6 @@ export namespace Prisma {
     category: string
     tags: string
     sentiment?: $Enums.Sentiment
-    verified?: boolean
-    verifiedAt?: Date | string | null
-    verifiedBy?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -28186,9 +28093,6 @@ export namespace Prisma {
     category?: StringFilter<"Article"> | string
     tags?: StringFilter<"Article"> | string
     sentiment?: EnumSentimentFilter<"Article"> | $Enums.Sentiment
-    verified?: BoolFilter<"Article"> | boolean
-    verifiedAt?: DateTimeNullableFilter<"Article"> | Date | string | null
-    verifiedBy?: StringNullableFilter<"Article"> | string | null
     level?: StringNullableFilter<"Article"> | string | null
     contentType?: StringNullableFilter<"Article"> | string | null
     readTime?: StringNullableFilter<"Article"> | string | null
@@ -28624,9 +28528,6 @@ export namespace Prisma {
     category: string
     tags: string
     sentiment?: $Enums.Sentiment
-    verified?: boolean
-    verifiedAt?: Date | string | null
-    verifiedBy?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -28660,9 +28561,6 @@ export namespace Prisma {
     category: string
     tags: string
     sentiment?: $Enums.Sentiment
-    verified?: boolean
-    verifiedAt?: Date | string | null
-    verifiedBy?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -28710,9 +28608,6 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     tags?: StringFieldUpdateOperationsInput | string
     sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28746,9 +28641,6 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     tags?: StringFieldUpdateOperationsInput | string
     sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29407,9 +29299,6 @@ export namespace Prisma {
     category: string
     tags: string
     sentiment?: $Enums.Sentiment
-    verified?: boolean
-    verifiedAt?: Date | string | null
-    verifiedBy?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -29443,9 +29332,6 @@ export namespace Prisma {
     category: string
     tags: string
     sentiment?: $Enums.Sentiment
-    verified?: boolean
-    verifiedAt?: Date | string | null
-    verifiedBy?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -29627,9 +29513,6 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     tags?: StringFieldUpdateOperationsInput | string
     sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29663,9 +29546,6 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     tags?: StringFieldUpdateOperationsInput | string
     sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29831,9 +29711,6 @@ export namespace Prisma {
     category: string
     tags: string
     sentiment?: $Enums.Sentiment
-    verified?: boolean
-    verifiedAt?: Date | string | null
-    verifiedBy?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -29867,9 +29744,6 @@ export namespace Prisma {
     category: string
     tags: string
     sentiment?: $Enums.Sentiment
-    verified?: boolean
-    verifiedAt?: Date | string | null
-    verifiedBy?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -30110,9 +29984,6 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     tags?: StringFieldUpdateOperationsInput | string
     sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30146,9 +30017,6 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     tags?: StringFieldUpdateOperationsInput | string
     sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30318,9 +30186,6 @@ export namespace Prisma {
     category: string
     tags: string
     sentiment?: $Enums.Sentiment
-    verified?: boolean
-    verifiedAt?: Date | string | null
-    verifiedBy?: string | null
     level?: string | null
     contentType?: string | null
     readTime?: string | null
@@ -30410,9 +30275,6 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     tags?: StringFieldUpdateOperationsInput | string
     sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30445,9 +30307,6 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     tags?: StringFieldUpdateOperationsInput | string
     sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30480,9 +30339,6 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     tags?: StringFieldUpdateOperationsInput | string
     sentiment?: EnumSentimentFieldUpdateOperationsInput | $Enums.Sentiment
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
     level?: NullableStringFieldUpdateOperationsInput | string | null
     contentType?: NullableStringFieldUpdateOperationsInput | string | null
     readTime?: NullableStringFieldUpdateOperationsInput | string | null

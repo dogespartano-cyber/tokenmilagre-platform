@@ -85,3 +85,6 @@ sentry.properties
 # Symlinks to external folders (not tracked by git)
 /app/lab
 /Muambas
+
+# Logs
+Feedback/logs/*.jsonl

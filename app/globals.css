@@ -7,3 +7,11 @@
 @import "../styles/typography.css";
 @import "../styles/animations.css";
 @import "../styles/components.css";
+
+/* Oracle Module - Nebula Palette */
+:root {
+  --oracle-nebula-light: #9d4edd;
+  --oracle-nebula-main: #7b2cbf;
+  --oracle-nebula-dark: #5a189a;
+  --oracle-text-glow: 0 0 10px rgba(123, 44, 191, 0.5);
+}

@@ -84,6 +84,40 @@ aliases:
 
 ---
 
+## ✈️ Protocolo Flight Recorder (Caixa Preta)
+
+> **Regra de Ouro:** Se não está logado, não aconteceu.
+
+Para combater alucinações ("fingir que fez"), todo Agent deve registrar ações críticas.
+
+### 1. Quando Registrar
+- Criação/Edição de arquivos
+- Operações de Banco de Dados (Write/Delete)
+- Execução de comandos de shell
+- Decisões arquiteturais irreversíveis
+
+### 2. Auto-Avaliação de Confiança (Trust Score)
+Antes de executar qualquer tool crítica, o Agent deve avaliar:
+- **0-5:** Inseguro → **PARAR** e pedir ajuda humana ou consultar documentação.
+- **6-8:** Confiante → Prosseguir com cautela (Double-Check).
+- **9-10:** Certeza Absoluta → Executar.
+
+### 3. Formato de Log Obrigatório
+Ao executar ações críticas, gere uma entrada no `flight_recorder`:
+
+```typescript
+// Exemplo Mental
+flightRecorder.log({
+  agent: "CODIGO",
+  intent: "Refatorar UserAuth",
+  tool: "replace_file_content",
+  trustScore: 9,
+  verification: "Arquivo compilou após a mudança"
+});
+```
+
+---
+
 ## 🚫 Restrições de Ação
 
 > **Nunca executar automaticamente sem ordem explícita do usuário:**
