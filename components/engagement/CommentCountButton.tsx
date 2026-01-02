@@ -13,7 +13,7 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 
 interface CommentCountButtonProps {
     id: string;
-    type: 'article' | 'resource';
+    type: 'article' | 'resource' | 'curiosity';
     onClick?: () => void;
     className?: string;
 }

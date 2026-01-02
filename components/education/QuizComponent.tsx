@@ -78,7 +78,7 @@ export default function QuizComponent({ title = 'Teste seus Conhecimentos', ques
         <div className={`w-20 h-20 rounded-full bg-[var(--bg-primary)] flex items-center justify-center mx-auto mb-6 text-4xl ${color} shadow-lg`}>
           <FontAwesomeIcon icon={faTrophy} />
         </div>
-<h3 className="title-newtab text-2xl mb-2">Quiz Finalizado!</h3>
+        <h3 className="title-newtab text-2xl mb-2">Quiz Finalizado!</h3>
         <p className="text-lg text-[var(--text-secondary)] mb-6">{message}</p>
 
         <div className="text-5xl font-extrabold mb-8 text-[var(--text-primary)]">
@@ -99,16 +99,16 @@ export default function QuizComponent({ title = 'Teste seus Conhecimentos', ques
   const question = questions[currentQuestion];
 
   return (
-    <div className="glass-card p-6 md:p-8 rounded-2xl border-t-4 border-[var(--brand-primary)]">
+    <div className="glass-card p-6 md:p-8 rounded-2xl border-t-4 border-[var(--brand-primary)] bg-white dark:bg-[#1a1b1e]/60 shadow-md dark:shadow-none">
       <div className="flex justify-between items-center mb-6">
-<h3 className="title-newtab text-xl">{title}</h3>
-        <span className="text-sm font-semibold text-[var(--text-tertiary)] bg-[var(--bg-primary)] px-3 py-1 rounded-full">
+        <h3 className="title-newtab text-xl text-gray-900 dark:text-gray-100">{title}</h3>
+        <span className="text-sm font-semibold text-gray-600 dark:text-[var(--text-tertiary)] bg-gray-100 dark:bg-[var(--bg-primary)] px-3 py-1 rounded-full">
           Questão {currentQuestion + 1} de {questions.length}
         </span>
       </div>
 
       <div className="mb-8">
-        <p className="text-lg font-medium text-[var(--text-primary)] leading-relaxed">
+        <p className="text-lg font-medium text-gray-800 dark:text-[var(--text-primary)] leading-relaxed">
           {question.text}
         </p>
       </div>
@@ -119,17 +119,17 @@ export default function QuizComponent({ title = 'Teste seus Conhecimentos', ques
 
           if (isAnswered) {
             if (index === question.correctAnswer) {
-              optionClass += "bg-green-500/10 border-green-500 dark:";
+              optionClass += "bg-green-100 border-green-500 text-green-800 dark:bg-green-500/10 dark:text-green-400 ";
             } else if (index === selectedOption) {
-              optionClass += "bg-red-500/10 border-red-500 dark:";
+              optionClass += "bg-red-100 border-red-500 text-red-800 dark:bg-red-500/10 dark:text-red-400 ";
             } else {
-              optionClass += "border-transparent bg-[var(--bg-primary)] opacity-50";
+              optionClass += "border-transparent bg-gray-50 text-gray-400 dark:bg-[var(--bg-primary)] dark:opacity-50 ";
             }
           } else {
             if (selectedOption === index) {
-              optionClass += "border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 text-[var(--brand-primary)]";
+              optionClass += "border-[var(--brand-primary)] bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] font-medium ";
             } else {
-              optionClass += "border-transparent bg-[var(--bg-primary)] hover:bg-[var(--bg-secondary)] text-[var(--text-secondary)]";
+              optionClass += "border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700 dark:border-transparent dark:bg-[var(--bg-primary)] dark:hover:bg-[var(--bg-secondary)] dark:text-[var(--text-secondary)] ";
             }
           }
 
@@ -143,10 +143,10 @@ export default function QuizComponent({ title = 'Teste seus Conhecimentos', ques
               <div className="flex items-center justify-between">
                 <span>{option}</span>
                 {isAnswered && index === question.correctAnswer && (
-                  <FontAwesomeIcon icon={faCheckCircle} className="" />
+                  <FontAwesomeIcon icon={faCheckCircle} className="text-green-600 dark:text-green-500" />
                 )}
                 {isAnswered && index === selectedOption && index !== question.correctAnswer && (
-                  <FontAwesomeIcon icon={faTimesCircle} className="" />
+                  <FontAwesomeIcon icon={faTimesCircle} className="text-red-600 dark:text-red-500" />
                 )}
               </div>
             </button>

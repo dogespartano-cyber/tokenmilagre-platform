@@ -1,22 +1,13 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import { useEffect, useState } from 'react';
-import type React from 'react';
-import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { getCitationAwareMarkdownComponents, SourcesSection } from '@/lib/domains/articles/components/citations-processor';
 import TransparencyNote from '@/components/shared/TransparencyNote';
-import PageWrapper from '@/components/layout/PageWrapper';
-import { useSidebar } from '@/contexts/SidebarContext';
-import LikeDislikeButton from '@/components/shared/LikeDislikeButton';
-import { SentimentIndicator } from '@/app/components/news/SentimentIndicator';
-
 import CommentsSection from '@/components/engagement/CommentsSection';
-import CommentCountButton from '@/components/engagement/CommentCountButton';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import ZenithArticleLayout, { TableOfContentsItem } from '@/components/zenith/ZenithArticleLayout';
 
 interface NewsItem {
   id: string;
@@ -45,26 +36,11 @@ interface ArtigoClientProps {
   relatedArticles?: NewsItem[];
 }
 
-interface TableOfContentsItem {
-  id: string;
-  text: string;
-}
-
 export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoClientProps) {
   const router = useRouter();
-  const { setDynamicTitle, setShortTitle } = useSidebar();
-
-  useEffect(() => {
-    if (article) {
-      setDynamicTitle(article.title);
-      setShortTitle('Notícias');
-    }
-  }, [article, setDynamicTitle, setShortTitle]);
-
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
   const [activeSection, setActiveSection] = useState<string>('');
   const [showComments, setShowComments] = useState(false);
-
 
   const createSlug = (text: string) => {
     return text
@@ -76,21 +52,6 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
       .replace(/-+/g, '-')
       .trim();
   };
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 100;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
-
 
   // Remover H1 do início do conteúdo
   const removeH1FromContent = (content: string): string => {
@@ -128,7 +89,8 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
         const text = h2Match[1].trim();
         headings.push({
           id: createSlug(text),
-          text
+          text,
+          level: 2
         });
       }
     });
@@ -139,7 +101,6 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
   // Rastrear seção ativa e scroll
   useEffect(() => {
     const handleScroll = () => {
-
       const headingElements = tableOfContents.map(item => ({
         id: item.id,
         element: document.getElementById(item.id)
@@ -175,36 +136,6 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
     }
   };
 
-  const shareOnX = () => {
-    const url = window.location.href;
-    const text = `${article?.title} via @TokenMilagre`;
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
-  };
-
-  const shareOnWhatsApp = () => {
-    const url = window.location.href;
-    const text = `${article?.title} - ${url}`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-  };
-
-  const shareOnTelegram = () => {
-    const url = window.location.href;
-    const text = article?.title || '';
-    window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
-  };
-
-  // Formatar data no estilo editorial - usando UTC para consistência SSR
-  const formatEditorialDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      timeZone: 'UTC' // Força UTC para consistência entre servidor e cliente
-    });
-  };
-
   if (!article) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center px-4">
@@ -220,7 +151,6 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
             onClick={() => router.push('/noticias')}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all bg-[var(--brand-primary)] text-white hover:opacity-90"
           >
-            <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" />
             Voltar para Notícias
           </button>
         </div>
@@ -235,430 +165,261 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
   const citationComponents = getCitationAwareMarkdownComponents(citations);
 
   return (
-    <PageWrapper
+    <ZenithArticleLayout
+      variant="editorial"
       header={{
-        title: "Notícias",
-        description: "Análises e atualizações do mercado cripto"
+        title: article.title,
+        category: article.category[0],
+        summary: article.summary,
+        publishedAt: article.publishedAt,
+        readTime: `${readingTime} min de leitura`,
+        sentiment: article.sentiment
+      }}
+      coverImage={article.coverImage ? {
+        src: article.coverImage,
+        alt: article.coverImageAlt || article.title,
+        caption: article.coverImageAlt
+      } : undefined}
+      toc={tableOfContents}
+      social={{
+        shareText: article.title
+      }}
+      interaction={{
+        id: article.id,
+        type: "article",
+        onCommentClick: () => setShowComments(!showComments)
+      }}
+      backLink={{
+        href: "/noticias",
+        label: "Notícias"
+      }}
+      activeSection={activeSection}
+      onSectionClick={(id) => {
+        const element = document.getElementById(id);
+        if (element) {
+          const offset = 100;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - offset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
       }}
     >
-
-      {/* ============================================
-     NYT-STYLE EDITORIAL LAYOUT
-     ============================================ */}
-      <div className="min-h-screen">
-
-        {/* Main Container */}
-        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
-
-          {/* Grid: Sidebar Left + Content Center + Space Right */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-8">
-
-            <aside className="hidden lg:block lg:col-span-2 xl:col-span-2">
-              <div className="sticky top-24 pt-8 space-y-8">
-
-                {/* Índice */}
-                {tableOfContents.length > 0 && (
-                  <nav className="space-y-1">
-                    <h3 className="title-newtab text-[10px] uppercase tracking-[0.2em] text-[var(--text-article-muted)] mb-3">
-                      Neste artigo
-                    </h3>
-                    {tableOfContents.map((item, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => scrollToSection(item.id)}
-                        className={`block text-left text-sm py-1.5 w-full transition-all leading-snug ${activeSection === item.id
-                          ? 'text-[var(--brand-primary)] font-medium'
-                          : 'text-[var(--text-article-muted)] hover:text-[var(--text-article-title)]'
-                          }`}
-                      >
-                        {item.text}
-                      </button>
-                    ))}
-                  </nav>
-                )}
-
-                {/* Divisor */}
-                <div className="h-px bg-[var(--border-article)]" />
-
-                {/* Compartilhar */}
-                <div className="space-y-3">
-                  <h3 className="title-newtab text-[10px] uppercase tracking-[0.2em] text-[var(--text-article-muted)]">
-                    Compartilhar
-                  </h3>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={shareOnX}
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[var(--text-article-title)] hover:text-[var(--text-article-title)] transition-colors"
-                      aria-label="Compartilhar no X"
-                    >
-                      <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={shareOnTelegram}
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[#0088cc] hover:text-[#0088cc] transition-colors"
-                      aria-label="Compartilhar no Telegram"
-                    >
-                      <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={shareOnWhatsApp}
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[#25D366] hover:text-[#25D366] transition-colors"
-                      aria-label="Compartilhar no WhatsApp"
-                    >
-                      <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-
-              </div>
-            </aside>
-
-            {/* ========== MAIN CONTENT ========== */}
-            <main className="lg:col-span-7 xl:col-span-7 pt-6 md:pt-12 lg:pt-8">
-
-              {/* Mobile: Voltar */}
-              <div className="lg:hidden mb-6">
-                <button
-                  onClick={() => router.push('/noticias')}
-                  className="inline-flex items-center gap-2 text-sm text-[var(--text-article-muted)]"
+      {/* ===== ARTICLE BODY ===== */}
+      <article
+        className="prose prose-lg max-w-none"
+        style={{
+          '--tw-prose-body': 'var(--text-article-body)',
+          '--tw-prose-headings': 'var(--text-article-title)',
+          '--tw-prose-links': 'var(--brand-primary)',
+        } as React.CSSProperties}
+      >
+        <ReactMarkdown
+          components={{
+            ...citationComponents,
+            h1: ({ children }) => (
+              <h1 className="title-newtab text-xl md:text-2xl mt-10 md:mt-12 mb-5">
+                {children}
+              </h1>
+            ),
+            h2: ({ children }) => {
+              const text = String(children);
+              const id = createSlug(text);
+              return (
+                <h2
+                  id={id}
+                  className="font-space text-2xl md:text-3xl font-bold text-[var(--text-article-title)] mt-12 md:mt-14 mb-6 pt-6 scroll-mt-28 border-t border-[var(--border-article)]"
+                  style={{ letterSpacing: '-0.02em' }}
                 >
-                  <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
-                  Notícias
-                </button>
-              </div>
+                  {children}
+                </h2>
+              );
+            },
+            h3: ({ children }) => {
+              const text = String(children);
+              const id = createSlug(text);
+              return (
+                <h3
+                  id={id}
+                  className="font-space text-lg md:text-xl font-semibold text-[var(--text-article-title)] mt-8 mb-4 scroll-mt-28"
+                >
+                  {children}
+                </h3>
+              );
+            },
+            p: ({ children }) => (
+              <p
+                className="text-[var(--text-article-body)] mb-7 md:mb-8"
+                style={{
+                  fontSize: 'clamp(1.0625rem, 1vw + 0.9rem, 1.1875rem)',
+                  lineHeight: '1.9'
+                }}
+              >
+                {children}
+              </p>
+            ),
+            ul: ({ children }) => (
+              <ul className="mb-8 space-y-3 list-disc pl-6 text-[var(--text-article-body)]" style={{ lineHeight: '1.8' }}>
+                {children}
+              </ul>
+            ),
+            ol: ({ children }) => (
+              <ol className="mb-8 space-y-3 list-decimal pl-6 text-[var(--text-article-body)]" style={{ lineHeight: '1.8' }}>
+                {children}
+              </ol>
+            ),
+            li: ({ children }) => (
+              <li className="pl-1" style={{ lineHeight: '1.8' }}>
+                {children}
+              </li>
+            ),
+            blockquote: ({ children }) => (
+              <blockquote
+                className="pl-6 md:pl-8 border-l-[3px] border-[var(--brand-primary)] my-10 md:my-12 py-2 text-[var(--text-article-body)]"
+                style={{ fontStyle: 'normal' }}
+              >
+                <div className="text-lg md:text-xl" style={{ lineHeight: '1.7' }}>
+                  {children}
+                </div>
+              </blockquote>
+            ),
+            hr: () => (
+              <hr className="my-12 md:my-16 border-0 h-px bg-[var(--border-article)]" />
+            ),
+            code: ({ children }) => (
+              <code className="px-1.5 py-0.5 rounded text-sm font-mono bg-[var(--bg-article-tag)] text-[var(--text-article-title)]">
+                {children}
+              </code>
+            ),
+            strong: ({ children }) => (
+              <strong className="font-semibold text-[var(--text-article-title)]">
+                {children}
+              </strong>
+            ),
+            em: ({ children }) => (
+              <em className="italic">{children}</em>
+            ),
+            a: ({ href, children }) => (
+              <a
+                href={href}
+                className="text-[var(--brand-primary)] underline decoration-[var(--brand-primary)]/30 underline-offset-2 hover:decoration-[var(--brand-primary)] transition-colors"
+                target={href?.startsWith('http') ? '_blank' : undefined}
+                rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+              >
+                {children}
+              </a>
+            ),
+          }}
+        >
+          {cleanContent || 'Conteúdo não disponível.'}
+        </ReactMarkdown>
+      </article>
 
-              {/* ===== ARTICLE HEADER (NYT Style) ===== */}
-              <header className="mb-10 md:mb-14">
+      {/* ===== TRANSPARENCY NOTE ===== */}
+      <div className="mt-8">
+        <TransparencyNote publishedAt={article.publishedAt} />
+      </div>
 
-                {/* Category */}
-                <div className="mb-4 md:mb-6">
-                  <span className="text-[var(--brand-primary)] text-xs md:text-sm font-semibold uppercase tracking-[0.15em]">
-                    {article.category[0]}
+      {/* ===== TAGS ===== */}
+      <div className="mt-8 md:mt-12">
+        <h3 className="title-newtab text-[10px] uppercase tracking-[0.2em] text-[var(--text-article-muted)] mb-4">
+          Tópicos relacionados
+        </h3>
+        <div className="flex flex-wrap gap-2">
+          {article.keywords.map((keyword, idx) => (
+            <button
+              key={idx}
+              onClick={() => router.push(`/noticias?search=${encodeURIComponent(keyword)}`)}
+              className="px-3 py-1.5 rounded-full text-sm transition-colors bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] hover:bg-[var(--brand-primary)] hover:text-white"
+            >
+              {keyword}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== CONSOLIDATED SOURCES (Cross Mode) ===== */}
+      {article.consolidatedSources && article.consolidatedSources.length > 0 && (
+        <div className="mt-12 p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20">
+          <h3 className="title-newtab text-lg mb-4 flex items-center gap-2">
+            📚 Fontes Consultadas
+            <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400">
+              Cross Mode
+            </span>
+          </h3>
+          <div className="space-y-2">
+            {article.consolidatedSources.map((source, idx) => (
+              <a
+                key={idx}
+                href={source.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all group"
+              >
+                <span className={`text-xs px-1.5 py-0.5 rounded ${source.origin === 'perplexity'
+                  ? 'bg-blue-500/20 '
+                  : 'bg-purple-500/20 text-purple-400'
+                  }`}>
+                  {source.origin === 'perplexity' ? 'P' : 'G'}
+                </span>
+                <span className="text-sm text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] truncate">
+                  {source.title || source.url}
+                </span>
+              </a>
+            ))}
+          </div>
+          <p className="mt-4 text-xs text-gray-500 dark:text-gray-400">
+            P = Perplexity AI • G = Gemini Grounding Search
+          </p>
+        </div>
+      )}
+
+      {/* ===== SOURCES ===== */}
+      <div className="mt-12">
+        <SourcesSection citations={citations} />
+      </div>
+
+      {/* ===== COMMENTS SECTION ===== */}
+      <CommentsSection
+        id={article.id}
+        type="article"
+        isOpen={showComments}
+      />
+
+      {/* ===== RELATED ARTICLES ===== */}
+      {relatedArticles.length > 0 && (
+        <div className="mt-16 md:mt-20 pt-10 border-t border-[var(--border-article)]">
+          <h3 className="title-newtab text-xl md:text-2xl mb-8">
+            Continue lendo
+          </h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            {relatedArticles.slice(0, 4).map((related) => (
+              <Link
+                key={related.id}
+                href={`/noticias/${related.slug || related.id}`}
+                className="group block p-5 rounded-xl border border-[var(--border-article)] hover:border-[var(--brand-primary)]/50 transition-all hover:shadow-lg"
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${getSentimentColorClass(related.sentiment)}`}>
+                    {getSentimentLabel(related.sentiment)}
+                  </span>
+                  <span className="text-xs text-[var(--text-article-muted)]">
+                    {related.category[0]}
                   </span>
                 </div>
-
-                {/* Title - Editorial Typography */}
-                <h1
-                  className="title-newtab text-[1.75rem] md:text-[2.5rem] lg:text-[2.75rem] mb-6 md:mb-8"
-                  style={{
-                    lineHeight: '1.15',
-                    letterSpacing: '-0.02em'
-                  }}
-                >
-                  {article.title}
-                </h1>
-
-                {/* Summary - Elegant Italic */}
-                <p
-                  className="text-lg md:text-xl lg:text-[1.375rem] text-[var(--text-article-body)] font-light italic mb-6 md:mb-8"
-                  style={{ lineHeight: '1.6' }}
-                >
-                  {article.summary}
+                <h4 className="text-base md:text-lg font-semibold mb-2 text-[var(--text-article-title)] group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2">
+                  {related.title}
+                </h4>
+                <p className="text-sm text-[var(--text-article-muted)] line-clamp-2">
+                  {related.summary}
                 </p>
-
-                {/* Meta Line: Date + Reading Time + LikeDislike */}
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[var(--text-article-muted)] pb-6 md:pb-8 border-b border-[var(--border-article)]">
-                  <time dateTime={article.publishedAt} className="capitalize">
-                    {formatEditorialDate(article.publishedAt)}
-                  </time>
-                  <span className="hidden md:inline">•</span>
-                  <span>{readingTime} min de leitura</span>
-                  <span className="hidden md:inline">•</span>
-                  <LikeDislikeButton id={article.id} type="article" />
-                  <CommentCountButton id={article.id} type="article" onClick={() => setShowComments(!showComments)} />
-                  <div className="lg:hidden ml-auto">
-                    <SentimentIndicator sentiment={article.sentiment} variant="compact" />
-                  </div>
-                </div>
-
-
-              </header>
-
-              {/* ===== COVER IMAGE ===== */}
-              {(article as any).coverImage && (
-                <figure className="mb-10 md:mb-14 -mx-4 md:mx-0">
-                  <img
-                    src={(article as any).coverImage}
-                    alt={(article as any).coverImageAlt || article.title}
-                    className="w-full h-auto md:rounded-lg"
-                    loading="eager"
-                  />
-                  {(article as any).coverImageAlt && (
-                    <figcaption className="mt-3 px-4 md:px-0 text-sm text-[var(--text-article-muted)] italic">
-                      {(article as any).coverImageAlt}
-                    </figcaption>
-                  )}
-                </figure>
-              )}
-
-              {/* ===== ARTICLE BODY ===== */}
-              <article
-                className="prose prose-lg max-w-none"
-                style={{
-                  '--tw-prose-body': 'var(--text-article-body)',
-                  '--tw-prose-headings': 'var(--text-article-title)',
-                  '--tw-prose-links': 'var(--brand-primary)',
-                } as React.CSSProperties}
-              >
-                <ReactMarkdown
-                  components={{
-                    ...citationComponents,
-                    h1: ({ children }) => (
-                      <h1 className="title-newtab text-xl md:text-2xl mt-10 md:mt-12 mb-5">
-                        {children}
-                      </h1>
-                    ),
-                    h2: ({ children }) => {
-                      const text = String(children);
-                      const id = createSlug(text);
-                      return (
-                        <h2
-                          id={id}
-                          className="title-newtab text-lg md:text-xl mt-12 md:mt-14 mb-4 pt-6 scroll-mt-28 border-t border-[var(--border-article)]"
-                          style={{ letterSpacing: '-0.01em' }}
-                        >
-                          {children}
-                        </h2>
-                      );
-                    },
-                    h3: ({ children }) => {
-                      const text = String(children);
-                      const id = createSlug(text);
-                      return (
-                        <h3
-                          id={id}
-                          className="title-newtab text-base md:text-lg mt-8 mb-3 scroll-mt-28"
-                        >
-                          {children}
-                        </h3>
-                      );
-                    },
-                    p: ({ children }) => (
-                      <p
-                        className="text-[var(--text-article-body)] mb-7 md:mb-8"
-                        style={{
-                          fontSize: 'clamp(1.0625rem, 1vw + 0.9rem, 1.1875rem)',
-                          lineHeight: '1.9'
-                        }}
-                      >
-                        {children}
-                      </p>
-                    ),
-                    ul: ({ children }) => (
-                      <ul className="mb-8 space-y-3 list-disc pl-6 text-[var(--text-article-body)]" style={{ lineHeight: '1.8' }}>
-                        {children}
-                      </ul>
-                    ),
-                    ol: ({ children }) => (
-                      <ol className="mb-8 space-y-3 list-decimal pl-6 text-[var(--text-article-body)]" style={{ lineHeight: '1.8' }}>
-                        {children}
-                      </ol>
-                    ),
-                    li: ({ children }) => (
-                      <li className="pl-1" style={{ lineHeight: '1.8' }}>
-                        {children}
-                      </li>
-                    ),
-                    blockquote: ({ children }) => (
-                      <blockquote
-                        className="pl-6 md:pl-8 border-l-[3px] border-[var(--brand-primary)] my-10 md:my-12 py-2 text-[var(--text-article-body)]"
-                        style={{ fontStyle: 'normal' }}
-                      >
-                        <div className="text-lg md:text-xl" style={{ lineHeight: '1.7' }}>
-                          {children}
-                        </div>
-                      </blockquote>
-                    ),
-                    hr: () => (
-                      <hr className="my-12 md:my-16 border-0 h-px bg-[var(--border-article)]" />
-                    ),
-                    code: ({ children }) => (
-                      <code className="px-1.5 py-0.5 rounded text-sm font-mono bg-[var(--bg-article-tag)] text-[var(--text-article-title)]">
-                        {children}
-                      </code>
-                    ),
-                    strong: ({ children }) => (
-                      <strong className="font-semibold text-[var(--text-article-title)]">
-                        {children}
-                      </strong>
-                    ),
-                    em: ({ children }) => (
-                      <em className="italic">{children}</em>
-                    ),
-                    a: ({ href, children }) => (
-                      <a
-                        href={href}
-                        className="text-[var(--brand-primary)] underline decoration-[var(--brand-primary)]/30 underline-offset-2 hover:decoration-[var(--brand-primary)] transition-colors"
-                        target={href?.startsWith('http') ? '_blank' : undefined}
-                        rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      >
-                        {children}
-                      </a>
-                    ),
-                  }}
-                >
-                  {cleanContent || 'Conteúdo não disponível.'}
-                </ReactMarkdown>
-              </article>
-
-
-              {/* ===== TRANSPARENCY NOTE ===== */}
-              <div className="mt-8">
-                <TransparencyNote publishedAt={article.publishedAt} />
-              </div>
-
-              {/* ===== TAGS ===== */}
-              <div className="mt-8 md:mt-12">
-                <h3 className="title-newtab text-[10px] uppercase tracking-[0.2em] text-[var(--text-article-muted)] mb-4">
-                  Tópicos relacionados
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {article.keywords.map((keyword, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => router.push(`/noticias?search=${encodeURIComponent(keyword)}`)}
-                      className="px-3 py-1.5 rounded-full text-sm transition-colors bg-[var(--bg-article-tag)] text-[var(--text-article-muted)] hover:bg-[var(--brand-primary)] hover:text-white"
-                    >
-                      {keyword}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* ===== CONSOLIDATED SOURCES (Cross Mode) ===== */}
-              {article.consolidatedSources && article.consolidatedSources.length > 0 && (
-                <div className="mt-12 p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20">
-                  <h3 className="title-newtab text-lg mb-4 flex items-center gap-2">
-                    📚 Fontes Consultadas
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400">
-                      Cross Mode
-                    </span>
-                  </h3>
-                  <div className="space-y-2">
-                    {article.consolidatedSources.map((source, idx) => (
-                      <a
-                        key={idx}
-                        href={source.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all group"
-                      >
-                        <span className={`text-xs px-1.5 py-0.5 rounded ${source.origin === 'perplexity'
-                          ? 'bg-blue-500/20 '
-                          : 'bg-purple-500/20 text-purple-400'
-                          }`}>
-                          {source.origin === 'perplexity' ? 'P' : 'G'}
-                        </span>
-                        <span className="text-sm text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] truncate">
-                          {source.title || source.url}
-                        </span>
-                      </a>
-                    ))}
-                  </div>
-                  <p className="mt-4 text-xs text-gray-500 dark:text-gray-400">
-                    P = Perplexity AI • G = Gemini Grounding Search
-                  </p>
-                </div>
-              )}
-
-              {/* ===== SOURCES ===== */}
-              <div className="mt-12">
-                <SourcesSection citations={citations} />
-              </div>
-
-
-
-              {/* ===== SHARE BUTTONS ===== */}
-              <div className="mt-12 pt-8 border-t border-[var(--border-article)] lg:hidden">
-                <h3 className="title-newtab text-[10px] uppercase tracking-[0.2em] text-[var(--text-article-muted)] mb-4">
-                  Compartilhar
-                </h3>
-                <div className="flex gap-2">
-                  <button
-                    onClick={shareOnX}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[var(--text-article-title)] hover:text-[var(--text-article-title)] transition-colors"
-                    aria-label="Compartilhar no X"
-                  >
-                    <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={shareOnTelegram}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[#0088cc] hover:text-[#0088cc] transition-colors"
-                    aria-label="Compartilhar no Telegram"
-                  >
-                    <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={shareOnWhatsApp}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[#25D366] hover:text-[#25D366] transition-colors"
-                    aria-label="Compartilhar no WhatsApp"
-                  >
-                    <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-
-
-              {/* ===== COMMENTS SECTION ===== */}
-              <CommentsSection
-                id={article.id}
-                type="article"
-                isOpen={showComments}
-              />
-
-              {/* ===== RELATED ARTICLES ===== */}
-              {relatedArticles.length > 0 && (
-                <div className="mt-16 md:mt-20 pt-10 border-t border-[var(--border-article)]">
-                  <h3 className="title-newtab text-xl md:text-2xl mb-8">
-                    Continue lendo
-                  </h3>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {relatedArticles.slice(0, 4).map((related) => (
-                      <Link
-                        key={related.id}
-                        href={`/noticias/${related.slug || related.id}`}
-                        className="group block p-5 rounded-xl border border-[var(--border-article)] hover:border-[var(--brand-primary)]/50 transition-all hover:shadow-lg"
-                      >
-                        <div className="flex items-center gap-2 mb-3">
-                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${getSentimentColorClass(related.sentiment)}`}>
-                            {getSentimentLabel(related.sentiment)}
-                          </span>
-                          <span className="text-xs text-[var(--text-article-muted)]">
-                            {related.category[0]}
-                          </span>
-                        </div>
-                        <h4 className="text-base md:text-lg font-semibold mb-2 text-[var(--text-article-title)] group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2">
-                          {related.title}
-                        </h4>
-                        <p className="text-sm text-[var(--text-article-muted)] line-clamp-2">
-                          {related.summary}
-                        </p>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Bottom Spacing */}
-              <div className="h-16 md:h-24" />
-
-            </main>
-
-            {/* ========== RIGHT SIDEBAR (Desktop) ========== */}
-            <aside className="hidden lg:block lg:col-span-3 xl:col-span-3">
-              <div className="sticky top-24 pt-8 space-y-6">
-                {/* Contexto Editorial Side indicator */}
-                <div className="pt-4">
-                  <SentimentIndicator sentiment={article.sentiment} />
-                </div>
-              </div>
-            </aside>
-
+              </Link>
+            ))}
           </div>
         </div>
-
-      </div>
-    </PageWrapper>
+      )}
+    </ZenithArticleLayout>
   );
 }

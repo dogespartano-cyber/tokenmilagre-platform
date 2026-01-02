@@ -51,16 +51,29 @@ export default function ModularArticleRenderer({ content, className }: ModularAr
                     outline: none;
                 }
                 .modular-renderer .ProseMirror h1 {
+                    font-family: 'Space Grotesk', sans-serif;
                     font-size: 2rem;
                     font-weight: 700;
-                    color: var(--brand-primary);
-                    margin: 2rem 0 1rem;
+                    color: var(--text-article-title);
+                    margin: 2.5rem 0 1.5rem;
+                    line-height: 1.2;
                 }
                 .modular-renderer .ProseMirror h2 {
-                    font-size: 1.5rem;
+                    font-family: 'Space Grotesk', sans-serif;
+                    font-size: 1.75rem;
                     font-weight: 600;
-                    color: var(--brand-primary);
+                    color: var(--text-article-title);
+                    margin: 2rem 0 1rem;
+                    line-height: 1.3;
+                    letter-spacing: -0.02em;
+                }
+                .modular-renderer .ProseMirror h3 {
+                    font-family: 'Space Grotesk', sans-serif;
+                    font-size: 1.35rem;
+                    font-weight: 600;
+                    color: var(--text-article-title);
                     margin: 1.5rem 0 0.75rem;
+                    line-height: 1.4;
                 }
                 .modular-renderer .ProseMirror p {
                     color: var(--text-secondary);

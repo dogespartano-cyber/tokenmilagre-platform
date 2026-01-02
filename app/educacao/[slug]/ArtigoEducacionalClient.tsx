@@ -7,14 +7,11 @@ import { markdownToHtml } from '@/lib/domains/articles/editor/converters/markdow
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { faXTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { getLevelLabel } from '@/lib/shared/utils/level-helpers';
 import { slugify } from '@/lib/shared/utils/content-helpers';
 import QuizComponent from '@/components/education/QuizComponent';
 import TransparencyNote from '@/components/shared/TransparencyNote';
-import LikeDislikeButton from '@/components/shared/LikeDislikeButton';
-import CommentCountButton from '@/components/engagement/CommentCountButton';
 import CommentsSection from '@/components/engagement/CommentsSection';
+import ZenithArticleLayout, { TableOfContentsItem } from '@/components/zenith/ZenithArticleLayout';
 
 interface EducationalArticle {
   id: string;
@@ -38,12 +35,6 @@ interface ArtigoEducacionalClientProps {
   relatedArticles?: EducationalArticle[];
 }
 
-interface TableOfContentsItem {
-  id: string;
-  text: string;
-  level: number;
-}
-
 export default function ArtigoEducacionalClient({ article, relatedArticles = [] }: ArtigoEducacionalClientProps) {
   const router = useRouter();
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
@@ -60,7 +51,6 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
   }, [article?.content]);
 
   // Pre-compute heading IDs for consistent hydration
-  // This creates a map of heading text -> unique ID that's deterministic
   const headingIdMap = useMemo(() => {
     if (!article) return new Map<string, string>();
 
@@ -92,35 +82,6 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
 
     return idMap;
   }, [article?.content]);
-
-  // Get ID for heading text using pre-computed map
-  const getHeadingId = (text: string): string => {
-    return headingIdMap.get(text) || slugify(text);
-  };
-
-  // Custom color scheme for level
-  const getLevelColor = (level: string) => {
-    switch (level) {
-      case 'iniciante': return '#22c55e';
-      case 'intermediario': return '#3b82f6';
-      case 'avancado': return '#a855f7';
-      default: return 'var(--brand-primary)';
-    }
-  };
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 100;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
 
   // Build table of contents from pre-computed heading IDs
   useEffect(() => {
@@ -166,35 +127,14 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [tableOfContents]);
 
-  // Funções de compartilhamento
-  const shareOnX = () => {
-    const url = window.location.href;
-    const text = `${article?.title} via @TokenMilagre`;
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
-  };
-
-  const shareOnWhatsApp = () => {
-    const url = window.location.href;
-    const text = `${article?.title} - ${url}`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-  };
-
-  const shareOnTelegram = () => {
-    const url = window.location.href;
-    const text = article?.title || '';
-    window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
-  };
-
-  // Formatar data no estilo editorial - usando UTC para consistência SSR
-  const formatEditorialDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      timeZone: 'UTC' // Força UTC para consistência entre servidor e cliente
-    });
+  // Custom color for related articles level badge
+  const getLevelColor = (level: string) => {
+    switch (level) {
+      case 'iniciante': return '#22c55e';
+      case 'intermediario': return '#3b82f6';
+      case 'avancado': return '#a855f7';
+      default: return 'var(--brand-primary)';
+    }
   };
 
   // Artigo não encontrado
@@ -222,283 +162,128 @@ export default function ArtigoEducacionalClient({ article, relatedArticles = [] 
   }
 
   return (
-    <>
-      {/* ============================================
-     NYT-STYLE EDITORIAL LAYOUT
-     ============================================ */}
-      <div className="min-h-screen">
+    <ZenithArticleLayout
+      variant="editorial"
+      header={{
+        title: article.title,
+        category: article.category,
+        summary: article.description,
+        publishedAt: article.publishedAt,
+        readTime: article.readTime,
+        level: article.level
+      }}
+      toc={tableOfContents}
+      social={{
+        shareText: article.title
+      }}
+      interaction={{
+        id: article.id,
+        type: "article",
+        onCommentClick: () => setShowComments(!showComments)
+      }}
+      backLink={{
+        href: "/educacao",
+        label: "Educação"
+      }}
+      activeSection={activeSection}
+      onSectionClick={(id) => {
+        const element = document.getElementById(id);
+        if (element) {
+          const offset = 100;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - offset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }}
+    >
+      <article className="prose prose-lg max-w-none">
+        {/* MODULAR RENDERER REPLACES REACT MARKDOWN */}
+        {htmlContent ? (
+          <ModularArticleRenderer content={htmlContent} />
+        ) : (
+          <div className="animate-pulse space-y-4">
+            <div className="h-4 bg-white/5 rounded w-3/4"></div>
+            <div className="h-4 bg-white/5 rounded w-full"></div>
+            <div className="h-4 bg-white/5 rounded w-5/6"></div>
+          </div>
+        )}
+      </article>
 
-        {/* Main Container */}
-        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+      {/* ===== QUIZ SECTION ===== */}
+      {article.quizData && (
+        <div className="mt-12 md:mt-16">
+          <QuizComponent
+            title="Teste seu conhecimento"
+            questions={typeof article.quizData === 'string' ? JSON.parse(article.quizData) : article.quizData}
+          />
+        </div>
+      )}
 
-          {/* Grid: Sidebar Left + Content Center + Space Right */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-8">
+      {/* ===== TAGS ===== */}
+      <div className="mt-12 md:mt-16 pt-8 border-t border-[var(--border-article)]">
+        <h3 className="title-newtab text-[10px] uppercase tracking-[0.2em] text-[var(--text-article-muted)] mb-4">
+          Tópicos relacionados
+        </h3>
+        <div className="flex flex-wrap gap-2">
+          {article.tags.map((tag, idx) => (
+            <span
+              key={idx}
+              className="px-3 py-1.5 rounded-full text-sm bg-[var(--bg-article-tag)] text-[var(--text-article-muted)]"
+            >
+              #{tag}
+            </span>
+          ))}
+        </div>
+      </div>
 
-            {/* ========== SIDEBAR (Desktop Only) ========== */}
-            <aside className="hidden lg:block lg:col-span-2 xl:col-span-2">
-              <div className="sticky top-24 pt-8 space-y-8">
+      {/* ===== TRANSPARENCY NOTE ===== */}
+      <div className="mt-12 pt-8 border-t border-[var(--border-article)]">
+        <TransparencyNote publishedAt={article.publishedAt} />
+      </div>
 
-                {/* Voltar */}
-                <button
-                  onClick={() => router.push('/educacao')}
-                  className="flex items-center gap-2 text-sm text-[var(--text-article-muted)] hover:text-[var(--text-article-title)] transition-colors group"
-                >
-                  <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3 transition-transform group-hover:-translate-x-1" />
-                  <span>Educação</span>
-                </button>
+      {/* ===== COMMENTS SECTION ===== */}
+      <CommentsSection
+        id={article.id}
+        type="article"
+        isOpen={showComments}
+      />
 
-                {/* Divisor */}
-                <div className="h-px bg-[var(--border-article)]" />
-
-                {/* Índice */}
-                {tableOfContents.length > 0 && (
-                  <nav className="space-y-1">
-                    <h3 className="title-newtab text-[10px] uppercase tracking-[0.2em] text-[var(--text-article-muted)] mb-3">
-                      Neste artigo
-                    </h3>
-                    {tableOfContents.map((item, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => scrollToSection(item.id)}
-                        className={`block text-left text-sm py-1.5 w-full transition-all leading-snug ${item.level === 3 ? 'pl-3' : ''
-                          } ${activeSection === item.id
-                            ? 'text-[var(--brand-primary)] font-medium'
-                            : 'text-[var(--text-article-muted)] hover:text-[var(--text-article-title)]'
-                          }`}
-                      >
-                        {item.text}
-                      </button>
-                    ))}
-                  </nav>
-                )}
-
-                {/* Divisor */}
-                <div className="h-px bg-[var(--border-article)]" />
-
-                {/* Compartilhar */}
-                <div className="space-y-3">
-                  <h3 className="title-newtab text-[10px] uppercase tracking-[0.2em] text-[var(--text-article-muted)]">
-                    Compartilhar
-                  </h3>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={shareOnX}
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[var(--text-article-title)] hover:text-[var(--text-article-title)] transition-colors"
-                      aria-label="Compartilhar no X"
-                    >
-                      <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={shareOnTelegram}
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[#0088cc] hover:text-[#0088cc] transition-colors"
-                      aria-label="Compartilhar no Telegram"
-                    >
-                      <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={shareOnWhatsApp}
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)] hover:border-[#25D366] hover:text-[#25D366] transition-colors"
-                      aria-label="Compartilhar no WhatsApp"
-                    >
-                      <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-
-              </div>
-            </aside>
-
-            {/* ========== MAIN CONTENT ========== */}
-            <main className="lg:col-span-7 xl:col-span-7 pt-6 md:pt-12 lg:pt-8">
-
-              {/* Mobile: Voltar */}
-              <div className="lg:hidden mb-6">
-                <button
-                  onClick={() => router.push('/educacao')}
-                  className="inline-flex items-center gap-2 text-sm text-[var(--text-article-muted)]"
-                >
-                  <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
-                  Educação
-                </button>
-              </div>
-
-              {/* ===== ARTICLE HEADER (NYT Style) ===== */}
-              <header className="mb-10 md:mb-14">
-
-                {/* Level Badge + Category */}
-                <div className="flex flex-wrap items-center gap-3 mb-4 md:mb-6">
+      {/* ===== RELATED ARTICLES ===== */}
+      {relatedArticles.length > 0 && (
+        <div className="mt-16 md:mt-20 pt-10 border-t border-[var(--border-article)]">
+          <h3 className="title-newtab text-xl md:text-2xl mb-8">
+            Continue aprendendo
+          </h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            {relatedArticles.slice(0, 4).map((related) => (
+              <Link
+                key={related.id}
+                href={`/educacao/${related.slug}`}
+                className="group block p-5 rounded-xl border border-[var(--border-article)] hover:border-[var(--brand-primary)]/50 transition-all hover:shadow-lg"
+              >
+                <div className="flex items-center gap-2 mb-3">
                   <span
-                    className="text-xs md:text-sm font-bold uppercase tracking-[0.1em]"
-                    style={{ color: getLevelColor(article.level) }}
-                  >
-                    {getLevelLabel(article.level)}
-                  </span>
-                  <span className="text-[var(--border-article)]">•</span>
-                  <span className="text-[var(--text-article-muted)] text-xs md:text-sm uppercase tracking-wider">
-                    {article.category}
-                  </span>
-                </div>
-
-                {/* Title - Editorial Typography */}
-                <h1
-                  className="title-newtab text-[1.75rem] md:text-[2.5rem] lg:text-[2.75rem] mb-6 md:mb-8"
-                  style={{
-                    lineHeight: '1.15',
-                    letterSpacing: '-0.02em',
-                    fontFamily: 'var(--font-sans)'
-                  }}
-                >
-                  {article.title}
-                </h1>
-
-                {/* Description - Elegant Italic */}
-                <p
-                  className="text-lg md:text-xl lg:text-[1.375rem] text-[var(--text-article-body)] font-light italic mb-6 md:mb-8"
-                  style={{ lineHeight: '1.6' }}
-                >
-                  {article.description}
-                </p>
-
-                {/* Meta Line: Date + Reading Time + LikeDislike */}
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[var(--text-article-muted)] pb-6 md:pb-8 border-b border-[var(--border-article)]">
-                  <time dateTime={article.publishedAt} className="capitalize">
-                    {formatEditorialDate(article.publishedAt)}
-                  </time>
-                  <span className="hidden md:inline">•</span>
-                  <span>{article.readTime}</span>
-                  <span className="hidden md:inline">•</span>
-                  <LikeDislikeButton id={article.id} type="article" />
-                  <CommentCountButton id={article.id} type="article" onClick={() => setShowComments(!showComments)} />
-                </div>
-
-                {/* Mobile: Share Buttons */}
-                <div className="lg:hidden mt-4 pt-4 flex items-center gap-4">
-                  <span className="text-xs text-[var(--text-article-muted)] uppercase tracking-wider">Compartilhar</span>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={shareOnX}
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[var(--text-article-muted)]"
-                      aria-label="X"
-                    >
-                      <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={shareOnTelegram}
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[#0088cc]"
-                      aria-label="Telegram"
-                    >
-                      <FontAwesomeIcon icon={faTelegram} className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={shareOnWhatsApp}
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-article)] text-[#25D366]"
-                      aria-label="WhatsApp"
-                    >
-                      <FontAwesomeIcon icon={faWhatsapp} className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-
-              </header>
-
-              <article className="prose prose-lg max-w-none">
-                {/* MODULAR RENDERER REPLACES REACT MARKDOWN */}
-                {htmlContent ? (
-                  <ModularArticleRenderer content={htmlContent} />
-                ) : (
-                  <div className="animate-pulse space-y-4">
-                    <div className="h-4 bg-white/5 rounded w-3/4"></div>
-                    <div className="h-4 bg-white/5 rounded w-full"></div>
-                    <div className="h-4 bg-white/5 rounded w-5/6"></div>
-                  </div>
-                )}
-              </article>
-
-              {/* ===== QUIZ SECTION ===== */}
-              {article.quizData && (
-                <div className="mt-12 md:mt-16">
-                  <QuizComponent
-                    title="Teste seu conhecimento"
-                    questions={typeof article.quizData === 'string' ? JSON.parse(article.quizData) : article.quizData}
+                    className="w-2 h-2 rounded-full"
+                    style={{ backgroundColor: getLevelColor(related.level) }}
                   />
+                  <span className="text-xs text-[var(--text-article-muted)]">
+                    {related.category}
+                  </span>
                 </div>
-              )}
-
-              {/* ===== TAGS ===== */}
-              <div className="mt-12 md:mt-16 pt-8 border-t border-[var(--border-article)]">
-                <h3 className="title-newtab text-[10px] uppercase tracking-[0.2em] text-[var(--text-article-muted)] mb-4">
-                  Tópicos relacionados
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {article.tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1.5 rounded-full text-sm bg-[var(--bg-article-tag)] text-[var(--text-article-muted)]"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* ===== TRANSPARENCY NOTE ===== */}
-              <div className="mt-12 pt-8 border-t border-[var(--border-article)]">
-                <TransparencyNote publishedAt={article.publishedAt} />
-              </div>
-
-              {/* ===== COMMENTS SECTION ===== */}
-              <CommentsSection
-                id={article.id}
-                type="article"
-                isOpen={showComments}
-              />
-
-              {/* ===== RELATED ARTICLES ===== */}
-              {relatedArticles.length > 0 && (
-                <div className="mt-16 md:mt-20 pt-10 border-t border-[var(--border-article)]">
-                  <h3 className="title-newtab text-xl md:text-2xl mb-8">
-                    Continue aprendendo
-                  </h3>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {relatedArticles.slice(0, 4).map((related) => (
-                      <Link
-                        key={related.id}
-                        href={`/educacao/${related.slug}`}
-                        className="group block p-5 rounded-xl border border-[var(--border-article)] hover:border-[var(--brand-primary)]/50 transition-all hover:shadow-lg"
-                      >
-                        <div className="flex items-center gap-2 mb-3">
-                          <span
-                            className="w-2 h-2 rounded-full"
-                            style={{ backgroundColor: getLevelColor(related.level) }}
-                          />
-                          <span className="text-xs text-[var(--text-article-muted)]">
-                            {related.category}
-                          </span>
-                        </div>
-                        <h4 className="text-base md:text-lg font-semibold mb-2 text-[var(--text-article-title)] group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2">
-                          {related.title}
-                        </h4>
-                        <p className="text-sm text-[var(--text-article-muted)] line-clamp-2">
-                          {related.description}
-                        </p>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Bottom Spacing */}
-              <div className="h-16 md:h-24" />
-
-            </main>
-
-            {/* ========== RIGHT SPACER (Desktop) ========== */}
-            <div className="hidden lg:block lg:col-span-3 xl:col-span-3" />
-
+                <h4 className="text-base md:text-lg font-semibold mb-2 text-[var(--text-article-title)] group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2">
+                  {related.title}
+                </h4>
+                <p className="text-sm text-[var(--text-article-muted)] line-clamp-2">
+                  {related.description}
+                </p>
+              </Link>
+            ))}
           </div>
         </div>
-
-      </div>
-    </>
+      )}
+    </ZenithArticleLayout>
   );
 }

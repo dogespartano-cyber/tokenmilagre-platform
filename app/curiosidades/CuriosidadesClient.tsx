@@ -2,9 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import ZenithCard from '@/components/ui/ZenithCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLightbulb, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 interface Curiosity {
     id: string;
@@ -66,42 +65,59 @@ export default function CuriosidadesClient() {
 
     return (
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-12 relative z-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {items.map((item, index) => (
-                    <Link key={item.id} href={`/curiosidades/${item.slug}`}>
-                        <ZenithCard
-                            variant="glass"
-                            className="group hover:scale-[1.02] transition-all duration-300 h-full"
-                        >
-                            <div className="relative p-2 h-full flex flex-col">
-                                <div className="flex items-start gap-4 mb-4">
-                                    <div className="w-10 h-10 rounded-xl bg-[var(--brand-primary)]/10 flex items-center justify-center text-[var(--brand-primary)] group-hover:bg-[var(--brand-primary)] group-hover:text-white transition-colors duration-300 border border-[var(--brand-primary)]/20">
-                                        <FontAwesomeIcon icon={faLightbulb} className="w-5 h-5" />
+            {/* Grid solto com gap maior para acomodar balões flutuantes */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16">
+                {items.map((item, index) => {
+                    // Randomize animation types (simple logic based on index)
+                    const animationType = index % 3 === 0 ? 'animate-float' : index % 3 === 1 ? 'animate-float-delayed' : 'animate-float-slow';
+
+                    // Deterministic randomness for hydration safety
+                    // Uses sin/cos to generate varied numbers based on index
+                    const randomDuration = 4 + (Math.abs(Math.sin(index + 1)) * 4); // 4s to 8s
+                    const randomDelay = Math.abs(Math.cos(index + 1)) * 3; // 0s to 3s
+
+                    return (
+                        <Link key={item.id} href={`/curiosidades/${item.slug}`} className="block group perspective-1000">
+                            <div
+                                className={`relative ${animationType}`}
+                                style={{
+                                    animationDuration: `${randomDuration}s`,
+                                    animationDelay: `${randomDelay}s`
+                                }}
+                            >
+                                {/* Thought Bubble Shape */}
+                                <div className="
+                                    relative bg-white dark:bg-zinc-800/80 backdrop-blur-md 
+                                    border-2 border-[var(--brand-primary)]/20 dark:border-[var(--brand-primary)]/30
+                                    p-12 rounded-[4rem]
+                                    shadow-lg hover:shadow-[0_0_30px_rgba(var(--brand-primary-rgb),0.3)]
+                                    transition-all duration-300 transform group-hover:scale-105
+                                    flex flex-col h-full min-h-[350px] justify-center gap-6
+                                    overflow-hidden
+                                ">
+                                    {/* Glass reflection effect */}
+                                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/40 to-transparent pointer-events-none opacity-50 dark:opacity-10" />
+
+                                    {/* Content */}
+                                    <p className="text-2xl font-bold leading-relaxed text-[var(--text-primary)] font-grotesk relative z-10 text-center">
+                                        "{item.content}"
+                                    </p>
+
+                                    {/* Footer: CTA */}
+                                    <div className="flex items-center justify-center gap-2 text-sm text-[var(--brand-primary)] font-bold tracking-wide uppercase opacity-70 group-hover:opacity-100 transition-opacity relative z-10">
+                                        <span>Ler história</span>
+                                        <span className="group-hover:translate-x-1 transition-transform">→</span>
                                     </div>
-                                    <span className="text-4xl font-black text-[var(--text-tertiary)] opacity-10 absolute right-0 top-0 select-none">
-                                        #{index + 1}
-                                    </span>
                                 </div>
 
-                                <p className="text-lg md:text-xl font-bold leading-relaxed text-[var(--text-primary)] mb-4 flex-grow">
-                                    <span className="bg-[var(--brand-primary)]/20 dark:bg-[var(--brand-primary)]/10 px-1 rounded-sm decoration-clone group-hover:bg-[var(--brand-primary)]/30 transition-colors">
-                                        {item.content}
-                                    </span>
-                                </p>
-
-                                <div className="flex items-center gap-2 text-xs text-[var(--brand-primary)] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <span>Ler breve artigo</span>
-                                    <span>→</span>
-                                </div>
+                                {/* Thought Bubbles (Circles) - Decorative Tail */}
+                                <div className="absolute -bottom-4 -right-2 w-6 h-6 bg-[var(--brand-primary)]/20 rounded-full animate-bounce delay-700" />
+                                <div className="absolute -bottom-8 -right-6 w-4 h-4 bg-[var(--brand-primary)]/10 rounded-full animate-bounce delay-1000" />
                             </div>
-                        </ZenithCard>
-                    </Link>
-                ))}
+                        </Link>
+                    );
+                })}
             </div>
-
-            {/* Decorative Background Glows */}
-            <div className="fixed top-1/4 -left-20 w-96 h-96 bg-[var(--brand-primary)]/5 blur-[120px] rounded-full -z-10 pointer-events-none" />
-            <div className="fixed bottom-1/4 -right-20 w-96 h-96 bg-zinc-500/5 blur-[120px] rounded-full -z-10 pointer-events-none" />
         </div>
     );
 }

@@ -32,6 +32,12 @@ Sessão:
   Data: YYYY-MM-DD
   Foco: [área principal de trabalho]
   
+  Autoanálise:
+    Eficiência: [Nota 0-10]
+    Workflow: [Seguido / Adaptado / Falhou]
+    Agents: [Agents acionados e se foram úteis]
+    Melhorias: [O que melhorar no processo para a próxima vez]
+
   O que foi feito:
     - [item 1]
     - [item 2]
