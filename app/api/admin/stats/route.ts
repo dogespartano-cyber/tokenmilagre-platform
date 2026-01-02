@@ -85,8 +85,6 @@ export async function GET(request: NextRequest) {
         bySentiment: articleStats.bySentiment,
         publishedThisWeek: weeklyPublished,
         educationalByLevel: levelCounts,
-        avgFactCheckScore: articleStats.avgFactCheckScore,
-        withFactCheck: articleStats.withFactCheck,
       },
       // User statistics
       users: {

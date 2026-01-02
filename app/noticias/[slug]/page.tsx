@@ -76,14 +76,8 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
     }
 
     // Parse consolidatedSources se existir (Cross Mode)
-    let consolidatedSources;
-    if (article.consolidatedSources) {
-      try {
-        consolidatedSources = JSON.parse(article.consolidatedSources);
-      } catch (e) {
-        console.error('Erro ao parsear consolidatedSources:', e);
-      }
-    }
+    // consolidatedSources removed (deprecated)
+    // let consolidatedSources;
 
     // Formatar para NewsItem
     return {
@@ -104,7 +98,6 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
       citations,
       coverImage: article.coverImage || undefined,
       coverImageAlt: article.coverImageAlt || undefined,
-      consolidatedSources, // ← Cross Mode
     };
   } catch (error) {
     console.error('Erro ao buscar artigo:', error);

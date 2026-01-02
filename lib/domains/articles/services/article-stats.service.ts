@@ -28,7 +28,6 @@ export class ArticleStatsService {
                 byType,
                 byCategory,
                 bySentiment,
-                factCheckStats,
             ] = await Promise.all([
                 prisma.article.count(),
                 prisma.article.count({ where: { published: true } }),
@@ -45,10 +44,6 @@ export class ArticleStatsService {
                     by: ['sentiment'],
                     _count: true,
                 }),
-                prisma.article.aggregate({
-                    _avg: { factCheckScore: true },
-                    _count: { factCheckScore: true },
-                }),
             ]);
 
             const stats: ArticleStats = {
@@ -58,8 +53,6 @@ export class ArticleStatsService {
                 byType: Object.fromEntries(byType.map((t) => [t.type, t._count])),
                 byCategory: Object.fromEntries(byCategory.map((c) => [c.category, c._count])),
                 bySentiment: Object.fromEntries(bySentiment.map((s) => [s.sentiment, s._count])),
-                avgFactCheckScore: factCheckStats._avg.factCheckScore,
-                withFactCheck: factCheckStats._count.factCheckScore,
             };
 
             this.logger.info('Article statistics fetched', stats);

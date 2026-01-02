@@ -45,8 +45,6 @@ export interface ArticleStats {
     byType: Record<string, number>
     byCategory: Record<string, number>
     bySentiment: Record<string, number>
-    avgFactCheckScore: number | null
-    withFactCheck: number
 }
 
 /**

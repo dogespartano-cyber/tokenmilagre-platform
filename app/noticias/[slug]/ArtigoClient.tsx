@@ -28,7 +28,6 @@ interface NewsItem {
   citations?: string[];
   coverImage?: string;
   coverImageAlt?: string;
-  consolidatedSources?: { url: string; title?: string; origin: 'perplexity' | 'gemini' }[];
 }
 
 interface ArtigoClientProps {
@@ -340,41 +339,7 @@ export default function ArtigoClient({ article, relatedArticles = [] }: ArtigoCl
         </div>
       </div>
 
-      {/* ===== CONSOLIDATED SOURCES (Cross Mode) ===== */}
-      {article.consolidatedSources && article.consolidatedSources.length > 0 && (
-        <div className="mt-12 p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20">
-          <h3 className="title-newtab text-lg mb-4 flex items-center gap-2">
-            📚 Fontes Consultadas
-            <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400">
-              Cross Mode
-            </span>
-          </h3>
-          <div className="space-y-2">
-            {article.consolidatedSources.map((source, idx) => (
-              <a
-                key={idx}
-                href={source.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all group"
-              >
-                <span className={`text-xs px-1.5 py-0.5 rounded ${source.origin === 'perplexity'
-                  ? 'bg-blue-500/20 '
-                  : 'bg-purple-500/20 text-purple-400'
-                  }`}>
-                  {source.origin === 'perplexity' ? 'P' : 'G'}
-                </span>
-                <span className="text-sm text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)] truncate">
-                  {source.title || source.url}
-                </span>
-              </a>
-            ))}
-          </div>
-          <p className="mt-4 text-xs text-gray-500 dark:text-gray-400">
-            P = Perplexity AI • G = Gemini Grounding Search
-          </p>
-        </div>
-      )}
+      {/* ===== CONSOLIDATED SOURCES REMOVED (Deprecated) ===== */}
 
       {/* ===== SOURCES ===== */}
       <div className="mt-12">
