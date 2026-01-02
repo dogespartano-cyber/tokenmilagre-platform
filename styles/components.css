@@ -1,0 +1,660 @@
+/* ============================================
+   COMPONENTS
+   Extracted from app/globals.css
+   ============================================ */
+
+/* ============================================
+  GLOBAL POLISH - Scrollbar & Selection
+  ============================================ */
+
+/* Custom Scrollbar - Sleek & Minimal */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-medium);
+    border-radius: 5px;
+    border: 2px solid var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Text Selection - Brand Aware */
+::selection {
+    background: var(--brand-primary);
+    color: var(--text-inverse);
+    text-shadow: none;
+}
+
+/* ============================================
+  UTILITY CLASSES - THEME AWARE
+  ============================================ */
+
+/* Background Colors */
+.bg-theme-primary {
+    background-color: var(--bg-primary);
+}
+
+.bg-theme-secondary {
+    background-color: var(--bg-secondary);
+}
+
+.bg-theme-tertiary {
+    background-color: var(--bg-tertiary);
+}
+
+.bg-theme-elevated {
+    background-color: var(--bg-elevated);
+}
+
+/* Zenith Glass Utility */
+.zenith-glass {
+    /* Default (Light Mode): Solid White - No Transparency */
+    background-color: #FFFFFF;
+    /* Remove gradient and blur for solid look */
+    background-image: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+
+    /* Solid border and cleaner shadow for card definition */
+    border: 1px solid var(--border-light);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .zenith-glass {
+    background-color: transparent;
+    /* Return to transparency in dark mode */
+    background-image: linear-gradient(to bottom right, rgba(107, 114, 128, 0.1), rgba(100, 116, 139, 0.05));
+    backdrop-filter: blur(12px);
+    /* Maintain blur for Dark Mode */
+    -webkit-backdrop-filter: blur(12px);
+    border-color: rgba(107, 114, 128, 0.2);
+    box-shadow: none;
+}
+
+/* Text Colors */
+.text-theme-primary {
+    color: var(--text-primary);
+}
+
+.text-theme-secondary {
+    color: var(--text-secondary);
+}
+
+.text-theme-tertiary {
+    color: var(--text-tertiary);
+}
+
+.text-theme-muted {
+    color: var(--text-muted);
+}
+
+.text-theme-inverse {
+    color: var(--text-inverse);
+}
+
+.text-theme-disabled {
+    color: var(--text-disabled);
+}
+
+/* Border Colors */
+.border-theme-light {
+    border-color: var(--border-light);
+}
+
+.border-theme-medium {
+    border-color: var(--border-medium);
+}
+
+.border-theme-strong {
+    border-color: var(--border-strong);
+}
+
+.border-theme-focus {
+    border-color: var(--border-focus);
+}
+
+/* Brand Colors */
+.bg-brand-primary {
+    background-color: var(--brand-primary);
+}
+
+.bg-brand-light {
+    background-color: var(--brand-light);
+}
+
+.bg-brand-bg {
+    background-color: var(--brand-bg);
+}
+
+.text-brand-primary {
+    color: var(--brand-primary);
+}
+
+.text-brand-light {
+    color: var(--brand-light);
+}
+
+.border-brand-primary {
+    border-color: var(--brand-primary);
+}
+
+.border-brand-border {
+    border-color: var(--brand-border);
+}
+
+/* Functional Colors */
+.text-success {
+    color: var(--success);
+}
+
+.text-success-light {
+    color: var(--success-light);
+}
+
+.bg-success {
+    background-color: var(--success);
+}
+
+.bg-success-light {
+    background-color: var(--success-light);
+}
+
+.bg-success-bg {
+    background-color: var(--success-bg);
+}
+
+.border-success {
+    border-color: var(--success-border);
+}
+
+.text-error {
+    color: var(--error);
+}
+
+.text-error-light {
+    color: var(--error-light);
+}
+
+.bg-error {
+    background-color: var(--error);
+}
+
+.bg-error-light {
+    background-color: var(--error-light);
+}
+
+.bg-error-bg {
+    background-color: var(--error-bg);
+}
+
+.border-error {
+    border-color: var(--error-border);
+}
+
+.text-warning {
+    color: var(--warning);
+}
+
+.text-warning-light {
+    color: var(--warning-light);
+}
+
+.bg-warning {
+    background-color: var(--warning);
+}
+
+.bg-warning-light {
+    background-color: var(--warning-light);
+}
+
+.bg-warning-bg {
+    background-color: var(--warning-bg);
+}
+
+.border-warning {
+    border-color: var(--warning-border);
+}
+
+.text-info {
+    color: var(--info);
+}
+
+.text-info-light {
+    color: var(--info-light);
+}
+
+.bg-info {
+    background-color: var(--info);
+}
+
+.bg-info-light {
+    background-color: var(--info-light);
+}
+
+.bg-info-bg {
+    background-color: var(--info-bg);
+}
+
+.border-info {
+    border-color: var(--info-border);
+}
+
+/* Shadows */
+.shadow-theme-xs {
+    box-shadow: var(--shadow-xs);
+}
+
+.shadow-theme-sm {
+    box-shadow: var(--shadow-sm);
+}
+
+.shadow-theme-md {
+    box-shadow: var(--shadow-md);
+}
+
+.shadow-theme-lg {
+    box-shadow: var(--shadow-lg);
+}
+
+.shadow-theme-xl {
+    box-shadow: var(--shadow-xl);
+}
+
+.shadow-theme-2xl {
+    box-shadow: var(--shadow-2xl);
+}
+
+.shadow-theme-inner {
+    box-shadow: var(--shadow-inner);
+}
+
+/* Focus Styles - Accessibility */
+.focus-ring {
+    outline: none;
+}
+
+.focus-ring:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+}
+
+/* Skip to content link - Accessibility */
+.skip-to-content {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--brand-primary);
+    color: white;
+    padding: var(--space-2) var(--space-4);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    z-index: var(--z-tooltip);
+}
+
+.skip-to-content:focus {
+    top: var(--space-4);
+}
+
+/* Glassmorphism Utilities */
+.glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+[data-theme="dark"] .glass {
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .glass-card {
+    background: rgba(15, 23, 42, 0.3);
+    /* Reduced opacity for better glass effect over new background */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 1024px) {
+    .glass-card:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="dark"] .glass-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* MILAGRE Theme Glass Card Override - Transparent */
+[data-theme="dark"][data-accent="milagre"] .glass-card {
+    /* Fully Transparent Background */
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+[data-theme="dark"][data-accent="milagre"] .glass-card:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(20, 184, 166, 0.4);
+    box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(20, 184, 166, 0.05);
+}
+
+/* Static Glass Card - No Hover/Movement (For CryptoScreener) */
+.glass-card.static-glass-card {
+    background: transparent !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+.glass-card.static-glass-card:hover {
+    background: transparent !important;
+    transform: none !important;
+    border-color: var(--border-light) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="dark"] .glass-card.static-glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Sidebar Active State - Fix for residual borders */
+.sidebar-active {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    /* Explicitly remove other borders to prevent transition artifacts */
+    border: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    color: var(--brand-primary);
+}
+
+[data-theme="dark"] .sidebar-active {
+    background: rgba(255, 255, 255, 0.03);
+    border: none;
+}
+
+/* =================================
+  SIDEBAR UTILITY CLASSES
+  Centralized styles for sidebar items
+  ================================= */
+
+/* Base sidebar item - navigation link/button */
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.sidebar-item:hover {
+    background: #F8FAFC;
+    /* slate-50 */
+    color: var(--brand-primary);
+}
+
+/* Active sidebar item */
+.sidebar-item-active {
+    background: #E6F4F3;
+    /* Teal-50 equivalent */
+    color: var(--brand-primary);
+    font-weight: 700;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-item-active:hover {
+    background: #CCFBF1;
+    /* Teal-100 */
+    transform: none;
+}
+
+/* Back link - with margin bottom */
+.sidebar-back-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    margin-bottom: 0.5rem;
+    width: 100%;
+}
+
+.sidebar-back-link:hover {
+    background: #F8FAFC;
+    /* slate-50 */
+    color: var(--brand-primary);
+}
+
+.sidebar-back-link:hover .sidebar-icon {
+    color: var(--brand-primary);
+}
+
+/* Sidebar icon styling */
+.sidebar-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+/* Sidebar text variants */
+.sidebar-text {
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.sidebar-text-lg {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* 
+  ZENITH SYSTEM - Cyber-Prosperity Architecture
+  Unified design tokens for the Zenith interface.
+*/
+.zenith-card {
+    /* Default (Light Mode) */
+    background: rgba(255, 255, 255, 0.9);
+    /* Less transparent for better readability */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    /* Visible border */
+    border-radius: var(--radius-2xl);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    /* Adjusted shadow */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zenith-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Dark Mode Overrides */
+[data-theme="dark"] .zenith-card {
+    background: linear-gradient(135deg, rgba(20, 20, 30, 0.6) 0%, rgba(10, 10, 20, 0.4) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .zenith-card:hover {
+    background: linear-gradient(135deg, rgba(30, 30, 45, 0.7) 0%, rgba(20, 20, 35, 0.5) 100%);
+    border-color: rgba(255, 215, 0, 0.3);
+    /* Gold border reveal */
+    box-shadow:
+        0 20px 40px -5px rgba(0, 0, 0, 0.4),
+        inset 0 0 20px rgba(255, 215, 0, 0.02);
+    /* Gold inner ambience */
+}
+
+/* MILAGRE Theme Card Override - Transparent Glass Test */
+[data-theme="dark"][data-accent="milagre"] .zenith-card,
+[data-theme="dark"][data-accent="ocean"] .zenith-card,
+[data-theme="dark"][data-accent="forest"] .zenith-card,
+[data-theme="dark"][data-accent="sunset"] .zenith-card {
+    /* Fully Transparent Background (Testing Only Blur + Border) */
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+[data-theme="dark"][data-accent="milagre"] .zenith-card:hover,
+[data-theme="dark"][data-accent="ocean"] .zenith-card:hover,
+[data-theme="dark"][data-accent="forest"] .zenith-card:hover,
+[data-theme="dark"][data-accent="sunset"] .zenith-card:hover {
+    background: rgba(255, 255, 255, 0.03);
+    /* Minimal hover hint */
+    border-color: var(--border-focus);
+    /* Match variant accent color */
+    box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(20, 184, 166, 0.05);
+}
+
+.zenith-featured {
+    position: relative;
+    background: var(--bg-primary);
+    border: 1px solid var(--brand-primary);
+    border-radius: var(--radius-2xl);
+    box-shadow: 0 0 0 1px var(--brand-primary), 0 10px 30px -5px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .zenith-featured {
+    background: linear-gradient(160deg, rgba(20, 20, 30, 0.9) 0%, rgba(10, 10, 20, 0.9) 100%);
+    box-shadow: 0 0 0 1px var(--brand-primary), 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+}
+
+/* Utility to force text color adaptation */
+.text-adaptive {
+    color: var(--text-primary);
+}
+
+/* ==================================================
+  GLOBAL BACKGROUND - OPTIMIZED CSS-ONLY VERSION
+  ================================================== */
+
+/**
+ * GlobalBackground - CSS-Only Implementation
+ * 
+ * Base background que responde ao tema via data-theme attribute.
+ * 100% CSS, zero JavaScript overhead.
+ */
+.global-background-base {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: var(--bg-primary);
+    transition: background-color 0.5s ease;
+}
+
+/**
+ * Container de efeitos visuais (apenas Dark Mode)
+ */
+.global-background-effects {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+[data-theme="dark"] .global-background-effects {
+    opacity: 1;
+}
+
+/* Light Mode: Clean with Depth Mix */
+[data-theme="light"] {
+    --theme-depth-color: #E5E7EB;
+    /* Zinc 200 - Light Gray target */
+    --bg-primary-source: #f5f5f7;
+    /* Start at Pure White */
+}
+
+[data-theme="light"] .global-background-base {
+    /* Mix from Source (White) to Depth Color (Gray) based on Percentage */
+    background: color-mix(in srgb, var(--bg-primary-source), var(--theme-depth-color) var(--theme-depth-mix));
+}
+
+/* Dark Mode: Zenith Prosper with Depth Mix */
+[data-theme="dark"] {
+    --theme-depth-color: #000000;
+    /* Black target */
+}
+
+[data-theme="dark"] .global-background-base {
+    /* Cor sólida sem gradiente */
+    background: #181a20;
+}
+
+/* =================
+  DARK MODE EFFECTS
+  ================= */
+
+/* Efeito 1: Hexagonal Data Mesh */
+[data-theme="dark"] .global-background-effects::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='104' viewBox='0 0 60 104' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill-rule='evenodd' stroke='%23FCD535' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+    -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+    mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    [data-theme="dark"] .global-background-effects::before {
+        display: block;
+    }
+}
+
+/* =================================
+  VOID COLLECTION ATMOSPHERE
+  Adaptive Glows using CSS Variables
+  ================================= */
+
+/* 1. Remove Gold Mesh for all "Void" variants */
+[data-theme="dark"][data-accent="milagre"] .global-background-effects::before,
+[data-theme="dark"][data-accent="ocean"] .global-background-effects::before,
+[data-theme="dark"][data-accent="forest"] .global-background-effects::before,
+[data-theme="dark"][data-accent="sunset"] .global-background-effects::before {
+    background-image: none;
+}

@@ -13,7 +13,7 @@ export { useFearGreed } from './hooks/useFearGreed';
 
 // Components
 export { MarketDataCards } from './MarketDataCards';
-export { FearGreedGauge } from './FearGreedGauge';
+
 export { DailyAnalysisCard } from './DailyAnalysisCard';
 export { QuickStartGrid } from './QuickStartGrid';
 export { LatestNewsGrid } from './LatestNewsGrid';
@@ -21,8 +21,7 @@ export { LearnCryptoSection } from './LearnCryptoSection';
 export { PriceChartSection } from './PriceChartSection';
 export { TopCryptosSection } from './TopCryptosSection';
 export { LoadingSkeleton } from './LoadingSkeleton';
-export { ZenithHeroHUD } from './ZenithHeroHUD';
-export { ZenithMarketTicker } from './ZenithMarketTicker';
+export { ZenithHeroHUD, ZenithMarketTicker, FearGreedGauge } from '@/components/zenith';
 export { FeaturedResourcesSection } from './FeaturedResourcesSection';
 export { CryptoCuriosities } from './CryptoCuriosities';
 

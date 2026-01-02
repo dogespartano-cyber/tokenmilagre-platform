@@ -1,0 +1,78 @@
+{
+  "name": "$MILAGRE Token - Educação Financeira Descentralizada",
+  "short_name": "$MILAGRE",
+  "description": "Plataforma comunitária de educação financeira e apoio mútuo na blockchain Solana",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F8F9FA",
+  "theme_color": "#0D9488",
+  "categories": [
+    "finance",
+    "education",
+    "blockchain"
+  ],
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Notícias Cripto",
+      "short_name": "Notícias",
+      "description": "Últimas notícias do mercado de criptomoedas",
+      "url": "/noticias",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Educação",
+      "short_name": "Educação",
+      "description": "Artigos educacionais sobre blockchain e finanças",
+      "url": "/educacao",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Gráficos",
+      "short_name": "Gráficos",
+      "description": "Gráficos e análises de mercado em tempo real",
+      "url": "/graficos",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

@@ -20,7 +20,9 @@ updated: 2025-12-31
 │ Gamificação │ SEO Schema  │             │             │ Chaos MVP   │
 │ Newsletter  │             │             │             │ Graphiti    │
 │ PWA         │             │             │             │ UI Standard │
-│ OpenAPI     │             │             │             │ Verificador │
+│ OpenAPI     │             │             │             │ Zenith Refac│
+│             │             │             │             │ Unit Tests  │
+│             │             │             │             │ Agent Opt.  │
 │             │             │             │             │ Mobile Check│
 │             │             │             │             │ Agent Gov   │
 └─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘

@@ -121,6 +121,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/supertest": "^6.0.3",
+    "ajv": "^8.17.1",
     "bcryptjs": "^3.0.3",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",

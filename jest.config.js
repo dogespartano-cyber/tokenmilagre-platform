@@ -38,6 +38,9 @@ const customJestConfig = {
       statements: 80,
     },
   },
+  transformIgnorePatterns: [
+    '/node_modules/(?!(@token-icons|@dnd-kit|@fortawesome|lucide-react)/)',
+  ],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

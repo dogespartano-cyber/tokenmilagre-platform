@@ -33,6 +33,16 @@ Escreveu código antes do teste? Delete. Comece de novo.
 
 ## Red-Green-Refactor
 
+### 🛫 Step 0: Pre-flight Check (Safety First)
+
+Antes de escrever qualquer código de teste:
+
+1. **Scan de Ambiente**: Leia `package.json` e configs de teste (`jest.config.js`).
+   - *Por que?* Evitar erros de módulo (ESM vs CJS) ou dependências faltando.
+2. **Setup Mínimo**: Se usar libs complexas (gráficos, web3), verifique se precisam de mocks.
+
+---
+
 ### 🔴 RED - Escreva Teste que Falha
 
 Escreva um teste mínimo mostrando o que deveria acontecer.

@@ -158,7 +158,7 @@ export function parseYamlFrontmatter(content: string): AgentMetadata | null {
         result[currentKey] = currentArray;
     }
 
-    return result as AgentMetadata;
+    return result as unknown as AgentMetadata;
 }
 
 /**
