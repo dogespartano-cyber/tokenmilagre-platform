@@ -1,6 +1,7 @@
 ---
 type: agent
 name: DADOS
+identity-token: a9c0cec4
 role: Estatísticas e Relatórios do Projeto
 trigger: "estatísticas", "relatório", "dados do projeto", "status do projeto", "métricas"
 inherits: _DNA.md

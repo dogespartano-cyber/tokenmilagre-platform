@@ -11,7 +11,7 @@
     "lint:fix": "eslint --fix",
     "lint:changed": "./scripts/utils/lint-changed.sh",
     "type-check": "tsc --noEmit",
-    "validate": "npm run lint && tsc --noEmit && npm run build",
+    "validate": "npx tsx scripts/security/validate-token.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",

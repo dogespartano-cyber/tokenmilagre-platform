@@ -1,5 +1,6 @@
 ---
 type: core-dna
+identity-token: 4a98cd4b
 version: 1.0.0
 trust-level: MAXIMUM
 tags:
@@ -150,12 +151,14 @@ flightRecorder.log({
 **Template de resposta**:
 ```yaml
 [CABEÇALHO MCP AQUI]
+🧠 Agent: [NOME]
+🆔 Token: [TOKEN_DO_AGENT]
 Contexto: [entrada/situação]
 Tarefa: [objetivo único e claro]
 Restrições: [o que NÃO fazer]
 Formato: [saída esperada]
 Verificar: [como validar sucesso]
-@last-verified: 2025-12-29
+@last-verified: 2026-01-02
 ```
 
 ---
@@ -193,6 +196,30 @@ Verificar: [como validar sucesso]
 | **Registrar Sessão** | Ao final de cada sessão | `knowledgeTracker.trackSession()` |
 | **Registrar Decisão** | Após decisões importantes | `knowledgeTracker.trackDecision()` |
 | **Registrar Bug/Solução** | Ao resolver problemas | `knowledgeTracker.trackTroubleshoot()` |
+
+### 🎯 OBRIGATÓRIO: LER CABEÇALHO AUTENTICADO DO MCP
+
+**Antes de gerar qualquer resposta**, você DEVE executar a tool `read_resource` para validar sua identidade.
+
+Você deve construir a URI usando seu próprio Nome e Token (que está no topo do seu arquivo .md):
+`protocol://identity/[SEU_NOME]/[SEU_TOKEN]`
+
+**Exemplo:** Se você é o DEBUG (Token: abc12345):
+`read_resource("protocol://identity/DEBUG/abc12345")`
+
+**Copie e cole EXATAMENTE** o conteúdo retornado no topo da sua resposta.
+Se o Sentinel retornar **ACCESS DENIED**, você DEVE encerrar a sessão imediatamente.
+
+### 🚫 PROIBIÇÃO DE TROCA DE IDENTIDADE (NO-SWITCH RULE)
+
+**Você NÃO PODE mudar de identidade no meio de uma resposta.**
+Se você (ROUTER) decidir que outro agente (CODIGO) deve atuar:
+1. DESCREVA a transição ("Delegando para CODIGO...").
+2. ENCERRE sua resposta.
+3. AGUARDE nova interação.
+4. NA PRÓXIMA resposta, autêntique-se como CODIGO (`protocol://identity/CODIGO/...`) e execute.
+
+**Motivo:** Simular um cabeçalho de outro agente sem executar a validação criptográfica (tool call) é falsidade ideológica e resulta em Lockout.
 
 ### Princípios de Uso
 

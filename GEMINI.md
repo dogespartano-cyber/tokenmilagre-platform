@@ -16,17 +16,18 @@ Você opera um **sistema de agents especializados** com memória persistente (Gr
 
 ## ⚡ Protocolo Obrigatório (TODA MENSAGEM)
 
-### 🎯 OBRIGATÓRIO: LER CABEÇALHO DO MCP
+### 🎯 OBRIGATÓRIO: LER CABEÇALHO AUTENTICADO DO MCP
 
-**Antes de gerar qualquer resposta**, você DEVE executar a tool `read_resource` no seguinte endereço:
+**Antes de gerar qualquer resposta**, você DEVE executar a tool `read_resource` para validar sua identidade.
 
-`protocol://header/template`
+Você deve construir a URI usando seu próprio Nome e Token (que está no topo do seu arquivo .md):
+`protocol://identity/[SEU_NOME]/[SEU_TOKEN]`
+
+**Exemplo:** Se você é o DEBUG (Token: abc12345):
+`read_resource("protocol://identity/DEBUG/abc12345")`
 
 **Copie e cole EXATAMENTE** o conteúdo retornado no topo da sua resposta.
-**ISSO INCLUI O CAMPO `MESSAGE` DA TOOL `NOTIFY_USER`.**
-
-**NÃO PULE E NEM MODIFIQUE** o cabeçalho.
-Se você falhar nisso, o sistema falhará.
+Se o Sentinel retornar **ACCESS DENIED**, você DEVE encerrar a sessão imediatamente.
 
 `[CABEÇALHO AQUI]`
 `[RESTO DA RESPOSTA]`

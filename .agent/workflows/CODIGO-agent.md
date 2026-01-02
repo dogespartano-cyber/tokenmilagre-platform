@@ -1,6 +1,7 @@
 ---
 type: agent
 name: CODIGO
+identity-token: 2d622bd0
 role: Revisão de Código
 trigger: "Code review", "revisar código", antes de commits, tipagem
 inherits: _DNA.md

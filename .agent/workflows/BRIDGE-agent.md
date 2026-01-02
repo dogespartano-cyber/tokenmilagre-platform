@@ -1,6 +1,7 @@
 ---
 type: agent
 name: BRIDGE
+identity-token: 9ce16dc9
 role: Ponte de Comunicação com o Host
 trigger: "bridge", "host", "podman", "container", "rebuild", "fora do container"
 inherits: _DNA.md

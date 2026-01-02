@@ -1,6 +1,7 @@
 ---
 type: agent
 name: IDEIAS
+identity-token: db4a26b3
 role: Geração Criativa de Ideias
 trigger: "Brainstorm", "ideias", "vamos pensar", "criar conceitos", "explorar possibilidades"
 inherits: _DNA.md

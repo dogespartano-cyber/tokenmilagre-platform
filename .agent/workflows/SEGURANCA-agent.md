@@ -1,6 +1,7 @@
 ---
 type: agent
 name: SEGURANCA
+identity-token: 7c592edc
 role: Segurança e Auditoria
 trigger: "Due diligence", "auditoria", "segurança", smart contracts, riscos
 inherits: _DNA.md

@@ -146,6 +146,7 @@ Adicione ao GitHub Actions:
 
 ```yaml
 - name: Agent Health Check
+identity-token: a7c3f60d
   run: |
     npm run agents:test
     npx tsx lib/agents/agent-validator.ts

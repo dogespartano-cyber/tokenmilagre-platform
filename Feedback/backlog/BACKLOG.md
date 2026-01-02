@@ -24,7 +24,9 @@ updated: 2025-12-31
 │             │             │             │             │ Unit Tests  │
 │             │             │             │             │ Agent Opt.  │
 │             │             │             │             │ Mobile Check│
-│             │             │             │             │ Agent Gov   │
+│             │             │             │             │ Ident. Guard│
+│             │             │             │             │ Oracle MVP  │
+│             │             │             │             │ AI Gov 2.0  │
 └─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘
 ```
 

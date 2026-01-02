@@ -1,6 +1,7 @@
 ---
 type: agent
 name: CONTEUDO
+identity-token: 7ad8757e
 role: Criação de Conteúdo Web
 trigger: "Crie artigo", "landing page", "página", "microcopy", conteúdo educacional
 inherits: _DNA.md

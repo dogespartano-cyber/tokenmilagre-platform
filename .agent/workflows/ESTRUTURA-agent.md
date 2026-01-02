@@ -1,6 +1,7 @@
 ---
 type: agent
 name: ESTRUTURA
+identity-token: df50dbd7
 role: Arquitetura Fractal
 trigger: "Revisar estrutura", "novo módulo", "validar arquitetura", PR grande
 inherits: _DNA.md

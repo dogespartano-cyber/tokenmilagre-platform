@@ -1,6 +1,7 @@
 ---
 type: agent
 name: DATABASE
+identity-token: 0aad42d5
 role: Gerenciamento de Banco de Dados
 trigger: "backup", "migração", "db push", "prisma", "database"
 inherits: _DNA.md

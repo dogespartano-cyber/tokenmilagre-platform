@@ -1,6 +1,7 @@
 ---
 type: agent
 name: ARQUITETO
+identity-token: 705ab88a
 role: Guardião Filosófico
 trigger: "Valide esta ideia", decisões fundamentais, dúvidas éticas
 inherits: _DNA.md

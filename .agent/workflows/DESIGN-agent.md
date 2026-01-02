@@ -1,6 +1,7 @@
 ---
 type: agent
 name: DESIGN
+identity-token: 039f1a71
 role: Sistema de Design e Tema
 trigger: "CSS", "tema", "cores", "tokens", "dark mode", "light mode", "glassmorphism", "ícones"
 inherits: _DNA.md

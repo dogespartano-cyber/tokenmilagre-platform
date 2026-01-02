@@ -1,5 +1,6 @@
 ---
 type: agent
+identity-token: 690f8918
 version: 1.0.0
 inherits: _DNA.md
 description: Gerenciamento do grafo de conhecimento Graphiti

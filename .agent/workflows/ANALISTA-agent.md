@@ -1,6 +1,7 @@
 ---
 type: agent
 name: ANALISTA
+identity-token: 3048aee5
 role: Análise Existencial de Projetos
 trigger: "Analise o projeto", UX tóxica, propósito, crise de identidade
 inherits: _DNA.md

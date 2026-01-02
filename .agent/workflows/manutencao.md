@@ -36,6 +36,8 @@ echo "╚═══════════════════════�
 
 ## 🤖 Configuração Antigravity (CRÍTICO)
 
+> **Identity Guard Ativo:** O Sentinel agora exige autenticação (`protocol://identity/...`). Se o cabeçalho não tiver "✅ VERIFIED", o sistema está comprometido.
+
 > **Descoberta 2025-12-31:** O caminho do GEMINI.md dentro do distrobox é diferente!
 
 ### Caminho Correto
@@ -72,7 +74,8 @@ cp /home/zenfoco/Dev/tokenmilagre-platform/CLAUDE.md \
 
 Após sincronização, a IA deve iniciar respostas com:
 ```
-🧠 Agent: [NOME]
+🧠 Agent: [NOME] (✅ VERIFIED)
+🆔 Token: [TOKEN]
 📡 Graphiti: [status]
 📋 Contexto: [1 linha]
 ```
@@ -165,6 +168,7 @@ for f in .agent/workflows/*-agent.md; do
   missing=""
   grep -q "^type:" "$f" || missing="$missing type"
   grep -q "escalates-to:" "$f" || missing="$missing escalates-to"
+  grep -q "identity-token:" "$f" || missing="$missing identity-token" # 🆕 Novo protocolo
   grep -q "@last-verified:" "$f" || missing="$missing @last-verified"
   [ -n "$missing" ] && echo "⚠️ $(basename $f): falta$missing"
 done
@@ -177,6 +181,16 @@ done
 for f in .agent/workflows/*-agent.md; do
   if ! grep -q "CONHECIMENTO" "$f"; then
     echo "⚠️ $(basename $f): não integrado com CONHECIMENTO"
+  fi
+done
+
+# 2.4 🔍 CRÍTICO: Verificar Flight Recorder (Caixa Preta)
+for f in .agent/workflows/*-agent.md; do
+  # Se o agente menciona ações críticas (deploy, delete, destroy, create), deve ter regras de FlightRecorder
+  if grep -E "deploy|delete|destroy|critical" "$f" | grep -v "flightRecorder" > /dev/null; then
+     if ! grep -q "flightRecorder" "$f"; then
+        echo "⚠️ $(basename $f): possui ações críticas mas não cita flightRecorder"
+     fi
   fi
 done
 ```
@@ -303,6 +317,7 @@ npx tsx scripts/knowledge/index-session.ts "Manutenção semanal realizada: $(da
 | Métrica | Valor | Status |
 |---------|-------|--------|
 | Referências quebradas | X | 🟢/🟡/🔴 |
+| Agents sem Token | X | 🟢/🟡/🔴 |
 | Agents desatualizados | X | 🟢/🟡/🔴 |
 | Graphiti status | X | 🟢/🟡/🔴 |
 ```
@@ -324,7 +339,7 @@ Antes de marcar como completa:
 
 ### Integridade
 - [ ] Todos os paths em `@references` existem
-- [ ] Todos os agents têm frontmatter completo
+- [ ] Todos os agents têm frontmatter completo (incluindo `identity-token`)
 - [ ] Todos integrados com CONHECIMENTO
 
 ### Atualidade
@@ -425,5 +440,5 @@ echo "Erros: $errors | Avisos: $warnings"
   - ARQUITETO: Escalar decisões críticas
 @created: 2025-12-29
 @updated: 2025-12-31
-@version-notes: v3.0 - Adicionada seção Configuração Antigravity com caminho correto do GEMINI.md
+@version-notes: v3.1 - Adicionada verificação de identity-token e flightRecorder
 ```

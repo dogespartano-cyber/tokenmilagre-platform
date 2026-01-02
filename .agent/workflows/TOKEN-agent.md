@@ -1,6 +1,7 @@
 ---
 type: agent
 name: TOKEN
+identity-token: 1330d83c
 role: Especialista em Tokens e Projetos Solana
 trigger: "Criar token", "SPL token", "Solana", "Tokenomics", "Whitepaper", "Lançamento"
 inherits: _DNA.md

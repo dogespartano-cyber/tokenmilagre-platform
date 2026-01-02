@@ -1,6 +1,7 @@
 ---
 type: agent
 name: CONSISTENCIA
+identity-token: d9b43858
 role: Verificação de Integridade e Sincronização
 trigger: "verificar consistência", "sincronização", "integridade", "auditoria de páginas"
 inherits: _DNA.md

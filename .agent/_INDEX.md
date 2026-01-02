@@ -83,6 +83,8 @@ aliases:
 | **🔧 Manutenção de Agents** | [[workflows/manutencao\|MANUTENCAO]] | "/manutencao", "health check" |
 | **🧠 Grafo de Conhecimento** | [[workflows/CONHECIMENTO-agent\|CONHECIMENTO]] | "/conhecimento", "lembrar", "buscar" |
 | **🌉 Comunicação com Host** | [[workflows/BRIDGE-agent\|BRIDGE]] | "bridge", "host", "podman", "fora do container" |
+| **🚀 Infraestrutura/Deploy** | [[workflows/DEVOPS-agent\|DEVOPS]] | "deploy", "vercel", "build", "ci/cd" |
+| **🧬 Criador de Agents** | [[workflows/GENESIS-agent\|GENESIS]] | "criar agent", "novo workflow", "genesis" |
 
 ---
 
@@ -101,8 +103,8 @@ aliases:
 │       │    │           │                              │
 SEGURANCA   DESIGN    CONTEUDO ←────────────────────────┘
     │                    ↑
-  TOKEN            CONSISTENCIA
-                   (audita todos)
+  TOKEN            CONSISTENCIA                DEVOPS
+                   (audita todos)            (infra/deploy)
                         
 ═══════════════════════════════════════════════════════════
          🧠 CONHECIMENTO (memória de todos os agents)
@@ -170,6 +172,16 @@ SEGURANCA   DESIGN    CONTEUDO ←───────────────�
 - **Quando**: Estatísticas do projeto, relatórios, métricas, gaps de conteúdo
 - **Colabora com**: CODIGO (queries), CONTEUDO (gaps)
 - **Escala para**: ARQUITETO (decisões baseadas em dados)
+
+### DEVOPS 🚀
+- **Quando**: Deploys (Vercel), CI/CD, variáveis de ambiente, infraestrutura
+- **Colabora com**: GITHUB (código), SEGURANCA (secrets)
+- **Escala para**: ARQUITETO (risco de downtime/custo)
+
+### GENESIS 🧬
+- **Quando**: Criar novos agents, atualizar workflows, evoluir o sistema
+- **Colabora com**: ARQUITETO (validação de necessidade)
+- **Escala para**: ARQUITETO (criação de vida artificial)
 
 ---
 

@@ -1,6 +1,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import * as crypto from 'crypto';
 
 /**
  * Tipos de eventos para o Flight Recorder
@@ -16,8 +17,17 @@ export type FlightEvent = {
 };
 
 /**
+ * Log Entry imutável com Hash Chain
+ */
+interface FlightLogEntry extends FlightEvent {
+    timestamp: string;
+    _prevHash: string;
+    _hash: string;
+}
+
+/**
  * Flight Recorder - Sistema de Caixa Preta para Agentes
- * Grava logs estruturados e imutáveis das ações dos agentes.
+ * Grava logs estruturados e imutáveis com encadeamento criptográfico (Blockchain-lite).
  */
 export class FlightRecorder {
     private logPath: string;
@@ -31,13 +41,21 @@ export class FlightRecorder {
     }
 
     /**
-     * Registra um evento crítico
+     * Registra um evento crítico com hash chain
      */
     public log(event: FlightEvent): void {
-        const entry = {
+        const prevHash = this.getLastHash();
+        const timestamp = event.timestamp || new Date().toISOString();
+
+        // Payload para hash inclui o hash anterior (Chain)
+        const payload = JSON.stringify({ ...event, timestamp, _prevHash: prevHash });
+        const hash = this.calculateHash(payload);
+
+        const entry: FlightLogEntry = {
             ...event,
-            timestamp: event.timestamp || new Date().toISOString(),
-            _integrity: this.generateIntegrityHash(event)
+            timestamp,
+            _prevHash: prevHash,
+            _hash: hash
         };
 
         const line = JSON.stringify(entry) + '\n';
@@ -50,10 +68,35 @@ export class FlightRecorder {
     }
 
     /**
-     * Gera um hash simples para integridade (simulado para este exemplo)
+     * Lê a última linha para obter o hash anterior (Genesis = '0000000000000000000000000000000000000000000000000000000000000000')
      */
-    private generateIntegrityHash(event: FlightEvent): string {
-        return Buffer.from(JSON.stringify(event)).toString('base64').slice(0, 16);
+    private getLastHash(): string {
+        try {
+            if (!fs.existsSync(this.logPath)) {
+                return '0'.repeat(64); // Genesis Hash
+            }
+
+            const data = fs.readFileSync(this.logPath, 'utf8').trim();
+            if (!data) return '0'.repeat(64);
+
+            const lines = data.split('\n');
+            const lastLine = lines[lines.length - 1];
+
+            if (!lastLine) return '0'.repeat(64);
+
+            const lastEntry = JSON.parse(lastLine);
+            return lastEntry._hash || '0'.repeat(64);
+        } catch (error) {
+            console.warn("FlightRecorder: Failed to read previous hash, resetting chain.", error);
+            return 'ERROR_CHAIN_BROKEN_' + Date.now();
+        }
+    }
+
+    /**
+     * Gera SHA-256 do payload
+     */
+    private calculateHash(payload: string): string {
+        return crypto.createHash('sha256').update(payload).digest('hex');
     }
 }
 
