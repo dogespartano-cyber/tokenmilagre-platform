@@ -54,7 +54,8 @@ export async function GET(request: Request) {
             name: true,
             email: true
           }
-        }
+        },
+        citations: true
       },
       orderBy: {
         createdAt: 'desc'
@@ -70,12 +71,12 @@ export async function GET(request: Request) {
       content: article.content,
       url: `/noticias/${article.slug}`,
       source: '$MILAGRE Research',
-      sources: safeJSONParse<string[]>(article.factCheckSources, []),
+      sources: article.citations?.map((c: any) => c.url) || [],
       publishedAt: article.createdAt.toISOString(),
       category: [article.category.charAt(0).toUpperCase() + article.category.slice(1)],
       sentiment: article.sentiment as 'positive' | 'neutral' | 'negative',
       keywords: safeJSONParse<string[]>(article.tags, []),
-      factChecked: article.factCheckStatus === 'verified',
+      factChecked: article.citations && article.citations.length > 0,
       lastVerified: article.updatedAt.toISOString()
     }));
 

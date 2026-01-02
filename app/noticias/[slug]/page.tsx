@@ -60,7 +60,8 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
             name: true,
             email: true
           }
-        }
+        },
+        citations: true
       }
     });
 
@@ -70,13 +71,8 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
 
     // Parse citations do factCheckSources
     let citations: string[] | undefined;
-    if (article.factCheckSources) {
-      try {
-        citations = JSON.parse(article.factCheckSources);
-      } catch (e) {
-        console.error('Erro ao parsear factCheckSources:', e);
-        citations = undefined;
-      }
+    if (article.citations && article.citations.length > 0) {
+      citations = article.citations.map(c => c.url);
     }
 
     // Parse consolidatedSources se existir (Cross Mode)
@@ -105,7 +101,7 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
       keywords: JSON.parse(article.tags || '[]'),
       factChecked: true,
       lastVerified: article.updatedAt.toISOString(),
-      citations, // ← ADICIONA CITATIONS!
+      citations,
       coverImage: article.coverImage || undefined,
       coverImageAlt: article.coverImageAlt || undefined,
       consolidatedSources, // ← Cross Mode
@@ -175,7 +171,8 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
               name: true,
               email: true
             }
-          }
+          },
+          citations: true
         },
         orderBy: {
           createdAt: 'desc'
@@ -186,12 +183,8 @@ export default async function ArtigoPage({ params }: { params: Promise<{ slug: s
       const allNews: NewsItem[] = articles.map((a: any) => {
         // Parse citations
         let citations: string[] | undefined;
-        if (a.factCheckSources) {
-          try {
-            citations = JSON.parse(a.factCheckSources);
-          } catch (e) {
-            citations = undefined;
-          }
+        if (a.citations && a.citations.length > 0) {
+          citations = a.citations.map((c: any) => c.url);
         }
 
         return {

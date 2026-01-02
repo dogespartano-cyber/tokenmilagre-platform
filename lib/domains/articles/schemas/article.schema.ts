@@ -318,10 +318,6 @@ export const articleCreateInputCurrent = z.object({
   coverImageAlt: z.string().min(10).max(200).optional(),
   relatedArticles: z.array(z.string()).optional(), // Array of slugs
   projectHighlight: z.boolean().default(false),
-  factCheckScore: z.number().min(0).max(100).optional(),
-  factCheckSources: z.array(z.string().url()).optional(),
-  factCheckDate: z.date().optional(),
-  factCheckStatus: z.string().max(50).optional(),
   authorId: z.string().optional(), // Optional - allows overriding author for AI-generated content
   status: z.enum(['DRAFT', 'PUBLISHED', 'ARCHIVED']).optional(), // Add status support
   quizData: z.union([z.string(), z.any()]).optional(), // JSON string or object

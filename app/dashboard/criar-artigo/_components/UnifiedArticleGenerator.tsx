@@ -721,7 +721,11 @@ IMPORTANTE: Apenas ferramentas confiáveis e verificadas.`
           ...articleToSave,
           type: contentType, // GARANTIR que o tipo seja enviado
           tags: tagsToSend.length > 0 ? tagsToSend : undefined,
-          factCheckSources: citationsToSend,
+          citations: citationsToSend?.map(url => ({
+            url,
+            title: url, // Fallback: usar URL como título
+            verified: true
+          })), // Enviar formato correto
           quizData: articleToSave.quiz, // Include quiz data
           published: true
         };

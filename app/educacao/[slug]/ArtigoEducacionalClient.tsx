@@ -26,7 +26,6 @@ interface EducationalArticle {
   tags: string[];
   author?: string;
   publishedAt: string;
-  factCheckSources?: string;
   quizData?: string | null;
 }
 

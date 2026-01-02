@@ -183,11 +183,17 @@ export async function POST(request: NextRequest) {
       : 'neutral';
 
     // Preparar dados de fact-checking (se fornecidos)
-    const factCheckData = factCheckResult ? {
-      factCheckScore: factCheckResult.score,
-      factCheckSources: JSON.stringify(factCheckResult.sources || []),
-      factCheckDate: new Date(factCheckResult.checkedAt),
-      factCheckStatus: factCheckResult.status
+    // NOTE: Fact checking deprecated fields removed from schema
+    // const factCheckData = factCheckResult ? { ... } : {};
+
+    // Preparar citações se houver
+    const citationsData = factCheckResult?.sources ? {
+      citations: {
+        create: factCheckResult.sources.map((source: string) => ({
+          url: source,
+          verified: true
+        }))
+      }
     } : {};
 
     // Criar artigo
@@ -202,7 +208,7 @@ export async function POST(request: NextRequest) {
         sentiment: sentiment,
         published: frontmatter.published !== false, // Publicar por padrão
         authorId,
-        ...factCheckData
+        ...citationsData
       },
       include: {
         author: {

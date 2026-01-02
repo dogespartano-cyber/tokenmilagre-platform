@@ -89,10 +89,6 @@ export class ArticleCrudService {
                 coverImageAlt: data.coverImageAlt,
                 relatedArticles: data.relatedArticles ? JSON.stringify(data.relatedArticles) : null,
                 projectHighlight: data.projectHighlight ?? false,
-                factCheckScore: data.factCheckScore,
-                factCheckSources: data.factCheckSources ? JSON.stringify(data.factCheckSources) : null,
-                factCheckDate: data.factCheckDate,
-                factCheckStatus: data.factCheckStatus,
                 quizData: data.quizData ? (typeof data.quizData === 'string' ? data.quizData : JSON.stringify(data.quizData)) : null,
             };
 
@@ -277,12 +273,6 @@ export class ArticleCrudService {
                 updateData.relatedArticles = JSON.stringify(data.relatedArticles);
             }
             if (data.projectHighlight !== undefined) updateData.projectHighlight = data.projectHighlight;
-            if (data.factCheckScore !== undefined) updateData.factCheckScore = data.factCheckScore;
-            if (data.factCheckSources !== undefined) {
-                updateData.factCheckSources = JSON.stringify(data.factCheckSources);
-            }
-            if (data.factCheckDate !== undefined) updateData.factCheckDate = data.factCheckDate;
-            if (data.factCheckStatus !== undefined) updateData.factCheckStatus = data.factCheckStatus;
             if (data.quizData !== undefined) {
                 updateData.quizData = data.quizData ? (typeof data.quizData === 'string' ? data.quizData : JSON.stringify(data.quizData)) : null;
             }
