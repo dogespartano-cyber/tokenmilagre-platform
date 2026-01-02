@@ -88,6 +88,7 @@ export class ArticleQueryService {
                         author: {
                             select: { id: true, name: true, email: true },
                         },
+                        citations: true,
                     },
                 }),
                 prisma.article.count({ where }),
