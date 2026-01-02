@@ -84,8 +84,8 @@ export async function GET(request: NextRequest) {
 
     // Transform articles for API response
     const formattedArticles = result.articles.map((article) => {
-      // Parse citations from factCheckSources
-      const citations = safeJSONParse<string[]>(article.factCheckSources, []);
+      // Map citations from relation
+      const citations = article.citations?.map(c => c.url) || [];
 
       const baseData = {
         id: article.id,

@@ -8,7 +8,7 @@
  * Re-exports from article-service.ts and article-schemas.ts
  */
 
-import { Article } from '@/lib/generated/prisma';
+import { Article, Citation } from '@/lib/generated/prisma';
 
 // ============================================
 // DOMAIN ENTITIES
@@ -20,6 +20,7 @@ import { Article } from '@/lib/generated/prisma';
  */
 export type ArticleWithRelations = Article & {
     author?: { id: string; name: string | null; email: string }
+    citations?: Citation[]
 }
 
 /**
