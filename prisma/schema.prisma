@@ -101,10 +101,7 @@ model Article {
   // Campos específicos de NOTÍCIAS
   sentiment          Sentiment @default(neutral)
 
-  // Verificação manual (simplificado)
-  verified           Boolean   @default(false) // Artigo verificado manualmente
-  verifiedAt         DateTime? // Data da verificação manual
-  verifiedBy         String?   // Quem verificou
+
 
   // Campos específicos de ARTIGOS EDUCACIONAIS
   level              String?   // 'iniciante' | 'intermediario' | 'avancado'
