@@ -7,6 +7,7 @@ export interface AuditEntry {
     agent: string;
     intent: string;
     trustScore: number;
+    tool: string;
     result: string;
     timestamp: string;
     _hash: string;
