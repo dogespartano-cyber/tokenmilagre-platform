@@ -97,6 +97,7 @@
     "sharp": "^0.34.5",
     "simple-statistics": "^7.8.8",
     "svix": "^1.82.0",
+    "tailwind-merge": "^3.4.0",
     "tsyringe": "^4.10.0",
     "turndown": "^7.2.2",
     "zod": "^4.1.12"
