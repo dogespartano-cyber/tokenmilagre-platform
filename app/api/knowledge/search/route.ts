@@ -9,19 +9,24 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { knowledgeTracker } from '@/lib/knowledge';
-import type { KnowledgeType } from '@/lib/knowledge/types';
+import { SearchKnowledgeSchema } from '@/lib/knowledge/schemas';
+import type { KnowledgeType } from '@/lib/knowledge/schemas';
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { query, type, limit = 10 } = body;
 
-        if (!query || typeof query !== 'string') {
+        // Validate with Zod
+        const validation = SearchKnowledgeSchema.safeParse(body);
+
+        if (!validation.success) {
             return NextResponse.json(
-                { error: 'Query is required and must be a string' },
+                { error: 'Invalid input', details: validation.error.format() },
                 { status: 400 }
             );
         }
+
+        const { query, type, limit } = validation.data;
 
         // Check availability
         const isAvailable = await knowledgeTracker.checkAvailability();

@@ -1,6 +1,6 @@
 ---
 type: agent-registry
-version: 3.0.0
+version: 3.1.0
 tags:
   - index
   - milagre
@@ -15,7 +15,7 @@ aliases:
 > Quando a IA precisar de contexto especializado, consulte este índice.
 
 > [!CAUTION] 🧠 PROTOCOLO OBRIGATÓRIO — LEIA PRIMEIRO
-> **Você opera através do [[workflows/ROUTER-agent|ROUTER]]** — um meta-agent que intercepta TODA mensagem.
+> **Você opera através do [[workers/meta/ROUTER-agent|ROUTER]]** — um meta-agent que intercepta TODA mensagem.
 > 
 > ### 🎯 INICIE TODA RESPOSTA COM:
 > ```
@@ -33,7 +33,7 @@ aliases:
 
 > [!NOTE] 🖥️ AMBIENTE DE EXECUÇÃO
 > - **Container:** distrobox `dev-ubuntu` (Ubuntu dentro do host)
-> - **Host:** Fedora Kinoite (imutável, acesso via [[workflows/BRIDGE-agent|BRIDGE]])
+> - **Host:** Fedora Kinoite (imutável, acesso via [[workers/meta/BRIDGE-agent|BRIDGE]])
 > - **Limitações:** SEM acesso a Podman/Docker, systemd do host
 > - **Bridge:** `/home/zenfoco/Dev/.claude-bridge/` para comunicar com Claude do host
 > - **Serviços externos:** Graphiti (port 8000), FalkorDB (port 6379) via Podman no host
@@ -47,7 +47,7 @@ aliases:
 > 2. **Confirmar com o usuário** que o backup foi criado
 > 3. **Só então executar** a operação destrutiva
 > 
-> Esta regra é INVIOLÁVEL. Consulte [[workflows/DATABASE-agent|DATABASE]] para detalhes.
+> Esta regra é INVIOLÁVEL. Consulte [[workers/dev/DATABASE-agent|DATABASE]] para detalhes.
 
 > [!TIP] 🌐 NAVEGADOR
 > Nunca abra o modo navegador (`browser_subagent`) sem solicitação explícita do usuário. Para análises de páginas, use apenas leitura de código-fonte a menos que o usuário peça especificamente para visualizar no browser.
@@ -56,7 +56,7 @@ aliases:
 > Este projeto usa Graphiti (localhost:8000) para memória persistente.
 > - **Início de sessão:** Consulte conhecimento anterior com `curl -X POST localhost:8000/search -d '{"query":"<contexto>"}'`
 > - **Durante trabalho:** Registre decisões importantes com `curl -X POST localhost:8000/add-episode`
-> - **Detalhes:** [[workflows/CONHECIMENTO-agent|CONHECIMENTO]]
+> - **Detalhes:** [[workers/meta/CONHECIMENTO-agent|CONHECIMENTO]]
 > - **Se Graphiti offline:** Use fallback em `Feedback/logs/knowledge-fallback.jsonl`
 
 ---
@@ -65,26 +65,27 @@ aliases:
 
 | Preciso de... | Agent | Ativação |
 |---------------|-------|----------|
-| **🧠 Orquestração automática** | [[workflows/ROUTER-agent\|ROUTER]] | **AUTOMÁTICO** (toda mensagem) |
-| Validação filosófica/ética | [[workflows/ARQUITETO-agent\|ARQUITETO]] | "Valide esta ideia" |
-| Criar conteúdo web | [[workflows/CONTEUDO-agent\|CONTEUDO]] | "Crie artigo/página" |
-| Regras de design/tema | [[workflows/DESIGN-agent\|DESIGN]] | "CSS/tema/cores" |
-| Gerenciamento de Código e Versionamento | [[workflows/GITHUB-agent\|GITHUB]] | "Gerenciar repositório", "versionamento" |
-| Validar arquitetura | [[workflows/ESTRUTURA-agent\|ESTRUTURA]] | "Revisar estrutura" |
-| Revisar código | [[workflows/CODIGO-agent\|CODIGO]] | "Code review" |
-| Auditoria de segurança | [[workflows/SEGURANCA-agent\|SEGURANCA]] | "Segurança", "auditoria" |
-| Análise crítica/UX | [[workflows/ANALISTA-agent\|ANALISTA]] | "Analise o projeto" |
-| Token Solana/Tokenomics | [[workflows/TOKEN-agent\|TOKEN]] | "Criar token", "Tokenomics" |
-| Geração de ideias | [[workflows/IDEIAS-agent\|IDEIAS]] | "Brainstorm", "ideias" |
-| Validação de valor/ROI | [[workflows/VALOR-agent\|VALOR]] | "Monetização", "ROI" |
-| Estatísticas e relatórios | [[workflows/DADOS-agent\|DADOS]] | "Estatísticas", "dados" |
-| **Verificar consistência** | [[workflows/CONSISTENCIA-agent\|CONSISTENCIA]] | "Sincronização", "integridade" |
-| **Banco de dados/Backup** | [[workflows/DATABASE-agent\|DATABASE]] | "Backup", "migração", "db push" |
-| **🔧 Manutenção de Agents** | [[workflows/manutencao\|MANUTENCAO]] | "/manutencao", "health check" |
-| **🧠 Grafo de Conhecimento** | [[workflows/CONHECIMENTO-agent\|CONHECIMENTO]] | "/conhecimento", "lembrar", "buscar" |
-| **🌉 Comunicação com Host** | [[workflows/BRIDGE-agent\|BRIDGE]] | "bridge", "host", "podman", "fora do container" |
-| **🚀 Infraestrutura/Deploy** | [[workflows/DEVOPS-agent\|DEVOPS]] | "deploy", "vercel", "build", "ci/cd" |
-| **🧬 Criador de Agents** | [[workflows/GENESIS-agent\|GENESIS]] | "criar agent", "novo workflow", "genesis" |
+| **🧠 Orquestração automática** | [[workers/meta/ROUTER-agent\|ROUTER]] | **AUTOMÁTICO** (toda mensagem) |
+| Validação filosófica/ética | [[workers/arch/ARQUITETO-agent\|ARQUITETO]] | "Valide esta ideia" |
+| Criar conteúdo web | [[workers/product/CONTEUDO-agent\|CONTEUDO]] | "Crie artigo/página" |
+| Regras de design/tema | [[workers/product/DESIGN-agent\|DESIGN]] | "CSS/tema/cores" |
+| Gerenciamento de Código e Versionamento | [[workers/dev/GITHUB-agent\|GITHUB]] | "Gerenciar repositório", "versionamento" |
+| Validar arquitetura | [[workers/arch/ESTRUTURA-agent\|ESTRUTURA]] | "Revisar estrutura" |
+| Revisar código | [[workers/dev/CODIGO-agent\|CODIGO]] | "Code review" |
+| Auditoria de segurança | [[workers/dev/SEGURANCA-agent\|SEGURANCA]] | "Segurança", "auditoria" |
+| Análise crítica/UX | [[workers/arch/ANALISTA-agent\|ANALISTA]] | "Analise o projeto" |
+| Token Solana/Tokenomics | [[workers/product/TOKEN-agent\|TOKEN]] | "Criar token", "Tokenomics" |
+| Geração de ideias | [[workers/product/IDEIAS-agent\|IDEIAS]] | "Brainstorm", "ideias" |
+| Validação de valor/ROI | [[workers/product/VALOR-agent\|VALOR]] | "Monetização", "ROI" |
+| Estatísticas e relatórios | [[workers/product/DADOS-agent\|DADOS]] | "Estatísticas", "dados" |
+| **Verificar consistência** | [[workers/dev/CONSISTENCIA-agent\|CONSISTENCIA]] | "Sincronização", "integridade" |
+| **Banco de dados/Backup** | [[workers/dev/DATABASE-agent\|DATABASE]] | "Backup", "migração", "db push" |
+| **🔧 Manutenção de Agents** | [[processes/manutencao\|MANUTENCAO]] | "/manutencao", "health check" |
+| **🧠 Grafo de Conhecimento** | [[workers/meta/CONHECIMENTO-agent\|CONHECIMENTO]] | "/conhecimento", "lembrar", "buscar" |
+| **🌉 Comunicação com Host** | [[workers/meta/BRIDGE-agent\|BRIDGE]] | "bridge", "host", "podman", "fora do container" |
+| **🚀 Infraestrutura/Deploy** | [[workers/dev/DEVOPS-agent\|DEVOPS]] | "deploy", "vercel", "build", "ci/cd" |
+| **🧬 Criador de Agents** | [[workers/meta/GENESIS-agent\|GENESIS]] | "criar agent", "novo workflow", "genesis" |
+| **☣️ Crescimento/Viral** | [[workers/product/VIRAL-agent\|VIRAL]] | "crescer", "viralizar", "trends", "ROI imediato" |
 
 ---
 
@@ -99,12 +100,16 @@ aliases:
     │              │          │          │              │
     │              │        VALOR ← ← ← ← ← ← ← ← ← ← ←┤
     │              │     (valida todos)                 │
+    │              │                                    │
 ┌───┴───┐    ┌─────┴─────┐                              │
 │       │    │           │                              │
 SEGURANCA   DESIGN    CONTEUDO ←────────────────────────┘
     │                    ↑
   TOKEN            CONSISTENCIA                DEVOPS
                    (audita todos)            (infra/deploy)
+                        │
+                      VIRAL
+                    (caçador)
                         
 ═══════════════════════════════════════════════════════════
          🧠 CONHECIMENTO (memória de todos os agents)
@@ -183,47 +188,51 @@ SEGURANCA   DESIGN    CONTEUDO ←───────────────�
 - **Colabora com**: ARQUITETO (validação de necessidade)
 - **Escala para**: ARQUITETO (criação de vida artificial)
 
+### VIRAL ☣️
+- **Quando**: Buscar crescimento agressivo, caçar trends, viralizar
+- **Colabora com**: VALOR (validação de ROI), CONTEUDO (produção de iscas)
+- **Escala para**: ARQUITETO (se a agressividade violar ética)
+
 ---
 
 ## Referências Estáticas
 
 | Documento | Propósito |
 |-----------|-----------|
-| [[workflows/_DNA\|_DNA]] | Mantra e valores (herdado por todos) |
-| [[workflows/ONBOARDING\|ONBOARDING]] | Onboarding para IAs |
-| [[workflows/MANIFESTO\|MANIFESTO]] | Missão e propósito |
-| [[workflows/ARQUITETURA\|ARQUITETURA]] | Filosofia fractal |
-| [[workflows/TRANSPARENCIA\|TRANSPARENCIA]] | Política ética do token |
-| [[workflows/CONHECIMENTO\|CONHECIMENTO]] | Base de troubleshooting |
+| [[memory/_DNA\|_DNA]] | Mantra e valores (herdado por todos) |
+| [[memory/ONBOARDING\|ONBOARDING]] | Onboarding para IAs |
+| [[memory/MANIFESTO\|MANIFESTO]] | Missão e propósito |
+| [[memory/ARQUITETURA\|ARQUITETURA]] | Filosofia fractal |
+| [[memory/TRANSPARENCIA\|TRANSPARENCIA]] | Política ética do token |
+| [[workers/meta/CONHECIMENTO-agent\|CONHECIMENTO]] | Base de troubleshooting |
 | [[../Feedback/backlog/BACKLOG\|BACKLOG]] | Tarefas pendentes *(local)* |
 | [[../Feedback/logs/HISTORICO\|HISTORICO]] | Histórico de sessões *(local)* |
-| [[workflows/MANTRA\|MANTRA]] | Leitura diária |
-| [[workflows/layout\|layout]] | Guia de layout/tipografia |
-| [[workflows/vibe\|vibe]] | Boas práticas de vibe coding |
+| [[memory/MANTRA\|MANTRA]] | Leitura diária |
+| [[processes/layout\|layout]] | Guia de layout/tipografia |
+| [[processes/vibe\|vibe]] | Boas práticas de vibe coding |
 | [[../Feedback/ANALISE-HOLISTICA_2025-12-19\|ANÁLISE HOLÍSTICA]] | Auditoria multi-agent *(local)* |
 
 ### Workflows de Desenvolvimento (Superpowers)
 
 | Workflow | Propósito |
 |----------|-----------|
-| [[workflows/chaos\|chaos]] | **🧠 Contexto instantâneo via Graphiti** |
-| [[workflows/auditoria\|auditoria]] | **🏥 Prompt para auditoria completa** |
-| [[workflows/sessao\|sessao]] | **📝 Registro de sessão no Graphiti** |
-| [[workflows/debug\|debug]] | Debugging sistemático em 4 fases |
-| [[workflows/tdd\|tdd]] | Test-Driven Development (red-green-refactor) |
-| [[workflows/plano\|plano]] | Escrita de planos de implementação |
-| [[workflows/execucao\|execucao]] | Execução de planos em batches |
-| [[workflows/verificacao\|verificacao]] | Verificação antes de conclusão |
-| [[workflows/manutencao\|manutencao]] | 🔧 Manutenção semanal do ecossistema |
-| [[workflows/criador-conteudo\|criador-conteudo]] | 📝 Prompts Perplexity para criação de conteúdo |
+| [[processes/chaos\|chaos]] | **🧠 Contexto instantâneo via Graphiti** |
+| [[processes/auditoria\|auditoria]] | **🏥 Prompt para auditoria completa** |
+| [[processes/sessao\|sessao]] | **📝 Registro de sessão no Graphiti** |
+| [[processes/debug\|debug]] | Debugging sistemático em 4 fases |
+| [[processes/tdd\|tdd]] | Test-Driven Development (red-green-refactor) |
+| [[processes/plano\|plano]] | Escrita de planos de implementação |
+| [[processes/execucao\|execucao]] | Execução de planos em batches |
+| [[processes/verificacao\|verificacao]] | Verificação antes de conclusão |
+| [[processes/manutencao\|manutencao]] | 🔧 Manutenção semanal do ecossistema |
+| [[processes/criador-conteudo\|criador-conteudo]] | 📝 Prompts Perplexity para criação de conteúdo |
 
 
 ---
 
 ```yaml
 @agi-metadata:
-  inherits: [[workflows/_DNA|_DNA]]
+  inherits: [[memory/_DNA|_DNA]]
   updates: on-agent-change
-  last-maintained: 2025-12-31
+  last-maintained: 2026-01-05
 ```
-

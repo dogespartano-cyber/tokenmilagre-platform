@@ -1,10 +1,10 @@
 ---
 type: workflow
 inherits: _DNA.md
-description: Registro de sessão no Graphiti ao final do trabalho
+description: Registro de sessão no Graphiti ao final do trabalho (Antigravity v2.0)
 ---
 
-# /sessao - Finalizar e Registrar
+# /sessao - Finalizar e Registrar (v2.0)
 
 > Workflow para registrar o trabalho da sessão no sistema de conhecimento.
 
@@ -18,14 +18,13 @@ description: Registro de sessão no Graphiti ao final do trabalho
 
 ### 1. Verificar Graphiti
 
-```bash
-// turbo
-curl -s http://localhost:8000/health | jq '.status'
-```
+Verifique se a memória está ativa.
+> **Tool:** `graphiti_health`
 
 ### 2. Preparar Resumo
 
-Crie um resumo estruturado:
+Crie um resumo estruturado. 
+**OBRIGATÓRIO:** Iniciar com Identity Header e assinar como o Agent responsável (ou ANALISTA).
 
 ```yaml
 Sessão:
@@ -51,37 +50,27 @@ Sessão:
 
 ### 3. Registrar no Graphiti
 
-```bash
-curl -s -X POST http://localhost:8000/add-episode \
-  -H "Content-Type: application/json" \
-  -d '{
-    "user_id": "zenfoco",
-    "name": "[TITULO DA SESSAO]",
-    "text": "[RESUMO COMPLETO]",
-    "source": "session",
-    "source_description": "Sessão Claude YYYY-MM-DD"
-  }'
-```
+Persista o conhecimento na memória de longo prazo.
+
+> **Tool:** `graphiti_add_episode`
+
+**Parâmetros:**
+- `name`: "[TITULO DA SESSAO]"
+- `text`: "[RESUMO COMPLETO DO YAML]"
+- `source`: "session"
+- `source_description`: "Sessão Antigravity YYYY-MM-DD (TokenMilagre)"
 
 ### 4. Atualizar BACKLOG (se necessário)
 
-Se houver novas tarefas ou tarefas concluídas:
+Se houver novas tarefas ou tarefas concluídas, atualize o arquivo mestre.
 
-```bash
-// turbo
-cat /home/zenfoco/Dev/tokenmilagre-platform/Feedback/backlog/BACKLOG.md
-```
-
-Edite movendo tarefas entre colunas.
+> **Tool:** `replace_file_content` (ou edit) em `Feedback/backlog/BACKLOG.md`
 
 ### 5. Confirmar Registro
 
-```bash
-// turbo
-curl -s -X POST http://localhost:8000/search \
-  -H "Content-Type: application/json" \
-  -d '{"query": "última sessão", "limit": 3}' | jq '.results[0]'
-```
+Verifique se foi gravado corretamente.
+
+> **Tool:** `graphiti_search` (query: "última sessão")
 
 ---
 
@@ -103,5 +92,7 @@ Para sessões simples, use este formato:
   purpose: knowledge-persistence
   requires: graphiti-online
   created: 2025-12-31
-@last-verified: 2025-12-31
+  updated: 2026-01-04
+  version: 2.0.0
+@last-verified: 2026-01-04
 ```

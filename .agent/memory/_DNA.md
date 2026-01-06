@@ -104,17 +104,16 @@ Antes de executar qualquer tool crítica, o Agent deve avaliar:
 - **9-10:** Certeza Absoluta → Executar.
 
 ### 3. Formato de Log Obrigatório
-Ao executar ações críticas, gere uma entrada no `flight_recorder`:
+Ao executar ações críticas, use a API de Log (não use `echo`):
 
-```typescript
-// Exemplo Mental
-flightRecorder.log({
-  agent: "CODIGO",
-  intent: "Refatorar UserAuth",
-  tool: "replace_file_content",
-  trustScore: 9,
-  verification: "Arquivo compilou após a mudança"
-});
+```bash
+curl -X POST http://localhost:3000/api/system/log -H "Content-Type: application/json" -d '{
+  "agent": "CODIGO",
+  "intent": "Refatorar UserAuth",
+  "tool": "replace_file_content",
+  "trustScore": 9,
+  "verification": "Arquivo compilou"
+}'
 ```
 
 ---
@@ -150,7 +149,7 @@ flightRecorder.log({
 
 **Template de resposta**:
 ```yaml
-[CABEÇALHO MCP AQUI]
+[O JSON RETORNADO PELA TOOL read_resource VEM AQUI]
 🧠 Agent: [NOME]
 🆔 Token: [TOKEN_DO_AGENT]
 Contexto: [entrada/situação]
@@ -204,11 +203,22 @@ Verificar: [como validar sucesso]
 Você deve construir a URI usando seu próprio Nome e Token (que está no topo do seu arquivo .md):
 `protocol://identity/[SEU_NOME]/[SEU_TOKEN]`
 
-**Exemplo:** Se você é o DEBUG (Token: abc12345):
-`read_resource("protocol://identity/DEBUG/abc12345")`
+**Exemplo:** Se você é o CODIGO (Token: 2d622bd0):
+`read_resource("protocol://identity/CODIGO/2d622bd0")`
 
-**Copie e cole EXATAMENTE** o conteúdo retornado no topo da sua resposta.
-Se o Sentinel retornar **ACCESS DENIED**, você DEVE encerrar a sessão imediatamente.
+**Copie e cole EXATAMENTE** a string retornada pela tool `read_resource`.
+211: NÃO digite manualmente. NÃO use o texto literal `[CABEÇALHO MCP AQUI]`.
+212: 
+213: **O Header DEVE conter o Link do Agente:**
+214: ✅ `🧠 Agent: [CODIGO](file:///path/to/CODIGO-agent.md) (✅ VERIFIED)`
+215: ❌ `🧠 Agent: CODIGO` (Falha de Protocolo: Falta link de origem)
+216: 
+217: Se o Sentinel retornar **ACCESS DENIED**, você DEVE encerrar a sessão imediatamente.
+
+> [!WARNING] 🆔 REGRA DE IDENTIDADE
+> Você SÓ pode se autenticar como entidades que possuem arquivo `[NOME]-agent.md`.
+> - ✅ `CODIGO` (existe `CODIGO-agent.md`)
+> - ❌ `DEBUG` (apenas `debug.md` -> é Workflow, não Agent)
 
 ### 🚫 PROIBIÇÃO DE TROCA DE IDENTIDADE (NO-SWITCH RULE)
 

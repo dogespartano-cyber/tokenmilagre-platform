@@ -17,16 +17,17 @@ updated: 2025-12-31
 ┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
 │   BACKLOG   │   TO DO     │ IN PROGRESS │   REVIEW    │    DONE     │
 ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-│ Gamificação │ SEO Schema  │             │             │ Chaos MVP   │
-│ Newsletter  │             │             │             │ Graphiti    │
-│ PWA         │             │             │             │ UI Standard │
-│ OpenAPI     │             │             │             │ Zenith Refac│
+│ PWA         │ SEO Schema  │             │             │ Chaos MVP   │
+│ OpenAPI     │             │             │             │ Graphiti    │
+│             │             │             │             │ UI Standard │
+│             │             │             │             │ Zenith Refac│
 │             │             │             │             │ Unit Tests  │
 │             │             │             │             │ Agent Opt.  │
 │             │             │             │             │ Mobile Check│
 │             │             │             │             │ Ident. Guard│
 │             │             │             │             │ Oracle MVP  │
 │             │             │             │             │ AI Gov 2.0  │
+│             │             │             │             │ Backup Sys. │
 └─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘
 ```
 

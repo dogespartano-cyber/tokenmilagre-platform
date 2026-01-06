@@ -5,10 +5,28 @@ import { CallToolRequestSchema, ListResourcesRequestSchema, ReadResourceRequestS
 import * as fs from 'fs';
 import * as path from 'path';
 import * as crypto from 'crypto';
+import { ROUTER_INSTRUCTIONS } from './router_content.js';
 // Caminho absoluto para a pasta de workflows (ajuste conforme seu ambiente)
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+async function checkGraphitiStatus() {
+    try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 500);
+        // Tenta conectar ao Graphiti (porta 8000)
+        const response = await fetch('http://localhost:8000', {
+            method: 'GET',
+            signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        // Se responder, consideramos online (mesmo 404 significa que o server está lá)
+        return "🟢 Online";
+    }
+    catch (error) {
+        return "🔴 Offline";
+    }
+}
 // Estratégia de Resolução de Caminho Robusta
 const possiblePaths = [
     // 1. Caminho Absoluto do Ambiente (Mais seguro para este setup específico)
@@ -52,6 +70,18 @@ server.setRequestHandler(ListResourcesRequestSchema, async () => {
                 mimeType: "text/plain",
                 description: "The mandatory identity header template for all agent responses.",
             },
+            {
+                uri: "protocol://router/instructions",
+                name: "Router Instructions (Hardened)",
+                mimeType: "text/plain",
+                description: "The immutable instructions for the Router Agent.",
+            },
+            {
+                uri: "protocol://auth/init",
+                name: "Session Initialization",
+                mimeType: "text/plain",
+                description: "Generates a session token for tool usage.",
+            },
         ],
     };
 });
@@ -78,6 +108,28 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
                     uri: "protocol://header/template",
                     mimeType: "text/plain",
                     text: `🧠 Agent: [NOME]\n📡 Graphiti: [online/offline]\n📋 Contexto: [resumo de 1 linha]\n\n(Obrigatório em TODA resposta)`
+                }]
+        };
+    }
+    // Router Instructions - Served directly from Sentinel (Immutable)
+    if (uri === "protocol://router/instructions") {
+        return {
+            contents: [{
+                    uri: uri,
+                    mimeType: "text/plain",
+                    text: ROUTER_INSTRUCTIONS
+                }]
+        };
+    }
+    // Auth Init - Generate Token
+    if (uri === "protocol://auth/init") {
+        const sessionToken = crypto.randomUUID();
+        console.error(`[Sentinel] NEW SESSION TOKEN GENERATED: ${sessionToken}`);
+        return {
+            contents: [{
+                    uri: uri,
+                    mimeType: "text/plain",
+                    text: JSON.stringify({ token: sessionToken, valid_until: Date.now() + 3600000 })
                 }]
         };
     }
@@ -127,16 +179,18 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
             // 4. Sucesso - Retornar Header Assinado com Link Físico
             // O link permite ao usuário clicar e verificar que o agente "existe" no disco.
             const fileUri = `file://${filePath}`;
+            const graphitiStatus = await checkGraphitiStatus();
             return {
                 contents: [{
                         uri: uri,
                         mimeType: "text/plain",
-                        text: `🧠 Agent: [${agentName}](${fileUri}) (✅ VERIFIED)
-🆔 Token: ${candidateToken}
-📡 Graphiti: [online/offline]
-📋 Contexto: [resumo de 1 linha]
+                        text: `🧠 **Agent:** [${agentName}](${fileUri}) (✅ VERIFIED)
+🆔 **Token:** ${candidateToken}
+📡 **Graphiti:** ${graphitiStatus}
+📋 **Contexto:** [resumo de 1 linha]
 
-(Identidade Confirmada pelo Sentinel Protocol)`
+(Identidade Confirmada pelo Sentinel Protocol)
+<!-- DO NOT REMOVE HEADER -->`
                     }]
             };
         }
@@ -163,6 +217,24 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                     properties: {},
                 },
             },
+            {
+                name: "sentinel_guard",
+                description: "Strictly validates content against the Agent Identity Protocol. Returns 'PASSED' or 'HALLUCINATION ALERT'. Use this to self-correct before outputting to the user.",
+                inputSchema: {
+                    type: "object",
+                    properties: {
+                        agent_name: {
+                            type: "string",
+                            description: "The name of the agent claiming the content (e.g., 'ROUTER', 'CODIGO')."
+                        },
+                        content: {
+                            type: "string",
+                            description: "The full content/message to validate."
+                        }
+                    },
+                    required: ["agent_name", "content"]
+                }
+            }
         ],
     };
 });
@@ -175,6 +247,29 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                     text: "Protocol Sentinel is active and monitoring.",
                 },
             ],
+        };
+    }
+    if (request.params.name === "sentinel_guard") {
+        const { agent_name, content } = request.params.arguments;
+        // 1. Basic Header Check
+        const headerRegex = new RegExp(`🧠 Agent: \\[?${agent_name}`, 'i');
+        const hasHeader = headerRegex.test(content);
+        const hasVisualCheck = content.includes("(✅ VERIFIED)");
+        const hasSentinelSignature = content.includes("(Identidade Confirmada pelo Sentinel Protocol)");
+        if (!hasHeader || !hasVisualCheck || !hasSentinelSignature) {
+            return {
+                content: [{
+                        type: "text",
+                        text: `🚨 HALLUCINATION ALERT 🚨\n\nCompliance Check FAILED for agent '${agent_name}'.\n\nMissing Elements:\n- Header Match: ${hasHeader ? '✅' : '❌'}\n- Verified Badges: ${hasVisualCheck ? '✅' : '❌'}\n- Sentinel Signature: ${hasSentinelSignature ? '✅' : '❌'}\n\nACTION: STOP. You are hallucinating your identity. RE-READ GEMINI.md immediately.`
+                    }],
+                isError: true
+            };
+        }
+        return {
+            content: [{
+                    type: "text",
+                    text: "✅ COMPLIANCE CHECK PASSED. Identity appears valid."
+                }]
         };
     }
     throw new Error("Tool not found");

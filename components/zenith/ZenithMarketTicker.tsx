@@ -26,6 +26,30 @@ import { CSS } from '@dnd-kit/utilities';
 
 import type { MarketDataProps } from '@/app/components/home/types';
 
+// Definições dos cards com explicações (versões para mobile e desktop)
+const cardDefinitions = {
+    marketCap: {
+        title: 'Capitalização',
+        mobileText: 'Valor total de mercado cripto. Preço × quantidade em circulação.',
+        desktopText: 'Valor total de mercado de todas as criptomoedas. Calculado multiplicando o preço de cada moeda pela quantidade em circulação. Indica o tamanho do mercado cripto.'
+    },
+    volume: {
+        title: 'Volume 24h',
+        mobileText: 'Total negociado nas últimas 24h. Alto volume = mercado ativo.',
+        desktopText: 'Total de criptomoedas negociadas nas últimas 24 horas. Alto volume indica mercado ativo e liquidez. Baixo volume pode significar menos interesse.'
+    },
+    btcDom: {
+        title: 'Dominância BTC',
+        mobileText: '% do mercado que é Bitcoin. Queda indica altcoin season.',
+        desktopText: 'Percentual do mercado cripto que pertence ao Bitcoin. Alta dominância sugere maior confiança no BTC. Queda pode indicar "altcoin season".'
+    },
+    ethDom: {
+        title: 'Dominância ETH',
+        mobileText: '% do mercado que é Ethereum. Força do ecossistema.',
+        desktopText: 'Percentual do mercado cripto que pertence ao Ethereum. Reflete a força do ecossistema ETH incluindo DeFi, NFTs e smart contracts.'
+    }
+};
+
 const formatNumber = (num: number): string => {
     if (num >= 1e12) return `$${(num / 1e12).toFixed(2)}T`;
     if (num >= 1e9) return `$${(num / 1e9).toFixed(2)}B`;
@@ -130,29 +154,7 @@ export function ZenithMarketTicker({ marketData }: MarketDataProps) {
 
     if (!marketData) return null;
 
-    // Definições dos cards com explicações (versões para mobile e desktop)
-    const cardDefinitions = {
-        marketCap: {
-            title: 'Capitalização',
-            mobileText: 'Valor total de mercado cripto. Preço × quantidade em circulação.',
-            desktopText: 'Valor total de mercado de todas as criptomoedas. Calculado multiplicando o preço de cada moeda pela quantidade em circulação. Indica o tamanho do mercado cripto.'
-        },
-        volume: {
-            title: 'Volume 24h',
-            mobileText: 'Total negociado nas últimas 24h. Alto volume = mercado ativo.',
-            desktopText: 'Total de criptomoedas negociadas nas últimas 24 horas. Alto volume indica mercado ativo e liquidez. Baixo volume pode significar menos interesse.'
-        },
-        btcDom: {
-            title: 'Dominância BTC',
-            mobileText: '% do mercado que é Bitcoin. Queda indica altcoin season.',
-            desktopText: 'Percentual do mercado cripto que pertence ao Bitcoin. Alta dominância sugere maior confiança no BTC. Queda pode indicar "altcoin season".'
-        },
-        ethDom: {
-            title: 'Dominância ETH',
-            mobileText: '% do mercado que é Ethereum. Força do ecossistema.',
-            desktopText: 'Percentual do mercado cripto que pertence ao Ethereum. Reflete a força do ecossistema ETH incluindo DeFi, NFTs e smart contracts.'
-        }
-    };
+
 
     const renderCard = (id: string) => {
         const cardInfo = cardDefinitions[id as keyof typeof cardDefinitions];

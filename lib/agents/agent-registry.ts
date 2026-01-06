@@ -42,7 +42,7 @@ export interface RegistryFilter {
 // Constants
 // ─────────────────────────────────────────────────────────────────────────────
 
-const AGENTS_DIR = '.agent/workflows';
+const AGENTS_DIR = '.agent';
 const AGENT_FILE_PATTERN = /\.md$/;
 
 // Cache global
@@ -71,21 +71,34 @@ export function findProjectRoot(startPath?: string): string {
 }
 
 /**
- * Lista todos os arquivos .md no diretório de agents
+ * Lista todos os arquivos .md no diretório de agents (recursivo)
  */
 export function listAgentFiles(projectRoot?: string): string[] {
     const root = projectRoot || findProjectRoot();
-    const agentsPath = path.join(root, AGENTS_DIR);
+    const agentsBasePath = path.join(root, AGENTS_DIR);
 
-    if (!fs.existsSync(agentsPath)) {
-        throw new Error(`Diretório de agents não encontrado: ${agentsPath}`);
+    if (!fs.existsSync(agentsBasePath)) {
+        throw new Error(`Diretório de agents não encontrado: ${agentsBasePath}`);
     }
 
-    const files = fs.readdirSync(agentsPath);
-    return files
-        .filter((f) => AGENT_FILE_PATTERN.test(f))
-        .map((f) => path.join(agentsPath, f))
-        .sort();
+    const results: string[] = [];
+
+    function scan(dir: string) {
+        const items = fs.readdirSync(dir, { withFileTypes: true });
+        for (const item of items) {
+            const fullPath = path.join(dir, item.name);
+            if (item.isDirectory()) {
+                // Ignore node_modules ou pastas ocultas que não sejam .agent
+                if (item.name.startsWith('.') && item.name !== '.agent') return;
+                scan(fullPath);
+            } else if (item.isFile() && AGENT_FILE_PATTERN.test(item.name)) {
+                results.push(fullPath);
+            }
+        }
+    }
+
+    scan(agentsBasePath);
+    return results.sort();
 }
 
 /**

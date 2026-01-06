@@ -1,0 +1,736 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - link "$ MILAGRE Comunidade Web3" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e8]:
+            - generic [ref=e9]:
+              - generic [ref=e10]: $
+              - generic [ref=e11]: MILAGRE
+            - generic [ref=e12]: Comunidade Web3
+        - link "Sentimento Medo" [ref=e13] [cursor=pointer]:
+          - /url: /sentimento
+          - img [ref=e15]: "7"
+          - generic [ref=e21]:
+            - generic [ref=e22]: Sentimento
+            - generic [ref=e23]: Medo
+        - navigation [ref=e24]:
+          - generic [ref=e25]:
+            - generic [ref=e26]:
+              - generic [ref=e27]:
+                - button [ref=e28]
+                - link "Início" [ref=e29] [cursor=pointer]:
+                  - /url: /
+                  - img [ref=e30]
+                  - generic [ref=e32]: Início
+              - generic [ref=e33]:
+                - button [ref=e34]
+                - link "Notícias" [ref=e35] [cursor=pointer]:
+                  - /url: /noticias
+                  - img [ref=e36]
+                  - generic [ref=e38]: Notícias
+              - generic [ref=e39]:
+                - button [ref=e40]
+                - link "Gráficos" [ref=e41] [cursor=pointer]:
+                  - /url: /graficos
+                  - img [ref=e42]
+                  - generic [ref=e44]: Gráficos
+              - generic [ref=e45]:
+                - button [ref=e46]
+                - link "Sentimento" [ref=e47] [cursor=pointer]:
+                  - /url: /sentimento
+                  - img [ref=e48]
+                  - generic [ref=e50]: Sentimento
+              - generic [ref=e51]:
+                - button [ref=e52]
+                - link "Criptomoedas" [ref=e53] [cursor=pointer]:
+                  - /url: /criptomoedas
+                  - img [ref=e54]
+                  - generic [ref=e56]: Criptomoedas
+              - generic [ref=e57]:
+                - button [ref=e58]
+                - link "Educação" [ref=e59] [cursor=pointer]:
+                  - /url: /educacao
+                  - img [ref=e60]
+                  - generic [ref=e62]: Educação
+              - generic [ref=e63]:
+                - button [ref=e64]
+                - link "Curiosidades" [ref=e65] [cursor=pointer]:
+                  - /url: /curiosidades
+                  - img [ref=e66]
+                  - generic [ref=e68]: Curiosidades
+              - generic [ref=e69]:
+                - button [ref=e70]
+                - link "Recursos" [ref=e71] [cursor=pointer]:
+                  - /url: /recursos
+                  - img [ref=e72]
+                  - generic [ref=e74]: Recursos
+              - generic [ref=e75]:
+                - button [ref=e76]
+                - link "Token" [ref=e77] [cursor=pointer]:
+                  - /url: /token
+                  - img [ref=e78]
+                  - generic [ref=e80]: Token
+              - generic [ref=e81]:
+                - button [ref=e82]
+                - link "Sobre" [ref=e83] [cursor=pointer]:
+                  - /url: /sobre
+                  - img [ref=e84]
+                  - generic [ref=e86]: Sobre
+            - status [ref=e87]
+          - generic [ref=e89]:
+            - link "Discord" [ref=e90] [cursor=pointer]:
+              - /url: https://discord.gg/9BU3mFVX58
+              - img [ref=e91]
+            - link "Telegram" [ref=e93] [cursor=pointer]:
+              - /url: https://t.me/+Bop_TVFc_mg3Njlh
+              - img [ref=e94]
+          - button "Resetar Interface" [ref=e97]:
+            - img [ref=e98]
+            - generic [ref=e100]: Resetar Interface
+    - generic [ref=e101]:
+      - banner [ref=e102]:
+        - generic [ref=e104]:
+          - generic [ref=e107]:
+            - link "BTC $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 , 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9" [ref=e108] [cursor=pointer]:
+              - /url: /criptomoedas/bitcoin
+              - img [ref=e110]
+              - generic [ref=e113]:
+                - generic [ref=e114]: BTC
+                - generic [ref=e115]:
+                  - generic [ref=e116]: $
+                  - generic [ref=e118]:
+                    - generic [ref=e119]: "0"
+                    - generic [ref=e120]: "1"
+                    - generic [ref=e121]: "2"
+                    - generic [ref=e122]: "3"
+                    - generic [ref=e123]: "4"
+                    - generic [ref=e124]: "5"
+                    - generic [ref=e125]: "6"
+                    - generic [ref=e126]: "7"
+                    - generic [ref=e127]: "8"
+                    - generic [ref=e128]: "9"
+                  - generic [ref=e130]:
+                    - generic [ref=e131]: "0"
+                    - generic [ref=e132]: "1"
+                    - generic [ref=e133]: "2"
+                    - generic [ref=e134]: "3"
+                    - generic [ref=e135]: "4"
+                    - generic [ref=e136]: "5"
+                    - generic [ref=e137]: "6"
+                    - generic [ref=e138]: "7"
+                    - generic [ref=e139]: "8"
+                    - generic [ref=e140]: "9"
+                  - generic [ref=e141]: ","
+                  - generic [ref=e143]:
+                    - generic [ref=e144]: "0"
+                    - generic [ref=e145]: "1"
+                    - generic [ref=e146]: "2"
+                    - generic [ref=e147]: "3"
+                    - generic [ref=e148]: "4"
+                    - generic [ref=e149]: "5"
+                    - generic [ref=e150]: "6"
+                    - generic [ref=e151]: "7"
+                    - generic [ref=e152]: "8"
+                    - generic [ref=e153]: "9"
+                  - generic [ref=e155]:
+                    - generic [ref=e156]: "0"
+                    - generic [ref=e157]: "1"
+                    - generic [ref=e158]: "2"
+                    - generic [ref=e159]: "3"
+                    - generic [ref=e160]: "4"
+                    - generic [ref=e161]: "5"
+                    - generic [ref=e162]: "6"
+                    - generic [ref=e163]: "7"
+                    - generic [ref=e164]: "8"
+                    - generic [ref=e165]: "9"
+                  - generic [ref=e167]:
+                    - generic [ref=e168]: "0"
+                    - generic [ref=e169]: "1"
+                    - generic [ref=e170]: "2"
+                    - generic [ref=e171]: "3"
+                    - generic [ref=e172]: "4"
+                    - generic [ref=e173]: "5"
+                    - generic [ref=e174]: "6"
+                    - generic [ref=e175]: "7"
+                    - generic [ref=e176]: "8"
+                    - generic [ref=e177]: "9"
+            - link "ETH $ 0 1 2 3 4 5 6 7 8 9 , 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9" [ref=e178] [cursor=pointer]:
+              - /url: /criptomoedas/ethereum
+              - img [ref=e180]
+              - generic [ref=e190]:
+                - generic [ref=e191]: ETH
+                - generic [ref=e192]:
+                  - generic [ref=e193]: $
+                  - generic [ref=e195]:
+                    - generic [ref=e196]: "0"
+                    - generic [ref=e197]: "1"
+                    - generic [ref=e198]: "2"
+                    - generic [ref=e199]: "3"
+                    - generic [ref=e200]: "4"
+                    - generic [ref=e201]: "5"
+                    - generic [ref=e202]: "6"
+                    - generic [ref=e203]: "7"
+                    - generic [ref=e204]: "8"
+                    - generic [ref=e205]: "9"
+                  - generic [ref=e206]: ","
+                  - generic [ref=e208]:
+                    - generic [ref=e209]: "0"
+                    - generic [ref=e210]: "1"
+                    - generic [ref=e211]: "2"
+                    - generic [ref=e212]: "3"
+                    - generic [ref=e213]: "4"
+                    - generic [ref=e214]: "5"
+                    - generic [ref=e215]: "6"
+                    - generic [ref=e216]: "7"
+                    - generic [ref=e217]: "8"
+                    - generic [ref=e218]: "9"
+                  - generic [ref=e220]:
+                    - generic [ref=e221]: "0"
+                    - generic [ref=e222]: "1"
+                    - generic [ref=e223]: "2"
+                    - generic [ref=e224]: "3"
+                    - generic [ref=e225]: "4"
+                    - generic [ref=e226]: "5"
+                    - generic [ref=e227]: "6"
+                    - generic [ref=e228]: "7"
+                    - generic [ref=e229]: "8"
+                    - generic [ref=e230]: "9"
+                  - generic [ref=e232]:
+                    - generic [ref=e233]: "0"
+                    - generic [ref=e234]: "1"
+                    - generic [ref=e235]: "2"
+                    - generic [ref=e236]: "3"
+                    - generic [ref=e237]: "4"
+                    - generic [ref=e238]: "5"
+                    - generic [ref=e239]: "6"
+                    - generic [ref=e240]: "7"
+                    - generic [ref=e241]: "8"
+                    - generic [ref=e242]: "9"
+            - link "XRP $ 0 1 2 3 4 5 6 7 8 9 . 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9" [ref=e243] [cursor=pointer]:
+              - /url: /criptomoedas/ripple
+              - img [ref=e245]
+              - generic [ref=e248]:
+                - generic [ref=e249]: XRP
+                - generic [ref=e250]:
+                  - generic [ref=e251]: $
+                  - generic [ref=e253]:
+                    - generic [ref=e254]: "0"
+                    - generic [ref=e255]: "1"
+                    - generic [ref=e256]: "2"
+                    - generic [ref=e257]: "3"
+                    - generic [ref=e258]: "4"
+                    - generic [ref=e259]: "5"
+                    - generic [ref=e260]: "6"
+                    - generic [ref=e261]: "7"
+                    - generic [ref=e262]: "8"
+                    - generic [ref=e263]: "9"
+                  - generic [ref=e264]: .
+                  - generic [ref=e266]:
+                    - generic [ref=e267]: "0"
+                    - generic [ref=e268]: "1"
+                    - generic [ref=e269]: "2"
+                    - generic [ref=e270]: "3"
+                    - generic [ref=e271]: "4"
+                    - generic [ref=e272]: "5"
+                    - generic [ref=e273]: "6"
+                    - generic [ref=e274]: "7"
+                    - generic [ref=e275]: "8"
+                    - generic [ref=e276]: "9"
+                  - generic [ref=e278]:
+                    - generic [ref=e279]: "0"
+                    - generic [ref=e280]: "1"
+                    - generic [ref=e281]: "2"
+                    - generic [ref=e282]: "3"
+                    - generic [ref=e283]: "4"
+                    - generic [ref=e284]: "5"
+                    - generic [ref=e285]: "6"
+                    - generic [ref=e286]: "7"
+                    - generic [ref=e287]: "8"
+                    - generic [ref=e288]: "9"
+            - link "BNB $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9" [ref=e289] [cursor=pointer]:
+              - /url: /criptomoedas/binancecoin
+              - img [ref=e291]
+              - generic [ref=e294]:
+                - generic [ref=e295]: BNB
+                - generic [ref=e296]:
+                  - generic [ref=e297]: $
+                  - generic [ref=e299]:
+                    - generic [ref=e300]: "0"
+                    - generic [ref=e301]: "1"
+                    - generic [ref=e302]: "2"
+                    - generic [ref=e303]: "3"
+                    - generic [ref=e304]: "4"
+                    - generic [ref=e305]: "5"
+                    - generic [ref=e306]: "6"
+                    - generic [ref=e307]: "7"
+                    - generic [ref=e308]: "8"
+                    - generic [ref=e309]: "9"
+                  - generic [ref=e311]:
+                    - generic [ref=e312]: "0"
+                    - generic [ref=e313]: "1"
+                    - generic [ref=e314]: "2"
+                    - generic [ref=e315]: "3"
+                    - generic [ref=e316]: "4"
+                    - generic [ref=e317]: "5"
+                    - generic [ref=e318]: "6"
+                    - generic [ref=e319]: "7"
+                    - generic [ref=e320]: "8"
+                    - generic [ref=e321]: "9"
+                  - generic [ref=e323]:
+                    - generic [ref=e324]: "0"
+                    - generic [ref=e325]: "1"
+                    - generic [ref=e326]: "2"
+                    - generic [ref=e327]: "3"
+                    - generic [ref=e328]: "4"
+                    - generic [ref=e329]: "5"
+                    - generic [ref=e330]: "6"
+                    - generic [ref=e331]: "7"
+                    - generic [ref=e332]: "8"
+                    - generic [ref=e333]: "9"
+            - link "SOL SOL $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9" [ref=e334] [cursor=pointer]:
+              - /url: /criptomoedas/solana
+              - img "SOL" [ref=e336]
+              - generic [ref=e338]:
+                - generic [ref=e339]: SOL
+                - generic [ref=e340]:
+                  - generic [ref=e341]: $
+                  - generic [ref=e343]:
+                    - generic [ref=e344]: "0"
+                    - generic [ref=e345]: "1"
+                    - generic [ref=e346]: "2"
+                    - generic [ref=e347]: "3"
+                    - generic [ref=e348]: "4"
+                    - generic [ref=e349]: "5"
+                    - generic [ref=e350]: "6"
+                    - generic [ref=e351]: "7"
+                    - generic [ref=e352]: "8"
+                    - generic [ref=e353]: "9"
+                  - generic [ref=e355]:
+                    - generic [ref=e356]: "0"
+                    - generic [ref=e357]: "1"
+                    - generic [ref=e358]: "2"
+                    - generic [ref=e359]: "3"
+                    - generic [ref=e360]: "4"
+                    - generic [ref=e361]: "5"
+                    - generic [ref=e362]: "6"
+                    - generic [ref=e363]: "7"
+                    - generic [ref=e364]: "8"
+                    - generic [ref=e365]: "9"
+                  - generic [ref=e367]:
+                    - generic [ref=e368]: "0"
+                    - generic [ref=e369]: "1"
+                    - generic [ref=e370]: "2"
+                    - generic [ref=e371]: "3"
+                    - generic [ref=e372]: "4"
+                    - generic [ref=e373]: "5"
+                    - generic [ref=e374]: "6"
+                    - generic [ref=e375]: "7"
+                    - generic [ref=e376]: "8"
+                    - generic [ref=e377]: "9"
+          - navigation [ref=e378]:
+            - button "Entrar" [ref=e380]
+            - button "Claro" [ref=e381]:
+              - img [ref=e382]
+              - generic [ref=e384]: Claro
+            - link "$MILAGRE" [ref=e385] [cursor=pointer]:
+              - /url: /token
+              - img [ref=e387]
+              - generic [ref=e389]: $MILAGRE
+      - main [ref=e390]:
+        - generic [ref=e393]:
+          - generic [ref=e395]:
+            - generic [ref=e398]:
+              - link "Sua Jornada Começa Aqui" [ref=e399] [cursor=pointer]:
+                - /url: /
+                - heading "Sua Jornada Começa Aqui" [level=1] [ref=e400]
+              - paragraph [ref=e401]: Em busca de uma comunidade com prosperidade.
+            - navigation "Breadcrumb" [ref=e403]:
+              - list [ref=e404]:
+                - listitem [ref=e405]:
+                  - link "Início" [ref=e406] [cursor=pointer]:
+                    - /url: /
+                    - img [ref=e407]
+                    - generic [ref=e409]: Início
+          - generic [ref=e411]:
+            - generic [ref=e412]:
+              - generic [ref=e413]:
+                - button [ref=e414]:
+                  - img [ref=e415]
+                - generic [ref=e418]:
+                  - generic [ref=e419]:
+                    - button "Comece Aqui" [ref=e421]:
+                      - link "Comece Aqui" [ref=e422]:
+                        - /url: /comece-aqui
+                        - generic [ref=e424]:
+                          - img [ref=e426]
+                          - heading "Comece Aqui" [level=3] [ref=e428]
+                    - button "Notícias do Mercado" [ref=e430]:
+                      - link "Notícias do Mercado" [ref=e431]:
+                        - /url: /noticias
+                        - generic [ref=e433]:
+                          - img [ref=e435]
+                          - heading "Notícias do Mercado" [level=3] [ref=e437]
+                    - button "Gráficos Avançados" [ref=e439]:
+                      - link "Gráficos Avançados" [ref=e440]:
+                        - /url: /graficos
+                        - generic [ref=e442]:
+                          - img [ref=e444]
+                          - heading "Gráficos Avançados" [level=3] [ref=e446]
+                    - button "Ferramentas" [ref=e448]:
+                      - link "Ferramentas" [ref=e449]:
+                        - /url: /ferramentas
+                        - generic [ref=e451]:
+                          - img [ref=e453]
+                          - heading "Ferramentas" [level=3] [ref=e455]
+                    - button "Criptomoedas" [ref=e457]:
+                      - link "Criptomoedas" [ref=e458]:
+                        - /url: /criptomoedas
+                        - generic [ref=e460]:
+                          - img [ref=e462]
+                          - heading "Criptomoedas" [level=3] [ref=e464]
+                    - button "Curiosidades" [ref=e466]:
+                      - link "Curiosidades" [ref=e467]:
+                        - /url: /curiosidades
+                        - generic [ref=e469]:
+                          - img [ref=e471]
+                          - heading "Curiosidades" [level=3] [ref=e473]
+                  - status [ref=e474]
+              - generic [ref=e475]:
+                - button [ref=e476]:
+                  - img [ref=e477]
+                - generic [ref=e480]:
+                  - generic [ref=e481]:
+                    - button "Capitalização $3.30T ▲ 2.9% O que é Capitalização? Valor total de mercado de todas as criptomoedas. Calculado multiplicando o preço de cada moeda pela quantidade em circulação. Indica o tamanho do mercado cripto." [ref=e482]:
+                      - generic [ref=e485]:
+                        - generic [ref=e488]:
+                          - generic [ref=e489]:
+                            - img [ref=e491]
+                            - heading "Capitalização" [level=3] [ref=e493]
+                          - paragraph [ref=e495]: $3.30T
+                          - generic [ref=e496]: ▲ 2.9%
+                        - generic [ref=e500]:
+                          - heading "O que é Capitalização?" [level=4] [ref=e501]
+                          - paragraph [ref=e502]: Valor total de mercado de todas as criptomoedas. Calculado multiplicando o preço de cada moeda pela quantidade em circulação. Indica o tamanho do mercado cripto.
+                    - button "Volume 24h $147.72B O que é Volume 24h? Total de criptomoedas negociadas nas últimas 24 horas. Alto volume indica mercado ativo e liquidez. Baixo volume pode significar menos interesse." [ref=e503]:
+                      - generic [ref=e506]:
+                        - generic [ref=e509]:
+                          - generic [ref=e510]:
+                            - img [ref=e512]
+                            - heading "Volume 24h" [level=3] [ref=e514]
+                          - paragraph [ref=e516]: $147.72B
+                        - generic [ref=e520]:
+                          - heading "O que é Volume 24h?" [level=4] [ref=e521]
+                          - paragraph [ref=e522]: Total de criptomoedas negociadas nas últimas 24 horas. Alto volume indica mercado ativo e liquidez. Baixo volume pode significar menos interesse.
+                    - button "Dominância BTC 56.89% O que é Dominância BTC? Percentual do mercado cripto que pertence ao Bitcoin. Alta dominância sugere maior confiança no BTC. Queda pode indicar \"altcoin season\"." [ref=e523]:
+                      - generic [ref=e526]:
+                        - generic [ref=e529]:
+                          - generic [ref=e530]:
+                            - img [ref=e532]
+                            - heading "Dominância BTC" [level=3] [ref=e534]
+                          - paragraph [ref=e536]: 56.89%
+                        - generic [ref=e542]:
+                          - heading "O que é Dominância BTC?" [level=4] [ref=e543]
+                          - paragraph [ref=e544]: Percentual do mercado cripto que pertence ao Bitcoin. Alta dominância sugere maior confiança no BTC. Queda pode indicar "altcoin season".
+                    - button "Dominância ETH 11.83% O que é Dominância ETH? Percentual do mercado cripto que pertence ao Ethereum. Reflete a força do ecossistema ETH incluindo DeFi, NFTs e smart contracts." [ref=e545]:
+                      - generic [ref=e548]:
+                        - generic [ref=e551]:
+                          - generic [ref=e552]:
+                            - img [ref=e554]
+                            - heading "Dominância ETH" [level=3] [ref=e563]
+                          - paragraph [ref=e565]: 11.83%
+                        - generic [ref=e571]:
+                          - heading "O que é Dominância ETH?" [level=4] [ref=e572]
+                          - paragraph [ref=e573]: Percentual do mercado cripto que pertence ao Ethereum. Reflete a força do ecossistema ETH incluindo DeFi, NFTs e smart contracts.
+                  - status [ref=e574]
+              - generic:
+                - button:
+                  - img [ref=e575]
+              - generic [ref=e577]:
+                - button [ref=e578]:
+                  - img [ref=e579]
+                - link "Últimas Notícias" [ref=e584] [cursor=pointer]:
+                  - /url: /noticias
+                  - heading "Últimas Notícias" [level=2] [ref=e585]
+              - button [ref=e590]:
+                - img [ref=e591]
+              - generic [ref=e595]:
+                - button [ref=e596]:
+                  - img [ref=e597]
+                - generic [ref=e600]:
+                  - link "Gráfico de Preços" [ref=e602] [cursor=pointer]:
+                    - /url: /graficos
+                    - heading "Gráfico de Preços" [level=2] [ref=e603]
+                  - generic [ref=e605]:
+                    - generic [ref=e607]:
+                      - button "BTC" [ref=e608]
+                      - button "ETH" [ref=e609]
+                      - button "SOL" [ref=e610]
+                    - table [ref=e616]:
+                      - row [ref=e617]:
+                        - cell
+                        - cell [ref=e618]:
+                          - link "Charting by TradingView" [ref=e622] [cursor=pointer]:
+                            - /url: https://www.tradingview.com/?utm_medium=lwc-link&utm_campaign=lwc-chart&utm_source=localhost/
+                            - img [ref=e623]
+                        - cell [ref=e627]
+                      - row [ref=e631]:
+                        - cell
+                        - cell [ref=e632]
+                        - cell [ref=e636]
+              - generic [ref=e639]:
+                - button [ref=e640]:
+                  - img [ref=e641]
+                - generic [ref=e644]:
+                  - link "Top 10 Criptomoedas" [ref=e646] [cursor=pointer]:
+                    - /url: /criptomoedas
+                    - heading "Top 10 Criptomoedas" [level=2] [ref=e647]
+                  - generic [ref=e649]:
+                    - generic [ref=e650]:
+                      - generic [ref=e651]: "#"
+                      - generic [ref=e652]: Nome
+                      - generic [ref=e653]: Preço
+                      - generic [ref=e654]: 1h
+                      - generic [ref=e655]: 24h
+                      - generic [ref=e656]: 7d
+                      - generic [ref=e657]: M.Cap
+                      - generic [ref=e658]: Últimos 7 dias
+                    - generic [ref=e659]:
+                      - link "1 Bitcoin Bitcoin btc $94,073.00 -0.0% +2.9% +7.9% $1879.38B" [ref=e660] [cursor=pointer]:
+                        - /url: /criptomoedas/bitcoin
+                        - generic [ref=e661]: "1"
+                        - generic [ref=e662]:
+                          - img "Bitcoin" [ref=e664]
+                          - generic [ref=e665]:
+                            - paragraph [ref=e666]: Bitcoin
+                            - paragraph [ref=e667]: btc
+                        - generic [ref=e669]: $94,073.00
+                        - generic [ref=e670]: "-0.0%"
+                        - generic [ref=e671]: +2.9%
+                        - generic [ref=e672]: +7.9%
+                        - generic [ref=e674]: $1879.38B
+                        - img [ref=e676]
+                      - link "2 Ethereum Ethereum eth $3,235.39 -0.0% +2.7% +10.2% $390.69B" [ref=e678] [cursor=pointer]:
+                        - /url: /criptomoedas/ethereum
+                        - generic [ref=e679]: "2"
+                        - generic [ref=e680]:
+                          - img "Ethereum" [ref=e682]
+                          - generic [ref=e683]:
+                            - paragraph [ref=e684]: Ethereum
+                            - paragraph [ref=e685]: eth
+                        - generic [ref=e687]: $3,235.39
+                        - generic [ref=e688]: "-0.0%"
+                        - generic [ref=e689]: +2.7%
+                        - generic [ref=e690]: +10.2%
+                        - generic [ref=e692]: $390.69B
+                        - img [ref=e694]
+                      - link "3 Tether Tether usdt $0.999975 +0.0% +0.0% +0.1% $187.11B" [ref=e696] [cursor=pointer]:
+                        - /url: /criptomoedas/tether
+                        - generic [ref=e697]: "3"
+                        - generic [ref=e698]:
+                          - img "Tether" [ref=e700]
+                          - generic [ref=e701]:
+                            - paragraph [ref=e702]: Tether
+                            - paragraph [ref=e703]: usdt
+                        - generic [ref=e705]: $0.999975
+                        - generic [ref=e706]: +0.0%
+                        - generic [ref=e707]: +0.0%
+                        - generic [ref=e708]: +0.1%
+                        - generic [ref=e710]: $187.11B
+                        - img [ref=e712]
+                      - link "4 XRP XRP xrp $2.34 +0.5% +11.8% +26.4% $141.80B" [ref=e714] [cursor=pointer]:
+                        - /url: /criptomoedas/ripple
+                        - generic [ref=e715]: "4"
+                        - generic [ref=e716]:
+                          - img "XRP" [ref=e718]
+                          - generic [ref=e719]:
+                            - paragraph [ref=e720]: XRP
+                            - paragraph [ref=e721]: xrp
+                        - generic [ref=e723]: $2.34
+                        - generic [ref=e724]: +0.5%
+                        - generic [ref=e725]: +11.8%
+                        - generic [ref=e726]: +26.4%
+                        - generic [ref=e728]: $141.80B
+                        - img [ref=e730]
+                      - link "5 BNB BNB bnb $911.79 -0.1% +1.8% +6.9% $125.62B" [ref=e732] [cursor=pointer]:
+                        - /url: /criptomoedas/binancecoin
+                        - generic [ref=e733]: "5"
+                        - generic [ref=e734]:
+                          - img "BNB" [ref=e736]
+                          - generic [ref=e737]:
+                            - paragraph [ref=e738]: BNB
+                            - paragraph [ref=e739]: bnb
+                        - generic [ref=e741]: $911.79
+                        - generic [ref=e742]: "-0.1%"
+                        - generic [ref=e743]: +1.8%
+                        - generic [ref=e744]: +6.9%
+                        - generic [ref=e746]: $125.62B
+                        - img [ref=e748]
+                      - link "6 Solana Solana sol $138.64 +0.2% +3.1% +12.4% $78.12B" [ref=e750] [cursor=pointer]:
+                        - /url: /criptomoedas/solana
+                        - generic [ref=e751]: "6"
+                        - generic [ref=e752]:
+                          - img "Solana" [ref=e754]
+                          - generic [ref=e755]:
+                            - paragraph [ref=e756]: Solana
+                            - paragraph [ref=e757]: sol
+                        - generic [ref=e759]: $138.64
+                        - generic [ref=e760]: +0.2%
+                        - generic [ref=e761]: +3.1%
+                        - generic [ref=e762]: +12.4%
+                        - generic [ref=e764]: $78.12B
+                        - img [ref=e766]
+                      - link "7 USDC USDC usdc $0.99984 +0.0% -0.0% +0.0% $75.76B" [ref=e768] [cursor=pointer]:
+                        - /url: /criptomoedas/usd-coin
+                        - generic [ref=e769]: "7"
+                        - generic [ref=e770]:
+                          - img "USDC" [ref=e772]
+                          - generic [ref=e773]:
+                            - paragraph [ref=e774]: USDC
+                            - paragraph [ref=e775]: usdc
+                        - generic [ref=e777]: $0.99984
+                        - generic [ref=e778]: +0.0%
+                        - generic [ref=e779]: "-0.0%"
+                        - generic [ref=e780]: +0.0%
+                        - generic [ref=e782]: $75.76B
+                        - img [ref=e784]
+                      - link "8 Lido Staked Ether Lido Staked Ether steth $3,233.89 -0.0% +2.8% +10.2% $28.68B" [ref=e786] [cursor=pointer]:
+                        - /url: /criptomoedas/staked-ether
+                        - generic [ref=e787]: "8"
+                        - generic [ref=e788]:
+                          - img "Lido Staked Ether" [ref=e790]
+                          - generic [ref=e791]:
+                            - paragraph [ref=e792]: Lido Staked Ether
+                            - paragraph [ref=e793]: steth
+                        - generic [ref=e795]: $3,233.89
+                        - generic [ref=e796]: "-0.0%"
+                        - generic [ref=e797]: +2.8%
+                        - generic [ref=e798]: +10.2%
+                        - generic [ref=e800]: $28.68B
+                        - img [ref=e802]
+                      - link "9 TRON TRON trx $0.292376 -0.0% -0.5% +3.0% $27.69B" [ref=e804] [cursor=pointer]:
+                        - /url: /criptomoedas/tron
+                        - generic [ref=e805]: "9"
+                        - generic [ref=e806]:
+                          - img "TRON" [ref=e808]
+                          - generic [ref=e809]:
+                            - paragraph [ref=e810]: TRON
+                            - paragraph [ref=e811]: trx
+                        - generic [ref=e813]: $0.292376
+                        - generic [ref=e814]: "-0.0%"
+                        - generic [ref=e815]: "-0.5%"
+                        - generic [ref=e816]: +3.0%
+                        - generic [ref=e818]: $27.69B
+                        - img [ref=e820]
+                      - link "10 Dogecoin Dogecoin doge $0.152433 +0.5% +1.7% +23.9% $25.67B" [ref=e822] [cursor=pointer]:
+                        - /url: /criptomoedas/dogecoin
+                        - generic [ref=e823]: "10"
+                        - generic [ref=e824]:
+                          - img "Dogecoin" [ref=e826]
+                          - generic [ref=e827]:
+                            - paragraph [ref=e828]: Dogecoin
+                            - paragraph [ref=e829]: doge
+                        - generic [ref=e831]: $0.152433
+                        - generic [ref=e832]: +0.5%
+                        - generic [ref=e833]: +1.7%
+                        - generic [ref=e834]: +23.9%
+                        - generic [ref=e836]: $25.67B
+                        - img [ref=e838]
+              - generic [ref=e840]:
+                - button [ref=e841]:
+                  - img [ref=e842]
+                - link "Entenda Criptomoedas" [ref=e847] [cursor=pointer]:
+                  - /url: /educacao
+                  - heading "Entenda Criptomoedas" [level=2] [ref=e848]
+              - generic:
+                - button:
+                  - img [ref=e849]
+            - status [ref=e851]
+      - contentinfo [ref=e852]:
+        - generic [ref=e853]:
+          - generic [ref=e854]:
+            - generic [ref=e855]:
+              - link "$MILAGRE $ MILAGRE Comunidade Web3" [ref=e856] [cursor=pointer]:
+                - /url: /
+                - img "$MILAGRE" [ref=e857]
+                - generic [ref=e859]:
+                  - generic [ref=e860]:
+                    - generic [ref=e861]: $
+                    - generic [ref=e862]: MILAGRE
+                  - generic [ref=e863]: Comunidade Web3
+              - paragraph [ref=e864]: Em busca de uma comunidade com prosperidade.
+              - generic [ref=e865]:
+                - link "Discord" [ref=e866] [cursor=pointer]:
+                  - /url: https://discord.gg/9BU3mFVX58
+                  - img [ref=e867]
+                - link "Telegram" [ref=e869] [cursor=pointer]:
+                  - /url: https://t.me/+Bop_TVFc_mg3Njlh
+                  - img [ref=e870]
+                - link "Twitter" [ref=e872] [cursor=pointer]:
+                  - /url: https://x.com/TokenMilagre
+                  - img [ref=e873]
+                - link "GitHub" [ref=e875] [cursor=pointer]:
+                  - /url: https://github.com/dogespartano-cyber/tokenmilagre-platform
+                  - img [ref=e876]
+            - generic [ref=e878]:
+              - heading "Produto" [level=3] [ref=e879]
+              - navigation "Links do produto" [ref=e880]:
+                - link "Início" [ref=e881] [cursor=pointer]:
+                  - /url: /
+                - link "Sobre" [ref=e882] [cursor=pointer]:
+                  - /url: /sobre
+                - link "Token" [ref=e883] [cursor=pointer]:
+                  - /url: /token
+                - link "Recursos" [ref=e884] [cursor=pointer]:
+                  - /url: /recursos
+                - link "Roadmap" [ref=e885] [cursor=pointer]:
+                  - /url: /roadmap
+            - generic [ref=e886]:
+              - heading "Comunidade" [level=3] [ref=e887]
+              - navigation "Links da comunidade" [ref=e888]:
+                - link "Discord" [ref=e889] [cursor=pointer]:
+                  - /url: https://discord.gg/9BU3mFVX58
+                - link "Telegram" [ref=e890] [cursor=pointer]:
+                  - /url: https://t.me/+Bop_TVFc_mg3Njlh
+                - link "Twitter" [ref=e891] [cursor=pointer]:
+                  - /url: https://x.com/TokenMilagre
+                - link "GitHub" [ref=e892] [cursor=pointer]:
+                  - /url: https://github.com/dogespartano-cyber/tokenmilagre-platform
+            - generic [ref=e893]:
+              - heading "Legal" [level=3] [ref=e894]
+              - navigation "Links legais" [ref=e895]:
+                - link "Transparência" [ref=e896] [cursor=pointer]:
+                  - /url: /transparencia
+                - link "Manifesto" [ref=e897] [cursor=pointer]:
+                  - /url: /manifesto
+                - link "Termos de Uso" [ref=e898] [cursor=pointer]:
+                  - /url: /termos
+                - link "Privacidade" [ref=e899] [cursor=pointer]:
+                  - /url: /privacidade
+                - link "Segurança" [ref=e900] [cursor=pointer]:
+                  - /url: /verificador-url
+          - generic [ref=e901]:
+            - generic [ref=e902]:
+              - paragraph [ref=e903]: © 2026 $MILAGRE. Open Source (Licença MIT).
+              - paragraph [ref=e904]: "\"Porque dele, e por ele, e para ele são todas as coisas.\" — Romanos 11:36"
+            - paragraph [ref=e905]: Criptomoedas envolvem riscos. Este não é um conselho financeiro.
+      - generic [ref=e908]:
+        - img [ref=e910]
+        - generic [ref=e912]:
+          - heading "Nós valorizamos sua privacidade" [level=3] [ref=e913]
+          - paragraph [ref=e914]:
+            - text: Utilizamos cookies para melhorar sua experiência e analisar o tráfego. Ao continuar, você concorda com nossa
+            - link "Política de Privacidade" [ref=e915] [cursor=pointer]:
+              - /url: /privacidade
+            - text: .
+          - generic [ref=e916]:
+            - button "Aceitar" [ref=e917]
+            - button "Fechar" [ref=e918]
+  - button "Open Next.js Dev Tools" [ref=e924] [cursor=pointer]:
+    - img [ref=e925]
+  - alert [ref=e929]
+```

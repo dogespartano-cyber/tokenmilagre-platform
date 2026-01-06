@@ -1,7 +1,7 @@
 /**
  * Prompt Loader Utility
  * 
- * Loads prompts from external .md files in .agent/workflows/prompts/
+ * Loads prompts from external .md files in .agent/templates/
  * Supports variable substitution (e.g., {{CURRENT_TIME}})
  * Includes in-memory caching for performance
  */
@@ -23,7 +23,7 @@ const CACHE_TTL_MS = process.env.NODE_ENV === 'development' ? 5 * 60 * 1000 : 60
  */
 function getPromptPath(type: PromptType): string {
     // In Next.js, process.cwd() returns the project root
-    return path.join(process.cwd(), '.agent', 'workflows', 'prompts', `${type}.md`);
+    return path.join(process.cwd(), '.agent', 'templates', `${type}.md`);
 }
 
 /**

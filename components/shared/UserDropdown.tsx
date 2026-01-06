@@ -8,6 +8,7 @@ import {
     faSignInAlt,
     faShieldAlt
 } from '@fortawesome/free-solid-svg-icons';
+import { ZenithButton } from '@/components/ui/ZenithButton';
 
 export default function UserDropdown() {
     const { user, isLoaded, isSignedIn } = useUser();
@@ -47,36 +48,33 @@ export default function UserDropdown() {
     // Not authenticated - Show Login button
     if (!isSignedIn) {
         return (
-            <Link
+            <ZenithButton
+                as={Link}
                 href="/sign-in"
-                className="group flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all duration-300 shadow-theme-sm hover:shadow-theme-md hover:scale-105 font-semibold"
-                style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border-medium)',
-                    color: 'var(--text-primary)'
-                }}
+                variant="primary"
+                size="md"
+                glow
+                className="group"
             >
-                <FontAwesomeIcon icon={faSignInAlt} className="w-4 h-4" />
+                <FontAwesomeIcon icon={faSignInAlt} className="w-4 h-4 mr-2" />
                 <span>Login</span>
-            </Link>
+            </ZenithButton>
         );
     }
 
     // Authenticated - Show Admin button (only for ADMIN)
     if (userRole === 'ADMIN') {
         return (
-            <Link
+            <ZenithButton
+                as={Link}
                 href="/dashboard"
-                className="group flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all duration-300 shadow-theme-sm hover:shadow-theme-md hover:scale-105 font-semibold"
-                style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border-medium)',
-                    color: 'var(--text-primary)'
-                }}
+                variant="glass"
+                size="md"
+                className="group border-dashed border-2"
             >
-                <FontAwesomeIcon icon={faShieldAlt} className="w-4 h-4" />
+                <FontAwesomeIcon icon={faShieldAlt} className="w-4 h-4 mr-2" />
                 <span className="hidden sm:block">Admin</span>
-            </Link>
+            </ZenithButton>
         );
     }
 

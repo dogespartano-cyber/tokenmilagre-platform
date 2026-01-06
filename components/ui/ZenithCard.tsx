@@ -12,6 +12,108 @@ interface ZenithCardProps extends React.HTMLAttributes<HTMLDivElement> {
     [key: string]: any;
 }
 
+// Variant Colors Map
+const createVariantStyles = (isActive: boolean) => ({
+    default: `bg-white dark:bg-zinc-900/50 border-zinc-300 dark:border-zinc-800 ${isActive ? 'border-[var(--brand-primary)]/50 dark:border-[var(--brand-primary)]/50' : 'group-hover:border-[var(--brand-primary)]/30'}`,
+
+    success: `
+        bg-white
+        dark:bg-transparent dark:bg-gradient-to-br dark:from-green-500/10 dark:to-emerald-500/5 
+        border-green-300 dark:border-green-500/20 group-hover:border-green-400 dark:group-hover:border-green-500/40
+    `,
+
+    danger: `
+        bg-white
+        dark:bg-transparent dark:bg-gradient-to-br dark:from-red-500/10 dark:to-rose-500/5 
+        border-red-300 dark:border-red-500/20 group-hover:border-red-400 dark:group-hover:border-red-500/40
+    `,
+
+    warning: `
+        bg-white
+        dark:bg-transparent dark:bg-gradient-to-br dark:from-yellow-500/10 dark:to-amber-500/5 
+        border-yellow-300 dark:border-yellow-500/20 group-hover:border-yellow-400 dark:group-hover:border-yellow-500/40
+    `,
+
+    info: `
+        bg-white
+        dark:bg-transparent dark:bg-gradient-to-br dark:from-cyan-500/10 dark:to-blue-500/5
+        border-cyan-300 dark:border-cyan-500/20 group-hover:border-cyan-400 dark:group-hover:border-cyan-500/40
+    `,
+
+    orange: `
+        bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-orange-500/10 dark:to-amber-500/5 
+        border-orange-300 dark:border-orange-500/20 group-hover:border-orange-400 dark:group-hover:border-orange-500/40
+    `,
+
+    indigo: `
+        bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-indigo-500/10 dark:to-purple-500/5 
+        border-indigo-300 dark:border-indigo-500/20 group-hover:border-indigo-400 dark:group-hover:border-indigo-400/40
+    `,
+
+    teal: `
+        bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-teal-500/10 dark:to-emerald-500/5 
+        border-teal-200 dark:border-teal-500/20 group-hover:border-teal-400 dark:group-hover:border-teal-500/40
+    `,
+
+    violet: `
+        bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-violet-500/10 dark:to-fuchsia-500/5 
+        border-violet-300 dark:border-violet-500/20 group-hover:border-violet-400 dark:group-hover:border-violet-500/40
+    `,
+
+    slate: `
+        bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-slate-500/10 dark:to-zinc-500/5 
+        border-slate-300 dark:border-slate-500/20 group-hover:border-slate-400 dark:group-hover:border-slate-500/40
+    `,
+
+    glass: `
+        bg-white/80 dark:bg-zinc-900/40 backdrop-blur-lg
+        border-zinc-300/50 dark:border-white/10
+    `
+});
+
+// Full static strings for Tailwind JIT to detect neon shadows
+const neonActiveStyles = {
+    default: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.3)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.4)]',
+    success: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.35)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.45)]',
+    danger: 'dark:shadow-[0_8px_20px_-6px_rgba(239,68,68,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(239,68,68,0.35)]',
+    warning: 'dark:shadow-[0_8px_20px_-6px_rgba(234,179,8,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(234,179,8,0.35)]',
+    info: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
+    orange: 'dark:shadow-[0_8px_20px_-6px_rgba(249,115,22,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(249,115,22,0.35)]',
+    indigo: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
+    teal: 'dark:shadow-[0_8px_20px_-6px_rgba(20,184,166,0.3)] lg:dark:shadow-[0_15px_30px_-5px_rgba(20,184,166,0.4)]',
+    violet: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
+    slate: 'dark:shadow-[0_8px_20px_-6px_rgba(100,116,139,0.2)] lg:dark:shadow-[0_15px_30px_-5px_rgba(100,116,139,0.3)]',
+    glass: 'dark:shadow-[0_8px_16px_-6px_rgba(255,255,255,0.05)] lg:dark:shadow-[0_15px_30px_-5px_rgba(255,255,255,0.08)]'
+};
+
+const neonHoverStyles = {
+    default: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.3)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.4)]',
+    success: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.35)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.45)]',
+    danger: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(239,68,68,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(239,68,68,0.35)]',
+    warning: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(234,179,8,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(234,179,8,0.35)]',
+    info: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
+    orange: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(249,115,22,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(249,115,22,0.35)]',
+    indigo: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
+    teal: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(20,184,166,0.3)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(20,184,166,0.4)]',
+    violet: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
+    slate: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(100,116,139,0.2)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(100,116,139,0.3)]',
+    glass: 'dark:group-hover:shadow-[0_8px_16px_-6px_rgba(255,255,255,0.05)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(255,255,255,0.08)]'
+};
+
+const ambientGradients = {
+    default: '',
+    success: 'from-green-500/10 to-transparent',
+    danger: 'from-red-500/10 to-transparent',
+    warning: 'from-yellow-500/10 to-transparent',
+    info: 'from-cyan-500/10 to-transparent',
+    orange: 'from-orange-500/10 to-transparent',
+    indigo: 'from-indigo-500/10 to-transparent',
+    teal: 'from-teal-500/10 to-transparent',
+    violet: 'from-violet-500/10 to-transparent',
+    slate: 'from-slate-500/10 to-transparent',
+    glass: ''
+};
+
 export default function ZenithCard({
     variant = 'default',
     hoverEffect = true,
@@ -36,110 +138,12 @@ export default function ZenithCard({
         ? `${isActive ? 'shadow-xl' : 'hover:shadow-xl'} cursor-default`
         : '';
 
-    // Variant Colors Map
-    // Adapting the styles from ZenithMarketTicker to be reusable
-    const variantStyles = {
-        default: `bg-white dark:bg-zinc-900/50 border-zinc-300 dark:border-zinc-800 ${isActive ? 'border-[var(--brand-primary)]/50 dark:border-[var(--brand-primary)]/50' : 'group-hover:border-[var(--brand-primary)]/30'}`,
 
-        success: `
-            bg-white
-            dark:bg-transparent dark:bg-gradient-to-br dark:from-green-500/10 dark:to-emerald-500/5 
-            border-green-300 dark:border-green-500/20 group-hover:border-green-400 dark:group-hover:border-green-500/40
-        `,
 
-        danger: `
-            bg-white
-            dark:bg-transparent dark:bg-gradient-to-br dark:from-red-500/10 dark:to-rose-500/5 
-            border-red-300 dark:border-red-500/20 group-hover:border-red-400 dark:group-hover:border-red-500/40
-        `,
 
-        warning: `
-            bg-white
-            dark:bg-transparent dark:bg-gradient-to-br dark:from-yellow-500/10 dark:to-amber-500/5 
-            border-yellow-300 dark:border-yellow-500/20 group-hover:border-yellow-400 dark:group-hover:border-yellow-500/40
-        `,
 
-        info: `
-            bg-white
-            dark:bg-transparent dark:bg-gradient-to-br dark:from-cyan-500/10 dark:to-blue-500/5
-            border-cyan-300 dark:border-cyan-500/20 group-hover:border-cyan-400 dark:group-hover:border-cyan-500/40
-        `,
 
-        orange: `
-            bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-orange-500/10 dark:to-amber-500/5 
-            border-orange-300 dark:border-orange-500/20 group-hover:border-orange-400 dark:group-hover:border-orange-500/40
-        `,
-
-        indigo: `
-            bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-indigo-500/10 dark:to-purple-500/5 
-            border-indigo-300 dark:border-indigo-500/20 group-hover:border-indigo-400 dark:group-hover:border-indigo-400/40
-        `,
-
-        teal: `
-            bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-teal-500/10 dark:to-emerald-500/5 
-            border-teal-200 dark:border-teal-500/20 group-hover:border-teal-400 dark:group-hover:border-teal-500/40
-        `,
-
-        violet: `
-            bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-violet-500/10 dark:to-fuchsia-500/5 
-            border-violet-300 dark:border-violet-500/20 group-hover:border-violet-400 dark:group-hover:border-violet-500/40
-        `,
-
-        slate: `
-            bg-white dark:bg-transparent dark:bg-gradient-to-br dark:from-slate-500/10 dark:to-zinc-500/5 
-            border-slate-300 dark:border-slate-500/20 group-hover:border-slate-400 dark:group-hover:border-slate-500/40
-        `,
-
-        glass: `
-            bg-white/80 dark:bg-zinc-900/40 backdrop-blur-lg
-            border-zinc-300/50 dark:border-white/10
-        `
-    };
-
-    // Full static strings for Tailwind JIT to detect neon shadows
-    // Adjusted to be directional (bottom/sides) instead of global spread
-    const neonActiveStyles = {
-        default: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.3)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.4)]',
-        success: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.35)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.45)]',
-        danger: 'dark:shadow-[0_8px_20px_-6px_rgba(239,68,68,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(239,68,68,0.35)]',
-        warning: 'dark:shadow-[0_8px_20px_-6px_rgba(234,179,8,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(234,179,8,0.35)]',
-        info: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
-        orange: 'dark:shadow-[0_8px_20px_-6px_rgba(249,115,22,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(249,115,22,0.35)]',
-        indigo: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
-        teal: 'dark:shadow-[0_8px_20px_-6px_rgba(20,184,166,0.3)] lg:dark:shadow-[0_15px_30px_-5px_rgba(20,184,166,0.4)]',
-        violet: 'dark:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
-        slate: 'dark:shadow-[0_8px_20px_-6px_rgba(100,116,139,0.2)] lg:dark:shadow-[0_15px_30px_-5px_rgba(100,116,139,0.3)]',
-        glass: 'dark:shadow-[0_8px_16px_-6px_rgba(255,255,255,0.05)] lg:dark:shadow-[0_15px_30px_-5px_rgba(255,255,255,0.08)]'
-    };
-
-    const neonHoverStyles = {
-        default: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.3)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.4)]',
-        success: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.35)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.45)]',
-        danger: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(239,68,68,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(239,68,68,0.35)]',
-        warning: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(234,179,8,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(234,179,8,0.35)]',
-        info: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
-        orange: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(249,115,22,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(249,115,22,0.35)]',
-        indigo: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
-        teal: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(20,184,166,0.3)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(20,184,166,0.4)]',
-        violet: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.25)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.35)]',
-        slate: 'dark:group-hover:shadow-[0_8px_20px_-6px_rgba(100,116,139,0.2)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(100,116,139,0.3)]',
-        glass: 'dark:group-hover:shadow-[0_8px_16px_-6px_rgba(255,255,255,0.05)] lg:dark:group-hover:shadow-[0_15px_30px_-5px_rgba(255,255,255,0.08)]'
-    };
-
-    // Ambient Effect Gradients (Replaces Top Line with Soft Fill)
-    const ambientGradients = {
-        default: '',
-        success: 'from-green-500/10 to-transparent',
-        danger: 'from-red-500/10 to-transparent',
-        warning: 'from-yellow-500/10 to-transparent',
-        info: 'from-cyan-500/10 to-transparent',
-        orange: 'from-orange-500/10 to-transparent',
-        indigo: 'from-indigo-500/10 to-transparent',
-        teal: 'from-teal-500/10 to-transparent',
-        violet: 'from-violet-500/10 to-transparent',
-        slate: 'from-slate-500/10 to-transparent',
-        glass: ''
-    };
+    const variantStyles = createVariantStyles(isActive);
 
     const containerClasses = [
         baseStyles,

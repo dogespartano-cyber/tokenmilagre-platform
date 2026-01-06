@@ -105,14 +105,23 @@ export function validateReferences(agent: AgentDefinition, projectRoot: string):
 
     // Verificar se inherits existe
     if (agent.inherits) {
-        const inheritsPath = path.join(projectRoot, '.agent', 'workflows', agent.inherits);
-        if (!fs.existsSync(inheritsPath)) {
+        // v5.0: Inherits geralmente vem de memory/_DNA.md
+        // Tentamos primeiro em rules/ (legacy), depois em memory/ e root da .agent
+        const possiblePaths = [
+            path.join(projectRoot, '.agent', 'memory', agent.inherits),
+            path.join(projectRoot, '.agent', 'workflows', agent.inherits), // Legacy fallback
+            path.join(projectRoot, '.agent', agent.inherits)
+        ];
+
+        const exists = possiblePaths.some(p => fs.existsSync(p));
+
+        if (!exists) {
             issues.push({
                 severity: 'error',
                 agentName: agent.name,
                 rule: 'reference-inherits',
                 message: `Arquivo herdado não existe: ${agent.inherits}`,
-                suggestion: `Verifique se ${agent.inherits} existe em .agent/workflows/`,
+                suggestion: `Verifique se ${agent.inherits} existe em .agent/memory/`,
             });
         }
     }

@@ -1,0 +1,1281 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - link "$ MILAGRE Comunidade Web3" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e8]:
+            - generic [ref=e9]:
+              - generic [ref=e10]: $
+              - generic [ref=e11]: MILAGRE
+            - generic [ref=e12]: Comunidade Web3
+        - link "Sentimento Medo" [ref=e13] [cursor=pointer]:
+          - /url: /sentimento
+          - img [ref=e15]: "26"
+          - generic [ref=e21]:
+            - generic [ref=e22]: Sentimento
+            - generic [ref=e23]: Medo
+        - navigation [ref=e24]:
+          - generic [ref=e25]:
+            - generic [ref=e26]:
+              - generic [ref=e27]:
+                - button [ref=e28]
+                - link "Início" [ref=e29] [cursor=pointer]:
+                  - /url: /
+                  - img [ref=e30]
+                  - generic [ref=e32]: Início
+              - generic [ref=e33]:
+                - button [ref=e34]
+                - link "Notícias" [ref=e35] [cursor=pointer]:
+                  - /url: /noticias
+                  - img [ref=e36]
+                  - generic [ref=e38]: Notícias
+              - generic [ref=e39]:
+                - button [ref=e40]
+                - link "Gráficos" [ref=e41] [cursor=pointer]:
+                  - /url: /graficos
+                  - img [ref=e42]
+                  - generic [ref=e44]: Gráficos
+              - generic [ref=e45]:
+                - button [ref=e46]
+                - link "Sentimento" [ref=e47] [cursor=pointer]:
+                  - /url: /sentimento
+                  - img [ref=e48]
+                  - generic [ref=e50]: Sentimento
+              - generic [ref=e51]:
+                - button [ref=e52]
+                - link "Criptomoedas" [ref=e53] [cursor=pointer]:
+                  - /url: /criptomoedas
+                  - img [ref=e54]
+                  - generic [ref=e56]: Criptomoedas
+              - generic [ref=e57]:
+                - button [ref=e58]
+                - link "Educação" [ref=e59] [cursor=pointer]:
+                  - /url: /educacao
+                  - img [ref=e60]
+                  - generic [ref=e62]: Educação
+              - generic [ref=e63]:
+                - button [ref=e64]
+                - link "Curiosidades" [ref=e65] [cursor=pointer]:
+                  - /url: /curiosidades
+                  - img [ref=e66]
+                  - generic [ref=e68]: Curiosidades
+              - generic [ref=e69]:
+                - button [ref=e70]
+                - link "Recursos" [ref=e71] [cursor=pointer]:
+                  - /url: /recursos
+                  - img [ref=e72]
+                  - generic [ref=e74]: Recursos
+              - generic [ref=e75]:
+                - button [ref=e76]
+                - link "Token" [ref=e77] [cursor=pointer]:
+                  - /url: /token
+                  - img [ref=e78]
+                  - generic [ref=e80]: Token
+              - generic [ref=e81]:
+                - button [ref=e82]
+                - link "Sobre" [ref=e83] [cursor=pointer]:
+                  - /url: /sobre
+                  - img [ref=e84]
+                  - generic [ref=e86]: Sobre
+            - status [ref=e87]
+          - generic [ref=e89]:
+            - link "Discord" [ref=e90] [cursor=pointer]:
+              - /url: https://discord.gg/9BU3mFVX58
+              - img [ref=e91]
+            - link "Telegram" [ref=e93] [cursor=pointer]:
+              - /url: https://t.me/+Bop_TVFc_mg3Njlh
+              - img [ref=e94]
+          - button "Resetar Interface" [ref=e97]:
+            - img [ref=e98]
+            - generic [ref=e100]: Resetar Interface
+    - generic [ref=e101]:
+      - banner [ref=e102]:
+        - generic [ref=e104]:
+          - generic [ref=e107]:
+            - link "BTC $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 , 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9" [ref=e108] [cursor=pointer]:
+              - /url: /criptomoedas/bitcoin
+              - img [ref=e110]
+              - generic [ref=e113]:
+                - generic [ref=e114]: BTC
+                - generic [ref=e115]:
+                  - generic [ref=e116]: $
+                  - generic [ref=e118]:
+                    - generic [ref=e119]: "0"
+                    - generic [ref=e120]: "1"
+                    - generic [ref=e121]: "2"
+                    - generic [ref=e122]: "3"
+                    - generic [ref=e123]: "4"
+                    - generic [ref=e124]: "5"
+                    - generic [ref=e125]: "6"
+                    - generic [ref=e126]: "7"
+                    - generic [ref=e127]: "8"
+                    - generic [ref=e128]: "9"
+                  - generic [ref=e130]:
+                    - generic [ref=e131]: "0"
+                    - generic [ref=e132]: "1"
+                    - generic [ref=e133]: "2"
+                    - generic [ref=e134]: "3"
+                    - generic [ref=e135]: "4"
+                    - generic [ref=e136]: "5"
+                    - generic [ref=e137]: "6"
+                    - generic [ref=e138]: "7"
+                    - generic [ref=e139]: "8"
+                    - generic [ref=e140]: "9"
+                  - generic [ref=e141]: ","
+                  - generic [ref=e143]:
+                    - generic [ref=e144]: "0"
+                    - generic [ref=e145]: "1"
+                    - generic [ref=e146]: "2"
+                    - generic [ref=e147]: "3"
+                    - generic [ref=e148]: "4"
+                    - generic [ref=e149]: "5"
+                    - generic [ref=e150]: "6"
+                    - generic [ref=e151]: "7"
+                    - generic [ref=e152]: "8"
+                    - generic [ref=e153]: "9"
+                  - generic [ref=e155]:
+                    - generic [ref=e156]: "0"
+                    - generic [ref=e157]: "1"
+                    - generic [ref=e158]: "2"
+                    - generic [ref=e159]: "3"
+                    - generic [ref=e160]: "4"
+                    - generic [ref=e161]: "5"
+                    - generic [ref=e162]: "6"
+                    - generic [ref=e163]: "7"
+                    - generic [ref=e164]: "8"
+                    - generic [ref=e165]: "9"
+                  - generic [ref=e167]:
+                    - generic [ref=e168]: "0"
+                    - generic [ref=e169]: "1"
+                    - generic [ref=e170]: "2"
+                    - generic [ref=e171]: "3"
+                    - generic [ref=e172]: "4"
+                    - generic [ref=e173]: "5"
+                    - generic [ref=e174]: "6"
+                    - generic [ref=e175]: "7"
+                    - generic [ref=e176]: "8"
+                    - generic [ref=e177]: "9"
+            - link "ETH $ 0 1 2 3 4 5 6 7 8 9 , 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9" [ref=e178] [cursor=pointer]:
+              - /url: /criptomoedas/ethereum
+              - img [ref=e180]
+              - generic [ref=e190]:
+                - generic [ref=e191]: ETH
+                - generic [ref=e192]:
+                  - generic [ref=e193]: $
+                  - generic [ref=e195]:
+                    - generic [ref=e196]: "0"
+                    - generic [ref=e197]: "1"
+                    - generic [ref=e198]: "2"
+                    - generic [ref=e199]: "3"
+                    - generic [ref=e200]: "4"
+                    - generic [ref=e201]: "5"
+                    - generic [ref=e202]: "6"
+                    - generic [ref=e203]: "7"
+                    - generic [ref=e204]: "8"
+                    - generic [ref=e205]: "9"
+                  - generic [ref=e206]: ","
+                  - generic [ref=e208]:
+                    - generic [ref=e209]: "0"
+                    - generic [ref=e210]: "1"
+                    - generic [ref=e211]: "2"
+                    - generic [ref=e212]: "3"
+                    - generic [ref=e213]: "4"
+                    - generic [ref=e214]: "5"
+                    - generic [ref=e215]: "6"
+                    - generic [ref=e216]: "7"
+                    - generic [ref=e217]: "8"
+                    - generic [ref=e218]: "9"
+                  - generic [ref=e220]:
+                    - generic [ref=e221]: "0"
+                    - generic [ref=e222]: "1"
+                    - generic [ref=e223]: "2"
+                    - generic [ref=e224]: "3"
+                    - generic [ref=e225]: "4"
+                    - generic [ref=e226]: "5"
+                    - generic [ref=e227]: "6"
+                    - generic [ref=e228]: "7"
+                    - generic [ref=e229]: "8"
+                    - generic [ref=e230]: "9"
+                  - generic [ref=e232]:
+                    - generic [ref=e233]: "0"
+                    - generic [ref=e234]: "1"
+                    - generic [ref=e235]: "2"
+                    - generic [ref=e236]: "3"
+                    - generic [ref=e237]: "4"
+                    - generic [ref=e238]: "5"
+                    - generic [ref=e239]: "6"
+                    - generic [ref=e240]: "7"
+                    - generic [ref=e241]: "8"
+                    - generic [ref=e242]: "9"
+            - link "XRP $ 0 1 2 3 4 5 6 7 8 9 . 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9" [ref=e243] [cursor=pointer]:
+              - /url: /criptomoedas/ripple
+              - img [ref=e245]
+              - generic [ref=e248]:
+                - generic [ref=e249]: XRP
+                - generic [ref=e250]:
+                  - generic [ref=e251]: $
+                  - generic [ref=e253]:
+                    - generic [ref=e254]: "0"
+                    - generic [ref=e255]: "1"
+                    - generic [ref=e256]: "2"
+                    - generic [ref=e257]: "3"
+                    - generic [ref=e258]: "4"
+                    - generic [ref=e259]: "5"
+                    - generic [ref=e260]: "6"
+                    - generic [ref=e261]: "7"
+                    - generic [ref=e262]: "8"
+                    - generic [ref=e263]: "9"
+                  - generic [ref=e264]: .
+                  - generic [ref=e266]:
+                    - generic [ref=e267]: "0"
+                    - generic [ref=e268]: "1"
+                    - generic [ref=e269]: "2"
+                    - generic [ref=e270]: "3"
+                    - generic [ref=e271]: "4"
+                    - generic [ref=e272]: "5"
+                    - generic [ref=e273]: "6"
+                    - generic [ref=e274]: "7"
+                    - generic [ref=e275]: "8"
+                    - generic [ref=e276]: "9"
+                  - generic [ref=e278]:
+                    - generic [ref=e279]: "0"
+                    - generic [ref=e280]: "1"
+                    - generic [ref=e281]: "2"
+                    - generic [ref=e282]: "3"
+                    - generic [ref=e283]: "4"
+                    - generic [ref=e284]: "5"
+                    - generic [ref=e285]: "6"
+                    - generic [ref=e286]: "7"
+                    - generic [ref=e287]: "8"
+                    - generic [ref=e288]: "9"
+            - link "BNB $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9" [ref=e289] [cursor=pointer]:
+              - /url: /criptomoedas/binancecoin
+              - img [ref=e291]
+              - generic [ref=e294]:
+                - generic [ref=e295]: BNB
+                - generic [ref=e296]:
+                  - generic [ref=e297]: $
+                  - generic [ref=e299]:
+                    - generic [ref=e300]: "0"
+                    - generic [ref=e301]: "1"
+                    - generic [ref=e302]: "2"
+                    - generic [ref=e303]: "3"
+                    - generic [ref=e304]: "4"
+                    - generic [ref=e305]: "5"
+                    - generic [ref=e306]: "6"
+                    - generic [ref=e307]: "7"
+                    - generic [ref=e308]: "8"
+                    - generic [ref=e309]: "9"
+                  - generic [ref=e311]:
+                    - generic [ref=e312]: "0"
+                    - generic [ref=e313]: "1"
+                    - generic [ref=e314]: "2"
+                    - generic [ref=e315]: "3"
+                    - generic [ref=e316]: "4"
+                    - generic [ref=e317]: "5"
+                    - generic [ref=e318]: "6"
+                    - generic [ref=e319]: "7"
+                    - generic [ref=e320]: "8"
+                    - generic [ref=e321]: "9"
+                  - generic [ref=e323]:
+                    - generic [ref=e324]: "0"
+                    - generic [ref=e325]: "1"
+                    - generic [ref=e326]: "2"
+                    - generic [ref=e327]: "3"
+                    - generic [ref=e328]: "4"
+                    - generic [ref=e329]: "5"
+                    - generic [ref=e330]: "6"
+                    - generic [ref=e331]: "7"
+                    - generic [ref=e332]: "8"
+                    - generic [ref=e333]: "9"
+            - link "SOL SOL $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9" [ref=e334] [cursor=pointer]:
+              - /url: /criptomoedas/solana
+              - img "SOL" [ref=e336]
+              - generic [ref=e338]:
+                - generic [ref=e339]: SOL
+                - generic [ref=e340]:
+                  - generic [ref=e341]: $
+                  - generic [ref=e343]:
+                    - generic [ref=e344]: "0"
+                    - generic [ref=e345]: "1"
+                    - generic [ref=e346]: "2"
+                    - generic [ref=e347]: "3"
+                    - generic [ref=e348]: "4"
+                    - generic [ref=e349]: "5"
+                    - generic [ref=e350]: "6"
+                    - generic [ref=e351]: "7"
+                    - generic [ref=e352]: "8"
+                    - generic [ref=e353]: "9"
+                  - generic [ref=e355]:
+                    - generic [ref=e356]: "0"
+                    - generic [ref=e357]: "1"
+                    - generic [ref=e358]: "2"
+                    - generic [ref=e359]: "3"
+                    - generic [ref=e360]: "4"
+                    - generic [ref=e361]: "5"
+                    - generic [ref=e362]: "6"
+                    - generic [ref=e363]: "7"
+                    - generic [ref=e364]: "8"
+                    - generic [ref=e365]: "9"
+                  - generic [ref=e367]:
+                    - generic [ref=e368]: "0"
+                    - generic [ref=e369]: "1"
+                    - generic [ref=e370]: "2"
+                    - generic [ref=e371]: "3"
+                    - generic [ref=e372]: "4"
+                    - generic [ref=e373]: "5"
+                    - generic [ref=e374]: "6"
+                    - generic [ref=e375]: "7"
+                    - generic [ref=e376]: "8"
+                    - generic [ref=e377]: "9"
+          - navigation [ref=e378]:
+            - button "Entrar" [ref=e380]
+            - button "Claro" [ref=e381]:
+              - img [ref=e382]
+              - generic [ref=e384]: Claro
+            - link "$MILAGRE" [ref=e385] [cursor=pointer]:
+              - /url: /token
+              - img [ref=e387]
+              - generic [ref=e389]: $MILAGRE
+      - main [ref=e390]:
+        - generic [ref=e393]:
+          - generic [ref=e395]:
+            - generic [ref=e398]:
+              - link "Sua Jornada Começa Aqui" [ref=e399] [cursor=pointer]:
+                - /url: /
+                - heading "Sua Jornada Começa Aqui" [level=1] [ref=e400]
+              - paragraph [ref=e401]: Em busca de uma comunidade com prosperidade.
+            - navigation "Breadcrumb" [ref=e403]:
+              - list [ref=e404]:
+                - listitem [ref=e405]:
+                  - link "Início" [ref=e406] [cursor=pointer]:
+                    - /url: /
+                    - img [ref=e407]
+                    - generic [ref=e409]: Início
+          - generic [ref=e411]:
+            - generic [ref=e412]:
+              - generic [ref=e413]:
+                - button [ref=e414]:
+                  - img [ref=e415]
+                - generic [ref=e418]:
+                  - generic [ref=e419]:
+                    - button "Comece Aqui" [ref=e421]:
+                      - link "Comece Aqui" [ref=e422]:
+                        - /url: /comece-aqui
+                        - generic [ref=e424]:
+                          - img [ref=e426]
+                          - heading "Comece Aqui" [level=3] [ref=e428]
+                    - button "Notícias do Mercado" [ref=e430]:
+                      - link "Notícias do Mercado" [ref=e431]:
+                        - /url: /noticias
+                        - generic [ref=e433]:
+                          - img [ref=e435]
+                          - heading "Notícias do Mercado" [level=3] [ref=e437]
+                    - button "Gráficos Avançados" [ref=e439]:
+                      - link "Gráficos Avançados" [ref=e440]:
+                        - /url: /graficos
+                        - generic [ref=e442]:
+                          - img [ref=e444]
+                          - heading "Gráficos Avançados" [level=3] [ref=e446]
+                    - button "Ferramentas" [ref=e448]:
+                      - link "Ferramentas" [ref=e449]:
+                        - /url: /ferramentas
+                        - generic [ref=e451]:
+                          - img [ref=e453]
+                          - heading "Ferramentas" [level=3] [ref=e455]
+                    - button "Criptomoedas" [ref=e457]:
+                      - link "Criptomoedas" [ref=e458]:
+                        - /url: /criptomoedas
+                        - generic [ref=e460]:
+                          - img [ref=e462]
+                          - heading "Criptomoedas" [level=3] [ref=e464]
+                    - button "Curiosidades" [ref=e466]:
+                      - link "Curiosidades" [ref=e467]:
+                        - /url: /curiosidades
+                        - generic [ref=e469]:
+                          - img [ref=e471]
+                          - heading "Curiosidades" [level=3] [ref=e473]
+                  - status [ref=e474]
+              - generic [ref=e475]:
+                - button [ref=e476]:
+                  - img [ref=e477]
+                - generic [ref=e480]:
+                  - generic [ref=e481]:
+                    - button "Capitalização $3.30T ▲ 2.9% O que é Capitalização? Valor total de mercado de todas as criptomoedas. Calculado multiplicando o preço de cada moeda pela quantidade em circulação. Indica o tamanho do mercado cripto." [ref=e482]:
+                      - generic [ref=e485]:
+                        - generic [ref=e488]:
+                          - generic [ref=e489]:
+                            - img [ref=e491]
+                            - heading "Capitalização" [level=3] [ref=e493]
+                          - paragraph [ref=e495]: $3.30T
+                          - generic [ref=e496]: ▲ 2.9%
+                        - generic [ref=e500]:
+                          - heading "O que é Capitalização?" [level=4] [ref=e501]
+                          - paragraph [ref=e502]: Valor total de mercado de todas as criptomoedas. Calculado multiplicando o preço de cada moeda pela quantidade em circulação. Indica o tamanho do mercado cripto.
+                    - button "Volume 24h $147.72B O que é Volume 24h? Total de criptomoedas negociadas nas últimas 24 horas. Alto volume indica mercado ativo e liquidez. Baixo volume pode significar menos interesse." [ref=e503]:
+                      - generic [ref=e506]:
+                        - generic [ref=e509]:
+                          - generic [ref=e510]:
+                            - img [ref=e512]
+                            - heading "Volume 24h" [level=3] [ref=e514]
+                          - paragraph [ref=e516]: $147.72B
+                        - generic [ref=e520]:
+                          - heading "O que é Volume 24h?" [level=4] [ref=e521]
+                          - paragraph [ref=e522]: Total de criptomoedas negociadas nas últimas 24 horas. Alto volume indica mercado ativo e liquidez. Baixo volume pode significar menos interesse.
+                    - button "Dominância BTC 56.89% O que é Dominância BTC? Percentual do mercado cripto que pertence ao Bitcoin. Alta dominância sugere maior confiança no BTC. Queda pode indicar \"altcoin season\"." [ref=e523]:
+                      - generic [ref=e526]:
+                        - generic [ref=e529]:
+                          - generic [ref=e530]:
+                            - img [ref=e532]
+                            - heading "Dominância BTC" [level=3] [ref=e534]
+                          - paragraph [ref=e536]: 56.89%
+                        - generic [ref=e542]:
+                          - heading "O que é Dominância BTC?" [level=4] [ref=e543]
+                          - paragraph [ref=e544]: Percentual do mercado cripto que pertence ao Bitcoin. Alta dominância sugere maior confiança no BTC. Queda pode indicar "altcoin season".
+                    - button "Dominância ETH 11.83% O que é Dominância ETH? Percentual do mercado cripto que pertence ao Ethereum. Reflete a força do ecossistema ETH incluindo DeFi, NFTs e smart contracts." [ref=e545]:
+                      - generic [ref=e548]:
+                        - generic [ref=e551]:
+                          - generic [ref=e552]:
+                            - img [ref=e554]
+                            - heading "Dominância ETH" [level=3] [ref=e563]
+                          - paragraph [ref=e565]: 11.83%
+                        - generic [ref=e571]:
+                          - heading "O que é Dominância ETH?" [level=4] [ref=e572]
+                          - paragraph [ref=e573]: Percentual do mercado cripto que pertence ao Ethereum. Reflete a força do ecossistema ETH incluindo DeFi, NFTs e smart contracts.
+                  - status [ref=e574]
+              - generic:
+                - button:
+                  - img [ref=e575]
+              - generic [ref=e577]:
+                - button [ref=e578]:
+                  - img [ref=e579]
+                - generic [ref=e582]:
+                  - link "Últimas Notícias" [ref=e584] [cursor=pointer]:
+                    - /url: /noticias
+                    - heading "Últimas Notícias" [level=2] [ref=e585]
+                  - generic [ref=e588]:
+                    - generic [ref=e589]:
+                      - generic [ref=e592]: Hoje
+                      - generic [ref=e594]:
+                        - article [ref=e596]:
+                          - generic [ref=e597]:
+                            - generic [ref=e599]: 55 min
+                            - 'generic "Sentimento: Positivo" [ref=e600]'
+                          - 'link "Jupiter Lança JupUSD: Stablecoin Regulamentada Lastreada em BlackRock Revoluciona Finanças On-Chain na Solana" [ref=e601] [cursor=pointer]':
+                            - /url: /noticias/jupiter-lanca-jupusd-stablecoin-regulamentada-lastreada-em-blackrock-revoluciona-financas-o-mk1qpinp
+                            - 'heading "Jupiter Lança JupUSD: Stablecoin Regulamentada Lastreada em BlackRock Revoluciona Finanças On-Chain na Solana" [level=3] [ref=e602]'
+                          - paragraph [ref=e603]: Jupiter lança JupUSD, stablecoin 90% lastreada em USDtb do BlackRock BUIDL, integrando-se a lending, trading e perps para unificar liquidez na Solana.
+                          - generic [ref=e604]:
+                            - generic [ref=e606]: Stablecoins
+                            - generic [ref=e607]:
+                              - button [ref=e608]:
+                                - img [ref=e609]
+                              - button [ref=e611]:
+                                - img [ref=e612]
+                              - button [ref=e614]:
+                                - img [ref=e615]
+                        - article [ref=e618]:
+                          - generic [ref=e619]:
+                            - generic [ref=e621]: 1 horas
+                            - 'generic "Sentimento: Positivo" [ref=e622]'
+                          - link "Controle Americano sobre US$ 17 Trilhões em Petróleo Venezuelano Pode Turbinar Bitcoin como Ativo de Refúgio" [ref=e623] [cursor=pointer]:
+                            - /url: /noticias/controle-americano-sobre-us-17-trilhoes-em-petroleo-venezuelano-pode-turbinar-bitcoin-como-mk1qbrka
+                            - heading "Controle Americano sobre US$ 17 Trilhões em Petróleo Venezuelano Pode Turbinar Bitcoin como Ativo de Refúgio" [level=3] [ref=e624]
+                          - paragraph [ref=e625]: EUA capturam Maduro e assumem reservas petrolíferas de US$ 17T da Venezuela, derrubando preços do óleo e impulsionando Bitcoin como hedge geopolítico.
+                          - generic [ref=e626]:
+                            - generic [ref=e628]: Bitcoin
+                            - generic [ref=e629]:
+                              - button [ref=e630]:
+                                - img [ref=e631]
+                              - button [ref=e633]:
+                                - img [ref=e634]
+                              - button [ref=e636]:
+                                - img [ref=e637]
+                        - article [ref=e640]:
+                          - generic [ref=e641]:
+                            - generic [ref=e643]: 1 horas
+                            - 'generic "Sentimento: Negativo" [ref=e644]'
+                          - link "Ledger Confirma Vazamento de Dados de Clientes via Global-e, mas Garante Segurança das Carteiras" [ref=e645] [cursor=pointer]:
+                            - /url: /noticias/ledger-confirma-vazamento-de-dados-de-clientes-via-global-e-mas-garante-seguranca-das-carte-mk1q8q7i
+                            - heading "Ledger Confirma Vazamento de Dados de Clientes via Global-e, mas Garante Segurança das Carteiras" [level=3] [ref=e646]
+                          - paragraph [ref=e647]: Ledger revela exposição de nomes, e-mails e contatos de clientes por parceira Global-e. Sem risco a chaves privadas ou fundos cripto. Histórico de brechas pr...
+                          - generic [ref=e648]:
+                            - generic [ref=e650]: Hacks
+                            - generic [ref=e651]:
+                              - button [ref=e652]:
+                                - img [ref=e653]
+                              - button [ref=e655]:
+                                - img [ref=e656]
+                              - button [ref=e658]:
+                                - img [ref=e659]
+                        - article [ref=e662]:
+                          - generic [ref=e663]:
+                            - generic [ref=e665]: 1 horas
+                            - 'generic "Sentimento: Positivo" [ref=e666]'
+                          - link "Tom Lee Prevê Novo Recorde do Bitcoin em Janeiro, Mas Alerta para Volatilidade em 2026" [ref=e667] [cursor=pointer]:
+                            - /url: /noticias/tom-lee-preve-novo-recorde-do-bitcoin-em-janeiro-mas-alerta-para-volatilidade-em-2026-mk1q6wzs
+                            - heading "Tom Lee Prevê Novo Recorde do Bitcoin em Janeiro, Mas Alerta para Volatilidade em 2026" [level=3] [ref=e668]
+                          - paragraph [ref=e669]: Cofundador da Fundstrat acredita que Bitcoin pode atingir nova máxima histórica até o fim de janeiro, apesar dos alertas sobre volatilidade no mercado cripto.
+                          - generic [ref=e670]:
+                            - generic [ref=e672]: Bitcoin
+                            - generic [ref=e673]:
+                              - button [ref=e674]:
+                                - img [ref=e675]
+                              - button [ref=e677]:
+                                - img [ref=e678]
+                              - button [ref=e680]:
+                                - img [ref=e681]
+                    - generic [ref=e683]:
+                      - generic [ref=e686]: Ontem
+                      - article [ref=e690]:
+                        - generic [ref=e691]:
+                          - generic [ref=e693]: 1 dias
+                          - 'generic "Sentimento: Positivo" [ref=e694]'
+                        - 'link "Top 100 Empresas Públicas Acumularem Mais de 1 Milhão de BTC: Metaplanet e Strategy Lideram Novos Aquisições" [ref=e695] [cursor=pointer]':
+                          - /url: /noticias/top-100-empresas-publicas-acumularem-mais-de-1-milhao-de-btc-metaplanet-e-strategy-lideram-mk07izkw
+                          - 'heading "Top 100 Empresas Públicas Acumularem Mais de 1 Milhão de BTC: Metaplanet e Strategy Lideram Novos Aquisições" [level=3] [ref=e696]'
+                        - paragraph [ref=e697]: As 100 maiores empresas públicas detêm 1.090.949 BTC. Metaplanet adicionou 4.279 BTC e Strategy 1.229 BTC na última semana, sinalizando adoção institucional.
+                        - generic [ref=e698]:
+                          - generic [ref=e700]: Institucional
+                          - generic [ref=e701]:
+                            - button [ref=e702]:
+                              - img [ref=e703]
+                            - button [ref=e705]:
+                              - img [ref=e706]
+                            - button [ref=e708]:
+                              - img [ref=e709]
+              - generic [ref=e711]:
+                - button [ref=e712]:
+                  - img [ref=e713]
+                - generic [ref=e716]:
+                  - link "Curiosidades do Mundo Cripto" [ref=e718] [cursor=pointer]:
+                    - /url: /curiosidades
+                    - heading "Curiosidades do Mundo Cripto" [level=2] [ref=e719]
+                  - generic [ref=e720]:
+                    - generic [ref=e722]:
+                      - link "El Salvador foi o primeiro país a adotar o Bitcoin como moeda legal." [ref=e723] [cursor=pointer]:
+                        - /url: /curiosidades/el-salvador-bitcoin-moeda-legal
+                        - generic [ref=e724]: El Salvador foi o primeiro país a adotar o Bitcoin como moeda legal.
+                      - link "Vitalik Buterin tinha apenas 19 anos quando escreveu o whitepaper do Ethereum." [ref=e725] [cursor=pointer]:
+                        - /url: /curiosidades/vitalik-buterin-19-anos-ethereum
+                        - generic [ref=e726]: Vitalik Buterin tinha apenas 19 anos quando escreveu o whitepaper do Ethereum.
+                      - link "A Dogecoin foi criada em apenas 3 horas como uma piada." [ref=e727] [cursor=pointer]:
+                        - /url: /curiosidades/criacao-dogecoin-3-horas
+                        - generic [ref=e728]: A Dogecoin foi criada em apenas 3 horas como uma piada.
+                      - link "O termo 'HODL' surgiu de um erro de digitação em um fórum em 2013." [ref=e729] [cursor=pointer]:
+                        - /url: /curiosidades/erro-digitacao-hodl-2013
+                        - generic [ref=e730]: O termo 'HODL' surgiu de um erro de digitação em um fórum em 2013.
+                      - link "A rede Bitcoin é mais poderosa do que os 500 maiores supercomputadores do mundo juntos." [ref=e731] [cursor=pointer]:
+                        - /url: /curiosidades/poder-rede-bitcoin-supercomputadores
+                        - generic [ref=e732]: A rede Bitcoin é mais poderosa do que os 500 maiores supercomputadores do mundo juntos.
+                      - link "O último Bitcoin será minerado por volta do ano 2140." [ref=e733] [cursor=pointer]:
+                        - /url: /curiosidades/ultimo-bitcoin-minerado-2140
+                        - generic [ref=e734]: O último Bitcoin será minerado por volta do ano 2140.
+                      - link "Estima-se que cerca de 20% de todo o Bitcoin existente esteja perdido para sempre." [ref=e735] [cursor=pointer]:
+                        - /url: /curiosidades/bitcoin-perdido-sempre
+                        - generic [ref=e736]: Estima-se que cerca de 20% de todo o Bitcoin existente esteja perdido para sempre.
+                      - link "Satoshi Nakamoto, o criador do Bitcoin, possui cerca de 1.1 milhão de BTC." [ref=e737] [cursor=pointer]:
+                        - /url: /curiosidades/fortuna-satoshi-nakamoto
+                        - generic [ref=e738]: Satoshi Nakamoto, o criador do Bitcoin, possui cerca de 1.1 milhão de BTC.
+                      - link "A primeira transação de Bitcoin foi 10.000 BTC por duas pizzas em 2010." [ref=e739] [cursor=pointer]:
+                        - /url: /curiosidades/primeira-transacao-bitcoin-pizza
+                        - generic [ref=e740]: A primeira transação de Bitcoin foi 10.000 BTC por duas pizzas em 2010.
+                      - link "Muitas pessoas no mundo usam criptomoedas como proteção contra a inflação local." [ref=e741] [cursor=pointer]:
+                        - /url: /curiosidades/muitas-pessoas-no-mundo-usam-criptomoedas-como-pro
+                        - generic [ref=e742]: Muitas pessoas no mundo usam criptomoedas como proteção contra a inflação local.
+                      - link "O custo de transação no Bitcoin não depende do valor enviado, mas do tamanho dos dados." [ref=e743] [cursor=pointer]:
+                        - /url: /curiosidades/o-custo-de-transacao-no-bitcoin-nao-depende-do-val
+                        - generic [ref=e744]: O custo de transação no Bitcoin não depende do valor enviado, mas do tamanho dos dados.
+                      - link "O mercado cripto funciona 24 horas por dia, 7 dias por semana, sem interrupções." [ref=e745] [cursor=pointer]:
+                        - /url: /curiosidades/o-mercado-cripto-funciona-24-horas-por-dia-7-dias-
+                        - generic [ref=e746]: O mercado cripto funciona 24 horas por dia, 7 dias por semana, sem interrupções.
+                      - link "Perder as chaves privadas da sua carteira significa perder o acesso aos fundos para sempre." [ref=e747] [cursor=pointer]:
+                        - /url: /curiosidades/perder-as-chaves-privadas-da-sua-carteira-signific
+                        - generic [ref=e748]: Perder as chaves privadas da sua carteira significa perder o acesso aos fundos para sempre.
+                      - link "O termo 'Altcoin' refere-se a qualquer criptomoeda que não seja o Bitcoin." [ref=e749] [cursor=pointer]:
+                        - /url: /curiosidades/o-termo-altcoin-refere-se-a-qualquer-criptomoeda-q
+                        - generic [ref=e750]: O termo 'Altcoin' refere-se a qualquer criptomoeda que não seja o Bitcoin.
+                      - link "Cerca de 10% das empresas globais já consideram aceitar pagamentos em Bitcoin." [ref=e751] [cursor=pointer]:
+                        - /url: /curiosidades/cerca-de-10-das-empresas-globais-ja-consideram-ace
+                        - generic [ref=e752]: Cerca de 10% das empresas globais já consideram aceitar pagamentos em Bitcoin.
+                      - link "A Binance é atualmente a maior exchange de criptomoedas do mundo por volume." [ref=e753] [cursor=pointer]:
+                        - /url: /curiosidades/a-binance-e-atualmente-a-maior-exchange-de-criptom
+                        - generic [ref=e754]: A Binance é atualmente a maior exchange de criptomoedas do mundo por volume.
+                      - link "O criador da Litecoin, Charlie Lee, trabalhou anteriormente no Google." [ref=e755] [cursor=pointer]:
+                        - /url: /curiosidades/o-criador-da-litecoin-charlie-lee-trabalhou-anteri
+                        - generic [ref=e756]: O criador da Litecoin, Charlie Lee, trabalhou anteriormente no Google.
+                      - link "Shiba Inu começou como uma paródia da Dogecoin, que já era uma paródia." [ref=e757] [cursor=pointer]:
+                        - /url: /curiosidades/shiba-inu-comecou-como-uma-parodia-da-dogecoin-que
+                        - generic [ref=e758]: Shiba Inu começou como uma paródia da Dogecoin, que já era uma paródia.
+                      - link "A primeira ICO (Oferta Inicial de Moedas) foi do projeto Mastercoin em 2013." [ref=e759] [cursor=pointer]:
+                        - /url: /curiosidades/a-primeira-ico-oferta-inicial-de-moedas-foi-do-pro
+                        - generic [ref=e760]: A primeira ICO (Oferta Inicial de Moedas) foi do projeto Mastercoin em 2013.
+                      - link "O endereço do bloco gênese do Bitcoin não pode gastar a recompensa original." [ref=e761] [cursor=pointer]:
+                        - /url: /curiosidades/o-endereco-do-bloco-genese-do-bitcoin-nao-pode-gas
+                        - generic [ref=e762]: O endereço do bloco gênese do Bitcoin não pode gastar a recompensa original.
+                      - link "A Lightning Network permite pagamentos instantâneos com taxas quase zero no Bitcoin." [ref=e763] [cursor=pointer]:
+                        - /url: /curiosidades/a-lightning-network-permite-pagamentos-instantaneo
+                        - generic [ref=e764]: A Lightning Network permite pagamentos instantâneos com taxas quase zero no Bitcoin.
+                      - link "Existem caixas eletrônicos de Bitcoin em quase todos os países do mundo." [ref=e765] [cursor=pointer]:
+                        - /url: /curiosidades/existem-caixas-eletronicos-de-bitcoin-em-quase-tod
+                        - generic [ref=e766]: Existem caixas eletrônicos de Bitcoin em quase todos os países do mundo.
+                      - link "O Halving do Bitcoin acontece aproximadamente a cada quatro anos." [ref=e767] [cursor=pointer]:
+                        - /url: /curiosidades/o-halving-do-bitcoin-acontece-aproximadamente-a-ca
+                        - generic [ref=e768]: O Halving do Bitcoin acontece aproximadamente a cada quatro anos.
+                      - link "O processo de reduzir a recompensa por bloco minerado pela metade chama-se Halving." [ref=e769] [cursor=pointer]:
+                        - /url: /curiosidades/o-processo-de-reduzir-a-recompensa-por-bloco-miner
+                        - generic [ref=e770]: O processo de reduzir a recompensa por bloco minerado pela metade chama-se Halving.
+                      - link "DeFi (Finanças Descentralizadas) visa eliminar intermediários como bancos." [ref=e771] [cursor=pointer]:
+                        - /url: /curiosidades/defi-financas-descentralizadas-visa-eliminar-inter
+                        - generic [ref=e772]: DeFi (Finanças Descentralizadas) visa eliminar intermediários como bancos.
+                      - link "Stablecoins são criptos pareadas ao valor de moedas fiduciárias como o Dólar." [ref=e773] [cursor=pointer]:
+                        - /url: /curiosidades/stablecoins-sao-criptos-pareadas-ao-valor-de-moeda
+                        - generic [ref=e774]: Stablecoins são criptos pareadas ao valor de moedas fiduciárias como o Dólar.
+                      - link "O termo 'Whale' (Baleia) refere-se a indivíduos que possuem enormes quantias de cripto." [ref=e775] [cursor=pointer]:
+                        - /url: /curiosidades/o-termo-whale-baleia-refere-se-a-individuos-que-po
+                        - generic [ref=e776]: O termo 'Whale' (Baleia) refere-se a indivíduos que possuem enormes quantias de cripto.
+                      - link "A primeira conferência de Bitcoin aconteceu em Praga, in 2011." [ref=e777] [cursor=pointer]:
+                        - /url: /curiosidades/a-primeira-conferencia-de-bitcoin-aconteceu-em-pra
+                        - generic [ref=e778]: A primeira conferência de Bitcoin aconteceu em Praga, in 2011.
+                      - link "Bitcoin é um software de código aberto; qualquer um pode sugerir melhorias." [ref=e779] [cursor=pointer]:
+                        - /url: /curiosidades/bitcoin-e-um-software-de-codigo-aberto-qualquer-um
+                        - generic [ref=e780]: Bitcoin é um software de código aberto; qualquer um pode sugerir melhorias.
+                      - link "O símbolo do Bitcoin (₿) foi adicionado oficialmente ao padrão Unicode em 2017." [ref=e781] [cursor=pointer]:
+                        - /url: /curiosidades/o-simbolo-do-bitcoin-foi-adicionado-oficialmente-a
+                        - generic [ref=e782]: O símbolo do Bitcoin (₿) foi adicionado oficialmente ao padrão Unicode em 2017.
+                      - link "El Salvador foi o primeiro país a adotar o Bitcoin como moeda legal." [ref=e783] [cursor=pointer]:
+                        - /url: /curiosidades/el-salvador-bitcoin-moeda-legal
+                        - generic [ref=e784]: El Salvador foi o primeiro país a adotar o Bitcoin como moeda legal.
+                      - link "Vitalik Buterin tinha apenas 19 anos quando escreveu o whitepaper do Ethereum." [ref=e785] [cursor=pointer]:
+                        - /url: /curiosidades/vitalik-buterin-19-anos-ethereum
+                        - generic [ref=e786]: Vitalik Buterin tinha apenas 19 anos quando escreveu o whitepaper do Ethereum.
+                      - link "A Dogecoin foi criada em apenas 3 horas como uma piada." [ref=e787] [cursor=pointer]:
+                        - /url: /curiosidades/criacao-dogecoin-3-horas
+                        - generic [ref=e788]: A Dogecoin foi criada em apenas 3 horas como uma piada.
+                      - link "O termo 'HODL' surgiu de um erro de digitação em um fórum em 2013." [ref=e789] [cursor=pointer]:
+                        - /url: /curiosidades/erro-digitacao-hodl-2013
+                        - generic [ref=e790]: O termo 'HODL' surgiu de um erro de digitação em um fórum em 2013.
+                      - link "A rede Bitcoin é mais poderosa do que os 500 maiores supercomputadores do mundo juntos." [ref=e791] [cursor=pointer]:
+                        - /url: /curiosidades/poder-rede-bitcoin-supercomputadores
+                        - generic [ref=e792]: A rede Bitcoin é mais poderosa do que os 500 maiores supercomputadores do mundo juntos.
+                      - link "O último Bitcoin será minerado por volta do ano 2140." [ref=e793] [cursor=pointer]:
+                        - /url: /curiosidades/ultimo-bitcoin-minerado-2140
+                        - generic [ref=e794]: O último Bitcoin será minerado por volta do ano 2140.
+                      - link "Estima-se que cerca de 20% de todo o Bitcoin existente esteja perdido para sempre." [ref=e795] [cursor=pointer]:
+                        - /url: /curiosidades/bitcoin-perdido-sempre
+                        - generic [ref=e796]: Estima-se que cerca de 20% de todo o Bitcoin existente esteja perdido para sempre.
+                      - link "Satoshi Nakamoto, o criador do Bitcoin, possui cerca de 1.1 milhão de BTC." [ref=e797] [cursor=pointer]:
+                        - /url: /curiosidades/fortuna-satoshi-nakamoto
+                        - generic [ref=e798]: Satoshi Nakamoto, o criador do Bitcoin, possui cerca de 1.1 milhão de BTC.
+                      - link "A primeira transação de Bitcoin foi 10.000 BTC por duas pizzas em 2010." [ref=e799] [cursor=pointer]:
+                        - /url: /curiosidades/primeira-transacao-bitcoin-pizza
+                        - generic [ref=e800]: A primeira transação de Bitcoin foi 10.000 BTC por duas pizzas em 2010.
+                      - link "Muitas pessoas no mundo usam criptomoedas como proteção contra a inflação local." [ref=e801] [cursor=pointer]:
+                        - /url: /curiosidades/muitas-pessoas-no-mundo-usam-criptomoedas-como-pro
+                        - generic [ref=e802]: Muitas pessoas no mundo usam criptomoedas como proteção contra a inflação local.
+                      - link "O custo de transação no Bitcoin não depende do valor enviado, mas do tamanho dos dados." [ref=e803] [cursor=pointer]:
+                        - /url: /curiosidades/o-custo-de-transacao-no-bitcoin-nao-depende-do-val
+                        - generic [ref=e804]: O custo de transação no Bitcoin não depende do valor enviado, mas do tamanho dos dados.
+                      - link "O mercado cripto funciona 24 horas por dia, 7 dias por semana, sem interrupções." [ref=e805] [cursor=pointer]:
+                        - /url: /curiosidades/o-mercado-cripto-funciona-24-horas-por-dia-7-dias-
+                        - generic [ref=e806]: O mercado cripto funciona 24 horas por dia, 7 dias por semana, sem interrupções.
+                      - link "Perder as chaves privadas da sua carteira significa perder o acesso aos fundos para sempre." [ref=e807] [cursor=pointer]:
+                        - /url: /curiosidades/perder-as-chaves-privadas-da-sua-carteira-signific
+                        - generic [ref=e808]: Perder as chaves privadas da sua carteira significa perder o acesso aos fundos para sempre.
+                      - link "O termo 'Altcoin' refere-se a qualquer criptomoeda que não seja o Bitcoin." [ref=e809] [cursor=pointer]:
+                        - /url: /curiosidades/o-termo-altcoin-refere-se-a-qualquer-criptomoeda-q
+                        - generic [ref=e810]: O termo 'Altcoin' refere-se a qualquer criptomoeda que não seja o Bitcoin.
+                      - link "Cerca de 10% das empresas globais já consideram aceitar pagamentos em Bitcoin." [ref=e811] [cursor=pointer]:
+                        - /url: /curiosidades/cerca-de-10-das-empresas-globais-ja-consideram-ace
+                        - generic [ref=e812]: Cerca de 10% das empresas globais já consideram aceitar pagamentos em Bitcoin.
+                      - link "A Binance é atualmente a maior exchange de criptomoedas do mundo por volume." [ref=e813] [cursor=pointer]:
+                        - /url: /curiosidades/a-binance-e-atualmente-a-maior-exchange-de-criptom
+                        - generic [ref=e814]: A Binance é atualmente a maior exchange de criptomoedas do mundo por volume.
+                      - link "O criador da Litecoin, Charlie Lee, trabalhou anteriormente no Google." [ref=e815] [cursor=pointer]:
+                        - /url: /curiosidades/o-criador-da-litecoin-charlie-lee-trabalhou-anteri
+                        - generic [ref=e816]: O criador da Litecoin, Charlie Lee, trabalhou anteriormente no Google.
+                      - link "Shiba Inu começou como uma paródia da Dogecoin, que já era uma paródia." [ref=e817] [cursor=pointer]:
+                        - /url: /curiosidades/shiba-inu-comecou-como-uma-parodia-da-dogecoin-que
+                        - generic [ref=e818]: Shiba Inu começou como uma paródia da Dogecoin, que já era uma paródia.
+                      - link "A primeira ICO (Oferta Inicial de Moedas) foi do projeto Mastercoin em 2013." [ref=e819] [cursor=pointer]:
+                        - /url: /curiosidades/a-primeira-ico-oferta-inicial-de-moedas-foi-do-pro
+                        - generic [ref=e820]: A primeira ICO (Oferta Inicial de Moedas) foi do projeto Mastercoin em 2013.
+                      - link "O endereço do bloco gênese do Bitcoin não pode gastar a recompensa original." [ref=e821] [cursor=pointer]:
+                        - /url: /curiosidades/o-endereco-do-bloco-genese-do-bitcoin-nao-pode-gas
+                        - generic [ref=e822]: O endereço do bloco gênese do Bitcoin não pode gastar a recompensa original.
+                      - link "A Lightning Network permite pagamentos instantâneos com taxas quase zero no Bitcoin." [ref=e823] [cursor=pointer]:
+                        - /url: /curiosidades/a-lightning-network-permite-pagamentos-instantaneo
+                        - generic [ref=e824]: A Lightning Network permite pagamentos instantâneos com taxas quase zero no Bitcoin.
+                      - link "Existem caixas eletrônicos de Bitcoin em quase todos os países do mundo." [ref=e825] [cursor=pointer]:
+                        - /url: /curiosidades/existem-caixas-eletronicos-de-bitcoin-em-quase-tod
+                        - generic [ref=e826]: Existem caixas eletrônicos de Bitcoin em quase todos os países do mundo.
+                      - link "O Halving do Bitcoin acontece aproximadamente a cada quatro anos." [ref=e827] [cursor=pointer]:
+                        - /url: /curiosidades/o-halving-do-bitcoin-acontece-aproximadamente-a-ca
+                        - generic [ref=e828]: O Halving do Bitcoin acontece aproximadamente a cada quatro anos.
+                      - link "O processo de reduzir a recompensa por bloco minerado pela metade chama-se Halving." [ref=e829] [cursor=pointer]:
+                        - /url: /curiosidades/o-processo-de-reduzir-a-recompensa-por-bloco-miner
+                        - generic [ref=e830]: O processo de reduzir a recompensa por bloco minerado pela metade chama-se Halving.
+                      - link "DeFi (Finanças Descentralizadas) visa eliminar intermediários como bancos." [ref=e831] [cursor=pointer]:
+                        - /url: /curiosidades/defi-financas-descentralizadas-visa-eliminar-inter
+                        - generic [ref=e832]: DeFi (Finanças Descentralizadas) visa eliminar intermediários como bancos.
+                      - link "Stablecoins são criptos pareadas ao valor de moedas fiduciárias como o Dólar." [ref=e833] [cursor=pointer]:
+                        - /url: /curiosidades/stablecoins-sao-criptos-pareadas-ao-valor-de-moeda
+                        - generic [ref=e834]: Stablecoins são criptos pareadas ao valor de moedas fiduciárias como o Dólar.
+                      - link "O termo 'Whale' (Baleia) refere-se a indivíduos que possuem enormes quantias de cripto." [ref=e835] [cursor=pointer]:
+                        - /url: /curiosidades/o-termo-whale-baleia-refere-se-a-individuos-que-po
+                        - generic [ref=e836]: O termo 'Whale' (Baleia) refere-se a indivíduos que possuem enormes quantias de cripto.
+                      - link "A primeira conferência de Bitcoin aconteceu em Praga, in 2011." [ref=e837] [cursor=pointer]:
+                        - /url: /curiosidades/a-primeira-conferencia-de-bitcoin-aconteceu-em-pra
+                        - generic [ref=e838]: A primeira conferência de Bitcoin aconteceu em Praga, in 2011.
+                      - link "Bitcoin é um software de código aberto; qualquer um pode sugerir melhorias." [ref=e839] [cursor=pointer]:
+                        - /url: /curiosidades/bitcoin-e-um-software-de-codigo-aberto-qualquer-um
+                        - generic [ref=e840]: Bitcoin é um software de código aberto; qualquer um pode sugerir melhorias.
+                      - link "O símbolo do Bitcoin (₿) foi adicionado oficialmente ao padrão Unicode em 2017." [ref=e841] [cursor=pointer]:
+                        - /url: /curiosidades/o-simbolo-do-bitcoin-foi-adicionado-oficialmente-a
+                        - generic [ref=e842]: O símbolo do Bitcoin (₿) foi adicionado oficialmente ao padrão Unicode em 2017.
+                    - generic [ref=e844]:
+                      - link "Algumas mineradoras de Bitcoin usam energia térmica de vulcões para operar." [ref=e845] [cursor=pointer]:
+                        - /url: /curiosidades/algumas-mineradoras-de-bitcoin-usam-energia-termic
+                        - generic [ref=e846]: Algumas mineradoras de Bitcoin usam energia térmica de vulcões para operar.
+                      - link "Gas no ecossistema Ethereum refere-se à taxa paga para processar transações." [ref=e847] [cursor=pointer]:
+                        - /url: /curiosidades/gas-no-ecossistema-ethereum-refere-se-a-taxa-paga-
+                        - generic [ref=e848]: Gas no ecossistema Ethereum refere-se à taxa paga para processar transações.
+                      - link "O termo 'To the Moon' refere-se à expectativa de que o preço suba drasticamente." [ref=e849] [cursor=pointer]:
+                        - /url: /curiosidades/o-termo-to-the-moon-refere-se-a-expectativa-de-que
+                        - generic [ref=e850]: O termo 'To the Moon' refere-se à expectativa de que o preço suba drasticamente.
+                      - link "Mais de 100 milhões de pessoas possuem algum tipo de ativo cripto no Brasil." [ref=e851] [cursor=pointer]:
+                        - /url: /curiosidades/mais-de-100-milhoes-de-pessoas-possuem-algum-tipo-
+                        - generic [ref=e852]: Mais de 100 milhões de pessoas possuem algum tipo de ativo cripto no Brasil.
+                      - link "A rede Ethereum processa significativamente mais transações diárias que o Bitcoin." [ref=e853] [cursor=pointer]:
+                        - /url: /curiosidades/a-rede-ethereum-processa-significativamente-mais-t
+                        - generic [ref=e854]: A rede Ethereum processa significativamente mais transações diárias que o Bitcoin.
+                      - link "NFTs (Tokens Não Fungíveis) podem representar qualquer coisa, de arte a terrenos virtuais." [ref=e855] [cursor=pointer]:
+                        - /url: /curiosidades/nfts-tokens-nao-fungiveis-podem-representar-qualqu
+                        - generic [ref=e856]: NFTs (Tokens Não Fungíveis) podem representar qualquer coisa, de arte a terrenos virtuais.
+                      - link "O Bitcoin é considerado 'ouro digital' por sua escassez programada." [ref=e857] [cursor=pointer]:
+                        - /url: /curiosidades/o-bitcoin-e-considerado-ouro-digital-por-sua-escas
+                        - generic [ref=e858]: O Bitcoin é considerado 'ouro digital' por sua escassez programada.
+                      - link "A palavra 'Criptomoeda' não aparece no whitepaper original do Bitcoin." [ref=e859] [cursor=pointer]:
+                        - /url: /curiosidades/a-palavra-criptomoeda-nao-aparece-no-whitepaper-or
+                        - generic [ref=e860]: A palavra 'Criptomoeda' não aparece no whitepaper original do Bitcoin.
+                      - link "Existem milhares de 'moedas zumbis' que não têm volume ou valor de mercado." [ref=e861] [cursor=pointer]:
+                        - /url: /curiosidades/existem-milhares-de-moedas-zumbis-que-nao-tem-volu
+                        - generic [ref=e862]: Existem milhares de 'moedas zumbis' que não têm volume ou valor de mercado.
+                      - link "A mineração de Bitcoin utiliza eletricidade gasta por aparelhos eletrônicos em stand-by nos EUA." [ref=e863] [cursor=pointer]:
+                        - /url: /curiosidades/a-mineracao-de-bitcoin-utiliza-eletricidade-gasta-
+                        - generic [ref=e864]: A mineração de Bitcoin utiliza eletricidade gasta por aparelhos eletrônicos em stand-by nos EUA.
+                      - link "A primeira grande exchange de Bitcoin, Mt. Gox, era originalmente um site de cards de Magic." [ref=e865] [cursor=pointer]:
+                        - /url: /curiosidades/a-primeira-grande-exchange-de-bitcoin-mt-gox-era-o
+                        - generic [ref=e866]: A primeira grande exchange de Bitcoin, Mt. Gox, era originalmente um site de cards de Magic.
+                      - link "El Salvador foi o primeiro país a adotar o Bitcoin como moeda legal." [ref=e867] [cursor=pointer]:
+                        - /url: /curiosidades/el-salvador-foi-o-primeiro-pais-a-adotar-o-bitcoin
+                        - generic [ref=e868]: El Salvador foi o primeiro país a adotar o Bitcoin como moeda legal.
+                      - link "O suprimento total de Bitcoin é de 21 milhões, nem um a mais." [ref=e869] [cursor=pointer]:
+                        - /url: /curiosidades/o-suprimento-total-de-bitcoin-e-de-21-milhoes-nem-
+                        - generic [ref=e870]: O suprimento total de Bitcoin é de 21 milhões, nem um a mais.
+                      - link "Ethereum não é apenas uma moeda, mas uma plataforma para contratos inteligentes." [ref=e871] [cursor=pointer]:
+                        - /url: /curiosidades/ethereum-nao-e-apenas-uma-moeda-mas-uma-plataforma
+                        - generic [ref=e872]: Ethereum não é apenas uma moeda, mas uma plataforma para contratos inteligentes.
+                      - link "Laszlo Hanyecz, o homem da pizza, gastou o que hoje valeria bilhões em uma refeição." [ref=e873] [cursor=pointer]:
+                        - /url: /curiosidades/laszlo-hanyecz-o-homem-da-pizza-gastou-o-que-hoje-
+                        - generic [ref=e874]: Laszlo Hanyecz, o homem da pizza, gastou o que hoje valeria bilhões em uma refeição.
+                      - link "O bloco gênese do Bitcoin contém uma manchete do jornal 'The Times' sobre resgate bancário." [ref=e875] [cursor=pointer]:
+                        - /url: /curiosidades/o-bloco-genese-do-bitcoin-contem-uma-manchete-do-j
+                        - generic [ref=e876]: O bloco gênese do Bitcoin contém uma manchete do jornal 'The Times' sobre resgate bancário.
+                      - link "A menor unidade de um Bitcoin é chamada de 'Satoshi'." [ref=e877] [cursor=pointer]:
+                        - /url: /curiosidades/a-menor-unidade-de-um-bitcoin-e-chamada-de-satoshi
+                        - generic [ref=e878]: A menor unidade de um Bitcoin é chamada de 'Satoshi'.
+                      - link "O governo dos EUA é um dos maiores detentores de Bitcoin do mundo devido a apreensões." [ref=e879] [cursor=pointer]:
+                        - /url: /curiosidades/o-governo-dos-eua-e-um-dos-maiores-detentores-de-b
+                        - generic [ref=e880]: O governo dos EUA é um dos maiores detentores de Bitcoin do mundo devido a apreensões.
+                      - link "Existem mais de 200 milhões de usuários de criptomoedas no mundo hoje." [ref=e881] [cursor=pointer]:
+                        - /url: /curiosidades/existem-mais-de-200-milhoes-de-usuarios-de-criptom
+                        - generic [ref=e882]: Existem mais de 200 milhões de usuários de criptomoedas no mundo hoje.
+                      - link "Vitalik Buterin tinha apenas 19 anos quando escreveu o whitepaper do Ethereum." [ref=e883] [cursor=pointer]:
+                        - /url: /curiosidades/vitalik-buterin-tinha-apenas-19-anos-quando-escrev
+                        - generic [ref=e884]: Vitalik Buterin tinha apenas 19 anos quando escreveu o whitepaper do Ethereum.
+                      - link "A Dogecoin foi criada em apenas 3 horas como uma piada." [ref=e885] [cursor=pointer]:
+                        - /url: /curiosidades/a-dogecoin-foi-criada-em-apenas-3-horas-como-uma-p
+                        - generic [ref=e886]: A Dogecoin foi criada em apenas 3 horas como uma piada.
+                      - link "O termo 'HODL' surgiu de um erro de digitação em um fórum em 2013." [ref=e887] [cursor=pointer]:
+                        - /url: /curiosidades/o-termo-hodl-surgiu-de-um-erro-de-digitacao-em-um-
+                        - generic [ref=e888]: O termo 'HODL' surgiu de um erro de digitação em um fórum em 2013.
+                      - link "Hal Finney foi a primeira pessoa a receber uma transação de Bitcoin de Satoshi." [ref=e889] [cursor=pointer]:
+                        - /url: /curiosidades/hal-finney-foi-a-primeira-pessoa-a-receber-uma-tra
+                        - generic [ref=e890]: Hal Finney foi a primeira pessoa a receber uma transação de Bitcoin de Satoshi.
+                      - link "A primeira criptomoeda do mundo não foi o Bitcoin, mas o eCash de David Chaum em 1983." [ref=e891] [cursor=pointer]:
+                        - /url: /curiosidades/a-primeira-criptomoeda-do-mundo-nao-foi-o-bitcoin-
+                        - generic [ref=e892]: A primeira criptomoeda do mundo não foi o Bitcoin, mas o eCash de David Chaum em 1983.
+                      - link "A rede Bitcoin é mais poderosa do que os 500 maiores supercomputadores do mundo juntos." [ref=e893] [cursor=pointer]:
+                        - /url: /curiosidades/a-rede-bitcoin-e-mais-poderosa-do-que-os-500-maior
+                        - generic [ref=e894]: A rede Bitcoin é mais poderosa do que os 500 maiores supercomputadores do mundo juntos.
+                      - link "O último Bitcoin será minerado por volta do ano 2140." [ref=e895] [cursor=pointer]:
+                        - /url: /curiosidades/o-ultimo-bitcoin-sera-minerado-por-volta-do-ano-21
+                        - generic [ref=e896]: O último Bitcoin será minerado por volta do ano 2140.
+                      - link "Estima-se que cerca de 20% de todo o Bitcoin existente esteja perdido para sempre." [ref=e897] [cursor=pointer]:
+                        - /url: /curiosidades/estima-se-que-cerca-de-20-de-todo-o-bitcoin-existe
+                        - generic [ref=e898]: Estima-se que cerca de 20% de todo o Bitcoin existente esteja perdido para sempre.
+                      - link "Satoshi Nakamoto, o criador do Bitcoin, possui cerca de 1.1 milhão de BTC." [ref=e899] [cursor=pointer]:
+                        - /url: /curiosidades/satoshi-nakamoto-o-criador-do-bitcoin-possui-cerca
+                        - generic [ref=e900]: Satoshi Nakamoto, o criador do Bitcoin, possui cerca de 1.1 milhão de BTC.
+                      - link "A primeira transação de Bitcoin foi 10.000 BTC por duas pizzas em 2010." [ref=e901] [cursor=pointer]:
+                        - /url: /curiosidades/a-primeira-transacao-de-bitcoin-foi-10000-btc-por-
+                        - generic [ref=e902]: A primeira transação de Bitcoin foi 10.000 BTC por duas pizzas em 2010.
+                      - link "Algumas mineradoras de Bitcoin usam energia térmica de vulcões para operar." [ref=e903] [cursor=pointer]:
+                        - /url: /curiosidades/algumas-mineradoras-de-bitcoin-usam-energia-termic
+                        - generic [ref=e904]: Algumas mineradoras de Bitcoin usam energia térmica de vulcões para operar.
+                      - link "Gas no ecossistema Ethereum refere-se à taxa paga para processar transações." [ref=e905] [cursor=pointer]:
+                        - /url: /curiosidades/gas-no-ecossistema-ethereum-refere-se-a-taxa-paga-
+                        - generic [ref=e906]: Gas no ecossistema Ethereum refere-se à taxa paga para processar transações.
+                      - link "O termo 'To the Moon' refere-se à expectativa de que o preço suba drasticamente." [ref=e907] [cursor=pointer]:
+                        - /url: /curiosidades/o-termo-to-the-moon-refere-se-a-expectativa-de-que
+                        - generic [ref=e908]: O termo 'To the Moon' refere-se à expectativa de que o preço suba drasticamente.
+                      - link "Mais de 100 milhões de pessoas possuem algum tipo de ativo cripto no Brasil." [ref=e909] [cursor=pointer]:
+                        - /url: /curiosidades/mais-de-100-milhoes-de-pessoas-possuem-algum-tipo-
+                        - generic [ref=e910]: Mais de 100 milhões de pessoas possuem algum tipo de ativo cripto no Brasil.
+                      - link "A rede Ethereum processa significativamente mais transações diárias que o Bitcoin." [ref=e911] [cursor=pointer]:
+                        - /url: /curiosidades/a-rede-ethereum-processa-significativamente-mais-t
+                        - generic [ref=e912]: A rede Ethereum processa significativamente mais transações diárias que o Bitcoin.
+                      - link "NFTs (Tokens Não Fungíveis) podem representar qualquer coisa, de arte a terrenos virtuais." [ref=e913] [cursor=pointer]:
+                        - /url: /curiosidades/nfts-tokens-nao-fungiveis-podem-representar-qualqu
+                        - generic [ref=e914]: NFTs (Tokens Não Fungíveis) podem representar qualquer coisa, de arte a terrenos virtuais.
+                      - link "O Bitcoin é considerado 'ouro digital' por sua escassez programada." [ref=e915] [cursor=pointer]:
+                        - /url: /curiosidades/o-bitcoin-e-considerado-ouro-digital-por-sua-escas
+                        - generic [ref=e916]: O Bitcoin é considerado 'ouro digital' por sua escassez programada.
+                      - link "A palavra 'Criptomoeda' não aparece no whitepaper original do Bitcoin." [ref=e917] [cursor=pointer]:
+                        - /url: /curiosidades/a-palavra-criptomoeda-nao-aparece-no-whitepaper-or
+                        - generic [ref=e918]: A palavra 'Criptomoeda' não aparece no whitepaper original do Bitcoin.
+                      - link "Existem milhares de 'moedas zumbis' que não têm volume ou valor de mercado." [ref=e919] [cursor=pointer]:
+                        - /url: /curiosidades/existem-milhares-de-moedas-zumbis-que-nao-tem-volu
+                        - generic [ref=e920]: Existem milhares de 'moedas zumbis' que não têm volume ou valor de mercado.
+                      - link "A mineração de Bitcoin utiliza eletricidade gasta por aparelhos eletrônicos em stand-by nos EUA." [ref=e921] [cursor=pointer]:
+                        - /url: /curiosidades/a-mineracao-de-bitcoin-utiliza-eletricidade-gasta-
+                        - generic [ref=e922]: A mineração de Bitcoin utiliza eletricidade gasta por aparelhos eletrônicos em stand-by nos EUA.
+                      - link "A primeira grande exchange de Bitcoin, Mt. Gox, era originalmente um site de cards de Magic." [ref=e923] [cursor=pointer]:
+                        - /url: /curiosidades/a-primeira-grande-exchange-de-bitcoin-mt-gox-era-o
+                        - generic [ref=e924]: A primeira grande exchange de Bitcoin, Mt. Gox, era originalmente um site de cards de Magic.
+                      - link "El Salvador foi o primeiro país a adotar o Bitcoin como moeda legal." [ref=e925] [cursor=pointer]:
+                        - /url: /curiosidades/el-salvador-foi-o-primeiro-pais-a-adotar-o-bitcoin
+                        - generic [ref=e926]: El Salvador foi o primeiro país a adotar o Bitcoin como moeda legal.
+                      - link "O suprimento total de Bitcoin é de 21 milhões, nem um a mais." [ref=e927] [cursor=pointer]:
+                        - /url: /curiosidades/o-suprimento-total-de-bitcoin-e-de-21-milhoes-nem-
+                        - generic [ref=e928]: O suprimento total de Bitcoin é de 21 milhões, nem um a mais.
+                      - link "Ethereum não é apenas uma moeda, mas uma plataforma para contratos inteligentes." [ref=e929] [cursor=pointer]:
+                        - /url: /curiosidades/ethereum-nao-e-apenas-uma-moeda-mas-uma-plataforma
+                        - generic [ref=e930]: Ethereum não é apenas uma moeda, mas uma plataforma para contratos inteligentes.
+                      - link "Laszlo Hanyecz, o homem da pizza, gastou o que hoje valeria bilhões em uma refeição." [ref=e931] [cursor=pointer]:
+                        - /url: /curiosidades/laszlo-hanyecz-o-homem-da-pizza-gastou-o-que-hoje-
+                        - generic [ref=e932]: Laszlo Hanyecz, o homem da pizza, gastou o que hoje valeria bilhões em uma refeição.
+                      - link "O bloco gênese do Bitcoin contém uma manchete do jornal 'The Times' sobre resgate bancário." [ref=e933] [cursor=pointer]:
+                        - /url: /curiosidades/o-bloco-genese-do-bitcoin-contem-uma-manchete-do-j
+                        - generic [ref=e934]: O bloco gênese do Bitcoin contém uma manchete do jornal 'The Times' sobre resgate bancário.
+                      - link "A menor unidade de um Bitcoin é chamada de 'Satoshi'." [ref=e935] [cursor=pointer]:
+                        - /url: /curiosidades/a-menor-unidade-de-um-bitcoin-e-chamada-de-satoshi
+                        - generic [ref=e936]: A menor unidade de um Bitcoin é chamada de 'Satoshi'.
+                      - link "O governo dos EUA é um dos maiores detentores de Bitcoin do mundo devido a apreensões." [ref=e937] [cursor=pointer]:
+                        - /url: /curiosidades/o-governo-dos-eua-e-um-dos-maiores-detentores-de-b
+                        - generic [ref=e938]: O governo dos EUA é um dos maiores detentores de Bitcoin do mundo devido a apreensões.
+                      - link "Existem mais de 200 milhões de usuários de criptomoedas no mundo hoje." [ref=e939] [cursor=pointer]:
+                        - /url: /curiosidades/existem-mais-de-200-milhoes-de-usuarios-de-criptom
+                        - generic [ref=e940]: Existem mais de 200 milhões de usuários de criptomoedas no mundo hoje.
+                      - link "Vitalik Buterin tinha apenas 19 anos quando escreveu o whitepaper do Ethereum." [ref=e941] [cursor=pointer]:
+                        - /url: /curiosidades/vitalik-buterin-tinha-apenas-19-anos-quando-escrev
+                        - generic [ref=e942]: Vitalik Buterin tinha apenas 19 anos quando escreveu o whitepaper do Ethereum.
+                      - link "A Dogecoin foi criada em apenas 3 horas como uma piada." [ref=e943] [cursor=pointer]:
+                        - /url: /curiosidades/a-dogecoin-foi-criada-em-apenas-3-horas-como-uma-p
+                        - generic [ref=e944]: A Dogecoin foi criada em apenas 3 horas como uma piada.
+                      - link "O termo 'HODL' surgiu de um erro de digitação em um fórum em 2013." [ref=e945] [cursor=pointer]:
+                        - /url: /curiosidades/o-termo-hodl-surgiu-de-um-erro-de-digitacao-em-um-
+                        - generic [ref=e946]: O termo 'HODL' surgiu de um erro de digitação em um fórum em 2013.
+                      - link "Hal Finney foi a primeira pessoa a receber uma transação de Bitcoin de Satoshi." [ref=e947] [cursor=pointer]:
+                        - /url: /curiosidades/hal-finney-foi-a-primeira-pessoa-a-receber-uma-tra
+                        - generic [ref=e948]: Hal Finney foi a primeira pessoa a receber uma transação de Bitcoin de Satoshi.
+                      - link "A primeira criptomoeda do mundo não foi o Bitcoin, mas o eCash de David Chaum em 1983." [ref=e949] [cursor=pointer]:
+                        - /url: /curiosidades/a-primeira-criptomoeda-do-mundo-nao-foi-o-bitcoin-
+                        - generic [ref=e950]: A primeira criptomoeda do mundo não foi o Bitcoin, mas o eCash de David Chaum em 1983.
+                      - link "A rede Bitcoin é mais poderosa do que os 500 maiores supercomputadores do mundo juntos." [ref=e951] [cursor=pointer]:
+                        - /url: /curiosidades/a-rede-bitcoin-e-mais-poderosa-do-que-os-500-maior
+                        - generic [ref=e952]: A rede Bitcoin é mais poderosa do que os 500 maiores supercomputadores do mundo juntos.
+                      - link "O último Bitcoin será minerado por volta do ano 2140." [ref=e953] [cursor=pointer]:
+                        - /url: /curiosidades/o-ultimo-bitcoin-sera-minerado-por-volta-do-ano-21
+                        - generic [ref=e954]: O último Bitcoin será minerado por volta do ano 2140.
+                      - link "Estima-se que cerca de 20% de todo o Bitcoin existente esteja perdido para sempre." [ref=e955] [cursor=pointer]:
+                        - /url: /curiosidades/estima-se-que-cerca-de-20-de-todo-o-bitcoin-existe
+                        - generic [ref=e956]: Estima-se que cerca de 20% de todo o Bitcoin existente esteja perdido para sempre.
+                      - link "Satoshi Nakamoto, o criador do Bitcoin, possui cerca de 1.1 milhão de BTC." [ref=e957] [cursor=pointer]:
+                        - /url: /curiosidades/satoshi-nakamoto-o-criador-do-bitcoin-possui-cerca
+                        - generic [ref=e958]: Satoshi Nakamoto, o criador do Bitcoin, possui cerca de 1.1 milhão de BTC.
+                      - link "A primeira transação de Bitcoin foi 10.000 BTC por duas pizzas em 2010." [ref=e959] [cursor=pointer]:
+                        - /url: /curiosidades/a-primeira-transacao-de-bitcoin-foi-10000-btc-por-
+                        - generic [ref=e960]: A primeira transação de Bitcoin foi 10.000 BTC por duas pizzas em 2010.
+              - generic [ref=e961]:
+                - button [ref=e962]:
+                  - img [ref=e963]
+                - generic [ref=e966]:
+                  - link "Gráfico de Preços" [ref=e968] [cursor=pointer]:
+                    - /url: /graficos
+                    - heading "Gráfico de Preços" [level=2] [ref=e969]
+                  - generic [ref=e971]:
+                    - generic [ref=e973]:
+                      - button "BTC" [ref=e974]
+                      - button "ETH" [ref=e975]
+                      - button "SOL" [ref=e976]
+                    - table [ref=e982]:
+                      - row [ref=e983]:
+                        - cell
+                        - cell [ref=e984]:
+                          - link "Charting by TradingView" [ref=e988] [cursor=pointer]:
+                            - /url: https://www.tradingview.com/?utm_medium=lwc-link&utm_campaign=lwc-chart&utm_source=localhost/
+                            - img [ref=e989]
+                        - cell [ref=e993]
+                      - row [ref=e997]:
+                        - cell
+                        - cell [ref=e998]
+                        - cell [ref=e1002]
+              - generic [ref=e1005]:
+                - button [ref=e1006]:
+                  - img [ref=e1007]
+                - generic [ref=e1010]:
+                  - link "Top 10 Criptomoedas" [ref=e1012] [cursor=pointer]:
+                    - /url: /criptomoedas
+                    - heading "Top 10 Criptomoedas" [level=2] [ref=e1013]
+                  - generic [ref=e1015]:
+                    - generic [ref=e1016]:
+                      - generic [ref=e1017]: "#"
+                      - generic [ref=e1018]: Nome
+                      - generic [ref=e1019]: Preço
+                      - generic [ref=e1020]: 1h
+                      - generic [ref=e1021]: 24h
+                      - generic [ref=e1022]: 7d
+                      - generic [ref=e1023]: M.Cap
+                      - generic [ref=e1024]: Últimos 7 dias
+                    - generic [ref=e1025]:
+                      - link "1 Bitcoin Bitcoin btc $94,073.00 -0.0% +2.9% +7.9% $1879.38B" [ref=e1026] [cursor=pointer]:
+                        - /url: /criptomoedas/bitcoin
+                        - generic [ref=e1027]: "1"
+                        - generic [ref=e1028]:
+                          - img "Bitcoin" [ref=e1030]
+                          - generic [ref=e1031]:
+                            - paragraph [ref=e1032]: Bitcoin
+                            - paragraph [ref=e1033]: btc
+                        - generic [ref=e1035]: $94,073.00
+                        - generic [ref=e1036]: "-0.0%"
+                        - generic [ref=e1037]: +2.9%
+                        - generic [ref=e1038]: +7.9%
+                        - generic [ref=e1040]: $1879.38B
+                        - img [ref=e1042]
+                      - link "2 Ethereum Ethereum eth $3,235.39 -0.0% +2.7% +10.2% $390.69B" [ref=e1044] [cursor=pointer]:
+                        - /url: /criptomoedas/ethereum
+                        - generic [ref=e1045]: "2"
+                        - generic [ref=e1046]:
+                          - img "Ethereum" [ref=e1048]
+                          - generic [ref=e1049]:
+                            - paragraph [ref=e1050]: Ethereum
+                            - paragraph [ref=e1051]: eth
+                        - generic [ref=e1053]: $3,235.39
+                        - generic [ref=e1054]: "-0.0%"
+                        - generic [ref=e1055]: +2.7%
+                        - generic [ref=e1056]: +10.2%
+                        - generic [ref=e1058]: $390.69B
+                        - img [ref=e1060]
+                      - link "3 Tether Tether usdt $0.999975 +0.0% +0.0% +0.1% $187.11B" [ref=e1062] [cursor=pointer]:
+                        - /url: /criptomoedas/tether
+                        - generic [ref=e1063]: "3"
+                        - generic [ref=e1064]:
+                          - img "Tether" [ref=e1066]
+                          - generic [ref=e1067]:
+                            - paragraph [ref=e1068]: Tether
+                            - paragraph [ref=e1069]: usdt
+                        - generic [ref=e1071]: $0.999975
+                        - generic [ref=e1072]: +0.0%
+                        - generic [ref=e1073]: +0.0%
+                        - generic [ref=e1074]: +0.1%
+                        - generic [ref=e1076]: $187.11B
+                        - img [ref=e1078]
+                      - link "4 XRP XRP xrp $2.34 +0.5% +11.8% +26.4% $141.80B" [ref=e1080] [cursor=pointer]:
+                        - /url: /criptomoedas/ripple
+                        - generic [ref=e1081]: "4"
+                        - generic [ref=e1082]:
+                          - img "XRP" [ref=e1084]
+                          - generic [ref=e1085]:
+                            - paragraph [ref=e1086]: XRP
+                            - paragraph [ref=e1087]: xrp
+                        - generic [ref=e1089]: $2.34
+                        - generic [ref=e1090]: +0.5%
+                        - generic [ref=e1091]: +11.8%
+                        - generic [ref=e1092]: +26.4%
+                        - generic [ref=e1094]: $141.80B
+                        - img [ref=e1096]
+                      - link "5 BNB BNB bnb $911.79 -0.1% +1.8% +6.9% $125.62B" [ref=e1098] [cursor=pointer]:
+                        - /url: /criptomoedas/binancecoin
+                        - generic [ref=e1099]: "5"
+                        - generic [ref=e1100]:
+                          - img "BNB" [ref=e1102]
+                          - generic [ref=e1103]:
+                            - paragraph [ref=e1104]: BNB
+                            - paragraph [ref=e1105]: bnb
+                        - generic [ref=e1107]: $911.79
+                        - generic [ref=e1108]: "-0.1%"
+                        - generic [ref=e1109]: +1.8%
+                        - generic [ref=e1110]: +6.9%
+                        - generic [ref=e1112]: $125.62B
+                        - img [ref=e1114]
+                      - link "6 Solana Solana sol $138.64 +0.2% +3.1% +12.4% $78.12B" [ref=e1116] [cursor=pointer]:
+                        - /url: /criptomoedas/solana
+                        - generic [ref=e1117]: "6"
+                        - generic [ref=e1118]:
+                          - img "Solana" [ref=e1120]
+                          - generic [ref=e1121]:
+                            - paragraph [ref=e1122]: Solana
+                            - paragraph [ref=e1123]: sol
+                        - generic [ref=e1125]: $138.64
+                        - generic [ref=e1126]: +0.2%
+                        - generic [ref=e1127]: +3.1%
+                        - generic [ref=e1128]: +12.4%
+                        - generic [ref=e1130]: $78.12B
+                        - img [ref=e1132]
+                      - link "7 USDC USDC usdc $0.99984 +0.0% -0.0% +0.0% $75.76B" [ref=e1134] [cursor=pointer]:
+                        - /url: /criptomoedas/usd-coin
+                        - generic [ref=e1135]: "7"
+                        - generic [ref=e1136]:
+                          - img "USDC" [ref=e1138]
+                          - generic [ref=e1139]:
+                            - paragraph [ref=e1140]: USDC
+                            - paragraph [ref=e1141]: usdc
+                        - generic [ref=e1143]: $0.99984
+                        - generic [ref=e1144]: +0.0%
+                        - generic [ref=e1145]: "-0.0%"
+                        - generic [ref=e1146]: +0.0%
+                        - generic [ref=e1148]: $75.76B
+                        - img [ref=e1150]
+                      - link "8 Lido Staked Ether Lido Staked Ether steth $3,233.89 -0.0% +2.8% +10.2% $28.68B" [ref=e1152] [cursor=pointer]:
+                        - /url: /criptomoedas/staked-ether
+                        - generic [ref=e1153]: "8"
+                        - generic [ref=e1154]:
+                          - img "Lido Staked Ether" [ref=e1156]
+                          - generic [ref=e1157]:
+                            - paragraph [ref=e1158]: Lido Staked Ether
+                            - paragraph [ref=e1159]: steth
+                        - generic [ref=e1161]: $3,233.89
+                        - generic [ref=e1162]: "-0.0%"
+                        - generic [ref=e1163]: +2.8%
+                        - generic [ref=e1164]: +10.2%
+                        - generic [ref=e1166]: $28.68B
+                        - img [ref=e1168]
+                      - link "9 TRON TRON trx $0.292376 -0.0% -0.5% +3.0% $27.69B" [ref=e1170] [cursor=pointer]:
+                        - /url: /criptomoedas/tron
+                        - generic [ref=e1171]: "9"
+                        - generic [ref=e1172]:
+                          - img "TRON" [ref=e1174]
+                          - generic [ref=e1175]:
+                            - paragraph [ref=e1176]: TRON
+                            - paragraph [ref=e1177]: trx
+                        - generic [ref=e1179]: $0.292376
+                        - generic [ref=e1180]: "-0.0%"
+                        - generic [ref=e1181]: "-0.5%"
+                        - generic [ref=e1182]: +3.0%
+                        - generic [ref=e1184]: $27.69B
+                        - img [ref=e1186]
+                      - link "10 Dogecoin Dogecoin doge $0.152433 +0.5% +1.7% +23.9% $25.67B" [ref=e1188] [cursor=pointer]:
+                        - /url: /criptomoedas/dogecoin
+                        - generic [ref=e1189]: "10"
+                        - generic [ref=e1190]:
+                          - img "Dogecoin" [ref=e1192]
+                          - generic [ref=e1193]:
+                            - paragraph [ref=e1194]: Dogecoin
+                            - paragraph [ref=e1195]: doge
+                        - generic [ref=e1197]: $0.152433
+                        - generic [ref=e1198]: +0.5%
+                        - generic [ref=e1199]: +1.7%
+                        - generic [ref=e1200]: +23.9%
+                        - generic [ref=e1202]: $25.67B
+                        - img [ref=e1204]
+              - generic [ref=e1206]:
+                - button [ref=e1207]:
+                  - img [ref=e1208]
+                - generic [ref=e1211]:
+                  - link "Entenda Criptomoedas" [ref=e1213] [cursor=pointer]:
+                    - /url: /educacao
+                    - heading "Entenda Criptomoedas" [level=2] [ref=e1214]
+                  - generic [ref=e1215]:
+                    - 'link "Como Descobrir os Melhores Airdrops: Guia Completo para Caçadores de Oportunidades em 2026 Neste artigo, você aprenderá estratégias práticas e confiáveis para identificar airdrops de alto potencial, evitando armadilhas comuns. Do básico à análise a..." [ref=e1216]':
+                      - /url: /educacao/como-descobrir-os-melhores-airdrops-guia-completo-para-cacadores-de-oportunidades-em-2026
+                      - generic [ref=e1218]:
+                        - 'heading "Como Descobrir os Melhores Airdrops: Guia Completo para Caçadores de Oportunidades em 2026" [level=3] [ref=e1219]'
+                        - paragraph [ref=e1220]: Neste artigo, você aprenderá estratégias práticas e confiáveis para identificar airdrops de alto potencial, evitando armadilhas comuns. Do básico à análise a...
+                    - 'link "ETFs de Bitcoin: A Porta de Entrada Institucional para o Rei das Criptomoedas Descubra o que são os ETFs de Bitcoin, como eles funcionam na prática e por que se tornaram o veículo preferido de investidores institucionais. Este artigo e..." [ref=e1221]':
+                      - /url: /educacao/etfs-de-bitcoin-a-porta-de-entrada-institucional-para-o-rei-das-criptomoedas
+                      - generic [ref=e1223]:
+                        - 'heading "ETFs de Bitcoin: A Porta de Entrada Institucional para o Rei das Criptomoedas" [level=3] [ref=e1224]'
+                        - paragraph [ref=e1225]: Descubra o que são os ETFs de Bitcoin, como eles funcionam na prática e por que se tornaram o veículo preferido de investidores institucionais. Este artigo e...
+                    - 'link "Regulação de Criptomoedas: Panorama Mundial 2025 Bem-vindo ao panorama completo da regulação de criptomoedas em 2025! Se você é um brasileiro curioso sobre Bitcoin, stablecoins ou investimentos digitais, es..." [ref=e1226]':
+                      - /url: /educacao/regulacao-cripto-mundial
+                      - generic [ref=e1228]:
+                        - 'heading "Regulação de Criptomoedas: Panorama Mundial 2025" [level=3] [ref=e1229]'
+                        - paragraph [ref=e1230]: Bem-vindo ao panorama completo da regulação de criptomoedas em 2025! Se você é um brasileiro curioso sobre Bitcoin, stablecoins ou investimentos digitais, es...
+                    - link "Como Declarar Criptomoedas no IR 2025 (Brasil) Este guia prático e completo ensina passo a passo como declarar criptomoedas no Imposto de Renda 2025 no Brasil, desde a obrigatoriedade até o pagamen..." [ref=e1231]:
+                      - /url: /educacao/declarar-cripto-brasil
+                      - generic [ref=e1233]:
+                        - heading "Como Declarar Criptomoedas no IR 2025 (Brasil)" [level=3] [ref=e1234]
+                        - paragraph [ref=e1235]: Este guia prático e completo ensina passo a passo como declarar criptomoedas no Imposto de Renda 2025 no Brasil, desde a obrigatoriedade até o pagamen...
+                    - 'link "A Arte de Escolher Validadores: Guia Completo para Delegação Inteligente Aprenda os critérios essenciais para selecionar validadores, entenda métricas críticas como uptime e comissão, explore riscos de slashing e descubra estratégias avançadas como staking líquido com Lido." [ref=e1236]':
+                      - /url: /educacao/validadores-delegacao
+                      - generic [ref=e1238]:
+                        - 'heading "A Arte de Escolher Validadores: Guia Completo para Delegação Inteligente" [level=3] [ref=e1239]'
+                        - paragraph [ref=e1240]: Aprenda os critérios essenciais para selecionar validadores, entenda métricas críticas como uptime e comissão, explore riscos de slashing e descubra estratégias avançadas como staking líquido com Lido.
+                    - 'link "Staking de Criptomoedas: O Guia Completo para Iniciantes Aprenda o que é staking, como funciona o mecanismo de Prova de Participação (PoS), onde fazer staking com segurança e quais moedas são as melhores para começar. Um guia prático e didático para quem quer ganhar renda passiva em criptomoedas." [ref=e1241]':
+                      - /url: /educacao/staking-para-iniciantes
+                      - generic [ref=e1243]:
+                        - 'heading "Staking de Criptomoedas: O Guia Completo para Iniciantes" [level=3] [ref=e1244]'
+                        - paragraph [ref=e1245]: Aprenda o que é staking, como funciona o mecanismo de Prova de Participação (PoS), onde fazer staking com segurança e quais moedas são as melhores para começar. Um guia prático e didático para quem quer ganhar renda passiva em criptomoedas.
+              - generic [ref=e1246]:
+                - button [ref=e1247]:
+                  - img [ref=e1248]
+                - generic [ref=e1251]:
+                  - link "Ferramentas Essenciais" [ref=e1253] [cursor=pointer]:
+                    - /url: /recursos
+                    - heading "Ferramentas Essenciais" [level=2] [ref=e1254]
+                  - generic [ref=e1255]:
+                    - link "Tools CoinMarketCap Plataforma pioneira de tracking de preços e market cap de criptomoedas" [ref=e1256] [cursor=pointer]:
+                      - /url: /recursos/coinmarketcap
+                      - generic [ref=e1257]:
+                        - generic [ref=e1259]: Tools
+                        - generic [ref=e1260]:
+                          - heading "CoinMarketCap" [level=3] [ref=e1261]:
+                            - text: CoinMarketCap
+                            - img [ref=e1262]
+                          - paragraph [ref=e1264]: Plataforma pioneira de tracking de preços e market cap de criptomoedas
+                    - link "Tools DeFi Llama Maior agregador de dados DeFi com tracking de TVL e analytics" [ref=e1265] [cursor=pointer]:
+                      - /url: /recursos/defillama
+                      - generic [ref=e1266]:
+                        - generic [ref=e1268]: Tools
+                        - generic [ref=e1269]:
+                          - heading "DeFi Llama" [level=3] [ref=e1270]:
+                            - text: DeFi Llama
+                            - img [ref=e1271]
+                          - paragraph [ref=e1273]: Maior agregador de dados DeFi com tracking de TVL e analytics
+                    - link "Tools CoinGecko Plataforma líder de dados e preços de criptomoedas" [ref=e1274] [cursor=pointer]:
+                      - /url: /recursos/coingecko
+                      - generic [ref=e1275]:
+                        - generic [ref=e1277]: Tools
+                        - generic [ref=e1278]:
+                          - heading "CoinGecko" [level=3] [ref=e1279]:
+                            - text: CoinGecko
+                            - img [ref=e1280]
+                          - paragraph [ref=e1282]: Plataforma líder de dados e preços de criptomoedas
+                    - link "Defi Aave Protocolo líder de lending e borrowing descentralizado" [ref=e1283] [cursor=pointer]:
+                      - /url: /recursos/aave
+                      - generic [ref=e1284]:
+                        - generic [ref=e1286]: Defi
+                        - generic [ref=e1287]:
+                          - heading "Aave" [level=3] [ref=e1288]:
+                            - text: Aave
+                            - img [ref=e1289]
+                          - paragraph [ref=e1291]: Protocolo líder de lending e borrowing descentralizado
+                    - link "Defi Raydium DEX líder da Solana com AMM e order book híbrido" [ref=e1292] [cursor=pointer]:
+                      - /url: /recursos/raydium
+                      - generic [ref=e1293]:
+                        - generic [ref=e1295]: Defi
+                        - generic [ref=e1296]:
+                          - heading "Raydium" [level=3] [ref=e1297]:
+                            - text: Raydium
+                            - img [ref=e1298]
+                          - paragraph [ref=e1300]: DEX líder da Solana com AMM e order book híbrido
+                    - link "Defi Uniswap DEX (exchange descentralizada) líder do Ethereum" [ref=e1301] [cursor=pointer]:
+                      - /url: /recursos/uniswap
+                      - generic [ref=e1302]:
+                        - generic [ref=e1304]: Defi
+                        - generic [ref=e1305]:
+                          - heading "Uniswap" [level=3] [ref=e1306]:
+                            - text: Uniswap
+                            - img [ref=e1307]
+                          - paragraph [ref=e1309]: DEX (exchange descentralizada) líder do Ethereum
+            - status [ref=e1310]
+      - contentinfo [ref=e1311]:
+        - generic [ref=e1312]:
+          - generic [ref=e1313]:
+            - generic [ref=e1314]:
+              - link "$MILAGRE $ MILAGRE Comunidade Web3" [ref=e1315] [cursor=pointer]:
+                - /url: /
+                - img "$MILAGRE" [ref=e1316]
+                - generic [ref=e1318]:
+                  - generic [ref=e1319]:
+                    - generic [ref=e1320]: $
+                    - generic [ref=e1321]: MILAGRE
+                  - generic [ref=e1322]: Comunidade Web3
+              - paragraph [ref=e1323]: Em busca de uma comunidade com prosperidade.
+              - generic [ref=e1324]:
+                - link "Discord" [ref=e1325] [cursor=pointer]:
+                  - /url: https://discord.gg/9BU3mFVX58
+                  - img [ref=e1326]
+                - link "Telegram" [ref=e1328] [cursor=pointer]:
+                  - /url: https://t.me/+Bop_TVFc_mg3Njlh
+                  - img [ref=e1329]
+                - link "Twitter" [ref=e1331] [cursor=pointer]:
+                  - /url: https://x.com/TokenMilagre
+                  - img [ref=e1332]
+                - link "GitHub" [ref=e1334] [cursor=pointer]:
+                  - /url: https://github.com/dogespartano-cyber/tokenmilagre-platform
+                  - img [ref=e1335]
+            - generic [ref=e1337]:
+              - heading "Produto" [level=3] [ref=e1338]
+              - navigation "Links do produto" [ref=e1339]:
+                - link "Início" [ref=e1340] [cursor=pointer]:
+                  - /url: /
+                - link "Sobre" [ref=e1341] [cursor=pointer]:
+                  - /url: /sobre
+                - link "Token" [ref=e1342] [cursor=pointer]:
+                  - /url: /token
+                - link "Recursos" [ref=e1343] [cursor=pointer]:
+                  - /url: /recursos
+                - link "Roadmap" [ref=e1344] [cursor=pointer]:
+                  - /url: /roadmap
+            - generic [ref=e1345]:
+              - heading "Comunidade" [level=3] [ref=e1346]
+              - navigation "Links da comunidade" [ref=e1347]:
+                - link "Discord" [ref=e1348] [cursor=pointer]:
+                  - /url: https://discord.gg/9BU3mFVX58
+                - link "Telegram" [ref=e1349] [cursor=pointer]:
+                  - /url: https://t.me/+Bop_TVFc_mg3Njlh
+                - link "Twitter" [ref=e1350] [cursor=pointer]:
+                  - /url: https://x.com/TokenMilagre
+                - link "GitHub" [ref=e1351] [cursor=pointer]:
+                  - /url: https://github.com/dogespartano-cyber/tokenmilagre-platform
+            - generic [ref=e1352]:
+              - heading "Legal" [level=3] [ref=e1353]
+              - navigation "Links legais" [ref=e1354]:
+                - link "Transparência" [ref=e1355] [cursor=pointer]:
+                  - /url: /transparencia
+                - link "Manifesto" [ref=e1356] [cursor=pointer]:
+                  - /url: /manifesto
+                - link "Termos de Uso" [ref=e1357] [cursor=pointer]:
+                  - /url: /termos
+                - link "Privacidade" [ref=e1358] [cursor=pointer]:
+                  - /url: /privacidade
+                - link "Segurança" [ref=e1359] [cursor=pointer]:
+                  - /url: /verificador-url
+          - generic [ref=e1360]:
+            - generic [ref=e1361]:
+              - paragraph [ref=e1362]: © 2026 $MILAGRE. Open Source (Licença MIT).
+              - paragraph [ref=e1363]: "\"Porque dele, e por ele, e para ele são todas as coisas.\" — Romanos 11:36"
+            - paragraph [ref=e1364]: Criptomoedas envolvem riscos. Este não é um conselho financeiro.
+      - generic [ref=e1367]:
+        - img [ref=e1369]
+        - generic [ref=e1371]:
+          - heading "Nós valorizamos sua privacidade" [level=3] [ref=e1372]
+          - paragraph [ref=e1373]:
+            - text: Utilizamos cookies para melhorar sua experiência e analisar o tráfego. Ao continuar, você concorda com nossa
+            - link "Política de Privacidade" [ref=e1374] [cursor=pointer]:
+              - /url: /privacidade
+            - text: .
+          - generic [ref=e1375]:
+            - button "Aceitar" [ref=e1376]
+            - button "Fechar" [ref=e1377]
+  - button "Open Next.js Dev Tools" [ref=e1383] [cursor=pointer]:
+    - img [ref=e1384]
+  - alert [ref=e1388]
+```

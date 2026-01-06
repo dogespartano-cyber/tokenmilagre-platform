@@ -1,0 +1,1079 @@
+{
+  "config": {
+    "configFile": "/home/zenfoco/Dev/tokenmilagre-platform/playwright.config.ts",
+    "rootDir": "/home/zenfoco/Dev/tokenmilagre-platform/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 6
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/zenfoco/Dev/tokenmilagre-platform/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/zenfoco/Dev/tokenmilagre-platform/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/zenfoco/Dev/tokenmilagre-platform/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/home/zenfoco/Dev/tokenmilagre-platform/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/zenfoco/Dev/tokenmilagre-platform/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/home/zenfoco/Dev/tokenmilagre-platform/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/zenfoco/Dev/tokenmilagre-platform/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/home/zenfoco/Dev/tokenmilagre-platform/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/zenfoco/Dev/tokenmilagre-platform/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/home/zenfoco/Dev/tokenmilagre-platform/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.57.0",
+    "workers": 6,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "zenith.spec.ts",
+      "file": "zenith.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Zenith Market Ticker",
+          "file": "zenith.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should display all 4 market cards",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11308,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Capitalização')\nExpected: visible\nError: strict mode violation: getByText('Capitalização') resolved to 3 elements:\n    1) <h3 class=\"font-bold text-sm lg:text-base  dark:\">Capitalização</h3> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    2) <h4 class=\"font-bold text-sm mb-1 text-[var(--text-primary)]\">Capitalização</h4> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    3) <h4 class=\"font-bold text-base mb-2 text-[var(--text-primary)]\">O que é Capitalização?</h4> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Capitalização')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Capitalização')\nExpected: visible\nError: strict mode violation: getByText('Capitalização') resolved to 3 elements:\n    1) <h3 class=\"font-bold text-sm lg:text-base  dark:\">Capitalização</h3> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    2) <h4 class=\"font-bold text-sm mb-1 text-[var(--text-primary)]\">Capitalização</h4> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    3) <h4 class=\"font-bold text-base mb-2 text-[var(--text-primary)]\">O que é Capitalização?</h4> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Capitalização')\u001b[22m\n\n    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:13:55",
+                        "location": {
+                          "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                          "column": 55,
+                          "line": 13
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 11 |\u001b[39m     test(\u001b[32m'should display all 4 market cards'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 12 |\u001b[39m         \u001b[90m// Check for the presence of the 4 main cards\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 13 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Capitalização'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 14 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Volume 24h'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 15 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Dominância BTC'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 16 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Dominância ETH'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                            "column": 55,
+                            "line": 13
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Capitalização')\nExpected: visible\nError: strict mode violation: getByText('Capitalização') resolved to 3 elements:\n    1) <h3 class=\"font-bold text-sm lg:text-base  dark:\">Capitalização</h3> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    2) <h4 class=\"font-bold text-sm mb-1 text-[var(--text-primary)]\">Capitalização</h4> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    3) <h4 class=\"font-bold text-base mb-2 text-[var(--text-primary)]\">O que é Capitalização?</h4> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Capitalização')\u001b[22m\n\n\n\u001b[0m \u001b[90m 11 |\u001b[39m     test(\u001b[32m'should display all 4 market cards'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 12 |\u001b[39m         \u001b[90m// Check for the presence of the 4 main cards\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 13 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Capitalização'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 14 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Volume 24h'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 15 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Dominância BTC'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 16 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Dominância ETH'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:13:55\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:12.511Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-bb76b--display-all-4-market-cards-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-bb76b--display-all-4-market-cards-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-bb76b--display-all-4-market-cards-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                        "column": 55,
+                        "line": 13
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-4adc6a62144b08326d08",
+              "file": "zenith.spec.ts",
+              "line": 11,
+              "column": 9
+            },
+            {
+              "title": "should reveal definition on hover/interaction",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 11743,
+                      "error": {
+                        "message": "Error: locator.isVisible: Error: strict mode violation: getByText(/Valor total de mercado/) resolved to 2 elements:\n    1) <p class=\"text-xs text-[var(--text-secondary)] leading-snug\">Valor total de mercado cripto. Preço × quantidade…</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    2) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Valor total de mercado de todas as criptomoedas. …</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n\nCall log:\n\u001b[2m    - checking visibility of getByText(/Valor total de mercado/)\u001b[22m\n",
+                        "stack": "Error: locator.isVisible: Error: strict mode violation: getByText(/Valor total de mercado/) resolved to 2 elements:\n    1) <p class=\"text-xs text-[var(--text-secondary)] leading-snug\">Valor total de mercado cripto. Preço × quantidade…</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    2) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Valor total de mercado de todas as criptomoedas. …</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n\nCall log:\n\u001b[2m    - checking visibility of getByText(/Valor total de mercado/)\u001b[22m\n\n    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:29:31",
+                        "location": {
+                          "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                          "column": 31,
+                          "line": 29
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 27 |\u001b[39m         \u001b[90m// \"Valor total de mercado de todas as criptomoedas...\"\u001b[39m\n \u001b[90m 28 |\u001b[39m         \u001b[36mconst\u001b[39m description \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mgetByText(\u001b[35m/Valor total de mercado/\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 29 |\u001b[39m         \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m description\u001b[33m.\u001b[39misVisible()) {\n \u001b[90m    |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 30 |\u001b[39m             \u001b[36mawait\u001b[39m expect(description)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m         } \u001b[36melse\u001b[39m {\n \u001b[90m 32 |\u001b[39m             \u001b[90m// Fallback for click interaction if hover isn't enough/mobile view\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                            "column": 31,
+                            "line": 29
+                          },
+                          "message": "Error: locator.isVisible: Error: strict mode violation: getByText(/Valor total de mercado/) resolved to 2 elements:\n    1) <p class=\"text-xs text-[var(--text-secondary)] leading-snug\">Valor total de mercado cripto. Preço × quantidade…</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    2) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Valor total de mercado de todas as criptomoedas. …</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n\nCall log:\n\u001b[2m    - checking visibility of getByText(/Valor total de mercado/)\u001b[22m\n\n\n\u001b[0m \u001b[90m 27 |\u001b[39m         \u001b[90m// \"Valor total de mercado de todas as criptomoedas...\"\u001b[39m\n \u001b[90m 28 |\u001b[39m         \u001b[36mconst\u001b[39m description \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mgetByText(\u001b[35m/Valor total de mercado/\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 29 |\u001b[39m         \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m description\u001b[33m.\u001b[39misVisible()) {\n \u001b[90m    |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 30 |\u001b[39m             \u001b[36mawait\u001b[39m expect(description)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m         } \u001b[36melse\u001b[39m {\n \u001b[90m 32 |\u001b[39m             \u001b[90m// Fallback for click interaction if hover isn't enough/mobile view\u001b[39m\u001b[0m\n\u001b[2m    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:29:31\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:12.504Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-f9e8d-nition-on-hover-interaction-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-f9e8d-nition-on-hover-interaction-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-f9e8d-nition-on-hover-interaction-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                        "column": 31,
+                        "line": 29
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-c5511863e42e597a37c3",
+              "file": "zenith.spec.ts",
+              "line": 19,
+              "column": 9
+            },
+            {
+              "title": "should verify value formatting",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 11659,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/\\$[0-9.]+T|B|M/)\nExpected: visible\nError: strict mode violation: getByText(/\\$[0-9.]+T|B|M/) resolved to 137 elements:\n    1) <span class=\"text-lg tracking-[0.2em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('link', { name: '$ MILAGRE Comunidade Web3', exact: true })\n    2) <span class=\"text-[10px] font-black uppercase tracking-wider text-orange-500 font-inter transition-colors duration-1000\">Medo</span> aka getByRole('link', { name: 'Sentimento Medo' })\n    3) <span class=\"text-base tracking-[0.15em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('banner').getByText('MILAGRE', { exact: true })\n    4) <span class=\"text-xs font-bold text-muted-foreground uppercase tracking-wider\">BTC</span> aka getByRole('link', { name: 'BTC $ 0 1 2 3 4 5 6 7 8 9 0 1' })\n    5) <span class=\"text-xs font-bold text-muted-foreground uppercase tracking-wider\">BNB</span> aka getByRole('link', { name: 'BNB $ 0 1 2 3 4 5 6 7 8 9 0 1' })\n    6) <span class=\"relative z-10\">$MILAGRE</span> aka getByRole('link', { name: '$MILAGRE', exact: true })\n    7) <h3 class=\"title-newtab text-base transition-colors  group-hover:text-[var(--brand-primary)]\">Notícias do Mercado</h3> aka getByRole('link', { name: 'Notícias do Mercado' })\n    8) <p class=\"text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight\">$3.30T</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    9) <p class=\"text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight\">$147.72B</p> aka getByRole('button', { name: 'Volume 24h $147.72B O que é' })\n    10) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Total de criptomoedas negociadas nas últimas 24 h…</p> aka getByRole('button', { name: 'Volume 24h $147.72B O que é' })\n    ...\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/\\$[0-9.]+T|B|M/)\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/\\$[0-9.]+T|B|M/)\nExpected: visible\nError: strict mode violation: getByText(/\\$[0-9.]+T|B|M/) resolved to 137 elements:\n    1) <span class=\"text-lg tracking-[0.2em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('link', { name: '$ MILAGRE Comunidade Web3', exact: true })\n    2) <span class=\"text-[10px] font-black uppercase tracking-wider text-orange-500 font-inter transition-colors duration-1000\">Medo</span> aka getByRole('link', { name: 'Sentimento Medo' })\n    3) <span class=\"text-base tracking-[0.15em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('banner').getByText('MILAGRE', { exact: true })\n    4) <span class=\"text-xs font-bold text-muted-foreground uppercase tracking-wider\">BTC</span> aka getByRole('link', { name: 'BTC $ 0 1 2 3 4 5 6 7 8 9 0 1' })\n    5) <span class=\"text-xs font-bold text-muted-foreground uppercase tracking-wider\">BNB</span> aka getByRole('link', { name: 'BNB $ 0 1 2 3 4 5 6 7 8 9 0 1' })\n    6) <span class=\"relative z-10\">$MILAGRE</span> aka getByRole('link', { name: '$MILAGRE', exact: true })\n    7) <h3 class=\"title-newtab text-base transition-colors  group-hover:text-[var(--brand-primary)]\">Notícias do Mercado</h3> aka getByRole('link', { name: 'Notícias do Mercado' })\n    8) <p class=\"text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight\">$3.30T</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    9) <p class=\"text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight\">$147.72B</p> aka getByRole('button', { name: 'Volume 24h $147.72B O que é' })\n    10) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Total de criptomoedas negociadas nas últimas 24 h…</p> aka getByRole('button', { name: 'Volume 24h $147.72B O que é' })\n    ...\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/\\$[0-9.]+T|B|M/)\u001b[22m\n\n    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:41:56",
+                        "location": {
+                          "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                          "column": 56,
+                          "line": 41
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 39 |\u001b[39m         \u001b[90m// Check that we have values formatted with $, T, B, M or %\u001b[39m\n \u001b[90m 40 |\u001b[39m         \u001b[90m// We look for elements that typically hold these values\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 41 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/\\$[0-9.]+T|B|M/\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m \u001b[90m// Market Cap or Volume\u001b[39m\n \u001b[90m    |\u001b[39m                                                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 42 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/[0-9.]+%$/\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m \u001b[90m// Dominance\u001b[39m\n \u001b[90m 43 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 44 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                            "column": 56,
+                            "line": 41
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/\\$[0-9.]+T|B|M/)\nExpected: visible\nError: strict mode violation: getByText(/\\$[0-9.]+T|B|M/) resolved to 137 elements:\n    1) <span class=\"text-lg tracking-[0.2em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('link', { name: '$ MILAGRE Comunidade Web3', exact: true })\n    2) <span class=\"text-[10px] font-black uppercase tracking-wider text-orange-500 font-inter transition-colors duration-1000\">Medo</span> aka getByRole('link', { name: 'Sentimento Medo' })\n    3) <span class=\"text-base tracking-[0.15em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('banner').getByText('MILAGRE', { exact: true })\n    4) <span class=\"text-xs font-bold text-muted-foreground uppercase tracking-wider\">BTC</span> aka getByRole('link', { name: 'BTC $ 0 1 2 3 4 5 6 7 8 9 0 1' })\n    5) <span class=\"text-xs font-bold text-muted-foreground uppercase tracking-wider\">BNB</span> aka getByRole('link', { name: 'BNB $ 0 1 2 3 4 5 6 7 8 9 0 1' })\n    6) <span class=\"relative z-10\">$MILAGRE</span> aka getByRole('link', { name: '$MILAGRE', exact: true })\n    7) <h3 class=\"title-newtab text-base transition-colors  group-hover:text-[var(--brand-primary)]\">Notícias do Mercado</h3> aka getByRole('link', { name: 'Notícias do Mercado' })\n    8) <p class=\"text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight\">$3.30T</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    9) <p class=\"text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight\">$147.72B</p> aka getByRole('button', { name: 'Volume 24h $147.72B O que é' })\n    10) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Total de criptomoedas negociadas nas últimas 24 h…</p> aka getByRole('button', { name: 'Volume 24h $147.72B O que é' })\n    ...\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/\\$[0-9.]+T|B|M/)\u001b[22m\n\n\n\u001b[0m \u001b[90m 39 |\u001b[39m         \u001b[90m// Check that we have values formatted with $, T, B, M or %\u001b[39m\n \u001b[90m 40 |\u001b[39m         \u001b[90m// We look for elements that typically hold these values\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 41 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/\\$[0-9.]+T|B|M/\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m \u001b[90m// Market Cap or Volume\u001b[39m\n \u001b[90m    |\u001b[39m                                                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 42 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/[0-9.]+%$/\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m \u001b[90m// Dominance\u001b[39m\n \u001b[90m 43 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 44 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:41:56\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:12.493Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticker-should-verify-value-formatting-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticker-should-verify-value-formatting-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticker-should-verify-value-formatting-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                        "column": 56,
+                        "line": 41
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-7d39f94ca816e427d452",
+              "file": "zenith.spec.ts",
+              "line": 38,
+              "column": 9
+            },
+            {
+              "title": "should display all 4 market cards",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 10042,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Capitalização')\nExpected: visible\nError: strict mode violation: getByText('Capitalização') resolved to 3 elements:\n    1) <h3 class=\"font-bold text-sm lg:text-base  dark:\">Capitalização</h3> aka getByRole('heading', { name: 'Capitalização', exact: true })\n    2) <h4 class=\"font-bold text-sm mb-1 text-[var(--text-primary)]\">Capitalização</h4> aka locator('h4').filter({ hasText: /^Capitalização$/ })\n    ...\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Capitalização')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Capitalização')\nExpected: visible\nError: strict mode violation: getByText('Capitalização') resolved to 3 elements:\n    1) <h3 class=\"font-bold text-sm lg:text-base  dark:\">Capitalização</h3> aka getByRole('heading', { name: 'Capitalização', exact: true })\n    2) <h4 class=\"font-bold text-sm mb-1 text-[var(--text-primary)]\">Capitalização</h4> aka locator('h4').filter({ hasText: /^Capitalização$/ })\n    ...\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Capitalização')\u001b[22m\n\n    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:13:55",
+                        "location": {
+                          "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                          "column": 55,
+                          "line": 13
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 11 |\u001b[39m     test(\u001b[32m'should display all 4 market cards'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 12 |\u001b[39m         \u001b[90m// Check for the presence of the 4 main cards\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 13 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Capitalização'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 14 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Volume 24h'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 15 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Dominância BTC'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 16 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Dominância ETH'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                            "column": 55,
+                            "line": 13
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Capitalização')\nExpected: visible\nError: strict mode violation: getByText('Capitalização') resolved to 3 elements:\n    1) <h3 class=\"font-bold text-sm lg:text-base  dark:\">Capitalização</h3> aka getByRole('heading', { name: 'Capitalização', exact: true })\n    2) <h4 class=\"font-bold text-sm mb-1 text-[var(--text-primary)]\">Capitalização</h4> aka locator('h4').filter({ hasText: /^Capitalização$/ })\n    ...\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Capitalização')\u001b[22m\n\n\n\u001b[0m \u001b[90m 11 |\u001b[39m     test(\u001b[32m'should display all 4 market cards'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 12 |\u001b[39m         \u001b[90m// Check for the presence of the 4 main cards\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 13 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Capitalização'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 14 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Volume 24h'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 15 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Dominância BTC'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 16 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Dominância ETH'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:13:55\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:12.516Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-bb76b--display-all-4-market-cards-firefox/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-bb76b--display-all-4-market-cards-firefox/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-bb76b--display-all-4-market-cards-firefox/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                        "column": 55,
+                        "line": 13
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-efee53aa87e91b4542d5",
+              "file": "zenith.spec.ts",
+              "line": 11,
+              "column": 9
+            },
+            {
+              "title": "should reveal definition on hover/interaction",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 12682,
+                      "error": {
+                        "message": "Error: locator.isVisible: Error: strict mode violation: getByText(/Valor total de mercado/) resolved to 2 elements:\n    1) <p class=\"text-xs text-[var(--text-secondary)] leading-snug\">Valor total de mercado cripto. Preço × quantidade…</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    2) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Valor total de mercado de todas as criptomoedas. …</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n\nCall log:\n\u001b[2m    - checking visibility of getByText(/Valor total de mercado/)\u001b[22m\n",
+                        "stack": "Error: locator.isVisible: Error: strict mode violation: getByText(/Valor total de mercado/) resolved to 2 elements:\n    1) <p class=\"text-xs text-[var(--text-secondary)] leading-snug\">Valor total de mercado cripto. Preço × quantidade…</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    2) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Valor total de mercado de todas as criptomoedas. …</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n\nCall log:\n\u001b[2m    - checking visibility of getByText(/Valor total de mercado/)\u001b[22m\n\n    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:29:31",
+                        "location": {
+                          "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                          "column": 31,
+                          "line": 29
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 27 |\u001b[39m         \u001b[90m// \"Valor total de mercado de todas as criptomoedas...\"\u001b[39m\n \u001b[90m 28 |\u001b[39m         \u001b[36mconst\u001b[39m description \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mgetByText(\u001b[35m/Valor total de mercado/\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 29 |\u001b[39m         \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m description\u001b[33m.\u001b[39misVisible()) {\n \u001b[90m    |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 30 |\u001b[39m             \u001b[36mawait\u001b[39m expect(description)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m         } \u001b[36melse\u001b[39m {\n \u001b[90m 32 |\u001b[39m             \u001b[90m// Fallback for click interaction if hover isn't enough/mobile view\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                            "column": 31,
+                            "line": 29
+                          },
+                          "message": "Error: locator.isVisible: Error: strict mode violation: getByText(/Valor total de mercado/) resolved to 2 elements:\n    1) <p class=\"text-xs text-[var(--text-secondary)] leading-snug\">Valor total de mercado cripto. Preço × quantidade…</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n    2) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Valor total de mercado de todas as criptomoedas. …</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9% O' })\n\nCall log:\n\u001b[2m    - checking visibility of getByText(/Valor total de mercado/)\u001b[22m\n\n\n\u001b[0m \u001b[90m 27 |\u001b[39m         \u001b[90m// \"Valor total de mercado de todas as criptomoedas...\"\u001b[39m\n \u001b[90m 28 |\u001b[39m         \u001b[36mconst\u001b[39m description \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mgetByText(\u001b[35m/Valor total de mercado/\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 29 |\u001b[39m         \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m description\u001b[33m.\u001b[39misVisible()) {\n \u001b[90m    |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 30 |\u001b[39m             \u001b[36mawait\u001b[39m expect(description)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m         } \u001b[36melse\u001b[39m {\n \u001b[90m 32 |\u001b[39m             \u001b[90m// Fallback for click interaction if hover isn't enough/mobile view\u001b[39m\u001b[0m\n\u001b[2m    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:29:31\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:12.525Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-f9e8d-nition-on-hover-interaction-firefox/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-f9e8d-nition-on-hover-interaction-firefox/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-f9e8d-nition-on-hover-interaction-firefox/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                        "column": 31,
+                        "line": 29
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-dcd2dba4b3f4c4815bd3",
+              "file": "zenith.spec.ts",
+              "line": 19,
+              "column": 9
+            },
+            {
+              "title": "should verify value formatting",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 14539,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/\\$[0-9.]+T|B|M/)\nExpected: visible\nError: strict mode violation: getByText(/\\$[0-9.]+T|B|M/) resolved to 137 elements:\n    1) <span class=\"text-lg tracking-[0.2em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('link', { name: '$ MILAGRE Comunidade Web3', exact: true })\n    2) <span class=\"text-[10px] font-black uppercase tracking-wider text-orange-500 font-inter transition-colors duration-1000\">Medo</span> aka getByRole('link', { name: 'Sentimento Medo' })\n    ...\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/\\$[0-9.]+T|B|M/)\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/\\$[0-9.]+T|B|M/)\nExpected: visible\nError: strict mode violation: getByText(/\\$[0-9.]+T|B|M/) resolved to 137 elements:\n    1) <span class=\"text-lg tracking-[0.2em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('link', { name: '$ MILAGRE Comunidade Web3', exact: true })\n    2) <span class=\"text-[10px] font-black uppercase tracking-wider text-orange-500 font-inter transition-colors duration-1000\">Medo</span> aka getByRole('link', { name: 'Sentimento Medo' })\n    ...\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/\\$[0-9.]+T|B|M/)\u001b[22m\n\n    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:41:56",
+                        "location": {
+                          "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                          "column": 56,
+                          "line": 41
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 39 |\u001b[39m         \u001b[90m// Check that we have values formatted with $, T, B, M or %\u001b[39m\n \u001b[90m 40 |\u001b[39m         \u001b[90m// We look for elements that typically hold these values\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 41 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/\\$[0-9.]+T|B|M/\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m \u001b[90m// Market Cap or Volume\u001b[39m\n \u001b[90m    |\u001b[39m                                                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 42 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/[0-9.]+%$/\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m \u001b[90m// Dominance\u001b[39m\n \u001b[90m 43 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 44 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                            "column": 56,
+                            "line": 41
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/\\$[0-9.]+T|B|M/)\nExpected: visible\nError: strict mode violation: getByText(/\\$[0-9.]+T|B|M/) resolved to 137 elements:\n    1) <span class=\"text-lg tracking-[0.2em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('link', { name: '$ MILAGRE Comunidade Web3', exact: true })\n    2) <span class=\"text-[10px] font-black uppercase tracking-wider text-orange-500 font-inter transition-colors duration-1000\">Medo</span> aka getByRole('link', { name: 'Sentimento Medo' })\n    ...\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/\\$[0-9.]+T|B|M/)\u001b[22m\n\n\n\u001b[0m \u001b[90m 39 |\u001b[39m         \u001b[90m// Check that we have values formatted with $, T, B, M or %\u001b[39m\n \u001b[90m 40 |\u001b[39m         \u001b[90m// We look for elements that typically hold these values\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 41 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/\\$[0-9.]+T|B|M/\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m \u001b[90m// Market Cap or Volume\u001b[39m\n \u001b[90m    |\u001b[39m                                                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 42 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/[0-9.]+%$/\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m \u001b[90m// Dominance\u001b[39m\n \u001b[90m 43 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 44 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:41:56\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:12.484Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticker-should-verify-value-formatting-firefox/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticker-should-verify-value-formatting-firefox/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticker-should-verify-value-formatting-firefox/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                        "column": 56,
+                        "line": 41
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-2973523955e9371ce5f2",
+              "file": "zenith.spec.ts",
+              "line": 38,
+              "column": 9
+            },
+            {
+              "title": "should display all 4 market cards",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 20,
+                      "error": {
+                        "message": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝",
+                        "stack": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:26.522Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-1034546111b12cd476a9",
+              "file": "zenith.spec.ts",
+              "line": 11,
+              "column": 9
+            },
+            {
+              "title": "should reveal definition on hover/interaction",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 9,
+                      "error": {
+                        "message": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝",
+                        "stack": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:28.122Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-877784b82648727c9721",
+              "file": "zenith.spec.ts",
+              "line": 19,
+              "column": 9
+            },
+            {
+              "title": "should verify value formatting",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 12,
+                      "error": {
+                        "message": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝",
+                        "stack": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:28.224Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-25c1a794f4eb724ccfad",
+              "file": "zenith.spec.ts",
+              "line": 38,
+              "column": 9
+            },
+            {
+              "title": "should display all 4 market cards",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 6063,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Capitalização')\nExpected: visible\nError: strict mode violation: getByText('Capitalização') resolved to 3 elements:\n    1) <h3 class=\"font-bold text-sm lg:text-base  dark:\">Capitalização</h3> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n    2) <h4 class=\"font-bold text-sm mb-1 text-[var(--text-primary)]\">Capitalização</h4> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n    3) <h4 class=\"font-bold text-base mb-2 text-[var(--text-primary)]\">O que é Capitalização?</h4> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Capitalização')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Capitalização')\nExpected: visible\nError: strict mode violation: getByText('Capitalização') resolved to 3 elements:\n    1) <h3 class=\"font-bold text-sm lg:text-base  dark:\">Capitalização</h3> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n    2) <h4 class=\"font-bold text-sm mb-1 text-[var(--text-primary)]\">Capitalização</h4> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n    3) <h4 class=\"font-bold text-base mb-2 text-[var(--text-primary)]\">O que é Capitalização?</h4> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Capitalização')\u001b[22m\n\n    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:13:55",
+                        "location": {
+                          "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                          "column": 55,
+                          "line": 13
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 11 |\u001b[39m     test(\u001b[32m'should display all 4 market cards'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 12 |\u001b[39m         \u001b[90m// Check for the presence of the 4 main cards\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 13 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Capitalização'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 14 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Volume 24h'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 15 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Dominância BTC'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 16 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Dominância ETH'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                            "column": 55,
+                            "line": 13
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Capitalização')\nExpected: visible\nError: strict mode violation: getByText('Capitalização') resolved to 3 elements:\n    1) <h3 class=\"font-bold text-sm lg:text-base  dark:\">Capitalização</h3> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n    2) <h4 class=\"font-bold text-sm mb-1 text-[var(--text-primary)]\">Capitalização</h4> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n    3) <h4 class=\"font-bold text-base mb-2 text-[var(--text-primary)]\">O que é Capitalização?</h4> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Capitalização')\u001b[22m\n\n\n\u001b[0m \u001b[90m 11 |\u001b[39m     test(\u001b[32m'should display all 4 market cards'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 12 |\u001b[39m         \u001b[90m// Check for the presence of the 4 main cards\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 13 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Capitalização'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 14 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Volume 24h'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 15 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Dominância BTC'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 16 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Dominância ETH'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:13:55\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:28.538Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-bb76b--display-all-4-market-cards-Mobile-Chrome/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-bb76b--display-all-4-market-cards-Mobile-Chrome/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-bb76b--display-all-4-market-cards-Mobile-Chrome/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                        "column": 55,
+                        "line": 13
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-766b9f72705d408a2b87",
+              "file": "zenith.spec.ts",
+              "line": 11,
+              "column": 9
+            },
+            {
+              "title": "should reveal definition on hover/interaction",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 6310,
+                      "error": {
+                        "message": "Error: locator.isVisible: Error: strict mode violation: getByText(/Valor total de mercado/) resolved to 2 elements:\n    1) <p class=\"text-xs text-[var(--text-secondary)] leading-snug\">Valor total de mercado cripto. Preço × quantidade…</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n    2) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Valor total de mercado de todas as criptomoedas. …</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n\nCall log:\n\u001b[2m    - checking visibility of getByText(/Valor total de mercado/)\u001b[22m\n",
+                        "stack": "Error: locator.isVisible: Error: strict mode violation: getByText(/Valor total de mercado/) resolved to 2 elements:\n    1) <p class=\"text-xs text-[var(--text-secondary)] leading-snug\">Valor total de mercado cripto. Preço × quantidade…</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n    2) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Valor total de mercado de todas as criptomoedas. …</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n\nCall log:\n\u001b[2m    - checking visibility of getByText(/Valor total de mercado/)\u001b[22m\n\n    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:29:31",
+                        "location": {
+                          "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                          "column": 31,
+                          "line": 29
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 27 |\u001b[39m         \u001b[90m// \"Valor total de mercado de todas as criptomoedas...\"\u001b[39m\n \u001b[90m 28 |\u001b[39m         \u001b[36mconst\u001b[39m description \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mgetByText(\u001b[35m/Valor total de mercado/\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 29 |\u001b[39m         \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m description\u001b[33m.\u001b[39misVisible()) {\n \u001b[90m    |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 30 |\u001b[39m             \u001b[36mawait\u001b[39m expect(description)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m         } \u001b[36melse\u001b[39m {\n \u001b[90m 32 |\u001b[39m             \u001b[90m// Fallback for click interaction if hover isn't enough/mobile view\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                            "column": 31,
+                            "line": 29
+                          },
+                          "message": "Error: locator.isVisible: Error: strict mode violation: getByText(/Valor total de mercado/) resolved to 2 elements:\n    1) <p class=\"text-xs text-[var(--text-secondary)] leading-snug\">Valor total de mercado cripto. Preço × quantidade…</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n    2) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Valor total de mercado de todas as criptomoedas. …</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n\nCall log:\n\u001b[2m    - checking visibility of getByText(/Valor total de mercado/)\u001b[22m\n\n\n\u001b[0m \u001b[90m 27 |\u001b[39m         \u001b[90m// \"Valor total de mercado de todas as criptomoedas...\"\u001b[39m\n \u001b[90m 28 |\u001b[39m         \u001b[36mconst\u001b[39m description \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mgetByText(\u001b[35m/Valor total de mercado/\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 29 |\u001b[39m         \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m description\u001b[33m.\u001b[39misVisible()) {\n \u001b[90m    |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 30 |\u001b[39m             \u001b[36mawait\u001b[39m expect(description)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m         } \u001b[36melse\u001b[39m {\n \u001b[90m 32 |\u001b[39m             \u001b[90m// Fallback for click interaction if hover isn't enough/mobile view\u001b[39m\u001b[0m\n\u001b[2m    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:29:31\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:28.599Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-f9e8d-nition-on-hover-interaction-Mobile-Chrome/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-f9e8d-nition-on-hover-interaction-Mobile-Chrome/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticke-f9e8d-nition-on-hover-interaction-Mobile-Chrome/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                        "column": 31,
+                        "line": 29
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-89cdc63c3ea04474ddbb",
+              "file": "zenith.spec.ts",
+              "line": 19,
+              "column": 9
+            },
+            {
+              "title": "should verify value formatting",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 6099,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/\\$[0-9.]+T|B|M/)\nExpected: visible\nError: strict mode violation: getByText(/\\$[0-9.]+T|B|M/) resolved to 135 elements:\n    1) <span class=\"text-lg tracking-[0.2em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('link', { name: '$ MILAGRE Comunidade Web3', exact: true })\n    2) <span class=\"text-[10px] font-black uppercase tracking-wider text-red-500 font-inter transition-colors duration-1000\">Medo</span> aka getByRole('link', { name: 'Sentimento Medo' })\n    3) <span class=\"text-base tracking-[0.15em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('link', { name: '$ MILAGRE', exact: true })\n    4) <span class=\"relative z-10\">$MILAGRE</span> aka locator('span').filter({ hasText: '$MILAGRE' })\n    5) <h3 class=\"title-newtab text-base transition-colors text-[var(--brand-primary)]\">Notícias do Mercado</h3> aka getByRole('link', { name: 'Notícias do Mercado' })\n    6) <p class=\"text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight\">$3.30T</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n    7) <p class=\"text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight\">$147.72B</p> aka getByRole('button', { name: 'Volume 24h $147.72B Volume' })\n    8) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Total de criptomoedas negociadas nas últimas 24 h…</p> aka getByRole('button', { name: 'Volume 24h $147.72B Volume' })\n    9) <h3 class=\"title-newtab text-sm lg:text-base\">Dominância BTC</h3> aka getByRole('button', { name: 'Dominância BTC 56.89% Dominâ' })\n    10) <h4 class=\"font-bold text-sm mb-1 text-[var(--text-primary)]\">Dominância BTC</h4> aka getByRole('button', { name: 'Dominância BTC 56.89% Dominâ' })\n    ...\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/\\$[0-9.]+T|B|M/)\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/\\$[0-9.]+T|B|M/)\nExpected: visible\nError: strict mode violation: getByText(/\\$[0-9.]+T|B|M/) resolved to 135 elements:\n    1) <span class=\"text-lg tracking-[0.2em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('link', { name: '$ MILAGRE Comunidade Web3', exact: true })\n    2) <span class=\"text-[10px] font-black uppercase tracking-wider text-red-500 font-inter transition-colors duration-1000\">Medo</span> aka getByRole('link', { name: 'Sentimento Medo' })\n    3) <span class=\"text-base tracking-[0.15em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('link', { name: '$ MILAGRE', exact: true })\n    4) <span class=\"relative z-10\">$MILAGRE</span> aka locator('span').filter({ hasText: '$MILAGRE' })\n    5) <h3 class=\"title-newtab text-base transition-colors text-[var(--brand-primary)]\">Notícias do Mercado</h3> aka getByRole('link', { name: 'Notícias do Mercado' })\n    6) <p class=\"text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight\">$3.30T</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n    7) <p class=\"text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight\">$147.72B</p> aka getByRole('button', { name: 'Volume 24h $147.72B Volume' })\n    8) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Total de criptomoedas negociadas nas últimas 24 h…</p> aka getByRole('button', { name: 'Volume 24h $147.72B Volume' })\n    9) <h3 class=\"title-newtab text-sm lg:text-base\">Dominância BTC</h3> aka getByRole('button', { name: 'Dominância BTC 56.89% Dominâ' })\n    10) <h4 class=\"font-bold text-sm mb-1 text-[var(--text-primary)]\">Dominância BTC</h4> aka getByRole('button', { name: 'Dominância BTC 56.89% Dominâ' })\n    ...\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/\\$[0-9.]+T|B|M/)\u001b[22m\n\n    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:41:56",
+                        "location": {
+                          "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                          "column": 56,
+                          "line": 41
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 39 |\u001b[39m         \u001b[90m// Check that we have values formatted with $, T, B, M or %\u001b[39m\n \u001b[90m 40 |\u001b[39m         \u001b[90m// We look for elements that typically hold these values\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 41 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/\\$[0-9.]+T|B|M/\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m \u001b[90m// Market Cap or Volume\u001b[39m\n \u001b[90m    |\u001b[39m                                                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 42 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/[0-9.]+%$/\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m \u001b[90m// Dominance\u001b[39m\n \u001b[90m 43 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 44 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                            "column": 56,
+                            "line": 41
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/\\$[0-9.]+T|B|M/)\nExpected: visible\nError: strict mode violation: getByText(/\\$[0-9.]+T|B|M/) resolved to 135 elements:\n    1) <span class=\"text-lg tracking-[0.2em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('link', { name: '$ MILAGRE Comunidade Web3', exact: true })\n    2) <span class=\"text-[10px] font-black uppercase tracking-wider text-red-500 font-inter transition-colors duration-1000\">Medo</span> aka getByRole('link', { name: 'Sentimento Medo' })\n    3) <span class=\"text-base tracking-[0.15em] font-bold text-[var(--text-primary)] dark:text-white uppercase font-space transition-colors duration-300\">MILAGRE</span> aka getByRole('link', { name: '$ MILAGRE', exact: true })\n    4) <span class=\"relative z-10\">$MILAGRE</span> aka locator('span').filter({ hasText: '$MILAGRE' })\n    5) <h3 class=\"title-newtab text-base transition-colors text-[var(--brand-primary)]\">Notícias do Mercado</h3> aka getByRole('link', { name: 'Notícias do Mercado' })\n    6) <p class=\"text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight\">$3.30T</p> aka getByRole('button', { name: 'Capitalização $3.30T ▲ 2.9%' })\n    7) <p class=\"text-2xl lg:text-3xl font-bold text-[var(--text-primary)] font-mono tracking-tight\">$147.72B</p> aka getByRole('button', { name: 'Volume 24h $147.72B Volume' })\n    8) <p class=\"text-sm text-[var(--text-secondary)] leading-relaxed\">Total de criptomoedas negociadas nas últimas 24 h…</p> aka getByRole('button', { name: 'Volume 24h $147.72B Volume' })\n    9) <h3 class=\"title-newtab text-sm lg:text-base\">Dominância BTC</h3> aka getByRole('button', { name: 'Dominância BTC 56.89% Dominâ' })\n    10) <h4 class=\"font-bold text-sm mb-1 text-[var(--text-primary)]\">Dominância BTC</h4> aka getByRole('button', { name: 'Dominância BTC 56.89% Dominâ' })\n    ...\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/\\$[0-9.]+T|B|M/)\u001b[22m\n\n\n\u001b[0m \u001b[90m 39 |\u001b[39m         \u001b[90m// Check that we have values formatted with $, T, B, M or %\u001b[39m\n \u001b[90m 40 |\u001b[39m         \u001b[90m// We look for elements that typically hold these values\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 41 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/\\$[0-9.]+T|B|M/\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m \u001b[90m// Market Cap or Volume\u001b[39m\n \u001b[90m    |\u001b[39m                                                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 42 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/[0-9.]+%$/\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m \u001b[90m// Dominance\u001b[39m\n \u001b[90m 43 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 44 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts:41:56\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:29.032Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticker-should-verify-value-formatting-Mobile-Chrome/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticker-should-verify-value-formatting-Mobile-Chrome/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/zenfoco/Dev/tokenmilagre-platform/test-results/zenith-Zenith-Market-Ticker-should-verify-value-formatting-Mobile-Chrome/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/zenfoco/Dev/tokenmilagre-platform/e2e/zenith.spec.ts",
+                        "column": 56,
+                        "line": 41
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-eb41291cd86ad41a0088",
+              "file": "zenith.spec.ts",
+              "line": 38,
+              "column": 9
+            },
+            {
+              "title": "should display all 4 market cards",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 10,
+                      "error": {
+                        "message": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝",
+                        "stack": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:29.322Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-76be704eee17413f7fe0",
+              "file": "zenith.spec.ts",
+              "line": 11,
+              "column": 9
+            },
+            {
+              "title": "should reveal definition on hover/interaction",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 10,
+                      "error": {
+                        "message": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝",
+                        "stack": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:29.372Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-625a080ca3128f9484b8",
+              "file": "zenith.spec.ts",
+              "line": 19,
+              "column": 9
+            },
+            {
+              "title": "should verify value formatting",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 15,
+                      "error": {
+                        "message": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝",
+                        "stack": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgstreamer-1.0.so.0                            ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libxslt.so.1                                     ║\n║     libwoff2dec.so.1.0.2                             ║\n║     libvpx.so.9                                      ║\n║     libevent-2.1.so.7                                ║\n║     libopus.so.0                                     ║\n║     libgstallocators-1.0.so.0                        ║\n║     libgstapp-1.0.so.0                               ║\n║     libgstbase-1.0.so.0                              ║\n║     libgstpbutils-1.0.so.0                           ║\n║     libgstaudio-1.0.so.0                             ║\n║     libgsttag-1.0.so.0                               ║\n║     libgstvideo-1.0.so.0                             ║\n║     libgstgl-1.0.so.0                                ║\n║     libgstcodecparsers-1.0.so.0                      ║\n║     libgstfft-1.0.so.0                               ║\n║     libflite.so.1                                    ║\n║     libflite_usenglish.so.1                          ║\n║     libflite_cmu_grapheme_lang.so.1                  ║\n║     libflite_cmu_grapheme_lex.so.1                   ║\n║     libflite_cmu_indic_lang.so.1                     ║\n║     libflite_cmu_indic_lex.so.1                      ║\n║     libflite_cmulex.so.1                             ║\n║     libflite_cmu_time_awb.so.1                       ║\n║     libflite_cmu_us_awb.so.1                         ║\n║     libflite_cmu_us_kal16.so.1                       ║\n║     libflite_cmu_us_kal.so.1                         ║\n║     libflite_cmu_us_rms.so.1                         ║\n║     libflite_cmu_us_slt.so.1                         ║\n║     libharfbuzz-icu.so.0                             ║\n║     libenchant-2.so.2                                ║\n║     libsecret-1.so.0                                 ║\n║     libhyphen.so.0                                   ║\n║     libmanette-0.2.so.0                              ║\n║     libx264.so                                       ║\n╚══════════════════════════════════════════════════════╝"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-05T23:43:29.624Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d1a126333bbd07475e87-ef77cc8166aa277b1676",
+              "file": "zenith.spec.ts",
+              "line": 38,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-01-05T23:43:11.498Z",
+    "duration": 23824.015,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 15,
+    "flaky": 0
+  }
+}
