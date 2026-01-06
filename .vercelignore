@@ -15,3 +15,6 @@ prisma/dev.db-journal
 
 # Backups
 *.backup
+
+# Symlinks locais (não funcionam no Vercel)
+Muambas
