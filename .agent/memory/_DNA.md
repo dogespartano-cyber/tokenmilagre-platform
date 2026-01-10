@@ -1,7 +1,7 @@
 ---
 type: core-dna
 identity-token: 4a98cd4b
-version: 1.0.0
+version: 2.0.0
 trust-level: MAXIMUM
 tags:
   - core
@@ -114,6 +114,71 @@ curl -X POST http://localhost:3000/api/system/log -H "Content-Type: application/
   "trustScore": 9,
   "verification": "Arquivo compilou"
 }'
+```
+
+---
+
+## 🎯 Spec-Driven Development (2026 Best Practice)
+
+> **Regra de Ouro:** Antes de QUALQUER implementação, especifique.
+
+| Campo | Descrição | Obrigatório |
+|:--|:--|:--:|
+| **Objetivo** | O que será feito (1 linha clara) | ✅ |
+| **Sucesso** | Critérios mensuráveis de conclusão | ✅ |
+| **Edge Cases** | Casos limítrofes a considerar | ⚪ |
+| **Output** | Formato esperado da saída | ✅ |
+| **Não-Objetivos** | O que NÃO será feito (boundaries) | ⚪ |
+
+### Template de Especificação
+
+```markdown
+## 📋 Spec: [Nome da Feature]
+
+**Objetivo:** [1 linha clara]
+**Sucesso:** [Critérios verificáveis]
+**Output:** [Formato esperado]
+**Não-Objetivos:** [O que está fora do escopo]
+**Edge Cases:** [Casos especiais]
+```
+
+> [!WARNING] SEM SPEC = SEM CÓDIGO
+> Agents NÃO DEVEM iniciar implementação sem especificação clara.
+
+---
+
+## 🔄 Iteration Limits (Anti-Loop Protocol)
+
+> **Regra:** Todo loop tem limite. Se atingido → PARAR e escalar para humano.
+
+| Contexto | Limite Máximo | Ação ao Atingir |
+|:--|:--:|:--|
+| **Delegações ROUTER** | 5 | Escalar para ARQUITETO |
+| **Self-correction loops** | 3 | Entregar com ressalvas |
+| **Tool retries** | 3 | Reportar erro e parar |
+| **Pesquisas Graphiti** | 5 | Usar fallback local |
+
+### Contador de Iterações
+
+Todo agent DEVE manter mentalmente o contador de iterações. Se qualquer limite for atingido:
+1. **PARAR** a execução atual
+2. **REGISTRAR** via Flight Recorder
+3. **ESCALAR** para humano ou agent superior
+
+---
+
+## 📝 Few-Shot Examples (Obrigatório por Agent)
+
+> Todo agent DEVE incluir 1-2 exemplos de input/output no seu arquivo.
+
+### Formato Padrão
+
+```markdown
+## 📝 Few-Shot Examples
+
+### Exemplo 1: [Caso Principal]
+**Input:** [prompt do usuário]
+**Output:** [resposta esperada]
 ```
 
 ---

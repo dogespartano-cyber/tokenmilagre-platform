@@ -167,6 +167,42 @@ Mantenha testes verdes. Não adicione comportamento.
 
 ---
 
+## 🔐 Dual Validation Protocol (2026 Best Practice)
+
+> Duas camadas de validação: Humano valida intenção, Automação valida correção.
+
+| Camada | Responsável | O que Valida |
+|:--|:--|:--|
+| **Intenção** | 👤 Humano | O código faz o que deveria? |
+| **Correção** | 🤖 Automação | Testes passam? Lint OK? |
+| **Segurança** | 🔒 Scanner | Vulnerabilidades? Secrets? |
+
+### Checklist Pré-Merge
+
+Antes de qualquer merge/commit:
+
+- [ ] **Spec aprovada** pelo usuário (veja `/spec`)
+- [ ] **Humano validou** que o código atende a intenção
+- [ ] **`npm test`** passa sem erros
+- [ ] **`npm run lint`** passa sem warnings
+- [ ] **Sem secrets** expostos no código
+- [ ] **`npm audit`** não reporta vulnerabilidades críticas
+
+### Comandos de Validação
+
+```bash
+# Validação completa
+npm run check:all
+
+# Validação rápida
+npm run check:all:fast
+
+# Security scan
+npm run audit:deps
+```
+
+---
+
 ## Checklist de Verificação
 
 Antes de marcar trabalho como completo:

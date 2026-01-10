@@ -220,12 +220,14 @@ SEGURANCA   DESIGN    CONTEUDO ←───────────────�
 | [[processes/auditoria\|auditoria]] | **🏥 Prompt para auditoria completa** |
 | [[processes/sessao\|sessao]] | **📝 Registro de sessão no Graphiti** |
 | [[processes/debug\|debug]] | Debugging sistemático em 4 fases |
-| [[processes/tdd\|tdd]] | Test-Driven Development (red-green-refactor) |
+| [[processes/tdd\|tdd]] | Test-Driven Development + Dual Validation |
 | [[processes/plano\|plano]] | Escrita de planos de implementação |
 | [[processes/execucao\|execucao]] | Execução de planos em batches |
 | [[processes/verificacao\|verificacao]] | Verificação antes de conclusão |
 | [[processes/manutencao\|manutencao]] | 🔧 Manutenção semanal do ecossistema |
 | [[processes/criador-conteudo\|criador-conteudo]] | 📝 Prompts Perplexity para criação de conteúdo |
+| [[processes/spec\|spec]] | **📋 Spec-Driven Development (2026)** |
+| [[processes/reflect\|reflect]] | **🔄 Self-Correction / Reflexion (2026)** |
 
 
 ---
@@ -234,5 +236,6 @@ SEGURANCA   DESIGN    CONTEUDO ←───────────────�
 @agi-metadata:
   inherits: [[memory/_DNA|_DNA]]
   updates: on-agent-change
-  last-maintained: 2026-01-05
+  last-maintained: 2026-01-10
+  version: 2.0.0
 ```
